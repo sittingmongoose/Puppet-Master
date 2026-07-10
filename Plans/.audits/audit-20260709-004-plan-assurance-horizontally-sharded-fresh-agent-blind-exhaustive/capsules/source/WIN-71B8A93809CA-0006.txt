@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 1609-1620 >>>
+  - "tool_policy_mode: \"ask\""
+  - "pm.project-plan-node.v1"
+negative_constraints:
+  - "Human ambiguity resolution is not required for continued execution; decision logging is traceability, not gating."
+preserved_contractrefs:
+  - "ContractRef: `PolicyRule:Decision_Policy.md`"
+  - "ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§4"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Decision_Policy.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1621-1977 >>>
+### POA-017 - Sharded-Only Plan Graph Root
+
+```yaml
+plan_unit_id: POA-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Puppet Master produces user-project plans as a canonical sharded-only graph under .puppet-master/project/plan_graph/, while plan.md remains the required human-readable view.
+gui_related: true
+gui_classification_reason: This unit preserves the user-visible human plan view boundary while defining the sharded headless graph root.
+split_recommended: false
+depends_on:
+  - POA-013
+  - POA-015
+unblocks: []
+acceptance_criteria:
+  - "Sharded-Only Plan Graph Root remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "The sharded graph remains canonical headless input and plan.md remains the human-readable view."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: plan_graph_entrypoint_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0021
+preserved_exact_tokens:
+  - "sharded-only plan graph"
+  - ".puppet-master/project/plan_graph/"
+  - "canonical headless execution input"
+  - "plan.md"
+  - "pm.project-plan-graph-index.v1"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+```
+
+### POA-018 - Locked Plan Graph Entrypoint And Noncanonical Monolithic Export
+
+```yaml
+plan_unit_id: POA-018
+unit_type: decision
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  The canonical graph entrypoint is always plan_graph/index.json; node files live under nodes/, optional edges.json is allowed, and any monolithic graph is a labeled derived export only.
+gui_related: false
+gui_classification_reason: This unit defines canonical graph file authority and derived export disposition rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-017
+unblocks: []
+acceptance_criteria:
+  - "Locked Plan Graph Entrypoint And Noncanonical Monolithic Export remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "No canonical .puppet-master/project/plan_graph.json is introduced."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: plan_graph_monolith_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: decision
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0022
+preserved_exact_tokens:
+  - ".puppet-master/project/plan_graph/index.json"
+  - "nodes/<node_id>.json"
+  - "edges.json"
+  - "NO canonical .puppet-master/project/plan_graph.json"
+  - "plan_graph/exports/plan_graph.monolithic.json"
+  - "locked decision"
+  - "no open questions remain"
+negative_constraints:
+  - "There is no canonical .puppet-master/project/plan_graph.json; monolithic export is never canonical input for orchestration or validation."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
+stale_retired_dispositions:
+  - "2026-02-24: Marked .puppet-master/project/plan_graph/exports/plan_graph.monolithic.json as an optional, non-canonical derived export."
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+```
+
+### POA-019 - Deterministic Node IDs
+
+```yaml
+plan_unit_id: POA-019
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Node IDs must be stable and reproducible from canonical node intent for identical inputs so shard filenames remain deterministic.
+gui_related: false
+gui_classification_reason: This unit defines deterministic identity constraints rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-017
+unblocks: []
+acceptance_criteria:
+  - "Deterministic Node IDs remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Node IDs do not depend on nondeterministic inputs."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: node_id_nondeterminism
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0023
+preserved_exact_tokens:
+  - "stable and deterministic"
+  - "timestamps"
+  - "randomness"
+  - "session IDs"
+  - "canonical representation of the node intent"
+  - "Invariant:INV-005"
+  - "PolicyRule:Decision_Policy.md§2"
+negative_constraints:
+  - "Node IDs must not depend on timestamps, randomness, session IDs, or nondeterministic ordering."
+preserved_contractrefs:
+  - "ContractRef: Invariant:INV-005, PolicyRule:Decision_Policy.md§2"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+```
+
+### POA-020 - Canonical Plan Graph Index Requirements
+
+```yaml
+plan_unit_id: POA-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  plan_graph/index.json is the required canonical graph entrypoint with schema version, node shard listing and hashes, entrypoints, deterministic execution ordering, validation targets, Executor Protocol status semantics, and canonical dependency semantics driven by blockers[].
+gui_related: true
+gui_classification_reason: The source span is GUI-related in the migration map because it preserves user-visible plan graph entrypoint and validation target semantics alongside headless execution rules.
+split_recommended: false
+depends_on:
+  - POA-018
+  - POA-019
+unblocks: []
+acceptance_criteria:
+  - "Canonical Plan Graph Index Requirements remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Index requirements preserve canonical dependency semantics and Executor Protocol status alignment."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: plan_graph_index_schema_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0024
+preserved_exact_tokens:
+  - "schema_version"
+  - "nodes[]"
+  - "nodes/<node_id>.json"
+  - "sha256"
+  - "entrypoints"
+  - "execution_ordering"
+  - "execution_ordering.node_state_source"
+  - "validation.targets"
+  - "acceptance_manifest"
+  - "contracts_index"
+  - "blockers[]"
+  - "unblocks[]"
+  - "depends_on[]"
+  - "edges.json"
+  - "Plans/Executor_Protocol.md"
+negative_constraints:
+  - "Graph execution must not rely on GUI-only artifacts."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executor_Protocol.md"
+compatibility_only_notes:
+  - "depends_on[] is optional compatibility metadata only, and edges.json is a derived consistency artifact rather than authority."
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Executor_Protocol.md
+```
+
+### POA-021 - Plan Graph Node Shard Required Fields
+
+```yaml
+plan_unit_id: POA-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Node shards under plan_graph/nodes/<node_id>.json must conform to pm.project-plan-node.v1, include all required lifecycle, policy, evidence, dependency, decision, and readiness fields, and keep filename node_id, ProjectContract:*, acceptance[], and evidence_required.path integrity aligned.
+gui_related: false
+gui_classification_reason: This unit defines sharded node schema and integrity behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-020"
+unblocks: []
+acceptance_criteria:
+  - "Plan Graph Node Shard Required Fields remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: project_plan_node_schema_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0025
+preserved_exact_tokens:
+  - "node_id"
+  - "objective"
+  - "contract_refs"
+  - "acceptance"
+  - "evidence_required"
+  - "allowed_tools"
+  - "tool_policy_mode"
+  - "policy_mode"
+  - "change_budget"
+  - "blockers"
+  - "unblocks"
+  - "status"
+  - "evidence_pointer"
+  - "verifier_result"
+  - "decision_refs"
+  - "spec_lock_requirements"
+negative_constraints:
+  - "No manual-only acceptance checks are allowed."
+  - "evidence_required.path is reserved execution evidence, not initial Project Plan Package output."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001"
+  - "ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-022 - Optional Edges Consistency Artifact
+
+```yaml
+plan_unit_id: POA-022
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  plan_graph/edges.json is optional and, if present, must be consistent with shard dependency semantics.
+gui_related: false
+gui_classification_reason: This unit defines optional dependency projection behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-021"
+unblocks: []
+acceptance_criteria:
+  - "Optional Edges Consistency Artifact remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: optional_edges_authority_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0026
+preserved_exact_tokens:
+  - "edges.json"
+  - "blockers"
+  - "unblocks"
+  - "depends_on"
+negative_constraints:
+  - "edges.json must not be required for headless execution and must not override shard-local blockers[]."
+preserved_contractrefs:
+  - "ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-023 - Noncanonical Monolithic Graph Export
+
+```yaml
+plan_unit_id: POA-023
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  plan_graph/exports/plan_graph.monolithic.json may exist only as a faithful, lossless, noncanonical derived export.
+gui_related: false
+gui_classification_reason: This unit defines derived export disposition rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-018"
+  - "POA-021"
+unblocks: []
+acceptance_criteria:
+  - "Noncanonical Monolithic Graph Export remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: noncanonical_export_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0027
+preserved_exact_tokens:
+  - "pm.project-plan-graph.v1"
+  - "same node IDs"
+  - "same node fields"
+  - "same entrypoints"
+negative_constraints:
+  - "The monolithic graph is not canonical and must not be required for validation or orchestration."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-graph.v1, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+
+<<< CONTEXT_AFTER 1978-1989 >>>
+### POA-024 - Seglog Artifact Event Persistence Fields
+
+```yaml
+plan_unit_id: POA-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Project Plan Package artifacts are canonical in seglog, with filesystem as regenerable export/cache and required artifact-event fields sufficient for hash-verified reconstruction.
+gui_related: false
+gui_classification_reason: This unit defines persistence event fields and reconstruction semantics rather than visual presentation.
+split_recommended: false

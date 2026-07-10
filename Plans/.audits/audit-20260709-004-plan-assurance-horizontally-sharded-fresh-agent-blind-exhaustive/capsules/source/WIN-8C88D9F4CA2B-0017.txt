@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 6090-6101 >>>
+          "requirement": "cmd.chat.worktree.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_create.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 6102-6500 >>>
+    "catalog.chat_worktree_info": {
+      "ui_element_id": "catalog.chat_worktree_info",
+      "ui_location": "Assistant Chat surface",
+      "ui_command_id": "cmd.chat.worktree.info",
+      "handler_location": "handlers::chat::worktree_info",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.worktree.info must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.worktree.info must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.worktree.info dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.worktree.info must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.worktree.info must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.worktree.info; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_worktree_info.availability",
+      "disabled_reason_projection": "state.commands.chat_worktree_info.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.worktree.info has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.worktree.info.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_worktree_info exposes a stable role/name/description matching cmd.chat.worktree.info.",
+        "keyboard_access": "catalog.chat_worktree_info is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_worktree_info preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_worktree_info surfaces state.commands.chat_worktree_info.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_worktree_info.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.worktree.info reaches handlers::chat::worktree_info with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_info.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_worktree_info.availability and disabled copy reads state.commands.chat_worktree_info.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_info.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.worktree.info has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_info.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.info records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_worktree_merge": {
+      "ui_element_id": "catalog.chat_worktree_merge",
+      "ui_location": "Assistant Chat surface",
+      "ui_command_id": "cmd.chat.worktree.merge",
+      "handler_location": "handlers::chat::worktree_merge",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.worktree.merge must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.worktree.merge must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.worktree.merge dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.worktree.merge must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.worktree.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.worktree.merge; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_worktree_merge.availability",
+      "disabled_reason_projection": "state.commands.chat_worktree_merge.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.worktree.merge has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.worktree.merge.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_worktree_merge exposes a stable role/name/description matching cmd.chat.worktree.merge.",
+        "keyboard_access": "catalog.chat_worktree_merge is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_worktree_merge preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_worktree_merge surfaces state.commands.chat_worktree_merge.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_worktree_merge.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.worktree.merge reaches handlers::chat::worktree_merge with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_merge.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_worktree_merge.availability and disabled copy reads state.commands.chat_worktree_merge.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_merge.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.worktree.merge has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_merge.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.merge records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_worktree_pr": {
+      "ui_element_id": "catalog.chat_worktree_pr",
+      "ui_location": "Assistant Chat surface",
+      "ui_command_id": "cmd.chat.worktree.pr",
+      "handler_location": "handlers::chat::worktree_pr",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.worktree.pr must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.worktree.pr must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.worktree.pr dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.worktree.pr must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.worktree.pr must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.worktree.pr; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_worktree_pr.availability",
+      "disabled_reason_projection": "state.commands.chat_worktree_pr.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.worktree.pr has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.worktree.pr.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_worktree_pr exposes a stable role/name/description matching cmd.chat.worktree.pr.",
+        "keyboard_access": "catalog.chat_worktree_pr is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_worktree_pr preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_worktree_pr surfaces state.commands.chat_worktree_pr.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_worktree_pr.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.worktree.pr reaches handlers::chat::worktree_pr with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_pr.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_worktree_pr.availability and disabled copy reads state.commands.chat_worktree_pr.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_pr.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.worktree.pr has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_pr.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.pr records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_worktree_remove": {
+      "ui_element_id": "catalog.chat_worktree_remove",
+      "ui_location": "Assistant Chat surface",
+      "ui_command_id": "cmd.chat.worktree.remove",
+      "handler_location": "handlers::chat::worktree_remove",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.worktree.remove must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.worktree.remove must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.worktree.remove dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.worktree.remove must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.worktree.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.worktree.remove; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_worktree_remove.availability",
+      "disabled_reason_projection": "state.commands.chat_worktree_remove.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.worktree.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.worktree.remove.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_worktree_remove exposes a stable role/name/description matching cmd.chat.worktree.remove.",
+        "keyboard_access": "catalog.chat_worktree_remove is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_worktree_remove preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_worktree_remove surfaces state.commands.chat_worktree_remove.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_worktree_remove.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.worktree.remove reaches handlers::chat::worktree_remove with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_remove.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_worktree_remove.availability and disabled copy reads state.commands.chat_worktree_remove.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_remove.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.worktree.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_remove.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.remove records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_worktree_unbind": {
+      "ui_element_id": "catalog.chat_worktree_unbind",
+      "ui_location": "Assistant Chat surface",
+      "ui_command_id": "cmd.chat.worktree.unbind",
+      "handler_location": "handlers::chat::worktree_unbind",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.worktree.unbind must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.worktree.unbind must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.worktree.unbind dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.worktree.unbind must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.worktree.unbind must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.worktree.unbind; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_worktree_unbind.availability",
+      "disabled_reason_projection": "state.commands.chat_worktree_unbind.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.worktree.unbind has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.worktree.unbind.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_worktree_unbind exposes a stable role/name/description matching cmd.chat.worktree.unbind.",
+        "keyboard_access": "catalog.chat_worktree_unbind is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_worktree_unbind preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_worktree_unbind surfaces state.commands.chat_worktree_unbind.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_worktree_unbind.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.worktree.unbind reaches handlers::chat::worktree_unbind with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_unbind.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_worktree_unbind.availability and disabled copy reads state.commands.chat_worktree_unbind.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_unbind.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.worktree.unbind has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_worktree_unbind.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.worktree.unbind records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.concern_assign": {
+      "ui_element_id": "catalog.concern_assign",
+      "ui_location": "Concern Center > Assign",
+      "ui_command_id": "cmd.concern.assign",
+      "handler_location": "handlers::concern::assign",
+      "expected_event_types": [
+        "concern.assigned"
+      ],
+      "acceptance_checks": [
+        "cmd.concern.assign is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.concern.assign exposes state selector and disabled reason before dispatch.",
+        "cmd.concern.assign dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.concern.assign uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.concern.assign. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.concern_assign.availability",
+      "disabled_reason_projection": "state.commands.concern_assign.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.concern.assign emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "concern.assigned"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.concern_assign exposes a stable role/name/description matching cmd.concern.assign.",
+        "keyboard_access": "catalog.concern_assign is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.concern_assign preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.concern_assign surfaces state.commands.concern_assign.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.concern_assign.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.concern.assign reaches handlers::concern::assign with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.concern_assign.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.concern_assign.availability and disabled copy reads state.commands.concern_assign.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.concern_assign.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.concern.assign emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.concern_assign.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.concern_assign.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.concern.assign emits concern.assigned with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.concern.assign emits concern.assigned with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.concern_create": {
+      "ui_element_id": "catalog.concern_create",
+      "ui_location": "Concern Center > Create",
+      "ui_command_id": "cmd.concern.create",
+      "handler_location": "handlers::concern::create",
+      "expected_event_types": [
+        "concern.created"
+      ],
+      "acceptance_checks": [
+        "cmd.concern.create is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.concern.create exposes state selector and disabled reason before dispatch.",
+        "cmd.concern.create dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.concern.create uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.concern.create. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.concern_create.availability",
+      "disabled_reason_projection": "state.commands.concern_create.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.concern.create emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "concern.created"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.concern_create exposes a stable role/name/description matching cmd.concern.create.",
+        "keyboard_access": "catalog.concern_create is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.concern_create preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.concern_create surfaces state.commands.concern_create.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.concern_create.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.concern.create reaches handlers::concern::create with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.concern_create.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.concern_create.availability and disabled copy reads state.commands.concern_create.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.concern_create.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.concern.create emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.concern_create.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.concern_create.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.concern.create emits concern.created with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.concern.create emits concern.created with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+
+<<< CONTEXT_AFTER 6501-6512 >>>
+    "catalog.concern_link_evidence": {
+      "ui_element_id": "catalog.concern_link_evidence",
+      "ui_location": "Concern Center > Link Evidence",
+      "ui_command_id": "cmd.concern.link_evidence",
+      "handler_location": "handlers::concern::link_evidence",
+      "expected_event_types": [
+        "concern.evidence_linked"
+      ],
+      "acceptance_checks": [
+        "cmd.concern.link_evidence is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.concern.link_evidence exposes state selector and disabled reason before dispatch.",
+        "cmd.concern.link_evidence dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",

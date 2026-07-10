@@ -1,0 +1,33 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-04",
+  "runner_thread_id": "019f49e2-0e96-70a0-960b-162a79bc889a",
+  "status": "rolling_recovery_and_dispatch_active",
+  "authority_validated": true,
+  "assignment_count": 211,
+  "valid_assignments": 6,
+  "failed_attempts": 4,
+  "active_attempts": 3,
+  "completed_waves": 2,
+  "last_completed_assignment_seq": 108,
+  "unique_agents_spawned": 13,
+  "validated_capsule_package_bytes": 237740,
+  "validated_token_estimate": 71027,
+  "active_attempt_ids": [
+    "A004-000068-ADVERSARIAL-WIN-C45446C7AC96-0001-attempt-002",
+    "A004-000080-ADVERSARIAL-WIN-374364D6188B-0001-attempt-002",
+    "A004-000110-ADVERSARIAL-WIN-CC3C85D86FBD-0023-attempt-001"
+  ],
+  "retry_backlog": [
+    "A004-000040-ADVERSARIAL-WIN-C45446C7AC96-0002-attempt-003"
+  ],
+  "initial_v2_global_credits_preserved": 17,
+  "initial_v2_runner04_quarantine_candidates": 0,
+  "initial_v2_runner04_localized_receipt_errors": 0,
+  "live_v2_runner04_credited_assignments": 6,
+  "live_v2_runner04_quarantine_candidates": 0,
+  "live_v2_runner04_localized_receipt_errors": 0,
+  "runner_packet_sha256": "4a560e316122a9e1410344a42afbcf7b8526eec9d92e116ee97bc92e05304640",
+  "ready_seal_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+  "updated_at": "2026-07-10T04:07:56.612Z"
+}

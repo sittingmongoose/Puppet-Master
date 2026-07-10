@@ -1,0 +1,15 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "observed_at": "2026-07-10T07:10:09Z",
+  "status": "error",
+  "validator": "validators/frozen/postrun_validator_v2_crosscheck.py",
+  "snapshot_ref": "validators/evidence/postrun_validator_v2.live.20260710T0710Z.json",
+  "snapshot_sha256": "3d5b540fd53a8e7e707e97d657ae67c12b88ce156a9eacf9f7e0c92ce4a05714",
+  "error_type": "JSONDecodeError",
+  "error": "runner-07/fresh_agent_assignment_registry.jsonl:22 begins with a literal plus sign and is not valid JSON",
+  "malformed_line_sha256": "f28b331ae34eaa255d93ff43bdc9b87551cb9118f34a520ce5cc5939ff3dac47",
+  "assignment_id_if_prefix_removed": "A004-000017-EXACT-WIN-510B3DE676A3-0003",
+  "attempt_if_prefix_removed": 3,
+  "coverage_credit": 0,
+  "runner_namespace_modified_by_master": false
+}

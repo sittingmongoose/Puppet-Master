@@ -1,0 +1,51 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "count": 3,
+  "entries": [
+    {
+      "agent_path": "/root/a004_r02_adv_000078_733267",
+      "assignment_id": "A004-000078-ADVERSARIAL-WIN-BCDD1AE883C0-0001",
+      "assignment_seq": 78,
+      "attempt_number": 1,
+      "fork_turns": "none",
+      "packet_index": 6,
+      "prompt": "Fresh isolated single-assignment reviewer for audit-20260709-004. Native runtime configuration is inherited as gpt-5.6-sol with reasoning_effort ultra. Perform exactly one substantive assignment and then terminate.\n\nAssignment: A004-000078-ADVERSARIAL-WIN-BCDD1AE883C0-0001; runner-02; role adversarial_negative_space; window WIN-BCDD1AE883C0-0001; doc DOC-BCDD1AE883C0 / Plans/Containers_Registry_and_Unraid.md; core lines 1-206; source_sha256 2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b.\n\nRead only these three immutable inputs and nothing else:\n1. Fixed universal lens/output card: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-02/validation/adversarial_role_card.json (sha256 c135e5ac4bcb441897303156dc6b53f82c8b4cf8aba4405acaf606cb2a453a7a; 4659 bytes).\n2. Assignment metadata capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000078-ADVERSARIAL-WIN-BCDD1AE883C0-0001.json (sha256 03903ac931b6a20fa0d345137bbaf501e08ade0501953d20e107954fc044ac67; 1616 bytes).\n3. Source excerpt named inside that capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BCDD1AE883C0-0001.txt (sha256 385bdc7bdc0e507477e9afaa830f1a554eb2a4254fbb84fe17abd3679e3ec293; 39542 bytes).\n\nVerify all three hashes and byte counts, then follow the fixed card and assignment capsule exactly. The bounded excerpt is the only substantive evidence universe. Return exactly the one JSON object required by the card, once, then remain terminal.",
+      "prompt_sha256": "719046a2037006cdd4b0651e10eee80bbbf22bf04b3dae2ca27dc52b0ef4eed1",
+      "prompt_template_version": "runner02-adversarial-v2-role-card",
+      "required_model": "gpt-5.6-sol",
+      "required_reasoning_effort": "ultra",
+      "task_name": "a004_r02_adv_000078_733267"
+    },
+    {
+      "agent_path": "/root/a004_r02_adv_000088_0bcc2e",
+      "assignment_id": "A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001",
+      "assignment_seq": 88,
+      "attempt_number": 1,
+      "fork_turns": "none",
+      "packet_index": 7,
+      "prompt": "Fresh isolated single-assignment reviewer for audit-20260709-004. Native runtime configuration is inherited as gpt-5.6-sol with reasoning_effort ultra. Perform exactly one substantive assignment and then terminate.\n\nAssignment: A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001; runner-02; role adversarial_negative_space; window WIN-BF7379C57A0F-0001; doc DOC-BF7379C57A0F / Plans/assistant-chat-design.md; core lines 1-389; source_sha256 dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67.\n\nRead only these three immutable inputs and nothing else:\n1. Fixed universal lens/output card: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-02/validation/adversarial_role_card.json (sha256 c135e5ac4bcb441897303156dc6b53f82c8b4cf8aba4405acaf606cb2a453a7a; 4659 bytes).\n2. Assignment metadata capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001.json (sha256 43da6eef9d9635001f0e7249b071a4a3eb70ca17e9c5de7524f57d36601344c1; 1607 bytes).\n3. Source excerpt named inside that capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BF7379C57A0F-0001.txt (sha256 dfc8d483ca7641f366dda797c2ebe3e7459558060632c37d58225d206a93bb23; 36646 bytes).\n\nVerify all three hashes and byte counts, then follow the fixed card and assignment capsule exactly. The bounded excerpt is the only substantive evidence universe. Return exactly the one JSON object required by the card, once, then remain terminal.",
+      "prompt_sha256": "977a8d24723a4714de59940fbec6226927eeb5b027a6eacfab1275f62b49ec6c",
+      "prompt_template_version": "runner02-adversarial-v2-role-card",
+      "required_model": "gpt-5.6-sol",
+      "required_reasoning_effort": "ultra",
+      "task_name": "a004_r02_adv_000088_0bcc2e"
+    },
+    {
+      "agent_path": "/root/a004_r02_adv_000102_6b215d",
+      "assignment_id": "A004-000102-ADVERSARIAL-WIN-19B62D73B9EF-0004",
+      "assignment_seq": 102,
+      "attempt_number": 1,
+      "fork_turns": "none",
+      "packet_index": 8,
+      "prompt": "Fresh isolated single-assignment reviewer for audit-20260709-004. Native runtime configuration is inherited as gpt-5.6-sol with reasoning_effort ultra. Perform exactly one substantive assignment and then terminate.\n\nAssignment: A004-000102-ADVERSARIAL-WIN-19B62D73B9EF-0004; runner-02; role adversarial_negative_space; window WIN-19B62D73B9EF-0004; doc DOC-19B62D73B9EF / Plans/Contracts_V0.md; core lines 658-794; source_sha256 4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5.\n\nRead only these three immutable inputs and nothing else:\n1. Fixed universal lens/output card: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-02/validation/adversarial_role_card.json (sha256 c135e5ac4bcb441897303156dc6b53f82c8b4cf8aba4405acaf606cb2a453a7a; 4659 bytes).\n2. Assignment metadata capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000102-ADVERSARIAL-WIN-19B62D73B9EF-0004.json (sha256 ca02ca4d489d7834b0530596d214cef0451c1e8ec640fe1d98afd16a3ce23502; 1634 bytes).\n3. Source excerpt named inside that capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-19B62D73B9EF-0004.txt (sha256 97934143d9df54ba124cd200c1a8003c07928f22468472c90db3c5474443a756; 39148 bytes).\n\nVerify all three hashes and byte counts, then follow the fixed card and assignment capsule exactly. The bounded excerpt is the only substantive evidence universe. Return exactly the one JSON object required by the card, once, then remain terminal.",
+      "prompt_sha256": "a9256e8959a6f5e7eb6cf34284f0da4e726f40743bd9a6f8904e423669c4757e",
+      "prompt_template_version": "runner02-adversarial-v2-role-card",
+      "required_model": "gpt-5.6-sol",
+      "required_reasoning_effort": "ultra",
+      "task_name": "a004_r02_adv_000102_6b215d"
+    }
+  ],
+  "runner_id": "runner-02",
+  "start_packet_index": 6,
+  "wave_number": 3
+}

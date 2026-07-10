@@ -4,7 +4,11 @@
     (function() {
       'use strict';
       function logCmd() {}
+      /* pm6 W2 (js-integration): delegate to the single promoted implementation in
+         pm6-js-globals when present, so there is exactly one toast pipeline at
+         runtime. The inline fallback only covers a globals parse failure. */
       function toast(msg) {
+        if (window.toast) { window.toast(msg); return; }
         var stack = document.getElementById('pmToastStack');
         if (!stack) return;
         var t = document.createElement('div');
@@ -1556,3 +1560,38 @@
           if (cb) cb.setAttribute('aria-expanded', 'true');
         }
       }
+      /* ── pm6 W2 (js-integration): page-tab delegated switcher ──────────────
+         Top page-tab clicks now route through window.PM_PAGES.go (pm6-js-globals)
+         so page.changed reaches the PM_DEMO bus — the breadcrumb strip and the
+         demo engine listen for it. Runs as a capturing listener so PM_PAGES.go has
+         already applied the .active toggling by the time the legacy per-tab
+         handler (js-terminal-demo) re-applies the identical classes; PM_PAGES
+         emits page.changed exactly once, so nothing double-fires. Propagation
+         is NOT stopped: document-level bubble listeners (context-menu and
+         popover closers) must keep seeing the click. Keyboard activation is
+         preserved — the legacy keydown handler synthesizes .click(), which
+         lands here too. If PM_PAGES is absent the legacy handler still switches
+         pages unchanged.
+         Orchestrator subtabs need no shim here: PM_PAGES.registerSubtab
+         ('orchestrator', …) in pm6-js-orchestrator funnels PM_PAGES.go
+         ('orchestrator', subtab) into a .click() on .orch-tab[data-tab] — the
+         same single path direct tab-strip clicks take (part-25 class toggler +
+         the pm6 container listener, whose mark() render is rAF-coalesced). */
+      document.addEventListener('click', function(e) {
+        if (!window.PM_PAGES || !window.PM_PAGES.go) return;
+        var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;
+        if (!tab) return;
+        window.PM_PAGES.go(tab.getAttribute('data-page'));
+      }, true);
+      /* ── pm6 W2 (js-integration): #themeSelect persistence shim ────────────
+         The legacy change handler (js-terminal-demo) only stamps data-theme.
+         For parity with Settings > Appearance > Theme, also persist
+         localStorage['pm.theme'] so the head boot snippet restores the choice;
+         the settings engine reads the same key and re-syncs its own controls. */
+      (function() {
+        var ts = document.getElementById('themeSelect');
+        if (!ts) return;
+        ts.addEventListener('change', function() {
+          try { localStorage.setItem('pm.theme', this.value); } catch (e0) {}
+        });
+      })();

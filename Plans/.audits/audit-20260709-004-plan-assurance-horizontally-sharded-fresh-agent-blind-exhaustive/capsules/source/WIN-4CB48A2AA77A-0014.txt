@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE 4905-4916 >>>
+- "/question/todoread/todowrite/capabilities.get"
+- "repo.import"
+- "media.generate"
+negative_constraints:
+- "Plan-mode wording must not imply blanket denial of tools expected during planning or research."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4917-5284 >>>
+### PS-068 - External Directory Allowlist Manager UI
+
+```yaml
+plan_unit_id: PS-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The external directory allowlist manager provides a scrollable wildcard path list, Add path input with optional native directory picker, per-row delete, and resolved home expansion display."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-026
+- PS-035
+- PS-063
+unblocks: []
+acceptance_criteria:
+- "PS-068 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_directory_allowlist_manager
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0053
+preserved_exact_tokens:
+- "External directory allowlist manager"
+- "external directory allowlist"
+- "Scrollable list"
+- "wildcard support"
+- "Add path"
+- "native directory picker"
+- "Per-row delete"
+- "Home expansion display"
+- "~ patterns"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FileSafe.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-069 - Doom Loop Policy Display Config
+
+```yaml
+plan_unit_id: PS-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The doom_loop policy card shows current allow, ask, or deny action, a repeat threshold spinner with default 3 and range 2-10, and explanation text for identical-input repeat triggering."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-034
+- PS-063
+unblocks: []
+acceptance_criteria:
+- "PS-069 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: doom_loop_policy_display_config
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0054
+preserved_exact_tokens:
+- "doom_loop"
+- "policy display/config"
+- "allow"
+- "ask"
+- "deny"
+- "Repeat threshold"
+- "spinner"
+- "default 3"
+- "range 2–10"
+- "same tool is called with identical input N consecutive times"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-070 - Per Persona Override Editor
+
+```yaml
+plan_unit_id: PS-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Persona-specific permission profiles are listed, created, edited, and deleted from the Permissions surface, with tool override counts and default_permissions_profile integration in Persona management."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-055
+- PS-063
+unblocks: []
+acceptance_criteria:
+- "PS-070 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: persona_permission_profile_editor
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0055
+preserved_exact_tokens:
+- "Per-Persona override editor"
+- "permission-profiles"
+- "Create profile"
+- "tool count"
+- "edit/delete"
+- "Plans/Personas.md §4"
+- "default_permissions_profile"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Personas.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-071 - Permission Scope Selector UI
+
+```yaml
+plan_unit_id: PS-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The Permissions scope selector exposes Global, Project, Package, Seam, and Lane scopes when applicable, prevents orphan project rules when no project is active, saves selected scope files, and displays effective layer-of-origin badges."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-021
+- PS-055
+- PS-064
+unblocks: []
+acceptance_criteria:
+- "PS-071 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_scope_selector_ui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0056
+preserved_exact_tokens:
+- "Scope selector"
+- "Global"
+- "Project"
+- "Package"
+- "Seam"
+- "Lane"
+- "/disabled"
+- "selected scope"
+- "layer-of-origin badges"
+- "project-scoped rules"
+negative_constraints:
+- "Durable always approval scope selection must not offer Project when no active project context exists."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-072 - Cross Surface Permission Mutation Parity
+
+```yaml
+plan_unit_id: PS-072
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Settings GUI, command palette, API/CLI, and automation surfaces all mutate permission rules through the same canonical permission commands and storage records."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-056
+- PS-071
+unblocks: []
+acceptance_criteria:
+- "PS-072 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_mutation_command_storage_parity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0056
+preserved_exact_tokens:
+- "Settings GUI"
+- "command-palette"
+- "API/CLI"
+- "automation surfaces"
+- "canonical permission commands"
+- "storage records"
+- "durable approval creation"
+- "revocation"
+- "inspection"
+negative_constraints:
+- "GUI-only affordances must not become the sole management path for durable approval creation, revocation, or inspection."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+- "Plans/UI_Command_Catalog.md"
+- "Plans/Commands_System.md"
+```
+
+### PS-073 - Permissions ELI5 Expert Copy Modes
+
+```yaml
+plan_unit_id: PS-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permissions UI follows app-level Expert and ELI5 Interaction Mode, with simplified ELI5 views and full Expert sections plus tooltip.permissions.* tooltip namespace."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-063
+unblocks: []
+acceptance_criteria:
+- "PS-073 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permissions_copy_mode
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0057
+preserved_exact_tokens:
+- "ELI5/Expert copy"
+- "Interaction Mode"
+- "Expert/ELI5"
+- "ELI5"
+- "Expert"
+- "tooltip.permissions.*"
+- "Granular rules"
+- "profile editor"
+- "allowlist manager"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-074 - Permission Trust Boundaries Threat Model
+
+```yaml
+plan_unit_id: PS-074
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The security model defines the Permissions trust boundaries across user intent, runtime policy/projection/audit machinery, tool execution backends, and external services, and tracks prompt injection, privilege escalation, and data exfiltration threats."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-015
+- PS-017
+unblocks: []
+acceptance_criteria:
+- "PS-074 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_threat_model
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0058
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0059
+preserved_exact_tokens:
+- "Security model"
+- "Trust boundaries and threat model"
+- "user intent"
+- "explicit approval surfaces"
+- "Puppet Master runtime policy"
+- "projection"
+- "audit machinery"
+- "tool execution backends"
+- "external services"
+- "Prompt injection"
+- "Privilege escalation"
+- "Data exfiltration"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< CONTEXT_AFTER 5285-5296 >>>
+### PS-075 - Capability Gates And Sandbox Boundaries
+
+```yaml
+plan_unit_id: PS-075
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission allow is necessary but insufficient: tools must be capability-registered, unregistered tools remain non-runnable, file tools stay scoped to roots unless policy broadens access, and web tools honor domain allowlists and web-operation scope keys."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

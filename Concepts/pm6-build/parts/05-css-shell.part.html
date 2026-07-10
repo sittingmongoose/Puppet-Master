@@ -183,8 +183,8 @@
     [data-theme="basic-dark"] .left-panel { --surface-alt: #1A1A1A; }
 
     .activity-bar {
-      width: 72px;
-      min-width: 72px;
+      width: var(--activity-bar-w, 72px);
+      min-width: var(--activity-bar-w, 72px);
       background: var(--surface-alt, var(--surface));
       border-right: var(--border-width) solid var(--border);
       display: flex;
@@ -223,6 +223,15 @@
     }
     [data-theme="retro-dark"] .activity-bar .icon.active { color: var(--accent-lime); }
     [data-theme="retro-light"] .activity-bar .icon.active { color: var(--accent-lime); }
+    /* retro readability: sub-12px display type repoints to --display-font-sm */
+    [data-theme^="retro"] .activity-bar .icon,
+    [data-theme^="retro"] .files-panel-header {
+      font-family: var(--display-font-sm, 'Rajdhani', sans-serif);
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+    /* retro readability: inputs get 2px radius (not hard-square) */
+    [data-theme^="retro"] .title-bar .search-bar { border-radius: 2px; }
     .activity-bar .icon.active::before {
       content: '';
       position: absolute;
@@ -245,7 +254,7 @@
     .activity-bar-toggle:hover { color: var(--text-primary); }
 
     .files-panel {
-      width: 260px;
+      width: var(--files-panel-w, 260px);
       min-width: 200px;
       background: var(--surface);
       border: var(--border-width) solid var(--border);
@@ -301,26 +310,8 @@
       gap: var(--sm);
       margin-bottom: var(--sm);
     }
-    .add-widget-btn, .customize-widgets-btn {
-      padding: var(--xs) var(--md);
-      font-size: 11px;
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      color: var(--text-primary);
-    }
-    .add-widget-btn:hover, .customize-widgets-btn:hover {
-      background: var(--accent-lime);
-      color: #1A1A1A;
-    }
-    [data-theme="basic-light"] .add-widget-btn:hover,
-    [data-theme="basic-dark"] .add-widget-btn:hover,
-    [data-theme="basic-light"] .customize-widgets-btn:hover,
-    [data-theme="basic-dark"] .customize-widgets-btn:hover {
-      background: var(--accent-blue);
-      color: var(--surface);
-    }
+    /* (W3 reaper: dead .add-widget-btn / .customize-widgets-btn rules removed —
+       zero markup/JS references in the current assembly.) */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -450,8 +441,8 @@
     .terminal-output .line.info { color: var(--accent-orange); }
 
     .chat-panel {
-      width: 550px;
-      min-width: 520px;
+      width: var(--chat-panel-w, 550px);
+      min-width: 0;
       min-height: 300px;
       background: var(--surface);
       border-left: var(--border-width) solid var(--border);
@@ -500,7 +491,7 @@
     }
 
     .chat-thread-sidebar {
-      width: 200px;
+      width: var(--chat-sidebar-w, 200px);
       min-width: 160px;
       max-width: 400px;
       resize: horizontal;
@@ -567,7 +558,7 @@
       border: var(--border-width) solid var(--accent-blue); /* Keep border width stable to avoid wrapping jitter */
     }
     [data-theme^="retro"] .chat-thread-item.active {
-      box-shadow: 4px 4px 0 var(--accent-blue);
+      box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-blue) 55%, transparent);
     }
     
     .chat-thread-item .thread-top-row {
@@ -681,7 +672,7 @@
     
     /* Specific Role Colors for Threads */
     .chat-thread-item.role-assistant.active { border-color: var(--text-primary); }
-    [data-theme^="retro"] .chat-thread-item.role-assistant.active { border-color: var(--accent-lime); box-shadow: 4px 4px 0 var(--accent-lime); }
+    [data-theme^="retro"] .chat-thread-item.role-assistant.active { border-color: var(--accent-lime); box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-lime) 55%, transparent); }
     .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
     [data-theme="retro-dark"] .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
     [data-theme="retro-light"] .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
@@ -689,17 +680,17 @@
     [data-theme^="retro"] .chat-thread-item.role-assistant .thread-working-pulse, [data-theme^="retro"] .chat-thread-item.role-assistant .thread-status-unread { color: var(--accent-lime); }
     
     .chat-thread-item.role-interviewer.active { border-color: var(--accent-lime); }
-    [data-theme^="retro"] .chat-thread-item.role-interviewer.active { box-shadow: 4px 4px 0 var(--accent-lime); }
+    [data-theme^="retro"] .chat-thread-item.role-interviewer.active { box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-lime) 55%, transparent); }
     .chat-thread-item.role-interviewer .thread-title { color: var(--accent-lime); }
     .chat-thread-item.role-interviewer .thread-working-pulse, .chat-thread-item.role-interviewer .thread-status-unread { color: var(--accent-lime); }
     
     .chat-thread-item.role-doc.active { border-color: var(--accent-orange); }
-    [data-theme^="retro"] .chat-thread-item.role-doc.active { box-shadow: 4px 4px 0 var(--accent-orange); }
+    [data-theme^="retro"] .chat-thread-item.role-doc.active { box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-orange) 55%, transparent); }
     .chat-thread-item.role-doc .thread-title { color: var(--accent-orange); }
     .chat-thread-item.role-doc .thread-working-pulse, .chat-thread-item.role-doc .thread-status-unread { color: var(--accent-orange); }
 
     .chat-thread-item.role-prd.active { border-color: var(--accent-magenta); }
-    [data-theme^="retro"] .chat-thread-item.role-prd.active { box-shadow: 4px 4px 0 var(--accent-magenta); }
+    [data-theme^="retro"] .chat-thread-item.role-prd.active { box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-magenta) 55%, transparent); }
     .chat-thread-item.role-prd .thread-title { color: var(--accent-magenta); }
     .chat-thread-item.role-prd .thread-working-pulse, .chat-thread-item.role-prd .thread-status-unread { color: var(--accent-magenta); }
 
@@ -773,7 +764,7 @@
       align-items: center;
       gap: var(--sm);
     }
-    .debug-thread-header .debug-target .debug-phase-badge {
+    .debug-thread-header .debug-target .debug-stage-badge {
       font-size: 9px;
       padding: 2px 6px;
       border-radius: 4px;

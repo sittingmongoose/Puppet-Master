@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 4258-4269 >>>
+- approval
+- auth
+- validation blockers
+- blocked-episode contract
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4270-4663 >>>
+### EP-068 - HTE DAE Graph-Lock Write-Scope Safety
+
+```yaml
+plan_unit_id: EP-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: HTE and DAE execution paths share graph-lock and write-scope safety, surfacing generation staleness, degradation, cleanup-remediation loops, FileSafe bypass, side-effect uncertainty, safe-point/restore conflicts, and projection trust failures as blocked/degraded/remediation classes.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: hte_dae_graph_lock_write_scope_safety
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0052
+preserved_exact_tokens:
+- HTE
+- DAE
+- graph-lock
+- write-scope safety
+- /generation
+- /degradation
+- FileSafe bypass
+- side-effect
+- remote side-effect
+- safe-point/restore-point conflicts
+- projection trust failures
+- blocked/degraded/remediation classes
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-069 - Blocked Projection Family And Startup Recovery Continuity
+
+```yaml
+plan_unit_id: EP-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: node-blocked, wizard-blocked, and thread-blocked projections keep family-local fields separate; Executor mints and reuses blocked_sequence across HITL/auth/storage/recovery updates and startup recovery must not lose or remint existing blocked episodes.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: blocked_projection_family_and_startup_recovery_continuity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0052
+preserved_exact_tokens:
+- node-blocked
+- wizard-blocked
+- thread-blocked
+- blocked_sequence
+- attempt_id
+- failure_class
+- clarification `/report`
+- /persisted
+- HITL
+- auth
+- /storage
+- startup_recovered
+- startup-recovery handshakes
+- request_id
+negative_constraints:
+- Recovery must not cause silent block-loss or accidental episode reminting.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-070 - Diagnostic Attempt Continuity
+
+```yaml
+plan_unit_id: EP-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Reserved diagnostic schemas for execution, audit, handoff, and HITL events carry attempt_id and preserve attempt continuity as an architecture invariant.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: diagnostic_attempt_continuity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0052
+preserved_exact_tokens:
+- Reserved diagnostic schemas
+- execution
+- audit
+- handoff
+- HITL events
+- attempt_id
+- architecture invariant
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-071 - Graph-Lock Dispatch Stop Boundary
+
+```yaml
+plan_unit_id: EP-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Draft decomposition fallback is allowed only before run.graph_canonical_locked; after graph lock, graph_integrity structure errors stop new dispatches and no silent flattening or degraded canonical execution is allowed.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: graph_lock_dispatch_stop_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0053
+preserved_exact_tokens:
+- run.graph_canonical_locked
+- graph_integrity
+- stop accepting new dispatches
+- no silent flattening
+- degraded canonical execution
+- ContractName:Plans/Progression_Gates.md
+negative_constraints:
+- After graph lock, execution must stop accepting new dispatches for invalid canonical graph structure.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-072 - Retry Resume Restored Rerun Attempt Identity
+
+```yaml
+plan_unit_id: EP-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id; prior attempts remain immutable, and post-lock execution must preserve runtime identity plus corroboration/promotion/runtime context.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: retry_resume_restored_rerun_attempt_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0054
+preserved_exact_tokens:
+- retry
+- resume-after-prerequisite
+- safe-point-restored rerun
+- new `attempt_id`
+- Prior attempts remain immutable historical records
+- identity-blind
+- single-branch
+- /corroboration/promotion/runtime
+negative_constraints:
+- After graph lock, execution must not fall back to identity-blind planning-artifact-centric execution.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-073 - Canonical Runtime Scope Context
+
+```yaml
+plan_unit_id: EP-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: execution_unit_context is the canonical runtime-facing context object and execution_unit_context plus execution_unit_type define authoritative runtime scope, replacing retired tier-era context as live runtime contract.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: canonical_runtime_scope_context
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0055
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056
+preserved_exact_tokens:
+- Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment
+- execution_unit_context
+- canonical runtime-facing context object
+- execution_unit_type
+- authoritative runtime scope
+- retired tier-era context object
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-074 - Shared Context For Worker Recovery Coordination UI Inspection
+
+```yaml
+plan_unit_id: EP-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Worker spawn, recovery, remediation, coordination services, scheduler joins, and UI inspection surfaces read one shared execution_unit_context so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.
+gui_related: true
+gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: shared_context_for_worker_recovery_coordination_ui_inspection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056
+preserved_exact_tokens:
+- Worker spawn
+- recovery
+- remediation
+- coordination
+- UI inspection surfaces
+- restart
+- approval
+- blocked-episode continuity
+- audit views
+- same runtime unit
+- 'ContractRef: Primitive:ExecutionContext'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-075 - Tier-Era Compatibility Adapter Retirement
+
+```yaml
+plan_unit_id: EP-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Compatibility adapters may derive retired tier-era context objects only for legacy selector translation or decomposition and must not persist, exchange, or rehydrate them as the live runtime contract.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: tier_era_compatibility_adapter_retirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0056
+preserved_exact_tokens:
+- Compatibility adapters
+- legacy selector translation
+- decomposition
+- MUST NOT persist, exchange, or rehydrate
+- live runtime contract
+negative_constraints: []
+compatibility_only_notes:
+- Retired tier-era context object is a derived or compatibility-only selection/decomposition helper.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< CONTEXT_AFTER 4664-4675 >>>
+### EP-076 - Blocked Sequence Identity And Restart Recovery
+
+```yaml
+plan_unit_id: EP-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: blocked_sequence is canonical per run_id/node_id blocked episode and unresolved blocked episodes restore on restart without reminting, with request_id retained only as subordinate compatibility lookup metadata.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []

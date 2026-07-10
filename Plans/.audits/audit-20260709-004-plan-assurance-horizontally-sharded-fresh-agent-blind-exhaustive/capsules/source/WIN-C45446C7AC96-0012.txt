@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE 3778-3789 >>>
+- Mtime read failures must not exclude a discovered skill.
+compatibility_only_notes:
+- The version field is optional and not required by OpenCode.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Skill metadata remains an extension of SkillInfo and does not change core discovery ownership.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Metadata display is a narrow enhancement.
+```
+
+
+<<< AUTHORITATIVE_CORE 3790-4167 >>>
+### M-041 - Validate All Skills Read-Only Flow
+
+```yaml
+plan_unit_id: M-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Skills validation must provide a read-only Validate all flow that checks every discovered SKILL.md and reports per-skill results in a full, copyable table.
+gui_related: true
+gui_classification_reason: The unit defines a user-visible validation command, results table, summary line, optional error filter, and copyable errors.
+split_recommended: false
+depends_on:
+- M-030
+unblocks: []
+acceptance_criteria:
+- Validate all runs the same frontmatter, name, directory-name, and description checks as load_skill.
+- Results show a full table for all discovered skills with OK or Error plus message.
+- Summary copy preserves N OK, M errors.
+- Per-skill read errors are reported and do not abort validation of later skills.
+- Validation is read-only and does not write skill files.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_validate_all_flow_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: validate_all_skills_read_only_flow
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+preserved_exact_tokens:
+- Validate all SKILL.md on disk
+- Validate all
+- "validate_skill(path: &Path)"
+- ValidationError
+- N OK, M errors
+- Show only errors
+- Could not read file
+negative_constraints:
+- Validate all must not abort the entire run when one skill becomes unreadable.
+- Validate all is read-only.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Validation reuses load_skill rules and must not duplicate divergent validation semantics.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Validate all is a discrete Skills quality workflow.
+```
+
+### M-042 - Shortcuts Skills Readiness And Order
+
+```yaml
+plan_unit_id: M-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Shortcuts and Skills implementation planning is ready when the spec sections, checklists, project-path behavior, Slint key-event integration point, platform skill delivery, dependencies, and recommended order are reconciled.
+gui_related: true
+gui_classification_reason: The unit covers GUI-facing Shortcuts and Skills implementation readiness, including key-event and Skills surface sequencing.
+split_recommended: true
+depends_on:
+- M-003
+- M-019
+- M-025
+- M-026
+- M-027
+- M-028
+- M-030
+- M-031
+- M-032
+- M-033
+- M-034
+- M-035
+- M-036
+- M-037
+- M-038
+- M-039
+- M-040
+- M-041
+unblocks: []
+acceptance_criteria:
+- The implementation plan reads sections 7.7 through 7.11.2 and checklist sections 8.8 through 8.10.2 before planning Shortcuts and Skills.
+- No-project Skills creation offers global-only paths.
+- Slint key event integration point is identified and documented.
+- platform_specs or equivalent documents how each platform receives skills.
+- Implementation order preserves cleanup/run-config foundation before Shortcuts, Skills, Cleanup UX, enhancements, and pre-completion.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcuts_skills_readiness_order_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcuts_skills_readiness_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+preserved_exact_tokens:
+- Implementation plan readiness
+- Implementation plan checklist
+- project_root is None
+- FocusScope
+- KeyMap
+- platform_specs
+- list_skills_for_agent
+- GuiConfig and Option B run config
+- Recommended implementation order
+- Pre-completion
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Slint API confirmation and platform skill delivery are implementation-readiness blockers, not product-decision blockers for this standardization batch.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: This readiness unit coordinates several GUI/backend areas and should remain split_recommended for implementation planning.
+```
+
+### M-043 - Cleanup Checklist Core Module Guard
+
+```yaml
+plan_unit_id: M-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup implementation checklist items must keep all cleanup policy, allowlist data, and git-clean execution in src/cleanup with DRY tags and no duplicated logic outside the shared module.
+gui_related: false
+gui_classification_reason: The unit covers backend module organization, DRY tagging, and cleanup helper implementation.
+split_recommended: true
+depends_on:
+- M-006
+- M-010
+- M-012
+- M-013
+- M-014
+- M-016
+unblocks: []
+acceptance_criteria:
+- src/cleanup/mod.rs and src/cleanup/workspace.rs carry CleanupConfig, allowlist data, prepare_working_directory, cleanup_after_execution, and run_git_clean_with_excludes as shared implementations.
+- cleanup_exclude_patterns or CLEANUP_EXCLUDE_PATTERNS includes the exact required exclusions.
+- Git execution uses resolved git binary behavior rather than duplicated Command::new logic.
+- prepare_working_directory never removes protected .puppet-master or root state files.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_core_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_checklist_core_module_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0051
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0052
+preserved_exact_tokens:
+- src/cleanup/
+- pub mod cleanup;
+- src/lib.rs
+- CleanupConfig
+- cleanup_exclude_patterns()
+- CLEANUP_EXCLUDE_PATTERNS
+- run_git_clean_with_excludes
+- path_utils::resolve_executable("git")
+- DRY:DATA
+- DRY:FN
+negative_constraints:
+- No duplicate allowlist or git-clean logic anywhere outside src/cleanup/.
+- Do not call run_git_clean_with_excludes from cleanup_after_execution.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Worktree git binary resolution remains the future source for resolve_git_executable when available.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Checklist spans combine structure, helper behavior, and docs; this unit owns core module guardrails.
+```
+
+### M-044 - Cleanup Wrapper Config Wiring Checklist
+
+```yaml
+plan_unit_id: M-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup wrapper and config wiring must place cleanup settings in the run config snapshot, pass CleanupConfig explicitly through execution context, wrap CLI execution paths, and skip cleanup only when no intended project workspace exists.
+gui_related: false
+gui_classification_reason: The unit covers backend execution wiring and run-config propagation rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- M-013
+- M-014
+- M-015
+- M-019
+unblocks: []
+acceptance_criteria:
+- run_with_cleanup is a shared DRY wrapper or equivalent prepare/execute/cleanup sequence.
+- CleanupConfig is included in the run config built from GuiConfig.
+- IterationContext or equivalent carries cleanup_config explicitly.
+- ExecutionEngine wraps direct CLI runner.execute with prepare and cleanup.
+- Interview, start_chain, and app call sites use run_with_cleanup when they have a known project working directory.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_wrapper_config_wiring_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_wrapper_config_wiring_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0053
+preserved_exact_tokens:
+- run_with_cleanup(runner, request, config)
+- IterationContext
+- "cleanup_config: Option<CleanupConfig>"
+- ExecutionEngine::execute_iteration
+- runner.execute(request)
+- execute_ai_turn
+- current_dir()
+- CLI-only
+negative_constraints:
+- Do not use a thread-local or global current run config when explicit passing is available.
+- Do not run prepare/cleanup from app.rs when current_dir is not the intended project.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- This checklist consumes Worktree Option B run-config wiring rather than owning it.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Execution wiring spans several call sites and should remain split_recommended.
+```
+
+### M-045 - Cleanup Tests Agent Output Evidence Checklist
+
+```yaml
+plan_unit_id: M-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup implementation must test protected excludes, define agent-output cleanup, and implement evidence pruning as a scheduled/manual path outside cleanup_after_execution.
+gui_related: false
+gui_classification_reason: The unit covers backend tests, storage paths, and evidence pruning implementation.
+split_recommended: true
+depends_on:
+- M-006
+- M-011
+- M-012
+- M-013
+- M-014
+- M-015
+- M-016
+- M-017
+- M-019
+unblocks: []
+acceptance_criteria:
+- Tests assert that cleanup excludes .puppet-master, progress.txt, AGENTS.md, prd.json, .gitignore, and sensitive patterns.
+- AGENT_OUTPUT_SUBDIR and agent_output_dir are single-source cleanup data.
+- Evidence pruning config includes retention_days, retain_last_runs, and prune_on_cleanup.
+- prune_evidence_older_than runs from manual action or background, not cleanup_after_execution.
+- The definition of run for retain_last_runs is resolved or retention_days is preferred until then.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_tests_output_evidence_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_tests_agent_output_evidence_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0055
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0056
+preserved_exact_tokens:
+- .puppet-master
+- progress.txt
+- AGENTS.md
+- prd.json
+- .gitignore
+- AGENT_OUTPUT_SUBDIR
+- agent_output_dir(base)
+- prune_evidence_older_than(base_dir, config)
+- retention_days
+- retain_last_runs
+- prune_on_cleanup
+negative_constraints:
+- Evidence pruning must not run from cleanup_after_execution.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- STATE_FILES.md and AGENTS.md own final documentation updates for state and evidence paths.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: This checklist groups tests, agent-output, and evidence retention while preserving separate source lineage.
+```
+
+### M-046 - Cleanup UX Checklist
+
+```yaml
+plan_unit_id: M-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup UX checklist implementation must wire Advanced and Doctor cleanup controls, tooltips/docs, platform-hook non-dependency notes, Shortcuts config surface, and Skills config surface through existing widgets.
+gui_related: true
+gui_classification_reason: The unit defines user-visible cleanup controls, Doctor mention, Config tabs, Shortcuts tab, and Skills tab.
+split_recommended: true
+depends_on:
+- M-017
+- M-020
+- M-021
+- M-025
+- M-029
+unblocks: []
+acceptance_criteria:
+- Advanced -> Workspace / Cleanup contains cleanup and evidence toggles wired into the shared run config.
+- Clean workspace now appears on Doctor or Advanced with project-root resolution, optional all-worktrees handling, confirmation, and preview.
+- Tooltips and docs preserve cleanup policy and platform-hook non-dependency.
+- Shortcuts and Skills subsections or tabs are added under the selected config surface.
+- Widget catalog scripts run after UI widget changes.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_ux_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_ux_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0057
+preserved_exact_tokens:
+- Advanced -> Workspace / Cleanup
+- Clean workspace now
+- Doctor
+- git clean -fd -n
+- Config -> Advanced -> Workspace
+- Config -> Shortcuts
+- Skills subsection/tab
+- generate-widget-catalog.sh
+- check-widget-reuse.sh
+negative_constraints:
+- Manual Clean workspace must use prepare-style logic, not cleanup_after_execution.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- UI surface details remain reconciled with FinalGUISpec and UI widget catalog ownership.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: UX checklist spans cleanup, shortcuts, and skills surfaces.
+```
+
+
+<<< CONTEXT_AFTER 4168-4179 >>>
+### M-047 - Desktop Shortcuts Backend Checklist
+
+```yaml
+plan_unit_id: M-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Desktop Shortcuts backend checklist implementation must define ShortcutAction, KeyBinding, defaults, GuiConfig overrides, key-map rebuild, validation, no hardcoded bindings, config-failure fallback, and unit tests.
+gui_related: true
+gui_classification_reason: The unit governs backend behavior directly reflected in user-visible shortcut handling and Config UI.
+split_recommended: true
+depends_on:

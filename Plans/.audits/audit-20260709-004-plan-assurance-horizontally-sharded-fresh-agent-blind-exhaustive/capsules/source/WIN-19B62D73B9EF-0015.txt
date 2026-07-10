@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 4524-4535 >>>
+  - "`/help`"
+  - "`/open`"
+  - "`record_id`"
+  - "`projection-health`"
+  - "`gap-003`"
+  - "`gap-006`"
+negative_constraints:
+  - "Glossary terms and Crosswalk names must not become alternate runtime owners."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4536-4921 >>>
+### CV-035 - Package-Aware Storage Projection Scope
+
+```yaml
+plan_unit_id: CV-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Storage and projection backbones are package-aware and join attempt, blocked,
+  and usage projections to lane, worktree, concern, and project-attention
+  identity before any fallback to /tier/session/thread scope.
+gui_related: false
+gui_classification_reason: This unit defines storage/projection record scope and join semantics.
+split_recommended: true
+depends_on: [CV-010, CV-023]
+unblocks: [CV-036, CV-048, CV-052]
+acceptance_criteria:
+  - Storage/projection records carry package/seam namespaces and lane/worktree state before legacy scope fallback.
+  - Attempt, blocked, and usage projections join to lane/worktree/concern/project-attention identity.
+  - /tier/session/thread is compatibility or fallback scope, not primary runtime scope.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_scope_regression
+reasoning_tier: high
+context_scope: package_aware_storage_projection
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: storage_projection_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`/package`"
+  - "`/seam`"
+  - "`/worktree`"
+  - "`/projection`"
+  - "`/tier/session/thread`"
+compatibility_only_notes:
+  - "/tier/session/thread is fallback compatibility scope after package/seam/lane/worktree identity."
+negative_constraints:
+  - "Storage families must not hide lane/worktree/concern/project-attention identity behind attempt/block/usage-only records."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-036 - Worktree Lane Runtime Context Preservation
+
+```yaml
+plan_unit_id: CV-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Runtime records carrying /lane, /runtime, or /effective facts preserve
+  worktree/lane binding beside requested/effective account and runtime identity.
+gui_related: false
+gui_classification_reason: This unit defines runtime record identity binding.
+split_recommended: false
+depends_on: [CV-011, CV-013, CV-014]
+unblocks: [CV-045, CV-052]
+acceptance_criteria:
+  - Runtime records carrying lane/runtime/effective facts include worktree/lane binding.
+  - Requested/effective account and runtime identity remain beside worktree/lane identity.
+  - Worktree/lane binding is not treated as optional downstream embellishment.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_lane_context_loss
+reasoning_tier: high
+context_scope: worktree_lane_runtime_context
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: worktree_lane_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`/lane`"
+  - "`/runtime`"
+  - "`/effective`"
+  - "worktree/lane binding"
+negative_constraints:
+  - "Runtime records must not drop worktree/lane binding when carrying lane/runtime/effective facts."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-037 - Run Graph Projection And Inspector Contract
+
+```yaml
+plan_unit_id: CV-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Run Graph readability and graph-native drill-in are route/runtime projection
+  contracts; zoom density, selected-object inspector detail, governance
+  drill-down, requested/effective identity, trust state, and historical runtime
+  states remain visible.
+gui_related: true
+gui_classification_reason: Run Graph zoom density, selected-object inspector detail, trust state, and drill-in are visible GUI behavior.
+split_recommended: true
+depends_on: [CV-028, CV-034]
+unblocks: []
+acceptance_criteria:
+  - Far, medium, and near graph zoom levels preserve appropriate label density.
+  - Selected objects expose strong detail in the right-side inspector regardless of zoom.
+  - Graph-native drill-in preserves governance, requested/effective identity, trust state, and historical runtime states.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: graph_projection_contract_drift
+reasoning_tier: high
+context_scope: run_graph_projection_contract
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: gui_projection_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "far zoom"
+  - "medium zoom"
+  - "near zoom"
+  - "right-side inspector"
+  - "graph-native"
+negative_constraints:
+  - "Graph readability must not become only a local drawing preference."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Run_Graph_View.md
+```
+
+### CV-038 - Tool Artifact Runtime Attribution
+
+```yaml
+plan_unit_id: CV-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  tool.invoked, tool.denied, runtime artifacts, receipts, usage, and evidence
+  share runtime attribution with node_id, attempt_id, lane_id, work_package_id,
+  feature_seam_id, execution_role, /runtime, /effective, effective_account_id,
+  operational_identity, artifact_id, and secondary usage_event_ref.
+gui_related: false
+gui_classification_reason: This unit defines runtime attribution payloads and joins rather than UI presentation.
+split_recommended: true
+depends_on: [CV-016, CV-029]
+unblocks: [CV-039, CV-060]
+acceptance_criteria:
+  - tool.invoked and tool.denied are first-class runtime trace records when they affect execution or artifacts.
+  - Runtime artifacts, receipts, usage, and evidence share runtime attribution keys.
+  - usage_event_ref remains secondary drill-through evidence, not the sole evidence trail.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_artifact_attribution_gap
+reasoning_tier: high
+context_scope: tool_artifact_runtime_attribution
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: runtime_attribution_packet
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`tool.invoked`"
+  - "`tool.denied`"
+  - "`node_id`"
+  - "`attempt_id`"
+  - "`lane_id`"
+  - "`work_package_id`"
+  - "`feature_seam_id`"
+  - "`usage_event_ref`"
+negative_constraints:
+  - "Tool events that affect execution, artifacts, receipts, usage, or operational identity must not remain under-attributed analytics exhaust."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-039 - Handoff Identity Before Artifacts
+
+```yaml
+plan_unit_id: CV-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Wizard, interview, and prompt handoffs inherit runtime identity before
+  artifacts, including source_stage, source_phase_ids[], persona_id, provider,
+  model, timestamp, execution_role, requested/effective account fields,
+  /worktree, /report, and governance evidence.
+gui_related: false
+gui_classification_reason: This unit defines handoff payload identity and provenance.
+split_recommended: true
+depends_on: [CV-024, CV-038]
+unblocks: []
+acceptance_criteria:
+  - Wizard/interview/prompt handoffs include runtime identity before artifact emission.
+  - Handoff payloads preserve stage, phase, persona, provider/model, timestamp, execution role, requested/effective account fields, worktree, report, and governance evidence.
+  - Downstream handoff consumers do not lose runtime authority context.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: handoff_identity_underkeying
+reasoning_tier: high
+context_scope: handoff_identity_provenance
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: handoff_identity_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`source_stage`"
+  - "`source_phase_ids[]`"
+  - "`persona_id`"
+  - "`execution_role`"
+  - "`/worktree`"
+  - "`/report`"
+negative_constraints:
+  - "Wizard and interview handoffs must not emit artifacts before inheriting runtime identity grammar."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-040 - Tier Event Alias Compatibility Disposition
+
+```yaml
+plan_unit_id: CV-040
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  run.tier_*, HITLRequest, TierContext, TierType, select_for_tier, tier_id,
+  active-agents.json, TierChanged, active tier, and request-local approval terms
+  remain lineage or compatibility only after mapping to package/seam/lane/account
+  runtime contracts.
+gui_related: false
+gui_classification_reason: This is a compatibility disposition for tier-era event and approval vocabulary.
+split_recommended: true
+depends_on: [CV-024, CV-029]
+unblocks: []
+acceptance_criteria:
+  - Tier-era event names and approval terms remain compatibility obligations only.
+  - Compatibility terms map into package/seam/lane/account runtime contracts.
+  - active-agents and tier-rooted selectors are not revived as canonical runtime identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tier_event_alias_drift
+reasoning_tier: high
+context_scope: tier_event_alias_disposition
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`run.tier_*`"
+  - "`HITLRequest`"
+  - "`TierContext`"
+  - "`TierType`"
+  - "`select_for_tier`"
+  - "`tier_id`"
+  - "`active-agents.json`"
+  - "`TierChanged`"
+  - "active tier"
+compatibility_only_notes:
+  - "Tier-era event names and approval terms are lineage or compatibility only after mapping."
+negative_constraints:
+  - "Tier-era side files and selectors must not become canonical child/orchestrator lineage identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-041 - Command Route Shared Primitive Contract
+
+```yaml
+plan_unit_id: CV-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Route/open and command metadata use shared route primitives: cmd.panel.switch
+  is shell_view, focus/open commands are navigation_wrapper, mutating subject
+  commands are domain_action, and wrappers normalize without creating a second
+  route/open contract.
+gui_related: true
+gui_classification_reason: Command routing, shell views, focus/open commands, and mutating subject commands affect user-visible navigation and actions.
+split_recommended: true
+depends_on: [CV-003, CV-023]
+unblocks: []
+acceptance_criteria:
+  - cmd.panel.switch remains a pure shell-facing shell_view command.
+  - Object/thread/worktree focus and open commands route through navigation_wrapper.
+  - Mutating subject commands remain domain_actions.
+  - Command wrappers normalize to route/open contracts without defining a parallel target model.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_route_fork
+reasoning_tier: high
+context_scope: command_route_shared_primitives
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: command_route_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`cmd.panel.switch`"
+  - "`shell_view`"
+  - "`navigation_wrapper`"
+  - "`domain_action`"
+  - "`route_target`"
+  - "`OpenSubject`"
+negative_constraints:
+  - "Command metadata must not create a second route/open contract."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### CV-042 - Owner Cleanup Order Guard
+
+```yaml
+plan_unit_id: CV-042
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Cleanup order repairs owner ContractRefs, section anchors, and duplicate
+  numbering first; promoted-shell command-family and persistence-scope cleanup
+  second; DAE/FileSafe third; and OpenCode provider-native SSE with
+  requested-effective disclosure after those owner repairs.
+gui_related: false
+gui_classification_reason: This unit defines governance cleanup sequencing rather than UI behavior.
+split_recommended: true
+depends_on: [CV-004]
+unblocks: []
+acceptance_criteria:
+  - Owner ContractRef, section-anchor, and duplicate-number repair comes first.
+  - Promoted-shell command-family and persistence-scope cleanup comes before DAE/FileSafe cleanup.
+  - OpenCode provider-native SSE cleanup preserves requested-effective disclosure and follows upstream owner repairs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_order_false_closure
+reasoning_tier: high
+context_scope: owner_cleanup_order
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: cleanup_order_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+preserved_exact_tokens:
+  - "`ContractRef`"
+  - "`section-anchor`"
+  - "`duplicate-number`"
+  - "`promoted-shell`"
+  - "`persistence-scope`"
+  - "`DAE`"
+  - "`/FileSafe/recovery`"
+negative_constraints:
+  - "Cleanup must not declare closure before owner-doc issues are repaired in order."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 4922-4933 >>>
+### CV-043 - Shared Concern Projection Family
+
+```yaml
+plan_unit_id: CV-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  /governance, Seams, History, Progress, Evidence, Ledger, graph inspector,
+  concern operations, corroboration, promotion, reviews, graph patches, and
+  recovery share one durable governance/concern record family with action policy
+  and reversibility classes.

@@ -1,0 +1,940 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000467-EXACT-WIN-4CB48A2AA77A-0001",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000467-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0467_92892e22",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-4CB48A2AA77A-0001",
+  "doc_id": "DOC-4CB48A2AA77A",
+  "document_path": "Plans/Permissions_System.md",
+  "core_range": [
+    1,
+    315
+  ],
+  "context_ranges": [
+    [
+      316,
+      327
+    ]
+  ],
+  "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb",
+  "core_sha256": "7e4d1e036e15a542ccae9de695e402f0d0c426c18ac1b78d08b7c88b709cf075",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000467-EXACT-WIN-4CB48A2AA77A-0001.json",
+  "capsule_sha256": "c7dd4ca837350c3a49f79292b9101fa57274c3ba77b994276ab1e010e4914faa",
+  "capsule_bytes": 1607,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-4CB48A2AA77A-0001.txt",
+  "source_excerpt_sha256": "9925765769db723e87d5e51cab6bd7581c0968c7eba984667955c7444e7adb71",
+  "source_excerpt_bytes": 24076,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "The document declares itself the single canonical permission-system source and requires other plan documents to reference its anchors rather than restating action, precedence, granular-syntax, or default contracts.",
+      "evidence_ref_ids": [
+        "ER-001"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "The required identity carry-through separates requested account identity and binding from subordinate provider-native account metadata and requires one approval scope key reused across permission, HITL, doom-loop, and approval-cache consumers.",
+      "evidence_ref_ids": [
+        "ER-002",
+        "ER-003",
+        "ER-004"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "Active approval reuse is execution-entity and actor/lane aware, includes run, account, package/seam context, and requires blocked cards to disclose the effective account and identity before cascade reuse.",
+      "evidence_ref_ids": [
+        "ER-005",
+        "ER-006",
+        "ER-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "Permission hooks and blocked-state records are required to share blocked-reason, allowed-action, failure, snapshot, and provider-attempt vocabulary, while blocked actions remain tied to request identity.",
+      "evidence_ref_ids": [
+        "ER-008",
+        "ER-009"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "Remote publication approval must not diverge by mode or surface, provider-gap disclosure is distinct from override disclosure, and requested/effective permission UI expands when effective behavior differs or a control was skipped or clamped.",
+      "evidence_ref_ids": [
+        "ER-010",
+        "ER-011",
+        "ER-012"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "Degraded trust and projection health are permission-visible inputs across multiple consumers; global search is distinguished from tab-local filtering; and route approvals are required to preserve the exact displayed target facts.",
+      "evidence_ref_ids": [
+        "ER-013",
+        "ER-014",
+        "ER-015",
+        "ER-016"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "Path checks use an ordered expansion, absolute-path, realpath, and canonical-match pipeline, with realpath failure denied and unresolved-path fallback prohibited.",
+      "evidence_ref_ids": [
+        "ER-018",
+        "ER-019"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "HTE and DAE are both bound to permission canon, and policy.may_execute_tool() is mandatory before every dispatch across nesting, child-run, execution-strategy, and provider boundaries.",
+      "evidence_ref_ids": [
+        "ER-020",
+        "ER-021"
+      ]
+    },
+    {
+      "observation_id": "OBS-009",
+      "statement": "Shared mutable permission state requires an RwLock, and argument- or context-modifying hooks require a fresh permission evaluation and cannot widen already-passed authority.",
+      "evidence_ref_ids": [
+        "ER-022",
+        "ER-023"
+      ]
+    },
+    {
+      "observation_id": "OBS-010",
+      "statement": "Discovered executable surfaces require permission clearance before load or execution; explicit approval, stronger evidence for execution-modifying surfaces, and approval invalidation on source or version change form the stated trust lifecycle.",
+      "evidence_ref_ids": [
+        "ER-024",
+        "ER-025"
+      ]
+    },
+    {
+      "observation_id": "OBS-011",
+      "statement": "Shared network trust includes proxy and CA posture, while enterprise registry, Kubernetes, plugin, MCP, and custom-tool consumers inherit host, trust, proxy, and blocked-reason controls.",
+      "evidence_ref_ids": [
+        "ER-026",
+        "ER-027",
+        "ER-028",
+        "ER-029",
+        "ER-030"
+      ]
+    },
+    {
+      "observation_id": "OBS-012",
+      "statement": "Every tool invocation resolves to exactly one of allow, ask, or deny; allow still passes through FileSafe, ask pauses for a canonical user resolution or maps to deny in the stated headless case, and deny emits tool.denied, returns an error, and does not execute.",
+      "evidence_ref_ids": [
+        "ER-031",
+        "ER-032",
+        "ER-033",
+        "ER-034"
+      ]
+    },
+    {
+      "observation_id": "OBS-013",
+      "statement": "Permission resolution combines layer precedence, additive downward child ceilings, scope specificity, and last-match behavior inside the selected ruleset.",
+      "evidence_ref_ids": [
+        "ER-035",
+        "ER-036",
+        "ER-037",
+        "ER-038",
+        "ER-039",
+        "ER-040",
+        "ER-041",
+        "ER-052"
+      ]
+    },
+    {
+      "observation_id": "OBS-014",
+      "statement": "The core names execution_entity_id, account_id, permission_scope, and approval_carryover_scope as required fields and requires multi-lane, account-aware carryover rather than session-only carryover.",
+      "evidence_ref_ids": [
+        "ER-042",
+        "ER-043"
+      ]
+    },
+    {
+      "observation_id": "OBS-015",
+      "statement": "Runtime and UI must distinguish requested from effective capability, execute the effective result, disclose the reason for differences, and show the governing permission source.",
+      "evidence_ref_ids": [
+        "ER-044",
+        "ER-045",
+        "ER-046",
+        "ER-047",
+        "ER-048"
+      ]
+    },
+    {
+      "observation_id": "OBS-016",
+      "statement": "Granular rules may be action strings or pattern objects over invocation context; the core defines star, question-mark, a trailing-space-star special case, tool-family prefixes, and last-match-wins ordering.",
+      "evidence_ref_ids": [
+        "ER-049",
+        "ER-050",
+        "ER-051",
+        "ER-052"
+      ]
+    },
+    {
+      "observation_id": "OBS-017",
+      "statement": "The core closes with an explicit no-build-task boundary for the ledger addendum; adjacent context, treated only as context, introduces an accepted GUI-related provider secret-custody requirement that forbids raw-secret storage.",
+      "evidence_ref_ids": [
+        "ER-053",
+        "ER-054",
+        "ER-055"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "severity": "high",
+      "title": "Approval reuse key is required but not normatively constructible",
+      "statement": "The core requires approval_scope_key reuse and names actor, run, lane, account, package/seam, execution_entity_id, permission_scope, and approval_carryover_scope inputs, but it does not define one canonical record shape, field types or nullability, serialization and equality rules, or the relationship among those key and scope fields.",
+      "impact": "Independent producers can compute non-equivalent cache keys, causing approval leakage across actors, accounts, lanes, runs, packages, or seams, or preventing valid carryover.",
+      "evidence_ref_ids": [
+        "ER-004",
+        "ER-006",
+        "ER-042",
+        "ER-043"
+      ]
+    },
+    {
+      "finding_id": "FIND-002",
+      "severity": "high",
+      "title": "Session-cache layer conflicts with active multi-lane authority",
+      "statement": "The active authority text says approval logic is no longer session-centric and must resolve through actor/lane/account-aware boundaries, yet precedence layer 3 describes prior explicit approvals as scoped to the session.",
+      "impact": "A builder cannot determine whether session identity or the execution-entity approval scope controls reuse, risking both over-broad reuse and inconsistent denial of carried approvals.",
+      "evidence_ref_ids": [
+        "ER-005",
+        "ER-006",
+        "ER-036",
+        "ER-043"
+      ]
+    },
+    {
+      "finding_id": "FIND-003",
+      "severity": "high",
+      "title": "Runtime-hook fields are simultaneously optional and required",
+      "statement": "The same normative sentence lists blocked_reason_code, allowed_action_ids, failure_class, permission_snapshot_id, and provider_attempt_ref first with question-mark optional markers and then again without those markers, without a rule reconciling the two forms.",
+      "impact": "Producers and consumers can disagree on requiredness, validation, and omission behavior for permission cards and blocked-state records.",
+      "evidence_ref_ids": [
+        "ER-008"
+      ]
+    },
+    {
+      "finding_id": "FIND-004",
+      "severity": "high",
+      "title": "Allowed actions are not canonically bound to request identity",
+      "statement": "The core says blocked-state actions map from allowed_action_ids while graph approval actions target request_id, but it gives no canonical mapping record, identity constraint, ordering interpretation, replay rule, or cascade validation tying an action selection to the exact request.",
+      "impact": "A surface can render or apply an action for the wrong or stale request, especially during concurrent blocked episodes or cascade reuse.",
+      "evidence_ref_ids": [
+        "ER-009",
+        "ER-033"
+      ]
+    },
+    {
+      "finding_id": "FIND-005",
+      "severity": "high",
+      "title": "Executable approval lifecycle leaves security-critical choices to builders",
+      "statement": "The phrase first load or first execution does not state whether load approval also authorizes execution or whether both checkpoints are required, and the core does not define approval scope, duration, evidence, revocation, source/version identity, or verification semantics for signed artifacts and elevated posture.",
+      "impact": "Executable plugins, tools, MCP servers, hooks, and formatters can receive inconsistent or stale authority across implementations.",
+      "evidence_ref_ids": [
+        "ER-024",
+        "ER-025"
+      ]
+    },
+    {
+      "finding_id": "FIND-006",
+      "severity": "high",
+      "title": "Wildcard matching grammar is incomplete for security decisions",
+      "statement": "The rule inputs include file paths, command strings, and URLs, but the grammar only defines star, question-mark, and one trailing-space-star special case; it does not define anchoring, escaping, character and newline treatment, case sensitivity, separator handling, or target-specific normalization.",
+      "impact": "Equivalent configurations can allow or deny different invocations, and ambiguous matching boundaries create permission-bypass risk.",
+      "evidence_ref_ids": [
+        "ER-049",
+        "ER-050"
+      ]
+    },
+    {
+      "finding_id": "FIND-007",
+      "severity": "medium",
+      "title": "Pattern specificity is asserted without a deterministic comparator",
+      "statement": "Tool-family text says more specific rules still win, while the only within-ruleset algorithm says the last matching rule wins; the core neither defines pattern specificity nor explains how a more-specific earlier rule behaves when a broader later rule also matches.",
+      "impact": "Rule authors and engines can disagree about which action wins, making policy changes order-sensitive in an undocumented way.",
+      "evidence_ref_ids": [
+        "ER-051",
+        "ER-052"
+      ]
+    },
+    {
+      "finding_id": "FIND-008",
+      "severity": "high",
+      "title": "Approval UI source taxonomy does not align with engine layers",
+      "statement": "The precedence table defines Mode override, Parent/run ceiling, Session cache, Persona overrides, Project-level, Global-level, and Defaults, while the Approval UI must also identify project defaults, global defaults, user override, and admin policy without mapping those labels to table layers.",
+      "impact": "The UI cannot deterministically explain the engine result and may display a governing authority that the canonical evaluation table does not recognize.",
+      "evidence_ref_ids": [
+        "ER-036",
+        "ER-045",
+        "ER-046"
+      ]
+    },
+    {
+      "finding_id": "FIND-009",
+      "severity": "medium",
+      "title": "Enterprise blocked outcomes lack a deterministic decision table",
+      "statement": "The core names four air-gapped outcomes and says policy-denied registry or Kubernetes actions map to outcomes such as three of them, but it does not assign exact predicates, precedence, or transition rules to each outcome; freshness markers also have no stated age or validity semantics.",
+      "impact": "Consumers can report different blocked reasons for the same facts or present cached evidence with inconsistent trust and freshness meaning.",
+      "evidence_ref_ids": [
+        "ER-027",
+        "ER-029"
+      ]
+    },
+    {
+      "finding_id": "FIND-010",
+      "severity": "high",
+      "title": "Displayed target and executed target lack an immutable binding contract",
+      "statement": "Permission cards must preserve route, subject, output, path, line or range, and editor-group facts and approve the exact target displayed, but the core does not define the shared target object's schema, canonical identity, equality rules, or immutable binding from prompt snapshot to dispatch.",
+      "impact": "Target normalization or mutation between rendering and execution can make a narrow approval authorize a different route, file, range, or output.",
+      "evidence_ref_ids": [
+        "ER-015",
+        "ER-016",
+        "ER-018"
+      ]
+    },
+    {
+      "finding_id": "FIND-011",
+      "severity": "medium",
+      "title": "RwLock requirement does not define composite-state consistency",
+      "statement": "The concurrency contract requires an RwLock for shared mutable state but does not define atomic snapshot boundaries, versioning, cache invalidation, or consistency across allowlists, deny rules, approvals, and cached effective policy.",
+      "impact": "Permission evaluation can observe a mixed or stale policy state even when each individual mutation is lock-protected.",
+      "evidence_ref_ids": [
+        "ER-022"
+      ]
+    },
+    {
+      "finding_id": "FIND-012",
+      "severity": "medium",
+      "title": "Network trust resolution is not executable from the listed inputs",
+      "statement": "The core lists proxy modes, environment names, credential custody, opt-outs, custom CA and per-host overrides, and inherited host policy, but does not state host matching, precedence among trust sources, validation-failure behavior, credential lookup failure behavior, or expiry enforcement.",
+      "impact": "Registry, Kubernetes, plugin, MCP, and custom-tool surfaces can derive divergent trust and permission outcomes from the same configuration.",
+      "evidence_ref_ids": [
+        "ER-026",
+        "ER-028",
+        "ER-029",
+        "ER-030"
+      ]
+    },
+    {
+      "finding_id": "FIND-013",
+      "severity": "medium",
+      "title": "Core enforcement duties lack acceptance oracles",
+      "statement": "The core mandates universal pre-dispatch checks, post-hook re-evaluation, denial events, and ordered pattern resolution, but the assigned core provides no test vectors, receipt schema, or observable acceptance criteria covering those duties.",
+      "impact": "Conformance cannot be demonstrated deterministically, especially for nested dispatch, hook mutation, denial side effects, and overlapping patterns.",
+      "evidence_ref_ids": [
+        "ER-021",
+        "ER-023",
+        "ER-034",
+        "ER-052"
+      ]
+    },
+    {
+      "finding_id": "FIND-014",
+      "severity": "low",
+      "title": "Permission disclosure has no accessibility behavior contract",
+      "statement": "The core requires compact or dense permission surfaces and expanded disclosure when effective behavior differs, but it does not define keyboard operation, focus movement, screen-reader naming and announcements, contrast, or non-visual presentation of governing-layer and denial details.",
+      "impact": "A builder can satisfy the visual density and disclosure wording while leaving approval and denial state unusable or ambiguous to assistive-technology users.",
+      "evidence_ref_ids": [
+        "ER-012",
+        "ER-017",
+        "ER-045"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "statement": "Path normalization order is explicit, and broken symlinks, permission errors, missing targets, unresolved fallback, and unexpanded runtime-home tokens all have fail-closed or bug outcomes.",
+      "evidence_ref_ids": [
+        "ER-018",
+        "ER-019"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "statement": "The core explicitly closes execution-strategy, provider-surface, nesting-depth, child, subagent, and crew bypasses by requiring a policy check before every dispatch.",
+      "evidence_ref_ids": [
+        "ER-020",
+        "ER-021"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "statement": "Argument- or context-changing hooks explicitly trigger a fresh check and are forbidden from widening authority after the original check passes.",
+      "evidence_ref_ids": [
+        "ER-023"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "statement": "Discovery and configuration presence explicitly do not grant executable authority, and a source or version change explicitly invalidates prior approval.",
+      "evidence_ref_ids": [
+        "ER-024",
+        "ER-025"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "statement": "Cached enterprise state is explicitly read-only, must carry freshness markers, and cannot be presented as live authority or execution capability.",
+      "evidence_ref_ids": [
+        "ER-027"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "statement": "The permission action cardinality and terminal deny effects are explicit: exactly three actions exist, and deny emits tool.denied, returns an error, and does not execute the tool.",
+      "evidence_ref_ids": [
+        "ER-031",
+        "ER-034"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "statement": "Child inheritance is explicitly additive-downward and merge-not-replace; a child may narrow but cannot remove inherited restrictions or widen authority.",
+      "evidence_ref_ids": [
+        "ER-037"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "statement": "When requested and effective state differ, the effective state explicitly executes and the owning UI must disclose both the difference and its reason.",
+      "evidence_ref_ids": [
+        "ER-044",
+        "ER-045",
+        "ER-047"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "statement": "Within one object ruleset, definition order and last-matching-rule behavior are explicit.",
+      "evidence_ref_ids": [
+        "ER-052"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-010",
+      "statement": "The ledger addendum explicitly excludes WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, and production build tasks; the adjacent secret-custody text is retained only as context evidence.",
+      "evidence_ref_ids": [
+        "ER-053",
+        "ER-054"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNKNOWN-001",
+      "statement": "The assigned core references section 6 for deny, once, for-session, and always resolution semantics, so their exact persistence, revocation, expiry, cascade, and audit behavior cannot be determined from this window.",
+      "evidence_ref_ids": [
+        "ER-033"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-002",
+      "statement": "The hardcoded fallback values cannot be determined from this window because the precedence table names a defaults layer but the assigned core ends before any default table.",
+      "evidence_ref_ids": [
+        "ER-001",
+        "ER-036",
+        "ER-053"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-003",
+      "statement": "The exact FileSafe outcome and event behavior after permission resolves to allow cannot be determined from the assigned core.",
+      "evidence_ref_ids": [
+        "ER-032"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-004",
+      "statement": "The concrete schemas and storage authorities for permission snapshots, request identity, provider attempt references, and blocked-state hook records cannot be determined from the assigned core.",
+      "evidence_ref_ids": [
+        "ER-007",
+        "ER-008",
+        "ER-009"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-005",
+      "statement": "The concrete verification rules for signing evidence, elevated approval posture, OS credential-store lookup, custom CA validation, and expiry reporting cannot be determined from the assigned core.",
+      "evidence_ref_ids": [
+        "ER-025",
+        "ER-026"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-006",
+      "statement": "The adjacent PS-119 context names CV-294 and MA-062 dependencies, but their content and any effect on core permission behavior are outside the allowed window and therefore unknown.",
+      "evidence_ref_ids": [
+        "ER-054",
+        "ER-055"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-001",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 14,
+      "line_end": 14,
+      "range_class": "core",
+      "exact_quote": "This document is the **single canonical source of truth** for the Puppet Master permission system — the rules that govern when a tool invocation is allowed, requires user approval, or is denied. All other plan documents MUST reference this document by anchor (e.g., `Plans/Permissions_System.md#PERM-ACTIONS`) rather than restating permission action definitions, precedence rules, granular syntax, or default tables."
+    },
+    {
+      "evidence_ref_id": "ER-002",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 38,
+      "line_end": 38,
+      "range_class": "core",
+      "exact_quote": "- Add requested_account_id alongside requested_account_policy"
+    },
+    {
+      "evidence_ref_id": "ER-003",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 44,
+      "line_end": 44,
+      "range_class": "core",
+      "exact_quote": "- Define `requested_account_binding` and keep `provider_account_id` governed only as subordinate provider-native metadata rather than canonical account identity."
+    },
+    {
+      "evidence_ref_id": "ER-004",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 47,
+      "line_end": 47,
+      "range_class": "core",
+      "exact_quote": "- Define `approval_scope_key` across actor/lane/run/account context and require reuse across permissions, HITL, doom-loop, and session approval caching."
+    },
+    {
+      "evidence_ref_id": "ER-005",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 51,
+      "line_end": 51,
+      "range_class": "core",
+      "exact_quote": "Permission prompts are no longer session-centric or under-bound: `ask -> deny unless HITL at current tier boundary` is a deprecated tier-era behavior, and the active blocked-overlay flow requires HITL, `/account`, `/lane/run/account`, shared-runtime, actor, lane, run, account, and operational identity scope on approval snapshots and approval caching."
+    },
+    {
+      "evidence_ref_id": "ER-006",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 53,
+      "line_end": 53,
+      "range_class": "core",
+      "exact_quote": "Session-scoped approval logic, permission session cache, reject cascade, and OpenCode SSE/session isolation must resolve through actor/lane-aware boundaries: the explicit `/actor/lane` scope key includes actor, run, lane, account, and package/seam context before approval reuse. The permission layer must not mix tier-boundary governance with tool-level HITL approval semantics; tier-boundary language is compatibility only, while tool-level approval, HITL approval, and blocked-state approval use the shared approval scope and permission snapshot fields."
+    },
+    {
+      "evidence_ref_id": "ER-007",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 55,
+      "line_end": 55,
+      "range_class": "core",
+      "exact_quote": "Permission resolution and approval carryover/cascade are execution-entity scoped. Lane, package, `/lane/account`, effective-account, and effective account `/identity` facts remain part of the approval snapshot, and blocked cards must explain which effective account/identity would have executed before any `/cascade` or reject-cascade reuse applies."
+    },
+    {
+      "evidence_ref_id": "ER-008",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 59,
+      "line_end": 59,
+      "range_class": "core",
+      "exact_quote": "Runtime state hooks must carry blocked_reason_code?, allowed_action_ids[]?, failure_class?, permission_snapshot_id?, provider_attempt_ref?, blocked_reason_code, allowed_action_ids, failure_class, permission_snapshot_id, and provider_attempt_ref so permission cards and blocked-state records share the same hook vocabulary."
+    },
+    {
+      "evidence_ref_id": "ER-009",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 61,
+      "line_end": 61,
+      "range_class": "core",
+      "exact_quote": "Blocked-state approval actions map from canonical allowed_action_ids[] and allowed_action_ids, while graph approval actions target request_id; consumer surfaces must not split blocked-state authority away from request identity."
+    },
+    {
+      "evidence_ref_id": "ER-010",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 67,
+      "line_end": 67,
+      "range_class": "core",
+      "exact_quote": "Remote side effects and mode-override semantics reconcile `ask/plan -> deny`, `/plan`, `/approval`, external_publish_side_effect, side-effect, and non-bypassable approval behavior so mutating remote publication cannot diverge by surface or mode."
+    },
+    {
+      "evidence_ref_id": "ER-011",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 69,
+      "line_end": 69,
+      "range_class": "core",
+      "exact_quote": "Provider-gap disclosure is separate from overrides: provider-gap states honored, skipped, and clamped describe requested/effective provider behavior and must not be collapsed into generic override wording."
+    },
+    {
+      "evidence_ref_id": "ER-012",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 71,
+      "line_end": 71,
+      "range_class": "core",
+      "exact_quote": "Requested/effective permission display may stay compact only when requested == effective and no control was skipped or `/clamped`; if they differ, the permission UI must expand and `/disclose` the reason visibly on the owning surface."
+    },
+    {
+      "evidence_ref_id": "ER-013",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 73,
+      "line_end": 73,
+      "range_class": "core",
+      "exact_quote": "Degraded-trust and projection-health are permission-visible trust inputs. Permission cards, approval surfaces, Orchestrator, Usage, widgets, and provider surfaces consume one degraded-trust / projection-health / concern bridge so stale, degraded, or restricted-trust render states cannot masquerade as fresh authority. Artifact and `/file` routing must support attempt_id and other runtime object ids directly, and read-only, historical, and restricted-trust rendering must be explicit in the permission disclosure."
+    },
+    {
+      "evidence_ref_id": "ER-014",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 81,
+      "line_end": 81,
+      "range_class": "core",
+      "exact_quote": "Search permission surfaces distinguish global object search from tab-local filtering; tab-local and tab-local filtering narrow an already selected surface, while global object search crosses surfaces and needs separate permission disclosure."
+    },
+    {
+      "evidence_ref_id": "ER-015",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 83,
+      "line_end": 83,
+      "range_class": "core",
+      "exact_quote": "Route-target and subject-open permissions approve the exact target they display. Permission cards must preserve route-target, subject-open, `/output`, OpenFile, path-based `/file` opens, `line?` / `range?` targeting when path-based, and editor-group realization as separate target facts instead of hiding them behind a generic file-open prompt."
+    },
+    {
+      "evidence_ref_id": "ER-016",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 85,
+      "line_end": 85,
+      "range_class": "core",
+      "exact_quote": "Navigation approvals inherit the same layered target model: the shared target object comes first, specialized open `/navigation` verbs sit above it, and path-open is one specialization rather than the base primitive."
+    },
+    {
+      "evidence_ref_id": "ER-017",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 87,
+      "line_end": 87,
+      "range_class": "core",
+      "exact_quote": "Small permission surfaces keep canonical terms and compact labels. Source Control remains worktree-first, graph badges and inspector chips stay dense, and `/contextual` help links expand to deeper explanations instead of renaming local jargon."
+    },
+    {
+      "evidence_ref_id": "ER-018",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 92,
+      "line_end": 96,
+      "range_class": "core",
+      "exact_quote": "Before any permission match, path comparison, or scope check, paths MUST be normalized in this order:\n1. Expand `~` and `$HOME` to the real home-directory path.\n2. Resolve an absolute path and eliminate `.` / `..` components.\n3. Resolve symlinks with `realpath()`; this is the symlink-root canonicalization step.\n4. Match only against the normalized canonical path."
+    },
+    {
+      "evidence_ref_id": "ER-019",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 101,
+      "line_end": 103,
+      "range_class": "core",
+      "exact_quote": "- `realpath()` failure is fail-closed. Broken symlink, permission error, or missing target means deny.\n- PM MUST NOT compare against an unresolved path as fallback.\n- Unexpanded `~` in a runtime path comparison is always a bug."
+    },
+    {
+      "evidence_ref_id": "ER-020",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 116,
+      "line_end": 116,
+      "range_class": "core",
+      "exact_quote": "Permission rules apply in both execution strategies. In HTE, Puppet Master is the sole tool dispatcher. In DAE, Puppet Master enforces the resolved permission ceiling through pre-spawn policy injection and post-hoc reconciliation; DAE never creates an execution path that bypasses permission canon."
+    },
+    {
+      "evidence_ref_id": "ER-021",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 120,
+      "line_end": 120,
+      "range_class": "core",
+      "exact_quote": "Universal invariant: `policy.may_execute_tool()` MUST be applied before every tool dispatch regardless of nesting depth, child-run path, execution strategy, or provider surface. Child, subagent, or crew context is not a bypass."
+    },
+    {
+      "evidence_ref_id": "ER-022",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 126,
+      "line_end": 126,
+      "range_class": "core",
+      "exact_quote": "Any mutable permission state shared across threads or async tasks MUST be protected by an `RwLock` / read-write lock. Unguarded mutation of allowlists, deny rules, session approvals, or cached effective policy state is prohibited."
+    },
+    {
+      "evidence_ref_id": "ER-023",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 130,
+      "line_end": 130,
+      "range_class": "core",
+      "exact_quote": "Hooks that modify tool arguments or effective invocation context MUST trigger a fresh permission evaluation on the modified arguments before dispatch. Hook execution can narrow permissions, but MUST NOT widen them after the original check has already passed. This is the post-hook permission re-check contract."
+    },
+    {
+      "evidence_ref_id": "ER-024",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 136,
+      "line_end": 136,
+      "range_class": "core",
+      "exact_quote": "Discovery is not execution approval. Any auto-discovered executable surface or executable-config entry must clear the permission system before PM loads or runs it. This is the permission-system-level executable-code gate for MCP servers, custom tools, executable configs, and plugin hooks."
+    },
+    {
+      "evidence_ref_id": "ER-025",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 150,
+      "line_end": 153,
+      "range_class": "core",
+      "exact_quote": "- first load or first execution requires explicit user approval on the owning surface\n- config presence, package discovery, or catalog availability does not imply execution approval\n- arg-touching hooks and other execution-modifying surfaces require signed artifacts, `/signing` evidence, or an explicitly elevated approval posture stronger than read-only plugins\n- source or version change invalidates prior approval and requires a new decision"
+    },
+    {
+      "evidence_ref_id": "ER-026",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 155,
+      "line_end": 155,
+      "range_class": "core",
+      "exact_quote": "Shared `/network/trust` policy covers proxy mode `system`, `manual`, or `off`; `http_proxy`, `https_proxy`, `no_proxy`; proxy credential source from the OS credential store only; and per-domain/per-surface opt-out rules. Trust policy begins with the OS trust store and may add an app custom CA bundle or per-host CA override with validation and expiry reporting, independent of Unraid metadata."
+    },
+    {
+      "evidence_ref_id": "ER-027",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 161,
+      "line_end": 161,
+      "range_class": "core",
+      "exact_quote": "Enterprise `/air-gapped` behavior distinguishes four canonical outcomes instead of collapsing them into generic network failure: `offline_cached`, `network_blocked_by_policy`, `host_unreachable`, and `host_untrusted`. Hosted and `/runtime` surfaces may show read-only cached state with freshness markers when prior evidence exists, but cached state MUST NOT be presented as live authority or execution capability."
+    },
+    {
+      "evidence_ref_id": "ER-028",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 163,
+      "line_end": 163,
+      "range_class": "core",
+      "exact_quote": "Enterprise and `/private` registry policy is resolved through `registry_hosts[]`. Each `registry_hosts` entry inherits the shared `/network/trust` posture, `/proxy` mode, app custom CA bundle, per-host CA override, validation and expiry reporting state, host policy, capability snapshot, and default push target from the owning registry contract."
+    },
+    {
+      "evidence_ref_id": "ER-029",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 165,
+      "line_end": 165,
+      "range_class": "core",
+      "exact_quote": "Kubernetes policy is resolved through `k8s_host_policy`. It defines allowed contexts, clusters, namespaces, and `/verb` entries, including `apply`, `exec`, `port_forward`, and `logs`. Policy-denied but otherwise valid `/registry` or Kubernetes actions map to canonical blocked/`/denied` outcomes such as `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted`; they MUST NOT be reported as generic network failure."
+    },
+    {
+      "evidence_ref_id": "ER-030",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 167,
+      "line_end": 167,
+      "range_class": "core",
+      "exact_quote": "Plugin-added, MCP, custom-tool, and other `/extensibility` surfaces that contact external hosts inherit the same host policy, trust, proxy, and blocked-reason checks before dispatch. They may surface blocked `/cards/actions` through ordered `allowed_action_ids[]`, but they do not get plugin-private network exceptions."
+    },
+    {
+      "evidence_ref_id": "ER-031",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 175,
+      "line_end": 175,
+      "range_class": "core",
+      "exact_quote": "Exactly three permission actions exist. Every tool invocation resolves to exactly one action."
+    },
+    {
+      "evidence_ref_id": "ER-032",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 181,
+      "line_end": 181,
+      "range_class": "core",
+      "exact_quote": "The tool invocation proceeds without user approval. FileSafe guards (`Plans/FileSafe.md`) still apply after permission resolution."
+    },
+    {
+      "evidence_ref_id": "ER-033",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 185,
+      "line_end": 185,
+      "range_class": "core",
+      "exact_quote": "The tool invocation is paused pending user approval. The user is presented with the invocation details and MUST choose one of the canonical resolution options: `deny`, `once`, `for session`, or `always` (see §6). If no user is available (headless/Orchestrator run), `ask` maps to `deny` unless a HITL/approval gate is active for the current blocked episode or package/seam decision point and can surface the ordered `allowed_action_ids[]` through the shared approval scope (`Plans/human-in-the-loop.md`)."
+    },
+    {
+      "evidence_ref_id": "ER-034",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 189,
+      "line_end": 189,
+      "range_class": "core",
+      "exact_quote": "The tool invocation is blocked. The policy engine emits a `tool.denied` event (`Plans/Contracts_V0.md#EventRecord`) and returns an error to the agent. The tool is not executed."
+    },
+    {
+      "evidence_ref_id": "ER-035",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 193,
+      "line_end": 193,
+      "range_class": "core",
+      "exact_quote": "Permission rules are evaluated in a strict layer precedence. The first layer that produces a defined rule for the invocation wins; higher-precedence layers shadow lower layers on a per-rule basis, but they do NOT replace the entire lower ruleset."
+    },
+    {
+      "evidence_ref_id": "ER-036",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 197,
+      "line_end": 205,
+      "range_class": "core",
+      "exact_quote": "| Priority | Layer | Source | Description |\n|---|---|---|---|\n| 1 | Mode override | `Plans/Run_Modes.md` | `ask` / `plan` clamp mutating capability; `yolo` applies only where policy allows. |\n| 2 | Parent/run ceiling | runtime envelope | Parent execution ceiling and inherited restriction patterns. |\n| 3 | Session cache | runtime | Prior explicit approvals scoped to the session. |\n| 4 | Persona overrides | `Plans/Personas.md` | Named permission profile for the active Persona. |\n| 5 | Project-level | `.puppet-master/permissions.toml` | Project-local rules. |\n| 6 | Global-level | user config | User-wide rules. |\n| 7 | Defaults | this document | Hardcoded fallback table. |"
+    },
+    {
+      "evidence_ref_id": "ER-037",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 210,
+      "line_end": 212,
+      "range_class": "core",
+      "exact_quote": "- Child runs inherit both action ceilings and restrictive argument-pattern rules from the parent chain.\n- Inheritance is additive-downward and merge-not-replace: a child may narrow authority, but MUST NOT widen or replace away inherited restrictions.\n- The permission chain is evaluated as Parent Agent -> Parent Session -> Child Session -> Child Agent, then project/global/default layers."
+    },
+    {
+      "evidence_ref_id": "ER-038",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 218,
+      "line_end": 218,
+      "range_class": "core",
+      "exact_quote": "`lane:{lane_id}` > `seam:{seam_id}` > `package:{package_id}` > project > global"
+    },
+    {
+      "evidence_ref_id": "ER-039",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 220,
+      "line_end": 220,
+      "range_class": "core",
+      "exact_quote": "Role-scoped account policy overrides use the same precedence chain. A rule may carry `allowed_roles`, `disallowed_roles`, `cooldown_policy_override`, and `switch_threshold_override`; these fields narrow which execution roles may use the account/pool and how cooldown or threshold switching applies, but they do not widen the parent/run permission ceiling."
+    },
+    {
+      "evidence_ref_id": "ER-040",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 223,
+      "line_end": 225,
+      "range_class": "core",
+      "exact_quote": "- `package:{package_id}` applies only while execution is inside the identified package. A package scope inherits from the enclosing project scope unless explicitly overridden.\n- `seam:{seam_id}` applies only at the named seam boundary, including cross-package transitions and other explicitly modeled boundary crossings.\n- `lane:{lane_id}` applies only within the identified execution lane and is the narrowest durable scope in the standard precedence model."
+    },
+    {
+      "evidence_ref_id": "ER-041",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 227,
+      "line_end": 227,
+      "range_class": "core",
+      "exact_quote": "This specificity order applies anywhere scoped permission material is evaluated, including session-cache approvals, durable project/global rules, and inherited parent/run ceilings. Ties within the same scope still use the layer order in §2.4 and last-match-wins behavior inside the selected ruleset (§3.1)."
+    },
+    {
+      "evidence_ref_id": "ER-042",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 231,
+      "line_end": 235,
+      "range_class": "core",
+      "exact_quote": "Required fields:\n- execution_entity_id\n- account_id\n- permission_scope\n- approval_carryover_scope"
+    },
+    {
+      "evidence_ref_id": "ER-043",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 247,
+      "line_end": 247,
+      "range_class": "core",
+      "exact_quote": "- Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only."
+    },
+    {
+      "evidence_ref_id": "ER-044",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 254,
+      "line_end": 254,
+      "range_class": "core",
+      "exact_quote": "The UI and runtime must distinguish requested state from effective state whenever permission, policy, platform, or health constraints change what is actually available."
+    },
+    {
+      "evidence_ref_id": "ER-045",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 265,
+      "line_end": 267,
+      "range_class": "core",
+      "exact_quote": "- when requested and effective state differ, the effective state is what executes\n- the UI must disclose the difference and its reason on the owning surface rather than forcing the user to infer it from missing controls or failed calls\n- Approval UI must show which layer governs each tool's permission state, including project defaults, global defaults, user override, admin policy, mode override, session cache, Persona profile, project rule, global rule, and default when that source determines the effective result."
+    },
+    {
+      "evidence_ref_id": "ER-046",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 271,
+      "line_end": 271,
+      "range_class": "core",
+      "exact_quote": "`#PRECEDENCE-LAYERS` is an anchor alias for the canonical precedence contract in §2.4. This subsection owns requested-vs-effective disclosure only; it does not redefine the layer table."
+    },
+    {
+      "evidence_ref_id": "ER-047",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 273,
+      "line_end": 273,
+      "range_class": "core",
+      "exact_quote": "Rule: the same effective result produced by §2.4 is what the UI must show as executable capability."
+    },
+    {
+      "evidence_ref_id": "ER-048",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 275,
+      "line_end": 275,
+      "range_class": "core",
+      "exact_quote": "Terminal-owned shell execution and reveal flows use the same `/requested-vs-effective` permission-model disclosure as every other privileged runtime action. `Plans/Permissions_System.md` owns the permission wording, while Section15 owns the terminal session, reveal, and PTY behavior; permission UI must not imply a terminal action is allowed when the effective permission or capability state is clamped."
+    },
+    {
+      "evidence_ref_id": "ER-049",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 285,
+      "line_end": 285,
+      "range_class": "core",
+      "exact_quote": "A permission rule MAY be a simple action string (`\"allow\"`, `\"ask\"`, `\"deny\"`) or an object containing pattern-based sub-rules that match against invocation context (e.g., file path for `read`/`edit`, command string for `bash`, URL for `webfetch`)."
+    },
+    {
+      "evidence_ref_id": "ER-050",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 294,
+      "line_end": 299,
+      "range_class": "core",
+      "exact_quote": "| Token | Meaning |\n|-------|---------|\n| `*` | Matches zero or more characters |\n| `?` | Matches exactly one character |\n\n**Special case:** A pattern ending with ` *` (space + wildcard) makes the trailing portion optional. Example: `\"git *\"` matches both `\"git\"` and `\"git status\"`."
+    },
+    {
+      "evidence_ref_id": "ER-051",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 301,
+      "line_end": 301,
+      "range_class": "core",
+      "exact_quote": "Tool-family prefix wildcards are valid for MCP/server-provided tools as well as built-ins. Enabling or disabling `github_*` affects every matched tool from the `github` server family, while more specific rules still win according to the precedence and last-match rules below."
+    },
+    {
+      "evidence_ref_id": "ER-052",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 303,
+      "line_end": 303,
+      "range_class": "core",
+      "exact_quote": "**Ordering:** Within a single ruleset (object syntax), rules are evaluated in definition order; the last matching rule wins. This allows broad patterns followed by narrow exceptions."
+    },
+    {
+      "evidence_ref_id": "ER-053",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 314,
+      "line_end": 314,
+      "range_class": "core",
+      "exact_quote": "This addendum compiles accepted provider-update ledger atoms into provider permission and secret-custody requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks."
+    },
+    {
+      "evidence_ref_id": "ER-054",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 324,
+      "line_end": 324,
+      "range_class": "context",
+      "exact_quote": "  Provider route credentials, OAuth/session state, API keys, subscription-backed auth, authorization URLs, local account roots, and provider-native tool access are governed by PM permission custody and secret redaction. Plans, ledgers, logs, runtime artifacts, usage rows, and GUI diagnostics may store credential locators, account/profile refs, redacted setup state, and proof metadata, but never raw secrets. Route permissions must distinguish direct API, CLI runtime, server bridge, subscription-backed, and provider-native tool access."
+    },
+    {
+      "evidence_ref_id": "ER-055",
+      "document_path": "Plans/Permissions_System.md",
+      "line_start": 325,
+      "line_end": 326,
+      "range_class": "context",
+      "exact_quote": "gui_related: true\ngui_classification_reason: Permission prompts, setup diagnostics, and redacted provider state are visible GUI behavior."
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

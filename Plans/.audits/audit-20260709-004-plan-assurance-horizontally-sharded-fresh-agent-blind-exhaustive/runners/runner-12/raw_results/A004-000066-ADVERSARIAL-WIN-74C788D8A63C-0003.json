@@ -1,0 +1,1163 @@
+{
+  "assignment_id": "A004-000066-ADVERSARIAL-WIN-74C788D8A63C-0003",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "Provider truth is centralized, but its many projections and GUI consumers create a broad propagation boundary.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "The WebProviderAdapterRegistry is the PM-owned single source of truth for web provider and adapter capability."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets."
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "The shared dispatcher spans user, agent, runtime, and builder callers while browser/testing exposes a substantially wider action vocabulary than the listed WebAction enum.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 626,
+          "line_end": 626,
+          "excerpt": "Slash commands, command palette entries, natural-language user requests, assistant-initiated needs, subagent needs, Goal Runtime work, PRD Builder work, and Planning Wizard work all converge on the same WebOperation / BrowserAction dispatcher."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 658,
+          "line_end": 658,
+          "excerpt": "Guaranteed everyday browser/testing action IDs include `open_tab`, `select_tab`, `close_tab`, `click`, `type`, `fill_form`, `select_option`, `hover`, `drag`, `press_key`, `upload_file`, `handle_dialog`, `wait_for`, `verify_text`, `verify_element`, `verify_value`, `snapshot`, `screenshot`, `console`, `network`, and `set_viewport`"
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "Selection, projection, fallback, and structured operation input are represented in result and audit payloads, but most state-bearing fields are optional.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 675,
+          "line_end": 675,
+          "excerpt": "Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, and operation-specific counters/refs."
+        }
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "A004-000066-ADV-001",
+      "title": "Registry-level SSRF metadata lacks enforceable redirect and address semantics",
+      "severity": "high",
+      "gap": "The registry names egress and SSRF/private-host policy, while webfetch validation only locks scheme normalization, malformed-URL rejection, and a size default.",
+      "why_it_matters": "A syntactically valid HTTP(S) URL can still resolve or redirect to loopback, link-local, private, metadata-service, or rebinding targets, creating internal-network access and credential-exfiltration risk.",
+      "missing_or_underspecified": "Blocked address classes, credential-bearing URL handling, DNS resolution and rebinding checks, redirect-hop revalidation, proxy/provider parity, and canonical denial/audit outcomes are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 743,
+          "line_end": 743,
+          "excerpt": "webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-002",
+      "title": "Wildcard research approval does not define authority for discovered reads",
+      "severity": "high",
+      "gap": "Search and research use wildcard-only approval even though autonomous research subsequently reads provider-selected sites.",
+      "why_it_matters": "One broad approval can become implicit authority to contact unanticipated origins, follow redirects, use authenticated browser state, or cross policy boundaries without a defined transition.",
+      "missing_or_underspecified": "Whether wildcard approval authorizes each discovered read, extract, browser action, redirect, and new origin; how cookie or authenticated context is bounded; and when host-scoped authority takes over are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 634,
+          "line_end": 634,
+          "excerpt": "Permission requests for `websearch` and `webresearch` are wildcard-only operation approvals because the URL set is not known before discovery, while `/extract/crawl/map` and `webfetch` use host/site-scoped approvals when their target is known."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 630,
+          "line_end": 630,
+          "excerpt": "search, read top pages through Site Reader, refine and repeat only when evidence is insufficient, then synthesize with citations."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-003",
+      "title": "Research-read sessions can submit remote forms without a side-effect transition",
+      "severity": "high",
+      "gap": "Research actions explicitly allow typing into forms and submitting with a keypress under session-granted authority, but no contract distinguishes evidence access from consequential remote mutation.",
+      "why_it_matters": "A research task could post content, change settings, place an order, trigger an authentication flow, or otherwise mutate external state while still appearing to be read-oriented work.",
+      "missing_or_underspecified": "Side-effect classification, escalation from evidence access to consequential action, confirmation behavior, idempotency, postcondition detection, and recovery for accidental submission are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 646,
+          "line_end": 646,
+          "excerpt": "`type` fills search boxes or forms, `press_key` submits or dismisses modals"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 654,
+          "line_end": 654,
+          "excerpt": "`session_granted` actions cover `click`, `type`, `fill_form`, tab management, uploads, dialog handling, viewport `/device` changes, and trace `/video` capture"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-004",
+      "title": "Prompt-injection detection is display-only",
+      "severity": "high",
+      "gap": "Prompt-injection indicators are required as chips and audit fields, but their effect on downstream reasoning or actions is not defined.",
+      "why_it_matters": "Merely displaying a warning does not prevent hostile page instructions from influencing extraction, synthesis, citations, browser interaction, subagents, or tool calls.",
+      "missing_or_underspecified": "Trust-state propagation, instruction exclusion, action gating, citation taint, downstream-agent handling, false-positive handling, and the success or failure state of an injection-affected read are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 730,
+          "line_end": 730,
+          "excerpt": "Prompt-injection indicators are visible chips and audit fields, not hidden prompt text."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 646,
+          "line_end": 646,
+          "excerpt": "`type` fills search boxes or forms, `press_key` submits or dismisses modals"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-005",
+      "title": "Persistent web-cache defaults lack privacy and isolation semantics",
+      "severity": "high",
+      "gap": "Several operations store fetched material by default, and even cache-bypassed action reads may be stored afterward.",
+      "why_it_matters": "Authenticated, personalized, confidential, or action-revealed content could be retained or reused across users, projects, credentials, sessions, or adapter contexts.",
+      "missing_or_underspecified": "Cache-key identity, project/user/credential/cookie isolation, redaction before storage, encryption, retention and deletion, artifact treatment, and the authority governing post-action storage are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 668,
+          "line_end": 668,
+          "excerpt": "Operation cache TTL defaults are exact unless overridden by caller policy: `websearch` defaults `cache_policy?: { max_age_seconds?: number, store?: boolean }` to `{ max_age_seconds: 3600, store: true }`; `webfetch` and `webextract` default the same shape to `{max_age_seconds: 14400, store: true}`; `webcrawl` and `webmap` default the same shape to `{ max_age_seconds: 86400, store: true }`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 669,
+          "line_end": 669,
+          "excerpt": "`bypassed` means request policy, action-driven reads, or a provider/runtime constraint skipped read-time cache lookup while still allowing post-action storage when permitted."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-006",
+      "title": "Audit payloads persist structured operation input without sensitivity controls",
+      "severity": "high",
+      "gap": "Structured operation input is required in tool audit payloads, while the explicit raw-secret prohibition applies only to registry projections.",
+      "why_it_matters": "Queries, tasks, prompts, URLs, schemas, and path/domain filters can contain secrets, personal data, confidential project material, or sensitive browsing intent.",
+      "missing_or_underspecified": "Field classification, redaction or hashing before persistence, access boundaries, retention, deletion, preview derivation safety, and treatment of sensitive refs are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 627,
+          "line_end": 627,
+          "excerpt": "`webresearch` accepts `task: string`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 675,
+          "line_end": 675,
+          "excerpt": "Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, and operation-specific counters/refs."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 677,
+          "line_end": 677,
+          "excerpt": "`operation_input` is the canonical structured routing/audit input; `operation_input_preview` and legacy `web_input_preview` are derived display text only and must not replace structured input."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-007",
+      "title": "Fallback routing has audit fields but no deterministic state machine",
+      "severity": "high",
+      "gap": "The registry stores fallback rank and health and the result exposes fallback metadata, but transition rules are absent.",
+      "why_it_matters": "Different implementations can retry or switch providers on different errors, duplicate costly work, violate adapter hints or permissions, loop, or produce audit summaries that do not explain the actual attempts.",
+      "missing_or_underspecified": "Triggering errors and health states, rank ties, adapter_hint precedence, retry count and timeout budget, loop prevention, partial-result handling, cancellation, and preservation of cost/cache/robots/egress policy across fallback are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-008",
+      "title": "batch_webfetch is introduced only through a result shape",
+      "severity": "high",
+      "gap": "The canonical dispatcher operation set omits batch_webfetch, while the output contract defines a batch result.",
+      "why_it_matters": "The caller, router, permission system, and adapter cannot implement or test a batch operation consistently from an output-only declaration.",
+      "missing_or_underspecified": "Input shape, tool and semantic operation identity, maximum batch size, concurrency, ordering, per-host approval, aggregate success semantics, cancellation, retry, and timeout behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 625,
+          "line_end": 625,
+          "excerpt": "The web dispatcher maps each invocation to one canonical operation (`search`, `extract`, `research`, `deep_research`, `crawl`, `map`, or `fetch`/`read`)"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 671,
+          "line_end": 671,
+          "excerpt": "`batch_webfetch` returns `results: Array<{ url, success, content?, formats_returned?, screenshot?, cache_state?, change_status?, error_code?, error_message? }>` plus `summary: { total, succeeded, failed, cached }`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-009",
+      "title": "Projection freshness and health cannot drive truthful GUI state",
+      "severity": "medium",
+      "gap": "GUI surfaces must expose provider availability, but projection freshness and health are optional and lack value or transition semantics.",
+      "why_it_matters": "Help, autocomplete, and Settings can show an adapter as available while routing uses stale or unhealthy registry data, or hide a healthy adapter after propagation lag.",
+      "missing_or_underspecified": "Freshness and health enums, timestamps or thresholds, stale/unhealthy routing behavior, atomic projection propagation, GUI degraded-state wording, and reconciliation after failed projection are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 638,
+          "line_end": 638,
+          "excerpt": "Permission and GUI consumers must preserve URL/domain pattern visibility for extract/crawl/map, query/task pattern visibility for search/research where supported, and provider availability in `/web` help/autocomplete and Settings rather than hiding fan-out behind generic `webfetch`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-010",
+      "title": "WebAction and browser-testing action boundaries are not discriminated",
+      "severity": "medium",
+      "gap": "The shared dispatcher is paired with a narrow exact WebAction enum and a substantially wider guaranteed browser/testing action set, without a locked discriminant or complete alias map.",
+      "why_it_matters": "Callers can disagree about whether refresh/reload, wait/wait_for, tabs/open_tab/select_tab/close_tab, hover, drag, uploads, or verification actions are valid and which permission class applies.",
+      "missing_or_underspecified": "Interface and session-class discriminants, canonical IDs for overlapping actions, ingress alias behavior, persistence identity, and invalid_input behavior for actions valid in one surface but not another are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 626,
+          "line_end": 626,
+          "excerpt": "Slash commands, command palette entries, natural-language user requests, assistant-initiated needs, subagent needs, Goal Runtime work, PRD Builder work, and Planning Wizard work all converge on the same WebOperation / BrowserAction dispatcher."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 682,
+          "line_end": 682,
+          "excerpt": "`type: \"click\" | \"scroll\" | \"type\" | \"press_key\" | \"wait_for\" | \"navigate\" | \"screenshot\" | \"set_viewport\" | \"fill_form\" | \"select_option\" | \"back\" | \"reload\" | \"snapshot\" | \"console\" | \"network\";`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 658,
+          "line_end": 658,
+          "excerpt": "Guaranteed everyday browser/testing action IDs include `open_tab`, `select_tab`, `close_tab`, `click`, `type`, `fill_form`, `select_option`, `hover`, `drag`, `press_key`, `upload_file`, `handle_dialog`, `wait_for`, `verify_text`, `verify_element`, `verify_value`, `snapshot`, `screenshot`, `console`, `network`, and `set_viewport`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-011",
+      "title": "Partial format success semantics are undefined",
+      "severity": "medium",
+      "gap": "A requested screenshot or PDF can fail with only a warning even when multiple formats were requested, while the common envelope exposes one operation-level success boolean.",
+      "why_it_matters": "Callers and GUI surfaces can report success despite omitting a requested evidence artifact, and different implementations can disagree about caching, retries, or downstream use of the partial result.",
+      "missing_or_underspecified": "Operation-level success for partial format completion, per-format status and error identity, required-versus-optional requested formats, missing-artifact representation, cache behavior, and GUI truth are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 653,
+          "line_end": 653,
+          "excerpt": "Multiple extraction `formats` may be requested together. `screenshot` and `pdf` formats require browser runtime; when that runtime is unavailable, return a `capability_unavailable` warning rather than an error."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`success: boolean`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-012",
+      "title": "PageRepresentation lacks a versioned and bounded test oracle",
+      "severity": "medium",
+      "gap": "PageRepresentation is described through prose fields and token-efficiency goals without a schema, version, or completeness contract.",
+      "why_it_matters": "Renderers and consumers can diverge on required fields, truncation, detail fidelity, frame merging, and element identity, producing stale selectors or silently incomplete evidence.",
+      "missing_or_underspecified": "Required and optional field types, detail-level values, schema versioning, size and token limits, pagination or truncation markers, completeness indicators, and stable-element-identity lifetime and invalidation are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 730,
+          "line_end": 730,
+          "excerpt": "The representation carries typed page structure, interactive elements, forms, errors, optional interactive summary, optional iframes, console/network refs, screenshot/PDF artifact refs when requested, redaction profile IDs, and visible prompt-injection chips so downstream agents can reason about the page before acting."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 736,
+          "line_end": 736,
+          "excerpt": "The structured-reader subsystem (`/subsystem`) is token-efficient and token-budgeted: it prefers `/text/markdown` and structured page summaries over raw page dumps, preserves stable element identity"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-013",
+      "title": "Robots behavior has no default, precedence, or authority model",
+      "severity": "high",
+      "gap": "Robots behavior exists in registry state and respect_robots is an optional crawl input, while providers may narrow behavior through warnings.",
+      "why_it_matters": "Caller, registry, and provider policy can conflict, allowing silent noncompliance or inconsistent crawling across adapters and operation families.",
+      "missing_or_underspecified": "Default value, who may disable robots compliance, precedence among caller/registry/provider, behavior on fetch/map/extract/research, redirect and sitemap treatment, and fail-versus-warn semantics are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 627,
+          "line_end": 627,
+          "excerpt": "`respect_robots?: boolean`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 642,
+          "line_end": 642,
+          "excerpt": "`webcrawl` preserves `change_tracking`, `dedup`, `respect_robots`, `formats`, and `include/exclude_paths` as explicit web-operation inputs; providers may narrow unsupported behavior only through structured warnings or capability disclosure."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-014",
+      "title": "Crawl and map limits omit operational recovery and resource ceilings",
+      "severity": "medium",
+      "gap": "Crawl and map define page, depth, and same-origin defaults but no end-to-end operational state contract.",
+      "why_it_matters": "Slow sites, large pages, retry storms, rate limits, and cancellation can exhaust time, memory, storage, provider quota, or network capacity while yielding inconsistent partial results.",
+      "missing_or_underspecified": "Total wall time, total bytes and artifact size, concurrency, per-host rate limits, retry/backoff, cancellation, checkpoint/resume, provider throttling, partial-result success, and cleanup are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 674,
+          "line_end": 674,
+          "excerpt": "`webcrawl` `max_pages = 25`, `max_depth = 2`, and `same_origin_only = true`; and `webmap` `max_pages = 50`, `max_depth = 3`, and `same_origin_only = true`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-015",
+      "title": "Change tracking can report removed without a completeness oracle",
+      "severity": "high",
+      "gap": "A page absent from the current crawl becomes removed, but absence caused by errors, limits, robots policy, authentication changes, redirects, or provider degradation is not distinguished.",
+      "why_it_matters": "Users and automations can receive false removal signals and trigger incorrect downstream decisions.",
+      "missing_or_underspecified": "Previous-snapshot identity across project, credential, adapter, filters, formats, and normalized URL; crawl-completeness criteria; inaccessible or skipped states; cache-bypass interaction; and removal suppression on partial failure are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 644,
+          "line_end": 644,
+          "excerpt": "removed pages are pages present in the previous crawl but absent from the current crawl"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 745,
+          "line_end": 745,
+          "excerpt": "webfetch defaults `cache_policy` to `{ max_age_seconds: 14400, store: true }` and uses hash-based `change_tracking` with status values `new|same|changed|removed`."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-016",
+      "title": "JSON Schema ref resolution and expansion are unconstrained",
+      "severity": "high",
+      "gap": "Draft-07 extraction supports $ref and caps the submitted schema at 50KB, but resolution behavior is not defined.",
+      "why_it_matters": "Remote refs can create unexpected egress or SSRF, while cyclic or expanding refs can cause nondeterminism, excessive work, or memory exhaustion beyond the submitted-byte limit.",
+      "missing_or_underspecified": "Local versus remote ref policy, permitted URI schemes, network authority, cycle and depth handling, resolved-graph size and time limits, reference caching, and canonical failure classification are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 650,
+          "line_end": 650,
+          "excerpt": "`schema_too_large` means the extraction schema exceeds the 50KB limit. `schema_invalid` means the schema is not valid JSON Schema draft-07."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 651,
+          "line_end": 651,
+          "excerpt": "Supported schema constructs include `$ref`, `oneOf`, `anyOf`, `enum`, `required`, and nested objects/arrays"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-017",
+      "title": "Raw HTML and inline SVG lack an active-content boundary",
+      "severity": "high",
+      "gap": "The contract returns unprocessed raw HTML and preserves inline SVG MIME content without specifying whether these artifacts are inert, sanitized, rendered, or downloadable.",
+      "why_it_matters": "If a GUI or preview renders active HTML or SVG, scripts, event handlers, external loads, or embedded links can execute in an application context and expose data or credentials.",
+      "missing_or_underspecified": "Sanitization and escaping, inert-preview versus render behavior, script and event handling, external-resource loading, origin isolation, content-security policy, and artifact download behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 666,
+          "line_end": 666,
+          "excerpt": "`\"rawHtml\"` is unprocessed HTML as-is from the server."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 744,
+          "line_end": 744,
+          "excerpt": "Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) return as inline attachments with MIME type preserved and size capped by `max_content_length` (5 MB by default)."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-018",
+      "title": "max_content_length lacks streaming and decompression enforcement semantics",
+      "severity": "high",
+      "gap": "A 5MB default is stated, but binary classification relies on Content-Type and no byte-accounting or termination behavior is defined.",
+      "why_it_matters": "Missing or false headers, chunked transfer, compression bombs, content-type spoofing, redirects, and configuration overrides can bypass an apparent cap or cause resource exhaustion.",
+      "missing_or_underspecified": "Wire versus decoded byte accounting, handling of absent or dishonest Content-Length, streaming early abort, compressed and chunked responses, configured upper bounds, temporary artifact cleanup, and content sniffing are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 743,
+          "line_end": 743,
+          "excerpt": "webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 744,
+          "line_end": 744,
+          "excerpt": "Binary `/non-text` webfetch URL responses are detected from the HTTP `Content-Type` header."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-019",
+      "title": "Research completion has no evidence-sufficiency oracle",
+      "severity": "medium",
+      "gap": "Deep research records coverage and closure state, and autonomous research repeats when evidence is insufficient, but neither sufficiency nor closure is defined.",
+      "why_it_matters": "Providers and PM-composed paths can mark materially different evidence quality as successful, and GUI activity can imply completion despite missing claim coverage or failed reads.",
+      "missing_or_underspecified": "Closure-state values and transitions, minimum usable sources, evidence-sufficiency criteria, claim-to-citation coverage, treatment of contradictory evidence, partial-read failure, and success semantics for zero or weak evidence are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 629,
+          "line_end": 629,
+          "excerpt": "It records a deep-research run with subquestion coverage, read receipts, extract receipts, citations from read/extract artifacts, subagent or closure refs when used, and explicit `closure_state` / `failure_reason_code`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 630,
+          "line_end": 630,
+          "excerpt": "search, read top pages through Site Reader, refine and repeat only when evidence is insufficient, then synthesize with citations."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-020",
+      "title": "LSP rename approval is not a transaction or recovery contract",
+      "severity": "high",
+      "gap": "Rename is retained with approval before apply, but no behavior around preview, scope, concurrency, partial failure, or recovery is present.",
+      "why_it_matters": "A workspace-wide rename can touch many files; stale buffers, file-system failures, generated or ignored files, symlinks, or mid-apply interruption can leave the project partially modified.",
+      "missing_or_underspecified": "Edit preview and approved scope, document-version preconditions, workspace and symlink boundaries, multi-file atomicity, partial-apply reporting, rollback, cancellation, conflict handling, and audit output are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 780,
+          "line_end": 780,
+          "excerpt": "`rename` with explicit approval before apply"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-021",
+      "title": "The muted-chat annotation alternative can expose muted snippets",
+      "severity": "high",
+      "gap": "chatsearch hits contain snippets, while muted messages may either be excluded or merely annotated for a later context-packer drop.",
+      "why_it_matters": "If annotated hits reach the agent or UI before packing, the muted content has already been disclosed despite the user's mute state.",
+      "missing_or_underspecified": "Whether annotated hits include snippet text, which consumer receives them, query-time versus pack-time enforcement, propagation latency after mute, cached-result invalidation, and failure-closed behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 796,
+          "line_end": 796,
+          "excerpt": "hits with `{ thread_id, message_id, ts, role, snippet, score }`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 799,
+          "line_end": 799,
+          "excerpt": "When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them)."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-022",
+      "title": "Canonical input fields lack validation bounds and normalization oracles",
+      "severity": "medium",
+      "gap": "The dispatcher promises pre-routing validation, but many numeric, domain, and time fields have only types or defaults rather than accepted ranges and normalization semantics.",
+      "why_it_matters": "Negative, zero, enormous, conflicting, malformed, or provider-specific values can be rejected, clamped, or interpreted differently across adapters.",
+      "missing_or_underspecified": "Hard minima and maxima, empty-string handling, time_range grammar, domain normalization, include/exclude conflict precedence, compatibility limit interaction with max_results, and clamp-versus-invalid_input behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 627,
+          "line_end": 627,
+          "excerpt": "`websearch` accepts `query: string`, `max_results?: number`, compatibility `limit?: number` for source-specific search-result caps, `adapter_hint?: string`, `sources?: (\"web\" | \"news\" | \"images\" | \"code\" | \"academic\")[]`, `categories?: (\"github\" | \"research\" | \"pdf\")[]`, `include_domains?: string[]`, `exclude_domains?: string[]`, and `time_range?: string`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 674,
+          "line_end": 674,
+          "excerpt": "`webcrawl` `max_pages = 25`, `max_depth = 2`, and `same_origin_only = true`; and `webmap` `max_pages = 50`, `max_depth = 3`, and `same_origin_only = true`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-023",
+      "title": "Mixed supported and unsupported source requests have no aggregate outcome",
+      "severity": "medium",
+      "gap": "Unsupported source or category values return unsupported_operation for that source or category, but arrays can contain multiple requested values.",
+      "why_it_matters": "A mixed request can either fail wholly or proceed partially, changing result coverage, success state, warnings, provider fallback, and user-visible truth.",
+      "missing_or_underspecified": "Whole-request versus per-item failure, partial success, result ordering, fallback to another adapter, warnings, and common-envelope success/error behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 627,
+          "line_end": 627,
+          "excerpt": "A requested source or category unsupported by the effective provider returns `unsupported_operation` for that source or category."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-024",
+      "title": "Extraction failure states are not mapped to the common result envelope",
+      "severity": "medium",
+      "gap": "Empty extraction and strict or lenient schema outcomes are defined locally, but their operation-level success, error, warning, and payload states are not locked.",
+      "why_it_matters": "Callers can disagree about whether empty or partially conforming data is usable, whether an error carries partial content, and what GUI or audit status to show.",
+      "missing_or_underspecified": "success values, canonical error_code mapping, extracted_data and content presence on strict failure, warning cardinality, partial-data retention, and cacheability for each extraction outcome are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 649,
+          "line_end": 649,
+          "excerpt": "`extraction_empty` means extraction completed but produced no data because page content did not match the schema or prompt."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 662,
+          "line_end": 662,
+          "excerpt": "In `\"strict\"` mode, output MUST conform to schema, non-conforming fields are dropped, and missing required fields return `extraction_schema_mismatch`; in `\"lenient\"` mode (default), output uses best-effort conformance, keeps non-conforming fields with `_schema_violation: true` annotation, and treats missing required fields as a warning, not an error."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`success: boolean`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-025",
+      "title": "Cross-origin iframe reading relies on an undefined security policy",
+      "severity": "high",
+      "gap": "Site Reader may extract cross-origin nested frames and create per-frame diagnostic sessions wherever browser security policy allows, but that policy is not defined in the capsule.",
+      "why_it_matters": "Nested frames can introduce new origins, authenticated content, tracking, prompt injection, large fan-out, and egress targets beyond the approved top-level site.",
+      "missing_or_underspecified": "Origin and permission inheritance, cookie and credential boundaries, per-frame egress and SSRF checks, frame-count and byte limits, warning propagation, diagnostic-session isolation, and failure behavior are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 732,
+          "line_end": 732,
+          "excerpt": "During structured reading, PM recursively discovers nested iframes up to 3 levels deep, attempts cross-origin iframe content extraction only where browser security policy allows, gracefully skips blocked same-origin or X-Frame-Options cases with a warning, may use per-frame diagnostic sessions when the PM-managed native browser runtime is available, and merges iframe content into the parent `PageRepresentation` with source-frame attribution."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000066-ADV-026",
+      "title": "Browser session states are named without transition or recovery semantics",
+      "severity": "medium",
+      "gap": "Sessions persist collapsed, detached, background, and runtime-unavailable state plus remediation action IDs, but no state machine defines how these states change.",
+      "why_it_matters": "GUI controls, testing surfaces, and agents can disagree about whether a session remains live, whether evidence is current, whether actions are queued or rejected, and whether recovery preserves identity.",
+      "missing_or_underspecified": "Allowed transitions, concurrent transition handling, session expiry, recovery success and failure, remediation idempotency, queued-action treatment, evidence invalidation, and Open/Watch availability truth are unspecified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 734,
+          "line_end": 734,
+          "excerpt": "Browser sessions persist `browser_session_id`, `show_when_possible`, collapsed/detached/background/runtime-unavailable state, Open/Watch availability, and `runtime_unavailable` remediation action IDs so GUI and testing surfaces can explain degraded browser evidence without inventing separate routing."
+        }
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "contract_present": "Caller provenance is explicitly persisted across user, goal, subagent, PRD, and planning-run invocations.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 626,
+          "line_end": 626,
+          "excerpt": "Every invocation persists `invocation_source`, optional `agent_reason`, and source IDs such as `source_user_message_id`, `source_goal_id`, `source_subagent_id`, `source_prd_id`, or `source_planning_run_id` when present."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "contract_present": "WebAction timing, unknown-type rejection, and sequential ordering are explicit.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 700,
+          "line_end": 700,
+          "excerpt": "`WebAction.timeout_ms` / `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 701,
+          "line_end": 701,
+          "excerpt": "Unknown `type` values → `invalid_input` error"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 702,
+          "line_end": 702,
+          "excerpt": "Actions are executed sequentially in array order"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "contract_present": "webfetch explicitly rejects non-HTTP(S) schemes, normalizes bare domains, rejects malformed URLs, and states a default size cap.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 743,
+          "line_end": 743,
+          "excerpt": "webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "contract_present": "Degraded browser capability reason codes are enumerated.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 659,
+          "line_end": 659,
+          "excerpt": "Degraded or blocked browser capabilities return explicit reason codes: `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "contract_present": "Empty extraction and strict-versus-lenient schema conformance behavior are explicitly distinguished.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 649,
+          "line_end": 649,
+          "excerpt": "`extraction_empty` means extraction completed but produced no data because page content did not match the schema or prompt."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 662,
+          "line_end": 662,
+          "excerpt": "In `\"strict\"` mode, output MUST conform to schema, non-conforming fields are dropped, and missing required fields return `extraction_schema_mismatch`; in `\"lenient\"` mode (default), output uses best-effort conformance, keeps non-conforming fields with `_schema_violation: true` annotation, and treats missing required fields as a warning, not an error."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "contract_present": "chatsearch explicitly requires project scoping and strict secrets scrubbing before index persistence.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 797,
+          "line_end": 797,
+          "excerpt": "MUST be project-scoped (per-project Tantivy index directory)."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 798,
+          "line_end": 798,
+          "excerpt": "Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence)."
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "question": "Whether an external permission contract supplies origin transitions, side-effect classification, and authority inheritance for wildcard research and session-granted browser actions.",
+      "impact": "It could narrow findings ADV-002 and ADV-003, but those semantics are absent from this capsule.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 634,
+          "line_end": 634,
+          "excerpt": "Permission requests for `websearch` and `webresearch` are wildcard-only operation approvals because the URL set is not known before discovery, while `/extract/crawl/map` and `webfetch` use host/site-scoped approvals when their target is known."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 654,
+          "line_end": 654,
+          "excerpt": "`session_granted` actions cover `click`, `type`, `fill_form`, tab management, uploads, dialog handling, viewport `/device` changes, and trace `/video` capture"
+        }
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "question": "Whether a versioned PageRepresentation schema, cache isolation model, or projection-state enum exists outside the assigned excerpt.",
+      "impact": "Such external definitions could narrow ADV-005, ADV-009, ADV-012, and ADV-026; they cannot be established from the permitted capsule.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 730,
+          "line_end": 730,
+          "excerpt": "The representation carries typed page structure, interactive elements, forms, errors, optional interactive summary, optional iframes, console/network refs, screenshot/PDF artifact refs when requested, redaction profile IDs, and visible prompt-injection chips so downstream agents can reason about the page before acting."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 670,
+          "line_end": 670,
+          "excerpt": "`requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`"
+        }
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "question": "Whether a provider-adapter capability contract outside this excerpt defines fallback, robots, autonomous-run closure, and health transitions.",
+      "impact": "External definitions could narrow ADV-007, ADV-013, and ADV-019, but the visible contract only names these states.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 624,
+          "line_end": 624,
+          "excerpt": "fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 629,
+          "line_end": 629,
+          "excerpt": "It records a deep-research run with subquestion coverage, read receipts, extract receipts, citations from read/extract artifacts, subagent or closure refs when used, and explicit `closure_state` / `failure_reason_code`."
+        }
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "question": "Whether rawHtml and SVG outputs are guaranteed to remain inert strings or downloads in all GUI consumers.",
+      "impact": "An external inert-rendering guarantee could reduce ADV-017 severity; none appears in the capsule.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 666,
+          "line_end": 666,
+          "excerpt": "`\"rawHtml\"` is unprocessed HTML as-is from the server."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 744,
+          "line_end": 744,
+          "excerpt": "Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) return as inline attachments with MIME type preserved and size capped by `max_content_length` (5 MB by default)."
+        }
+      ]
+    },
+    {
+      "unknown_id": "UNK-005",
+      "question": "Whether the referenced LSP and FileSafe contracts define rename preview, scope, atomicity, and rollback.",
+      "impact": "Those external contracts could narrow ADV-020; the assigned line only establishes pre-apply approval.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 780,
+          "line_end": 780,
+          "excerpt": "`rename` with explicit approval before apply"
+        }
+      ]
+    },
+    {
+      "unknown_id": "UNK-006",
+      "question": "Whether an annotated muted chat hit suppresses its snippet before any agent-visible or GUI-visible result is constructed.",
+      "impact": "That distinction determines whether the annotation alternative is privacy-preserving or already discloses muted content.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 796,
+          "line_end": 796,
+          "excerpt": "hits with `{ thread_id, message_id, ts, role, snippet, score }`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 799,
+          "line_end": 799,
+          "excerpt": "When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them)."
+        }
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 624,
+      "line_end": 624,
+      "excerpt": "The WebProviderAdapterRegistry is the PM-owned single source of truth for web provider and adapter capability."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 624,
+      "line_end": 624,
+      "excerpt": "fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 624,
+      "line_end": 624,
+      "excerpt": "Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 625,
+      "line_end": 625,
+      "excerpt": "The web dispatcher maps each invocation to one canonical operation (`search`, `extract`, `research`, `deep_research`, `crawl`, `map`, or `fetch`/`read`)"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 626,
+      "line_end": 626,
+      "excerpt": "Slash commands, command palette entries, natural-language user requests, assistant-initiated needs, subagent needs, Goal Runtime work, PRD Builder work, and Planning Wizard work all converge on the same WebOperation / BrowserAction dispatcher."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 626,
+      "line_end": 626,
+      "excerpt": "Every invocation persists `invocation_source`, optional `agent_reason`, and source IDs such as `source_user_message_id`, `source_goal_id`, `source_subagent_id`, `source_prd_id`, or `source_planning_run_id` when present."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 627,
+      "line_end": 627,
+      "excerpt": "`webresearch` accepts `task: string`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 627,
+      "line_end": 627,
+      "excerpt": "`respect_robots?: boolean`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 627,
+      "line_end": 627,
+      "excerpt": "`websearch` accepts `query: string`, `max_results?: number`, compatibility `limit?: number` for source-specific search-result caps, `adapter_hint?: string`, `sources?: (\"web\" | \"news\" | \"images\" | \"code\" | \"academic\")[]`, `categories?: (\"github\" | \"research\" | \"pdf\")[]`, `include_domains?: string[]`, `exclude_domains?: string[]`, and `time_range?: string`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 627,
+      "line_end": 627,
+      "excerpt": "A requested source or category unsupported by the effective provider returns `unsupported_operation` for that source or category."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 629,
+      "line_end": 629,
+      "excerpt": "It records a deep-research run with subquestion coverage, read receipts, extract receipts, citations from read/extract artifacts, subagent or closure refs when used, and explicit `closure_state` / `failure_reason_code`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 630,
+      "line_end": 630,
+      "excerpt": "search, read top pages through Site Reader, refine and repeat only when evidence is insufficient, then synthesize with citations."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 634,
+      "line_end": 634,
+      "excerpt": "Permission requests for `websearch` and `webresearch` are wildcard-only operation approvals because the URL set is not known before discovery, while `/extract/crawl/map` and `webfetch` use host/site-scoped approvals when their target is known."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 638,
+      "line_end": 638,
+      "excerpt": "Permission and GUI consumers must preserve URL/domain pattern visibility for extract/crawl/map, query/task pattern visibility for search/research where supported, and provider availability in `/web` help/autocomplete and Settings rather than hiding fan-out behind generic `webfetch`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 642,
+      "line_end": 642,
+      "excerpt": "`webcrawl` preserves `change_tracking`, `dedup`, `respect_robots`, `formats`, and `include/exclude_paths` as explicit web-operation inputs; providers may narrow unsupported behavior only through structured warnings or capability disclosure."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 644,
+      "line_end": 644,
+      "excerpt": "removed pages are pages present in the previous crawl but absent from the current crawl"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 646,
+      "line_end": 646,
+      "excerpt": "`type` fills search boxes or forms, `press_key` submits or dismisses modals"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 649,
+      "line_end": 649,
+      "excerpt": "`extraction_empty` means extraction completed but produced no data because page content did not match the schema or prompt."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 650,
+      "line_end": 650,
+      "excerpt": "`schema_too_large` means the extraction schema exceeds the 50KB limit. `schema_invalid` means the schema is not valid JSON Schema draft-07."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 651,
+      "line_end": 651,
+      "excerpt": "Supported schema constructs include `$ref`, `oneOf`, `anyOf`, `enum`, `required`, and nested objects/arrays"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 653,
+      "line_end": 653,
+      "excerpt": "Multiple extraction `formats` may be requested together. `screenshot` and `pdf` formats require browser runtime; when that runtime is unavailable, return a `capability_unavailable` warning rather than an error."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 654,
+      "line_end": 654,
+      "excerpt": "`session_granted` actions cover `click`, `type`, `fill_form`, tab management, uploads, dialog handling, viewport `/device` changes, and trace `/video` capture"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 658,
+      "line_end": 658,
+      "excerpt": "Guaranteed everyday browser/testing action IDs include `open_tab`, `select_tab`, `close_tab`, `click`, `type`, `fill_form`, `select_option`, `hover`, `drag`, `press_key`, `upload_file`, `handle_dialog`, `wait_for`, `verify_text`, `verify_element`, `verify_value`, `snapshot`, `screenshot`, `console`, `network`, and `set_viewport`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 659,
+      "line_end": 659,
+      "excerpt": "Degraded or blocked browser capabilities return explicit reason codes: `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 662,
+      "line_end": 662,
+      "excerpt": "In `\"strict\"` mode, output MUST conform to schema, non-conforming fields are dropped, and missing required fields return `extraction_schema_mismatch`; in `\"lenient\"` mode (default), output uses best-effort conformance, keeps non-conforming fields with `_schema_violation: true` annotation, and treats missing required fields as a warning, not an error."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 666,
+      "line_end": 666,
+      "excerpt": "`\"rawHtml\"` is unprocessed HTML as-is from the server."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 668,
+      "line_end": 668,
+      "excerpt": "Operation cache TTL defaults are exact unless overridden by caller policy: `websearch` defaults `cache_policy?: { max_age_seconds?: number, store?: boolean }` to `{ max_age_seconds: 3600, store: true }`; `webfetch` and `webextract` default the same shape to `{max_age_seconds: 14400, store: true}`; `webcrawl` and `webmap` default the same shape to `{ max_age_seconds: 86400, store: true }`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 669,
+      "line_end": 669,
+      "excerpt": "`bypassed` means request policy, action-driven reads, or a provider/runtime constraint skipped read-time cache lookup while still allowing post-action storage when permitted."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 670,
+      "line_end": 670,
+      "excerpt": "`success: boolean`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 670,
+      "line_end": 670,
+      "excerpt": "`requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 671,
+      "line_end": 671,
+      "excerpt": "`batch_webfetch` returns `results: Array<{ url, success, content?, formats_returned?, screenshot?, cache_state?, change_status?, error_code?, error_message? }>` plus `summary: { total, succeeded, failed, cached }`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 674,
+      "line_end": 674,
+      "excerpt": "`webcrawl` `max_pages = 25`, `max_depth = 2`, and `same_origin_only = true`; and `webmap` `max_pages = 50`, `max_depth = 3`, and `same_origin_only = true`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 675,
+      "line_end": 675,
+      "excerpt": "Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, and operation-specific counters/refs."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 677,
+      "line_end": 677,
+      "excerpt": "`operation_input` is the canonical structured routing/audit input; `operation_input_preview` and legacy `web_input_preview` are derived display text only and must not replace structured input."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 682,
+      "line_end": 682,
+      "excerpt": "`type: \"click\" | \"scroll\" | \"type\" | \"press_key\" | \"wait_for\" | \"navigate\" | \"screenshot\" | \"set_viewport\" | \"fill_form\" | \"select_option\" | \"back\" | \"reload\" | \"snapshot\" | \"console\" | \"network\";`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 700,
+      "line_end": 700,
+      "excerpt": "`WebAction.timeout_ms` / `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 701,
+      "line_end": 701,
+      "excerpt": "Unknown `type` values → `invalid_input` error"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 702,
+      "line_end": 702,
+      "excerpt": "Actions are executed sequentially in array order"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 730,
+      "line_end": 730,
+      "excerpt": "The representation carries typed page structure, interactive elements, forms, errors, optional interactive summary, optional iframes, console/network refs, screenshot/PDF artifact refs when requested, redaction profile IDs, and visible prompt-injection chips so downstream agents can reason about the page before acting."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 730,
+      "line_end": 730,
+      "excerpt": "Prompt-injection indicators are visible chips and audit fields, not hidden prompt text."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 732,
+      "line_end": 732,
+      "excerpt": "During structured reading, PM recursively discovers nested iframes up to 3 levels deep, attempts cross-origin iframe content extraction only where browser security policy allows, gracefully skips blocked same-origin or X-Frame-Options cases with a warning, may use per-frame diagnostic sessions when the PM-managed native browser runtime is available, and merges iframe content into the parent `PageRepresentation` with source-frame attribution."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 734,
+      "line_end": 734,
+      "excerpt": "Browser sessions persist `browser_session_id`, `show_when_possible`, collapsed/detached/background/runtime-unavailable state, Open/Watch availability, and `runtime_unavailable` remediation action IDs so GUI and testing surfaces can explain degraded browser evidence without inventing separate routing."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 736,
+      "line_end": 736,
+      "excerpt": "The structured-reader subsystem (`/subsystem`) is token-efficient and token-budgeted: it prefers `/text/markdown` and structured page summaries over raw page dumps, preserves stable element identity"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 743,
+      "line_end": 743,
+      "excerpt": "webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 744,
+      "line_end": 744,
+      "excerpt": "Binary `/non-text` webfetch URL responses are detected from the HTTP `Content-Type` header."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 744,
+      "line_end": 744,
+      "excerpt": "Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) return as inline attachments with MIME type preserved and size capped by `max_content_length` (5 MB by default)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 745,
+      "line_end": 745,
+      "excerpt": "webfetch defaults `cache_policy` to `{ max_age_seconds: 14400, store: true }` and uses hash-based `change_tracking` with status values `new|same|changed|removed`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 780,
+      "line_end": 780,
+      "excerpt": "`rename` with explicit approval before apply"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 796,
+      "line_end": 796,
+      "excerpt": "hits with `{ thread_id, message_id, ts, role, snippet, score }`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 797,
+      "line_end": 797,
+      "excerpt": "MUST be project-scoped (per-project Tantivy index directory)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 798,
+      "line_end": 798,
+      "excerpt": "Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 799,
+      "line_end": 799,
+      "excerpt": "When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them)."
+    }
+  ]
+}

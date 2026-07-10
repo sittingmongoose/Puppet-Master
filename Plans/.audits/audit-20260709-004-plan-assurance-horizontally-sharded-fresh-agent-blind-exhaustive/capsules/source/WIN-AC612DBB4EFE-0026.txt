@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 8860-8871 >>>
+- "progress.account-pressure"
+- "progress.account-switches"
+- "progress.escalation-stack"
+- "progress.attention-summary"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 8872-9258 >>>
+### F3-100 - Progress State Action And Alert Labels
+
+```yaml
+plan_unit_id: F3-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Progress UI labels include the canonical state, action, and alert taxonomy used by Progress
+  widgets and attention views.
+gui_related: true
+gui_classification_reason: >-
+  State, action, and alert labels are user-visible UI copy even though the parent span was
+  initially inferred non-GUI.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: progress_state_action_and_alert_labels
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0070"
+preserved_exact_tokens:
+- "queued"
+- "running"
+- "attention_required"
+- "blocked"
+- "recovering"
+- "degraded"
+- "complete"
+- "Inspect"
+- "Retry recovery"
+- "degraded_projection"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-101 - Progress Event Taxonomy And Condition Aging
+
+```yaml
+plan_unit_id: F3-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Progress event taxonomy and condition-aging policy preserve event names and quiet/resurface rules,
+  with advisory warnings allowed to quiet after a stable refresh while blocked and escalated states
+  never auto-quiet.
+gui_related: false
+gui_classification_reason: >-
+  Event taxonomy and aging policy are runtime/state semantics rather than direct GUI layout or
+  visual presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: progress_event_taxonomy_and_condition_aging
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0070"
+preserved_exact_tokens:
+- "run_started"
+- "node_started"
+- "node_completed"
+- "concern_opened"
+- "approval_requested"
+- "approval_decided"
+- "recovery_started"
+- "recovery_completed"
+- "artifact_published"
+- "account_switched"
+- "blocked and escalated never auto-quiet"
+negative_constraints:
+- "`blocked` and `escalated` never auto-quiet."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-102 - Shared Route Payload And Widget Command Routing
+
+```yaml
+plan_unit_id: F3-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Search results, palette actions, widgets, recovery links, and cross-surface pivots emit one
+  shared route/deep-link payload; resume_url is only serialized transport, and widget actions plus
+  cmd.nav wrappers use the shared command and wiring/gate stack.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible routing, navigation, widget action, and command behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: route_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: shared_route_payload_and_widget_command_routing
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0071"
+preserved_exact_tokens:
+- "route/deep-link payload"
+- "resume_url"
+- "/serialization"
+- "widget-local action ids"
+- "cmd.nav"
+- "cmd.nav.*"
+- "/wiring/gate"
+- "target_kind"
+negative_constraints:
+- "Catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics."
+- "`resume_url` is the serialized transport form of that payload, not a second routing model."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-103 - Chat Usage Graph Evidence Object-First Pivots
+
+```yaml
+plan_unit_id: F3-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Chat, Usage, graph, and evidence surfaces consume the object-first route model, preserving
+  usage_event and attempt pivots, work-package identity, correlation_id passthroughs, and
+  bidirectional evidence/artifact linkage.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible cross-surface pivots, search jumps, and route/open behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: route_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chat_usage_graph_evidence_object_first_pivots
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0071"
+preserved_exact_tokens:
+- "jump-to-message"
+- "usage_event"
+- "/object"
+- "/search/jump"
+- "/correlation"
+- "correlation_id"
+- "/seam/promotion/account/lane"
+- "/coverage/evidence"
+- "HITL"
+negative_constraints:
+- "Chat may store `resume_url` for recovery portability, but it must not fall back to path-first opening."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "`human-in-the-loop` / `human-in-the-loop.md` carries direct canon-supersession for HITL behavior."
+- "The Evidence pane owns verdicts `/receipts/findings/reports`; the Artifacts pane owns screenshots `/recordings/diffs/reports/generated` docs `/etc`."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-104 - Route Compatibility Records And Tier Identity Cleanup
+
+```yaml
+plan_unit_id: F3-104
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Legacy tier runtime, usage, evidence, blocked notice, and wizard resume records are compatibility
+  records only and cannot reassert tier identity over object routes or restore tier_id as
+  cross-surface runtime identity.
+gui_related: false
+gui_classification_reason: >-
+  Compatibility record cleanup and identity precedence are routing/data semantics rather than GUI
+  visual presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: compatibility_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: route_compatibility_records_and_tier_identity_cleanup
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0071"
+preserved_exact_tokens:
+- "tier_runtime_record"
+- "tier-keyed `usage_record`"
+- "tier-adjacent `evidence_record`"
+- "thread_blocked_notice"
+- "wizard_runtime_state"
+- "resume_url"
+- "tier_id"
+negative_constraints:
+- "Compatibility records cannot reassert tier identity over object routes."
+- "`switch-aware` usage/history views cannot restore `tier_id` as the cross-surface runtime identity."
+compatibility_only_notes:
+- "Canonical-record cleanup treats tier runtime, usage, evidence, blocked notice, and wizard resume records as compatibility records."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-105 - Crosswalk FileManager Open Primitive Boundaries
+
+```yaml
+plan_unit_id: F3-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Crosswalk exposes route-target and identity-native open behavior alongside command and document
+  pane primitives; FileManager keeps OpenFile for workspace files, while runtime identity opens use
+  OpenSubject or route_target over canonical object identity.
+gui_related: false
+gui_classification_reason: >-
+  Open primitive boundaries and route identity are cross-surface routing semantics, not direct GUI
+  layout or styling work.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: route_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: crosswalk_filemanager_open_primitive_boundaries
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0071"
+preserved_exact_tokens:
+- "Crosswalk.md"
+- "route_target"
+- "OpenSubject"
+- "OpenFile"
+- "OpenFile { path... }"
+- "tab_id"
+- "subject_id"
+- "object_kind"
+- "object_id"
+negative_constraints:
+- "`subject_id` is for openable `/renderable` content subjects only; it must not become a second generic object taxonomy beside `object_kind` / `object_id`."
+- "`tab_id` does not replace destination class, subject identity, or object identity."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "`FileManager` keeps `OpenFile { path... }` for workspace-file opens."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-106 - Concern Route Payload Fields And Overrides
+
+```yaml
+plan_unit_id: F3-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Concern route payloads are object-first with concern identity, focused run, target tab, selected
+  concern preservation, small route_target identity, secondary inspector_target metadata, and
+  destination/context overrides only when restoration requires them.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible concern search results, drill-downs, inspectors, and recovery links.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: route_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: concern_route_payload_fields_and_overrides
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0071"
+preserved_exact_tokens:
+- "object_kind: concern"
+- "object_id: concern_id"
+- "focused_run_id"
+- "target_tab"
+- "concern_id"
+- "route_target"
+- "doc:"
+- "artifact:"
+- "inspector_target"
+negative_constraints:
+- "`inspector_target` is secondary metadata, not primary identity."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 9259-9270 >>>
+### F3-107 - Indexing Settings Admin Surface
+
+```yaml
+plan_unit_id: F3-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Indexing settings expose project-search index controls for enablement, thresholds, generated and
+  custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache
+  eviction confirmation, and rebuild.
+gui_related: true

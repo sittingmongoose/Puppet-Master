@@ -1,0 +1,48 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-06",
+  "checkpoint_kind": "v2_recovery_wave_complete",
+  "wave": 5,
+  "observed_at": "2026-07-10T04:09:27Z",
+  "validator_authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+  "attempts": [
+    {
+      "assignment_id": "A004-000020-ADVERSARIAL-WIN-510B3DE676A3-0006",
+      "attempt": 3,
+      "agent_instance_id": "a004_r06_adv_000020_r3_ff43e531a9",
+      "agent_path": "/root/a004_r06_adv_000020_r3_ff43e531a9",
+      "coverage_credit": 0,
+      "validation_passed": false,
+      "result_sha256": "1811e7517cd48b9b3191accf39c2ef3550695460551a3b2d5217a7e3bac73b66"
+    },
+    {
+      "assignment_id": "A004-000032-ADVERSARIAL-WIN-9AD3F0F54D94-0001",
+      "attempt": 4,
+      "agent_instance_id": "a004_r06_adv_000032_r4_906906e446",
+      "agent_path": "/root/a004_r06_adv_000032_r4_906906e446",
+      "coverage_credit": 0,
+      "validation_passed": false,
+      "result_sha256": "5d0946af492b69238450e8a09f68c3df822b7f57b407527cb123be290342df04"
+    },
+    {
+      "assignment_id": "A004-000070-ADVERSARIAL-WIN-BF7379C57A0F-0007",
+      "attempt": 3,
+      "agent_instance_id": "a004_r06_adv_000070_r3_ed5f749f8f",
+      "agent_path": "/root/a004_r06_adv_000070_r3_ed5f749f8f",
+      "coverage_credit": 0,
+      "validation_passed": false,
+      "result_sha256": "972b8ce2325193862a6e7011ac0958a8bbf4097069c3a9b952fa2802295f260a"
+    }
+  ],
+  "credited_assignment_ids_preserved": [
+    "A004-000006-ADVERSARIAL-WIN-7414C6C901F8-0001",
+    "A004-000042-ADVERSARIAL-WIN-ECB10B16CAAF-0001",
+    "A004-000052-ADVERSARIAL-WIN-E9F0FF594512-0001"
+  ],
+  "credited_assignment_count": 3,
+  "zero_credit_failed_attempt_count": 12,
+  "unique_agents_spawned": 18,
+  "active_agent_count": 3,
+  "prior_receipts_or_results_modified": false
+}

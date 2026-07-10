@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 2474-2485 >>>
+- LSP requests must never block the UI thread.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md'
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+
+<<< AUTHORITATIVE_CORE 2486-2884 >>>
+### LSPS-027 - Document Scale And Sync Pressure Controls
+
+```yaml
+plan_unit_id: LSPS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: The LSP client controls scale pressure by limiting open documents per server, sending didClose on buffer eviction, capping initialize roots, debouncing didChange at the default interval, preferring incremental contentChanges when supported, and avoiding thousands of initialize paths.
+gui_related: false
+gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-027 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: document_scale_and_sync_pressure_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0020
+preserved_exact_tokens:
+- Many open documents
+- max 50 open docs per server
+- didClose
+- Large workspace at init
+- capped at 10
+- do not send thousands of paths
+- didChange flood
+- 100 ms
+- contentChanges
+- full content
+negative_constraints:
+- Initialize must not send thousands of paths.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md'
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-028 - FileManager Fallback Symbol Boundary
+
+```yaml
+plan_unit_id: LSPS-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: When LSP diagnostics and symbols are unavailable, FileManager remains responsible for regex, heuristic, or indexed fallback symbol navigation and optional install hints, while the LSP client does not own the symbol index path.
+gui_related: true
+gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-028 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: filemanager_fallback_symbol_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0020
+preserved_exact_tokens:
+- Symbol index staleness (without LSP)
+- FileManager §10.2
+- Diagnostics and symbols come from server
+- regex/heuristic symbol path
+- optional install hint
+- 'Client: No action for index'
+- fallback is editor/FileManager responsibility
+negative_constraints:
+- Fallback symbol behavior must not claim healthy LSP diagnostics or semantic symbol state.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/FileManager.md owns fallback symbol navigation; Plans/LSPSupport.md owns the LSP unavailable boundary.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md'
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-029 - Stdio Bridge TCP Boundary
+
+```yaml
+plan_unit_id: LSPS-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: The MVP LSP client speaks stdio only; TCP-only servers such as Godot are supported through custom stdio bridge commands like godot-lsp-stdio-bridge, while native TCP/socket support remains out of scope for MVP.
+gui_related: false
+gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-029 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: stdio_bridge_tcp_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0020
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0022
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0023
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0024
+preserved_exact_tokens:
+- TCP-only servers
+- Godot
+- GDScript LSP
+- npx godot-lsp-stdio-bridge
+- .gd
+- .gdshader
+- stdio-to-TCP bridge
+- Binary-safe buffers
+- auto port discovery
+- 6005, 6007, 6008
+- Windows URI normalization
+- Native TCP/socket
+- Out of scope for MVP
+- use a bridge
+negative_constraints:
+- Native TCP/socket support is out of scope for MVP.
+- The MVP client does not implement TCP transport; it documents bridge usage.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md'
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-030 - MVP Operation Inventory And Result Envelope
+
+```yaml
+plan_unit_id: LSPS-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: The canonical MVP LSP surface preserves its operation inventory, normalized parameter fields, and result status envelope using operation, query, path, position, newName, status, and the ok, partial, unavailable, or error status values.
+gui_related: false
+gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-030 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: mvp_operation_inventory_and_result_envelope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0021
+preserved_exact_tokens:
+- operation
+- query
+- path
+- position
+- newName
+- status
+- ok | partial | unavailable | error
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- rename
+negative_constraints:
+- Stale aliases, short names, or ad hoc result envelopes are retired in favor of the canonical status envelope.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Stale aliases, short names, or ad hoc result envelopes are retired in favor of LSPSupport §9.
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-031 - Rename Alias And Approval Gate
+
+```yaml
+plan_unit_id: LSPS-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: The write-capable rename operation is approval-gated, requires path, position, and newName, and treats lsp_rename as a legacy alias for rename rather than a second operation over the nine read-only operation surface.
+gui_related: false
+gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-031 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: rename_alias_and_approval_gate
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0021
+preserved_exact_tokens:
+- nine read-only operations
+- one write/approval-gated `rename`
+- lsp_rename
+- legacy alias
+- not a second operation
+- path + position + newName
+- approval-gated
+negative_constraints:
+- lsp_rename must not become a second operation distinct from rename.
+- rename is write-capable and approval-gated.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The packetization label `10 read-only + 1 write-gated (lsp_rename)` is reconciled by treating `lsp_rename` as a legacy alias.
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-032 - Phase 1 Core LSP Outcome
+
+```yaml
+plan_unit_id: LSPS-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: Phase 1 ships the core LSP client, server registry, document sync, diagnostics, hover, completion, Problems integration, status UI, and explicit fallback behavior as the foundation before navigation and chat enhancements.
+gui_related: true
+gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-032 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: phase_1_core_lsp_outcome
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0027
+preserved_exact_tokens:
+- Phase 1 -- Core LSP
+- Rust LSP client crate
+- Server registry
+- Document sync
+- didOpen / didChange
+- Diagnostics
+- Problems panel
+- Hover
+- Completion
+- LSP status in UI
+- Fallback when LSP unavailable
+- Phase 1 outcome
+negative_constraints:
+- Phase 1 must retain explicit fallback behavior when no server is available.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### LSPS-033 - Phase 2 Editor Chat Settings Outcome
+
+```yaml
+plan_unit_id: LSPS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: Phase 2 adds editor navigation and editing features, inlay and semantic features, code actions and code lens, signature help, timeout/cancellation, per-server enable/disable, Settings > LSP, bridge pattern, Chat LSP, and diagnostics for Assistant/Interview context.
+gui_related: true
+gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through LSPS-033 instead of broad L-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lsp_contract_drift
+reasoning_tier: standard
+context_scope: lspsupport_standardization
+implementation_surfaces:
+- Plans/LSPSupport.md
+node_compile_hint:
+  mode: phase_2_editor_chat_settings_outcome
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0027
+preserved_exact_tokens:
+- Phase 2 -- Editor navigation + Chat LSP
+- textDocument/references
+- Find references
+- Rename with FileSafe
+- textDocument/formatting
+- Inlay hints
+- semantic highlighting
+- code actions
+- code lens
+- signature help
+- Settings > LSP
+- Chat LSP
+- Diagnostics for LLM/Assistant
+- Phase 2 outcome
+negative_constraints:
+- Rename and formatting use FileSafe-backed paths rather than direct mutation.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/LSPSupport.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+
+<<< CONTEXT_AFTER 2885-2896 >>>
+### LSPS-034 - Phase 3 Optional Evidence And Chat Enhancements
+
+```yaml
+plan_unit_id: LSPS-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/LSPSupport.md
+canonical_text: Phase 3 optional enhancements may add the LSP diagnostics verification gate, LSP snapshot in evidence, chat fix/rename/usage/format affordances, lsp tool promotion, and advanced protocol requests without moving optional work into MVP foundations.
+gui_related: true
+gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+split_recommended: true
+depends_on: []

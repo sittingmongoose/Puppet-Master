@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 544-555 >>>
+- guided conflict assistant
+negative_constraints:
+- Search result routing must never switch focused run context silently.
+- Declining safe-point retry leaves the blocked episode unchanged.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FileSafe remains the mutation guard owner; Contracts_V0 owns safe_point.created, safe_point.restored, and restore outcome events.
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+
+<<< AUTHORITATIVE_CORE 556-912 >>>
+### GI-008 - GitHub Actions IA And Settings ConfigKey Boundary
+
+```yaml
+plan_unit_id: GI-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: GitHub Actions has Current Branch, Workflows, and Settings as stable subviews, routes compatibility entrypoints to the correct owner surface, and owns only GitHub-specific Settings, readiness, workflow, admin, and source-control ConfigKey schema details while importing shared storage rules.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: github_actions_ia_settings_configkey_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- Current Branch
+- Workflows
+- Settings
+- /Workflows/Settings
+- /local-repo
+- Git (GitHub)
+- ConfigKey
+- secrets
+- variables
+- /environments
+- runner labels
+negative_constraints:
+- ConfigKey entries here must not duplicate Contracts event names, Permissions policy schema, usage rollup logic, or FileSafe safe-point behavior.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- GitHub Actions > Current Branch owns branch-context readiness and run controls; Workflows owns inventory/run detail; Settings owns hosted admin state.
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-009 - Pinned Critical Workflows And Health Badge Provenance
+
+```yaml
+plan_unit_id: GI-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Pinned critical workflows are owned by GitHub Actions > Workflows, use canonical pin/unpin commands and compatibility aliases, store workflow/repo/branch/worktree/badge/preference/provenance records, and expose stale or renamed workflow state without hiding historical receipts.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: pinned_critical_workflows_health_badge_provenance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- Pinned critical workflows
+- Critical workflow pinning / health badges
+- cmd.github.actions.pin
+- cmd.github.actions.unpin
+- cmd.actions.pin
+- /event/storage
+- /build/deploy
+- /deploy
+- /renamed
+- notify-on-failure
+negative_constraints:
+- Pinned workflow health badges must expose stale or /renamed workflow state and let the user unpin without hiding historical receipts.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-010 - Replay Last Known Good And Compare Last Success
+
+```yaml
+plan_unit_id: GI-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Replay from last known good belongs to GitHub Actions failure triage/history, compares failed runs against same-workflow same-branch successes, records baseline and comparison metadata, exposes compare options, and never implies rerun tests latest branch head unless a new dispatch occurs.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: replay_last_known_good_compare_last_success
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- Replay from last known good
+- known-good run id
+- cached comparison target id
+- comparison window length
+- run-history
+- cmd.github.actions.compare_last_success
+- same-branch history
+- manual compare selection
+negative_constraints:
+- GitHub reruns use original commit/ref semantics; replay UI must not imply a rerun tests latest branch head unless a new dispatch occurs.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-011 - Current Branch Readiness And Live-admin Precedence
+
+```yaml
+plan_unit_id: GI-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Current Branch shows active branch/worktree binding, background run status, Actions readiness, admin/runtime scopes, rate-limit/repo linkage, capability, environment-gated wait/blocked states, and recovery CTAs while live GitHub Actions Settings remains source of truth for hosted admin state.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: current_branch_readiness_live_admin_precedence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- Current Branch
+- /branches/background
+- /rate-limit/repo
+- live-admin
+- Settings > Advanced > CI / GitHub Actions
+- environment-gated readiness
+- wait/blocked states
+- durable audit receipts
+negative_constraints:
+- Workflow generation/template defaults do not override live-admin state.
+- Actions-specific recovery CTAs route to the owning subview rather than duplicating admin controls elsewhere.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-012 - Actions Readiness Refresh And Dispatch Capability Disclosure
+
+```yaml
+plan_unit_id: GI-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Actions readiness is event-driven plus bounded refresh on project, branch/worktree, workflow-file, panel, dispatch-form, and admin CRUD events; stale readiness cannot authorize mutation, dispatchability is validated without persisting secrets, and capability disclosure shows scope/value limits honestly.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: actions_readiness_refresh_dispatch_capability_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- workflow-file save
+- dispatch-form
+- event-driven plus bounded refresh
+- cmd.github.actions.validate_dispatch_readiness
+- hidden-value
+- read-only inventory
+- browser handoff
+- /scope-based
+- Local-to-remote workflow loop
+- /dispatch
+negative_constraints:
+- Readiness is not timer-only and not manual-only.
+- Stale readiness snapshots cannot authorize rerun, dispatch, or dependent Orchestrator steps.
+- Secret values are not stored or value-inspected after creation.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-013 - Actions To Code Correlation Bridge
+
+```yaml
+plan_unit_id: GI-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Actions-to-code correlation links runs, jobs, steps, failed checks, command pivots, commit ranges, changed files, branch/worktree refs, and related diffs/worktrees as a remediation bridge while labeling heuristic uncertainty and preserving candidate choices.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: actions_to_code_correlation_bridge
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- to-code
+- cmd.github.actions.open_run
+- cmd.github.actions.open_job
+- cmd.github.actions.open_step_logs
+- cmd.github.actions.open_related_diff
+- cmd.github.actions.open_related_worktree
+- /open_related_worktree
+- /failing
+- heuristic matches
+negative_constraints:
+- Actions-to-code correlation is a remediation bridge, not canonical proof by log parsing.
+- If exact file correlation is unavailable, show uncertainty; if multiple candidates exist, show candidates rather than auto-opening one.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+### GI-014 - Run Impact Mapping Evidence Boundary
+
+```yaml
+plan_unit_id: GI-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Run impact mapping belongs to GitHub Actions run detail and Orchestrator receipts, shows branch/commit/PR, worktree, deploy chain, publish, and readiness implications, and marks incomplete evidence as partial rather than complete truth.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: run_impact_mapping_evidence_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+preserved_exact_tokens:
+- Run impact mapping
+- /branch/commit/PR
+- deploy chain
+- Secrets / variables / environments readiness
+- partial impact map
+- derived-artifacts toggle
+- /download
+- retention boundary
+negative_constraints:
+- Related objects may auto-pin only as view state, never as an auto-write to repository or workflow state.
+- Heuristic linkage must not be presented as complete truth.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+
+<<< CONTEXT_AFTER 913-924 >>>
+### GI-015 - Failure Triage Log Access And Repro Budget
+
+```yaml
+plan_unit_id: GI-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Failure triage view compresses failed runs into failing job/step, logs, changed files, likely next action, metadata, log access/fallback state, tiered fetching, and stored refs while GitHub Actions repro loops follow Debug investigation budget reset rules.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+split_recommended: true
+depends_on: []

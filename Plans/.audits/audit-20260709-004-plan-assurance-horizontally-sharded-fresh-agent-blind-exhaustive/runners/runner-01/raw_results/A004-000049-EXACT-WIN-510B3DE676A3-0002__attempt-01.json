@@ -1,0 +1,997 @@
+{
+  "assignment_id": "A004-000049-EXACT-WIN-510B3DE676A3-0002",
+  "runner_id": "runner-01",
+  "status": "valid_result",
+  "agent_instance_id": "a004_r01_exact_000049_0b8e3f1ada92",
+  "agent_path": "/root/a004_r01_exact_000049_0b8e3f1ada92",
+  "agent_thread_id": null,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "window_id": "WIN-510B3DE676A3-0002",
+  "doc_id": "DOC-510B3DE676A3",
+  "document_path": "Plans/storage-plan.md",
+  "core_range": [
+    158,
+    489
+  ],
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "Exports are separate view families but must preserve canonical record identity, disclose trust state, and revalidate projection-derived data before asserting current authority.",
+      "evidence_ref_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "The declared storage authority hierarchy is seglog for canonical events, redb for durable KV projections and rollups, Tantivy for search, and JSONL as a projector-maintained mirror.",
+      "evidence_ref_ids": [
+        "EV-004",
+        "EV-051",
+        "EV-054"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "The capsule makes shell and workspace identifiers first-class and assigns separate continuity ownership to terminal sections, tabs, panes, PTY sessions, and higher-level dev sessions.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-006",
+        "EV-007",
+        "EV-008"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "Remote Git search uses a local bare-clone cache, separately handled submodules, local dirty-file staging, sparse n-gram candidate generation, and ripgrep verification against Git object content or dirty files.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-015",
+        "EV-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "Dirty entries carry monotonic generations and deletion state; query readers snapshot relevant entries, and re-anchor completion clears only generations included when the build began.",
+      "evidence_ref_ids": [
+        "EV-019",
+        "EV-020"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "Regex-index publication is intended to be atomic for live readers through ArcSwap, with readers retaining old snapshots and generation files flushed before publication.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-022"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "Remote cache settings have per-project overrides and global defaults; eviction is storage-owned, while the GUI must report local index size and separate remote Git and index portions.",
+      "evidence_ref_ids": [
+        "EV-031",
+        "EV-032"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "The index has explicit little-endian binary families for file maps, lookup entries, Roaring postings, and metadata, with generation-local file IDs.",
+      "evidence_ref_ids": [
+        "EV-033",
+        "EV-034",
+        "EV-035",
+        "EV-036",
+        "EV-037"
+      ]
+    },
+    {
+      "observation_id": "OBS-009",
+      "statement": "Frequency weighting combines a compiled u16 base matrix with per-project byte-pair counts, reuses the resulting table on incremental builds, and falls back to fixed-width trigrams when sparse boundaries cannot be placed.",
+      "evidence_ref_ids": [
+        "EV-038",
+        "EV-039"
+      ]
+    },
+    {
+      "observation_id": "OBS-010",
+      "statement": "Seglog is described as a length-prefixed stream whose stored payload is checksummed, optionally compressed, and decoded only after length and CRC validation.",
+      "evidence_ref_ids": [
+        "EV-042",
+        "EV-044",
+        "EV-045",
+        "EV-046"
+      ]
+    },
+    {
+      "observation_id": "OBS-011",
+      "statement": "Closed seglog segments are immutable, projections rebuild from seglog and checkpoints, and recovery from an active partial tail truncates after the last verified record.",
+      "evidence_ref_ids": [
+        "EV-048",
+        "EV-049"
+      ]
+    },
+    {
+      "observation_id": "OBS-012",
+      "statement": "EventRecord persistence explicitly separates envelope ownership, payload-schema dispatch, producer-owned semantics, redb lookup projections, retention mechanics, secret restrictions, and legacy compatibility input.",
+      "evidence_ref_ids": [
+        "EV-050",
+        "EV-051",
+        "EV-054",
+        "EV-057",
+        "EV-058",
+        "EV-059",
+        "EV-060",
+        "EV-061",
+        "EV-062"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FND-001",
+      "severity": "medium",
+      "gap_type": "export_authority_contract",
+      "statement": "The capsule requires `trust-state` disclosure and canonical revalidation but does not define the trust-state values, revalidation inputs or algorithm, failure result, or authority permitted to assert that an export is current.",
+      "why_consequential": "Independent export producers can disclose incompatible states or claim current authority after materially different checks, undermining the canonical-ID protection the rule is meant to provide.",
+      "evidence_ref_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "finding_id": "FND-002",
+      "severity": "high",
+      "gap_type": "migration_determinism",
+      "statement": "Migration is declared prose-rule driven and forward-only while many aliases and wrapper-local payloads remain accepted, but this capsule supplies no versioned crosswalk, precedence rule for conflicting canonical and legacy values, retirement criterion, or deterministic failure behavior.",
+      "why_consequential": "Producers, consumers, and automated extraction gates can normalize the same legacy input differently or preserve permanent parallel canon despite the stated prohibition.",
+      "evidence_ref_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "finding_id": "FND-003",
+      "severity": "medium",
+      "gap_type": "identity_lifecycle",
+      "statement": "The identifiers and their ownership distinctions are named, but the feature-enable condition, uniqueness scope, allocation authority, persistence keys, referential-integrity rules, deletion states, and restore collision behavior are not defined in the capsule.",
+      "why_consequential": "Builders can create incompatible identity lifecycles even while following the listed ownership labels, breaking exact PTY restoration, detached-window continuity, and branch lineage.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-006",
+        "EV-007"
+      ]
+    },
+    {
+      "finding_id": "FND-004",
+      "severity": "high",
+      "gap_type": "storage_path_contract_conflict",
+      "statement": "All storage is said to live under an app-data root such as `~/.puppet-master/`, yet the remote-cache table labels `.puppet-master/cache/...` as relative to that root. The capsule does not adjudicate whether the resulting path is `<app-root>/cache/...` or `<app-root>/.puppet-master/cache/...`.",
+      "why_consequential": "Implementations can create different physical cache roots, fail to find prior caches, duplicate large repositories, or evict a different directory than the one used for search.",
+      "evidence_ref_ids": [
+        "EV-009",
+        "EV-024",
+        "EV-025"
+      ]
+    },
+    {
+      "finding_id": "FND-005",
+      "severity": "high",
+      "gap_type": "regex_candidate_algorithm",
+      "statement": "The capsule selects deterministic sparse n-gram postings and gives one boundary-failure fallback, but it does not define the sparse-boundary algorithm, n-gram selection rules, regex-to-literal extraction, handling when no usable gram exists, or exact build/query equivalence outside the fallback.",
+      "why_consequential": "Candidate generation is the central capability of the index; different implementations can produce false negatives before authoritative ripgrep verification is ever invoked.",
+      "evidence_ref_ids": [
+        "EV-010",
+        "EV-039"
+      ]
+    },
+    {
+      "finding_id": "FND-006",
+      "severity": "high",
+      "gap_type": "cache_namespace_collision",
+      "statement": "Remote project directories use only the first eight hexadecimal characters of xxh3(project_id), while the manifest merely records a full-ID mapping; no collision detection, disambiguation, or alternate-directory rule is specified.",
+      "why_consequential": "Two project identities can alias one cache namespace, causing cross-project search contamination, incorrect Git content, or eviction of the wrong project's cache.",
+      "evidence_ref_ids": [
+        "EV-011",
+        "EV-025",
+        "EV-027",
+        "EV-030"
+      ]
+    },
+    {
+      "finding_id": "FND-007",
+      "severity": "high",
+      "gap_type": "submodule_layout_conflict",
+      "statement": "The capsule names both `git/m/{sub_hash8}/` and `git/modules/{submodule_path}/` as submodule repositories, later says validated submodules are stored under `git/modules/{submodule_path}/`, and the cache-layout table instead assigns bare submodule clones to `git/m/{sub_hash8}/`.",
+      "why_consequential": "Clone, index-build, verification, cleanup, and recovery components cannot share a single deterministic submodule location, and one component may delete or ignore another component's repository.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-015",
+        "EV-026"
+      ]
+    },
+    {
+      "finding_id": "FND-008",
+      "severity": "high",
+      "gap_type": "remote_command_security",
+      "statement": "The remote-clone and bundle paths contain remote host, URL, SSH command, and repository-path inputs, but the capsule does not define canonical parsing, shell-escaping avoidance, host-key validation, credential custody, allowed schemes, or failure redaction; only submodule-path validation is mentioned.",
+      "why_consequential": "Implementations can diverge at a security boundary and may construct unsafe remote commands, disclose sensitive connection material in reproducibility records, or trust an unintended host.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-015"
+      ]
+    },
+    {
+      "finding_id": "FND-009",
+      "severity": "medium",
+      "gap_type": "case_collision_visibility",
+      "statement": "On a case-insensitive filesystem the first lowercased-path collision is retained and later entries are dropped with only a logged warning; no deterministic user-visible degraded state, alternate access path, or remediation behavior is specified.",
+      "why_consequential": "Search can silently omit a real tracked file, and the selected file can become consequential if enumeration behavior changes.",
+      "evidence_ref_ids": [
+        "EV-016"
+      ]
+    },
+    {
+      "finding_id": "FND-010",
+      "severity": "high",
+      "gap_type": "unsynced_dirty_cache_eviction",
+      "statement": "Dirty remote buffers remain local pending-sync state until destination write confirmation, while cache eviction can remove project caches; the capsule does not say whether eviction is blocked, preserves dirty staging, requires confirmation, or deletes unconfirmed content.",
+      "why_consequential": "Automatic LRU or age eviction and manual eviction can lose the only local copy of unsynced user work or leave an orphaned dirty layer whose ownership is unknown.",
+      "evidence_ref_ids": [
+        "EV-017",
+        "EV-018",
+        "EV-031"
+      ]
+    },
+    {
+      "finding_id": "FND-011",
+      "severity": "high",
+      "gap_type": "dirty_state_crash_recovery",
+      "statement": "Dirty lists and dirty-layer state are memory-only even though staged buffers can represent pending-sync user state. The capsule says the state is reconstructed as needed but gives no reconstruction source, generation assignment after restart, deleted-entry recovery, or rule tying layer clearing to confirmed remote writes.",
+      "why_consequential": "A crash or restart can erase ordering and deletion facts, clear content that arrived during a rebuild, or retain an index containing dirty content that can no longer be verified against the corresponding staged buffer.",
+      "evidence_ref_ids": [
+        "EV-012",
+        "EV-017",
+        "EV-018",
+        "EV-019",
+        "EV-020",
+        "EV-037"
+      ]
+    },
+    {
+      "finding_id": "FND-012",
+      "severity": "high",
+      "gap_type": "snapshot_restart_authority",
+      "statement": "Live publication uses an in-memory ArcSwap pointer and syncs generation files, but the capsule defines no persisted current-generation selector, startup choice among multiple valid generation directories, crash-before-or-after-swap adjudication, or orphan-generation cleanup rule.",
+      "why_consequential": "After restart, a reader can select an older but valid snapshot or a newly flushed generation that was never made authoritative in the prior process.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-022",
+        "EV-040"
+      ]
+    },
+    {
+      "finding_id": "FND-013",
+      "severity": "high",
+      "gap_type": "git_anchor_reachability_check",
+      "statement": "The capsule treats failure of `git cat-file -t {sha}` as the anchor-reachability test, but that probe establishes object existence, not reachability from current HEAD; no ancestry or ref-reachability check is specified.",
+      "why_consequential": "A rebased-away commit whose object remains locally available can be treated as current, preserving a stale index contrary to the stated full-rebuild policy.",
+      "evidence_ref_ids": [
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FND-014",
+      "severity": "medium",
+      "gap_type": "remote_staleness_state_machine",
+      "statement": "The capsule defines a fetch cadence and says stale or disconnected snapshots are read-only until refresh, but it does not define when a snapshot enters or exits stale, which search operations read-only permits, how fetch failures retry, what explicit refresh failure returns, or what GUI disclosure accompanies stale results.",
+      "why_consequential": "Users and callers cannot tell whether results are current, and implementations can enable different capabilities or silently serve indefinitely stale data.",
+      "evidence_ref_ids": [
+        "EV-014",
+        "EV-018",
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FND-015",
+      "severity": "high",
+      "gap_type": "binary_input_validation",
+      "statement": "Transferred snapshots can supply file-map paths and binary lengths, while the file-map contract requires only UTF-8 and slash normalization. The capsule gives no prohibition on absolute paths, `..`, NUL, duplicate paths, symlink traversal, oversized lengths, or file-count and bitmap allocation limits.",
+      "why_consequential": "A malformed or hostile cache can cause out-of-root I/O, excessive allocation, denial of service, or ambiguous file identity before ripgrep verification.",
+      "evidence_ref_ids": [
+        "EV-028",
+        "EV-029",
+        "EV-034",
+        "EV-036",
+        "EV-040"
+      ]
+    },
+    {
+      "finding_id": "FND-016",
+      "severity": "medium",
+      "gap_type": "binary_offset_semantics",
+      "statement": "A lookup entry contains `postings_offset`, and a postings entry begins with a length prefix, but the capsule does not say whether the offset addresses the length field or bitmap bytes, whether it is absolute from file start or relative to the post-header region, or whether offsets must reference unique entry boundaries.",
+      "why_consequential": "Independent writers and readers can produce mutually unreadable snapshots even while satisfying the declared field layouts and basic bounds check.",
+      "evidence_ref_ids": [
+        "EV-035",
+        "EV-036",
+        "EV-040"
+      ]
+    },
+    {
+      "finding_id": "FND-017",
+      "severity": "high",
+      "gap_type": "frequency_table_determinism",
+      "statement": "The base and project matrices are described as u16-derived counts and combined with `0.5 * base + 0.5 * project`, but count normalization, saturation, integer or floating evaluation, rounding, tie behavior, overflow handling, and reproducible corpus revision are not specified.",
+      "why_consequential": "Local and remote builders can persist different frequency tables and therefore choose different sparse boundaries and candidate postings for identical source content.",
+      "evidence_ref_ids": [
+        "EV-038",
+        "EV-039"
+      ]
+    },
+    {
+      "finding_id": "FND-018",
+      "severity": "critical",
+      "gap_type": "seglog_wire_format_incomplete",
+      "statement": "The canonical log is called length-prefixed, but the capsule specifies neither the prefix width and byte order nor a byte encoding for the variable-length header. It also names `lz4` without defining frame versus block encoding or an uncompressed-length field.",
+      "why_consequential": "The authoritative event store cannot be independently encoded, decoded, scanned, or safely resynchronized after corruption from this contract, blocking interoperable implementation and canonical recovery.",
+      "evidence_ref_ids": [
+        "EV-044",
+        "EV-045",
+        "EV-046"
+      ]
+    },
+    {
+      "finding_id": "FND-019",
+      "severity": "high",
+      "gap_type": "seglog_header_integrity",
+      "statement": "CRC32 covers only stored payload bytes, while ordering, generation, compression, type, timestamps, and length live in the header. The header may duplicate EventRecord fields, but no required equality check or header checksum is defined.",
+      "why_consequential": "Header corruption can alter canonical order, select the wrong decoder, or misattribute an event while the payload CRC still validates.",
+      "evidence_ref_ids": [
+        "EV-042",
+        "EV-045",
+        "EV-046",
+        "EV-052"
+      ]
+    },
+    {
+      "finding_id": "FND-020",
+      "severity": "high",
+      "gap_type": "corruption_recovery_state",
+      "statement": "A CRC-failing record is skipped and projectors resume from the last known-good checkpoint, while only an active partial or corrupt tail has a truncation rule. The capsule does not define resynchronization after a corrupt length or header, closed-segment corruption behavior, persistent sequence-gap state, degraded authority, retry suppression, or integrity-event append failure.",
+      "why_consequential": "Readers can loop on the same corrupt record, misframe every later record, silently omit a canonical event, or disagree about whether subsequent projections are authoritative.",
+      "evidence_ref_ids": [
+        "EV-043",
+        "EV-049"
+      ]
+    },
+    {
+      "finding_id": "FND-021",
+      "severity": "high",
+      "gap_type": "rotation_and_append_durability",
+      "statement": "Rotation is labeled deterministic, but the size threshold, generation-allocation rule, concurrent-writer authority, sequence allocation, append acknowledgement point, fsync policy, close-and-rename atomicity, and recovery of a crash during rotation are not specified.",
+      "why_consequential": "Builders can rotate at different boundaries, reuse sequence or generation values, acknowledge events that are not durable, or leave two plausible active segments.",
+      "evidence_ref_ids": [
+        "EV-047",
+        "EV-048"
+      ]
+    },
+    {
+      "finding_id": "FND-022",
+      "severity": "high",
+      "gap_type": "canonical_order_validation",
+      "statement": "The capsule calls append order canonical, consumes files lexically and by byte offset, also includes `sequence_id` in replay order, and requires preserving sequence ordering, but it gives no rule for duplicate, decreasing, missing, or cross-generation sequence IDs or disagreement between physical and sequence order.",
+      "why_consequential": "Different rebuilders can reject, reorder, or project the same physical log differently, violating the claimed canonical event order.",
+      "evidence_ref_ids": [
+        "EV-046",
+        "EV-048",
+        "EV-049",
+        "EV-053"
+      ]
+    },
+    {
+      "finding_id": "FND-023",
+      "severity": "high",
+      "gap_type": "unsupported_schema_transition",
+      "statement": "A missing schema version may be quarantined or migrated, while an unsupported schema ID or version must be rejected, but the capsule does not choose between quarantine and migration or define whether rejection halts replay, skips the record, marks projections degraded, emits a durable event, or can later resume.",
+      "why_consequential": "Projectors can make incompatible availability and data-loss choices at the first schema transition, and checkpoint advancement can permanently bypass an unprojected canonical event.",
+      "evidence_ref_ids": [
+        "EV-055",
+        "EV-056"
+      ]
+    },
+    {
+      "finding_id": "FND-024",
+      "severity": "high",
+      "gap_type": "idempotency_conflict_contract",
+      "statement": "Duplicate delivery returns an original result when event ID or idempotency key matches the policy, but the capsule does not define key scope, policy location, retention duration, precedence when the identifiers disagree, or handling of the same key with different payload bytes or schema versions.",
+      "why_consequential": "A conflicting event can be silently aliased to an unrelated append, appended twice, or rejected differently by the writer and projectors.",
+      "evidence_ref_ids": [
+        "EV-058"
+      ]
+    },
+    {
+      "finding_id": "FND-025",
+      "severity": "high",
+      "gap_type": "legacy_event_migration",
+      "statement": "Legacy input contains only `ts`, `seq`, `type`, and `payload`, yet the upgrader must populate identity, version, idempotency, redaction, replay, and migration fields without any derivation rules, namespace, collision behavior, or failure state.",
+      "why_consequential": "Two upgraders can generate different canonical EventRecords for the same legacy value, defeating deterministic replay and idempotency.",
+      "evidence_ref_ids": [
+        "EV-061"
+      ]
+    },
+    {
+      "finding_id": "FND-026",
+      "severity": "medium",
+      "gap_type": "secret_rejection_enforcement",
+      "statement": "Secret-bearing EventRecord content is declared invalid, but the capsule does not define detection authority, scanning stage, false-positive handling, redaction proof, quarantine or rejection result, producer receipt, or behavior when a secret is discovered after append.",
+      "why_consequential": "Producers can interpret the prohibition differently, and a canonical append-only store has no stated recovery path once forbidden content becomes durable.",
+      "evidence_ref_ids": [
+        "EV-059",
+        "EV-060"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "statement": "Export-local shadow identities are explicitly prohibited, and projection-built exports cannot claim current authority without canonical revalidation.",
+      "evidence_ref_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "statement": "The capsule explicitly distinguishes project, workspace-tab, browser-tab, preview-session, terminal-section, terminal-tab, terminal-pane, PTY-session, and dev-session identity responsibilities; command-block identity is subordinate to terminal-session identity.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-006",
+        "EV-007",
+        "EV-008"
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "statement": "Dirty entries created after a re-anchor build begins are explicitly protected from that build's clearing operation, and query readers take a stable clone of relevant dirty entries.",
+      "evidence_ref_ids": [
+        "EV-019",
+        "EV-020"
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "statement": "Live snapshot replacement explicitly uses one pointer swap, readers retain old snapshots through query completion, and generation files are flushed before publication.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-022"
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "statement": "Hash collisions in lookup keys have an explicit correctness-preserving behavior: posting lists are unioned, candidates may broaden, and final line precision comes from ripgrep verification.",
+      "evidence_ref_ids": [
+        "EV-035",
+        "EV-036"
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "statement": "The GUI-visible disk-usage distinction is explicit: local projects expose index size, while remote projects expose total cache, index, and Git portions.",
+      "evidence_ref_ids": [
+        "EV-032"
+      ]
+    },
+    {
+      "non_gap_id": "NG-007",
+      "statement": "Seglog is explicitly authoritative for EventRecord values, and redb is expressly barred from becoming a second mutable event source of truth.",
+      "evidence_ref_ids": [
+        "EV-051",
+        "EV-054"
+      ]
+    },
+    {
+      "non_gap_id": "NG-008",
+      "statement": "Envelope, storage, and producer ownership boundaries are explicitly separated, and a family without a concrete payload schema is explicitly declared materially incomplete.",
+      "evidence_ref_ids": [
+        "EV-057"
+      ]
+    },
+    {
+      "non_gap_id": "NG-009",
+      "statement": "The capsule explicitly limits the EventRecord closure claim and does not assert that runtime lifecycle, GUI, security, behavioral acceptance, or all redb value schemas are complete.",
+      "evidence_ref_ids": [
+        "EV-062"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "statement": "The exact feature-enable state and transition that activate persistence of the additional shell/runtime identities cannot be determined from this capsule.",
+      "evidence_ref_ids": [
+        "EV-005"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "statement": "The canonical per-platform app-data-root selection and the criterion for deciding that state is inherently project-local cannot be determined from the provided rules.",
+      "evidence_ref_ids": [
+        "EV-009"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "statement": "The precise stale, disconnected, refresh-in-progress, refresh-failed, and pending-sync transitions for remote search cannot be determined from the cadence and read-only statements.",
+      "evidence_ref_ids": [
+        "EV-014",
+        "EV-018"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "statement": "Which valid regex-index generation is authoritative after process restart cannot be determined from the in-memory publication and startup-validation rules.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-022",
+        "EV-040"
+      ]
+    },
+    {
+      "unknown_id": "UNK-005",
+      "statement": "Which event families already have concrete payload schemas, and therefore which are materially complete, cannot be determined from this capsule.",
+      "evidence_ref_ids": [
+        "EV-057",
+        "EV-062"
+      ]
+    },
+    {
+      "unknown_id": "UNK-006",
+      "statement": "Whether the referenced external verifier gates and evidence contracts supply golden binary vectors, corruption injection, crash recovery, migration, security, and performance acceptance coverage cannot be determined within the capsule.",
+      "evidence_ref_ids": [
+        "EV-003"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 158,
+      "line_end": 158,
+      "quote": "Export families stay distinct. Run export, Ledger export, Evidence export, CSV, JSONL, record-shaped bundles, scope-keyed manifests, surface-local view exports, and DRY_Rules / DRY_Rules.md compliance records must preserve canonical IDs and `trust-state` disclosure instead of creating export-local shadow identity; exports built from projections require canonical revalidation before claiming current authority. Pass-report, pass_verdict, phase_plan_ref, requirements_quality_report_ref, evidence_id, workflow_run_id, /branch, /Source, /docs, /Usage, and /consumer joins are export and inspection refs, not alternate storage owners."
+    },
+    {
+      "evidence_id": "EV-002",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 160,
+      "line_end": 160,
+      "quote": "Storage migration is prose-rule driven and forward-only. Low-level actually-populated fields may keep migration aliases for request-era, blocked-state, restore point, /block, /blocked/wizard, `/system`, /help/cross-doc, and under-specified terms, but owner-routing, policy-layer, schema-owner, non-weak-integration, multi-package, packages, /reusable, /accepted, /promoted/active, /wizard/interview, /wizard/validation, /Actions/Docker/Kubernetes, /Seams/Evidence/History/Ledger, /lifecycle/projection, /scheduler/worker/governance/storage/UI, and GUI/HITL/SSOT wording must resolve into the canonical object families above. Event naming and command extraction rules across catalog/storage/wiring and `/storage/wiring` are reconciled here before any automated gate trusts doc parsing. New docs/producers (`/producers`) must prefer canonical route-target forms; consumers may accept older wrapper-local payloads during migration, but migration aliases must not become permanent parallel canon. Graph/Evidence/Ledger and `/Evidence/Ledger` search can remain tab-local inside those tabs, while Orchestrator search may be page-level, `/or` command-palette integrated, or both; all cases reuse storage routing fields so Ledger, exports, search, and `/routing` inspect record families consistently."
+    },
+    {
+      "evidence_id": "EV-003",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 166,
+      "line_end": 166,
+      "quote": "**Cross-references:** Plans/rewrite-tie-in-memo.md, Plans/assistant-chat-design.md (§10-§11, §24), Plans/assistant-memory-subsystem.md, Plans/usage-feature.md, Plans/FileManager.md (§2.9), Plans/Tools.md (§8.0, §8.4 -- tool events and rollups), AGENTS.md. **Validation:** Deterministic verifier gates plus SSOT acceptance/evidence contracts are authoritative for this stack (`python3 scripts/pm-plans-verify.py run-gates`, `Plans/Progression_Gates.md`, `Plans/evidence.schema.json`); SQLite remains off the table."
+    },
+    {
+      "evidence_id": "EV-004",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 172,
+      "line_end": 172,
+      "quote": "Storage for the rewrite follows a multi-store design: **seglog** as the canonical append-only event stream, **redb** for durable KV state (settings, sessions, runs, checkpoints, editor state, analytics rollups), and **Tantivy** for full-text search. Projectors consume seglog and maintain a JSONL mirror, Tantivy indices, and redb state. Analytics scan jobs compute rollups from seglog and store them in redb for fast dashboard and Usage queries. This plan specifies **how** we implement it: file locations, event format, redb schema, projector behavior, and how we address gaps, failure modes, and optional enhancements."
+    },
+    {
+      "evidence_id": "EV-005",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 195,
+      "line_end": 195,
+      "quote": "The storage model MUST treat the following as first-class identities when the feature is enabled:"
+    },
+    {
+      "evidence_id": "EV-006",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 212,
+      "line_end": 212,
+      "quote": "- `project_id` is stable across path rebinding and restore operations; raw path is not the canonical identity"
+    },
+    {
+      "evidence_id": "EV-007",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 215,
+      "line_end": 220,
+      "quote": "- `terminal_section_id` owns presentation continuity and dock or detach realization\n- `terminal_tab_id` owns tab continuity, label, pin state, and order within a terminal section\n- `terminal_pane_id` owns split-tree slot continuity and visible binding location\n- `terminal_session_id` owns exact PTY continuity\n- `dev_session_id` owns higher-level dev workflow continuity and MUST NOT replace `terminal_session_id` when exact shell reuse is required\n- detached windows and ephemeral automation/auth sessions have separate persistence scope from workspace-tab shell state"
+    },
+    {
+      "evidence_id": "EV-008",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 225,
+      "line_end": 225,
+      "quote": "- command-block and transcript metadata may reference stable per-session command-block identifiers, but command-block identity is subordinate to `terminal_session_id` rather than a peer replacement for it"
+    },
+    {
+      "evidence_id": "EV-009",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 232,
+      "line_end": 232,
+      "quote": "All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state still lives under `.puppet-master/` inside the workspace when the feature is inherently project-local."
+    },
+    {
+      "evidence_id": "EV-010",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 247,
+      "line_end": 247,
+      "quote": "Regex-index algorithm policy: PM does not adopt probabilistic Blackbird-style posting augmentation as canonical storage. `nextMask` and `locMask` near-quadgram bloom masks are source-reference evidence only; BUT they are rejected for dynamic PM indexes because saturated bloom masks eventually match everything and degrade back toward full scans under frequent updates. Canonical PM storage keeps deterministic sparse n-gram postings plus authoritative ripgrep verification."
+    },
+    {
+      "evidence_id": "EV-011",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 251,
+      "line_end": 251,
+      "quote": "Regex-index n-gram hashing uses xxHash (`xxh3`) through the `xxhash-rust` crate as the 64-bit hash function for n-gram keys. Classification: Non-cryptographic. Rationale: Fast with excellent distribution for index-key hashing, not security-sensitive hashing."
+    },
+    {
+      "evidence_id": "EV-012",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 253,
+      "line_end": 253,
+      "quote": "Regex-index compression and metadata policy: each posting list is a Roaring Bitmap (`roaring` crate) over `u32` file IDs, highly compressed for dense and sparse sets, and supports fast intersection/union (`/union`) for multi-n-gram queries. `index_meta.json` carries `anchor_sha: string | null` (Git HEAD SHA, null for non-Git), `build_timestamp_utc` as ISO-8601 with Z, `schema_version: u32` starting at 1 and incremented on format-breaking changes, `file_count: u32`, `generation: u64`, `case_sensitive_fs: bool`, `roaring_format: \"portable\"`, and `checksums` as per-file xxh3 hex strings exactly shaped `{ \"file_map\": \"<hex>\", \"lookup\": \"<hex>\", \"postings\": \"<hex>\" }`. Dirty file lists are in-memory only per `/Q19`."
+    },
+    {
+      "evidence_id": "EV-013",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 255,
+      "line_end": 255,
+      "quote": "Remote Git regex-index cache policy: on remote project open, PM stores the local Git cache under `.puppet-master/cache/r/{hash8}/git/`, with remote submodules under `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` and submodule repositories under `git/modules/{submodule_path}/`. Clone mode may be full, shallow, or partial (`/shallow/partial`), but bare-clones are the storage shape: PM may run `git clone --bare ssh://remote_host/path/to/repo` or `git -c core.sshCommand=\"ssh -J remote_host\" clone --bare`, where `core.sshCommand`, `remote_host`, `//remote_host/path/to/repo`, and remote `URL` handling are recorded for reproducibility. If auth or `/network` topology means the repository is only reachable from the remote host, PM initiates the clone remotely and streams a `git bundle` over SSH; if that fails, it falls back to the non-Git remote path."
+    },
+    {
+      "evidence_id": "EV-014",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 261,
+      "line_end": 261,
+      "quote": "Remote Git fetch cadence is on project open, every 5 minutes after the prior fetch+build cycle completes, and explicit user `/sync`, pull, or refresh action; webhook or push notification remains aspirational and not MVP-required."
+    },
+    {
+      "evidence_id": "EV-015",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 263,
+      "line_end": 263,
+      "quote": "Remote submodule and verification policy: CRITICAL FIX for bare-clone and recurse-submodules behavior is that `--recurse-submodules` is ignored with `--bare`, so PM parses `.gitmodules`/gitmodules, separately bare-clones each submodule repo after validating submodule paths, stores them under `git/modules/{submodule_path}/`, and includes `/modules/{submodule_path}/` content by reading the gitlink-referenced commit via `git show`. Bare Git clones cannot be searched directly by ripgrep; CRITICAL FIX verification resolves `file_id -> path`, runs `git show {anchor_sha}:{path}` / `git show {anchor}:{path}` / `git show {sha}:{path}` and pipes that content to ripgrep, while index-build bulk content reads use `git cat-file --batch`."
+    },
+    {
+      "evidence_id": "EV-016",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 265,
+      "line_end": 265,
+      "quote": "During bare-clone index builds that enumerate files with `git ls-tree` / `ls-tree`, PM detects case-insensitive filesystems, deduplicates entries by lowercased path, keeps the first entry encountered, and logs a `case-collisions` warning when later entries collapse to the same normalized path."
+    },
+    {
+      "evidence_id": "EV-017",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 267,
+      "line_end": 267,
+      "quote": "Remote dirty-file locality and re-anchor policy: dirty remote content is staged locally at `.puppet-master/cache/r/{hash8}/dirty/{relative_path}` so ripgrep can verify dirty files from local storage and keep the near-zero-SSH-during-grep guarantee. Content arrives with the file-change notification for files up to 1 MB or through background prefetch for larger files; if grep outruns that prefetch, PM may block briefly and then fall back to SSH ripgrep for that file. This near-zero policy SUPERSEDES any absolute zero-SSH claim for >1 MB dirty files. The dirty staging area is merged into the next re-anchor build before clearing."
+    },
+    {
+      "evidence_id": "EV-018",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 269,
+      "line_end": 269,
+      "quote": "Remote editor/search storage treats `remote proxy`, SSHFS-style, and `SSHFS` access as capability profiles over one remote project identity, not separate path authorities. Each profile records whether file-watch is native, proxied, or polling-derived; stale or disconnected remote search snapshots are `/read-only` until refresh, while dirty remote buffers remain local pending-sync state until the effective destination confirms write success."
+    },
+    {
+      "evidence_id": "EV-019",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 271,
+      "line_end": 271,
+      "quote": "Dirty-layer generation clearing is a CRITICAL FIX: dirty-layer entries carry a monotonically increasing `generation: u64`; when a re-anchor build starts, PM records `build_generation`, and on build completion clears only entries with `generation <= build_generation` / `generation ≤ build_generation`. Entries added during the build (`generation > build_generation`) survive so a long-running build cannot lose files dirtied during that build."
+    },
+    {
+      "evidence_id": "EV-020",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 273,
+      "line_end": 273,
+      "quote": "Dirty-layer concurrency uses `RwLock<HashMap<PathBuf, DirtyEntry>>`. Each `DirtyEntry` carries the generation counter and deleted flag; PM-mediated writes take a brief write lock for synchronous inserts, file watcher inserts are async backup/dedup, and query readers clone the relevant dirty entries at query start."
+    },
+    {
+      "evidence_id": "EV-021",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 275,
+      "line_end": 275,
+      "quote": "Regex-index snapshot publication is a CRITICAL FIX: PM publishes `ArcSwap<Arc<IndexSnapshot>>` using the `arc-swap` crate. `IndexSnapshot` holds the mmap handle for `lookup.bin`, the postings file handle, `file_map` data, and `index_meta`; the builder constructs a new snapshot from `gen-{N+1}/` and performs one atomic pointer swap. Readers hold `Arc` references until query completion, old generation directories are cleaned only after the last reader exits, and the generation-directory design removes rename-of-mmap'd-file / d-file hazards on Windows and eliminates multi-file rename atomicity issues."
+    },
+    {
+      "evidence_id": "EV-022",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 277,
+      "line_end": 277,
+      "quote": "Regex-index durability before publish: all new generation files are flushed with `File::sync_all()` / `sync_all` before ArcSwap publication, preventing a crash-after-swap-before-flush from leaving truncated content behind valid filenames."
+    },
+    {
+      "evidence_id": "EV-023",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 279,
+      "line_end": 279,
+      "quote": "Anchor SHA reachability policy: if `git cat-file -t {sha}` fails because the indexed SHA was garbage-collected, rebased away, shallow-pruned, or no longer reachable from current HEAD, PM treats the index as invalid, triggers a full rebuild from current HEAD, emits an info-level log, and does not surface a user-visible error."
+    },
+    {
+      "evidence_id": "EV-024",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 304,
+      "line_end": 304,
+      "quote": "| Path (relative to app data root) | Purpose |"
+    },
+    {
+      "evidence_id": "EV-025",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 306,
+      "line_end": 306,
+      "quote": "| `.puppet-master/cache/r/{hash8}/` | Remote project cache root (`hash8` = first 8 chars of xxh3(project_id)) |"
+    },
+    {
+      "evidence_id": "EV-026",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 308,
+      "line_end": 308,
+      "quote": "| `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` | Bare Git clones for submodules (recursive, max depth 5) |"
+    },
+    {
+      "evidence_id": "EV-027",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 311,
+      "line_end": 311,
+      "quote": "| `.puppet-master/cache/r/{hash8}/manifest.json` | `hash8 -> project_id/submodule_path` mapping for recovery, MAX_PATH mitigation, and cleanup |"
+    },
+    {
+      "evidence_id": "EV-028",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 320,
+      "line_end": 320,
+      "quote": "| `.puppet-master/cache/r/{hash8}/regex_index/` | Transferred sparse n-gram snapshot built on the remote host |"
+    },
+    {
+      "evidence_id": "EV-029",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 324,
+      "line_end": 324,
+      "quote": "| `.puppet-master/cache/r/{hash8}/regex_index/gen-{N}/file_map.bin` | Transferred file map snapshot |"
+    },
+    {
+      "evidence_id": "EV-030",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 331,
+      "line_end": 331,
+      "quote": "Windows compatibility note for `storage-plan.md ### 2.1`: PM mitigates MAX_PATH with hash-based short paths such as `.puppet-master/cache/r/{hash8}/git/m/{hash8}/` (`/cache/r/{hash8}/git/m/{hash8}/`) where `hash8` is derived from `xxh3(full_id)`, and `manifest.json` keeps the full `full_id` mapping. The Windows app manifest also declares `longPathAware` as `<longPathAware>true</longPathAware>` (`/longPathAware`) as defense-in-depth; both mitigations apply together."
+    },
+    {
+      "evidence_id": "EV-031",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 340,
+      "line_end": 340,
+      "quote": "Remote cache eviction is storage-owned and does not run on ordinary project close. PM evicts remote project caches after 30 days of no project opens, when the total cache directory exceeds the global cache size limit (default: 50 GB or 10% of free disk at first cache creation, whichever is smaller), or when the user manually evicts one project cache or chooses Clear All Remote Caches. Disk-pressure eviction removes LRU project caches until the cache is under limit. Eviction deletes both the Git cache and regex index for that project; the next open performs a fresh clone plus background index build."
+    },
+    {
+      "evidence_id": "EV-032",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 344,
+      "line_end": 344,
+      "quote": "Disk-usage reporting is required for BOTH local and remote project caches: local projects show `Index: {size}`, while remote projects show `Remote cache: {total} - Index: {idx_size}, Git: {git_size}` so users can see the index and Git portions separately."
+    },
+    {
+      "evidence_id": "EV-033",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 348,
+      "line_end": 348,
+      "quote": "All binary index files use **little-endian** byte order with no inter-field padding."
+    },
+    {
+      "evidence_id": "EV-034",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 350,
+      "line_end": 350,
+      "quote": "- **`file_map.bin`:** header `PMFM` + `schema_version:u32` + `entry_count:u32`. Entries are `path_byte_length:u32` + UTF-8 path bytes. Stored paths are forward-slash (`/`) normalized regardless of OS and convert to native separators only at query/I/O time, matching Git internal convention and keeping the `file_map` format platform-independent. File IDs are generation-local only and MUST NOT be treated as stable across builds or across snapshot generations."
+    },
+    {
+      "evidence_id": "EV-035",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 353,
+      "line_end": 353,
+      "quote": "- **`lookup.bin`:** header `PMLK` + `schema_version:u32` + `entry_count:u32`. Entries are sorted `(xxh3_hash:u64, postings_offset:u64)` pairs. `lookup.bin` remains a separate mmap file from offset 0; if a future packed format combines files, the lookup region MUST begin at a 64 KB-aligned offset for Windows `MapViewOfFile` compatibility. Startup validation checks both `12 + entry_count * 16` sizing and every referenced postings offset before mmap. When two distinct n-grams produce the same xxh3 64-bit hash, their posting lists are merged at index time (Roaring union); the lookup table has exactly one entry per unique hash. Collisions broaden candidates but never affect correctness."
+    },
+    {
+      "evidence_id": "EV-036",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 356,
+      "line_end": 356,
+      "quote": "- **`postings.bin`:** header `PMPL` + `schema_version:u32`. Entries are `bitmap_byte_length:u32` + portable-format Roaring Bitmap bytes produced with `RoaringBitmap::serialize_into` portable mode. Postings store `u32` file IDs only; line-level precision always comes from ripgrep verification on candidate files."
+    },
+    {
+      "evidence_id": "EV-037",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 359,
+      "line_end": 359,
+      "quote": "- **`index_meta.json`:** metadata object with these required fields: `anchor_sha: string | null`, `build_timestamp_utc: string`, `schema_version: u32`, `file_count: u32`, `generation: u64`, `checksums: { file_map, lookup, postings }`, `case_sensitive_fs: bool`, and `roaring_format: \"portable\"`. Dirty-layer state is NOT persisted in `index_meta.json`; it is reconstructed as needed because the index is a cache."
+    },
+    {
+      "evidence_id": "EV-038",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 368,
+      "line_end": 368,
+      "quote": "- **Base frequency corpus:** PM derives the shipped base frequency table from The Stack Smol (`bigcode/the-stack-smol`, ~2.6 GB), a multi-language random subset of The Stack. A one-time development char-pair / byte-pair counting script produces the 256x256 matrix on the same CRLF-stripped normalized byte stream; no public pre-computed table is assumed, and PM computes its own so it can refresh the table on new Stack releases when needed."
+    },
+    {
+      "evidence_id": "EV-039",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 372,
+      "line_end": 375,
+      "quote": "- **Base table source:** `frequency_table.bin` is derived from a shipped 256x256 `u16` base matrix built from The Stack Smol, counted on CRLF-stripped ASCII-lowercased bytes. The base table is compiled into the PM binary as a `static` constant (`[u16; 65536]`, ~128 KB); it is not shipped as a separate file.\n- **Blend rule:** Local and remote full builds compute per-project byte-pair counts on the same CRLF-stripped normalized byte stream and blend them with the base table using `effective[a][b] = 0.5 * base[a][b] + 0.5 * project[a][b]`.\n- **Stability rule:** `frequency_table.bin` is shared by both build and query logic and is recomputed only on full rebuilds. Incremental rebuilds reuse the current stored table.\n- **Boundary-failure fallback:** When weighting cannot place sparse boundaries for a segment of length >= 3, the builder and query path fall back to fixed-width 3-gram extraction for that segment."
+    },
+    {
+      "evidence_id": "EV-040",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 378,
+      "line_end": 380,
+      "quote": "- **Path normalization:** `file_map.bin` stores forward-slash relative paths on every platform. Conversion to native separators happens only at I/O time.\n- **Filesystem compatibility:** `case_sensitive_fs` records whether the snapshot was built on a case-sensitive filesystem. On case-insensitive filesystems, bare-clone path enumeration deduplicates by lowercase path and logs collisions.\n- **Startup validation:** snapshot load validates the per-file xxh3 checksums, the lookup-table size and offsets, and (for Git snapshots) whether `anchor_sha` is still reachable. Unreachable anchors or invalid metadata invalidate the generation and force rebuild."
+    },
+    {
+      "evidence_id": "EV-041",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 388,
+      "line_end": 388,
+      "quote": "Sparse n-gram index is typically 1-10% of source code size: 50 MB source produces ~0.5-5 MB index, 500 MB → ~5-50 MB, 1 GB → ~50-100 MB, 50 GB → ~2-5 GB. Only the hash lookup table is mmap'd in process memory; the OS pages in what is needed per query. Peak RSS contribution is typically <500 MB even for large repositories."
+    },
+    {
+      "evidence_id": "EV-042",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 396,
+      "line_end": 396,
+      "quote": "Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement, not an optional enhancement."
+    },
+    {
+      "evidence_id": "EV-043",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 400,
+      "line_end": 403,
+      "quote": "On read, CRC32 MUST be validated before the record is processed. If validation fails:\n- the corrupt record is skipped\n- PM emits a recovery/integrity event including record offset and expected vs observed CRC\n- projectors resume from the last known-good checkpoint rather than replaying the corrupt record"
+    },
+    {
+      "evidence_id": "EV-044",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 409,
+      "line_end": 409,
+      "quote": "Seglog uses a length-prefixed binary record stream. The canonical payload codec is MessagePack; mirrors and diagnostics may expose the same envelope in JSON, but JSON is not the on-disk authority."
+    },
+    {
+      "evidence_id": "EV-045",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 422,
+      "line_end": 432,
+      "quote": "  version: u8,\n  segment_generation: u32,\n  event_type: string,\n  sequence_id: u64,\n  source_timestamp_ns?: u64,\n  observed_timestamp_ns: u64,\n  session_id?: string,\n  project_id?: string,\n  payload_length: u32,\n  checksum_crc32: u32,\n  compression: \"none\" | \"lz4\""
+    },
+    {
+      "evidence_id": "EV-046",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 437,
+      "line_end": 441,
+      "quote": "- `payload` is the encoded event payload after any payload-only compression step.\n- `checksum_crc32` is computed over the stored payload bytes.\n- readers validate `payload_length`, then checksum, then decode.\n- a single append operation produces exactly one record; record order is the canonical event order.\n- `source_timestamp_ns?` preserves upstream/authored time when the source provides it; `observed_timestamp_ns` is always populated by the seglog writer."
+    },
+    {
+      "evidence_id": "EV-047",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 445,
+      "line_end": 445,
+      "quote": "Seglog rotation is deterministic and generation-aware."
+    },
+    {
+      "evidence_id": "EV-048",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 448,
+      "line_end": 453,
+      "quote": "- there is exactly one active writable segment per seglog generation\n- active segment path: `storage/seglog/seg-{generation:06}-{start_seq:020}.active`\n- closed segment path: `storage/seglog/seg-{generation:06}-{start_seq:020}-{end_seq:020}.seglog`\n- rotate on size threshold, clean shutdown, explicit maintenance, or schema-generation change\n- closed segments are immutable; no in-place rewrite is allowed\n- projectors and rebuild tools consume closed segments in lexicographic order, then the active segment tail when present"
+    },
+    {
+      "evidence_id": "EV-049",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 458,
+      "line_end": 461,
+      "quote": "- redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority\n- on restart, replay begins from the last committed checkpoint `{ segment_generation, segment_name, byte_offset, last_seq }`\n- if the active segment ends with a partial/corrupt tail, rebuild truncates only after the last verified record and records the recovery action\n- rebuild MUST preserve `sequence_id` ordering; regenerated mirrors or indices may differ in file timestamps but not in semantic event order"
+    },
+    {
+      "evidence_id": "EV-050",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 467,
+      "line_end": 467,
+      "quote": "`EventRecord` persistence is canonical only for the envelope materialized in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json` (`schema_id = pm.event.v0`, `schema_version = 1.0.0`). This section defines the storage value boundary; it does not materialize every redb family or every event-type payload schema."
+    },
+    {
+      "evidence_id": "EV-051",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 470,
+      "line_end": 470,
+      "quote": "- Seglog is the authoritative append-only store for persisted `EventRecord` values. The seglog record payload is the MessagePack-encoded EventRecord envelope; JSON/JSONL mirrors are diagnostics and exports only."
+    },
+    {
+      "evidence_id": "EV-052",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 471,
+      "line_end": 471,
+      "quote": "- The seglog header may duplicate `event_type`, `sequence_id`, source/observed timestamps, and payload length for scanning and corruption recovery, but the decoded EventRecord value remains the semantic record."
+    },
+    {
+      "evidence_id": "EV-053",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 472,
+      "line_end": 472,
+      "quote": "- Physical append identity is `{segment_generation, segment_name, byte_offset, sequence_id, event_id}`. Replay order is segment generation, segment lexical order, byte offset, and `sequence_id`; timestamps never reorder replay."
+    },
+    {
+      "evidence_id": "EV-054",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 473,
+      "line_end": 473,
+      "quote": "- redb MUST NOT become a second mutable event source of truth. redb may store checkpoints, projections, idempotency indexes, and lookup rows keyed as `event_record_index.v1:{project_id}:{sequence_id}:{event_id}` with value `{schema_id, schema_version, event_type, segment_ref, byte_offset, payload_sha256, idempotency_key, correlation_id, causation_event_id?, persisted_at_utc}`. These rows point back to seglog and are rebuildable."
+    },
+    {
+      "evidence_id": "EV-055",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 474,
+      "line_end": 474,
+      "quote": "- The value encoding for the canonical EventRecord is MessagePack with the exact top-level fields from `Plans/event_record.schema.json`. A stored value missing `schema_version` is invalid and must be quarantined or migrated before projection."
+    },
+    {
+      "evidence_id": "EV-056",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 475,
+      "line_end": 475,
+      "quote": "- `schema_version` is part of the durable value, projector checkpoint, and redb lookup value. Projectors MUST reject a record whose `schema_id` or `schema_version` is unsupported rather than inferring a shape from `event_type`."
+    },
+    {
+      "evidence_id": "EV-057",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 476,
+      "line_end": 476,
+      "quote": "- `payload_schema_id` dispatches concrete event-type payload validation. `Contracts_V0.md` owns the envelope; storage-plan owns payload schema registration, replay, retention, and projection storage mechanics; producer docs own event semantics. Until a concrete payload schema exists for a given event family, that family is not materially complete."
+    },
+    {
+      "evidence_id": "EV-058",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 477,
+      "line_end": 477,
+      "quote": "- Replay and idempotency use `event_id`, `idempotency_key`, `sequence_id`, and `replay_policy`. Duplicate delivery returns the original append/projection result when `event_id` or `idempotency_key` matches the policy; timestamp equality is not a dedupe rule."
+    },
+    {
+      "evidence_id": "EV-059",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 478,
+      "line_end": 478,
+      "quote": "- Retention and compaction never rewrite closed seglog segments in place. Compaction may rebuild redb projections, lookup rows, JSONL mirrors, and Tantivy indexes; canonical EventRecord values are retained or migrated through append-only successor records plus governed retention/legal-hold policy."
+    },
+    {
+      "evidence_id": "EV-060",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 479,
+      "line_end": 479,
+      "quote": "- Raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, and local machine secrets are invalid in EventRecord envelope or payload content. Secret-bearing operational data is represented only by non-secret refs governed by permission/account custody."
+    },
+    {
+      "evidence_id": "EV-061",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 480,
+      "line_end": 480,
+      "quote": "- Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input. Upgraders map `type` to `event_type`, populate required identity/version/idempotency/redaction/replay/migration fields, and record `migration.compatibility_event_type`; new writers MUST emit EventRecord."
+    },
+    {
+      "evidence_id": "EV-062",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 481,
+      "line_end": 481,
+      "quote": "- This Tier 0C-1 boundary records partial closure for EventRecord persistence only. It does not claim `attempt_record`, `receipt`, `lane`, `worktree`, provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, or all redb value schemas are complete."
+    }
+  ],
+  "scope_confirmation": {
+    "capsule_only": true,
+    "prior_audits_used": false,
+    "other_results_used": false,
+    "unrelated_windows_used": false
+  },
+  "terminal_after_result": true
+}

@@ -483,14 +483,24 @@
    "expected_shape": "<script id=\"pm6-js-globals\">\u2026</script>"
   },
   {
-   "file": "29x-pm6-js-demo-engine.part.html",
+   "file": "29x-pm6-js-demo-engine-a.part.html",
    "kind": "new-stub-js",
-   "name": "pm6-js-demo-engine",
+   "name": "pm6-js-demo-engine-a",
    "marker": null,
    "marker_rule": "stub",
    "owner": "demo-engine",
    "insertion": "after part 29; globals FIRST, demo-engine SECOND, then listed order",
-   "expected_shape": "<script id=\"pm6-js-demo-engine\">\u2026</script>"
+   "expected_shape": "<script id=\"pm6-js-demo-engine\">\u2026 (sibling A: opens the engine script block; PARTS.md write-size split)"
+  },
+  {
+   "file": "29x-pm6-js-demo-engine-b.part.html",
+   "kind": "new-stub-js",
+   "name": "pm6-js-demo-engine-b",
+   "marker": null,
+   "marker_rule": "stub",
+   "owner": "demo-engine",
+   "insertion": "after part 29; globals FIRST, demo-engine SECOND, then listed order",
+   "expected_shape": "\u2026</script> (sibling B: closes the engine script block opened by sibling A)"
   },
   {
    "file": "29x-pm6-js-dashboard.part.html",

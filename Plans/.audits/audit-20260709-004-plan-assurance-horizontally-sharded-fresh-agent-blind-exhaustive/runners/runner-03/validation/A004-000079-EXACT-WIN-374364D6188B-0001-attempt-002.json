@@ -1,0 +1,33 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-03",
+  "assignment_id": "A004-000079-EXACT-WIN-374364D6188B-0001",
+  "attempt_id": "A004-000079-EXACT-WIN-374364D6188B-0001-attempt-002",
+  "agent_instance_id": "a004_r03_exact_000079_retry02_6e2d9a41",
+  "agent_path": "/root/a004_r03_exact_000079_retry02_6e2d9a41",
+  "agent_thread_id": "/root/a004_r03_exact_000079_retry02_6e2d9a41",
+  "status": "pass",
+  "validation_passed": true,
+  "coverage_credit": 1,
+  "checks": {
+    "identity": "pass",
+    "assignment_metadata": "pass",
+    "capsule_hash_and_size": "pass",
+    "source_excerpt_hash_and_size": "pass",
+    "canonical_source_hash": "pass",
+    "required_arrays": "pass",
+    "evidence_object_shape": "pass",
+    "exact_quotes": "pass",
+    "canonical_line_ranges": "pass",
+    "single_assigned_range_confinement": "pass"
+  },
+  "evidence_reference_count": 111,
+  "result_ref": "runners/runner-03/raw_results/A004-000079-EXACT-WIN-374364D6188B-0001-attempt-002.json",
+  "result_sha256": "5ed5de377e4a7219c344f974c4413d76f84f9b675bfa606954aa379eb3ba69de",
+  "result_bytes": 34350,
+  "validator_authority_ref": "validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+  "candidate_validator_ref": "runners/runner-03/validation/validate_candidate_v2.py",
+  "validated_at": "2026-07-10T03:58:51Z",
+  "errors": []
+}

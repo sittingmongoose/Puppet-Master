@@ -1,0 +1,185 @@
+<<< CONTEXT_BEFORE 7766-7777 >>>
+- Raw CDP or arbitrary browser code execution is not the guaranteed core browser contract.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Raw CDP/code execution as core browser contract is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7778-7933 >>>
+### SMPFS-120 - Generic Watch Mode Non Goal
+
+```yaml
+plan_unit_id: SMPFS-120
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Generic watch mode is not the primary dev-loop model.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- RM-025
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-120 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: generic_watch_mode_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- generic watch mode
+- primary dev-loop model
+negative_constraints:
+- Generic watch mode is not the primary dev-loop model.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Generic watch mode as primary dev-loop model is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Run_Modes.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-121 - MCP Config Passthrough Non Goal
+
+```yaml
+plan_unit_id: SMPFS-121
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: MCP is not config-and-passthrough only; Section 15 consumers rely on host-managed MCP capability resolution.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-121 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: mcp_config_passthrough_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- MCP
+- config-and-passthrough only
+negative_constraints:
+- MCP as config-and-passthrough only is non-canonical.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- MCP config-only framing is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+```
+
+### SMPFS-122 - Tool Permission Scope Non Goal
+
+```yaml
+plan_unit_id: SMPFS-122
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and browser model.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-122 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: tool_permission_scope_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- app-level-only tool permission scope
+- project-switch
+- MCP
+- browser model
+negative_constraints:
+- App-level-only tool permission scope is insufficient for the promoted project-switch/MCP/browser model.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- App-level-only permission scope is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 7934-7945 >>>
+### SMPFS-123 - Persona Tier Selector Stale Disposition
+
+```yaml
+plan_unit_id: SMPFS-123
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Stale Persona/tier selectors from Personas.md, Contracts_V0, and Contracts_V0.md, including _persona_id and select_for_tier(), are not canonical promoted-shell fields; Section 15 consumers use requested/effective Persona identity and runtime owner scope instead.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:

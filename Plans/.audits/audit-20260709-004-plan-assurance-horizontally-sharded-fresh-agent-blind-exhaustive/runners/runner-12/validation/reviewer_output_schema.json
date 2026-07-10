@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.audit004.runner12.reviewer-result.v1",
+  "type": "object",
+  "required": [
+    "assignment_id",
+    "role",
+    "status",
+    "observations",
+    "candidate_findings",
+    "explicit_non_gaps",
+    "unknowns",
+    "exact_evidence_refs"
+  ],
+  "properties": {
+    "assignment_id": {"type": "string"},
+    "role": {"const": "adversarial_negative_space"},
+    "status": {"const": "completed"},
+    "observations": {"type": "array"},
+    "candidate_findings": {"type": "array"},
+    "explicit_non_gaps": {"type": "array"},
+    "unknowns": {"type": "array"},
+    "exact_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["document_path", "line_start", "line_end", "excerpt"],
+        "properties": {
+          "document_path": {"type": "string"},
+          "line_start": {"type": "integer", "minimum": 1},
+          "line_end": {"type": "integer", "minimum": 1},
+          "excerpt": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

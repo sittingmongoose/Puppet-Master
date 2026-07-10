@@ -1,0 +1,838 @@
+{
+  "assignment_id": "A004-000026-ADVERSARIAL-WIN-BF7379C57A0F-0006",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-02",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-BF7379C57A0F-0006",
+  "doc_id": "DOC-BF7379C57A0F",
+  "document_path": "Plans/assistant-chat-design.md",
+  "core_range": [
+    1910,
+    2239
+  ],
+  "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000026-ADVERSARIAL-WIN-BF7379C57A0F-0006.json",
+  "capsule_sha256": "d1aa9562d2886e073d7a2330490768b6772e45845ddf494e8e01883097922cbd",
+  "capsule_bytes": 1649,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BF7379C57A0F-0006.txt",
+  "source_excerpt_sha256": "8d72600b953af62b7fbe6b97b791909e0f9547c3de03ad0b69fe6b872fa9f95b",
+  "source_excerpt_bytes": 37742,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "Clarification work uses cross-surface question identifiers and requires wizard and thread resume to recover the same outstanding questionnaire or resolved outcome.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "Assistant context is ordered into Instruction, Work, and Memory bundles, with Work Bundle acceptance criteria designated as non-truncatable.",
+      "evidence_ids": [
+        "EV-007",
+        "EV-008"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "Model-switch re-pack preserves named inputs, summarizes older turns, then truncates the summary and potentially preserved turns against provider capability limits.",
+      "evidence_ids": [
+        "EV-011",
+        "EV-012",
+        "EV-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "Assistant memory and project retrieval are distinct injection mechanisms: memory has Verified-only default gating and a no-subagent boundary, while project retrieval contributes ephemeral chat, code, or log material to the Work Bundle.",
+      "evidence_ids": [
+        "EV-014",
+        "EV-015",
+        "EV-016",
+        "EV-017",
+        "EV-018"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "Context Lens applies Mute and Focus immediately, creates a local artifact for Subcompact, and changes effective context, search visibility, and child handoff shaping.",
+      "evidence_ids": [
+        "EV-022",
+        "EV-023",
+        "EV-024",
+        "EV-025",
+        "EV-026",
+        "EV-027",
+        "EV-028",
+        "EV-029",
+        "EV-030"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "HITL actions are exposed through natural-language Assistant requests, a newly spawned dedicated thread, and an optional direct Dashboard approval control.",
+      "evidence_ids": [
+        "EV-033",
+        "EV-034",
+        "EV-035"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "A dev session can aggregate multiple terminal identities, retain shell evidence after stopping, and remain active in an old project while effective state is recalculated for a newly selected project.",
+      "evidence_ids": [
+        "EV-037",
+        "EV-039",
+        "EV-042",
+        "EV-043",
+        "EV-044"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "The gap summary marks queue behavior as resolved and all listed features as in scope, while the comparison still labels trigger-loaded agent skills as absent from this plan.",
+      "evidence_ids": [
+        "EV-046",
+        "EV-047",
+        "EV-048",
+        "EV-049",
+        "EV-050",
+        "EV-051"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "title": "Cross-surface questionnaire updates lack a conflict authority",
+      "severity": "high",
+      "negative_space_dimension": "authority/concurrency",
+      "claim": "The excerpt identifies one questionnaire across wizard and thread surfaces but does not define the authoritative writer, revision token, submit-versus-resume ordering, or conflict result when both surfaces update the same questionnaire concurrently.",
+      "why_it_matters": "A stale resume or simultaneous submission can overwrite revised answers, reopen resolved work, or leave the two surfaces showing incompatible outcomes despite sharing canonical question identifiers.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-003"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-002",
+      "title": "Compact session has no transactional failure contract",
+      "severity": "medium",
+      "negative_space_dimension": "states/transitions/failure-recovery",
+      "claim": "User-triggered compaction is tied to the auto-compact pipeline and a progress indicator, but the excerpt specifies no immutable input snapshot, cancellation point, success or failure state, rollback, retry, or behavior when a turn arrives while compaction is running.",
+      "why_it_matters": "A partial or racing compaction can make the visible conversation and effective context diverge or silently replace usable context with an incomplete summary.",
+      "evidence_ids": [
+        "EV-006"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-003",
+      "title": "Model re-pack contradicts unconditional preservation",
+      "severity": "high",
+      "negative_space_dimension": "compatibility/failure-recovery/test-oracle",
+      "claim": "The re-pack algorithm labels the last six turns as preserved unconditionally, then explicitly permits dropping oldest preserved turns. It also gives no terminal outcome when the system prompt plus non-truncatable acceptance criteria alone exceed the target window, and this excerpt does not state precedence among the three listed capability-limit fields.",
+      "why_it_matters": "Implementations can discard supposedly guaranteed context, disagree about the effective input limit, or loop or fail opaquely on a model switch that cannot fit mandatory content.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-011",
+        "EV-012",
+        "EV-013"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-004",
+      "title": "Mandatory memory calls have no degraded-mode behavior",
+      "severity": "high",
+      "negative_space_dimension": "failure/recovery/operations",
+      "claim": "Every selected-project Assistant turn must call both memory interfaces, but the excerpt does not define timeout, unavailable, corrupt-result, partial-result, cancellation, retry, or continue-without-memory behavior.",
+      "why_it_matters": "A nonessential memory subsystem failure can block all project chat or, if implementations improvise a fallback, produce inconsistent prompt contents and misleading context disclosure.",
+      "evidence_ids": [
+        "EV-014"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-005",
+      "title": "Injected Context UI can omit material context sources",
+      "severity": "medium",
+      "negative_space_dimension": "misleading GUI truth/propagation",
+      "claim": "The required Injected Context breakdown names AGENTS.md, parent summary, attempt journal, and truncation, but later rules add mandatory memory, optional project retrieval, per-thread overrides, and Context Lens shaping without requiring those inclusions, exclusions, budgets, or transformations to appear in that breakdown.",
+      "why_it_matters": "A user can be shown an apparently complete per-turn context explanation that does not reveal influential retrieved or remembered text or user-directed shaping.",
+      "evidence_ids": [
+        "EV-009",
+        "EV-010",
+        "EV-014",
+        "EV-017",
+        "EV-018",
+        "EV-019",
+        "EV-020",
+        "EV-021",
+        "EV-027",
+        "EV-028",
+        "EV-029"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-006",
+      "title": "Project retrieval lacks an explicit untrusted-content boundary",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy",
+      "claim": "Verified-only gating is specified for Assistant memory, while separate project retrieval can place chat, code, and log text into the Work Bundle. The excerpt does not require source provenance, trust labels, instruction-data separation, prompt-injection handling, sensitive-log filtering, or an equivalent verification gate for retrieved project content.",
+      "why_it_matters": "Repository text, logs, or prior chat can contain malicious instructions or secrets and may be interpreted as authoritative work context without the protections applied to memory.",
+      "evidence_ids": [
+        "EV-015",
+        "EV-017",
+        "EV-018",
+        "EV-019",
+        "EV-020"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-007",
+      "title": "Context Lens has no conflict or dispatch-snapshot semantics",
+      "severity": "high",
+      "negative_space_dimension": "states/transitions/concurrency/test-oracle",
+      "claim": "Mute and Focus apply immediately and affect context and retrieval, but the excerpt does not define mutual exclusivity, precedence if content is both muted and focused, the result when focused content exceeds budget, or whether changes made during an active send affect that dispatched run or only the next run.",
+      "why_it_matters": "Different implementations can send materially different prompts for the same visible selection, and the UI can imply that an in-flight request changed when its prompt was already frozen.",
+      "evidence_ids": [
+        "EV-022",
+        "EV-023",
+        "EV-024",
+        "EV-027",
+        "EV-028"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-008",
+      "title": "Subcompact artifact lifecycle is underspecified",
+      "severity": "medium",
+      "negative_space_dimension": "failure/recovery/operations/propagation",
+      "claim": "Subcompact creates a local summary artifact and rehydration handles, but the excerpt does not define artifact identity, provenance, versioning, staleness invalidation after source edits, generation failure, retention, deletion, or whether Turn Off removes only selection state or also disables the replacement summary.",
+      "why_it_matters": "A stale or failed local summary can continue shaping runs without a deterministic route back to the intended canonical message region.",
+      "evidence_ids": [
+        "EV-025",
+        "EV-026",
+        "EV-029",
+        "EV-030"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-009",
+      "title": "BrainStorm execution authority and rollback are ambiguous",
+      "severity": "high",
+      "negative_space_dimension": "authority/states/transitions",
+      "claim": "Execution requires a switch from read-only Plan mode to Agent mode, while execution topology is either automatically decided by the manager or requested by the user. The excerpt does not state whether the user request overrides the manager, when permission is committed, or how the mode transition rolls back if agent or crew startup fails.",
+      "why_it_matters": "A plan can begin under an unintended execution topology or leave the chat presenting writable Agent mode despite no valid executor having started.",
+      "evidence_ids": [
+        "EV-031",
+        "EV-032"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-010",
+      "title": "HITL approval lacks one idempotent authoritative transition",
+      "severity": "high",
+      "negative_space_dimension": "authority/security/concurrency",
+      "claim": "The same gate can be acted on through natural language in a spawned thread or through a direct Dashboard control, but the excerpt does not require a stable gate identifier, actor authorization, stale-state check, idempotency key, atomic compare-and-transition, or duplicate-thread suppression.",
+      "why_it_matters": "Two surfaces can race, replay, or approve a stale or wrong mandatory side-effect gate, potentially resuming execution twice or bypassing the intended approval boundary.",
+      "evidence_ids": [
+        "EV-033",
+        "EV-034",
+        "EV-035"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-011",
+      "title": "Continue in Assistant handoff is untyped and freshness-blind",
+      "severity": "medium",
+      "negative_space_dimension": "propagation/security/privacy",
+      "claim": "The handoff injects a loosely described context block but does not specify its schema, source identities, authorization filtering, redaction, size budget, freshness token, deduplication, or behavior when the referenced run changes before the Assistant thread opens.",
+      "why_it_matters": "The Assistant can receive stale, duplicated, oversized, or over-disclosed run context and then offer actions against the wrong package, seam, node, or blocked episode.",
+      "evidence_ids": [
+        "EV-036"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-012",
+      "title": "One dev-session status cannot represent partial terminal failure",
+      "severity": "high",
+      "negative_space_dimension": "states/failure-recovery/misleading GUI truth",
+      "claim": "The chat exposes a single enumerated dev-session lifecycle while one dev session can own multiple independent terminal identities. The excerpt gives no aggregation rule for mixed states such as one live terminal, one failed terminal, and one disconnected terminal, nor states for lost, reconnecting, partially stopped, or unknown ownership.",
+      "why_it_matters": "The chat can report an apparently active, stopped, or failed session that contradicts the live state of one or more processes it represents.",
+      "evidence_ids": [
+        "EV-037",
+        "EV-039",
+        "EV-040",
+        "EV-041"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-013",
+      "title": "Active dev-session close consequences are not actionable",
+      "severity": "high",
+      "negative_space_dimension": "failure/recovery/authority",
+      "claim": "The excerpt requires consequence disclosure and prohibits silent orphaning by default but does not define the permitted choices, default choice, cancellation behavior, ownership transfer, or atomic outcome when stop or detach fails during tab close.",
+      "why_it_matters": "Implementations can silently choose between killing work, blocking close, or detaching it, producing data loss or orphaned background processes despite technically displaying a warning.",
+      "evidence_ids": [
+        "EV-038",
+        "EV-045"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-014",
+      "title": "Historical shell evidence has no data-governance bounds",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy/scale/operations",
+      "claim": "Stopped dev sessions preserve shell evidence and linked histories, but this excerpt specifies no redaction, access scope, retention duration, deletion path, storage quota, compaction, or behavior when history persistence fails.",
+      "why_it_matters": "Terminal output can contain credentials or private data and can grow without bound across long-running watch processes and repeated sessions.",
+      "evidence_ids": [
+        "EV-042"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-015",
+      "title": "Project switching leaves dev-command target authority ambiguous",
+      "severity": "high",
+      "negative_space_dimension": "authority/propagation/concurrency",
+      "claim": "A project switch recalculates effective state for the new project while old-project activity remains live and visible, but the excerpt does not say how subsequent Assistant dev commands select between the current project and an explicitly identified old dev_session_id or how stale selections are rejected.",
+      "why_it_matters": "A stop, restart, output reveal, or test command can be applied to the wrong project's background process after a switch.",
+      "evidence_ids": [
+        "EV-040",
+        "EV-043",
+        "EV-044"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-016",
+      "title": "Send now does not fully resolve second-item queue ordering",
+      "severity": "medium",
+      "negative_space_dimension": "states/transitions/concurrency",
+      "claim": "The risk asks whether Send now on the second item sends only that item or reorders the queue, but the stated resolution only says that the selected message steers immediately. It does not say whether that item is atomically removed, whether the earlier FIFO item remains first afterward, or what happens if steering fails while both queue slots are occupied.",
+      "why_it_matters": "A message can execute twice, an older queued instruction can unexpectedly undo the steer, or clients can implement incompatible queue orderings while all claim FIFO compliance.",
+      "evidence_ids": [
+        "EV-046",
+        "EV-049",
+        "EV-050",
+        "EV-051"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-017",
+      "title": "Competitive scope summary contradicts the agent-skills row",
+      "severity": "medium",
+      "negative_space_dimension": "traceability/compatibility",
+      "claim": "The comparison explicitly marks trigger-loaded agent skills as not in this plan, while its summary says all listed features are now in scope.",
+      "why_it_matters": "MVP scope, acceptance tests, and downstream task generation cannot deterministically decide whether agent-skill loading is required.",
+      "evidence_ids": [
+        "EV-047",
+        "EV-048"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-018",
+      "title": "Runtime disclosure snapshot has no freshness contract",
+      "severity": "medium",
+      "negative_space_dimension": "misleading GUI truth/failure-recovery",
+      "claim": "Chat presents a resolved runtime and account snapshot, but this excerpt does not require snapshot version, capture time, refresh state, invalidation signal, or unavailable and stale indicators.",
+      "why_it_matters": "Users can make approval or execution decisions from account and runtime information that appears effective while no longer matching the owning runtime state.",
+      "evidence_ids": [
+        "EV-005"
+      ],
+      "scope_confined": true
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NONGAP-001",
+      "statement": "Question identity and the basic resume invariant are explicit: question_ids are canonical across surfaces and resume must restore the same outstanding or resolved questionnaire state.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-003"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-002",
+      "statement": "Chat is explicitly prohibited from inventing a parallel dev-output model; shell-owned output surfaces remain authoritative.",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-003",
+      "statement": "Acceptance criteria have an explicit non-truncation priority above illustrative instructions, summaries, and older turns.",
+      "evidence_ids": [
+        "EV-008"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-004",
+      "statement": "Automatic Assistant-memory eligibility defaults to Verified content, and Assistant memory is explicitly prohibited from being forwarded to subagents or non-Assistant paths.",
+      "evidence_ids": [
+        "EV-015",
+        "EV-016"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-005",
+      "statement": "Subcompact is required to preserve canonical history and rehydration handles, and child handoffs cannot rely on a lossy copy as their only truth.",
+      "evidence_ids": [
+        "EV-029",
+        "EV-030"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-006",
+      "statement": "Linked dev-output reveals are explicitly observational and must not mutate canonical runtime ownership records.",
+      "evidence_ids": [
+        "EV-040"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-007",
+      "statement": "Assistant concurrent-thread limits are explicitly distinguished from global orchestration limits.",
+      "evidence_ids": [
+        "EV-052"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-008",
+      "statement": "Accessibility is explicitly declared outside the MVP rather than being silently implied as covered.",
+      "evidence_ids": [
+        "EV-053"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "statement": "Whether referenced owner documents define questionnaire conflict handling, memory degradation, retrieval trust, Context Lens precedence, HITL idempotency, and dev-session retention is unknown.",
+      "reason_unresolved": "Those owner documents are outside the bounded evidence universe and were forbidden to inspect."
+    },
+    {
+      "unknown_id": "UNK-002",
+      "statement": "Whether §4 contains additional queue state-machine rules that remove the Send now ambiguity is unknown.",
+      "reason_unresolved": "Section §4 is referenced but is not present in the assigned capsule."
+    },
+    {
+      "unknown_id": "UNK-003",
+      "statement": "Whether §24 actually supplies measurable performance limits, test oracles, and failure behavior for the long-thread mitigation is unknown.",
+      "reason_unresolved": "The bounded context reaches only the opening of §24 and does not include its substantive implementation requirements."
+    },
+    {
+      "unknown_id": "UNK-004",
+      "statement": "The identities of the phrase “three context injectors” and the precedence among context_window_tokens, max_input_tokens, and effective_context_window_tokens are unknown.",
+      "reason_unresolved": "The excerpt names the injector count and capability fields but delegates their definitions to unavailable owner material."
+    },
+    {
+      "unknown_id": "UNK-005",
+      "statement": "Whether user-requested BrainStorm execution topology overrides manager selection is unknown.",
+      "reason_unresolved": "The excerpt presents both authorities without an explicit precedence rule, and the referenced orchestration owner is outside scope."
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1911,
+      "line_end": 1911,
+      "excerpt": "- `clarification_request` and related wizard/thread surfaces may point at a multi-question questionnaire, not only one prompt at a time"
+    },
+    {
+      "evidence_id": "EV-002",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1912,
+      "line_end": 1912,
+      "excerpt": "- `question_ids[]` remain the canonical cross-surface identifiers for clarification work"
+    },
+    {
+      "evidence_id": "EV-003",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1913,
+      "line_end": 1913,
+      "excerpt": "- thread resume and wizard resume must restore the same outstanding questionnaire state or its resolved outcome"
+    },
+    {
+      "evidence_id": "EV-004",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1920,
+      "line_end": 1920,
+      "excerpt": "Assistant-invoked `/dev` and live command work uses shell-owned terminal/output/ports and `/output/ports` surfaces; chat must not invent a parallel dev-output model."
+    },
+    {
+      "evidence_id": "EV-005",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1922,
+      "line_end": 1922,
+      "excerpt": "Chat-visible runtime and account information stays owner-doc consistent with `Plans/Multi-Account.md`; `/runtime-disclosure` is a presentation obligation over the resolved runtime/account snapshot, not a new chat-local account-routing model."
+    },
+    {
+      "evidence_id": "EV-006",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1936,
+      "line_end": 1936,
+      "excerpt": "which runs the same compaction pipeline as auto-compact through the live Prompt Pipeline owners, with clear UI feedback (e.g. \"Compacting...\")."
+    },
+    {
+      "evidence_id": "EV-007",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1940,
+      "line_end": 1940,
+      "excerpt": "Rule: For every Assistant turn (and any chat-triggered run), the context pipeline MUST assemble the run context as three explicit bundles, in this deterministic order: (1) Instruction Bundle, (2) Work Bundle, (3) Memory Bundle."
+    },
+    {
+      "evidence_id": "EV-008",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1944,
+      "line_end": 1944,
+      "excerpt": "Rule: The Work Bundle acceptance criteria MUST NEVER be truncated; if truncation is required to fit a model’s window, truncation MUST occur in instruction example/illustrative content first and in conversation summaries/older turns before any acceptance criteria content is removed."
+    },
+    {
+      "evidence_id": "EV-009",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1950,
+      "line_end": 1950,
+      "excerpt": "Rule: The chat UI MUST surface an “Injected Context” breakdown per run/turn, including: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and whether truncation occurred (and the reason/order that was applied)."
+    },
+    {
+      "evidence_id": "EV-010",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1954,
+      "line_end": 1954,
+      "excerpt": "Rule: The three context injectors MUST be user-configurable (per-project; optional per-run override) with deterministic defaults; budget defaults (bytes/lines/headings) MUST be decided deterministically and recorded via `auto_decisions.jsonl`."
+    },
+    {
+      "evidence_id": "EV-011",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1962,
+      "line_end": 1962,
+      "excerpt": "1. **Preserve unconditionally:** System prompt, Instruction Bundle (`AGENTS.md` chain where enabled), active file references, last 6 turns verbatim (config: `context.repack.verbatim_turns`, default `6`)."
+    },
+    {
+      "evidence_id": "EV-012",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1964,
+      "line_end": 1964,
+      "excerpt": "3. **Truncate:** If the preserved + summarized content exceeds the new model's effective context window from the Models_System capability snapshot, truncate the summary first, then drop oldest preserved turns until it fits. Never truncate the system prompt or the Work Bundle acceptance criteria."
+    },
+    {
+      "evidence_id": "EV-013",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1970,
+      "line_end": 1970,
+      "excerpt": "Config: `context.repack.verbatim_turns` (default `6`). Max tokens are sourced from the selected provider/model capability snapshot fields owned by `Plans/Models_System.md`, including `context_window_tokens`, `max_input_tokens`, and `effective_context_window_tokens`."
+    },
+    {
+      "evidence_id": "EV-014",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1978,
+      "line_end": 1978,
+      "excerpt": "Rule: For Assistant turns with a selected project, chat context assembly MUST call the Assistant-memory SSOT interfaces (`build_capsule(project_id, now)` and `search(project_id, user_message, now, k)`) and MUST enforce the configured capsule/retrieval budgets."
+    },
+    {
+      "evidence_id": "EV-015",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1982,
+      "line_end": 1982,
+      "excerpt": "Rule: Automatic memory injection in chat MUST apply eligibility gating per the Assistant-memory SSOT (Verified-only by default; any Unverified inclusion requires explicit user action)."
+    },
+    {
+      "evidence_id": "EV-016",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1990,
+      "line_end": 1990,
+      "excerpt": "Rule: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+    },
+    {
+      "evidence_id": "EV-017",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1999,
+      "line_end": 1999,
+      "excerpt": "In addition to the Assistant-only memory capsule (§17.4), the chat context pipeline MAY inject **project-scoped retrieved context** (chat/code/logs) per §10.1. This is designed to keep long-running threads usable without relying on full-history in-context."
+    },
+    {
+      "evidence_id": "EV-018",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2002,
+      "line_end": 2002,
+      "excerpt": "- Project retrieval injection is **fresh, ephemeral context for the current turn** (Work Bundle: “Retrieved Context”)."
+    },
+    {
+      "evidence_id": "EV-019",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2006,
+      "line_end": 2006,
+      "excerpt": "- **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread)."
+    },
+    {
+      "evidence_id": "EV-020",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2007,
+      "line_end": 2007,
+      "excerpt": "- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory)."
+    },
+    {
+      "evidence_id": "EV-021",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2008,
+      "line_end": 2008,
+      "excerpt": "- **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections."
+    },
+    {
+      "evidence_id": "EV-022",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2025,
+      "line_end": 2025,
+      "excerpt": "- all three modes support selecting multiple messages at once."
+    },
+    {
+      "evidence_id": "EV-023",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2026,
+      "line_end": 2026,
+      "excerpt": "- `Mute` applies immediately as selection toggles happen."
+    },
+    {
+      "evidence_id": "EV-024",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2027,
+      "line_end": 2027,
+      "excerpt": "- `Focus` applies immediately as selection toggles happen."
+    },
+    {
+      "evidence_id": "EV-025",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2028,
+      "line_end": 2028,
+      "excerpt": "- `Subcompact` prepares a selection and then requires an explicit apply action because it creates a local summary artifact."
+    },
+    {
+      "evidence_id": "EV-026",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2029,
+      "line_end": 2029,
+      "excerpt": "- `Turn Off` exits Context Lens mode and clears the active selection state."
+    },
+    {
+      "evidence_id": "EV-027",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2034,
+      "line_end": 2034,
+      "excerpt": "- muted messages are excluded from effective context assembly and from chatsearch results returned to the agent."
+    },
+    {
+      "evidence_id": "EV-028",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2035,
+      "line_end": 2035,
+      "excerpt": "- focused messages remain protected and high-priority in effective context assembly."
+    },
+    {
+      "evidence_id": "EV-029",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2036,
+      "line_end": 2036,
+      "excerpt": "- Subcompact replaces the selected message region in effective context assembly with a local summary while preserving canonical source history and rehydration handles."
+    },
+    {
+      "evidence_id": "EV-030",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2038,
+      "line_end": 2038,
+      "excerpt": "- child handoff bundles derive from canonical source state plus current effective shaping state; children do not inherit a lossy copy as their only truth."
+    },
+    {
+      "evidence_id": "EV-031",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2044,
+      "line_end": 2044,
+      "excerpt": "- **Execution:** When the user **starts or executes** the plan, the **chat must switch to Agent mode** (execution mode), because Plan mode is read-only and execution requires write/execute permissions."
+    },
+    {
+      "evidence_id": "EV-032",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2049,
+      "line_end": 2049,
+      "excerpt": "The **manager** (orchestrator) automatically decides, or the **user can request** which option."
+    },
+    {
+      "evidence_id": "EV-033",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2103,
+      "line_end": 2103,
+      "excerpt": "- Open the Assistant and respond in natural language (e.g. \"approve and continue,\" \"what's blocking?\", \"run the suggested fix\")."
+    },
+    {
+      "evidence_id": "EV-034",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2108,
+      "line_end": 2108,
+      "excerpt": "A **new thread** is **spawned** with an **appropriate name** (e.g. tied to the package/seam/node or \"Approval: Package Gate\") so the user has a dedicated place to respond."
+    },
+    {
+      "evidence_id": "EV-035",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2109,
+      "line_end": 2109,
+      "excerpt": "The user can also address the CtA via the Assistant in that thread (e.g. \"approve and continue\" or ask for a summary and then approve) or via a direct \"Approve & continue\" control on the Dashboard if provided."
+    },
+    {
+      "evidence_id": "EV-036",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2111,
+      "line_end": 2111,
+      "excerpt": "That action opens the Assistant chat with **relevant context** injected: e.g. run summary, current package/seam/node/blocked episode id, and a short summary of what was done."
+    },
+    {
+      "evidence_id": "EV-037",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2123,
+      "line_end": 2123,
+      "excerpt": "- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state"
+    },
+    {
+      "evidence_id": "EV-038",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2125,
+      "line_end": 2125,
+      "excerpt": "- project switch or workspace-tab close must surface explicit consequences for any active dev session"
+    },
+    {
+      "evidence_id": "EV-039",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2130,
+      "line_end": 2130,
+      "excerpt": "A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity."
+    },
+    {
+      "evidence_id": "EV-040",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2134,
+      "line_end": 2134,
+      "excerpt": "- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records."
+    },
+    {
+      "evidence_id": "EV-041",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2135,
+      "line_end": 2135,
+      "excerpt": "- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists."
+    },
+    {
+      "evidence_id": "EV-042",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2138,
+      "line_end": 2138,
+      "excerpt": "- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited."
+    },
+    {
+      "evidence_id": "EV-043",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2142,
+      "line_end": 2142,
+      "excerpt": "- switching projects recalculates effective shell, tool, and dev-session state for the new project context"
+    },
+    {
+      "evidence_id": "EV-044",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2143,
+      "line_end": 2143,
+      "excerpt": "- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities"
+    },
+    {
+      "evidence_id": "EV-045",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2144,
+      "line_end": 2144,
+      "excerpt": "- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default"
+    },
+    {
+      "evidence_id": "EV-046",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2167,
+      "line_end": 2167,
+      "excerpt": "**Resolved:** §4 specifies queue is **FIFO** and max 2 messages; \"Send now\" sends that message immediately (steer)."
+    },
+    {
+      "evidence_id": "EV-047",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2194,
+      "line_end": 2194,
+      "excerpt": "| **Agent skills (load by trigger)** | -- | Skills/hooks | -- | ✅ Agent Skills | -- | -- | ⚠️ newfeatures §6; not in this plan |"
+    },
+    {
+      "evidence_id": "EV-048",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2198,
+      "line_end": 2198,
+      "excerpt": "**Summary:** All listed features are now in scope:"
+    },
+    {
+      "evidence_id": "EV-049",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2206,
+      "line_end": 2206,
+      "excerpt": "4. **Up to 2 queued messages, FIFO** -- §4: ordered list above composer, each with edit and `Send now`."
+    },
+    {
+      "evidence_id": "EV-050",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2207,
+      "line_end": 2207,
+      "excerpt": "5. **Interrupt != Stop** -- §4: Stop cancels run (no message); `Send now` steers by injecting a message."
+    },
+    {
+      "evidence_id": "EV-051",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2215,
+      "line_end": 2215,
+      "excerpt": "13. **Queued messages** -- §4: two-slot FIFO queue with edit/send-now/cancel controls; no clear-queue action."
+    },
+    {
+      "evidence_id": "EV-052",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2224,
+      "line_end": 2224,
+      "excerpt": "This is a thread-level Assistant concurrency setting, not the global runtime subagent ceiling."
+    },
+    {
+      "evidence_id": "EV-053",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2227,
+      "line_end": 2227,
+      "excerpt": "24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**."
+    }
+  ],
+  "scope_attestation": {
+    "only_capsule_and_source_excerpt_read": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "hashes_verified": true,
+    "bytes_verified": true,
+    "evidence_within_capsule": true,
+    "no_writes": true
+  },
+  "terminal_after_result": true
+}

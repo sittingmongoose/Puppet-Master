@@ -1,0 +1,888 @@
+{
+  "assignment_id": "A004-000025-EXACT-WIN-BF7379C57A0F-0006",
+  "runner_id": "runner-01",
+  "agent_instance_id": "a004_r01_exact_000025_37e5a7593070",
+  "agent_path": "/root/a004_r01_exact_000025_37e5a7593070",
+  "agent_thread_id": null,
+  "status": "valid_result",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "window_id": "WIN-BF7379C57A0F-0006",
+  "doc_id": "DOC-BF7379C57A0F",
+  "document_path": "Plans/assistant-chat-design.md",
+  "core_range": [
+    1910,
+    2239
+  ],
+  "observations": [
+    {
+      "observation_id": "O1",
+      "statement": "Clarification is explicitly cross-surface and may use multi-question questionnaires; question_ids[] are canonical, and resume must restore the same outstanding questionnaire or its resolved outcome.",
+      "evidence_ref_ids": [
+        "E1"
+      ]
+    },
+    {
+      "observation_id": "O2",
+      "statement": "Runtime GUI truth is consumer-only: Interview shows effective owner state, shell surfaces own dev output, runtime disclosure presents an already-resolved runtime/account snapshot, and external approval labels do not become PM modes.",
+      "evidence_ref_ids": [
+        "E51",
+        "E3",
+        "E4",
+        "E5"
+      ]
+    },
+    {
+      "observation_id": "O3",
+      "statement": "The context contract declares Instruction, Work, and Memory bundles in that order, declares Work acceptance criteria non-truncatable, requires a per-run Injected Context breakdown, and makes three injectors configurable with deterministic recorded defaults.",
+      "evidence_ref_ids": [
+        "E7",
+        "E8",
+        "E9",
+        "E10"
+      ]
+    },
+    {
+      "observation_id": "O4",
+      "statement": "A model switch synchronously re-packs before the next send by preserving selected material, summarizing older turns, applying a stated truncation sequence, normalizing provider formatting, and showing a repack indicator; capacity comes from the selected model capability snapshot.",
+      "evidence_ref_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "observation_id": "O5",
+      "statement": "Selected-project Assistant turns must call both memory SSOT interfaces under budgets; automatic inclusion is Verified-only by default, text is summary-only and separate from rules, forwarding to subagents is forbidden, and Gist Review uses canonical command IDs.",
+      "evidence_ref_ids": [
+        "E13",
+        "E15",
+        "E16",
+        "E17",
+        "E18"
+      ]
+    },
+    {
+      "observation_id": "O6",
+      "statement": "Project retrieval is an optional, fresh Work Bundle input distinct from Assistant memory and is governed by a default-On thread chip, project allowlist/modes/budgets, and Context Lens overlays.",
+      "evidence_ref_ids": [
+        "E19",
+        "E20",
+        "E21"
+      ]
+    },
+    {
+      "observation_id": "O7",
+      "statement": "Context Lens has exact placement and four menu choices; Mute and Focus apply on toggle, Subcompact requires Apply, Turn Off clears active selection, and assembly excludes muted messages, protects focused messages, replaces Subcompact regions with summaries, and derives child handoffs from canonical plus shaped state.",
+      "evidence_ref_ids": [
+        "E22",
+        "E23",
+        "E24"
+      ]
+    },
+    {
+      "observation_id": "O8",
+      "statement": "BrainStorm produces one plan through coordinated inquiry, switches to Agent mode for execution, permits regular-agent, crew, or agent-plus-subagent execution, and defers collaboration schema authority to the orchestrator owner.",
+      "evidence_ref_ids": [
+        "E25",
+        "E26",
+        "E27",
+        "E28"
+      ]
+    },
+    {
+      "observation_id": "O9",
+      "statement": "Interview-generated documents target AI execution and must be wire-explicit, DRY, complete, GUI/config/API-connected, and free of unwired stubs.",
+      "evidence_ref_ids": [
+        "E29",
+        "E30"
+      ]
+    },
+    {
+      "observation_id": "O10",
+      "statement": "Dashboard warnings and CtAs expect action; qualifying HITL pauses create a Dashboard CtA and a dedicated thread, while Continue in Assistant opens chat with injected run context.",
+      "evidence_ref_ids": [
+        "E32",
+        "E33",
+        "E34",
+        "E35"
+      ]
+    },
+    {
+      "observation_id": "O11",
+      "statement": "Dev work maps to stable commands and shell-visible states, exposes six chat-visible session states, keeps output in shell-owned surfaces, supports multiple terminal identities, and preserves historical shell evidence after stop.",
+      "evidence_ref_ids": [
+        "E36",
+        "E38",
+        "E39"
+      ]
+    },
+    {
+      "observation_id": "O12",
+      "statement": "Project switching recalculates effective state while retaining old-project activity visibility; active-session tab close requires consequence disclosure and must not silently orphan work by default.",
+      "evidence_ref_ids": [
+        "E40"
+      ]
+    },
+    {
+      "observation_id": "O13",
+      "statement": "Assistant thread concurrency has a user-facing default of 10, is distinct from the global agent ceiling, and applies the more restrictive applicable limit.",
+      "evidence_ref_ids": [
+        "E48"
+      ]
+    },
+    {
+      "observation_id": "O14",
+      "statement": "The MVP traceability statement supplies generic error UI with Resend or Cancel, preserves the queue unless the user resends, and may suggest switching platform or model.",
+      "evidence_ref_ids": [
+        "E49"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "F1",
+      "severity": "high",
+      "gap_type": "internal_contract_contradiction",
+      "statement": "The acceptance-criteria truncation rule contradicts itself: it says Work Bundle acceptance criteria MUST NEVER be truncated, then defines an ordering before acceptance-criteria content is removed.",
+      "why_consequential": "Builders cannot tell whether acceptance criteria are absolutely protected or merely last-priority content, so equivalent capacity pressure can produce incompatible and correctness-affecting prompts.",
+      "evidence_ref_ids": [
+        "E8"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "severity": "high",
+      "gap_type": "state_transition_conflict",
+      "statement": "Model re-pack calls the last configured verbatim turns unconditionally preserved but later instructs the pipeline to drop the oldest preserved turns; the section's Resolved trace repeats rather than disambiguates that conflict.",
+      "why_consequential": "An implementation may either violate the preservation promise or fail to fit the target window, and users cannot predict which recent turns survive a model switch.",
+      "evidence_ref_ids": [
+        "E11",
+        "E43"
+      ]
+    },
+    {
+      "finding_id": "F3",
+      "severity": "high",
+      "gap_type": "impossible_capacity_state_undefined",
+      "statement": "No terminal behavior is defined when the system prompt plus protected Work acceptance criteria alone exceed the selected model's effective input capacity.",
+      "why_consequential": "The synchronous pre-send pipeline must either violate a MUST NOT truncate rule, send an invalid request, or block indefinitely; no error, model fallback, user choice, or recovery transition is specified.",
+      "evidence_ref_ids": [
+        "E8",
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "finding_id": "F4",
+      "severity": "medium",
+      "gap_type": "gui_transparency_contract_incomplete",
+      "statement": "The minimum Injected Context breakdown does not explicitly require disclosure of Assistant memory or project-retrieved Work context, while the phrase three context injectors is not bound here to named injector IDs or override precedence.",
+      "why_consequential": "A builder can satisfy the listed GUI fields while hiding material context and privacy-relevant injections, and different implementations can apply project defaults and per-run overrides differently.",
+      "evidence_ref_ids": [
+        "E7",
+        "E9",
+        "E10",
+        "E13",
+        "E20"
+      ]
+    },
+    {
+      "finding_id": "F5",
+      "severity": "medium",
+      "gap_type": "failure_recovery_undefined",
+      "statement": "User-triggered compaction defines initiation and an in-progress example but no success result, failure state, cancellation rule, retry behavior, or guarantee about the next send.",
+      "why_consequential": "A failed or partial compaction can leave the user unable to distinguish old context, new compacted context, and an unsent or blocked next turn.",
+      "evidence_ref_ids": [
+        "E6"
+      ]
+    },
+    {
+      "finding_id": "F6",
+      "severity": "high",
+      "gap_type": "mandatory_dependency_failure_undefined",
+      "statement": "Both Assistant-memory SSOT calls are mandatory for every selected-project Assistant turn, but this capsule defines no timeout, unavailable-service, malformed-result, over-budget, partial-success, or stale-cache behavior.",
+      "why_consequential": "Every project-scoped turn can be blocked or silently lose memory under ordinary dependency failure, with no deterministic recovery or GUI truth.",
+      "evidence_ref_ids": [
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "finding_id": "F7",
+      "severity": "medium",
+      "gap_type": "capability_toggle_effective_state_undefined",
+      "statement": "Project retrieval is described as MAY inject while its thread chip defaults On; the capsule does not define whether On requires an attempted retrieval, what conditions permit no retrieval, or how requested versus effective state is shown.",
+      "why_consequential": "The same enabled settings can legally produce retrieval or no retrieval without explanation, changing answer quality and context exposure invisibly.",
+      "evidence_ref_ids": [
+        "E19",
+        "E21"
+      ]
+    },
+    {
+      "finding_id": "F8",
+      "severity": "high",
+      "gap_type": "mode_conflict_precedence_undefined",
+      "statement": "Context Lens does not state whether Mute, Focus, and Subcompact are mutually exclusive, whether selections persist across mode changes, or which effect wins when regions overlap.",
+      "why_consequential": "Mute requires exclusion, Focus requires protection, and Subcompact requires replacement; without precedence, identical UI selections can create materially different prompts and chatsearch results.",
+      "evidence_ref_ids": [
+        "E23",
+        "E24"
+      ]
+    },
+    {
+      "finding_id": "F9",
+      "severity": "high",
+      "gap_type": "artifact_lifecycle_undefined",
+      "statement": "Subcompact creates a local summary artifact and rehydration handles but specifies no artifact identity/version, atomic apply semantics, generation-failure state, retry or undo behavior, invalidation after source changes, or acceptance test for rehydration.",
+      "why_consequential": "A failed, stale, or low-fidelity summary can silently replace canonical conversation content in effective context and propagate into child handoffs.",
+      "evidence_ref_ids": [
+        "E23",
+        "E24"
+      ]
+    },
+    {
+      "finding_id": "F10",
+      "severity": "medium",
+      "gap_type": "authority_precedence_undefined",
+      "statement": "BrainStorm permits the manager to choose an executor and the user to request one but does not say whether a valid user request overrides automatic choice, how an invalid request is rejected, or what selection evidence is shown.",
+      "why_consequential": "Executor topology changes permissions, concurrency, cost, and execution behavior; unresolved authority precedence gives the orchestrator consequential discretion.",
+      "evidence_ref_ids": [
+        "E27"
+      ]
+    },
+    {
+      "finding_id": "F11",
+      "severity": "high",
+      "gap_type": "approval_binding_idempotency_undefined",
+      "statement": "HITL approval can arrive through natural-language chat or an optional Dashboard control, but this capsule does not bind the response to an immutable gate/run ID or define authorization, stale-gate rejection, duplicate delivery, idempotency, or synchronization between surfaces.",
+      "why_consequential": "An ambiguous or repeated approve-and-continue action could release the wrong blocked-runtime, package, seam, or mandatory side-effect gate.",
+      "evidence_ref_ids": [
+        "E33",
+        "E34"
+      ]
+    },
+    {
+      "finding_id": "F12",
+      "severity": "high",
+      "gap_type": "handoff_contract_nondeterministic",
+      "statement": "Continue in Assistant uses illustrative context fields, may create or select a thread, and permits an optional suggested prompt without defining mandatory payload schema, snapshot/provenance identity, target-thread selection, deduplication, or injection-failure behavior.",
+      "why_consequential": "Users can land in a wrong or stale thread with incomplete run state and then issue approval or recovery instructions against the wrong execution context.",
+      "evidence_ref_ids": [
+        "E35"
+      ]
+    },
+    {
+      "finding_id": "F13",
+      "severity": "medium",
+      "gap_type": "state_machine_incomplete",
+      "statement": "The dev-session GUI enumerates starting, active, failed, stopping, stopped, and historical-restored states but provides no legal transition table, event authority, terminality rules, failure details, restart semantics, or recovery actions.",
+      "why_consequential": "Backend and GUI implementations can disagree about reachable states and available actions, especially after failure or restoration; the generic chat error trace does not define dev-session recovery.",
+      "evidence_ref_ids": [
+        "E36",
+        "E49"
+      ]
+    },
+    {
+      "finding_id": "F14",
+      "severity": "medium",
+      "gap_type": "target_resolution_nondeterministic",
+      "statement": "For a multi-terminal dev session, Open in Terminal may reveal the primary or last-active leaf without precedence, and mirrored-pane close may remove or update editor references without criteria.",
+      "why_consequential": "The same command or close event can navigate to different terminals or leave different reference graphs, creating inconsistent GUI truth and possible operations against the wrong PTY.",
+      "evidence_ref_ids": [
+        "E38",
+        "E39"
+      ]
+    },
+    {
+      "finding_id": "F15",
+      "severity": "high",
+      "gap_type": "destructive_close_behavior_undefined",
+      "statement": "Project switch and active-session close require recalculation or consequence disclosure, but the capsule does not define the offered choices, default action, cancel path, persistence behavior, or rollback if stopping/detaching fails.",
+      "why_consequential": "A builder may stop work, keep it backgrounded, block close, or detach it; those outcomes have materially different data-loss and resource consequences despite all satisfying disclosure.",
+      "evidence_ref_ids": [
+        "E36",
+        "E40"
+      ]
+    },
+    {
+      "finding_id": "F16",
+      "severity": "medium",
+      "gap_type": "scope_traceability_contradiction",
+      "statement": "The section says all listed features are in scope while the competitive table explicitly marks Agent skills as not in this plan; the earlier all-gaps-adopted wording further obscures the intended scope.",
+      "why_consequential": "Builders and acceptance reviewers cannot determine whether Agent skills are an MVP chat obligation or an external/non-plan capability.",
+      "evidence_ref_ids": [
+        "E42",
+        "E45",
+        "E46"
+      ]
+    },
+    {
+      "finding_id": "F17",
+      "severity": "high",
+      "gap_type": "security_acceptance_undefined",
+      "statement": "Session sharing promises a bundle with no secrets but this capsule gives no secret definition, detection/redaction stage, preview, fail-closed rule, user override boundary, or acceptance evidence.",
+      "why_consequential": "A share implementation can claim compliance while exporting credentials or sensitive metadata, creating direct disclosure risk.",
+      "evidence_ref_ids": [
+        "E47"
+      ]
+    },
+    {
+      "finding_id": "F18",
+      "severity": "medium",
+      "gap_type": "resume_reconciliation_undefined",
+      "statement": "Questionnaires may be revised before submission and resumed across wizard/thread surfaces, but the resume contract supplies no version, revision-conflict, concurrent-edit, deleted-question, or partial-answer reconciliation rule.",
+      "why_consequential": "Cross-surface resume can restore different answer sets or attach answers to changed question definitions while still claiming to restore the same questionnaire.",
+      "evidence_ref_ids": [
+        "E2",
+        "E1"
+      ]
+    },
+    {
+      "finding_id": "F19",
+      "severity": "medium",
+      "gap_type": "acceptance_evidence_missing",
+      "statement": "The AI-overseer contract requires every component and feature to be wire-explicit and fully implemented, but the capsule defines no structured output fields, validator, completeness checklist, or objective evidence that generated documents satisfy those universal claims.",
+      "why_consequential": "Generators can emit aspirational completeness prose while still omitting wires or producing stubs, and reviewers lack deterministic acceptance criteria.",
+      "evidence_ref_ids": [
+        "E30"
+      ]
+    },
+    {
+      "finding_id": "F20",
+      "severity": "low",
+      "gap_type": "budget_contract_vague",
+      "statement": "The ELI5 prompt-size mitigation says appendages should be short and offers one sentence only as an example, without a normative byte/token cap or its place in truncation priority.",
+      "why_consequential": "Providers or builders can interpret short differently, causing inconsistent context consumption and undermining deterministic context budgeting.",
+      "evidence_ref_ids": [
+        "E44"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "N1",
+      "statement": "Cross-surface clarification identity and the required resume target are explicit.",
+      "evidence_ref_ids": [
+        "E1"
+      ]
+    },
+    {
+      "non_gap_id": "N2",
+      "statement": "Chat is explicitly prohibited from inventing parallel dev-output or account-routing ownership.",
+      "evidence_ref_ids": [
+        "E3",
+        "E4"
+      ]
+    },
+    {
+      "non_gap_id": "N3",
+      "statement": "Top-level context-bundle order is explicit and deterministic.",
+      "evidence_ref_ids": [
+        "E7"
+      ]
+    },
+    {
+      "non_gap_id": "N4",
+      "statement": "Automatic memory eligibility, summary-only separation, and the no-forward-to-subagents boundary are explicit.",
+      "evidence_ref_ids": [
+        "E15",
+        "E16",
+        "E17"
+      ]
+    },
+    {
+      "non_gap_id": "N5",
+      "statement": "Gist Review command authority is explicitly assigned to canonical cmd.chat.memory.* IDs, with ad-hoc identifiers forbidden.",
+      "evidence_ref_ids": [
+        "E18"
+      ]
+    },
+    {
+      "non_gap_id": "N6",
+      "statement": "Subcompact explicitly preserves canonical history and rehydration handles, and child handoffs cannot use a lossy copy as their only truth.",
+      "evidence_ref_ids": [
+        "E24"
+      ]
+    },
+    {
+      "non_gap_id": "N7",
+      "statement": "The Plan-mode versus Agent-mode permission boundary for BrainStorm execution is explicit.",
+      "evidence_ref_ids": [
+        "E26"
+      ]
+    },
+    {
+      "non_gap_id": "N8",
+      "statement": "The crew message board's schema, routing, priority, rate-limit, and visibility authority is explicitly deferred to the orchestrator owner rather than re-owned here.",
+      "evidence_ref_ids": [
+        "E28"
+      ]
+    },
+    {
+      "non_gap_id": "N9",
+      "statement": "Generated-document intent explicitly rejects unwired and partial components.",
+      "evidence_ref_ids": [
+        "E30"
+      ]
+    },
+    {
+      "non_gap_id": "N10",
+      "statement": "HITL attention is explicitly surfaced both on the Dashboard and in a dedicated spawned thread.",
+      "evidence_ref_ids": [
+        "E34"
+      ]
+    },
+    {
+      "non_gap_id": "N11",
+      "statement": "Dev output ownership, reveal-by-dev_session_id behavior, placeholder truth, and preservation of stopped-session history are explicit.",
+      "evidence_ref_ids": [
+        "E36",
+        "E39"
+      ]
+    },
+    {
+      "non_gap_id": "N12",
+      "statement": "Silent orphaning of an active background workflow is explicitly forbidden as the default close behavior.",
+      "evidence_ref_ids": [
+        "E40"
+      ]
+    },
+    {
+      "non_gap_id": "N13",
+      "statement": "Assistant thread concurrency is explicitly distinguished from global orchestration concurrency and has a deterministic restrictive-limit rule.",
+      "evidence_ref_ids": [
+        "E48"
+      ]
+    },
+    {
+      "non_gap_id": "N14",
+      "statement": "External approval vocabulary is explicitly noncanonical for PM approval modes.",
+      "evidence_ref_ids": [
+        "E5"
+      ]
+    },
+    {
+      "non_gap_id": "N15",
+      "statement": "The references section explicitly requires deference to live owner documents rather than stale section-number citations.",
+      "evidence_ref_ids": [
+        "E31"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U1",
+      "statement": "Whether the cited owner documents close any candidate schema, routing, authority, or state gaps is unknown because those documents are outside this capsule.",
+      "evidence_ref_ids": [
+        "E28",
+        "E31"
+      ]
+    },
+    {
+      "unknown_id": "U2",
+      "statement": "The exact identities of the three context injectors and precedence among context_window_tokens, max_input_tokens, and effective_context_window_tokens may be owner-defined, but that definition is not present here.",
+      "evidence_ref_ids": [
+        "E10",
+        "E12"
+      ]
+    },
+    {
+      "unknown_id": "U3",
+      "statement": "The cited Assistant-memory owner may define dependency-failure and fallback behavior, but this capsule does not reveal it.",
+      "evidence_ref_ids": [
+        "E14"
+      ]
+    },
+    {
+      "unknown_id": "U4",
+      "statement": "The cited human-in-the-loop owner may define gate binding, approval authorization, and idempotency, but those rules are not visible in this evidence universe.",
+      "evidence_ref_ids": [
+        "E34"
+      ]
+    },
+    {
+      "unknown_id": "U5",
+      "statement": "Dev-session transition and project-close behavior may be resolved by the cited storage, wiring, GUI, promoted-feature, or run-mode owners, which were not available for inspection.",
+      "evidence_ref_ids": [
+        "E37",
+        "E41"
+      ]
+    },
+    {
+      "unknown_id": "U6",
+      "statement": "It is unknown whether all listed features was intended to exclude warning-marked comparison rows; the text provides no such qualifier and separately avoids claiming blanket closure.",
+      "evidence_ref_ids": [
+        "E45",
+        "E46",
+        "E50"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E1",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1911,
+      "line_end": 1913,
+      "quote": "- `clarification_request` and related wizard/thread surfaces may point at a multi-question questionnaire, not only one prompt at a time\n- `question_ids[]` remain the canonical cross-surface identifiers for clarification work\n- thread resume and wizard resume must restore the same outstanding questionnaire state or its resolved outcome"
+    },
+    {
+      "evidence_id": "E2",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1902,
+      "line_end": 1902,
+      "quote": "- users may answer in any order and revise answers before final submission"
+    },
+    {
+      "evidence_id": "E3",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1920,
+      "line_end": 1920,
+      "quote": "Assistant-invoked `/dev` and live command work uses shell-owned terminal/output/ports and `/output/ports` surfaces; chat must not invent a parallel dev-output model."
+    },
+    {
+      "evidence_id": "E4",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1922,
+      "line_end": 1922,
+      "quote": "Chat-visible runtime and account information stays owner-doc consistent with `Plans/Multi-Account.md`; `/runtime-disclosure` is a presentation obligation over the resolved runtime/account snapshot, not a new chat-local account-routing model."
+    },
+    {
+      "evidence_id": "E5",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1924,
+      "line_end": 1924,
+      "quote": "Approval display copy uses PM-native durable/default approval wording; external labels such as Bypass, Autopilot, and Default Approvals are reference-baseline terms only and do not become canonical PM approval modes."
+    },
+    {
+      "evidence_id": "E6",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1936,
+      "line_end": 1936,
+      "quote": "- **User-triggered \"Compact session\":** The user can trigger **\"Compact session\"** (or \"Summarize and continue\") in chat -- e.g. via slash command, menu, or the chat context circle's Compact Now action -- which runs the same compaction pipeline as auto-compact through the live Prompt Pipeline owners, with clear UI feedback (e.g. \"Compacting...\"). Plans/newfeatures.md §10 remains source-lineage only for this historical reference."
+    },
+    {
+      "evidence_id": "E7",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1940,
+      "line_end": 1940,
+      "quote": "Rule: For every Assistant turn (and any chat-triggered run), the context pipeline MUST assemble the run context as three explicit bundles, in this deterministic order: (1) Instruction Bundle, (2) Work Bundle, (3) Memory Bundle."
+    },
+    {
+      "evidence_id": "E8",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1944,
+      "line_end": 1944,
+      "quote": "Rule: The Work Bundle acceptance criteria MUST NEVER be truncated; if truncation is required to fit a model’s window, truncation MUST occur in instruction example/illustrative content first and in conversation summaries/older turns before any acceptance criteria content is removed."
+    },
+    {
+      "evidence_id": "E9",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1950,
+      "line_end": 1950,
+      "quote": "Rule: The chat UI MUST surface an “Injected Context” breakdown per run/turn, including: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and whether truncation occurred (and the reason/order that was applied)."
+    },
+    {
+      "evidence_id": "E10",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1954,
+      "line_end": 1954,
+      "quote": "Rule: The three context injectors MUST be user-configurable (per-project; optional per-run override) with deterministic defaults; budget defaults (bytes/lines/headings) MUST be decided deterministically and recorded via `auto_decisions.jsonl`."
+    },
+    {
+      "evidence_id": "E11",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1962,
+      "line_end": 1966,
+      "quote": "1. **Preserve unconditionally:** System prompt, Instruction Bundle (`AGENTS.md` chain where enabled), active file references, last 6 turns verbatim (config: `context.repack.verbatim_turns`, default `6`).\n2. **Summarize:** All turns older than the last 6 are condensed into a single \"Conversation Summary\" block (key decisions, file paths mentioned, outcomes).\n3. **Truncate:** If the preserved + summarized content exceeds the new model's effective context window from the Models_System capability snapshot, truncate the summary first, then drop oldest preserved turns until it fits. Never truncate the system prompt or the Work Bundle acceptance criteria.\n4. **Normalize:** Provider-specific formatting (e.g., tool call syntax) is normalized to the new provider's expected format.\n5. **Timing:** Re-pack runs synchronously before the next turn is sent. The user sees a brief \"Repacking context…\" indicator."
+    },
+    {
+      "evidence_id": "E12",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1970,
+      "line_end": 1970,
+      "quote": "Config: `context.repack.verbatim_turns` (default `6`). Max tokens are sourced from the selected provider/model capability snapshot fields owned by `Plans/Models_System.md`, including `context_window_tokens`, `max_input_tokens`, and `effective_context_window_tokens`."
+    },
+    {
+      "evidence_id": "E13",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1978,
+      "line_end": 1978,
+      "quote": "Rule: For Assistant turns with a selected project, chat context assembly MUST call the Assistant-memory SSOT interfaces (`build_capsule(project_id, now)` and `search(project_id, user_message, now, k)`) and MUST enforce the configured capsule/retrieval budgets."
+    },
+    {
+      "evidence_id": "E14",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1980,
+      "line_end": 1980,
+      "quote": "ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults"
+    },
+    {
+      "evidence_id": "E15",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1982,
+      "line_end": 1982,
+      "quote": "Rule: Automatic memory injection in chat MUST apply eligibility gating per the Assistant-memory SSOT (Verified-only by default; any Unverified inclusion requires explicit user action)."
+    },
+    {
+      "evidence_id": "E16",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1986,
+      "line_end": 1986,
+      "quote": "Rule: Memory injection in chat MUST use summary-only memory text and MUST remain separate from Application/Project rules pipeline assembly."
+    },
+    {
+      "evidence_id": "E17",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1990,
+      "line_end": 1990,
+      "quote": "Rule: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+    },
+    {
+      "evidence_id": "E18",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1994,
+      "line_end": 1994,
+      "quote": "Rule: Gist Review actions in Assistant chat MUST dispatch canonical `cmd.chat.memory.*` UI command IDs from `Plans/UI_Command_Catalog.md` and MUST NOT use ad-hoc command identifiers."
+    },
+    {
+      "evidence_id": "E19",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1999,
+      "line_end": 1999,
+      "quote": "In addition to the Assistant-only memory capsule (§17.4), the chat context pipeline MAY inject **project-scoped retrieved context** (chat/code/logs) per §10.1. This is designed to keep long-running threads usable without relying on full-history in-context."
+    },
+    {
+      "evidence_id": "E20",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2001,
+      "line_end": 2003,
+      "quote": "Rule: Project retrieval injection MUST remain **separate** from Assistant memory injection:\n- Project retrieval injection is **fresh, ephemeral context for the current turn** (Work Bundle: “Retrieved Context”).\n- Assistant memory injection remains governed by verification + gist rules (Plans/assistant-memory-subsystem.md) and is never implicitly expanded by chat/code/log retrieval."
+    },
+    {
+      "evidence_id": "E21",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2005,
+      "line_end": 2008,
+      "quote": "Rule: Project retrieval injection MUST respect:\n- **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread).\n- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory).\n- **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections."
+    },
+    {
+      "evidence_id": "E22",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2019,
+      "line_end": 2022,
+      "quote": "- the control lives in the top-right of the chat window.\n- it appears immediately to the right of the chat search bar.\n- it renders as an icon with a dropdown arrow.\n- opening the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`."
+    },
+    {
+      "evidence_id": "E23",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2025,
+      "line_end": 2029,
+      "quote": "- all three modes support selecting multiple messages at once.\n- `Mute` applies immediately as selection toggles happen.\n- `Focus` applies immediately as selection toggles happen.\n- `Subcompact` prepares a selection and then requires an explicit apply action because it creates a local summary artifact.\n- `Turn Off` exits Context Lens mode and clears the active selection state."
+    },
+    {
+      "evidence_id": "E24",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2034,
+      "line_end": 2038,
+      "quote": "- muted messages are excluded from effective context assembly and from chatsearch results returned to the agent.\n- focused messages remain protected and high-priority in effective context assembly.\n- Subcompact replaces the selected message region in effective context assembly with a local summary while preserving canonical source history and rehydration handles.\n- Context Lens state is thread-local UI shaping, not Assistant memory.\n- child handoff bundles derive from canonical source state plus current effective shaping state; children do not inherit a lossy copy as their only truth."
+    },
+    {
+      "evidence_id": "E25",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2042,
+      "line_end": 2042,
+      "quote": "- **Flow:** BrainStorm runs a **plan-style flow** (questions, research, debugging as needed) to form a **single plan**. Questions are **not** asked multiple times by multiple subagents; one coordinated Q&A/research phase, then the plan is formed."
+    },
+    {
+      "evidence_id": "E26",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2044,
+      "line_end": 2044,
+      "quote": "- **Execution:** When the user **starts or executes** the plan, the **chat must switch to Agent mode** (execution mode), because Plan mode is read-only and execution requires write/execute permissions."
+    },
+    {
+      "evidence_id": "E27",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2045,
+      "line_end": 2049,
+      "quote": "- **Who executes:** The plan can be executed by:\n  - A **regular agent**,\n  - A **crew**, or\n  - **Agent + subagents**.\n  The **manager** (orchestrator) automatically decides, or the **user can request** which option."
+    },
+    {
+      "evidence_id": "E28",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2050,
+      "line_end": 2050,
+      "quote": "- **Subagent collaboration:** During BrainStorm, subagents collaborate through the canonical crew message board owned by `Plans/orchestrator-subagent-integration.md`; this is the chat-facing subagent-collaboration projection, not the normative schema owner. This chat document may describe the user-facing behavior, but the schema, routing rules, priority model, rate limit, and orchestrator-visibility contract live in the orchestrator owner doc."
+    },
+    {
+      "evidence_id": "E29",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2056,
+      "line_end": 2056,
+      "quote": "- All **documentation and plans** produced by the **Interview** (PRD, AGENTS.md, requirements, phase plans, etc.) must be written with the understanding that an **AI agent** will execute them, not a human."
+    },
+    {
+      "evidence_id": "E30",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2058,
+      "line_end": 2060,
+      "quote": "  - Instructions must be **unambiguous** and **wire-explicit**: every component, config key, and feature must be explicitly wired (e.g. \"wire X to Y\", \"ensure Z is passed to the run config\").\n  - **DRY Method** must be enforced in generated content (single source of truth, no duplicated logic, tag reusable items). See Plans/interview-subagent-integration.md §5.1.\n  - **No partially complete components:** Generated tasks and plans must call out **completeness**: ensure components are fully implemented and wired to the GUI/config/API as intended, and that nothing is \"built but not wired\" or left as a stub."
+    },
+    {
+      "evidence_id": "E31",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2068,
+      "line_end": 2068,
+      "quote": "Reference lists must defer to live owner docs instead of stale section-number citations."
+    },
+    {
+      "evidence_id": "E32",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2097,
+      "line_end": 2097,
+      "quote": "The **Dashboard** displays **warnings** and **Calls to Action (CtAs)** that require or benefit from user attention. These are not only informational: the user is expected to **answer or address** them."
+    },
+    {
+      "evidence_id": "E33",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2102,
+      "line_end": 2104,
+      "quote": "**Addressable via the chat Assistant:** Warnings and CtAs can be **answered or addressed by the chat Assistant**. The user can:\n- Open the Assistant and respond in natural language (e.g. \"approve and continue,\" \"what's blocking?\", \"run the suggested fix\").\n- Use the Assistant to discuss or clarify before taking action (e.g. \"summarize what was done in this phase\" before approving a HITL gate)."
+    },
+    {
+      "evidence_id": "E34",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2106,
+      "line_end": 2109,
+      "quote": "**HITL prompts:** When Human-in-the-Loop (HITL) is enabled and the orchestrator pauses on a blocked-runtime, package-complete, seam-complete, or mandatory side-effect approval gate:\n  - The **Dashboard** shows a **CtA** that prompts the user to interact (e.g. \"Package gate complete -- approval required to continue\").\n  - A **new thread** is **spawned** with an **appropriate name** (e.g. tied to the package/seam/node or \"Approval: Package Gate\") so the user has a dedicated place to respond. That thread shows the CtA; the user can address it there via the Assistant (e.g. \"approve and continue\" or ask for a summary and then approve). So the user is notified on the Dashboard and in a dedicated HITL thread.\n  The user can also address the CtA via the Assistant in that thread (e.g. \"approve and continue\" or ask for a summary and then approve) or via a direct \"Approve & continue\" control on the Dashboard if provided. See **Plans/human-in-the-loop.md** for HITL settings (GUI) and behavior."
+    },
+    {
+      "evidence_id": "E35",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2111,
+      "line_end": 2111,
+      "quote": "**Orchestrator to Assistant handoff:** When the orchestrator **completes** a run or **pauses** (e.g. at a blocked episode, package/seam gate, or run-completion review point), the Dashboard/completion UI must offer the canonical CtA **Continue in Assistant**. That action opens the Assistant chat with **relevant context** injected: e.g. run summary, current package/seam/node/blocked episode id, and a short summary of what was done. The user can then continue in natural language (\"approve and continue\", \"what should we do next?\") without re-pasting. Implementation: Dashboard CtA or completion panel includes a control that switches to Assistant view, creates or selects a thread, and injects a context block (run summary, package/seam/node, optional suggested prompt)."
+    },
+    {
+      "evidence_id": "E36",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2121,
+      "line_end": 2125,
+      "quote": "- assistant-invoked dev actions map to stable UI commands and visible shell state changes\n- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that resolve to canonical `cmd.dev.*` or terminal command IDs\n- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state\n- output routes into the canonical Terminal, Output, Problems, Debug Console, and Ports surfaces owned by the shell; chat does not create a parallel dev-output model\n- project switch or workspace-tab close must surface explicit consequences for any active dev session"
+    },
+    {
+      "evidence_id": "E37",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2127,
+      "line_end": 2127,
+      "quote": "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md"
+    },
+    {
+      "evidence_id": "E38",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2130,
+      "line_end": 2130,
+      "quote": "A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity."
+    },
+    {
+      "evidence_id": "E39",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2133,
+      "line_end": 2138,
+      "quote": "- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.\n- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.\n- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.\n- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.\n- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.\n- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited."
+    },
+    {
+      "evidence_id": "E40",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2142,
+      "line_end": 2144,
+      "quote": "- switching projects recalculates effective shell, tool, and dev-session state for the new project context\n- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities\n- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default"
+    },
+    {
+      "evidence_id": "E41",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2146,
+      "line_end": 2146,
+      "quote": "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md"
+    },
+    {
+      "evidence_id": "E42",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2149,
+      "line_end": 2149,
+      "quote": "This section reviews the Assistant & Chat plan for **gaps**, **potential problems**, and **competitive coverage** (vs. OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor). **All gaps listed below are adopted as MVP:** the main body of this plan (§1-§22) has been updated to include every adopted requirement (slash commands, interrupt vs. stop, up to 2 queued messages FIFO, Plan read-only until execute, thinking toggle, export, compact, model switch UI, resume/rewind, revert last edit, session share, HITL dashboard + thread notification)."
+    },
+    {
+      "evidence_id": "E43",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2168,
+      "line_end": 2168,
+      "quote": "| **Context re-pack on model switch** | \"Context is passed along\" when switching model--different platforms have different context limits and formats. Re-pack logic (summarize, truncate, normalize) must be specified so we do not overflow or lose critical context. | **Resolved in §17:** Preserve system prompt + AGENTS.md + active file refs + last 6 turns verbatim; summarize older turns; truncate summary first if over limit; normalize Provider-specific formatting. Config: `context.repack.verbatim_turns` (default `6`). Max tokens from the Models_System capability snapshot for the selected provider/model entry. |"
+    },
+    {
+      "evidence_id": "E44",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2172,
+      "line_end": 2172,
+      "quote": "| **ELI5 and system prompt size** | App and chat ELI5 add instructions to prompts; long ELI5 text could consume context. | Keep ELI5 appendages short (e.g. one sentence); document in §2. |"
+    },
+    {
+      "evidence_id": "E45",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2194,
+      "line_end": 2194,
+      "quote": "| **Agent skills (load by trigger)** | -- | Skills/hooks | -- | ✅ Agent Skills | -- | -- | ⚠️ newfeatures §6; not in this plan |"
+    },
+    {
+      "evidence_id": "E46",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2198,
+      "line_end": 2198,
+      "quote": "**Summary:** All listed features are now in scope: steer/queue (§4), context display (§12), permissions (§3), MCP (§7), @ mention (§9), **LSP-aware chat/editor integration (§9, Plans/LSPSupport.md §5)**, activity transparency (§13), multi-agent (§14-§15), slash commands (§5), export (§6), thinking toggle (§13), model switch (§1), user compact (§17), resume/rewind (§11), revert edit (§9), session share (§11). **LSP is MVP** (editor + Chat). Inbox-per-agent and real-time collaboration are out of scope for the initial desktop MVP (see glossary in table above)."
+    },
+    {
+      "evidence_id": "E47",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2212,
+      "line_end": 2212,
+      "quote": "10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets)."
+    },
+    {
+      "evidence_id": "E48",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2224,
+      "line_end": 2224,
+      "quote": "22. **Concurrent threads** -- §11: user-facing setting, **default 10** max concurrent thread runs in Assistant UI. This is a thread-level Assistant concurrency setting, not the global runtime subagent ceiling. Global orchestration caps remain SSOT in `Plans/orchestrator-subagent-integration.md` and `Plans/Run_Modes.md` (`max_total_active_agents=32`), and interview reviewer narrowing remains in `Plans/interview-subagent-integration.md`; the more restrictive applicable limit wins."
+    },
+    {
+      "evidence_id": "E49",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2228,
+      "line_end": 2228,
+      "quote": "25. **Error and failure UX** -- §4: clear error state, Resend or Cancel, queue unchanged unless user resends; suggest switch platform or model when appropriate."
+    },
+    {
+      "evidence_id": "E50",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 2235,
+      "line_end": 2235,
+      "quote": "This traceability table now records what moved into the main body without claiming blanket closure."
+    },
+    {
+      "evidence_id": "E51",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 1918,
+      "line_end": 1918,
+      "quote": "Active Interview work blocks must show the effective runtime state required by the shared runtime owner docs."
+    }
+  ],
+  "scope_confirmation": {
+    "capsule_only": true,
+    "prior_audits_used": false,
+    "other_results_used": false,
+    "unrelated_windows_used": false
+  },
+  "terminal_after_result": true
+}

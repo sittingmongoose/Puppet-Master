@@ -1,0 +1,835 @@
+<script id="pm6-js-wizard">
+/* ==================================================================
+   pm6-js-wizard — Planning Wizard page renderer + interactions.
+   Owns #panel-wizard only. All state lives in PM_DEMO.state.wizard
+   (engine facades mutate it); this block renders + registers the
+   page-local actions declared in 16-page-wizard markup.
+   ================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------------- helpers ---------------- */
+  function $(sel, r) { return (r || document).querySelector(sel); }
+  function $$(sel, r) { return Array.prototype.slice.call((r || document).querySelectorAll(sel)); }
+  function byId(id) { return document.getElementById(id); }
+  function root() { return byId('panel-wizard'); }
+  function D() { return window.PM_DEMO || null; }
+  function WS() { var d = D(); return d && d.state && d.state.wizard ? d.state.wizard : null; }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function icoMap() { return window.PM_ICONS || {}; }
+  function ico(key, cls) {
+    var m = icoMap();
+    return '<span class="pm6-ico' + (cls ? ' ' + cls : '') + '">' + (m[key] || m.gear || '') + '</span>';
+  }
+  function hydrateIcons(scope) {
+    $$('.pm6-ico[data-pm6-icon]', scope || root()).forEach(function (el) {
+      if (el.firstChild) return;
+      var m = icoMap();
+      el.innerHTML = m[el.getAttribute('data-pm6-icon')] || m.gear || '';
+    });
+  }
+  function reduced() {
+    try {
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    } catch (e) { return false; }
+  }
+  function speed() { var d = D(); return (d && d.state && d.state.clock && d.state.clock.speed) || 1; }
+  function later(fn, ms) { return setTimeout(fn, reduced() ? 0 : ms / speed()); }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+
+  /* ---------------- page-local UI state (render state only) -------- */
+  var W = {
+    stage: 'intake',            /* intake | discovery | workspace */
+    attach: 'github',
+    intent: 'feature',
+    discovering: false,
+    threadMode: 'overview',     /* overview | topic | review */
+    drafts: {},                 /* 'tid|qid' -> value */
+    ffOpen: {},                 /* 'tid|qid' -> freeform textarea open */
+    theater: null,              /* step index while the integration sequence plays */
+    theaterDone: false,
+    testing: 'full'
+  };
+
+  /* static presentation metadata (icons, dependency/origin badges) */
+  var TOPIC_META = {
+    t1: { icon: 'layers',  badges: ['core'] },
+    t2: { icon: 'shield',  badges: ['depends: data model'] },
+    t3: { icon: 'film',    badges: ['origin: chat import', 'depends: data model'] },
+    t4: { icon: 'search',  badges: ['depends: data model'] },
+    t5: { icon: 'star',    badges: ['depends: auth'] },
+    t6: { icon: 'globe',   badges: ['origin: chat import', 'depends: editor'] },
+    t7: { icon: 'bolt',    badges: ['depends: import-from-URL'] },
+    t8: { icon: 'rocket',  badges: ['depends: editor', 'credentials'] }
+  };
+  var STATE_LABEL = {
+    not_started: 'Not started', active: 'Active', ledger_syncing: 'Ledger syncing',
+    compiling: 'Compiling', auditing: 'Auditing', repairing: 'Repairing',
+    ready: 'Ready', impacted: 'Impacted', 'review-impact': 'Review impact',
+    reopened: 'Reopened', deferred: 'Deferred', blocked: 'Blocked'
+  };
+  var BUSY_STATES = { ledger_syncing: 1, compiling: 1, auditing: 1, repairing: 1, reopened: 1 };
+  var STATE_PCT = {
+    not_started: 0, active: 15, blocked: 8, impacted: 60, 'review-impact': 60,
+    reopened: 40, ledger_syncing: 35, compiling: 55, auditing: 75, repairing: 85,
+    deferred: 20, ready: 100
+  };
+
+  /* self-initiated web / Site Reader evidence (visible cards, receipts only) */
+  var EVIDENCE = {
+    discovery: {
+      icon: 'globe', label: 'Reading Site: docs.rs/axum',
+      reason: 'Agent read the framework docs because the discovered Axum 0.8 surface needed confirmation.',
+      receipts: ['Site Reader', 'receipt only', 'cache: fresh', '1 page'],
+      input: 'operation_input · {"url":"https://docs.rs/axum"}'
+    },
+    t6: {
+      icon: 'search', label: 'Searching Web: schema.org Recipe markup coverage',
+      reason: 'Agent searched web because import-coverage claims needed fresh evidence.',
+      receipts: ['websearch · scope *', '6 sources', 'read receipts ✓'],
+      input: 'operation_input · {"query":"schema.org Recipe adoption"}'
+    },
+    t8: {
+      icon: 'globe', label: 'Reading Site: developers.cloudflare.com/r2',
+      reason: 'Agent read storage pricing pages before proposing the options below.',
+      receipts: ['Site Reader', 'host-scoped: https://developers.cloudflare.com/*', 'receipt only'],
+      input: 'operation_input · {"url":"https://developers.cloudflare.com/r2"}'
+    }
+  };
+
+  /* ---------------- topic accessors ---------------- */
+  function topics() {
+    var s = WS();
+    if (!s) return [];
+    return Object.keys(s.topics).map(function (k) { return s.topics[k]; })
+      .sort(function (a, b) { return a.num - b.num; });
+  }
+  function readyCount() {
+    return topics().filter(function (t) { return t.state === 'ready'; }).length;
+  }
+  function storageAnswered() {
+    var s = WS();
+    var t8 = s && s.topics.t8;
+    return !!(t8 && t8.questions[0] && t8.questions[0].answer);
+  }
+
+  /* ---------------- stage switching ---------------- */
+  function setStage(name) {
+    W.stage = name;
+    var r = root();
+    if (!r) return;
+    $$('.pm6-wiz-stage', r).forEach(function (sec) {
+      sec.classList.toggle('active', sec.getAttribute('data-wiz-stage') === name);
+    });
+  }
+  function ensureWorkspace() {
+    if (W.stage !== 'workspace') setStage('workspace');
+    renderAll();
+  }
+
+  /* ---------------- shared fragments ---------------- */
+  function schip(state) {
+    var label = STATE_LABEL[state] || state;
+    return '<span class="pm6-wiz-schip' + (BUSY_STATES[state] ? ' busy' : '') + '" data-state="' + esc(state) + '">' +
+      '<span class="pm6-wiz-sdot"></span>' + esc(label) + '</span>';
+  }
+  function evdCard(key, opts) {
+    var e = EVIDENCE[key];
+    if (!e) return '';
+    var state = (opts && opts.busy) ? '<span class="pm6-wiz-evd-state busy">running</span>'
+      : '<span class="pm6-wiz-evd-state">completed ✓</span>';
+    return '<button type="button" class="pm6-wiz-evd" data-demo-action="wizard.evidence_open" data-demo-arg="' + esc(key) + '">' +
+      '<span class="pm6-wiz-evd-top">' + ico(e.icon) +
+        '<span class="pm6-wiz-evd-label">' + esc(e.label) + '</span>' + state + '</span>' +
+      '<span class="pm6-wiz-evd-reason">' + esc(e.reason) + '</span>' +
+      '<span class="pm6-wiz-evd-receipts">' + e.receipts.map(function (r) {
+        return '<span class="pm6-wiz-tbadge">' + esc(r) + '</span>';
+      }).join('') + '</span>' +
+      '<span class="pm6-wiz-evd-input">' + esc(e.input) + '</span>' +
+    '</button>';
+  }
+  function reasonLine(code, hint) {
+    return '<div class="pm6-wiz-reason"><span class="pm6-wiz-reason-code">' + esc(code) + '</span><span>' + esc(hint) + '</span></div>';
+  }
+
+  /* ---------------- topic map ---------------- */
+  function renderTopics() {
+    var host = byId('pm6WizTopicList');
+    if (!host) return;
+    var s = WS();
+    var open = s ? s.activeTopic : null;
+    host.innerHTML = topics().map(function (t, i) {
+      var meta = TOPIC_META[t.id] || { icon: 'clipboard', badges: [] };
+      var pct = STATE_PCT[t.state] != null ? STATE_PCT[t.state] : 10;
+      var badges = meta.badges.map(function (b) {
+        return '<span class="pm6-wiz-tbadge">' + esc(b) + '</span>';
+      }).join('');
+      var prog = t.progress
+        ? '<span class="pm6-wiz-topic-sub">' + esc(t.progress) + '</span>' : '';
+      return '<button type="button" class="pm6-wiz-topic-card pm-sheen' + (open === t.id ? ' open' : '') + '"' +
+        ' data-tstate="' + esc(t.state) + '" style="--i:' + Math.min(i, 8) + '"' +
+        ' data-demo-action="wizard.open_topic" data-demo-arg="' + esc(t.id) + '">' +
+        '<span class="pm6-wiz-topic-toprow">' + ico(meta.icon, 'pm-hover-icon') +
+          '<span class="pm6-wiz-topic-name">' + t.num + ' · ' + esc(t.title) + '</span>' + schip(t.state) + '</span>' +
+        '<span class="pm6-wiz-topic-badges">' + badges + '</span>' +
+        '<span class="pm6-wiz-topic-sub">' + esc(t.summary) + '</span>' + prog +
+        '<span class="pm6-wiz-topic-prog"><span class="pm6-wiz-topic-prog-fill" style="width:' + pct + '%"></span></span>' +
+      '</button>';
+    }).join('');
+    var count = byId('pm6WizTopicCount');
+    if (count) count.textContent = readyCount() + ' of ' + topics().length + ' Ready';
+  }
+
+  /* ---------------- integrate dock ---------------- */
+  function renderDock() {
+    var host = byId('pm6WizIntegrateDock');
+    if (!host) return;
+    var s = WS();
+    if (!s) { host.innerHTML = ''; return; }
+    if (s.pack) {
+      host.innerHTML = '<div class="pm6-wiz-mchip ok" style="width:100%;justify-content:center;">' +
+        'Final Plan Pack ✓ · audit closure ' + esc(s.hashes.auditClosure) + '</div>';
+      return;
+    }
+    var blockedByStorage = !storageAnswered();
+    var allReady = readyCount() === topics().length;
+    var dis = blockedByStorage ? ' aria-disabled="true" data-demo-reason="blocked_by_gate"' : '';
+    host.innerHTML =
+      '<button type="button" class="pm6-wiz-integrate-btn"' + dis + ' data-demo-action="wizard.integrate">' +
+        'Integrate Final Plan Pack <span class="pm6-wiz-glyph">→</span></button>' +
+      (blockedByStorage
+        ? reasonLine('blocked_by_gate', 'Topic 8 still needs the storage decision — open Deployment & backups and answer it to unblock.')
+        : (allReady ? '' : reasonLine('busy', 'Some topics are still syncing — integration will pick up their latest ledger state.')));
+  }
+
+  /* ---------------- header state pill ---------------- */
+  function renderStatePill() {
+    var host = byId('pm6WizRunState');
+    if (!host) return;
+    var s = WS();
+    if (!s) { host.innerHTML = ''; return; }
+    var cls = '', text = '';
+    if (s.approved) { cls = ' ok'; text = 'Approved · PlanCompileRun pcr-47 bound'; }
+    else if (s.pack && !W.theaterDone) { cls = ' warn'; text = 'Final audit running'; }
+    else if (s.pack) { cls = ''; text = 'Final review — ready to approve'; }
+    else { text = 'Interviewing · ' + readyCount() + ' of ' + topics().length + ' Ready'; }
+    host.innerHTML = '<span class="pm6-wiz-statepill' + cls + '">' + esc(text) + '</span>';
+  }
+
+  /* ---------------- live plan preview ---------------- */
+  function hashRow(k, v) {
+    return '<div class="pm6-wiz-hashrow"><span class="pm6-wiz-hash-k">' + esc(k) + '</span>' +
+      '<span class="pm6-wiz-hash-v">' + esc(v) + ' <span class="pm6-wiz-glyph">✓</span></span></div>';
+  }
+  function renderDoc() {
+    var host = byId('pm6WizDoc');
+    if (!host) return;
+    var s = WS();
+    if (!s) return;
+    var d = D();
+    var planName = (d && d.data && d.data.wizard && d.data.wizard.planName) || 'Tastebook v1.2';
+    var html = '<div class="pm6-wiz-doc-h">' + esc(planName) + '</div>';
+    topics().forEach(function (t) {
+      if (t.state === 'ready') {
+        var decisions = t.questions.filter(function (q) { return q.answer; }).map(function (q) {
+          return 'Decision: ' + q.answer;
+        }).join(' · ');
+        html += '<div class="pm6-wiz-doc-sec">' +
+          '<div class="pm6-wiz-doc-sec-t"><span class="pm6-wiz-glyph">✓</span>' + t.num + '. ' + esc(t.title) + '</div>' +
+          '<div class="pm6-wiz-doc-sec-p">' + esc(t.summary) + (decisions ? ' <em>' + esc(decisions) + '</em>' : '') + '</div></div>';
+      } else if (t.state === 'blocked') {
+        html += '<div class="pm6-wiz-doc-sec">' +
+          '<div class="pm6-wiz-doc-sec-t"><span class="pm6-wiz-glyph" style="color:var(--accent-error)">⚠</span>' + t.num + '. ' + esc(t.title) + '</div>' +
+          '<div class="pm6-wiz-doc-sec-p"><em>Waiting on the storage decision — this section drafts itself once you answer.</em></div></div>';
+      } else {
+        html += '<div class="pm6-wiz-doc-sec">' +
+          '<div class="pm6-wiz-doc-sec-t"><span class="pm6-wiz-glyph" style="color:var(--accent-orange)">●</span>' + t.num + '. ' + esc(t.title) + '</div>' +
+          '<div class="pm6-wiz-skel"><span class="pm6-wiz-skel-line" style="width:92%"></span>' +
+          '<span class="pm6-wiz-skel-line" style="width:71%"></span></div></div>';
+      }
+    });
+    if (s.pack) {
+      html += '<div class="pm6-wiz-doc-sec fresh">' +
+        '<div class="pm6-wiz-doc-sec-t"><span class="pm6-wiz-glyph">✓</span>Final Plan Pack</div>' +
+        hashRow('PlanningRun revision', String(s.hashes.planningRunRev)) +
+        hashRow('Topic map version', s.hashes.topicMapVersion) +
+        hashRow('PlanUnit + acceptance index', s.hashes.planUnitIdx + '…') +
+        hashRow('Testing policy', s.hashes.testingPolicy + '…') +
+        hashRow('Audit closure', s.hashes.auditClosure + '…') + '</div>';
+    }
+    host.innerHTML = html;
+    var meta = byId('pm6WizDocMeta');
+    if (meta) meta.textContent = 'rev ' + s.hashes.planningRunRev + ' · map ' + s.hashes.topicMapVersion;
+  }
+
+  /* ---------------- readiness rail ---------------- */
+  function renderRail() {
+    var host = byId('pm6WizRail');
+    if (!host) return;
+    var s = WS();
+    if (!s) return;
+    var nReady = readyCount(), n = topics().length;
+    function gate(done, busy, label) {
+      var cls = done ? ' done' : (busy ? ' busy' : '');
+      var mark = done ? '✓' : (busy ? '●' : '');
+      return '<div class="pm6-wiz-gate' + cls + '"><span class="pm6-wiz-gate-mark">' + mark + '</span><span>' + label + '</span></div>';
+    }
+    var approved = !!s.approved;
+    var canApprove = !!s.pack && W.theaterDone && !approved;
+    var btnAttrs = '', btnLabel = 'Approve And Build', hint = '';
+    if (approved) {
+      btnAttrs = ' aria-disabled="true" data-demo-reason="already_done"';
+      btnLabel = 'Approved ✓ · pcr-47';
+      hint = reasonLine('already_done', 'PlanApproved published · approval_cas_receipt-4e91d0 — follow the run in Orchestrator > Plan Compile.');
+    } else if (!canApprove) {
+      btnAttrs = ' aria-disabled="true" data-demo-reason="blocked_by_gate"';
+      hint = s.pack
+        ? reasonLine('blocked_by_gate', 'Final audit is still closing — this unlocks in a few seconds.')
+        : reasonLine('blocked_by_gate', 'Reach zero incomplete items: finish all ' + n + ' topics, then Integrate the Final Plan Pack.');
+    }
+    host.innerHTML =
+      '<div class="pm6-wiz-rail-title">Compile readiness — zero incomplete</div>' +
+      gate(nReady === n, nReady < n && nReady > 0, esc(nReady + ' of ' + n) + ' topics Ready') +
+      gate(storageAnswered(), false, 'Storage decision recorded (Topic 8)') +
+      gate(!!s.pack, false, 'Final Plan Pack integrated') +
+      gate(W.theaterDone || approved, !!s.pack && !W.theaterDone, 'Final audit closed — zero stubs, TODOs or placeholders') +
+      gate(W.theaterDone || approved, false, 'Currentness hashes verified (rev ' + s.hashes.planningRunRev + ' · ' + esc(s.hashes.topicMapVersion) + ')') +
+      '<button type="button" class="pm6-wiz-approve' + (canApprove ? ' armed' : '') + '"' + btnAttrs +
+        ' data-demo-action="wizard.approve_and_build">' + ico('rocket') + btnLabel + '</button>' + hint;
+    hydrateIcons(host);
+  }
+
+  /* ---------------- center thread ---------------- */
+  function renderThread() {
+    var host = byId('pm6WizThread');
+    if (!host) return;
+    var s = WS();
+    if (!s) return;
+    if (W.threadMode === 'review' || s.pack || s.approved) { renderReview(host); return; }
+    var t = s.activeTopic ? s.topics[s.activeTopic] : null;
+    if (!t) { renderOverview(host); return; }
+    renderTopicThread(host, t);
+    hydrateIcons(host);
+  }
+
+  function renderOverview(host) {
+    host.innerHTML =
+      '<div class="pm6-wiz-thread-head">' + ico('clipboard') +
+        '<div class="pm6-wiz-thread-title">Topic threads</div></div>' +
+      '<div class="pm6-wiz-thread-body">' +
+        '<div class="pm6-wiz-thread-note">Pick a topic on the left to open its thread. Each topic runs its own interview: ' +
+          'the wizard auto-resolves what the evidence already answers, records safe defaults as assumptions, and only asks you ' +
+          'about genuine product direction — like Topic 8&rsquo;s storage decision.</div>' +
+        evdCard('discovery') +
+        '<div class="pm6-wiz-thread-note">Evidence cards are receipts only — they never create work on their own. ' +
+          'Full payloads live in Runtime Artifacts.</div>' +
+      '</div>';
+    hydrateIcons(host);
+  }
+
+  function questionBlock(t, q, idx) {
+    var key = t.id + '|' + q.id;
+    var draft = W.drafts[key];
+    var answered = !!q.answer && t.state === 'ready';
+    var chips = q.chips.map(function (c) {
+      var sel = draft === c || (!draft && q.answer === c);
+      return '<button type="button" class="pm6-wiz-opt' + (sel ? ' sel' : '') + '"' +
+        ' data-demo-action="wizard.chip" data-demo-arg="' + esc(key + '|' + c) + '">' + esc(c) + '</button>';
+    }).join('');
+    var ffSel = !!draft && q.chips.indexOf(draft) === -1;
+    chips += '<button type="button" class="pm6-wiz-opt something' + (ffSel || W.ffOpen[key] ? ' sel' : '') + '"' +
+      ' data-demo-action="wizard.something_else" data-demo-arg="' + esc(key) + '">' + esc(q.freeform || 'Something else') + '…</button>';
+    var ff = W.ffOpen[key]
+      ? '<textarea class="pm6-wiz-freeform" data-pm6-wiz-ff="' + esc(key) + '" placeholder="Tell the wizard what you have in mind — this becomes the recorded decision.">' + esc(ffSel ? draft : '') + '</textarea>'
+      : '';
+    var draftChip = draft ? '<span class="pm6-wiz-draftchip">Draft — not submitted</span>' : '';
+    return '<div class="pm6-wiz-q" style="--i:' + idx + '">' +
+      '<div class="pm6-wiz-q-toprow"><span class="pm6-wiz-q-num">Q' + (idx + 1) + '</span>' +
+        '<div class="pm6-wiz-q-flags">' + (answered ? '<span class="pm6-wiz-tbadge">answered</span>' : '<span class="pm6-wiz-tbadge">product decision</span>') + '</div></div>' +
+      '<div class="pm6-wiz-q-text">' + esc(q.text) + '</div>' +
+      '<div class="pm6-wiz-q-help">Answer in any order — drafts stay editable until you submit.</div>' +
+      '<div class="pm6-wiz-opts">' + chips + '</div>' + ff + draftChip +
+    '</div>';
+  }
+
+  function answeredRows(t) {
+    return t.questions.map(function (q, i) {
+      var src = (t.id === 't1' || t.id === 't4')
+        ? 'Auto-resolved from repo evidence · assumption recorded'
+        : 'Answered · recorded in the planning ledger';
+      return '<div class="pm6-wiz-ans" style="--i:' + i + '">' +
+        '<span class="pm6-wiz-ans-check">✓</span><div>' +
+        '<div class="pm6-wiz-ans-q">' + esc(q.text) + '</div>' +
+        '<div class="pm6-wiz-ans-a">' + esc(q.answer || '—') + '</div>' +
+        '<div class="pm6-wiz-ans-src">' + esc(src) + '</div></div></div>';
+    }).join('');
+  }
+
+  function activityCard(t) {
+    var titleMap = {
+      ledger_syncing: 'Writing your decision to the planning ledger',
+      compiling: 'Recompiling the Topic Plan Draft',
+      auditing: 'Scoped fidelity audit running',
+      repairing: 'Repairing audit findings',
+      reopened: 'Re-syncing after impact review'
+    };
+    var pct = STATE_PCT[t.state] || 40;
+    var log = '';
+    if (t.id === 't6') {
+      log = '<div class="pm6-wiz-activity-log">' +
+        '<div class="pm6-wiz-activity-line"><span class="pm6-wiz-glyph">✓</span>sanitization rules verified against 4 fixture pages</div>' +
+        '<div class="pm6-wiz-activity-line"><span class="pm6-wiz-glyph">✓</span>retry budget bounded · worker idempotency asserted</div></div>';
+    }
+    return '<div class="pm6-wiz-activity' + (t.state === 'ledger_syncing' || t.state === 'reopened' ? ' calm' : '') + '">' +
+      '<div class="pm6-wiz-activity-top">' +
+        '<div class="pm6-wiz-activity-title">' + esc(titleMap[t.state] || 'Working') + '</div>' +
+        '<div class="pm6-wiz-activity-meta">' + esc(t.progress || STATE_LABEL[t.state] || '') + '</div></div>' +
+      '<div class="pm6-wiz-activity-bar"><div class="pm6-wiz-activity-fill" style="width:' + pct + '%"></div></div>' + log +
+    '</div>';
+  }
+
+  function renderTopicThread(host, t) {
+    var meta = TOPIC_META[t.id] || { icon: 'clipboard' };
+    var body = '';
+    if (t.state === 'blocked') {
+      body += '<div class="pm6-wiz-blockbar"><span class="pm6-wiz-reason-code">blocked</span>' +
+        '<span><strong>Needs your decision.</strong> Storage is a credentials + cost call the wizard will not make for you. ' +
+        'Answer below and the topic unblocks itself.</span></div>';
+      body += evdCard('t8');
+    }
+    if (t.state === 'impacted' || t.state === 'review-impact' || t.state === 'reopened') {
+      body += '<div class="pm6-wiz-impact">' +
+        '<div class="pm6-wiz-impact-title"><span class="pm6-wiz-glyph">⚠</span>Impacted by the Import-from-URL audit</div>' +
+        '<div class="pm6-wiz-impact-body">The audit tightened the import worker&rsquo;s event contract — ' +
+          '<strong>notification triggers must re-sync</strong> to the new events. The wizard reopens this topic, re-syncs its ledger, ' +
+          'and recompiles the draft automatically. Nothing is needed from you unless the re-audit finds a real conflict.</div>' +
+        '<div class="pm6-wiz-thread-actions"><button type="button" class="pm6-wiz-btn" data-demo-action="wizard.review_impact" data-demo-arg="' + esc(t.id) + '">Review impact</button></div>' +
+      '</div>';
+    }
+    if (BUSY_STATES[t.state]) {
+      body += activityCard(t);
+      if (t.id === 't6' && t.state === 'auditing') body += evdCard('t6');
+    }
+    if (t.state === 'ready') {
+      body += answeredRows(t);
+      if (t.id === 't6') body += evdCard('t6');
+      if (!t.accepted) {
+        body += '<div class="pm6-wiz-thread-actions">' +
+          '<button type="button" class="pm6-wiz-btn primary" data-demo-action="wizard.accept_topic" data-demo-arg="' + esc(t.id) + '">Accept topic ✓</button>' +
+          '<span class="pm6-wiz-thread-note">Accepting pins this draft into the Final Plan Pack.</span></div>';
+      } else {
+        body += '<div class="pm6-wiz-thread-note">Accepted — pinned for the Final Plan Pack.</div>';
+      }
+    } else {
+      var hasDraft = false;
+      body += t.questions.map(function (q, i) {
+        var key = t.id + '|' + q.id;
+        if (W.drafts[key]) hasDraft = true;
+        return questionBlock(t, q, i);
+      }).join('');
+      var subAttrs = hasDraft ? '' : ' aria-disabled="true" data-demo-reason="blocked_by_gate"';
+      body += '<div class="pm6-wiz-thread-actions">' +
+        '<button type="button" class="pm6-wiz-btn primary"' + subAttrs +
+          ' data-demo-action="wizard.submit_answers" data-demo-arg="' + esc(t.id) + '">Submit answers →</button>' +
+        (hasDraft ? '' : '<span class="pm6-wiz-thread-note">Pick an option (or &ldquo;Something else&rdquo;) to enable Submit.</span>') +
+      '</div>';
+    }
+    host.innerHTML =
+      '<div class="pm6-wiz-thread-head">' + ico(meta.icon) +
+        '<div class="pm6-wiz-thread-title">' + t.num + ' · ' + esc(t.title) + '</div>' + schip(t.state) + '</div>' +
+      '<div class="pm6-wiz-thread-body">' + body + '</div>';
+  }
+
+  /* ---------------- integration sequence + final review ---------------- */
+  var THEATER_STEPS = [
+    { label: 'Assembling Final Plan Pack — 23 PlanUnits from 8 topic drafts', meta: 'integration', pct: 25 },
+    { label: 'Final audit — parallel read-only specialists on the whole pack', meta: '2 findings', pct: 55 },
+    { label: 'Repairing 2 findings — bounded repairs, ledger recorded', meta: 'repairing', pct: 80 },
+    { label: 'Re-audit clean — audit closure e77b02 sealed', meta: 'zero incomplete ✓', pct: 100 }
+  ];
+  function startTheater() {
+    W.threadMode = 'review';
+    if (reduced()) { W.theater = null; W.theaterDone = true; renderAll(); return; }
+    W.theater = 0;
+    W.theaterDone = false;
+    renderAll();
+    function step() {
+      if (WS() && WS().approved) { W.theater = null; W.theaterDone = true; renderAll(); return; }
+      W.theater++;
+      if (W.theater >= THEATER_STEPS.length) {
+        W.theater = null; W.theaterDone = true;
+        say('Final audit closed — zero incomplete items. Review the pack, then Approve And Build.');
+        renderAll();
+        return;
+      }
+      renderThread(); renderRail(); renderStatePill();
+      later(step, 1400);
+    }
+    later(step, 1400);
+  }
+
+  function renderReview(host) {
+    var s = WS();
+    if (!s) return;
+    if (W.theater != null && !W.theaterDone) {
+      var st = THEATER_STEPS[Math.min(W.theater, THEATER_STEPS.length - 1)];
+      host.innerHTML =
+        '<div class="pm6-wiz-thread-head">' + ico('swirl') +
+          '<div class="pm6-wiz-thread-title">Final integration</div>' + schip('auditing') + '</div>' +
+        '<div class="pm6-wiz-thread-body">' +
+          '<div class="pm6-wiz-activity"><div class="pm6-wiz-activity-top">' +
+            '<div class="pm6-wiz-activity-title">' + esc(st.label) + '</div>' +
+            '<div class="pm6-wiz-activity-meta">' + esc(st.meta) + '</div></div>' +
+            '<div class="pm6-wiz-activity-bar"><div class="pm6-wiz-activity-fill" style="width:' + st.pct + '%"></div></div></div>' +
+          '<div class="pm6-wiz-thread-note">Findings get bounded repairs, then a re-audit — the pack cannot reach review with open findings.</div>' +
+        '</div>';
+      hydrateIcons(host);
+      return;
+    }
+    var h = s.hashes;
+    var approvedBanner = s.approved
+      ? '<div class="pm6-wiz-approved-banner">' + ico('checkCircle') + '<div style="flex:1;min-width:0;">' +
+          '<div class="pm6-wiz-approved-title">PlanApproved published</div>' +
+          '<div class="pm6-wiz-approved-sub">approval_cas_receipt-4e91d0 · exactly one PlanCompileRun bound: pcr-47</div></div>' +
+          '<button type="button" class="pm6-wiz-btn" data-demo-action="page.go" data-demo-arg="orchestrator:plan_compile">Open plan compile →</button>' +
+        '</div>'
+      : '';
+    var testOpts = [
+      ['full', 'Full suite per lane (cargo test + pnpm test)'],
+      ['smoke', 'Smoke tests only'],
+      ['nobrowser', 'Skip browser checks']
+    ].map(function (o) {
+      return '<button type="button" class="pm6-wiz-opt' + (W.testing === o[0] ? ' sel' : '') + '"' +
+        ' data-demo-action="wizard.testing_select" data-demo-arg="' + o[0] + '">' + esc(o[1]) + '</button>';
+    }).join('');
+    host.innerHTML =
+      '<div class="pm6-wiz-thread-head">' + ico('scales') +
+        '<div class="pm6-wiz-thread-title">Final review — ApprovedPlanPack candidate</div>' +
+        (s.approved ? schip('ready') : '') + '</div>' +
+      '<div class="pm6-wiz-thread-body"><div class="pm6-wiz-review">' +
+        approvedBanner +
+        '<div class="pm6-wiz-rev-sect-t">Readiness summary</div>' +
+        '<div class="pm6-wiz-rev-stats">' +
+          '<div class="pm6-wiz-rev-stat"><span class="pm6-wiz-rev-num">23</span><span class="pm6-wiz-rev-cap">PlanUnits</span></div>' +
+          '<div class="pm6-wiz-rev-stat"><span class="pm6-wiz-rev-num">8</span><span class="pm6-wiz-rev-cap">Topics Ready</span></div>' +
+          '<div class="pm6-wiz-rev-stat"><span class="pm6-wiz-rev-num ok">0</span><span class="pm6-wiz-rev-cap">Incomplete items</span></div>' +
+          '<div class="pm6-wiz-rev-stat"><span class="pm6-wiz-rev-num">2</span><span class="pm6-wiz-rev-cap">Findings repaired</span></div>' +
+        '</div>' +
+        '<div class="pm6-wiz-pack"><div class="pm6-wiz-pack-title">' + ico('check') + 'Pack currentness — the CAS values Approve And Build verifies</div>' +
+          hashRow('PlanningRun revision', String(h.planningRunRev)) +
+          hashRow('Topic map version', h.topicMapVersion) +
+          hashRow('Project-context hash', 'a19c44…') +
+          hashRow('PlanUnit + acceptance index', h.planUnitIdx + '…') +
+          hashRow('Testing policy', h.testingPolicy + '…') +
+          hashRow('Audit closure', h.auditClosure + '…') +
+        '</div>' +
+        '<div class="pm6-wiz-rev-sect-t">Source · security · resource limits</div>' +
+        '<div class="pm6-wiz-rev-row"><span class="pm6-wiz-glyph">✓</span><span><strong>Sources verified 12 of 12</strong> — every external claim links to a read receipt.</span></div>' +
+        '<div class="pm6-wiz-rev-row"><span class="pm6-wiz-glyph">✓</span><span><strong>Security</strong> — no new elevated permissions requested; the import worker stays in the existing sandbox profile.</span></div>' +
+        '<div class="pm6-wiz-rev-row"><span class="pm6-wiz-glyph">✓</span><span><strong>Resource limits</strong> — 4 lanes · est. 2.1M tokens, inside the plan budget with headroom.</span></div>' +
+        '<div class="pm6-wiz-rev-sect-t">Research &amp; citation evidence</div>' +
+        '<div class="pm6-wiz-cite"><div class="pm6-wiz-cite-t">' + ico('telescope') + 'Researching Web: recipe-import legality and robots posture</div>' +
+          '<div class="pm6-wiz-cite-meta"><span class="pm6-wiz-tbadge">ResearchRun rr-0708-3</span><span class="pm6-wiz-tbadge">6 sources read</span>' +
+          '<span class="pm6-wiz-tbadge">citations from read sources</span><span class="pm6-wiz-conf">source_confidence: high</span></div></div>' +
+        '<div class="pm6-wiz-cite"><div class="pm6-wiz-cite-t">' + ico('globe') + 'Reading Site: schema.org/Recipe</div>' +
+          '<div class="pm6-wiz-cite-meta"><span class="pm6-wiz-tbadge">Site Reader</span><span class="pm6-wiz-tbadge">cached · fresh</span>' +
+          '<span class="pm6-wiz-conf medium">source_confidence: medium</span></div></div>' +
+        '<div class="pm6-wiz-thread-note">Receipts only — evidence never creates work by itself.</div>' +
+        '<div class="pm6-wiz-rev-sect-t">Testing capability</div>' +
+        '<div class="pm6-wiz-opts">' + testOpts + '</div>' +
+        '<div class="pm6-wiz-thread-note">Your selection is recorded into the testing policy (' + esc(h.testingPolicy) + '…).</div>' +
+        '<div class="pm6-wiz-thread-note"><strong>Approve And Build</strong> (right rail) is the only launch control — it runs the CAS check over the values above, ' +
+        'publishes PlanApproved, binds exactly one PlanCompileRun and jumps to Orchestrator. There is no second confirmation.</div>' +
+      '</div></div>';
+    hydrateIcons(host);
+  }
+
+  /* ---------------- render everything ---------------- */
+  function renderAll() {
+    if (!WS()) return;
+    try { renderTopics(); } catch (e) {}
+    try { renderDock(); } catch (e) {}
+    try { renderStatePill(); } catch (e) {}
+    try { renderDoc(); } catch (e) {}
+    try { renderRail(); } catch (e) {}
+    try { renderThread(); } catch (e) {}
+    hydrateIcons();
+  }
+
+  /* ---------------- discovery ---------------- */
+  function runDiscovery() {
+    var d = D();
+    var disc = (d && d.data && d.data.project && d.data.project.discovery) || {
+      branch: 'main', worktreeClean: true, frameworks: ['Axum 0.8', 'SvelteKit 2'],
+      packageManagers: ['cargo', 'pnpm'], testCommands: ['cargo test', 'pnpm test']
+    };
+    var rowsHost = byId('pm6WizScanRows');
+    var bar = byId('pm6WizScanBar');
+    if (rowsHost) rowsHost.innerHTML = '';
+    if (bar) bar.style.width = '4%';
+    var rows = [
+      ['branch', disc.branch + ' · ' + (disc.worktreeClean ? 'clean worktree' : 'dirty worktree')],
+      ['frameworks', disc.frameworks.join(' · ')],
+      ['packages', disc.packageManagers.join(' · ')],
+      ['tests', disc.testCommands.join(' · ')]
+    ];
+    var total = rows.length + 2; /* + evidence card + settle beat */
+    function paintRow(i) {
+      if (!rowsHost) return;
+      if (i < rows.length) {
+        rowsHost.insertAdjacentHTML('beforeend',
+          '<div class="pm6-wiz-scanrow"><span class="pm6-wiz-glyph">✓</span>' +
+          '<span class="pm6-wiz-scan-k">' + esc(rows[i][0]) + '</span>' +
+          '<span class="pm6-wiz-scan-v">' + esc(rows[i][1]) + '</span></div>');
+      } else if (i === rows.length) {
+        rowsHost.insertAdjacentHTML('beforeend', evdCard('discovery'));
+        hydrateIcons(rowsHost);
+      }
+      if (bar) bar.style.width = Math.round(((i + 1) / total) * 100) + '%';
+    }
+    if (reduced()) {
+      for (var i = 0; i <= rows.length; i++) paintRow(i);
+      finishDiscovery();
+      return;
+    }
+    var idx = 0;
+    (function tick() {
+      paintRow(idx);
+      idx++;
+      if (idx < total) { later(tick, 520); }
+      else { later(finishDiscovery, 420); }
+    })();
+  }
+  function finishDiscovery() {
+    W.discovering = false;
+    setStage('workspace');
+    renderAll();
+    say('Discovery complete — read-only scan, nothing changed.');
+  }
+
+  /* ---------------- replay (rewind wizard-local flow; run #47 untouched) ---------------- */
+  var replayHintShown = false;
+  function resetLocalForReplay() {
+    W.drafts = {};
+    W.ffOpen = {};
+    W.threadMode = 'overview';
+    W.theater = null;
+    W.theaterDone = false;
+    W.discovering = false;
+    setStage('intake');
+    hydrateIcons();
+    say('Rewound to intake — replay the planning flow from the start. Run #47 keeps running untouched.');
+  }
+  function maybeShowReplayHint() {
+    var s = WS();
+    if (replayHintShown || !s || !s.approved) return;
+    replayHintShown = true;
+    say('This planning run already shipped — replay it from the start with "Replay planning flow" in the header.');
+  }
+
+  /* ---------------- resync (chapter jumps / late arrival) ---------------- */
+  function resync() {
+    var s = WS();
+    if (!s) return;
+    if (s.approved || s.pack) {
+      W.theater = null;
+      W.theaterDone = true;
+      W.threadMode = 'review';
+      setStage('workspace');
+      renderAll();
+    } else if (W.stage === 'workspace') {
+      renderAll();
+    }
+  }
+
+  /* ---------------- actions ---------------- */
+  function registerActions() {
+    var d = D();
+    if (!d || !d.actions) return;
+    function reg(id, fn) { d.actions.register(id, fn); }
+
+    reg('wizard.attach', function (ctx) {
+      var kind = (ctx && ctx.arg) || 'local';
+      W.attach = kind;
+      $$('.pm6-wiz-attach-card', root()).forEach(function (c) {
+        c.classList.toggle('selected', c.getAttribute('data-attach') === kind);
+      });
+      return kind === 'github' ? { ok: true } : { toast: 'Selected — the Tastebook demo keeps GitHub wired, but any source works the same way.' };
+    });
+    reg('wizard.intent', function (ctx) {
+      var v = (ctx && ctx.arg) || 'feature';
+      W.intent = v;
+      $$('.pm6-wiz-intent-chip', root()).forEach(function (c) {
+        c.classList.toggle('sel', c.getAttribute('data-demo-arg') === v);
+      });
+      return { ok: true };
+    });
+    reg('wizard.viewThread', function () {
+      /* open-only: same #chatPanel/.hidden contract as panels.open_chat —
+         never toggle-close a chat the user already has open */
+      var panel = byId('chatPanel');
+      var chatIcon = $('.activity-bar .icon[title="Chat"]');
+      if (chatIcon && (!panel || panel.classList.contains('hidden'))) { try { chatIcon.click(); } catch (e) {} }
+      return { toast: 'The imported goal lives in Assistant Chat — thread "Tastebook media pipeline".' };
+    });
+    reg('wizard.startDiscovery', function () {
+      if (W.discovering) return { disabled: true, reason: 'busy' };
+      if (W.stage === 'workspace') return { disabled: true, reason: 'already_done' };
+      W.discovering = true;
+      setStage('discovery');
+      runDiscovery();
+      return { ok: true };
+    });
+    reg('wizard.toggleHeader', function () {
+      var head = byId('pm6WizRunHead');
+      if (head) head.classList.toggle('collapsed');
+      return { ok: true };
+    });
+    reg('wizard.chip', function (ctx) {
+      var a = String((ctx && ctx.arg) || '').split('|'); /* tid|qid|value */
+      if (a.length < 3) return { toast: 'Nothing to select.' };
+      var key = a[0] + '|' + a[1];
+      W.drafts[key] = a.slice(2).join('|');
+      delete W.ffOpen[key];
+      renderThread();
+      return { ok: true };
+    });
+    reg('wizard.something_else', function (ctx) {
+      var key = String((ctx && ctx.arg) || '');
+      if (!key) return { toast: 'Nothing to open.' };
+      W.ffOpen[key] = !W.ffOpen[key];
+      renderThread();
+      if (W.ffOpen[key]) {
+        var ta = $('[data-pm6-wiz-ff="' + key.replace(/["\\]/g, '') + '"]', root());
+        if (ta) { try { ta.focus(); } catch (e) {} }
+      }
+      return { ok: true };
+    });
+    reg('wizard.submit_answers', function (ctx) {
+      var tid = String((ctx && ctx.arg) || '');
+      var s = WS();
+      var t = s && s.topics[tid];
+      if (!t) return { toast: 'Unknown topic.' };
+      var sent = 0, res = null;
+      t.questions.forEach(function (q) {
+        var key = tid + '|' + q.id;
+        if (W.drafts[key]) {
+          res = d.wizard.answer(tid, q.id, W.drafts[key]);
+          delete W.drafts[key];
+          delete W.ffOpen[key];
+          sent++;
+        }
+      });
+      if (!sent) return { disabled: true, reason: 'blocked_by_gate' };
+      if (res && (res.toast || res.disabled)) return res;
+      say('Decision recorded — syncing it to the planning ledger…');
+      return { ok: true };
+    });
+    reg('wizard.review_impact', function () {
+      return { toast: 'Impact review noted — Notifications re-syncs from the planning ledger and recompiles automatically.' };
+    });
+    reg('wizard.testing_select', function (ctx) {
+      W.testing = String((ctx && ctx.arg) || 'full');
+      renderThread();
+      return { toast: 'Testing capability recorded in the testing policy for this pack.' };
+    });
+    reg('wizard.evidence_open', function () {
+      return { toast: 'Receipt pinned — the full payload lives in Runtime Artifacts (evidence never creates work by itself).' };
+    });
+  }
+
+  /* ---------------- events + boot ---------------- */
+  function subscribe() {
+    var d = D();
+    if (!d || !d.on) return;
+    d.on('wizard.topic', function (p) {
+      if (!p) return;
+      if (p.opened) W.threadMode = 'topic';
+      if (W.stage !== 'workspace') return;
+      try { renderTopics(); renderDock(); renderStatePill(); renderDoc(); renderRail(); } catch (e) {}
+      if (W.threadMode !== 'review') { try { renderThread(); } catch (e) {} }
+    });
+    d.on('wizard.pack', function () {
+      if (W.stage !== 'workspace') setStage('workspace');
+      startTheater();
+    });
+    d.on('wizard.approved', function () {
+      W.theater = null;
+      W.theaterDone = true;
+      W.threadMode = 'review';
+      renderAll();
+    });
+    d.on('wizard.replay', resetLocalForReplay);
+    d.on('wizard.state', resync);
+    d.on('demo.jump', resync);
+    d.on('page.changed', function (p) {
+      if (p && p.page === 'wizard') {
+        hydrateIcons();
+        maybeShowReplayHint();
+        var s = WS();
+        if (s && (s.approved || s.pack)) { resync(); return; }
+        if (W.stage === 'workspace') renderAll();
+      }
+    });
+  }
+
+  function wireInputs() {
+    var r = root();
+    if (!r) return;
+    r.addEventListener('input', function (e) {
+      var ta = e.target && e.target.closest ? e.target.closest('[data-pm6-wiz-ff]') : null;
+      if (!ta) return;
+      var key = ta.getAttribute('data-pm6-wiz-ff');
+      var v = String(ta.value || '').trim();
+      if (v) W.drafts[key] = v; else delete W.drafts[key];
+      /* refresh only the submit row so the textarea keeps focus */
+      var btn = $('[data-demo-action="wizard.submit_answers"]', r);
+      if (btn) {
+        var tid = key.split('|')[0];
+        var any = Object.keys(W.drafts).some(function (k) { return k.indexOf(tid + '|') === 0; });
+        if (any) { btn.removeAttribute('aria-disabled'); btn.removeAttribute('data-demo-reason'); }
+        else { btn.setAttribute('aria-disabled', 'true'); btn.setAttribute('data-demo-reason', 'blocked_by_gate'); }
+      }
+    });
+  }
+
+  function registerSubtabs() {
+    try {
+      if (window.PM_PAGES && PM_PAGES.registerSubtab) {
+        PM_PAGES.registerSubtab('wizard', function (sub) {
+          if (!sub) return;
+          if (sub === 'intake') { setStage('intake'); hydrateIcons(); return; }
+          if (sub === 'final_review' || sub === 'review') {
+            ensureWorkspace();
+            var s = WS();
+            if (s && (s.pack || s.approved)) { W.threadMode = 'review'; W.theaterDone = true; renderAll(); }
+            return;
+          }
+          ensureWorkspace(); /* workspace | topics | interview | anything else */
+        });
+      }
+    } catch (e) {}
+  }
+
+  var tries = 0;
+  function boot() {
+    if (!root()) return;
+    if (!D() || !WS()) {
+      if (tries++ < 40) setTimeout(boot, 150);
+      return;
+    }
+    hydrateIcons(root());
+    registerActions();
+    subscribe();
+    wireInputs();
+    registerSubtabs();
+    resync(); /* if a chapter jump already approved the plan, land in review */
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

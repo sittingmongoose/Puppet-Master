@@ -1,0 +1,9 @@
+{
+  "audit_id": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+  "status": "not_frozen",
+  "frozen_at": null,
+  "findings_sha256": null,
+  "finding_count": 0,
+  "blindness_gate_released": false,
+  "prerequisites": {"zero_window_gaps":false,"zero_duplicate_core":false,"zero_unreviewed_windows":false,"all_windows_both_roles":false,"all_document_integrations":false,"all_seam_reviews":false,"feature_phases_complete":false}
+}

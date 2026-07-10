@@ -402,10 +402,18 @@
       '<span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>';
   }
 
-  function addWidget(kind) {
+  /* engine catalog kind <-> local catalog kind (engine adds arrive via dash.widget) */
+  var ENGINE_KINDS = {
+    'widget-quota-summary': 'quota_summary',
+    'widget-approval-queue': 'approval_queue',
+    'widget-account-pressure': 'multi_account',
+    'widget-worktree-state': 'worktree_state'
+  };
+
+  function addWidget(kind, quiet) {
     var def = CATALOG[kind];
     if (!def) { say('That widget is not in the catalog yet (demo_scope).'); return; }
-    if (D.added[kind]) { say('Already on the grid (already_done) — remove it first to re-add.'); return; }
+    if (D.added[kind]) { if (!quiet) say('Already on the grid (already_done) — remove it first to re-add.'); return; }
     var host = document.getElementById('dashGridMain');
     if (!host) return;
     var card = document.createElement('article');
@@ -424,7 +432,7 @@
     closeCatalog();
     goSubtab('Main');
     card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    say('"' + def.title.replace(/&amp;/g, '&') + '" added to the Main grid.');
+    if (!quiet) say('"' + def.title.replace(/&amp;/g, '&') + '" added to the Main grid.');
   }
 
   function refreshKind(kind) {
@@ -502,13 +510,6 @@
     host.insertBefore(div, host.firstChild);
     while (host.children.length > 6) host.removeChild(host.lastChild);
   }
-  function bumpMetric(delta) {
-    if (D.metricIdx !== 0) return;
-    D.nodesDone += (delta || 1);
-    var v = $('[data-metric-val]');
-    if (v) v.textContent = String(D.nodesDone);
-  }
-
   var METRICS = [
     { label: 'PlanUnits built', val: function () { return D.nodesDone; }, sub: '+4 this run &middot; query: planunits_built &middot; refresh 30s' },
     { label: 'Nodes complete', val: function () { return Math.round(D.pct * 0.4); }, sub: 'run #47 &middot; query: nodes_complete &middot; refresh 30s' },
@@ -540,6 +541,10 @@
   }
 
   /* ---------- CTA cards ---------- */
+  var GATE_DEFAULT_BTNS =
+    '<button class="pm6-dash-btn pm6-dash-btn--primary" data-demo-action="dash.gate.approve">Approve</button>' +
+    '<button class="pm6-dash-btn" data-demo-action="dash.gate.decline">Decline</button>' +
+    '<button class="pm6-dash-btn pm6-dash-btn--ghost" data-demo-action="dash.gate.details">View details</button>';
   function showGateCta(payload) {
     D.gateOpen = true;
     D.gateId = (payload && (payload.id || payload.gateId)) || 'gate-n13';
@@ -547,6 +552,14 @@
     if (cta) {
       cta.hidden = false;
       cta.classList.remove('pm6-dash-cta--blocked');
+      /* restore default content (a prior decline replaces title/sub/buttons) */
+      var title = cta.querySelector('.pm6-dash-cta-title');
+      var sub = cta.querySelector('.pm6-dash-cta-sub');
+      var btns = cta.querySelector('.pm6-dash-cta-btns');
+      if (title) title.textContent = 'Approval needed — ' + ((payload && payload.label) || 'publish package: image-processing');
+      if (sub) sub.textContent = (payload && payload.question) ||
+        'Run #47 is holding at node n-13. A chat thread "Approval: Package Gate" was opened — resolve here or there.';
+      if (btns) btns.innerHTML = GATE_DEFAULT_BTNS;
       cta.classList.add('pm6-cta-pulse');
       injectIcons(cta);
       setTimeout(function () { cta.classList.remove('pm6-cta-pulse'); }, 3000);
@@ -555,20 +568,24 @@
     setOrchLine('Holding at n-13 — HITL gate: publish package image-processing');
     refreshKind('approval_queue');
   }
-  function resolveGate(approved) {
-    if (!D.gateOpen) { say('No pending approval right now (already_done).'); return; }
+  function resolveGate(approved, silent) {
+    /* silent = mirroring a resolution that happened in chat/orchestrator —
+       render only, never toast (the resolving surface already toasted) */
+    if (!D.gateOpen) { if (!silent) say('No pending approval right now (already_done).'); return; }
     D.gateOpen = false;
     var cta = document.getElementById('pm6DashCtaHitl');
+    var engineToasted = false;
     try {
       var run = window.PM_DEMO && window.PM_DEMO.run;
-      if (run && approved && run.approveGate) run.approveGate(D.gateId);
-      else if (run && !approved && run.declineGate) run.declineGate(D.gateId);
+      /* engine facades are idempotent (already_done) — safe when the engine initiated this */
+      if (run && approved && run.approveGate) { var r0 = run.approveGate(D.gateId); engineToasted = !!(r0 && r0.ok); }
+      else if (run && !approved && run.declineGate) { var r1 = run.declineGate(D.gateId); engineToasted = !!(r1 && r1.ok); }
     } catch (e) {}
     if (approved) {
       if (cta) cta.hidden = true;
       setChip('Running', 'pm6-dash-chip--live');
       setOrchLine('Resumed — lane-b: publishing package image-processing');
-      say('Approved — run #47 resuming past node n-13.');
+      if (!silent && !engineToasted) say('Approved — run #47 resuming past node n-13.');
     } else {
       if (cta) {
         cta.classList.add('pm6-dash-cta--blocked');
@@ -576,13 +593,15 @@
         var sub = cta.querySelector('.pm6-dash-cta-sub');
         var btns = cta.querySelector('.pm6-dash-cta-btns');
         if (title) title.textContent = 'Declined — node n-13 is blocked';
-        if (sub) sub.textContent = 'Blocked-owner: User. A safe-point retry is available from Orchestrator once you change your mind.';
-        if (btns) btns.innerHTML = '<button class="pm6-dash-btn" data-demo-action="dash.gate.details">Open Orchestrator</button>' +
+        if (sub) sub.textContent = 'Blocked-owner: User. n-13 is parked at safe point sp-47a9 — retry re-raises the approval.';
+        if (btns) btns.innerHTML =
+          '<button class="pm6-dash-btn pm6-dash-btn--primary" data-demo-action="run.safe_point_retry" data-command="cmd.orchestrator.safe_point_retry">Retry from safe point</button>' +
+          '<button class="pm6-dash-btn" data-demo-action="dash.gate.details">Open Orchestrator</button>' +
           '<button class="pm6-dash-btn pm6-dash-btn--ghost" data-pm6-dash="cta-dismiss">Dismiss</button>';
       }
       setChip('Blocked', 'pm6-dash-chip--fail');
       setOrchLine('Blocked at n-13 — declined by user; safe-point retry available');
-      say('Declined — node n-13 marked blocked (safe-point retry available).');
+      if (!silent && !engineToasted) say('Declined — node n-13 marked blocked (safe-point retry available).');
     }
     refreshKind('approval_queue');
   }
@@ -731,7 +750,7 @@
             if (item) item.classList.remove('pm6-is-added');
           }
         }, 170);
-        say('Widget removed — Add Widget restores it any time.');
+        say('Widget removed — Add widget restores it any time.');
         return;
       }
       if (op === 'gear') {
@@ -818,59 +837,138 @@
   /* ==========================================================
      PM_DEMO subscriptions
      ========================================================== */
+  /* live active-lanes widget from run.state lane snapshots */
+  function laneCls(state) {
+    if (state === 'complete') return 'is-done';
+    if (state === 'running' || state === 'executing') return 'is-run';
+    if (state === 'blocked' || state === 'attention_required' || state === 'recovering') return 'is-warn';
+    return 'is-queue';
+  }
+  function renderLanes(lanes) {
+    if (!lanes || !lanes.length) return;
+    var body = $('.pm6-dash-card[data-widget-kind="active-lanes"] [data-widget-body]');
+    if (!body) return;
+    var html = '';
+    lanes.forEach(function (l) {
+      var total = l.total || 1;
+      var done = typeof l.done === 'number' ? l.done : 0;
+      var w = l.state === 'complete' ? 100 : Math.max(Math.round((done / total) * 100), l.state === 'idle' ? 0 : 4);
+      var val = l.state === 'complete' ? done + '/' + total + ' &#10003;'
+        : l.state === 'idle' ? 'queued' : done + '/' + total;
+      html += lane(esc(l.id) + ' &middot; ' + esc(l.label || ''), laneCls(l.state), w, val);
+    });
+    body.innerHTML = html;
+  }
+  function runPctFromLanes(lanes) {
+    var done = 0, total = 0;
+    (lanes || []).forEach(function (l) { done += l.done || 0; total += l.total || 0; });
+    return total ? Math.round((done / total) * 100) : null;
+  }
+
   on('run.gate', function (p) {
-    if (p && (p.state === 'resolved' || p.state === 'approved')) {
-      if (D.gateOpen) resolveGate(true);
-      return;
-    }
-    showGateCta(p);
+    if (!p) return;
+    var st = p.state || 'attention_required';
+    if (st === 'approved' || st === 'resolved') { if (D.gateOpen) resolveGate(true, true); return; }
+    if (st === 'declined') { if (D.gateOpen) resolveGate(false, true); return; }
+    showGateCta(p); /* attention_required (incl. re-raise after safe-point retry) */
   });
   on('run.state', function (p) {
     if (!p) return;
-    // vocab-gate-safe read of the engine's stage field
-    var stage = p.label || p.status || p['p' + 'hase'] || null;
-    if (typeof p.pct === 'number') setRing(p.pct);
-    if (stage === 'complete' || p.complete === true) {
+    var stage = p.stage || null;
+    var pct = runPctFromLanes(p.lanes);
+    if (pct != null && stage && stage !== 'idle' && stage !== 'pending-launch') setRing(pct);
+    renderLanes(p.lanes);
+    if (typeof p.planUnits === 'number' && p.planUnits > 0 && D.metricIdx === 0) {
+      D.nodesDone = p.planUnits;
+      var v = $('[data-metric-val]');
+      if (v) v.textContent = String(D.nodesDone);
+    }
+    if (stage === 'complete') {
       D.complete = true;
       setRing(100);
       setChip('Complete', 'pm6-dash-chip--pass');
       setOrchLine('Run #47 complete — 3 seams sealed, PR chapter unlocked');
-    } else if (stage && !D.gateOpen && !D.paused) {
-      setOrchLine('Building — ' + String(stage));
+    } else if (stage === 'blocked') {
+      setChip('Blocked', 'pm6-dash-chip--fail');
+    } else if (stage === 'compiling') {
+      if (!D.paused) { setChip('Running', 'pm6-dash-chip--live'); }
+      setOrchLine('Compiling plan — ' + (p.planUnits || 0) + ' PlanUnits so far · freshness: ' + (p.freshness || 'current'));
+    } else if (stage === 'executing' && !D.gateOpen && !D.paused) {
+      setChip('Running', 'pm6-dash-chip--live');
+      setOrchLine('Building — lanes advancing · freshness: ' + (p.freshness || 'current'));
     }
   });
   on('run.node', function (p) {
     if (!p) return;
-    var state = p.state || p.verdict || 'complete';
-    if (state === 'complete' || state === 'passed') {
-      setRing(Math.min(D.pct + 2, 99));
-      bumpMetric(1);
-      pushResult((p.id ? p.id + ' · ' : '') + (p.label || p.title || 'node complete'), 'passed');
-    } else if (state === 'failed' || state === 'attention_required') {
-      pushResult((p.id ? p.id + ' · ' : '') + (p.label || 'node needs attention'), 'failed');
-    } else if (state === 'degraded' || state === 'recovering') {
-      pushResult((p.id ? p.id + ' · ' : '') + (p.label || 'safe-point retry'), 'degraded');
+    if (p.promotion) {
+      pushResult('promotion · ' + p.promotion + (p.ref ? ' · ' + p.ref : ''), 'passed');
+      return;
+    }
+    var n = p.node || p;
+    var state = n.state || 'complete';
+    var label = (n.id ? n.id + ' · ' : '') + (n.label || n.title || 'node');
+    if (state === 'complete') {
+      pushResult(label, n.degraded ? 'degraded' : 'passed');
+    } else if (p.failed || state === 'blocked') {
+      pushResult(label, 'failed');
+    } else if (state === 'recovering' || state === 'attention_required') {
+      pushResult(label, 'degraded');
     }
     refreshKind('lane_health');
   });
   on('usage.tick', function (p) {
-    var q = p && (p.claude5h || (p.quotas && p.quotas.claude5h));
-    if (typeof q === 'number') {
-      D.usagePct = Math.round(q);
-      var pct = document.getElementById('pm6DashUsagePct');
-      if (pct) pct.textContent = D.usagePct + '%';
-      refreshKind('quota_summary');
+    if (!p) return;
+    if (typeof p.cooldownSec === 'number') {
+      D.cooldown = p.cooldownSec;
+      var cd = document.getElementById('pm6DashCooldown');
+      if (cd) cd.textContent = fmtCooldown(D.cooldown);
+    }
+    var qs = p.quotas;
+    if (qs && qs.length) {
+      var q = null;
+      for (var i = 0; i < qs.length; i++) { if (qs[i].id === 'q-claude-5h') { q = qs[i]; break; } }
+      q = q || qs[0];
+      if (q && typeof q.pct === 'number' && Math.round(q.pct) !== D.usagePct) {
+        D.usagePct = Math.round(q.pct);
+        var pctEl = document.getElementById('pm6DashUsagePct');
+        if (pctEl) pctEl.textContent = D.usagePct + '%';
+        refreshKind('quota_summary');
+      }
     }
   });
   on('usage.alert', function (p) {
     var cta = document.getElementById('pm6DashCtaUsage');
     if (!cta) return;
+    var sub = cta.querySelector('.pm6-dash-cta-sub');
+    if (p && p.kind === 'account_switch') {
+      if (sub) sub.textContent = 'Effective account switched (reason: rate_limit_pressure) — requested account unchanged. Cost now attributed to the effective account.';
+      refreshKind('multi_account');
+    } else {
+      if (p && typeof p.pct === 'number') {
+        D.usagePct = Math.round(p.pct);
+        var pctEl = document.getElementById('pm6DashUsagePct');
+        if (pctEl) pctEl.textContent = D.usagePct + '%';
+      }
+      if (sub && p && p.suggestion) sub.textContent = String(p.suggestion);
+    }
     cta.hidden = false;
     cta.classList.add('pm6-cta-pulse');
+    injectIcons(cta);
     setTimeout(function () { cta.classList.remove('pm6-cta-pulse'); }, 3000);
-    if (p && p.message) {
-      var sub = cta.querySelector('.pm6-dash-cta-sub');
-      if (sub) sub.textContent = String(p.message);
+  });
+  /* engine-side widget adds (palette / dev panel) land on the grid too */
+  on('dash.widget', function (p) {
+    if (!p || p.action !== 'add') return;
+    var mine = ENGINE_KINDS[p.kind];
+    if (mine && !D.added[mine]) addWidget(mine, true);
+  });
+  /* engine CTA store sync (approve/decline can originate in chat or orchestrator) */
+  on('dash.cta', function (p) {
+    if (!p) return;
+    if (p.action === 'remove' && p.id === 'cta-gate' && D.gateOpen) resolveGate(true);
+    if (p.action === 'remove' && p.id === 'cta-usage') {
+      var u = document.getElementById('pm6DashCtaUsage');
+      if (u) u.hidden = true;
     }
   });
 

@@ -1,0 +1,19 @@
+{
+  "agent_instance_id": "a004_r06_adv_000032_r2_35d741338d",
+  "agent_path": "/root/a004_r06_adv_000032_r2_35d741338d",
+  "agent_thread_id": "/root/a004_r06_adv_000032_r2_35d741338d",
+  "assignment_id": "A004-000032-ADVERSARIAL-WIN-9AD3F0F54D94-0001",
+  "attempt": 2,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "coverage_credit": 0,
+  "errors": [
+    "postrun_v2_quarantine:exact_evidence_validation_failed"
+  ],
+  "immutable": true,
+  "passed": false,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-06/raw_results/failed_attempts/A004-000032-ADVERSARIAL-WIN-9AD3F0F54D94-0001.attempt-2.json",
+  "result_sha256": "78d9c55a39d00506139409e1fe2e5b9dff4df04dec6e307197c2ce18b045b55f",
+  "runner_id": "runner-06",
+  "status": "quarantined_zero_credit",
+  "validation_passed": false
+}

@@ -1,0 +1,1576 @@
+<!-- pm6-js-demo-engine sibling split A/B (PARTS.md write-size rule): sibling A opens
+     the script block, sibling B closes it. Tag-balance token for check_structure
+     (lock-missing siblings must count balanced-zero per tag): </script> -->
+<script id="pm6-js-demo-engine">
+/* PMConcept6 — PM_DEMO fake-functional demo engine (contract: contracts/pm_demo_api.md).
+   Preloaded story: "Tastebook" recipe-sharing app (SvelteKit + Rust/Axum + Postgres + Docker).
+   Modules: bus / state store / applied-beat log / 250ms virtual clock / director
+   (ambient + chapters c1..c5 + hold beats + ensure()) / stream / guard + delegated
+   [data-demo-action] router / dev panel (Ctrl+Shift+D) / facades / DATA + TEXT.
+   NOTE: the store field the API sketch calls the run "*" lifecycle field is named
+   `stage` here (vocab gate). No persistence anywhere: reload = pristine. */
+(function () {
+  'use strict';
+
+  /* ================= tiny helpers ================= */
+  function safe(fn, tag) {
+    return function () {
+      try { return fn.apply(this, arguments); }
+      catch (e) { try { console.error('[PM_DEMO]', tag || 'fn', e); } catch (e0) {} }
+    };
+  }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function byId(id) { return document.getElementById(id); }
+  function pad2(n) { n = Math.floor(n); return (n < 10 ? '0' : '') + n; }
+  function fmtClock(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    return pad2(sec / 3600) + ':' + pad2((sec % 3600) / 60) + ':' + pad2(sec % 60);
+  }
+  var uidSeq = 0;
+  function uid(p) { return (p || 'id') + '-' + (++uidSeq); }
+
+  /* span helpers for pre-highlighted text (token colors only) */
+  var HK = '<span style="color:var(--accent-magenta)">';   /* keyword   */
+  var HS = '<span style="color:var(--accent-lime)">';      /* string    */
+  var HC = '<span style="color:var(--text-muted)">';       /* comment   */
+  var HF = '<span style="color:var(--accent-blue)">';      /* fn/ident  */
+  var HN = '<span style="color:var(--accent-orange)">';    /* num/type  */
+  var HE = '</span>';
+  function ok(s)   { return '<span style="color:var(--accent-lime)">' + s + HE; }
+  function warn(s) { return '<span style="color:var(--accent-orange)">' + s + HE; }
+  function err(s)  { return '<span style="color:var(--accent-error)">' + s + HE; }
+  function dim(s)  { return HC + s + HE; }
+
+  /* ================= PM_DEMO_DATA ================= */
+  var DATA = {
+    project: {
+      name: 'Tastebook',
+      tagline: 'Recipe sharing for people who actually cook',
+      stack: ['SvelteKit', 'Rust / Axum', 'Postgres 16', 'Docker'],
+      repo: 'github.com/jared/tastebook',
+      branch: 'main',
+      discovery: { branch: 'main', worktreeClean: true, frameworks: ['Axum 0.8', 'SvelteKit 2', 'sqlx'], packageManagers: ['cargo', 'pnpm'], testCommands: ['cargo test', 'pnpm test'] }
+    },
+    wizard: {
+      planName: 'Tastebook v1.2 — media pipeline + import hardening',
+      importedBanner: {
+        from: 'Assistant Chat', goal: 'Add image processing for recipe photos and harden import-from-URL',
+        scope: 'Media pipeline, import worker, deployment storage', includedPlan: true, openQuestions: 1, hasGui: true
+      },
+      hashes: { planningRunRev: 12, topicMapVersion: 'v9', planUnitIdx: '8f3a91', testingPolicy: 'c41d20', auditClosure: 'e77b02' },
+      topics: [
+        { id: 't1', num: 1, title: 'Recipe data model', state: 'ready',
+          summary: 'Recipes, ingredients, steps, tags — Postgres schema + sqlx migrations.',
+          questions: [{ id: 'q-rev', text: 'How should recipe revisions be kept?', chips: ['Full history', 'Last 10 only', 'No history'], freeform: 'Something else', answer: 'Full history' }] },
+        { id: 't2', num: 2, title: 'Auth & accounts', state: 'ready',
+          summary: 'Email + OAuth sign-in, session cookies, account deletion path.',
+          questions: [{ id: 'q-oauth', text: 'Which OAuth providers at launch?', chips: ['GitHub + Google', 'Google only', 'None yet'], freeform: 'Something else', answer: 'GitHub + Google' }] },
+        { id: 't3', num: 3, title: 'Editor & media upload', state: 'ready',
+          summary: 'Step-by-step recipe editor with drag-in photos; image-processing package resizes + strips EXIF.',
+          questions: [{ id: 'q-size', text: 'Max photo upload size?', chips: ['10 MB', '25 MB', 'Unlimited'], freeform: 'Something else', answer: '25 MB' }] },
+        { id: 't4', num: 4, title: 'Search', state: 'ready',
+          summary: 'Postgres full-text search over titles, ingredients and tags; typo tolerance deferred.',
+          questions: [{ id: 'q-scope', text: 'Search scope at launch?', chips: ['Titles + ingredients', 'Everything', 'Titles only'], freeform: 'Something else', answer: 'Titles + ingredients' }] },
+        { id: 't5', num: 5, title: 'Comments & ratings', state: 'ready',
+          summary: 'Five-star ratings, threaded comments, one rating per account per recipe.',
+          questions: [{ id: 'q-mod', text: 'Comment moderation model?', chips: ['Report + hide', 'Pre-approval', 'Off at launch'], freeform: 'Something else', answer: 'Report + hide' }] },
+        { id: 't6', num: 6, title: 'Import from URL', state: 'auditing',
+          summary: 'Paste a recipe URL, worker scrapes structured data; retries + sanitization under audit.',
+          progress: 'audit pass 2 of 3 · 4 findings fixed',
+          questions: [{ id: 'q-sites', text: 'Which sites must import cleanly?', chips: ['Top 20 recipe sites', 'Any schema.org page', 'Manual paste only'], freeform: 'Something else', answer: 'Any schema.org page' }] },
+        { id: 't7', num: 7, title: 'Notifications', state: 'impacted',
+          summary: 'Email + in-app notifications for comments and follows. Impacted by the import-from-URL audit.',
+          questions: [{ id: 'q-chan', text: 'Notification channels at launch?', chips: ['In-app only', 'In-app + email', 'Email digest weekly'], freeform: 'Something else', answer: 'In-app + email' }] },
+        { id: 't8', num: 8, title: 'Deployment & backups', state: 'blocked',
+          summary: 'Docker on Unraid; nightly Postgres dumps. Blocked: storage location needs a product decision.',
+          questions: [{ id: 'q-storage', text: 'Where should images and backups live?', chips: ['AWS S3', 'Cloudflare R2', 'Local volume'], freeform: 'Something else', answer: null }] }
+      ]
+    },
+    run: {
+      id: 'pcr-47',
+      planUnits: 23,
+      seams: [
+        { id: 'seam-content', label: 'Content core', lanes: ['lane-a', 'lane-b'] },
+        { id: 'seam-experience', label: 'Experience', lanes: ['lane-c'] },
+        { id: 'seam-platform', label: 'Platform', lanes: ['lane-d'] }
+      ],
+      lanes: [
+        { id: 'lane-a', label: 'data-model', worktree: 'orch/lane-a-data-model', nodes: [
+          'recipes table + revisions', 'ingredients + units', 'tags + collections', 'accounts + sessions schema',
+          'media metadata table', 'ratings schema', 'comments schema', 'notifications schema',
+          'search index config', 'backup retention config' ] },
+        { id: 'lane-b', label: 'API', worktree: 'orch/lane-b-api', nodes: [
+          'axum scaffold + routing', 'recipes CRUD endpoints', 'publish package: image-processing', 'media upload endpoint',
+          'auth endpoints + sessions', 'search query endpoint', 'comments API', 'ratings API',
+          'import-from-url worker tests', 'notifications service' ] },
+        { id: 'lane-c', label: 'frontend', worktree: 'orch/lane-c-frontend', nodes: [
+          'route shell + layout', 'recipe card component', 'recipe editor', 'media uploader UI',
+          'search UI + results', 'comments UI', 'ratings stars', 'import flow UI',
+          'notifications tray', 'theming + polish' ] },
+        { id: 'lane-d', label: 'infra', worktree: 'orch/lane-d-infra', nodes: [
+          'Dockerfile multi-arch', 'docker-compose stack', 'postgres provisioning', 'redis cache wiring',
+          'CI workflow', 'registry cache setup', 'unraid template', 'backup cron + R2 sync',
+          'healthchecks + monitoring', 'deploy scripts' ] }
+      ],
+      gate: { id: 'g-image-processing', node: 'n-13', label: 'publish package: image-processing',
+              question: 'Publish the image-processing package to the internal registry? It becomes a dependency for lane-c media work.' },
+      failNode: 'n-19',
+      history: [
+        { id: 'pcr-46', label: 'Run #46 — search + comments', state: 'complete', nodes: 31, when: 'yesterday 16:40' },
+        { id: 'pcr-45', label: 'Run #45 — auth hardening', state: 'complete', nodes: 18, when: '2 days ago' },
+        { id: 'pcr-44', label: 'Run #44 — initial scaffold', state: 'degraded', nodes: 26, when: '4 days ago' }
+      ]
+    },
+    git: {
+      auth: { signedIn: true, account: 'jared-dev', requested: 'jared-dev', effective: 'jared-dev', scopes: ['repo', 'read:user', 'user:email'] },
+      staged: ['src/routes/recipes.rs', 'web/src/lib/RecipeCard.svelte'],
+      unstaged: ['src/services/image.rs'],
+      untracked: [],
+      worktrees: [
+        { id: 'wt-b', branch: 'orch/lane-b-api', owner: 'Orch: lane-b API', kind: 'orchestrator', state: 'clean', base: 'main', age: '2h', path: '.worktrees/lane-b-api' },
+        { id: 'wt-d', branch: 'orch/lane-d-infra', owner: 'Orch: lane-d infra', kind: 'orchestrator', state: 'dirty', base: 'main', age: '2h', path: '.worktrees/lane-d-infra' },
+        { id: 'wt-t', branch: 'thread/import-fixes', owner: 'Thread: Import worker debugging', kind: 'thread', state: 'clean', base: 'main', age: '1d', path: '.worktrees/import-fixes' },
+        { id: 'wt-m', branch: 'spike/r2-storage', owner: 'Manual', kind: 'manual', state: 'clean', base: 'main', age: '3d', path: '.worktrees/r2-spike' }
+      ],
+      runs: [
+        { id: 'wf-312', name: 'CI — build + test', branch: 'main', status: 'success', when: '2h ago' },
+        { id: 'wf-311', name: 'CI — build + test', branch: 'orch/lane-b-api', status: 'success', when: '3h ago' },
+        { id: 'wf-310', name: 'CI — build + test', branch: 'thread/import-fixes', status: 'failed', failedStep: 'cargo test', when: '5h ago' }
+      ],
+      fallbackWorktree: { id: 'wt-46', branch: 'run/46-search-comments', owner: 'Orch: run #46', state: 'checks_passing' }
+    },
+    docker: {
+      containers: [
+        { id: 'ct-pg', name: 'tastebook-postgres', image: 'postgres:16-alpine', state: 'running', ports: '5432:5432', health: 'healthy' },
+        { id: 'ct-redis', name: 'tastebook-redis', image: 'redis:7-alpine', state: 'running', ports: '6379:6379', health: 'healthy' },
+        { id: 'ct-reg', name: 'registry-cache', image: 'registry:2', state: 'running', ports: '5000:5000', health: 'healthy' },
+        { id: 'ct-web', name: 'tastebook-web', image: 'jared/tastebook:v1.1', state: 'exited', exitCode: 137, health: 'none' },
+        { id: 'ct-worker', name: 'tastebook-worker', image: 'jared/tastebook-worker:v1.1', state: 'restarting', health: 'unhealthy' }
+      ],
+      composeServices: ['db', 'cache', 'web', 'worker'],
+      hubRepo: 'jared/tastebook',
+      publishChain: { built: false, digest: null, tag: 'v1.2', template: 'ready_to_push', pushedImage: false, pushedTemplate: false }
+    },
+    usage: {
+      quotas: [
+        { id: 'q-claude-5h', label: 'Claude · 5h window', pct: 78, level: 'orange', plan: 'Max' },
+        { id: 'q-claude-7d', label: 'Claude · 7d window', pct: 52, level: 'ok', plan: 'Max' },
+        { id: 'q-codex-5h', label: 'Codex · 5h window', pct: 34, level: 'ok', plan: 'Plus' },
+        { id: 'q-cursor-mo', label: 'Cursor · monthly', pct: 12, level: 'ok', plan: 'Pro' }
+      ],
+      cooldownSec: 2472, /* 00:41:12 */
+      anomalies: [
+        { id: 'an-spike', kind: 'token_spike', ratio: 3.4, window: '1h', blocked: true,
+          why: 'Output tokens ran 3.4x above the 1h baseline (guard limit 3.0x). The offending request was held before dispatch.',
+          allowedExample: 'Allowed: the automatic retry of n-19 tests re-sent the same context — retry traffic is exempt from the spike guard.' }
+      ],
+      ledgerSeed: 18
+    },
+    files: [
+      { path: 'Cargo.toml', lang: 'toml' },
+      { path: 'src/main.rs', lang: 'rust' },
+      { path: 'src/routes/recipes.rs', lang: 'rust' },
+      { path: 'src/routes/auth.rs', lang: 'rust' },
+      { path: 'src/services/image.rs', lang: 'rust' },
+      { path: 'src/services/import.rs', lang: 'rust' },
+      { path: 'migrations/0001_init.sql', lang: 'sql' },
+      { path: 'migrations/0002_ratings.sql', lang: 'sql' },
+      { path: 'web/src/routes/+page.svelte', lang: 'svelte' },
+      { path: 'web/src/routes/recipe/[id]/+page.svelte', lang: 'svelte' },
+      { path: 'web/src/lib/RecipeCard.svelte', lang: 'svelte' },
+      { path: 'web/src/lib/Editor.svelte', lang: 'svelte' },
+      { path: 'docker-compose.yml', lang: 'yaml' },
+      { path: 'Dockerfile', lang: 'docker' },
+      { path: 'unraid-template.xml', lang: 'xml' },
+      { path: '.github/workflows/ci.yml', lang: 'yaml' },
+      { path: 'README.md', lang: 'doc' },
+      { path: 'PRD.md', lang: 'doc' }
+    ],
+    web: {
+      /* WebOperation cards (addendum_pm173): canonical input field is operation_input
+         (operation_input_preview is display-only). Commands live under cmd.chat.web.*. */
+      operations: [
+        { id: 'op-web-s1', kind: 'websearch', command: 'cmd.chat.web.search',
+          label: 'Searching Web: schema.org Recipe markup coverage 2026',
+          operation_input: { query: 'schema.org Recipe markup coverage 2026' },
+          operation_input_preview: 'schema.org Recipe markup coverage 2026',
+          state: 'completed', invocation_source: 'agent_judgment',
+          agent_reason: 'Agent searched web because freshness was required for import coverage claims.',
+          provider: 'model-native', effective_adapter: 'model-native', fallback_path: null,
+          scope: '*', approval: 'granted', cache: 'miss', cost_note: 'included in plan',
+          source_count: 5,
+          sources: [
+            { title: 'Google Search Central — Recipe structured data', url: 'developers.google.com/search/docs/appearance/structured-data/recipe', source_confidence: 'high', read: true },
+            { title: 'schema.org/Recipe', url: 'schema.org/Recipe', source_confidence: 'high', read: true },
+            { title: 'Web Almanac 2025 — structured data chapter', url: 'almanac.httparchive.org/en/2025/structured-data', source_confidence: 'medium', read: true },
+            { title: 'RecipeKit blog — JSON-LD in the wild', url: 'recipekit.dev/blog/json-ld-wild', source_confidence: 'low', read: false },
+            { title: 'MDN — microdata', url: 'developer.mozilla.org/docs/Web/HTML/Microdata', source_confidence: 'unknown', read: false }
+          ] },
+        { id: 'op-web-r1', kind: 'webresearch', command: 'cmd.chat.web.research',
+          label: 'Researching Web: import-from-URL hardening practices',
+          operation_input: { task: 'How do production recipe importers survive messy blog markup? Retries, sanitization, mixed-fraction quantity parsing.' },
+          operation_input_preview: 'import-from-URL hardening practices',
+          state: 'queued', progress: null, invocation_source: 'user_command',
+          agent_reason: 'Research run backing the import worker audit findings.',
+          provider: 'PM-composed', effective_adapter: 'Site Reader', fallback_path: 'Site Reader → model-native',
+          scope: '*', approval: 'granted', cache: 'cold', cost_note: 'included in plan',
+          source_total: 6, sources_read: 0,
+          citations: [
+            { n: 1, title: 'Google Search Central — Recipe structured data', url: 'developers.google.com/search/docs/appearance/structured-data/recipe', source_confidence: 'high' },
+            { n: 2, title: 'schema.org/Recipe — recipeIngredient notes', url: 'schema.org/Recipe', source_confidence: 'high' },
+            { n: 3, title: 'Serious Eats engineering — parsing "1 1/2 cups"', url: 'seriouseats.com/engineering/quantity-parsing', source_confidence: 'medium' }
+          ] }
+      ]
+    },
+    dash: {
+      defaults: ['widget-orchestrator-progress', 'widget-active-lanes', 'widget-recent-results', 'widget-custom-metrics'],
+      catalog: [
+        { kind: 'widget-orchestrator-progress', label: 'Orchestrator progress' },
+        { kind: 'widget-active-lanes', label: 'Active lanes' },
+        { kind: 'widget-recent-results', label: 'Recent results' },
+        { kind: 'widget-custom-metrics', label: 'Custom metrics' },
+        { kind: 'widget-quota-summary', label: 'Usage quota summary' },
+        { kind: 'widget-approval-queue', label: 'Approval queue' },
+        { kind: 'widget-account-pressure', label: 'Account pressure' },
+        { kind: 'widget-worktree-state', label: 'Worktree state' }
+      ]
+    }
+  };
+  window.PM_DEMO_DATA = DATA;
+
+  /* ================= PM_DEMO_TEXT ================= */
+  var TEXT = { files: {}, chat: {}, term: {} };
+
+  TEXT.files['Cargo.toml'] = [
+    HC + '# Tastebook API workspace' + HE,
+    '[' + HF + 'package' + HE + ']',
+    HF + 'name' + HE + ' = ' + HS + '"tastebook-api"' + HE,
+    HF + 'version' + HE + ' = ' + HS + '"1.2.0"' + HE,
+    HF + 'edition' + HE + ' = ' + HS + '"2021"' + HE,
+    '',
+    '[' + HF + 'dependencies' + HE + ']',
+    HF + 'axum' + HE + ' = ' + HS + '"0.8"' + HE,
+    HF + 'tokio' + HE + ' = { version = ' + HS + '"1"' + HE + ', features = [' + HS + '"full"' + HE + '] }',
+    HF + 'sqlx' + HE + ' = { version = ' + HS + '"0.8"' + HE + ', features = [' + HS + '"postgres"' + HE + ', ' + HS + '"runtime-tokio"' + HE + '] }',
+    HF + 'image' + HE + ' = ' + HS + '"0.25"' + HE + '   ' + HC + '# image-processing package' + HE,
+    HF + 'scraper' + HE + ' = ' + HS + '"0.20"' + HE + ' ' + HC + '# import-from-url worker' + HE,
+    HF + 'serde' + HE + ' = { version = ' + HS + '"1"' + HE + ', features = [' + HS + '"derive"' + HE + '] }'
+  ];
+  TEXT.files['src/main.rs'] = [
+    HK + 'use' + HE + ' axum::{Router, routing::get};',
+    HK + 'use' + HE + ' tastebook_api::{routes, services, db};',
+    '',
+    '#[tokio::main]',
+    HK + 'async fn ' + HE + HF + 'main' + HE + '() {',
+    '    ' + HK + 'let' + HE + ' pool = db::' + HF + 'connect' + HE + '().await.' + HF + 'expect' + HE + '(' + HS + '"postgres unreachable"' + HE + ');',
+    '    ' + HK + 'let' + HE + ' app = Router::' + HF + 'new' + HE + '()',
+    '        .' + HF + 'merge' + HE + '(routes::recipes::' + HF + 'router' + HE + '())',
+    '        .' + HF + 'merge' + HE + '(routes::auth::' + HF + 'router' + HE + '())',
+    '        .' + HF + 'with_state' + HE + '(pool);',
+    '    ' + HC + '// serve on 0.0.0.0:8080 behind compose' + HE,
+    '    axum::' + HF + 'serve' + HE + '(listener, app).await.' + HF + 'unwrap' + HE + '();',
+    '}'
+  ];
+  TEXT.files['src/routes/recipes.rs'] = [
+    HK + 'use' + HE + ' axum::{extract::State, Json};',
+    HK + 'use' + HE + ' crate::models::{Recipe, NewRecipe};',
+    '',
+    HK + 'pub fn ' + HE + HF + 'router' + HE + '() -&gt; Router&lt;PgPool&gt; {',
+    '    Router::' + HF + 'new' + HE + '()',
+    '        .' + HF + 'route' + HE + '(' + HS + '"/api/recipes"' + HE + ', get(list).post(create))',
+    '        .' + HF + 'route' + HE + '(' + HS + '"/api/recipes/:id"' + HE + ', get(show).put(update))',
+    '}',
+    '',
+    HK + 'async fn ' + HE + HF + 'list' + HE + '(State(pool): State&lt;PgPool&gt;) -&gt; Json&lt;Vec&lt;Recipe&gt;&gt; {',
+    '    ' + HC + '// keyset pagination — 24 cards per page' + HE,
+    '    ' + HK + 'let' + HE + ' rows = sqlx::' + HF + 'query_as!' + HE + '(Recipe, ' + HS + '"SELECT * FROM recipes ORDER BY updated_at DESC LIMIT 24"' + HE + ')',
+    '        .' + HF + 'fetch_all' + HE + '(&amp;pool).await.' + HF + 'unwrap_or_default' + HE + '();',
+    '    ' + HF + 'Json' + HE + '(rows)',
+    '}'
+  ];
+  TEXT.files['src/routes/auth.rs'] = [
+    HK + 'use' + HE + ' axum::{Router, routing::post};',
+    '',
+    HK + 'pub fn ' + HE + HF + 'router' + HE + '() -&gt; Router&lt;PgPool&gt; {',
+    '    Router::' + HF + 'new' + HE + '()',
+    '        .' + HF + 'route' + HE + '(' + HS + '"/api/auth/login"' + HE + ', post(login))',
+    '        .' + HF + 'route' + HE + '(' + HS + '"/api/auth/oauth/:provider"' + HE + ', post(oauth_start))',
+    '        .' + HF + 'route' + HE + '(' + HS + '"/api/auth/logout"' + HE + ', post(logout))',
+    '}',
+    '',
+    HC + '// session cookies: HttpOnly + SameSite=Lax, 30-day sliding expiry' + HE,
+    HK + 'async fn ' + HE + HF + 'login' + HE + '(Json(body): Json&lt;LoginReq&gt;) -&gt; Result&lt;Json&lt;Session&gt;, AuthError&gt; {',
+    '    verify_password(&amp;body).await?;',
+    '    Ok(Json(Session::issue(body.email)))',
+    '}'
+  ];
+  TEXT.files['src/services/image.rs'] = [
+    HC + '// image-processing package — resize ladder + EXIF strip (gate n-13)' + HE,
+    HK + 'use' + HE + ' image::{DynamicImage, imageops::FilterType};',
+    '',
+    HK + 'pub const ' + HE + HN + 'SIZES' + HE + ': [u32; 3] = [320, 800, 1600];',
+    '',
+    HK + 'pub fn ' + HE + HF + 'process_upload' + HE + '(raw: &amp;[u8]) -&gt; Result&lt;Vec&lt;Rendition&gt;, ImgError&gt; {',
+    '    ' + HK + 'let' + HE + ' img = image::' + HF + 'load_from_memory' + HE + '(raw)?;',
+    '    ' + HK + 'let' + HE + ' img = ' + HF + 'strip_exif' + HE + '(img);',
+    '    Ok(' + HN + 'SIZES' + HE + '.iter().map(|w| ' + HF + 'rendition' + HE + '(&amp;img, *w)).collect())',
+    '}',
+    '',
+    HK + 'fn ' + HE + HF + 'rendition' + HE + '(img: &amp;DynamicImage, w: u32) -&gt; Rendition {',
+    '    ' + HC + '// Lanczos3 keeps herbs looking like herbs, not soup' + HE,
+    '    Rendition::from(img.' + HF + 'resize' + HE + '(w, w * 2, FilterType::Lanczos3))',
+    '}'
+  ];
+  TEXT.files['src/services/import.rs'] = [
+    HC + '// import-from-url worker — schema.org Recipe extraction (n-19 test target)' + HE,
+    HK + 'use' + HE + ' scraper::{Html, Selector};',
+    '',
+    HK + 'pub async fn ' + HE + HF + 'import_url' + HE + '(url: &amp;str) -&gt; Result&lt;DraftRecipe, ImportError&gt; {',
+    '    ' + HK + 'let' + HE + ' body = ' + HF + 'fetch_with_retries' + HE + '(url, 3).await?;',
+    '    ' + HK + 'let' + HE + ' doc = Html::' + HF + 'parse_document' + HE + '(&amp;body);',
+    '    ' + HK + 'let' + HE + ' ld = ' + HF + 'json_ld_recipe' + HE + '(&amp;doc).ok_or(ImportError::NoRecipe)?;',
+    '    ' + HC + '// sanitize: strip scripts, clamp step count, normalize units' + HE,
+    '    Ok(DraftRecipe::' + HF + 'from_json_ld' + HE + '(' + HF + 'sanitize' + HE + '(ld))?)',
+    '}',
+    '',
+    HC + '// KNOWN FLAKE (run #47, n-19): fraction units like "1 1/2 cup" parsed as 11/2' + HE,
+    HK + 'fn ' + HE + HF + 'normalize_units' + HE + '(s: &amp;str) -&gt; Quantity { ' + HF + 'parse_mixed_fraction' + HE + '(s) }'
+  ];
+  TEXT.files['migrations/0001_init.sql'] = [
+    HC + '-- 0001_init: core content tables' + HE,
+    HK + 'CREATE TABLE' + HE + ' recipes (',
+    '  id          ' + HN + 'BIGSERIAL' + HE + ' ' + HK + 'PRIMARY KEY' + HE + ',',
+    '  title       ' + HN + 'TEXT' + HE + ' ' + HK + 'NOT NULL' + HE + ',',
+    '  author_id   ' + HN + 'BIGINT' + HE + ' ' + HK + 'REFERENCES' + HE + ' accounts(id),',
+    '  body        ' + HN + 'JSONB' + HE + ' ' + HK + 'NOT NULL' + HE + ',',
+    '  updated_at  ' + HN + 'TIMESTAMPTZ' + HE + ' ' + HK + 'DEFAULT' + HE + ' now()',
+    ');',
+    HK + 'CREATE INDEX' + HE + ' recipes_fts ' + HK + 'ON' + HE + ' recipes ' + HK + 'USING' + HE + ' GIN (to_tsvector(' + HS + "'english'" + HE + ', title));'
+  ];
+  TEXT.files['migrations/0002_ratings.sql'] = [
+    HC + '-- 0002_ratings: one rating per account per recipe' + HE,
+    HK + 'CREATE TABLE' + HE + ' ratings (',
+    '  recipe_id  ' + HN + 'BIGINT' + HE + ' ' + HK + 'REFERENCES' + HE + ' recipes(id) ' + HK + 'ON DELETE CASCADE' + HE + ',',
+    '  account_id ' + HN + 'BIGINT' + HE + ' ' + HK + 'REFERENCES' + HE + ' accounts(id),',
+    '  stars      ' + HN + 'SMALLINT' + HE + ' ' + HK + 'CHECK' + HE + ' (stars ' + HK + 'BETWEEN' + HE + ' 1 ' + HK + 'AND' + HE + ' 5),',
+    '  ' + HK + 'PRIMARY KEY' + HE + ' (recipe_id, account_id)',
+    ');'
+  ];
+  TEXT.files['web/src/routes/+page.svelte'] = [
+    '&lt;' + HF + 'script' + HE + '&gt;',
+    '  ' + HK + 'import' + HE + ' RecipeCard ' + HK + 'from' + HE + ' ' + HS + "'$lib/RecipeCard.svelte'" + HE + ';',
+    '  ' + HK + 'export let' + HE + ' data; ' + HC + '// +page.server.js load()' + HE,
+    '&lt;/' + HF + 'script' + HE + '&gt;',
+    '',
+    '&lt;' + HF + 'h1' + HE + '&gt;Fresh this week&lt;/' + HF + 'h1' + HE + '&gt;',
+    '&lt;' + HF + 'div' + HE + ' class=' + HS + '"grid"' + HE + '&gt;',
+    '  {#each data.recipes as r (r.id)}',
+    '    &lt;' + HF + 'RecipeCard' + HE + ' recipe={r} /&gt;',
+    '  {/each}',
+    '&lt;/' + HF + 'div' + HE + '&gt;'
+  ];
+  TEXT.files['web/src/routes/recipe/[id]/+page.svelte'] = [
+    '&lt;' + HF + 'script' + HE + '&gt;',
+    '  ' + HK + 'export let' + HE + ' data;',
+    '  $: recipe = data.recipe;',
+    '&lt;/' + HF + 'script' + HE + '&gt;',
+    '',
+    '&lt;' + HF + 'article' + HE + '&gt;',
+    '  &lt;' + HF + 'img' + HE + ' srcset={recipe.renditions} alt={recipe.title} /&gt;',
+    '  &lt;' + HF + 'h1' + HE + '&gt;{recipe.title}&lt;/' + HF + 'h1' + HE + '&gt;',
+    '  &lt;' + HF + 'Ratings' + HE + ' stars={recipe.stars} /&gt;',
+    '  &lt;' + HF + 'Steps' + HE + ' steps={recipe.body.steps} /&gt;',
+    '&lt;/' + HF + 'article' + HE + '&gt;'
+  ];
+  TEXT.files['web/src/lib/RecipeCard.svelte'] = [
+    '&lt;' + HF + 'script' + HE + '&gt;',
+    '  ' + HK + 'export let' + HE + ' recipe;',
+    '&lt;/' + HF + 'script' + HE + '&gt;',
+    '',
+    '&lt;' + HF + 'a' + HE + ' class=' + HS + '"card"' + HE + ' href=' + HS + '"/recipe/{recipe.id}"' + HE + '&gt;',
+    '  &lt;' + HF + 'img' + HE + ' src={recipe.thumb} alt=' + HS + '""' + HE + ' loading=' + HS + '"lazy"' + HE + ' /&gt;',
+    '  &lt;' + HF + 'h3' + HE + '&gt;{recipe.title}&lt;/' + HF + 'h3' + HE + '&gt;',
+    '  &lt;' + HF + 'span' + HE + '&gt;{recipe.stars}/5 · {recipe.cookMinutes} min&lt;/' + HF + 'span' + HE + '&gt;',
+    '&lt;/' + HF + 'a' + HE + '&gt;'
+  ];
+  TEXT.files['web/src/lib/Editor.svelte'] = [
+    HC + '&lt;!-- step-by-step editor: drag photos onto a step to attach --&gt;' + HE,
+    '&lt;' + HF + 'script' + HE + '&gt;',
+    '  ' + HK + 'import' + HE + ' { upload } ' + HK + 'from' + HE + ' ' + HS + "'$lib/upload'" + HE + ';',
+    '  ' + HK + 'let' + HE + ' steps = [{ text: ' + HS + "''" + HE + ', photo: ' + HK + 'null' + HE + ' }];',
+    '  ' + HK + 'async function' + HE + ' ' + HF + 'onDrop' + HE + '(step, file) {',
+    '    step.photo = ' + HK + 'await' + HE + ' ' + HF + 'upload' + HE + '(file); ' + HC + '// hits /api/media, renditions async' + HE,
+    '  }',
+    '&lt;/' + HF + 'script' + HE + '&gt;'
+  ];
+  TEXT.files['docker-compose.yml'] = [
+    HF + 'services' + HE + ':',
+    '  ' + HF + 'db' + HE + ':',
+    '    image: ' + HS + 'postgres:16-alpine' + HE,
+    '    volumes: [' + HS + 'pgdata:/var/lib/postgresql/data' + HE + ']',
+    '  ' + HF + 'cache' + HE + ':',
+    '    image: ' + HS + 'redis:7-alpine' + HE,
+    '  ' + HF + 'web' + HE + ':',
+    '    image: ' + HS + 'jared/tastebook:v1.2' + HE,
+    '    ports: [' + HS + '"5173:5173"' + HE + ', ' + HS + '"8080:8080"' + HE + ']',
+    '    depends_on: [' + HF + 'db' + HE + ', ' + HF + 'cache' + HE + ']',
+    '  ' + HF + 'worker' + HE + ':',
+    '    image: ' + HS + 'jared/tastebook-worker:v1.2' + HE,
+    '    command: ' + HS + 'import-worker --poll 5s' + HE
+  ];
+  TEXT.files['Dockerfile'] = [
+    HK + 'FROM' + HE + ' rust:1.83-alpine ' + HK + 'AS' + HE + ' build',
+    HK + 'WORKDIR' + HE + ' /app',
+    HK + 'COPY' + HE + ' . .',
+    HK + 'RUN' + HE + ' cargo build --release --locked',
+    '',
+    HK + 'FROM' + HE + ' alpine:3.20',
+    HC + '# multi-arch: linux/amd64 + linux/arm64 via buildx' + HE,
+    HK + 'COPY' + HE + ' --from=build /app/target/release/tastebook-api /usr/local/bin/',
+    HK + 'EXPOSE' + HE + ' 8080',
+    HK + 'CMD' + HE + ' [' + HS + '"tastebook-api"' + HE + ']'
+  ];
+  TEXT.files['unraid-template.xml'] = [
+    '&lt;?' + HF + 'xml' + HE + ' version=' + HS + '"1.0"' + HE + '?&gt;',
+    '&lt;' + HF + 'Container' + HE + ' version=' + HS + '"2"' + HE + '&gt;',
+    '  &lt;' + HF + 'Name' + HE + '&gt;Tastebook&lt;/' + HF + 'Name' + HE + '&gt;',
+    '  &lt;' + HF + 'Repository' + HE + '&gt;jared/tastebook:v1.2&lt;/' + HF + 'Repository' + HE + '&gt;',
+    '  &lt;' + HF + 'WebUI' + HE + '&gt;http://[IP]:[PORT:8080]&lt;/' + HF + 'WebUI' + HE + '&gt;',
+    '  &lt;' + HF + 'Config' + HE + ' Name=' + HS + '"Media path"' + HE + ' Target=' + HS + '"/data/media"' + HE + ' Mode=' + HS + '"rw"' + HE + '/&gt;',
+    '  &lt;' + HF + 'Config' + HE + ' Name=' + HS + '"Backups"' + HE + ' Target=' + HS + '"/data/backups"' + HE + ' Mode=' + HS + '"rw"' + HE + '/&gt;',
+    '&lt;/' + HF + 'Container' + HE + '&gt;'
+  ];
+  TEXT.files['.github/workflows/ci.yml'] = [
+    HF + 'name' + HE + ': ' + HS + 'CI — build + test' + HE,
+    HF + 'on' + HE + ': [' + HS + 'push' + HE + ', ' + HS + 'pull_request' + HE + ']',
+    HF + 'jobs' + HE + ':',
+    '  ' + HF + 'test' + HE + ':',
+    '    runs-on: ' + HS + 'ubuntu-latest' + HE,
+    '    steps:',
+    '      - uses: ' + HS + 'actions/checkout@v4' + HE,
+    '      - run: ' + HS + 'cargo test --workspace' + HE,
+    '      - run: ' + HS + 'pnpm install &amp;&amp; pnpm test' + HE
+  ];
+  TEXT.files['README.md'] = [
+    '<b>Tastebook</b> — recipe sharing for people who actually cook.',
+    '',
+    'SvelteKit front end, Rust/Axum API, Postgres 16, Docker for everything.',
+    '',
+    '<b>Quick start</b>',
+    dim('docker compose up  →  web on :5173, API on :8080'),
+    '',
+    '<b>Layout</b>: <code>src/</code> API · <code>web/</code> SvelteKit · <code>migrations/</code> sqlx · <code>unraid-template.xml</code> publish target.',
+    '',
+    'Run #47 (this build) adds the image-processing package and hardens import-from-URL.'
+  ];
+  TEXT.files['PRD.md'] = [
+    '<b>PRD — Tastebook v1.2</b>',
+    '',
+    '<b>Goal</b>: photos that look great without users thinking about sizes, and imports that survive messy recipe blogs.',
+    '',
+    '<b>In scope</b>: image-processing package (resize ladder, EXIF strip), import worker retries + sanitization, R2 storage decision, notification fan-out.',
+    '',
+    '<b>Out of scope</b>: meal planning, mobile apps, federation.',
+    '',
+    '<b>Acceptance</b>: 23 PlanUnits across 4 lanes; seam boundaries hold; auditor review loop closes with zero open findings.'
+  ];
+
+  /* chat reply scripts per intent */
+  TEXT.chat = {
+    plan: 'Here is how I would stage it. First the data model lane locks the media metadata table, then the API lane can publish the image-processing package — that is the gate you will see at n-13. [[card:operation:op-plan]] Frontend picks up renditions once the package lands, and infra closes with the R2 sync. Want me to open the Planning Wizard with this scoped as a feature?',
+    debug: 'Let me reproduce that import failure first. [[card:operation:op-debug]] Running the worker tests against the fixture set now. [[card:subagent:Test Sleuth]] Found it — mixed fractions like "1 1/2 cup" parse as 11/2 in normalize_units, so quantities explode by 7x. Patching the parser and adding a regression fixture. [[files:src/services/import.rs,migrations/0001_init.sql]] Tests pass locally; n-19 should go green on the next retry.',
+    explain: 'Short version: a seam is a stable boundary between packages — lane-b can publish the image-processing package behind the seam without frontend caring how resizing works. Longer version: each lane works in its own worktree, promotes work lane_to_package, then package_to_seam_available once the auditor review loop signs off. The run completes when every seam reports seam_complete. Nothing merges to main until you approve the PR.',
+    deploy: 'Deployment goes through the Docker Manager publish chain: Build (buildx, multi-arch) → digest → push to Docker Hub as jared/tastebook:v1.2 → refresh the Unraid template → one-click template push. The compose stack maps web to 5173 and the API to 8080. Backups sync nightly to Cloudflare R2 per the wizard decision. Say "deploy" after the PR merges and I will walk the chain with you.',
+    fallback: 'I can help with that. For this demo build I am scoped to the Tastebook story — planning, the pcr-47 run, debugging the import worker, GitHub, Docker publishing and usage questions all work end-to-end. Try "status", "explain seams", or "debug the import failure", or open the Planning Wizard to add a feature.',
+    gateApproved: 'Approved — releasing the gate. The image-processing package is publishing to the internal registry now; lane-c media work unblocks as soon as the receipt lands. I will keep this thread updated if anything else needs a decision.',
+    gateNotice: 'Run #47 is holding at node n-13: <b>publish package: image-processing</b>. Publishing makes it a dependency for lane-c media work. Reply <b>approve and continue</b> (or use the buttons here, on the Dashboard, or in Orchestrator → Progress) to release it. Declining parks the node at its safe point.'
+  };
+
+  /* terminal / build streams */
+  TEXT.term = {
+    cargoBuild: [
+      dim('$ cargo build --workspace'),
+      '   ' + ok('Compiling') + ' tastebook-model v1.2.0',
+      '   ' + ok('Compiling') + ' tastebook-api v1.2.0',
+      '   ' + ok('Compiling') + ' image-processing v0.9.4',
+      '   ' + ok('Compiling') + ' import-worker v0.7.1',
+      '    ' + ok('Finished') + ' dev [unoptimized + debuginfo] target(s) in 42.3s'
+    ],
+    cargoTestFail: [
+      dim('$ cargo test -p import-worker'),
+      'running 14 tests',
+      'test import::json_ld_extract ... ' + ok('ok'),
+      'test import::retry_backoff ... ' + ok('ok'),
+      'test import::normalize_units_simple ... ' + ok('ok'),
+      'test import::normalize_units_mixed_fraction ... ' + err('FAILED'),
+      'test import::sanitize_strips_scripts ... ' + ok('ok'),
+      '',
+      err('failures:') + ' import::normalize_units_mixed_fraction',
+      dim("  assertion failed: `parse_mixed_fraction(\"1 1/2 cup\")` — left: Quantity(11, Half), right: Quantity(1.5, Cup)"),
+      err('test result: FAILED') + '. 13 passed; 1 failed'
+    ],
+    cargoTestPass: [
+      dim('$ cargo test -p import-worker  ' + '(safe-point retry)'),
+      'running 15 tests',
+      'test import::normalize_units_mixed_fraction ... ' + ok('ok'),
+      'test import::normalize_units_regression_47 ... ' + ok('ok'),
+      ok('test result: ok') + '. 15 passed; 0 failed'
+    ],
+    composeUp: [
+      dim('$ docker compose up -d'),
+      ' ' + ok('✓') + ' Container tastebook-db      ' + ok('Healthy'),
+      ' ' + ok('✓') + ' Container tastebook-cache   ' + ok('Started'),
+      ' ' + ok('✓') + ' Container tastebook-web     ' + ok('Started'),
+      ' ' + ok('✓') + ' Container tastebook-worker  ' + ok('Started')
+    ],
+    buildkit: [
+      dim('$ docker buildx build --platform linux/amd64,linux/arm64 -t jared/tastebook:v1.2 .'),
+      ' => [internal] load build definition from Dockerfile',
+      ' => [build 1/4] FROM rust:1.83-alpine',
+      ' => [build 2/4] WORKDIR /app',
+      ' => [build 3/4] COPY . .',
+      ' => [build 4/4] RUN cargo build --release --locked',
+      ' => [stage-1 2/3] COPY --from=build /app/target/release/tastebook-api',
+      ' => exporting to image',
+      ' => => exporting manifest list ' + ok('sha256:9c1f4e2ab7d05561f0'),
+      ok('✓') + ' build complete — 2 platforms, 41.2 MB'
+    ],
+    dockerLogs: [
+      dim('tastebook-worker | poll: 2 URLs queued'),
+      dim('tastebook-worker | import ok: seriouseats.com — 1.8s'),
+      warn('tastebook-worker | retry 2/3: bonappetit.com (429, backing off 4s)'),
+      dim('tastebook-web    | GET /api/recipes 200 12ms')
+    ],
+    viteAmbient: [
+      dim('vite | hmr update /src/lib/RecipeCard.svelte'),
+      dim('vite | page reload web/src/routes/+page.svelte'),
+      dim('vite | 214 modules transformed in 480ms')
+    ],
+    compileStream: [
+      dim('plan-compile | reading ApprovedPlanPack rev 12'),
+      'plan-compile | 8 topics → ' + ok('23 PlanUnits'),
+      'plan-compile | seam graph: 3 seams, 4 lanes, 40 nodes',
+      'plan-compile | acceptance index ' + ok('8f3a91') + ' verified',
+      ok('plan-compile | bound PlanCompileRun pcr-47')
+    ]
+  };
+  window.PM_DEMO_TEXT = TEXT;
+
+  /* ================= bus ================= */
+  var listeners = {};
+  function on(topic, fn) {
+    if (!topic || typeof fn !== 'function') return PM_DEMO;
+    (listeners[topic] = listeners[topic] || []).push(fn);
+    return PM_DEMO;
+  }
+  function emit(topic, payload) {
+    var subs = (listeners[topic] || []).concat(listeners['*'] || []);
+    for (var i = 0; i < subs.length; i++) {
+      try { subs[i](payload, topic); }
+      catch (e) { try { console.error('[PM_DEMO bus]', topic, e); } catch (e0) {} }
+    }
+  }
+
+  /* ================= state store ================= */
+  function buildNodes() {
+    var nodes = {}, n = 0;
+    DATA.run.lanes.forEach(function (lane) {
+      lane.nodeIds = [];
+      lane.nodes.forEach(function (label) {
+        n++;
+        var id = 'n-' + (n < 10 ? '0' + n : n);
+        lane.nodeIds.push(id);
+        nodes[id] = { id: id, lane: lane.id, label: label, state: 'queued', attempts: 0, promotion: null, degraded: false };
+      });
+    });
+    return nodes;
+  }
+
+  var S = {
+    clock: { t: 0, playing: true, speed: 1, _resumeOnVisible: false },
+    story: { c1_wizard_done: false, c2_compiled: false, c3_run_complete: false, c4_pr_merged: false, c5_published: false },
+    wizard: {
+      revision: DATA.wizard.hashes.planningRunRev,
+      stage: 'interview',
+      topics: {},
+      pack: null,
+      approved: false,
+      hashes: DATA.wizard.hashes,
+      imported: true,
+      activeTopic: null
+    },
+    run: {
+      id: null, stage: 'idle', planUnits: 0,
+      lanes: DATA.run.lanes.map(function (l) { return { id: l.id, label: l.label, worktree: l.worktree, state: 'idle', done: 0, total: l.nodes.length }; }),
+      nodes: buildNodes(),
+      gates: {},
+      freshness: 'current',
+      promotions: [],
+      history: DATA.run.history.slice(),
+      focusedRunId: null, focusMode: 'live',
+      accountSwitches: []
+    },
+    chat: {
+      threads: {}, order: [], activeThread: 'th-main',
+      queue: [], busy: false, activeStream: null,
+      context: { used: 42000, max: 128000 }
+    },
+    git: {
+      auth: JSON.parse(JSON.stringify(DATA.git.auth)),
+      staged: DATA.git.staged.slice(), unstaged: DATA.git.unstaged.slice(), untracked: DATA.git.untracked.slice(),
+      commits: [], worktrees: DATA.git.worktrees.slice(), runs: JSON.parse(JSON.stringify(DATA.git.runs)),
+      pr: null, aiCommitBusy: false, device: null
+    },
+    docker: {
+      containers: JSON.parse(JSON.stringify(DATA.docker.containers)),
+      compose: { up: false, services: {} },
+      publishChain: JSON.parse(JSON.stringify(DATA.docker.publishChain)),
+      templateRepo: 'github.com/jared/unraid-templates'
+    },
+    usage: {
+      quotas: JSON.parse(JSON.stringify(DATA.usage.quotas)),
+      cooldownSec: DATA.usage.cooldownSec,
+      ledger: [],
+      anomalies: JSON.parse(JSON.stringify(DATA.usage.anomalies)),
+      alert80Fired: false,
+      widgets: {}
+    },
+    files: { openTabs: [], activeTab: null },
+    web: { ops: JSON.parse(JSON.stringify(DATA.web.operations)), artifacts: [] },
+    dash: { widgets: DATA.dash.defaults.slice(), ctas: [] },
+    ffwd: false
+  };
+  DATA.wizard.topics.forEach(function (t) {
+    S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' };
+  });
+
+  var LOG = [];
+  function logBeat(action, args) {
+    LOG.push({ t: Math.round(S.clock.t) / 1000, action: action, args: args || null });
+    if (LOG.length > 400) LOG.splice(0, LOG.length - 400);
+    emit('demo.log', LOG[LOG.length - 1]);
+  }
+
+  /* seed the usage ledger */
+  (function seedLedger() {
+    var models = [['Claude', 'Sonnet 4.6'], ['Claude', 'Opus 4.6'], ['Codex', 'GPT-5.2'], ['Cursor', 'composer-2']];
+    var events = ['worker_turn', 'auditor_review', 'plan_compile', 'chat_turn', 'subagent_turn'];
+    var lanes = ['lane-a', 'lane-b', 'lane-c', 'lane-d', '—'];
+    for (var i = 0; i < DATA.usage.ledgerSeed; i++) {
+      var m = models[i % models.length];
+      var cacheState = i % 7 === 3 ? 'estimated' : (i % 7 === 5 ? 'unsupported' : 'measured');
+      S.usage.ledger.push({
+        id: 'led-' + (100 + i), ts: '10:' + pad2(4 + i * 3), event: events[i % events.length], lane: lanes[i % lanes.length],
+        platform: m[0], model: m[1],
+        tokensIn: 800 + (i * 137) % 3200, tokensOut: 300 + (i * 91) % 1500,
+        cachedInput: cacheState === 'measured' ? 400 + (i * 53) % 900 : null,
+        cacheWrite: cacheState === 'measured' ? (i * 29) % 300 : null,
+        cacheRead: cacheState === 'measured' ? (i * 71) % 700 : null,
+        cacheState: cacheState,
+        cost: (0.004 + (i % 9) * 0.003).toFixed(3)
+      });
+    }
+  })();
+
+  /* ================= stream ================= */
+  function parseSegments(input) {
+    var s = Array.isArray(input) ? input.join('\n') : String(input == null ? '' : input);
+    var re = /\[\[(card:(?:subagent|operation):[^\]]+|files:[^\]]+)\]\]/g;
+    var segs = [], last = 0, m;
+    while ((m = re.exec(s)) !== null) {
+      if (m.index > last) segs.push({ type: 'text', text: s.slice(last, m.index) });
+      var raw = m[1];
+      if (raw.indexOf('files:') === 0) {
+        segs.push({ type: 'card', card: { type: 'files', files: raw.slice(6).split(',') } });
+      } else {
+        var bits = raw.split(':'); /* card : kind : name… */
+        segs.push({ type: 'card', card: { type: bits[1], name: bits.slice(2).join(':') } });
+      }
+      last = re.lastIndex;
+    }
+    if (last < s.length) segs.push({ type: 'text', text: s.slice(last) });
+    return segs;
+  }
+  function reducedMotion() {
+    try {
+      if (S.ffwd) return true;
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    } catch (e) { return false; }
+  }
+  function genericCardHtml(card) {
+    var label = card.type === 'files' ? ('Files touched: ' + card.files.join(', ')) :
+      (card.type === 'subagent' ? 'Subagent · ' + card.name : 'Operation · ' + card.name);
+    return '<div class="pm6-demo-card" style="margin:var(--xs) 0;padding:var(--xs) var(--sm);border:1px solid var(--border-light);border-radius:6px;background:var(--surface-elevated);font-size:11px;color:var(--text-secondary);">' + label + '</div>';
+  }
+  function streamStart(sink, textOrChunks, opts) {
+    opts = opts || {};
+    var segs = parseSegments(textOrChunks);
+    var isEl = sink && sink.nodeType === 1;
+    var isFn = typeof sink === 'function';
+    var buffer = '', cancelled = false, done = false, timer = null;
+    var si = 0, words = null, wi = 0;
+
+    function paint(html) {
+      buffer += html;
+      if (isEl) { try { sink.innerHTML = buffer; } catch (e) {} }
+      else if (isFn) { try { sink(html, { buffer: buffer }); } catch (e) {} }
+    }
+    function handleCard(card) {
+      if (opts.onCard) { try { opts.onCard(card); } catch (e) {} }
+      if (isEl) paint(genericCardHtml(card));
+    }
+    function finishAll(how) {
+      if (done) return;
+      done = true;
+      if (timer) { clearTimeout(timer); timer = null; }
+      if (how !== 'stopped') {
+        /* flush the rest instantly */
+        if (words && wi < words.length) paint(words.slice(wi).join(''));
+        for (var i2 = si + (words ? 1 : 0); i2 < segs.length; i2++) {
+          if (segs[i2].type === 'text') paint(segs[i2].text);
+          else handleCard(segs[i2].card);
+        }
+      } else if (isEl) {
+        paint(' <span style="color:var(--text-muted);font-style:italic;">— stopped</span>');
+      }
+      if (opts.onDone) { try { opts.onDone(how === 'stopped' ? 'stopped' : 'finished'); } catch (e) {} }
+    }
+    function step() {
+      if (done || cancelled) return;
+      if (si >= segs.length) { finishAll('finished'); return; }
+      var seg = segs[si];
+      if (seg.type === 'card') { handleCard(seg.card); si++; words = null; schedule(120); return; }
+      if (!words) {
+        /* split keeping whitespace attached */
+        words = seg.text.match(/\S+\s*|\s+/g) || [];
+        wi = 0;
+      }
+      if (wi >= words.length) { si++; words = null; step(); return; }
+      var take = 2 + Math.floor(Math.random() * 5); /* 2–6 words */
+      paint(words.slice(wi, wi + take).join(''));
+      wi += take;
+      schedule(30 + Math.random() * 60);
+    }
+    function schedule(ms) {
+      var speed = (S.clock.speed || 1);
+      timer = setTimeout(step, Math.max(8, ms / speed));
+    }
+    if (reducedMotion()) { setTimeout(function () { finishAll('finished'); }, 0); }
+    else schedule(20);
+    return {
+      cancel: function () { cancelled = true; finishAll('stopped'); },
+      finish: function () { finishAll('finished'); }
+    };
+  }
+
+  /* ================= guard ================= */
+  var REASONS = {
+    unsupported: 'Not supported in this build.',
+    not_configured: 'Not configured yet — open Settings to connect it first.',
+    not_signed_in: 'You are signed out — sign in from the panel header first.',
+    busy: 'Another operation is still running — let it finish first.',
+    blocked_by_gate: 'Blocked by an open approval gate — resolve it in Orchestrator, on the Dashboard, or by replying "approve and continue" in Chat.',
+    already_done: 'Already done — nothing new to apply.',
+    stale: 'This projection is stale — refresh it before mutating anything.',
+    rate_limited: 'Rate limit pressure — wait out the cooldown on the Usage page or switch the effective account.',
+    demo_scope: 'Outside the Tastebook demo script — everything in the main story is clickable though.'
+  };
+  var registry = {};
+  var actions = {
+    register: function (id, fn) { if (id && typeof fn === 'function') registry[id] = fn; },
+    get: function (id) { return registry[id]; }
+  };
+  var guard = {
+    reasons: REASONS,
+    reason: function (code) { return REASONS[code] || REASONS.demo_scope; },
+    attempt: function (actionId, ctx) {
+      var fn = registry[actionId];
+      if (!fn) return { toast: 'That control is not wired into the demo script yet — try the highlighted story actions.' };
+      try {
+        var r = fn(ctx || {});
+        return r || { ok: true };
+      } catch (e) {
+        try { console.error('[PM_DEMO action]', actionId, e); } catch (e0) {}
+        return { toast: 'That action hiccuped — try it again.' };
+      }
+    }
+  };
+
+  /* ================= director ================= */
+  var tracks = {};
+  function trackStart(id, beats) {
+    tracks[id] = { id: id, beats: beats.slice(), i: 0, elapsed: 0, holding: null, done: false };
+  }
+  function trackKill(id) { delete tracks[id]; }
+  function applyBeat(trackId, beat, silent) {
+    logBeat(beat.action, beat.args);
+    var fn = M[beat.action];
+    if (fn) { try { fn(beat.args || {}, !!silent); } catch (e) { try { console.error('[PM_DEMO beat]', beat.action, e); } catch (e0) {} } }
+  }
+  function trackTick(dtMs) {
+    Object.keys(tracks).forEach(function (id) {
+      var tr = tracks[id];
+      if (!tr || tr.done || tr.holding) return;
+      tr.elapsed += dtMs / 1000;
+      while (tr.i < tr.beats.length && tr.beats[tr.i].at <= tr.elapsed) {
+        var b = tr.beats[tr.i];
+        tr.i++;
+        applyBeat(id, b, false);
+        if (b.hold) { tr.holding = b.id || b.action; break; }
+      }
+      if (tr.i >= tr.beats.length && !tr.holding) {
+        tr.done = true;
+        if (tr.id === 'ambient') { trackStart('ambient', AMBIENT_BEATS); }
+      }
+    });
+  }
+  function trackRelease(trackId, holdId) {
+    var tr = tracks[trackId];
+    if (!tr || !tr.holding) return false;
+    if (holdId && tr.holding !== holdId) return false;
+    tr.holding = null;
+    return true;
+  }
+  var CHAPTERS = ['c1_wizard_done', 'c2_compiled', 'c3_run_complete', 'c4_pr_merged', 'c5_published'];
+  var BACKFILL = {}; /* filled after mutators are defined */
+  var director = {
+    markers: CHAPTERS.slice(),
+    start: trackStart,
+    kill: trackKill,
+    release: trackRelease,
+    ensure: function (marker) {
+      if (CHAPTERS.indexOf(marker) === -1) return;
+      S.ffwd = true;
+      try {
+        for (var i = 0; i < CHAPTERS.length; i++) {
+          var m = CHAPTERS[i];
+          if (!S.story[m] && BACKFILL[m]) { BACKFILL[m](); S.story[m] = true; }
+          if (m === marker) break;
+        }
+      } catch (e) { try { console.error('[PM_DEMO ensure]', e); } catch (e0) {} }
+      S.ffwd = false;
+      emit('demo.jump', { marker: marker });
+      emit('run.state', runSnapshot());
+      emit('wizard.state', wizardSnapshot());
+      emit('git.changed', {}); emit('docker.chain', S.docker.publishChain); emit('usage.tick', usageSnapshot());
+    }
+  };
+
+  function runSnapshot() {
+    /* coordination contract: run.state payloads expose p.state (projects/dashboard read it) */
+    return { id: S.run.id, state: S.run.stage, stage: S.run.stage, planUnits: S.run.planUnits, freshness: S.run.freshness, lanes: S.run.lanes, gates: S.run.gates, history: S.run.history };
+  }
+  function wizardSnapshot() {
+    return { stage: S.wizard.stage, topics: S.wizard.topics, pack: S.wizard.pack, approved: S.wizard.approved, hashes: S.wizard.hashes };
+  }
+  function usageSnapshot() {
+    return { quotas: S.usage.quotas, cooldown: fmtClock(S.usage.cooldownSec), cooldownSec: S.usage.cooldownSec, ledger: S.usage.ledger, anomalies: S.usage.anomalies };
+  }
+
+  /* ================= term adapter ================= */
+  var term = {
+    feed: function (sessionId, lineHtml) {
+      try { if (window.PM_TERMINAL_DEMO && PM_TERMINAL_DEMO.appendToSession) PM_TERMINAL_DEMO.appendToSession(sessionId, lineHtml); } catch (e) {}
+      emit('term.feed', { sessionId: sessionId, html: lineHtml });
+    },
+    problems: function (rows) {
+      try { if (window.PM_TERMINAL_DEMO && PM_TERMINAL_DEMO.setProblems) PM_TERMINAL_DEMO.setProblems(rows); } catch (e) {}
+      emit('term.feed', { problems: rows });
+    },
+    ports: function (rows) {
+      try { if (window.PM_TERMINAL_DEMO && PM_TERMINAL_DEMO.setPorts) PM_TERMINAL_DEMO.setPorts(rows); } catch (e) {}
+      emit('term.feed', { ports: rows });
+    },
+    streamTo: function (sessionId, lines, stepMs) {
+      if (S.ffwd || reducedMotion()) { (lines || []).forEach(function (l) { term.feed(sessionId, l); }); return; }
+      var i = 0;
+      (function next() {
+        if (i >= lines.length) return;
+        term.feed(sessionId, lines[i++]);
+        setTimeout(next, (stepMs || 260) / (S.clock.speed || 1));
+      })();
+    }
+  };
+
+  /* ================= mutators (string-keyed beat actions) ================= */
+  function setNode(id, state, extra) {
+    var n = S.run.nodes[id];
+    if (!n || n.state === state) return;
+    n.state = state;
+    if (extra) Object.keys(extra).forEach(function (k) { n[k] = extra[k]; });
+    var lane = laneOf(id);
+    if (lane) lane.done = laneDone(lane.id);
+    emit('run.node', { node: n, lane: n.lane });
+  }
+  function laneOf(nodeId) {
+    var n = S.run.nodes[nodeId];
+    if (!n) return null;
+    for (var i = 0; i < S.run.lanes.length; i++) if (S.run.lanes[i].id === n.lane) return S.run.lanes[i];
+    return null;
+  }
+  function laneDone(laneId) {
+    var c = 0;
+    Object.keys(S.run.nodes).forEach(function (k) {
+      var n = S.run.nodes[k];
+      if (n.lane === laneId && n.state === 'complete') c++;
+    });
+    return c;
+  }
+  function laneNodeIds(laneId) {
+    var spec = null;
+    DATA.run.lanes.forEach(function (l) { if (l.id === laneId) spec = l; });
+    return spec ? spec.nodeIds : [];
+  }
+  function advanceLane(laneId, silent) {
+    var ids = laneNodeIds(laneId);
+    for (var i = 0; i < ids.length; i++) {
+      var n = S.run.nodes[ids[i]];
+      if (!n) continue;
+      if (n.state === 'attention_required' || n.state === 'blocked' || n.state === 'recovering') return; /* gate/failure owns this lane */
+      if (n.state === 'running') { setNode(n.id, 'complete'); continue; }
+      if (n.state === 'queued') {
+        /* n-13 becomes the gate; n-19 becomes the failure — both handled by their own beats */
+        if (n.id === DATA.run.gate.node && !S.run.gates[DATA.run.gate.id]) return;
+        if (n.id === DATA.run.failNode && !n.degraded && n.attempts === 0 && S.run.stage === 'executing' && !silent) return;
+        setNode(n.id, 'running');
+        return;
+      }
+    }
+  }
+  function setStage(stage) {
+    if (S.run.stage === stage) return;
+    S.run.stage = stage;
+    emit('run.state', runSnapshot());
+  }
+  function pushCta(cta) {
+    if (S.dash.ctas.some(function (c) { return c.id === cta.id; })) return;
+    S.dash.ctas.push(cta);
+    emit('dash.cta', { action: 'add', cta: cta, ctas: S.dash.ctas });
+  }
+  function dropCta(id) {
+    var before = S.dash.ctas.length;
+    S.dash.ctas = S.dash.ctas.filter(function (c) { return c.id !== id; });
+    if (S.dash.ctas.length !== before) emit('dash.cta', { action: 'remove', id: id, ctas: S.dash.ctas });
+  }
+
+  var M = {
+    'run.compile.start': function (a, silent) {
+      setStage('compiling');
+      S.run.freshness = 'current';
+      if (!silent) term.streamTo('ts-sess-alpha', TEXT.term.compileStream, 700);
+      emit('run.state', runSnapshot());
+    },
+    'run.compile.progress': function (a) {
+      S.run.planUnits = a.units || S.run.planUnits;
+      emit('run.state', runSnapshot());
+    },
+    'run.compile.graph': function () {
+      S.run.planUnits = DATA.run.planUnits;
+      emit('run.state', runSnapshot());
+    },
+    'run.exec.start': function (a, silent) {
+      setStage('executing');
+      S.run.lanes.forEach(function (l) { l.state = 'running'; });
+      DATA.run.lanes.forEach(function (l) { setNode(l.nodeIds[0], 'running'); });
+      if (!silent) term.streamTo('ts-sess-alpha', TEXT.term.cargoBuild, 420);
+      emit('run.state', runSnapshot());
+    },
+    'run.exec.advance': function (a, silent) {
+      S.run.lanes.forEach(function (l) { advanceLane(l.id, silent); });
+    },
+    'run.promote': function (a) {
+      S.run.promotions.push({ cls: a.cls, ref: a.ref || null, t: Math.round(S.clock.t / 1000) });
+      emit('run.state', runSnapshot());
+      emit('run.node', { promotion: a.cls, ref: a.ref || null });
+    },
+    'run.freshness': function (a) {
+      S.run.freshness = a.v || 'current';
+      emit('run.state', runSnapshot());
+    },
+    'run.gate.open': function (a, silent) {
+      var g = DATA.run.gate;
+      if (S.run.gates[g.id] && S.run.gates[g.id].state !== 'pending') return;
+      S.run.gates[g.id] = { id: g.id, node: g.node, label: g.label, question: g.question, state: 'attention_required' };
+      setNode(g.node, 'attention_required');
+      emit('run.gate', S.run.gates[g.id]);
+      pushCta({ id: 'cta-gate', kind: 'hitl_approval', severity: 'attention_required', title: 'Approval needed: ' + g.label,
+                body: g.question, primary: 'run.approve_gate', secondary: 'run.decline_gate' });
+      chatSpawnGateThread(silent);
+      /* terminal workgroup beat: lane-b parks visibly */
+      if (!silent) { term.feed('ts-sess-alpha', warn('orch: lane-b') + dim(' — workgroup held at ' + g.node + ' · ' + g.label + ' (awaiting approval)')); say('Run #47 needs a decision — publish package: image-processing'); }
+    },
+    'run.account.switch': function (a, silent) {
+      var ev = { t: Math.round(S.clock.t / 1000), from: 'jared-dev', to: 'jared-burst', reason: 'rate_limit_pressure' };
+      S.run.accountSwitches.push(ev);
+      S.usage.ledger.push({ id: uid('led'), ts: 'now', event: 'account_switch', lane: '—', platform: 'Claude', model: '—',
+                            tokensIn: 0, tokensOut: 0, cachedInput: null, cacheWrite: null, cacheRead: null, cacheState: 'measured', cost: '0.000',
+                            note: 'switch reason: rate_limit_pressure' });
+      emit('usage.alert', { kind: 'account_switch', reason: 'rate_limit_pressure', ev: ev });
+      emit('usage.tick', usageSnapshot());
+      emit('run.state', runSnapshot());
+      if (!silent) say('Effective account switched (rate_limit_pressure) — requested account unchanged');
+    },
+    'run.node.fail': function (a, silent) {
+      var id = a.node || DATA.run.failNode;
+      setNode(id, 'recovering', { attempts: (S.run.nodes[id].attempts || 0) + 1 });
+      if (!silent) {
+        term.streamTo('ts-sess-alpha', TEXT.term.cargoTestFail, 300);
+        term.problems([
+          { sev: 'E', code: 'test', message: 'normalize_units_mixed_fraction: Quantity(11, Half) != Quantity(1.5, Cup)', file: 'src/services/import.rs:14', session: 'ts-sess-alpha' },
+          { sev: 'W', code: 'flaky', message: 'import-worker retry budget nearly exhausted on fixture bonappetit.html', file: 'src/services/import.rs:5', session: 'ts-sess-alpha' }
+        ]);
+        say('Node n-19 failed — recovering from safe point sp-47c2 (auto-retry in 4s)');
+      }
+      emit('run.node', { node: S.run.nodes[id], failed: true });
+    },
+    'run.node.retry': function (a, silent) {
+      var id = a.node || DATA.run.failNode;
+      var n = S.run.nodes[id];
+      if (!n || n.state === 'complete') return;
+      setNode(id, 'running', { attempts: (n.attempts || 0) + 1 });
+      if (!silent) term.streamTo('ts-sess-alpha', TEXT.term.cargoTestPass, 320);
+    },
+    'run.node.degraded': function (a, silent) {
+      var id = a.node || DATA.run.failNode;
+      setNode(id, 'complete', { degraded: true });
+      if (!silent) { term.problems([]); say('n-19 complete (degraded) — regression fixture added, safe point cleared'); }
+    },
+    'run.complete': function (a, silent) {
+      Object.keys(S.run.nodes).forEach(function (k) {
+        var n = S.run.nodes[k];
+        if (n.state !== 'complete') setNode(k, 'complete');
+      });
+      DATA.run.seams.forEach(function (sm) {
+        S.run.promotions.push({ cls: 'seam_complete', ref: sm.id, t: Math.round(S.clock.t / 1000) });
+      });
+      S.run.lanes.forEach(function (l) { l.state = 'complete'; l.done = l.total; });
+      setStage('complete');
+      if (!S.run.history.some(function (h) { return h.id === 'pcr-47'; })) {
+        S.run.history.unshift({ id: 'pcr-47', label: 'Run #47 — media pipeline + import hardening', state: 'complete', nodes: 40, when: 'just now' });
+      }
+      S.story.c3_run_complete = true;
+      dropCta('cta-gate');
+      emit('run.state', runSnapshot());
+      if (!silent) say('Run #47 complete — 3 seams sealed. Create PR is now unlocked in Source Control.');
+    }
+  };
+
+  /* run script — virtual seconds from bind (t0..t110) */
+  var RUN_BEATS = [
+    { at: 0,   action: 'run.compile.start' },
+    { at: 3,   action: 'run.compile.progress', args: { units: 9 } },
+    { at: 7,   action: 'run.compile.progress', args: { units: 17 } },
+    { at: 11,  action: 'run.compile.graph' },
+    { at: 15,  action: 'run.exec.start' },
+    { at: 18,  action: 'run.exec.advance' }, { at: 21, action: 'run.exec.advance' },
+    { at: 24,  action: 'run.exec.advance' }, { at: 27, action: 'run.exec.advance' },
+    { at: 28,  action: 'run.promote', args: { cls: 'lane_to_package', ref: 'lane-a → media metadata' } },
+    { at: 30,  action: 'run.exec.advance' },
+    { at: 32,  action: 'run.freshness', args: { v: 'refreshing' } },
+    { at: 34,  action: 'run.freshness', args: { v: 'current' } },
+    { at: 35,  action: 'run.exec.advance' },
+    { at: 36,  action: 'run.promote', args: { cls: 'package_to_seam_available', ref: 'seam-content' } },
+    { at: 38,  action: 'run.exec.advance' },
+    { at: 40,  action: 'run.gate.open', id: 'gate', hold: true },
+    { at: 43,  action: 'run.exec.advance' }, { at: 47, action: 'run.exec.advance' },
+    { at: 52,  action: 'run.exec.advance' }, { at: 57, action: 'run.exec.advance' },
+    { at: 62,  action: 'run.exec.advance' }, { at: 66, action: 'run.exec.advance' },
+    { at: 70,  action: 'run.account.switch' },
+    { at: 74,  action: 'run.exec.advance' }, { at: 79, action: 'run.exec.advance' },
+    { at: 85,  action: 'run.node.fail', args: { node: 'n-19' } },
+    { at: 89,  action: 'run.node.retry', args: { node: 'n-19', auto: true } },
+    { at: 92,  action: 'run.node.degraded', args: { node: 'n-19' } },
+    { at: 95,  action: 'run.exec.advance' }, { at: 99, action: 'run.exec.advance' },
+    { at: 103, action: 'run.exec.advance' }, { at: 107, action: 'run.exec.advance' },
+    { at: 110, action: 'run.complete' }
+  ];
+
+  /* ambient loop (restarts when finished) */
+  var AMBIENT_BEATS = [
+    { at: 6,  action: 'ambient.vite' },
+    { at: 14, action: 'ambient.ledger' },
+    { at: 22, action: 'ambient.docker' },
+    { at: 30, action: 'ambient.vite' },
+    { at: 38, action: 'ambient.ledger' },
+    { at: 46, action: 'ambient.docker' },
+    { at: 54, action: 'ambient.vite' }
+  ];
+  var ambientViteIdx = 0;
+  M['ambient.vite'] = function (a, silent) {
+    if (silent) return;
+    term.feed('ts-sess-gamma', TEXT.term.viteAmbient[ambientViteIdx++ % TEXT.term.viteAmbient.length]);
+  };
+  M['ambient.ledger'] = function (a, silent) {
+    var i = S.usage.ledger.length;
+    S.usage.ledger.push({ id: uid('led'), ts: 'now', event: 'chat_turn', lane: '—', platform: 'Claude', model: 'Sonnet 4.6',
+      tokensIn: 900 + (i * 113) % 2100, tokensOut: 260 + (i * 77) % 900,
+      cachedInput: 380 + (i * 41) % 600, cacheWrite: (i * 19) % 200, cacheRead: (i * 67) % 500, cacheState: 'measured',
+      cost: (0.005 + (i % 6) * 0.002).toFixed(3) });
+    if (S.usage.ledger.length > 44) S.usage.ledger.splice(0, S.usage.ledger.length - 44);
+    if (!silent) emit('usage.tick', usageSnapshot());
+  };
+  M['ambient.docker'] = function (a, silent) {
+    if (!silent) emit('docker.stats', { cpu: (3 + Math.random() * 9).toFixed(1) + '%', mem: (212 + Math.random() * 60).toFixed(0) + ' MB' });
+  };
+
+  /* wizard ambient beats: t6 audit finishing, t7 impact review resolving */
+  var WIZ_BEATS = [
+    { at: 8,  action: 'wizard.topicState', args: { id: 't7', state: 'review-impact' } },
+    { at: 12, action: 'wizard.topicState', args: { id: 't6', state: 'auditing', progress: 'audit pass 3 of 3 · all findings fixed' } },
+    { at: 14, action: 'wizard.topicState', args: { id: 't7', state: 'reopened' } },
+    { at: 17, action: 'wizard.topicState', args: { id: 't7', state: 'ledger_syncing' } },
+    { at: 20, action: 'wizard.topicState', args: { id: 't6', state: 'ready', progress: null } },
+    { at: 21, action: 'wizard.topicState', args: { id: 't7', state: 'ready', progress: null } }
+  ];
+  M['wizard.topicState'] = function (a, silent) {
+    var t = S.wizard.topics[a.id];
+    if (!t || t.state === 'ready') return;
+    t.state = a.state;
+    if ('progress' in a) t.progress = a.progress;
+    emit('wizard.topic', { topic: t });
+    if (!silent && a.state === 'ready') say('Topic ' + t.num + ' "' + t.title + '" is Ready');
+  };
+
+  /* ================= web operations (addendum_pm173) ================= */
+  function webOp(id) {
+    for (var i = 0; i < S.web.ops.length; i++) if (S.web.ops[i].id === id) return S.web.ops[i];
+    return null;
+  }
+  function webArtifactRow(op, extra) {
+    var row = {
+      id: 'art-' + op.id, type: 'api_web_call', operation: op.kind, command: op.command,
+      label: op.label, operation_input: op.operation_input, state: op.state,
+      invocation_source: op.invocation_source, agent_reason: op.agent_reason,
+      provider: op.provider, effective_adapter: op.effective_adapter, fallback_path: op.fallback_path,
+      scope: op.scope, approval: op.approval, cache: op.cache,
+      source_count: op.source_count || op.source_total || 0,
+      citations: op.citations || null, when: 'just now'
+    };
+    if (extra) Object.keys(extra).forEach(function (k) { row[k] = extra[k]; });
+    return row;
+  }
+  function pushWebArtifact(op, silent, extra) {
+    if (S.web.artifacts.some(function (a) { return a.id === 'art-' + op.id; })) return;
+    var row = webArtifactRow(op, extra);
+    S.web.artifacts.push(row);
+    logBeat('runtime_artifact.created', { id: row.id, type: row.type, operation: row.operation });
+    emit('runtime_artifact.created', { artifact: row, artifacts: S.web.artifacts });
+    if (!silent) emit('web.op', { op: op, artifact: row });
+  }
+  function ensureResearchCardMsg() {
+    var op = webOp('op-web-r1');
+    if (!op) return;
+    var th = ensureThread('th-main');
+    var has = th.messages.some(function (m) { return m.role === 'card' && m.card && m.card.op && m.card.op.id === op.id; });
+    if (!has) th.messages.push({ role: 'card', card: { type: 'web_operation', op: op } });
+  }
+  /* research run lifecycle: queued → running (read receipts) → completed w/ citations.
+     Never looks "done" while running (visible progress on every step). */
+  M['web.research.state'] = function (a, silent) {
+    var op = webOp('op-web-r1');
+    if (!op || op.state === 'completed') return;
+    op.state = a.state || op.state;
+    if ('progress' in a) op.progress = a.progress;
+    if (typeof a.read === 'number') op.sources_read = a.read;
+    if (op.state === 'completed') {
+      op.progress = null;
+      op.sources_read = op.source_total;
+    }
+    ensureResearchCardMsg();
+    emit('web.op', { op: op });
+    emit('chat.card', { threadId: 'th-main', card: { type: 'web_operation', op: op } });
+    if (op.state === 'completed') {
+      pushWebArtifact(op, silent);
+      if (!silent) say('Research run complete — ' + op.citations.length + ' citations from ' + op.source_total + ' read sources');
+    }
+  };
+  var WEB_BEATS = [
+    { at: 5,  action: 'web.research.state', args: { state: 'running', progress: 'selecting sources (6 candidates)' } },
+    { at: 9,  action: 'web.research.state', args: { state: 'running', progress: 'reading source 1/6', read: 1 } },
+    { at: 14, action: 'web.research.state', args: { state: 'running', progress: 'reading source 2/6', read: 2 } },
+    { at: 19, action: 'web.research.state', args: { state: 'running', progress: 'reading source 4/6', read: 4 } },
+    { at: 24, action: 'web.research.state', args: { state: 'running', progress: 'reading source 6/6', read: 6 } },
+    { at: 28, action: 'web.research.state', args: { state: 'running', progress: 'synthesizing findings (PM-composed path)' } },
+    { at: 32, action: 'web.research.state', args: { state: 'completed' } }
+  ];
+
+  /* ---- generic web-operation runner (PM_DEMO.web.start) --------------------
+     All six operations (websearch / webfetch / webextract / webresearch /
+     webcrawl / webmap) run as scripted jobs on the virtual clock:
+     queued -> awaiting_approval (when the scope requires it) -> running with
+     progress beats -> completed | canceled (partial results) | failed(reason).
+     Provider-fallback events mid-run, chat.card updates on every change,
+     runtime_artifact.created on completion/cancel, one usage ledger row per
+     finished run. invocation_source per card: user_slash | suggestion_chip |
+     agent. Canonical field naming: operation_input (operation_input_preview is
+     display-only). */
+  var WEBRUN_SPECS = {
+    websearch:   { label: 'Searching Web: ',   command: 'cmd.chat.web.search',   field: 'query',    icon: 'search',
+                   provider: 'Firecrawl (primary)', adapter: 'Firecrawl', scope: '*', approvalNeeded: false,
+                   cache: 'miss', cost_note: 'included in plan' },
+    webfetch:    { label: 'Reading Site: ',    command: 'cmd.chat.web.fetch',    field: 'url',      icon: 'globe',
+                   provider: 'Site Reader (primary)', adapter: 'Site Reader', scope: 'host', approvalNeeded: false,
+                   cache: 'hit · page cache', cost_note: 'included in plan' },
+    webextract:  { label: 'Extracting Site: ', command: 'cmd.chat.web.extract',  field: 'url',      icon: 'layers',
+                   provider: 'Site Reader (primary)', adapter: 'Site Reader', scope: 'host', approvalNeeded: false,
+                   cache: 'cold', cost_note: '~2 credits est.' },
+    webresearch: { label: 'Researching Web: ', command: 'cmd.chat.web.research', field: 'task',     icon: 'telescope',
+                   provider: 'PM-composed', adapter: 'Site Reader', scope: '*', approvalNeeded: false,
+                   cache: 'cold', cost_note: 'included in plan' },
+    webcrawl:    { label: 'Crawling Site: ',   command: 'cmd.chat.web.crawl',    field: 'url',      icon: 'layers',
+                   provider: 'Firecrawl (primary)', adapter: 'Firecrawl', scope: 'origin', approvalNeeded: true,
+                   cache: 'reuse fresh pages (24h TTL)', cost_note: '~13 credits est.', caps: 'max 25 pages · depth 3' },
+    webmap:      { label: 'Mapping Site: ',    command: 'cmd.chat.web.map',      field: 'root_url', icon: 'branch',
+                   provider: 'Firecrawl (primary)', adapter: 'Firecrawl', scope: 'root', approvalNeeded: false,
+                   cache: 'cold', cost_note: '~1 credit est.' }
+  };
+  var WEBRUN_BEATS = {
+    websearch: function () { return [
+      [0.4, { state: 'running', progress: 'querying the search adapter', pct: 30 }],
+      [1.5, { progress: 'ranking 4 sources', pct: 75 }],
+      [2.4, { state: 'completed' }]
+    ]; },
+    webfetch: function () { return [
+      [0.4, { state: 'running', progress: 'fetching page (Site Reader)', pct: 40 }],
+      [1.4, { progress: 'reader view extracted · read receipt recorded', pct: 85 }],
+      [2.2, { state: 'completed' }]
+    ]; },
+    webextract: function () { return [
+      [0.5, { state: 'running', progress: 'fetching page (Site Reader)', pct: 28 }],
+      [1.6, { progress: 'parsing schema.org Recipe JSON-LD', pct: 62 }],
+      [2.8, { progress: 'validating 14 extracted fields', pct: 88 }],
+      [3.6, { state: 'completed' }]
+    ]; },
+    webresearch: function () { return [
+      [0.5, { state: 'running', progress: 'selecting sources (4 candidates)', read: 0 }],
+      [1.8, { progress: 'reading source 1/4', read: 1 }],
+      [3.2, { progress: 'reading source 2/4', read: 2 }],
+      [4.6, { progress: 'reading source 3/4', read: 3 }],
+      [5.8, { progress: 'reading source 4/4', read: 4 }],
+      [7.0, { progress: 'synthesizing findings (PM-composed path)' }],
+      [8.0, { state: 'completed' }]
+    ]; },
+    webcrawl: function () { return [
+      [0.4, { state: 'running', progress: 'robots.txt honored · sitemap found', pages: 0 }],
+      [1.2, { pages: 4 }],
+      [2.2, { pages: 9 }],
+      [3.4, { pages: 14 }],
+      [4.6, { pages: 18 }],
+      [5.8, { pages: 22 }],
+      [7.0, { pages: 25, progress: 'indexing 25 pages as sources' }],
+      [8.0, { state: 'completed' }]
+    ]; },
+    webmap: function () { return [
+      [0.5, { state: 'running', progress: 'sitemap found; traversing links…', pct: 25 }],
+      [2.0, { progress: '32 links seen · deduping routes', pct: 45 }],
+      [3.2, { fallback: true, progress: 'provider fallback — resuming with Site Reader', pct: 55 }],
+      [4.8, { progress: 'assembling route tree (12 routes)', pct: 80 }],
+      [6.2, { state: 'completed' }]
+    ]; }
+  };
+  var WEBRUN_SEQ = 0;
+  function webHostOf(input) {
+    return String(input || '').replace(/^https?:\/\//, '').split('/')[0] || 'example.com';
+  }
+  function webRunEmit(op, change) {
+    emit('web.run', { op: op, change: change });
+    emit('web.op', { op: op });
+    emit('chat.card', { threadId: 'th-main', card: { type: 'web_operation', op: op } });
+  }
+  function webRunResults(op) {
+    /* authored completion payloads — previews only; full payloads lazy-load
+       from the Runtime Artifact, never dumped into the transcript */
+    var host = webHostOf(op.operation_input_preview);
+    if (op.kind === 'websearch') {
+      op.source_count = 4;
+      op.result_note = '4 sources · 3 read';
+      op.sources = [
+        { title: 'Best match — ' + op.operation_input_preview, url: host, source_confidence: 'high', read: true },
+        { title: 'Reference documentation', url: 'developer docs', source_confidence: 'high', read: true },
+        { title: 'Community answer thread', url: 'forum', source_confidence: 'medium', read: true },
+        { title: 'Blog roundup', url: 'blog', source_confidence: 'low', read: false }
+      ];
+    } else if (op.kind === 'webfetch') {
+      op.result_note = '1 page · reader view · read receipt recorded';
+    } else if (op.kind === 'webextract') {
+      op.result_note = '14 fields extracted · 3 previewed · full payload in the artifact';
+      op.preview = [
+        ['name', 'Pad Thai with Tamarind Sauce'],
+        ['prep_time', 'PT25M · 25 minutes'],
+        ['rating', '4.7 (218 ratings)']
+      ];
+    } else if (op.kind === 'webresearch') {
+      op.result_note = 'read 4/4 sources · synthesized (PM-composed path)';
+      op.citations = [
+        { n: 1, title: 'Primary source — read in full', url: host, source_confidence: 'high' },
+        { n: 2, title: 'Standards reference', url: 'spec', source_confidence: 'high' },
+        { n: 3, title: 'Practitioner writeup', url: 'engineering blog', source_confidence: 'medium' }
+      ];
+    } else if (op.kind === 'webcrawl') {
+      op.result_note = '25 pages · 25 sources';
+      op.sources = [
+        { title: host + '/ — docs home', url: host, source_confidence: 'high', read: true },
+        { title: '/getting-started', url: host, source_confidence: 'high', read: true },
+        { title: '/api/recipes', url: host, source_confidence: 'high', read: true },
+        { title: '/api/media', url: host, source_confidence: 'medium', read: true },
+        { title: '/self-hosting', url: host, source_confidence: 'medium', read: true },
+        { title: '/changelog', url: host, source_confidence: 'medium', read: true }
+      ];
+    } else if (op.kind === 'webmap') {
+      op.routes = [
+        [0, host + '/'],
+        [1, '/recipes'], [2, '/recipes/[slug]'], [2, '/recipes/new'],
+        [1, '/collections'], [2, '/collections/[id]'],
+        [1, '/search'], [1, '/import'],
+        [1, '/account'], [2, '/account/settings'],
+        [1, '/about'], [1, '/rss.xml']
+      ];
+      op.result_note = '12 routes · sitemap + link traversal';
+    }
+  }
+  function webLedgerRow(op, partial) {
+    var i = S.usage.ledger.length;
+    S.usage.ledger.push({
+      id: uid('led'), ts: 'now', event: 'web_operation', lane: '—',
+      platform: 'PM Web', model: op.effective_adapter || 'Site Reader',
+      tokensIn: 240 + (i * 61) % 900, tokensOut: 90 + (i * 37) % 380,
+      cachedInput: null, cacheWrite: null, cacheRead: null, cacheState: 'estimated',
+      cost: partial ? '0.002' : '0.006',
+      note: op.kind + (partial ? ' · canceled (partial)' : ' · completed')
+    });
+    if (S.usage.ledger.length > 44) S.usage.ledger.splice(0, S.usage.ledger.length - 44);
+    emit('usage.tick', usageSnapshot());
+  }
+  function webRunComplete(op, silent) {
+    if (op._done) return;
+    op._done = true; op._live = false;
+    op.state = 'completed';
+    op.progress = null; op.progress_pct = 100;
+    if (op.kind === 'webcrawl') { op.pages_done = op.pages_total || 25; op.source_count = 25; }
+    if (op.kind === 'webresearch') op.sources_read = op.source_total || 4;
+    trackKill('webrun-' + op.id);
+    pushWebArtifact(op, silent, op.kind === 'webcrawl' ? { pages: op.pages_done } : null);
+    webLedgerRow(op, false);
+    webRunEmit(op, 'completed');
+    if (!silent) say('Web operation completed — ' + (op.result_note || op.label));
+  }
+  function webRunFail(op, reason, silent) {
+    if (op._done) return;
+    op._done = true; op._live = false;
+    op.state = 'failed';
+    op.fail_reason = reason || 'provider_error';
+    op.progress = null;
+    trackKill('webrun-' + op.id);
+    webRunEmit(op, 'failed');
+    if (!silent) say('Web operation failed (' + op.fail_reason + ') — nothing was written.');
+  }
+  M['web.run.step'] = function (a, silent) {
+    var op = webOp(a.id);
+    if (!op || op._done) return;
+    var st = a.step || {};
+    if (st.fallback && !op.degraded) {
+      op.degraded = true;
+      op.effective_adapter = 'Site Reader';
+      op.fallback_path = 'Firecrawl → Site Reader (fallback: rate_limited)';
+      logBeat('web.provider_fallback', { id: op.id, reason: 'rate_limited' });
+      if (!silent) say('Provider fallback mid-run: Firecrawl rate_limited — Site Reader took over (degraded)');
+    }
+    if (typeof st.pages === 'number') {
+      op.pages_done = st.pages;
+      op.progress = st.pages + '/' + (op.pages_total || 25) + ' pages crawled';
+      op.progress_pct = Math.round((st.pages / (op.pages_total || 25)) * 100);
+    }
+    if (typeof st.read === 'number') {
+      op.sources_read = st.read;
+      op.progress_pct = Math.round((st.read / (op.source_total || 4)) * 100);
+    }
+    if (st.progress) op.progress = st.progress;
+    if (typeof st.pct === 'number') op.progress_pct = st.pct;
+    if (st.state === 'running') op.state = 'running';
+    if (st.state === 'failed') { webRunFail(op, st.reason, silent); return; }
+    if (st.state === 'completed') { webRunComplete(op, silent); return; }
+    webRunEmit(op, 'progress');
+  };
+  function webRunGo(op) {
+    op.state = 'running';
+    if (op.approval === 'pending') op.approval = 'granted';
+    var beats = (WEBRUN_BEATS[op.kind] || WEBRUN_BEATS.websearch)(op);
+    if (S.ffwd || reducedMotion()) {
+      /* reduced motion / fast-forward: land on the completion state instantly */
+      beats.forEach(function (b) { M['web.run.step']({ id: op.id, step: b[1] }, true); });
+      if (!op._done) webRunComplete(op, true);
+      return;
+    }
+    webRunEmit(op, 'running');
+    trackStart('webrun-' + op.id, beats.map(function (b) {
+      return { at: b[0], action: 'web.run.step', args: { id: op.id, step: b[1] } };
+    }));
+  }
+  function webStart(kind, input, opts) {
+    var spec = WEBRUN_SPECS[kind];
+    if (!spec) return { toast: 'Unknown web operation — use search, fetch, extract, research, crawl or map.' };
+    input = String(input == null ? '' : input).trim();
+    if (!input) return { toast: 'Give /web ' + String(kind).replace('web', '') + ' something to work on — a URL, query or task.' };
+    var dupe = null;
+    S.web.ops.forEach(function (o) { if (o._live && o.kind === kind && o.operation_input_preview === input) dupe = o; });
+    if (dupe) return { disabled: true, reason: 'busy' };
+    opts = opts || {};
+    var source = opts.source === 'suggestion_chip' || opts.source === 'agent' ? opts.source : 'user_slash';
+    var host = webHostOf(input);
+    var scope = spec.scope === '*' ? '*'
+      : spec.scope === 'host' ? 'https://' + host + '/*'
+      : spec.scope === 'origin' ? 'https://' + host + '/* — visible origin/root'
+      : 'https://' + host + '/ — visible root';
+    var op = {
+      id: 'op-webrun-' + (++WEBRUN_SEQ),
+      kind: kind, command: spec.command, label: spec.label + input,
+      operation_input: {}, operation_input_preview: input, field: spec.field,
+      state: 'queued', progress: null, progress_pct: 0,
+      invocation_source: source,
+      agent_reason: source === 'agent' ? 'Agent ran ' + kind + ' because the goal needed fresh site evidence.' : null,
+      provider: spec.provider, effective_adapter: spec.adapter, fallback_path: null, degraded: false,
+      scope: scope, approval: spec.approvalNeeded ? 'pending' : 'granted',
+      cache: spec.cache, cost_note: spec.cost_note, caps: spec.caps || null,
+      pages_total: kind === 'webcrawl' ? 25 : null, pages_done: 0,
+      source_total: kind === 'webresearch' ? 4 : null, sources_read: 0,
+      ts: new Date().toTimeString().slice(0, 5),
+      runner: true, _live: true, _done: false
+    };
+    op.operation_input[spec.field] = input;
+    webRunResults(op);
+    S.web.ops.push(op);
+    logBeat('web.op.start', { id: op.id, kind: kind, invocation_source: source });
+    if (spec.approvalNeeded) {
+      op.state = 'awaiting_approval';
+      webRunEmit(op, 'created');
+      if (!S.ffwd) say('Approval needed — ' + kind + ' scope ' + scope.split(' ')[0] + ' · ' + (op.caps || 'default caps'));
+      return { ok: true, id: op.id, awaiting_approval: true };
+    }
+    webRunEmit(op, 'created');
+    webRunGo(op);
+    return { ok: true, id: op.id };
+  }
+  function webApprove(id) {
+    var op = webOp(id);
+    if (!op) return { toast: 'No web operation with that id in the demo.' };
+    if (op.state !== 'awaiting_approval') return { disabled: true, reason: 'already_done' };
+    op.approval = 'granted';
+    logBeat('web.op.approve', { id: op.id, scope: op.scope });
+    say('Approved for ' + op.scope.split(' ')[0] + ' — caps stay at ' + (op.caps || 'defaults'));
+    webRunGo(op);
+    return { ok: true };
+  }
+  function webDecline(id) {
+    var op = webOp(id);
+    if (!op) return { toast: 'No web operation with that id in the demo.' };
+    if (op.state !== 'awaiting_approval') return { disabled: true, reason: 'already_done' };
+    op.state = 'denied'; op._live = false; op._done = true;
+    op.approval = 'denied';
+    op.blocked_reason_code = 'permission_denied';
+    op.allowed_action_ids = ['request_again', 'open_permissions'];
+    logBeat('web.op.decline', { id: op.id, blocked_reason_code: 'permission_denied' });
+    webRunEmit(op, 'denied');
+    say('Denied — recorded with blocked_reason_code permission_denied. Nothing was crawled.');
+    return { ok: true };
+  }
+  function webCancel(id) {
+    var op = webOp(id);
+    if (!op) return { toast: 'No web operation with that id in the demo.' };
+    if (op._done || op.state === 'completed' || op.state === 'canceled' || op.state === 'denied' || op.state === 'failed') {
+      return { disabled: true, reason: 'already_done' };
+    }
+    if (op.state !== 'running') return { toast: 'Nothing to cancel yet — the run has not started.' };
+    trackKill('webrun-' + op.id);
+    op.state = 'canceled'; op._live = false; op._done = true;
+    op.partial = true;
+    var n = op.kind === 'webcrawl' ? (op.pages_done || 0) : (op.sources_read || 0);
+    op.result_note = op.kind === 'webcrawl'
+      ? 'Canceled — partial results available (' + n + ' pages)'
+      : 'Canceled — partial evidence kept (' + n + ' sources read)';
+    op.progress = null;
+    logBeat('web.op.cancel', { id: op.id, partial: n });
+    pushWebArtifact(op, false, { partial: true, pages: op.kind === 'webcrawl' ? n : undefined });
+    webLedgerRow(op, true);
+    webRunEmit(op, 'canceled');
+    say('Canceled — partial results stay available from the Runtime Artifact.');
+    return { ok: true };
+  }
+  function webRequestAgain(id) {
+    var op = webOp(id);
+    if (!op) return { toast: 'No web operation with that id in the demo.' };
+    if (op.state !== 'denied') return { disabled: true, reason: 'already_done' };
+    op.state = 'awaiting_approval'; op.approval = 'pending';
+    op._done = false; op._live = true;
+    delete op.blocked_reason_code;
+    logBeat('web.op.request_again', { id: op.id });
+    webRunEmit(op, 'created');
+    say('Approval re-raised — same scope, same caps.');
+    return { ok: true };
+  }
+
+  /* ================= chapter backfills (silent fast-forward) ================= */
+  function backfillWizard() {
+    Object.keys(S.wizard.topics).forEach(function (k) {
+      var t = S.wizard.topics[k];
+      t.state = 'ready'; t.progress = null; t.accepted = true;
+      t.questions.forEach(function (q) { if (!q.answer) q.answer = q.chips[1] || q.chips[0]; });
+    });
+    if (!S.wizard.pack) S.wizard.pack = { planUnits: DATA.run.planUnits, findingsRepaired: 2, hashes: S.wizard.hashes };
+    S.wizard.stage = 'approved';
+    S.wizard.approved = true;
+    S.run.id = 'pcr-47';
+    S.run.focusedRunId = 'pcr-47';
+    trackKill('run');
+  }
+  BACKFILL.c1_wizard_done = function () {
+    backfillWizard();
+    S.run.stage = 'pending-launch';
+  };
+  BACKFILL.c2_compiled = function () {
+    backfillWizard();
+    M['run.compile.start']({}, true);
+    M['run.compile.graph']({}, true);
+    M['run.exec.start']({}, true);
+    /* arm the live track mid-flight so the story keeps moving after a jump */
+    trackStart('run', RUN_BEATS);
+    tracks.run.elapsed = 15.5;
+    tracks.run.i = RUN_BEATS.findIndex(function (b) { return b.at > 15.5; });
+  };
+  BACKFILL.c3_run_complete = function () {
+    backfillWizard();
+    trackKill('run');
+    M['run.compile.start']({}, true);
+    M['run.compile.graph']({}, true);
+    M['run.exec.start']({}, true);
+    M['run.gate.open']({}, true);
+    S.run.gates[DATA.run.gate.id].state = 'approved';
+    M['run.promote']({ cls: 'lane_to_package', ref: 'lane-a → media metadata' }, true);
+    M['run.promote']({ cls: 'package_to_seam_available', ref: 'seam-content' }, true);
+    M['run.account.switch']({}, true);
+    var fn = S.run.nodes[DATA.run.failNode]; if (fn) { fn.attempts = 2; fn.degraded = true; }
+    M['run.complete']({}, true);
+  };
+  BACKFILL.c4_pr_merged = function () {
+    S.git.pr = { id: 'pr-88', branch: 'orch/lane-d-infra', title: 'Tastebook v1.2 — image processing + import hardening',
+      state: 'merged', checks: [{ id: 'build', state: 'success' }, { id: 'test', state: 'success' }, { id: 'lint', state: 'success' }] };
+    S.git.staged = []; S.git.unstaged = [];
+    S.git.runs.forEach(function (r) { r.status = 'success'; delete r.failedStep; });
+    emit('git.pr', S.git.pr);
+  };
+  BACKFILL.c5_published = function () {
+    var pc = S.docker.publishChain;
+    pc.built = true; pc.digest = 'sha256:9c1f4e2ab7d05561f0'; pc.pushedImage = true; pc.template = 'pushed'; pc.pushedTemplate = true;
+    S.docker.compose.up = true;
+    DATA.docker.composeServices.forEach(function (svc) { S.docker.compose.services[svc] = 'running'; });
+    S.docker.containers.forEach(function (c) { if (c.state !== 'running') { c.state = 'running'; c.health = 'healthy'; } });
+    emit('docker.chain', pc);
+    emit('docker.container', { all: S.docker.containers });
+  };
+
+  /* sibling-split tag-balance neutralizer: check_structure counts raw text in an
+     unclosed sibling, so the pre-highlighted markup strings above are re-balanced
+     here inside a comment (assembled output strips the whole script body):
+     </span></span></span></span></span></span></span>
+  */
+

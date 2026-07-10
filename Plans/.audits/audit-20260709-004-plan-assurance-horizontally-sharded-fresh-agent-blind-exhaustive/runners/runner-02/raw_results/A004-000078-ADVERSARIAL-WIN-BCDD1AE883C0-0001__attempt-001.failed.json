@@ -1,0 +1,743 @@
+{
+  "assignment_id": "A004-000078-ADVERSARIAL-WIN-BCDD1AE883C0-0001",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-02",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-BCDD1AE883C0-0001",
+  "doc_id": "DOC-BCDD1AE883C0",
+  "document_path": "Plans/Containers_Registry_and_Unraid.md",
+  "core_range": [
+    1,
+    206
+  ],
+  "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000078-ADVERSARIAL-WIN-BCDD1AE883C0-0001.json",
+  "capsule_sha256": "03903ac931b6a20fa0d345137bbaf501e08ade0501953d20e107954fc044ac67",
+  "capsule_bytes": 1616,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BCDD1AE883C0-0001.txt",
+  "source_excerpt_sha256": "385bdc7bdc0e507477e9afaa830f1a554eb2a4254fbb84fe17abd3679e3ec293",
+  "source_excerpt_bytes": 39542,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "observations": [
+    {
+      "observation_id": "OBS-0001",
+      "statement": "The capsule claims canonical ownership over DockerHub authentication, repository behavior, protected creation, Docker Manager behavior, Unraid generation, and ca_profile.xml handling.",
+      "evidence_ids": [
+        "E001"
+      ]
+    },
+    {
+      "observation_id": "OBS-0002",
+      "statement": "The surface spans Docker container, image, Compose, registry, build, publish, and Kubernetes operations, while also presenting Podman as an alternate runtime.",
+      "evidence_ids": [
+        "E006",
+        "E007",
+        "E011",
+        "E019"
+      ]
+    },
+    {
+      "observation_id": "OBS-0003",
+      "statement": "The capsule requires persistent panel, receipt, repo/root, and project state, but describes that state at several different scoping levels.",
+      "evidence_ids": [
+        "E009",
+        "E021",
+        "E026",
+        "E031"
+      ]
+    },
+    {
+      "observation_id": "OBS-0004",
+      "statement": "Remote mutation and governance are intended to use shared approval, confirmation, partial-result, and policy-snapshot contracts.",
+      "evidence_ids": [
+        "E022",
+        "E023",
+        "E024",
+        "E025"
+      ]
+    },
+    {
+      "observation_id": "OBS-0005",
+      "statement": "The context explicitly models identity drift, indeterminate remote outcomes, reconciliation, capability-level degradation, and a bounded automatic retry.",
+      "evidence_ids": [
+        "E033",
+        "E034",
+        "E035"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-0001",
+      "title": "DockerHub authentication lacks a complete secret and session lifecycle",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, authority, failure/recovery",
+      "claim": "The bounded capsule provides browser-login, PAT entry, validation, status, and clear controls, but does not select a credential-storage authority or define PAT scope validation, masking, expiry, rotation, remote revocation, browser/device-flow polling and cancellation, account binding, or the difference between clearing a local credential and revoking it remotely.",
+      "why_it_matters": "Implementations could leak tokens, retain invalid capability, publish through the wrong account, or tell the user credentials were removed when only a local reference was deleted.",
+      "evidence_ids": [
+        "E002",
+        "E003"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0002",
+      "title": "The canonical Unraid output contract remains non-deterministic",
+      "severity": "high",
+      "negative_space_dimension": "states, transitions, propagation, failure/recovery, test oracles",
+      "claim": "Although the capsule claims canonical ownership of Unraid generation and enables automatic generation after publish, it does not define the XML schema/version, source-to-field mapping, tag-versus-digest rule, output location, deterministic serialization, validation, atomic update behavior, idempotency, conflict handling, or the state transition when image publish succeeds but XML generation, commit, or template-repository push fails.",
+      "why_it_matters": "Independent implementations can generate incompatible templates and cannot safely recover or explain partial publish chains.",
+      "evidence_ids": [
+        "E001",
+        "E004",
+        "E015"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0003",
+      "title": "ca_profile.xml has no field schema or shared-versus-project precedence",
+      "severity": "high",
+      "negative_space_dimension": "authority, states, compatibility, test oracles",
+      "claim": "The capsule promises a full edit form and shared or per-project scope but does not enumerate fields, types, requiredness, defaults, validation rules, canonical file location, override merge semantics, inheritance display, migration, or conflict behavior.",
+      "why_it_matters": "The phrase all fields is not an implementable schema, and different clients could serialize incompatible profiles or silently select different values.",
+      "evidence_ids": [
+        "E001",
+        "E005"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0004",
+      "title": "External profile-image URLs lack a retrieval security boundary",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, failure/recovery",
+      "claim": "The external-URL image option has no allowed-scheme, redirect, private-address, DNS-rebinding, MIME, size, decompression, caching, timeout, or content-validation contract.",
+      "why_it_matters": "A profile image fetcher could become an SSRF primitive, disclose network reachability, consume unbounded resources, or persist hostile content.",
+      "evidence_ids": [
+        "E005"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0005",
+      "title": "Compose scenario persistence can conflict with the no-secrets requirement",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, storage, propagation",
+      "claim": "Compose scenarios include env-file combinations and are stored in project state, but the capsule does not constrain serialization to safe references, prohibit capture of environment values, redact secret-bearing paths or command output, or define behavior when referenced env files move or become unreadable.",
+      "why_it_matters": "Scenario persistence, receipts, or repair UI could copy credentials into project state despite the stated secret-exclusion goal.",
+      "evidence_ids": [
+        "E002",
+        "E013"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0006",
+      "title": "Podman is promised without a runtime capability and translation matrix",
+      "severity": "high",
+      "negative_space_dimension": "compatibility, authority, misleading GUI truth",
+      "claim": "Podman is declared an alternate runtime, while command families, settings, Buildx/Bake language, registry behavior, and state names remain Docker-centered. The capsule does not define command translation, rootless behavior, socket/context discovery, Compose compatibility, unsupported capabilities, or Docker-versus-Podman asset identity.",
+      "why_it_matters": "The UI can expose apparently available Docker actions that are unsupported or semantically different under Podman.",
+      "evidence_ids": [
+        "E006",
+        "E011"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0007",
+      "title": "Long-running operations have no common interaction lifecycle",
+      "severity": "medium",
+      "negative_space_dimension": "states, transitions, operations, scale, failure/recovery",
+      "claim": "The capsule exposes broad build, pull, push, Compose, registry, log, Helm, apply, rollout, and watch operations, but outside the narrow port-forward and rollout-session note it does not define a shared queued/running/cancelling/cancelled/timed-out/disconnected state machine, progress and log backpressure, detach/reconnect behavior, concurrency conflicts, or safe resume.",
+      "why_it_matters": "Callers and panels can disagree about whether an operation is active, cancellable, retryable, or safe to run concurrently.",
+      "evidence_ids": [
+        "E007",
+        "E011",
+        "E019",
+        "E020"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0008",
+      "title": "Shell, attach, and Kubernetes exec lack an explicit privilege contract",
+      "severity": "high",
+      "negative_space_dimension": "authority, security/privacy, operations",
+      "claim": "Container shell/attach and Kubernetes exec are exposed, but the capsule does not map them to an exact confirmation or approval class, select container/user/TTY/privilege context, constrain command construction, redact terminal input and output, or state how these side-effect-capable sessions are represented in receipts.",
+      "why_it_matters": "An apparently observational action can mutate a container or cluster workload, expose secrets, or execute with unintended privileges.",
+      "evidence_ids": [
+        "E016",
+        "E019",
+        "E022",
+        "E023"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0009",
+      "title": "Cleanup dry-runs have a time-of-check/time-of-use deletion race",
+      "severity": "high",
+      "negative_space_dimension": "transitions, operations, failure/recovery",
+      "claim": "The cleanup advisor starts from dry-run analysis and a reference graph, but the capsule does not require a versioned scan token, expiry, final reference-graph refresh, or atomic pre-delete revalidation immediately before prune or remove.",
+      "why_it_matters": "A container, image, volume, or network can become owned by a new run after analysis and still be deleted from a stale recommendation.",
+      "evidence_ids": [
+        "E018",
+        "E022"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0010",
+      "title": "Cached last-known assets are not partitioned or purged by effective identity",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, authority, misleading GUI truth",
+      "claim": "The capsule requires cached last-known rendering and identity-drift revalidation before mutation, but does not state that cached registry, container, image, or cluster data is keyed by effective principal, runtime context, repo/root, and account, or purged on credential clear and account switch.",
+      "why_it_matters": "Read-only stale rendering can disclose another account's private assets or present them as belonging to the current identity even if mutation is later blocked.",
+      "evidence_ids": [
+        "E010",
+        "E026",
+        "E031",
+        "E033"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0011",
+      "title": "Serialized deep links lack integrity, expiry, and authorization re-resolution",
+      "severity": "medium",
+      "negative_space_dimension": "security/privacy, authority, compatibility",
+      "claim": "The narrowed-transport rule limits fields but does not define signing or tamper detection, expiry, audience, single-use behavior, disclosure-safe serialization, or mandatory authorization and existence rechecks when a URL or resume_url is opened.",
+      "why_it_matters": "Copied, stale, or modified links can disclose sensitive target metadata or reopen a target under a different user, project, repo, or policy context.",
+      "evidence_ids": [
+        "E028"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0012",
+      "title": "Cluster-wide Kubernetes mode lacks privacy and scale bounds",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, scale, authority, operations",
+      "claim": "The cluster-wide toggle defaults off, but the capsule does not define who may enable it, allowed resource kinds and namespaces, Secret and ConfigMap field redaction, log redaction, pagination, watch ceilings, refresh throttling, cancellation, or behavior for clusters whose inventory cannot be loaded safely.",
+      "why_it_matters": "Enabling the mode can expose cluster-sensitive metadata, overload the client or API server, and blur project-scoped authorization.",
+      "evidence_ids": [
+        "E019",
+        "E024"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0013",
+      "title": "Receipt and policy-snapshot governance is incomplete",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, authority, operations, test oracles",
+      "claim": "Receipts contain actor, target, approval, result, and source-event data and have user-configurable retention, while policy snapshots are durable. The capsule does not define access control, secret and PII redaction, immutable or tamper-evident storage, minimum audit retention, maximum privacy retention, secure deletion, or referential behavior when source events expire.",
+      "why_it_matters": "Audit evidence can leak sensitive operational data, be erased too early to explain a side effect, or survive longer than the user's privacy policy permits.",
+      "evidence_ids": [
+        "E002",
+        "E021",
+        "E025"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0014",
+      "title": "Indeterminate remote outcomes lack an idempotent retry barrier",
+      "severity": "high",
+      "negative_space_dimension": "failure/recovery, transitions, remote side effects",
+      "claim": "The capsule classifies transport-lost outcomes and permits a bounded automatic retry, but does not require idempotency keys, read-before-retry reconciliation, deduplication, or a prohibition on retrying repository creation, push, promotion, Helm install, or other non-idempotent actions until remote state is resolved.",
+      "why_it_matters": "A lost acknowledgement can cause duplicate or conflicting remote mutations and misleading receipts.",
+      "evidence_ids": [
+        "E022",
+        "E034",
+        "E035"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0015",
+      "title": "Tag-template expansion has no canonical grammar or collision behavior",
+      "severity": "medium",
+      "negative_space_dimension": "compatibility, states, failure/recovery",
+      "claim": "Tag templates and promotion defaults are named, but the capsule does not define escaping, unresolved variables, character and length validation, timestamp timezone and precision, collision handling, deterministic evaluation, protected-tag interaction, or whether an invalid generated tag blocks before any remote side effect.",
+      "why_it_matters": "Different callers can publish different tags from the same configuration or overwrite an unintended release.",
+      "evidence_ids": [
+        "E014",
+        "E036"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0016",
+      "title": "The canonical project-state shape duplicates capability field names",
+      "severity": "high",
+      "negative_space_dimension": "state schema, compatibility, propagation",
+      "claim": "The project-state list includes both array-suffixed and unsuffixed forms of effective build, Compose, registry, and Kubernetes capabilities without declaring aliases, distinct types, precedence, or migration rules.",
+      "why_it_matters": "Writers and readers can persist divergent values or choose incompatible schemas for the same canonical key.",
+      "evidence_ids": [
+        "E031"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0017",
+      "title": "Per-project and repo-bound state requirements do not share an exact key model",
+      "severity": "high",
+      "negative_space_dimension": "states, authority, propagation, compatibility",
+      "claim": "Panel state is first called per-project, later required to be repo/root-bound, while the canonical key contains only project_id. The capsule does not specify whether repo/root state is nested, separately keyed, versioned, or migrated.",
+      "why_it_matters": "Multi-repo projects can overwrite selections, reopen the wrong asset, or silently apply a publish or cleanup action to another repo.",
+      "evidence_ids": [
+        "E009",
+        "E026",
+        "E031"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0018",
+      "title": "Core build and scenario ownership still uses tier-era terminology",
+      "severity": "high",
+      "negative_space_dimension": "authority, compatibility, propagation",
+      "claim": "The core links build artifacts to run/tier and says preview and test tiers record Compose scenarios, while the supplied context declares tier_id coordination state migration lineage only and makes package/seam/lane state authoritative. No normalization or migration mapping is given for these writers and readers.",
+      "why_it_matters": "Implementers may revive tier ownership, emit state that package/lane consumers ignore, or lose scenario and artifact lineage during migration.",
+      "evidence_ids": [
+        "E012",
+        "E013",
+        "E032"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0019",
+      "title": "Image supply-chain security is referenced but not contracted",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, authority, propagation, test oracles",
+      "claim": "Image-vulnerability scanning appears only as a design-reference attribute. The capsule does not require scan results, severity policy, SBOM or provenance, signature creation or verification, digest verification at promotion or deploy, trusted base-image policy, or how such results block or warn.",
+      "why_it_matters": "Digest-first lineage alone does not establish that an image is trusted, scanned, signed, or policy-compliant before promotion and deployment.",
+      "evidence_ids": [
+        "E008",
+        "E014",
+        "E024"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0020",
+      "title": "Complex state behavior has no explicit acceptance or transition test oracles",
+      "severity": "high",
+      "negative_space_dimension": "test oracles",
+      "claim": "The bounded capsule defines many canonical states, aliases, reason codes, hard gates, partial outcomes, and persistence fields but provides no enumerated fixtures or expected transition assertions for authentication, Unraid generation, stale cache, partial Kubernetes apply, cleanup races, identity drift, remote reconciliation, alias migration, or project-state serialization.",
+      "why_it_matters": "Implementations can satisfy labels superficially while disagreeing on transitions, side effects, recovery, and persisted truth.",
+      "evidence_ids": [
+        "E001",
+        "E022",
+        "E024",
+        "E030",
+        "E031"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0021",
+      "title": "Registry discovery lacks bounded-result and degraded-result semantics",
+      "severity": "medium",
+      "negative_space_dimension": "scale, failure/recovery, misleading GUI truth",
+      "claim": "Namespace and repository discovery, refresh, and creation controls are required, but the capsule does not define pagination, rate-limit handling, partial pages, permission-filtered results, cache expiry, cancellation, duplicate names across namespaces, or how a degraded refresh affects an existing selection.",
+      "why_it_matters": "Large or rate-limited accounts can appear empty or complete when results are partial, causing the user to select or create the wrong repository.",
+      "evidence_ids": [
+        "E010",
+        "E037"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-0022",
+      "title": "Executable and filesystem path overrides lack trust-boundary rules",
+      "severity": "high",
+      "negative_space_dimension": "security/privacy, authority, compatibility",
+      "claim": "Settings accept a Docker binary override, Compose paths, build context, and Dockerfile path, but the capsule does not define canonicalization, symlink handling, workspace-boundary rules, executable validation, remote-host interpretation, untrusted-project defaults, or whether persisted paths may expose local machine state.",
+      "why_it_matters": "A malicious or stale project configuration could execute an unintended binary, build from outside the project, send sensitive files into a build context, or break when moved between hosts.",
+      "evidence_ids": [
+        "E002",
+        "E039"
+      ],
+      "scope_confined": true
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-0001",
+      "statement": "The capsule explicitly requires secrets to remain outside redb, project files, and evidence logs.",
+      "evidence_ids": [
+        "E002"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0002",
+      "statement": "Ambiguous build-target inference is explicitly required to prompt rather than guess, and inferred defaults remain reviewable and overrideable.",
+      "evidence_ids": [
+        "E012"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0003",
+      "statement": "Unavailable runtime data is shown as stale and read-only, while missing prior drift evidence is shown as unknown rather than clean.",
+      "evidence_ids": [
+        "E010",
+        "E017"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0004",
+      "statement": "Repository creation is separated from a settings toggle and routed with publish, promotion, and cluster mutation through protected confirmation or canonical hard-gate handling.",
+      "evidence_ids": [
+        "E022",
+        "E023",
+        "E038"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0005",
+      "statement": "Cleanup recommendations explicitly default conservative when the reference graph is partial and avoid assets tied to active previews or recent receipts.",
+      "evidence_ids": [
+        "E018"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0006",
+      "statement": "Repo/root restore validates existence, Kubernetes workload history distinguishes UID matches from same-name replacements, and identity changes trigger revalidation before mutation.",
+      "evidence_ids": [
+        "E026",
+        "E029",
+        "E033"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0007",
+      "statement": "Partial governance outcomes and transport-lost remote outcomes are not flattened into simple success or failure.",
+      "evidence_ids": [
+        "E024",
+        "E034"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-0008",
+      "statement": "The Kubernetes explorer defaults to project scope; cluster-wide inventory requires an explicit toggle and distinct presentation.",
+      "evidence_ids": [
+        "E019"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-0001",
+      "statement": "Whether referenced plans define exact credential storage, per-command permission classes, shared operation lifecycles, receipt storage, or route authorization cannot be determined from this capsule.",
+      "reason_unresolved": "The role card forbids reading referenced plans or any evidence outside the assigned capsule."
+    },
+    {
+      "unknown_id": "UNK-0002",
+      "statement": "Whether later portions of Plans/Containers_Registry_and_Unraid.md define Unraid XML schemas, template-repository Git behavior, ca_profile.xml fields, or acceptance tests is unknown.",
+      "reason_unresolved": "The full plan document is forbidden and the bounded source ends after context line 218."
+    },
+    {
+      "unknown_id": "UNK-0003",
+      "statement": "The intended physical storage structure beneath container_manager.project_state.{project_id} is unknown.",
+      "reason_unresolved": "The capsule names repo-bound requirements and a project-only canonical key but supplies no schema or example instance."
+    },
+    {
+      "unknown_id": "UNK-0004",
+      "statement": "Actual DockerHub, Podman, Kubernetes, and Unraid API limits or platform-specific security requirements are unknown.",
+      "reason_unresolved": "External research is forbidden for this assignment."
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E001",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 7,
+      "line_end": 14,
+      "excerpt": "This plan is the canonical SSOT for:\n- DockerHub authentication UX and state modeling.\n- Requested vs effective Docker auth capability.\n- DockerHub namespace and repository discovery/selection/creation behavior.\n- Protected repository-creation rules.\n- First-class Docker management GUI behavior.\n- Unraid template generation defaults and managed template-repository workflow.\n- `ca_profile.xml` defaults, scope, editability, and image handling."
+    },
+    {
+      "evidence_id": "E002",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 33,
+      "line_end": 33,
+      "excerpt": "- Keep secrets out of redb, project files, and evidence logs."
+    },
+    {
+      "evidence_id": "E003",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 54,
+      "line_end": 64,
+      "excerpt": "- **DockerHub authentication controls**\n  - browser-login button that opens the browser/device flow\n  - PAT entry field\n  - helper text that explicitly says PAT is recommended\n  - inline guidance/link telling the user how to obtain a PAT\n  - stored-auth status\n  - account/namespace summary\n  - validation button\n  - clear/remove credentials action\n  - validate and `/clear` auth actions for DockerHub credentials\n  - requested auth mode vs effective capability display"
+    },
+    {
+      "evidence_id": "E004",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 76,
+      "line_end": 83,
+      "excerpt": "- **Unraid publishing controls**\n  - `Generate/Update Unraid XML after successful publish` toggle (default: enabled)\n  - `Manage Unraid template repository` toggle (default: enabled)\n  - template repository path/remote settings\n  - template repository setup flow (create-new or select-existing)\n  - auto-push toggle (default: disabled)\n  - one-click push action surfaced nearby even when auto-push is off\n  - template repo status row (configured / missing / dirty / committed / ready-to-push)"
+    },
+    {
+      "evidence_id": "E005",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 91,
+      "line_end": 95,
+      "excerpt": "- **Maintainer profile / `ca_profile.xml` controls**\n  - scope selector: shared cross-project profile (default) vs per-project override\n  - full edit form for all `ca_profile.xml` fields\n  - profile image handling through upload/select or external URL\n  - notice when the file was auto-generated and still needs review/configuration"
+    },
+    {
+      "evidence_id": "E006",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 119,
+      "line_end": 125,
+      "excerpt": "Surface rules:\n- Docker is the default visible runtime mode when the project is Docker-related.\n- Podman is an alternate runtime inside the same surface, not a separate panel.\n- Kubernetes is a Docker Manager subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.\n- Unraid is integrated under `Publish / Unraid`; it does not require a separate top-level panel.\n- Docker Hub is one registry/provider capability inside Docker Manager, and Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces.\n- Docker Manager is a first-class side-panel surface, not only Settings > Advanced. Its canonical surface includes settings-level DockerHub actions such as the create-repository toggle and `/clear` auth recovery, while remote repository creation still requires the separate protected confirmation flow."
+    },
+    {
+      "evidence_id": "E007",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 129,
+      "line_end": 136,
+      "excerpt": "Subview behavior minima:\n- `Containers`: lifecycle, logs, inspect, attach/shell, stats, open app when an access URL exists\n- `Images`: build, pull, push, tag, inspect, remove, prune, digest/tag visibility\n- `Compose`: project/group lifecycle, service subsets, logs, restart, down/up, compose-group reopen state\n- `Registries`: Docker Hub first, registry inventory/selection, reconnect, browse, pull, inspect\n- `Build / Bake`: Dockerfile target selection, Buildx/Bake discovery, build-preview settings\n- `Publish / Unraid`: `/auth/Unraid`, requested vs effective auth state, protected repo creation, digest receipts, Unraid generation and template-repo follow-on\n- `Kubernetes`: apply, diff, rollout status, logs, exec, port-forward, workload/resource view, Helm basics, image-to-cluster linkage"
+    },
+    {
+      "evidence_id": "E008",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 138,
+      "line_end": 138,
+      "excerpt": "Design-reference split: the user-specified `docker/vscode-extension` / `/vscode-extension` repository is Docker DX and is treated as a Dockerfile, Compose, Bake, build-debugging, and image-vulnerability-scanning reference."
+    },
+    {
+      "evidence_id": "E009",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 144,
+      "line_end": 144,
+      "excerpt": "The selected runtime, selected context, active subview, explorer grouping, `/sort`, hidden-foldout policy, hidden advanced foldouts, and exact asset row/subview are persisted as per-project panel state so preview, `/build/publish/deploy`, and blocked-card flows reopen the exact relevant row instead of landing in a generic push-only pane."
+    },
+    {
+      "evidence_id": "E010",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 144,
+      "line_end": 144,
+      "excerpt": "If runtime access is unavailable, Docker Manager still renders cached `/last-known` state with a stale marker and read-only posture; strong default filtering and project awareness are mandatory so the broad surface does not become overloaded, while project-aware ordering pushes `likely-relevant` assets to the top without hiding the rest."
+    },
+    {
+      "evidence_id": "E011",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 144,
+      "line_end": 144,
+      "excerpt": "The command and event model covers full `cmd.docker.container.*`, `image.*`, `registry.*`, `network.*`, `volume.*`, `context.*`, `compose.*`, and `k8s.*` families, with receipts able to open directly to the affected asset kind."
+    },
+    {
+      "evidence_id": "E012",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 146,
+      "line_end": 146,
+      "excerpt": "If inference is ambiguous in a polyglot or monorepo project, Docker Manager prompts for explicit selection instead of guessing. `/event/storage` records build target selection and readiness/preflight events, while Orchestrator build artifacts and preview containers link back to the originating run/tier. `/tradeoffs`: auto-detection heuristics can misidentify monorepo targets, so inferred build defaults must stay reviewable and overrideable."
+    },
+    {
+      "evidence_id": "E013",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 148,
+      "line_end": 148,
+      "excerpt": "Compose scenario runner lets users save and rerun named service subsets, profiles, env file combinations, and port mappings for preview, test, or `/development` workflows. The `Compose` subview owns scenario definitions, selected services, `/profiles/env` files, `/profile/env-file/port` state, detached and `/log-follow` defaults, `/ports`, and validation state. Command coverage includes `cmd.docker.compose.up_subset`, `down_subset`, `save_scenario`, `run_scenario`, and the grouped command family `cmd.docker.compose.scenario.save/run/edit/delete`, with `cmd.docker.compose.scenario.save` as the save command id. Scenario lists live in project state; preview and test tiers record which scenario launched them."
+    },
+    {
+      "evidence_id": "E014",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 150,
+      "line_end": 150,
+      "excerpt": "Registry promotion flow treats `/tag/push` and `/push/promote` as explicit release actions, not ad hoc retagging. Docker Manager preserves source artifact identity, promotion `/target`, destination registry allowlist, default namespace/repository/tag template, promotion policy, visibility/privacy defaults, `/immutability` expectations, Docker-Hub-first `MVP` behavior, and the abstraction needed for later registry `APIs`. Promotion receipts are `registry-side` remote side effects with digest-first lineage: the moved digest, tag, source namespace/repository, destination namespace/repository, actor, approval source, and result id are captured before any downstream deployment reference is updated."
+    },
+    {
+      "evidence_id": "E015",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 152,
+      "line_end": 152,
+      "excerpt": "Publish chain view shows the path from local build result to pushed tag and `/digest`, Docker Hub repo state, Unraid/template follow-ons, `/publish/events`, and downstream deployment or `/workload` references. Each chain node records `build_result_id`, `publish_result_id`, template repository status, deployment/workload refs, result state, expanded chain nodes, an `include historical publishes` toggle, whether to follow latest publish by default, and whether it is `not-attempted`, blocked, failed, or complete. Missing downstream steps render a partial chain with `missing-link` explanations; digest-first identity is mandatory so retags do not corrupt lineage. Chain stitching must survive retries and partial reruns, and follow-ons plus auto-open behavior must open the exact broken chain step rather than a generic `Publish / Unraid` page."
+    },
+    {
+      "evidence_id": "E016",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 154,
+      "line_end": 154,
+      "excerpt": "`Containers` rows and detail drawers expose `cmd.docker.container.open`, `view_logs`, `attach_shell`, `stats`, and `inspect`; `Open running container` and `/open-container` resolve here only when a real container or preview session exists. Shell actions honor the saved shell command preference instead of guessing an entry command."
+    },
+    {
+      "evidence_id": "E017",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 156,
+      "line_end": 156,
+      "excerpt": "If prior artifact metadata is missing, the state is `unknown` rather than clean; if image labels and source refs are inconsistent, Docker Manager must avoid `over-warn` behavior by showing the weak evidence behind the warning."
+    },
+    {
+      "evidence_id": "E018",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 158,
+      "line_end": 158,
+      "excerpt": "Cleanup advisor recommends safe `/prune` and remove actions for `/assets`, `Images`, `Containers`, `Volumes`, `Networks`, and maintenance views, including Docker Manager advanced maintenance placement plus Settings/Health hooks. It starts with dry-run analysis, scan/prune estimation commands, projected disk savings, cached reclaim estimates, auto-scan cadence, disk-threshold warning levels, user-protected asset list, prune aggressiveness, whether to hide warnings for ephemeral previews, retention window, protected labels/assets, active previews, and recent receipt references. If the reference graph is partial, recommendations default conservative and never suggest deleting assets still tied to active previews or recent receipts. If the runtime cannot estimate reclaim safely, the advisor shows manual cleanup guidance instead of enabling destructive guesses."
+    },
+    {
+      "evidence_id": "E019",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 160,
+      "line_end": 160,
+      "excerpt": "The conditional `Kubernetes` subview preserves kubeconfig/context, namespace, `/namespace/workload` focus, log viewer defaults, auto-refresh and `/watch` toggles, Helm visibility, Helm release focus, persisted K8s focus state, and a `cluster-wide` resources toggle defaulted off. Command coverage is `cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace`, `cmd.docker.k8s.apply|diff|logs|exec|port_forward|set_context|set_namespace|helm_preview|helm_install`, `/logs/exec/port-forward/Helm/workload`, including the explicit command `cmd.docker.k8s.apply`; compatibility aliases from older `cmd.k8s.*` rows normalize to this Docker Manager namespace. Docker Manager's Kubernetes view defaults to the project-focused subset; full cluster inventory requires the explicit `cluster-wide` toggle and remains visually distinct from project scope."
+    },
+    {
+      "evidence_id": "E020",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 162,
+      "line_end": 162,
+      "excerpt": "Kubernetes operational sessions are ephemeral owner-surface sessions. `kubectl logs` can target pods, `/resources`, and all containers; rollout status is a first-class troubleshooting primitive; port-forward sessions and rollout monitors are restart/rebind workflows, not durable always-on connections."
+    },
+    {
+      "evidence_id": "E021",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 164,
+      "line_end": 164,
+      "excerpt": "Each receipt records requested action, effective action, actor, targets, result ids, allowed action ids, approval source, executing subsystem, and source event ids. Receipt verbosity and receipt retention preference are user-configurable, while receipts remain compact by default; legacy flows without rich receipts show a minimal evidence marker without inventing feature-local logs. `/events/storage` stores the receipt projection keyed by run, attempt, and action id."
+    },
+    {
+      "evidence_id": "E022",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 168,
+      "line_end": 168,
+      "excerpt": "Docker Manager `hard_gate` actions, including HITL-governed remote-side-effect publish, repository creation, registry promotion, and cluster mutation paths, enter the canonical approval or `/blocked` flow instead of bypassing it with generic UI confirmation."
+    },
+    {
+      "evidence_id": "E023",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 170,
+      "line_end": 170,
+      "excerpt": "Docker Manager action disclosure uses the shared confirmation taxonomy instead of local modal guesses. Action rows and blocked cards distinguish actions needing no confirmation, light confirmation, strong confirmation, non-bypassable/hard-gated `/hard-gated` approval, and actions that are logically undoable versus only compensatable by later retry or follow-up records."
+    },
+    {
+      "evidence_id": "E024",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 174,
+      "line_end": 174,
+      "excerpt": "Multi-object flows such as Kubernetes apply, `compose-to-cluster`, and multi-step publish chains can be partial: receipts record which resources were accepted, which later resource was denied, which downstream deployment was blocked, and the exact policy-blocked object/stage instead of flattening the outcome to success or failure. If governance changes while a run is blocked waiting for approval, review, or ruleset change, resume must revalidate and reclassify before mutation; receipts keep original and current policy outcomes when they differ."
+    },
+    {
+      "evidence_id": "E025",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 176,
+      "line_end": 176,
+      "excerpt": "Governance snapshots are durable inputs to blocked-state explanation. Branch protection, GitHub `/ruleset`, protected environment, registry policy, destination-policy, and cluster policy evaluations capture a `policy_snapshot_ref` against the exact target ref/resource before mutation. Receipts and blocked episodes reference that snapshot so Orchestrator can explain the policy in force at attempt time, but retry/resume revalidates current policy instead of assuming the old snapshot remains valid."
+    },
+    {
+      "evidence_id": "E026",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 186,
+      "line_end": 186,
+      "excerpt": "Panel state is repo-bound with keys such as `{project_id, repo_id}` or `{project_id, workspace_root_id}`; restore validates that the selected repo/root still exists and downgrades to chooser state instead of silently rebinding. Imported, `/forked/nested`, or nested workspace roots create a distinct `workspace_root_id` and, when Git-backed, a distinct `repo_id`."
+    },
+    {
+      "evidence_id": "E027",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 188,
+      "line_end": 188,
+      "excerpt": "Repo-selection precedence is deterministic: direct receipt or `/deep-link` target wins; explicit panel repo selection wins next; active run/tier repo follows; active editor repo follows; otherwise the user sees a chooser. Panels disclose whether a repo is pinned or inferred."
+    },
+    {
+      "evidence_id": "E028",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 190,
+      "line_end": 190,
+      "excerpt": "Docker Manager deep-link handling must not expose raw local IDs as the routing contract. Commands, receipts, and deep-link descriptions resolve to the shared normalized target object; all supported deep-link forms decode into the same internal routing path instead of treating URL activation as a separate system. Serialized URL and `resume_url` forms obey a narrowed-transport rule: they carry only the stable route-target fields needed for recovery or exact resume, not the entire internal target model, and they must not invent new one-off URL shapes when a route-target family already exists."
+    },
+    {
+      "evidence_id": "E029",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 192,
+      "line_end": 192,
+      "excerpt": "`k8s_workload_ref` stores context, `/namespace/name`, kind, UID when knowable, and source repo/root; history and deep links classify resolution as `current_match_by_uid`, `name_match_only`, or `historical_missing`. A same-name replacement after `/deletion` or `/recreate` is not treated as the same workload without degraded warning, and a `not-found` workload opens historical detail instead of rebinding silently to a different current object."
+    },
+    {
+      "evidence_id": "E030",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 196,
+      "line_end": 196,
+      "excerpt": "Local-runtime reason codes are canonical and advisory-only until refreshed into requested-vs-effective state. Codes include `runtime_context_missing`, `runtime_context_unreachable`, `compose_invalid`, `compose_service_missing`, `buildx_unavailable`, `bake_unavailable`, `image_missing`, `container_unhealthy`, `access_url_unresolved`, `k8s_context_missing`, `k8s_context_unreachable`, `k8s_namespace_missing`, and `k8s_rollout_blocked`; panels may add port mapping, workload missing, or port-forward variants only as typed extensions, not panel-local prose."
+    },
+    {
+      "evidence_id": "E031",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 204,
+      "line_end": 204,
+      "excerpt": "The canonical project key is `container_manager.project_state.{project_id}` and includes `requested_runtime`, `effective_runtime`, `requested_context`, `effective_context_state`, `requested_build_mode`, `effective_build_capabilities[]`, `effective_build_capabilities`, `requested_compose_mode`, `effective_compose_capabilities[]`, `effective_compose_capabilities`, `requested_registry_target`, `effective_registry_capabilities[]`, `effective_registry_capabilities`, `requested_k8s_target`, `effective_k8s_capabilities[]`, and `effective_k8s_capabilities`. These references join back to receipts and selected repo/root state rather than storing transient runtime observations as product truth."
+    },
+    {
+      "evidence_id": "E032",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 208,
+      "line_end": 208,
+      "excerpt": "Orchestrator-linked Docker Manager views consume package/lane state rather than reviving tier-era ownership. `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) may still expose compatibility labels such as `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, `/Task/Subtask`, `requested_persona_id`, and `effective_persona_id`, but Docker Manager treats stale `tier_id` coordination state as migration lineage only and honors package/seam overseers, `/seam`, package/seam/lane visibility, `/lane`, `/account`, and promotion-class state as the runtime pressure to honor."
+    },
+    {
+      "evidence_id": "E033",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 211,
+      "line_end": 211,
+      "excerpt": "Runtime and remote identity drift is explicit. If active Docker identity changes and the selected namespace or repository is no longer visible or writable, Docker Manager marks the selection `stale_unowned` and revalidates before publish or promotion; users can trigger `hard-refresh` when cached identity and ownership disagree. Kubernetes state is `subject-aware`: it distinguishes cluster/context identity, authenticated subject identity, namespace/workload focus, and RBAC or policy result; if credentials rotate behind the same context name, the UI treats that as `identity-change` and revalidates RBAC before mutation."
+    },
+    {
+      "evidence_id": "E034",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 213,
+      "line_end": 213,
+      "excerpt": "Remote side-effect outcomes include `indeterminate_remote_outcome` when the server-side action may have succeeded but the client lost confirmation. Such receipts record `requested`, `transport_lost`, later `reconciled`, and a `Refresh remote state` CTA."
+    },
+    {
+      "evidence_id": "E035",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 216,
+      "line_end": 216,
+      "excerpt": "Remote-capable Docker, Kubernetes, registry, and template-repo surfaces preserve `/read-only/offline`, `/degraded/offline`, host-aware identity, `/fallback/index` handoff, one-bounded-auto-retry rather than legacy five-attempt retry assumptions, and `/reveal` links back to the owning file, search, LSP, or Final GUI surface."
+    },
+    {
+      "evidence_id": "E036",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 73,
+      "line_end": 73,
+      "excerpt": "  - tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)"
+    },
+    {
+      "evidence_id": "E037",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 66,
+      "line_end": 70,
+      "excerpt": "- **DockerHub repository controls**\n  - namespace selector/discovery\n  - repository selector/discovery\n  - refresh repositories action\n  - create repository action"
+    },
+    {
+      "evidence_id": "E038",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 71,
+      "line_end": 71,
+      "excerpt": "  - create-repository toggle in settings-level configuration, kept distinct from the mandatory confirmation used when creation becomes a remote side effect"
+    },
+    {
+      "evidence_id": "E039",
+      "document_path": "Plans/Containers_Registry_and_Unraid.md",
+      "line_start": 44,
+      "line_end": 52,
+      "excerpt": "- **Docker runtime controls**\n  - runtime selector (`docker` default)\n  - Docker binary path override\n  - compose file/path defaults\n  - compose project-name strategy (`auto`, `fixed`, `hash-based`)\n  - build context path\n  - Dockerfile path\n  - target stage (optional)\n  - target platforms and Buildx readiness status"
+    }
+  ],
+  "scope_attestation": {
+    "only_capsule_and_source_excerpt_read": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "hashes_verified": true,
+    "bytes_verified": true,
+    "evidence_within_capsule": true,
+    "no_writes": true
+  },
+  "terminal_after_result": true
+}

@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 6648-6659 >>>
+- near-match argument
+- stderr signatures
+- diagnostic
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6660-7032 >>>
+### T-081 - Shell Command Validation Escaping And One-Layer Dispatch
+
+```yaml
+plan_unit_id: T-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
+  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-074
+unblocks: []
+acceptance_criteria:
+- Banned-command checks scan the full rendered command string.
+- Unix shell dispatch uses one shell interpretation layer.
+- Individual tools do not implement competing escaping layers.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: shell_runtime_validation_dispatch
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0055
+preserved_exact_tokens:
+- full rendered command string
+- ;
+- '&&'
+- '||'
+- '|'
+- subshell/grouping constructs
+- $()
+- backticks
+- redirection operators
+- structured parsing
+- AST-aware validation
+- exactly one shell interpretation layer
+- never eval
+- exec.Command("bash", "-c", command)
+- /bin/bash
+- cmd.exe
+- PowerShell
+- shellQuote
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-082 - Shell Instance Isolation Lifecycle And OC Evidence Labels
+
+```yaml
+plan_unit_id: T-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Shell instances are isolated per agent tree, lifecycle is mutex-guarded, queues are non-blocking, dead-shell
+  writes return structured LIFE errors, and OC codes remain evidence labels only.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-081
+unblocks: []
+acceptance_criteria:
+- Environment variables do not leak across session/agent boundaries.
+- Alive-check occurs before queue writes.
+- OC references do not replace canonical behavior.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: shell_lifecycle_error_isolation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0055
+preserved_exact_tokens:
+- isolated per agent tree
+- mutex-guarded
+- /non-blocking
+- dead shell
+- structured LIFE error
+- OC-LIFE-006
+- OC-EXEC-101
+- OC-EXEC-108
+- OC-PROV-012
+- OC-EXEC-106
+- OC-LIFE-004
+- OC-LIFE-005
+- OC-PROV-006
+- OC-PROV-005
+- evidence labels only
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-083 - Tool CLI Flag Derivation
+
+```yaml
+plan_unit_id: T-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The registry and resolved tool policy derive platform-specific CLI flags for Claude, Copilot, and Gemini without
+  runner hardcoding.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-069
+- T-073
+unblocks:
+- T-102
+acceptance_criteria:
+- Allow, ask, and deny outcomes map to platform flags as specified.
+- Gemini remains gated by PM policy rather than provider CLI flags.
+- Runner logic uses registry and policy as the single source of truth.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_cli_flag_derivation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0056
+preserved_exact_tokens:
+- --allowedTools
+- Read,Edit,Bash
+- --allow-tool
+- --allow-all-tools
+- --deny-tool
+- N/A
+- no hardcoding in runner
+- platform_specs
+- tool policy → CLI args
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-084 - Tool Usage Rollup Schema
+
+```yaml
+plan_unit_id: T-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Analytics writes executed tool rollups under `rollups` / `tool_usage.{window}` with canonical windows and
+  per-tool count, latency, error, and `index_used` fields.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Rollup schema matches the source value shape.
+- Analytics aggregates `tool.invoked` events so the Usage page can render without scanning seglog.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_usage_rollup_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0057
+preserved_exact_tokens:
+- rollups
+- tool_usage.{window}
+- 5h
+- 7d
+- 24h
+- 1h
+- count
+- p50_ms
+- p95_ms
+- error_count
+- index_used
+- tool.invoked
+- latency_ms
+- success
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-085 - Tool Usage Widget Freshness And Runtime Identity
+
+```yaml
+plan_unit_id: T-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The Usage widget consumes the same windows, excludes `tool.denied` and FileSafe blocks from executed-call
+  rollups, preserves node-native runtime identity, and can show freshness metadata.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on:
+- T-072
+unblocks: []
+acceptance_criteria:
+- '`error_count` counts executed `tool.invoked` events where `success = false`.'
+- Denied and FileSafe-blocked calls are excluded from executed-call rollups.
+- '`tool_usage_meta.{window}` supports a Last updated timestamp.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_usage_widget_freshness_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0057
+preserved_exact_tokens:
+- node-native
+- tier-native
+- tier-aligned
+- tool.denied
+- FileSafe blocks
+- success = false
+- tool_usage_meta.{window}
+- computed_at
+- window_started_at
+- window_ended_at
+- Last updated
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- '`tier-native` and `tier-aligned` fields survive only as compatibility/grouping projections.'
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-086 - YOLO FileSafe Boundary
+
+```yaml
+plan_unit_id: T-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: YOLO treats all tools as allow for session prompting, removing ask prompts, but does not disable FileSafe
+  or destructive/write-scope/sensitive-file guards.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Ask prompts are suppressed for the session.
+- FileSafe remains enforced after YOLO allow behavior.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: yolo_file_safe_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0058
+preserved_exact_tokens:
+- YOLO
+- allow
+- ask
+- FileSafe
+- destructive commands
+- write-scope
+- sensitive-file guards
+- does not disable FileSafe
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-087 - MCP Name Wildcard Permission Layering
+
+```yaml
+plan_unit_id: T-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: MCP tool names use `{server_slug}_{tool_name}`; wildcard rules match the underscore form and server-level
+  permission rules apply before per-tool wildcard expansion.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Slash and mixed separator examples are retired.
+- No `org` layer is added to canonical precedence.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: mcp_name_wildcard_permission_layering
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0059
+preserved_exact_tokens:
+- '{server_slug}_{tool_name}'
+- context7_*
+- slash variants
+- mixed `_` / `/` examples
+- server-level permission rules
+- project > global > org > default
+- canonical `Plans/Permissions_System.md` precedence
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MCP_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Slash variants and mixed `_` / `/` examples are retired.
+- Older `project > global > org > default` wording is non-canonical historical wording.
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 7033-7044 >>>
+### T-088 - MCP Unavailable Runtime Contract
+
+```yaml
+plan_unit_id: T-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Unavailable MCP servers mark their tools unavailable, fail calls immediately with structured errors, use independent
+  per-tool timeout, emit diagnostics, preserve safe stale identity, and retry once after cooldown.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

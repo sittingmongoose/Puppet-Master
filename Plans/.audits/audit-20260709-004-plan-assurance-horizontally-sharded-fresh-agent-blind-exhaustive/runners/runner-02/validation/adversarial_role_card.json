@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.audit004.adversarial_window_role_card",
+  "schema_version": "1.0.0",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-02",
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "role": "adversarial_negative_space",
+  "role_instructions": "Independently attack negative space in only the assigned capsule: missing callers, states, transitions, authority, failure/recovery, security/privacy, misleading GUI truth, propagation, operations, scale, compatibility, and test oracles. Do not see or infer the exact reviewer's conclusions.",
+  "blindness": {
+    "prior_audits": "forbidden",
+    "other_reviewer_results": "forbidden",
+    "unrelated_windows": "forbidden",
+    "full_plan_document": "forbidden",
+    "external_research": "forbidden"
+  },
+  "execution_rules": {
+    "read_only": true,
+    "single_assignment_only": true,
+    "spawn_agents": false,
+    "accept_followups": false,
+    "write_files": false,
+    "return_once_then_terminal": true,
+    "verify_all_input_hashes_and_bytes": true,
+    "evidence_must_use_original_document_line_numbers": true,
+    "evidence_must_remain_inside_capsule_core_or_context": true,
+    "empty_arrays_allowed": true,
+    "unknowns_must_not_be_disguised_findings": true
+  },
+  "output_contract": {
+    "encoding": "one parseable JSON object with no Markdown fence or surrounding prose",
+    "top_level_keys_exact": [
+      "assignment_id",
+      "audit_id",
+      "runner_id",
+      "role",
+      "window_id",
+      "doc_id",
+      "document_path",
+      "core_range",
+      "source_sha256",
+      "capsule_ref",
+      "capsule_sha256",
+      "capsule_bytes",
+      "source_excerpt_ref",
+      "source_excerpt_sha256",
+      "source_excerpt_bytes",
+      "model",
+      "reasoning_effort",
+      "observations",
+      "candidate_findings",
+      "explicit_non_gaps",
+      "unknowns",
+      "exact_evidence_refs",
+      "scope_attestation",
+      "terminal_after_result"
+    ],
+    "field_shapes": {
+      "assignment_id": "string",
+      "audit_id": "string",
+      "runner_id": "runner-02",
+      "role": "adversarial_negative_space",
+      "window_id": "string",
+      "doc_id": "string",
+      "document_path": "string",
+      "core_range": ["integer", "integer"],
+      "source_sha256": "string",
+      "capsule_ref": "string",
+      "capsule_sha256": "string",
+      "capsule_bytes": "integer",
+      "source_excerpt_ref": "string",
+      "source_excerpt_sha256": "string",
+      "source_excerpt_bytes": "integer",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "ultra",
+      "observations": [
+        {
+          "observation_id": "string",
+          "statement": "string",
+          "evidence_ids": ["string"]
+        }
+      ],
+      "candidate_findings": [
+        {
+          "finding_id": "string",
+          "title": "string",
+          "severity": "blocker|high|medium|low",
+          "negative_space_dimension": "string",
+          "claim": "string",
+          "why_it_matters": "string",
+          "evidence_ids": ["string"],
+          "scope_confined": true
+        }
+      ],
+      "explicit_non_gaps": [
+        {
+          "non_gap_id": "string",
+          "statement": "string",
+          "evidence_ids": ["string"]
+        }
+      ],
+      "unknowns": [
+        {
+          "unknown_id": "string",
+          "statement": "string",
+          "reason_unresolved": "string"
+        }
+      ],
+      "exact_evidence_refs": [
+        {
+          "evidence_id": "string",
+          "document_path": "string",
+          "line_start": "integer",
+          "line_end": "integer",
+          "excerpt": "string"
+        }
+      ],
+      "scope_attestation": {
+        "only_capsule_and_source_excerpt_read": true,
+        "no_prior_audits": true,
+        "no_other_results": true,
+        "no_unrelated_windows": true,
+        "no_external_research": true,
+        "hashes_verified": true,
+        "bytes_verified": true,
+        "evidence_within_capsule": true,
+        "no_writes": true
+      },
+      "terminal_after_result": true
+    },
+    "evidence_rules": {
+      "every_observation_requires_at_least_one_evidence_id": true,
+      "every_candidate_finding_requires_at_least_one_evidence_id": true,
+      "every_explicit_non_gap_requires_at_least_one_evidence_id": true,
+      "every_consumed_evidence_id_must_exist_in_exact_evidence_refs": true,
+      "evidence_ids_must_be_unique": true,
+      "finding_ids_must_be_unique": true,
+      "observation_ids_must_be_unique": true,
+      "non_gap_ids_must_be_unique": true,
+      "unknown_ids_must_be_unique": true
+    }
+  }
+}

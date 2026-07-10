@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 299-310 >>>
+- Help uses a dedicated help-entry architecture with related-concept linking.
+- Project taxonomy defines `activity_state`, `attention_state`, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules.
+
+#### Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+- Blocked-owner kinds are exactly `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.
+- Escalation levels are `info`, `watch`, `attention_required`, `blocked`, and `escalated`, with surface mapping across Orchestrator banners, Dashboard summaries, thread badges, and notifications.
+
+### Source Control boundary
+
+Orchestrator remains the lane-pool operational truth, while Source Control is the concrete repo/worktree operator.
+
+Source Control's unified worktree inventory includes assistant-owned worktrees alongside orch-owned worktrees. Rows preserve the owning thread, package, lane, run, and worktree refs available for each owner class, so this boundary is a shared ownership statement rather than exclusive orch ownership.
+
+<<< AUTHORITATIVE_CORE 311-697 >>>
+
+Rules:
+- Worktree rows display owning package, lane, and run refs together with lifecycle state and blocked/recovery state.
+- run detail can open review mode scoped to that run's commit range or worktree, preserving run, lane, package, and worktree identity in the route payload.
+- blocked worktree cards should include affected file list and an `Open Conflict Assistant` action that routes to the `Source Control > Changes` conflict group through `cmd.source_control.open_conflict`.
+- SCM lineage acceptance is explicit for Orchestrator surfaces: every mutation-capable attempt resolves to `repo/worktree/branch/head`; every `dirty_worktree` or `worktree_conflict` blocked episode shows the exact worktree, affected files summary, safe-point relation, and recovery target; and every run with SCM side effects shows at least partial receipts instead of opaque generic history rows.
+- Cross-surface deep links from Orchestrator to Source Control, GitHub Actions, Docker Manager, or Kubernetes owner panels must reopen with stable context after restart. When lineage is incomplete, Orchestrator labels the view as partial lineage; it must never silently omit missing hops or invent repo, worktree, branch, head, receipt, or recovery targets.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+
+#### Promotion classes and gate evidence
+- Promotion classes are `lane_to_package`, `package_to_seam_available`, and `seam_complete`.
+- Each promotion class carries exact gate and evidence expectations: promotion gate verdict, lineage refs, required verification evidence, and promotion receipt refs.
+
+#### Source Control and worktree handshake
+- Orchestrator remains the lane-pool operational truth, while Source Control is the concrete repo/worktree operator.
+- Worktree rows display owning package, lane, and run refs together with lifecycle state and blocked/recovery state.
+
+### glossary/help references
+
+#### Glossary and help governance
+- Orchestrator depends on Glossary coverage for rewrite-critical objects, states, and trust terms.
+- Help is layered as inline help, context help, and canonical help-entry pages while canonical term names stay stable.
+
+#### Help entry template and related-concept clusters
+- Every help entry follows one template: canonical term, trigger conditions, operator meaning, primary routes, related concepts, and recovery guidance.
+- Related-concept clusters provide the dedicated linking structure for concept-to-concept navigation.
+
+### Owner-first canonicalization order
+- Apply owner-doc corrections before consumer and mirror cleanup.
+- Rerun fidelity audit only after owner and consumer corrections are in place.
+
+### Shared governance/runtime record envelope
+- One shared record envelope carries canonical lineage refs plus artifact and evidence refs.
+- Record objects stay distinct from artifacts, receipts, and rendered summaries.
+
+### Concern record family definition
+- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
+- The owner contract defines `concern_id`, `project_id`, run refs, scope refs, evidence/source refs, lineage refs, severity, category, status, and governance metadata.
+- `weak_integration` is the concern category for owner/consumer seams whose live owner record, consumer projection, or corroborating evidence is absent, stale, degraded, or inconsistent; it does not create a separate warning family outside the concern lifecycle.
+
+### Concern lifecycle and resolution kinds
+- Lifecycle states are exactly `active`, `acknowledged`, `resolved`, and `dismissed`.
+- `resolution_kind` values are exactly `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`.
+
+### Concern lifecycle owner section
+- This owner section defines explicit semantics for `active`, `acknowledged`, `resolved`, and `dismissed`.
+- It carries `resolution_kind`, including `accepted_risk`, together with a concern-action confirmation matrix for acknowledge, dismiss, resolve, and lineage-edit operations.
+- The concern lifecycle transition matrix is owner prose here: `active -> acknowledged` records operator awareness without changing truth, `active | acknowledged -> resolved` requires evidence that the underlying issue changed, `active | acknowledged -> dismissed` requires a rationale that the concern presentation is intentionally hidden or rejected as actionable framing, and `resolved | dismissed -> active` is the reopen path when new evidence invalidates the prior resolution or dismissal. Resolved and dismissed guard rules require current projection data or direct record revalidation before mutation, and every transition persists through `concern_record` plus `concern_projection` linkage rather than a page-local status flag.
+- Weak-integration concern taxonomy uses the canonical enum `wiring | workflow | state | gui | design`. `wiring` covers missing command, route, event, or handler joins; `workflow` covers broken or under-specified multi-step execution paths; `state` covers stale, degraded, or contradictory owner/projection state; `gui` covers consumer-surface behavior that fails to expose the owner truth; and `design` covers unresolved owner/consumer responsibility gaps.
+- Inspector and full-record behavior stay split. Summary/action inspectors show compact currentness, allowed actions, rationale, and links; dense full-record views open through canonical route/open contracts to the underlying concern, source event, projection, or governance record instead of expanding giant inline records inside the inspector.
+- Legacy import and search aliases `/concern`, `/dismissed`, `/guard/persistence`, and `trust-state` resolve to this concern record/projection lifecycle owner; they are compatibility aliases only and do not create separate route, status, or storage families.
+- Legacy import and search labels `Concern model — formal lifecycle section`, `Seam weak-integration concern taxonomy`, `Inspector / full-record behavior split`, and `Trust/concern projection handoffs` map to the lifecycle, taxonomy, inspector, and projection rules above; they are compatibility labels only and do not create separate owner sections.
+
+### Concern owner vs creator vs resolver separation
+- `owner_kind` / `owner_ref` are separate from `created_by_kind` / `created_by_ref`.
+- Resolver authority is modeled separately from both owner and creator.
+- Ownership may change without changing concern identity.
+
+### Concern source-event vs record vs projection split
+- `concern_source_event_ref`, `concern_record`, and `concern_projection` are separate structural layers.
+- Source events describe raw sightings, records describe durable state, and projections describe rendered consumer views.
+
+### Recommended minimum concern record shape
+- Required fields: `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`, `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`, `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`.
+- `blocking_effect` stays explicitly separate from `severity`.
+
+### Concern ownership / authority direction
+- Concern owner surfaces are exactly `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.
+- `concern resolver` is distinct from owner and source roles.
+- Concern ownership can be reassigned without changing concern identity.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Orchestrator_Page.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### OP-002 - Orchestrator Scope Page Shell And Owner Boundary
+
+```yaml
+plan_unit_id: OP-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+split_recommended: true
+split_recommendation_reason: >-
+  S0032 mixes page shell, runtime ownership, compatibility, routing, and governance material; this unit covers the scope and owner-boundary subset.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Orchestrator remains distinct from the UI, CLI, and external providers.
+  - The page shell is a seven-tab single-page surface over node/package/seam/lane-aware runtime state.
+  - The live tab set is Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
+  - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: orchestrator_scope_owner_boundary
+reasoning_tier: standard
+context_scope: orchestrator_page
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0001
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0002
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+preserved_exact_tokens:
+  - "Orchestrator Page -- Single-Page 6-Tab Specification"
+  - "/page-shell"
+  - "six-tab single-page surface"
+  - "seven-tab single-page surface"
+  - "Tiers"
+  - "Progress/Seams/Node Graph/Evidence/History/Ledger"
+  - "Progress/Plan Compile/Seams/Node Graph/Evidence/History/Ledger"
+  - "Progress"
+  - "Plan Compile"
+  - "Seams"
+  - "Node Graph"
+  - "History"
+  - "Evidence"
+  - "Ledger"
+  - "package/lane aware"
+negative_constraints:
+  - "Orchestrator must not define page-local runtime authority for enums, event semantics, or scheduler truth."
+  - "Tiers must not remain a primary tab/page authority."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+```
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles Orchestrator containerized-host projection obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### OP-028 - Orchestrator Containerized Host Projection And Routes
+
+```yaml
+plan_unit_id: OP-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Orchestrator surfaces containerized-host readiness, assignment, blocker, access, and receipt projections for runs and
+  attempts that use host capability, while Docker Manager, Docker/Hosts, Executor, Run Modes, ATS, Permissions, FileSafe,
+  Tools, and Runtime Artifacts retain their owner roles. Orchestrator may show host readiness chips, blocked-action
+  payloads, active assignments, access URL pivots, receipt/evidence links, and Docker/Hosts routes from run details, but
+  it does not own local Docker, Kubernetes, SSH, shell, file, or cleanup mutation semantics and does not create a new
+  top-level Orchestrator tab for Hosts. Stale projections cannot authorize sensitive actions; all mutation or launch
+  requests resolve through HostCapabilityCommand and owner receipts.
+gui_related: true
+gui_classification_reason: This PlanUnit defines visible Orchestrator projections, chips, pivots, and routes.
+depends_on: [F3-410, UCC-105, GRS-032, EP-109, RAP-042]
+unblocks: [RGV-015]
+acceptance_criteria:
+  - Orchestrator run details can display host readiness, active assignments, blocked_reason_code, access pivots, and receipt links.
+  - Orchestrator routes to Docker/Hosts and Runtime Artifacts without owning Docker/Kubernetes mutation or cleanup policy.
+  - No new top-level Orchestrator Hosts tab is created by this compile.
+  - Stale or missing host projections degrade or block the visible affordance rather than authorizing sensitive actions.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Orchestrator host-projection fixture
+risk_class: orchestrator_host_projection_authority_drift
+reasoning_tier: standard
+context_scope: orchestrator_containerized_host_projection
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - future Orchestrator run details and routes
+node_compile_hint:
+  mode: orchestrator_host_projection_routes
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0011
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#docker_hosts_gui_ia
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+source_atom_ids: [atom-0011, atom-0040, atom-0041, atom-0073, atom-0075, atom-0079, atom-0080, atom-0081]
+preserved_exact_tokens:
+  - "no new top-level Orchestrator tab"
+  - "orchestrator/executor(or anything adjacent)"
+  - "Orchestrator/Executor run details"
+  - "Docker/Hosts"
+  - "HostCapabilityCommand"
+negative_constraints:
+  - Do not make Orchestrator the owner of local Docker, Kubernetes, SSH, shell, file, or cleanup mutation semantics.
+  - Do not create a new top-level Orchestrator Hosts tab.
+  - Do not let stale projections authorize sensitive actions.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### OP-003 - Governance Runtime Record Envelope
+
+```yaml
+plan_unit_id: OP-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Governance and runtime records use a shared record envelope with family-specific payload blocks so records remain distinct from artifacts, receipts, and rendered summaries.
+gui_related: false
+gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+split_recommended: true
+split_recommendation_reason: >-
+  S0032 contains record-envelope examples interleaved with GUI and ownership material.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Shared lineage, artifact, and evidence refs stay in the record envelope.
+  - Concern, promotion, recovery, and review payloads remain structured family payloads.
+  - Rendered summaries do not replace durable records.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: record_envelope_drift
+reasoning_tier: standard
+context_scope: orchestrator_page
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0004
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0067
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+preserved_exact_tokens:
+  - "/blocking/HITL"
+  - "resolution_thread"
+  - "safe-point"
+  - "promotion_class"
+  - "revoked"
+  - "/reopened"
+  - "rendered summaries"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+```
+
+### OP-004 - Concern Record Lifecycle And Authority Contract
+
+```yaml
+plan_unit_id: OP-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Concern is a first-class durable record with exact lifecycle states, resolution_kind values, owner/creator/resolver separation, source-event/record/projection layers, required minimum fields, and explicit authority direction.
+gui_related: false
+gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+split_recommended: true
+split_recommendation_reason: >-
+  S0070 includes both lifecycle/backend rules and inspector/UI behavior; this unit covers the lifecycle and authority side.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Concern lifecycle states remain exactly active, acknowledged, resolved, and dismissed.
+  - resolution_kind values remain explicit and do not collapse distinct outcomes.
+  - Concern identity survives owner reassignment and projection changes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: concern_lifecycle_identity_drift
+reasoning_tier: standard
+context_scope: orchestrator_page
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0005
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0006
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0009
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0023
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0024
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0026
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0030
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0031
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0049
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0052
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0068
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0069
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0070
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0071
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0072
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0073
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0074
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+preserved_exact_tokens:
+  - "active"
+  - "acknowledged"
+  - "resolved"
+  - "dismissed"
+  - "resolution_kind"
+  - "weak_integration"
+  - "wiring | workflow | state | gui | design"
+  - "concern_source_event_ref"
+  - "concern_record"
+  - "concern_projection"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+```
+
+### OP-005 - Concern Actions Inspectors And Mutation Affordances
+
+```yaml
+plan_unit_id: OP-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Concern actions expose authority, confirmation level, rationale requirements, reversibility, audit fields, compact inspectors, route-open full records, and narrow user-facing affordances.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+split_recommended: true
+split_recommendation_reason: >-
+  S0070 mixes lifecycle rules with inspector/full-record presentation; this unit covers the GUI/action side.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Acknowledge, dismiss, resolve, and structural lineage edits remain distinct actions.
+  - Full record inspection routes to canonical records instead of expanding giant inline records.
+  - User-facing actions remain narrow and true HITL approvals stay separate from generic runtime actions.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: concern_action_authority_drift
+reasoning_tier: standard
+context_scope: orchestrator_page
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0008
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0025
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0035
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0039
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0051
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0070
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+preserved_exact_tokens:
+  - "audit_fields"
+  - "confirmation_level"
+  - "allowed_actor_kinds"
+  - "open evidence"
+  - "open history"
+  - "open ledger"
+  - "open resolution thread"
+  - "approve/reject"
+  - "true `/HITL` boundaries"
+negative_constraints:
+  - "Inspectors must not expand giant inline full records inside compact UI."
+  - "Runtime `/overseer` actions must not become generic user-facing actions."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+```
+
+
+<<< CONTEXT_AFTER 698-709 >>>
+### OP-006 - Projection Trust Freshness And Wait Semantics
+
+```yaml
+plan_unit_id: OP-006
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Projection state, freshness, direct revalidation, degraded fallback, stale-observation waits, and timeout display are governed by canonical runtime and storage projections rather than elapsed-time guesses.
+gui_related: false
+gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+split_recommended: true

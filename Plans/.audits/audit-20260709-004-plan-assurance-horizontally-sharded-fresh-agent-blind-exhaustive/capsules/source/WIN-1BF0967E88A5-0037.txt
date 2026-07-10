@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE 13510-13521 >>>
+- 'CodeReview'
+- 'Iteration quality checked at subtask level'
+negative_constraints: []
+compatibility_only_notes:
+- 'Phase/Task/Subtask/Iteration are preserved source tokens for tier-era compatibility, not promoted above graph/node identity.'
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 13522-13898 >>>
+### OSI-127 - End Tier Verification Error Handling Policy
+
+```yaml
+plan_unit_id: OSI-127
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  End-tier verification error handling treats artifact collection failure as warning with Info finding, diff computation failure as logged warning and continue, reviewer subagent failure as fail with Critical finding because reviewer is required, and quality gate failure status according to severity.
+gui_related: true
+gui_classification_reason: This unit covers user/operator-visible verification failure outcomes.
+split_recommended: false
+depends_on:
+- OSI-120
+- OSI-125
+- OSI-126
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+  final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: end_tier_verification_error_handling_policy
+node_compile_hint:
+  mode: end_tier_verification_error_handling_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+preserved_exact_tokens:
+- 'Artifact collection failure'
+- 'Diff computation failure'
+- 'Reviewer subagent failure'
+- 'Quality gate failure'
+- 'VerificationStatus::Warning'
+- 'VerificationStatus::Fail'
+- 'Critical finding'
+- 'log warning and continue'
+- 'Critical → Fail'
+- 'Major/Minor → Warning'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-128 - Start/End Verification Timing Matrix
+
+```yaml
+plan_unit_id: OSI-128
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Start and end tier boundaries use the summary timing matrix to distinguish start-phase/task/subtask/iteration config-wiring
+  and wiring/readiness checks from end-phase/task/subtask acceptance and quality verification.
+gui_related: true
+gui_classification_reason: The matrix explicitly names GUI/backend wiring-readiness and user-visible verification boundary
+  behavior.
+split_recommended: true
+depends_on:
+- OSI-104
+- OSI-107
+- OSI-115
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: start_end_verification_timing_matrix
+node_compile_hint:
+  mode: start_end_verification_timing_matrix
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0098
+preserved_exact_tokens:
+- Start Phase
+- Start Task
+- Start Subtask
+- Start Iteration
+- End Phase
+- End Task
+- End Subtask
+- Config-wiring
+- Wiring/readiness (GUI? backend? steps? gaps?)
+- Acceptance criteria
+- Quality verification
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-129 - Canonical Validation Table Source Of Truth
+
+```yaml
+plan_unit_id: OSI-129
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Start/end verification gaps are closed by a canonical validation table maintained with orchestrator code; every row preserves
+  config field, GUI control or UI source, backend consumer, applicable tier set, execution impact, and default or fallback
+  behavior, and validate_config_wiring_for_tier uses that table as the source of truth.
+gui_related: true
+gui_classification_reason: >-
+  This unit includes GUI control or UI source mappings and backend consumer wiring for execution-affecting settings.
+split_recommended: true
+depends_on:
+- OSI-102
+- OSI-104
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: canonical_validation_table_source_of_truth
+node_compile_hint:
+  mode: canonical_validation_table_source_of_truth
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0099
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0100
+preserved_exact_tokens:
+- Gaps and potential issues in start/end verification
+- Canonical validation-table source of truth
+- config field
+- GUI control or UI source
+- backend consumer
+- phase
+- task
+- subtask
+- iteration
+- interview_phase
+- validate_config_wiring_for_tier(...)
+negative_constraints:
+- Readiness MUST NOT be heuristic prose.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- >-
+  Self PolicyRule anchor #config-wiring-verification is preserved as ContractRef text from source; no governance anchor generation
+  occurs in this batch.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- >-
+  ContractRef: ContractName:Plans/Contracts_V0.md, PolicyRule:Plans/orchestrator-subagent-integration.md#config-wiring-verification
+```
+
+### OSI-130 - Tier Start Verification Preconditions
+
+```yaml
+plan_unit_id: OSI-130
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Start-of-phase, start-of-task, and start-of-subtask verification run config-wiring validation, readiness validation, operation-sequence
+  validation, and known-gap detection before tier execution may start.
+gui_related: false
+gui_classification_reason: This unit defines backend verification preconditions rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-108
+- OSI-112
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: tier_start_verification_preconditions
+node_compile_hint:
+  mode: tier_start_verification_preconditions
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0101
+preserved_exact_tokens:
+- Start-of-tier verification
+- config-wiring validation against the canonical table
+- readiness validation for required upstream artifacts and dependencies
+- operation-sequence validation
+- known-gap detection for execution-affecting unresolved prerequisites
+negative_constraints:
+- A tier MUST NOT start when a required execution-affecting field is unwired, unavailable, or inconsistent.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- >-
+  Self PolicyRule anchor #tier-start-preconditions is preserved as ContractRef text from source; no governance anchor generation
+  occurs in this batch.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- >-
+  ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Plans/orchestrator-subagent-integration.md#tier-start-preconditions
+```
+
+### OSI-131 - Tier End Verification Sequence
+
+```yaml
+plan_unit_id: OSI-131
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  End-of-phase, end-of-task, and end-of-subtask verification run config-wiring re-checks, acceptance checks, quality review,
+  and feedback emission for failed requirements, quality findings, or retry/remediation triggers.
+gui_related: false
+gui_classification_reason: This unit defines backend tier-end verification sequence rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-115
+- OSI-120
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: tier_end_verification_sequence
+node_compile_hint:
+  mode: tier_end_verification_sequence
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0102
+preserved_exact_tokens:
+- End-of-tier verification
+- config-wiring re-check
+- acceptance check
+- quality review
+- feedback emission
+- retry/remediation trigger
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-132 - Canonical Tier Quality Matrix
+
+```yaml
+plan_unit_id: OSI-132
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The canonical quality matrix maps tier types to required reviews for Phase, Task, Subtask, Iteration, and Interview phase,
+  preserving artifact completeness, design correctness, code review, tests, lint/format, local retry acceptance, and downstream
+  plan generation readiness criteria.
+gui_related: false
+gui_classification_reason: This unit defines tier quality criteria, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-126
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: canonical_tier_quality_matrix
+node_compile_hint:
+  mode: canonical_tier_quality_matrix
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0103
+preserved_exact_tokens:
+- Canonical quality matrix
+- Phase
+- artifact completeness, acceptance coverage, cross-doc integrity, terminology alignment
+- Task
+- design/contract correctness, dependency consistency, fit with parent phase intent
+- Subtask
+- code review, tests for touched scope, lint/format for touched scope, implementation acceptance
+- Iteration
+- local acceptance of the concrete retry/fix objective when iteration-level execution is used
+- Interview phase
+- >-
+  document completeness, decision clarity, unresolved-clarification handling, output readiness for downstream plan generation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 13899-13910 >>>
+### OSI-133 - Reviewer Participation Required
+
+```yaml
+plan_unit_id: OSI-133
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The reviewer/quality path is mandatory at the end of every tier completion path, on retry paths after a failed tier is re-attempted,
+  and when a quality gate failure feeds remediation back into the same tier.
+gui_related: false
+gui_classification_reason: This unit covers required verification participation rather than GUI behavior.

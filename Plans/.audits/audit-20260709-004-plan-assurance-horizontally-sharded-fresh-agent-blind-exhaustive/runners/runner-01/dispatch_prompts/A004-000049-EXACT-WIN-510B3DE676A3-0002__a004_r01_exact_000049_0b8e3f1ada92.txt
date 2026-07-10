@@ -1,0 +1,44 @@
+You are a fresh, terminal, read-only reviewer for exactly one blind audit assignment. Required runtime identity: native gpt-5.6-sol with reasoning_effort=ultra. Perform no other task and spawn no agents.
+
+Immutable assignment
+- assignment_id: A004-000049-EXACT-WIN-510B3DE676A3-0002
+- runner_id: runner-01
+- role: contract_capability_exact_behavior
+- window_id: WIN-510B3DE676A3-0002
+- doc_id: DOC-510B3DE676A3
+- document_path: Plans/storage-plan.md
+- core_range: [158,489]
+- source_sha256: 66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1
+- capsule_ref: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000049-EXACT-WIN-510B3DE676A3-0002.json
+- capsule_sha256: a6c6b27236f892b0e340f0399e155b5200b8c465ebed7791f3fc2f6f16947483
+- source_excerpt_ref: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-510B3DE676A3-0002.txt
+- source_excerpt_sha256: 45713becb5d40267c0d1729e02153afa8a8d023bb9dff8ac3028ce124212d62f
+- capsule_package_bytes: 43559
+- agent_instance_id: a004_r01_exact_000049_0b8e3f1ada92
+- agent_path: /root/a004_r01_exact_000049_0b8e3f1ada92
+
+Scope firewall
+Read only the two files named by capsule_ref and source_excerpt_ref. Do not read AGENTS.md, Plans/00-plans-index.md, the underlying full document, any other capsule/window, any runner result, any audit 001-003 path, git history/status/diff, web sources, or unrelated repository files. Do not write or modify any file. Verify both file hashes before review. The source excerpt plus capsule metadata is your entire evidence universe.
+
+Fixed universal lens
+Within only the assigned role and capsule, test correctness, completeness, internal consistency, implementability, verifiability, authority/consumer boundaries, states and transitions, failure/recovery behavior, permissions/security implications, GUI-visible truth, acceptance evidence, and consequential builder discretion. Do not import requirements from outside the capsule.
+
+Role card
+Extract exact behavior, contracts, capabilities, states, authorities, consumers, GUI truth, failures, acceptance evidence, and consequential builder discretion from only this capsule. Identify underspecified obligations with exact source lines. Do not use external or prior-audit knowledge.
+
+Identity receipt
+Call the read-only get_goal({}) tool once if available solely to obtain this child thread's real threadId; do not create a Goal. Put the exact returned threadId in agent_thread_id, or null only if the API exposes none.
+
+Output contract
+Return exactly one valid JSON object and no markdown fences or prose outside it. Required top-level keys and values:
+- assignment_id=A004-000049-EXACT-WIN-510B3DE676A3-0002; runner_id=runner-01; status=valid_result or infrastructure_error
+- agent_instance_id=a004_r01_exact_000049_0b8e3f1ada92; agent_path=/root/a004_r01_exact_000049_0b8e3f1ada92; agent_thread_id=<real child thread UUID or null if unavailable>
+- model=gpt-5.6-sol; reasoning_effort=ultra; role=contract_capability_exact_behavior; window_id=WIN-510B3DE676A3-0002; doc_id=DOC-510B3DE676A3; document_path=Plans/storage-plan.md; core_range=[158,489]
+- observations: array of objects with observation_id, statement, evidence_ref_ids
+- candidate_findings: array of objects with finding_id, severity (critical|high|medium|low), gap_type, statement, why_consequential, evidence_ref_ids
+- explicit_non_gaps: array of objects with non_gap_id, statement, evidence_ref_ids
+- unknowns: array of objects with unknown_id, statement, evidence_ref_ids
+- exact_evidence_refs: array of objects with evidence_id, document_path, line_start, line_end, quote
+- scope_confirmation={"capsule_only":true,"prior_audits_used":false,"other_results_used":false,"unrelated_windows_used":false}
+- terminal_after_result=true
+Every substantive item must cite at least one evidence_ref_id. Every evidence line must be within the capsule's core or overlap ranges, must name the assigned document_path, and quote the excerpt exactly. Return at least one exact evidence reference for valid_result. Arrays may otherwise be empty when justified by the capsule. On any hash mismatch, use status=infrastructure_error and describe it only in unknowns. After returning this object, you are terminal and must perform no further work.

@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE 6811-6822 >>>
+- host
+- repo/worktree
+- recover-unsaved context
+negative_constraints:
+- A stale cross-ref can reopen the visible query but cannot claim write authority.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6823-7210 >>>
+### SP-079 - SCM Side-Effect Lineage And Partial Receipt Replay
+
+```yaml
+plan_unit_id: SP-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: SCM side-effect lineage persists restart-stable receipt context for Orchestrator and Source Control, including repo/worktree/branch/head refs, partial receipt availability, destination filter/focus replay, and explicit complete-or-partial lineage state.
+gui_related: false
+gui_classification_reason: This unit preserves backend SCM receipt lineage and restart replay semantics.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: scm_side_effect_lineage_and_partial_receipt_replay
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- SCM side-effect lineage
+- restart-stable receipt context
+- repo/worktree/branch/head refs
+- partial receipt availability
+- complete or partial
+- destination
+- filter or focus mode
+- Partial lineage
+negative_constraints:
+- Partial lineage is stored as an explicit state and must not be silently omitted or invented.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-080 - SCM Worktree Canonical Identity
+
+```yaml
+plan_unit_id: SP-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'SCM/worktree contract-resolution is storage-owned: project_id remains top-level, repo_id derives from vcs_root_fingerprint, worktree_id derives from worktree_realpath_fingerprint, worktree_path is display/navigation state, and historical snapshots stay separate from live_state.'
+gui_related: false
+gui_classification_reason: This unit preserves backend SCM and worktree identity rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: scm_worktree_canonical_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- project_id
+- repo_id
+- vcs_root_fingerprint
+- gitrepo::<project_id>::<vcs_root_fingerprint>
+- worktree_id
+- worktree_realpath_fingerprint
+- worktree::<repo_id>::<worktree_realpath_fingerprint>
+- worktree_path
+- /navigation
+- historical_snapshot
+- live_state
+- compare_historical_to_live
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-081 - SCM Runtime Record Growth
+
+```yaml
+plan_unit_id: SP-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: SCM-capable attempt, tier runtime, blocked projection, and evidence records add exact SCM refs, dirty/conflict fields, ownership and baseline states, recovery targets, and evidence_scm_state so replay does not reconstruct state from UI text.
+gui_related: false
+gui_classification_reason: This unit preserves backend SCM runtime-record field growth.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: scm_runtime_record_growth
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- attempt_record
+- tier_runtime_record
+- blocked_projection
+- evidence_record
+- repo_id
+- worktree_id
+- worktree_path
+- branch_name
+- head_commit_oid
+- baseline_commit_oid
+- compare_target_ref
+- git_operation_ref
+- pr_ref
+- dirty_file_paths
+- dirty_file_paths[]
+- conflict_file_paths[]
+- ownership_state
+- evidence_scm_state
+negative_constraints:
+- Receipts, blocked cards, and history replay exact SCM state instead of reconstructing it from UI text.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-082 - Project And Worktree Tombstone Lifecycle
+
+```yaml
+plan_unit_id: SP-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Project roots and retired worktrees keep durable tombstone states after deletion or missing-root, preserving immutable identity, last-known refs, receipts, historical deep-link behavior, and validation before resumable state.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible tombstone, historical link, and rebind behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: project_and_worktree_tombstone_lifecycle
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- active
+- missing_on_disk
+- archived_from_ui
+- deleted_from_registry
+- not-found
+- rebind_required
+- worktree_id
+- /receipts
+- /recreate
+- tombstone detail
+- nearest valid compare target
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-083 - Receipt Reference-State And Live-List Anchors
+
+```yaml
+plan_unit_id: SP-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Receipt reference_state degradation is deterministic when identities disappear, and live-refreshing lists preserve row, menu, dialog, action anchors, and update-source metadata while users focus or arm mutations.
+gui_related: true
+gui_classification_reason: This unit preserves visible receipt degradation, list anchors, and update-source metadata.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: receipt_reference_state_and_live_list_anchors
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- reference_state
+- reference-state
+- live
+- historical
+- missing
+- superseded
+- target_no_longer_available
+- rebased-away
+- already_stopped
+- already_replaced
+- already_finished
+- completed_before_cancel
+- /containers
+- /restarted
+- /menu/dialog
+- /update-source
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-084 - Source Control Storage Owner Boundary
+
+```yaml
+plan_unit_id: SP-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Source Control storage is an independent provider-agnostic SCM surface contract; storage owns durable keys and receipt joins while GUI owner docs own command placement.
+gui_related: false
+gui_classification_reason: This unit preserves backend storage owner/consumer boundaries for Source Control.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: source_control_storage_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- Source Control storage
+- independent SCM surface contract
+- GitHub-only side effect
+- provider-agnostic SCM inventory
+- graph/history filters
+- merge-editor availability
+- compare identity
+- conflict presentation
+- remote-aware Source Control contexts
+negative_constraints:
+- Source Control storage is not a GitHub-only side effect.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-085 - SCM Review GUI State Storage Boundary
+
+```yaml
+plan_unit_id: SP-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: SCM/review GUI state stores identity-rich review routes and summaries for compare, open/review, diff markers, heat maps, conflict heat maps, side-panel filter/focus, and preview linkage without owning hunk UI layout.
+gui_related: true
+gui_classification_reason: This unit preserves visible SCM review routes, banners, markers, heat maps, and preview linkage.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: scm_review_gui_state_storage_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- /open/review
+- /banners
+- /drifted
+- /change-marker
+- heat-map
+- /hunk/conflict/heat-map
+- /preview
+- side-panel filter/focus state
+- hunk UI layout
+negative_constraints:
+- Storage records review-state summaries without owning hunk UI layout.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 7211-7222 >>>
+### SP-086 - File Command Receipt Payload Vocabulary
+
+```yaml
+plan_unit_id: SP-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview.
+gui_related: false
+gui_classification_reason: This unit preserves backend command-ref and receipt payload vocabulary.
+split_recommended: false
+depends_on:

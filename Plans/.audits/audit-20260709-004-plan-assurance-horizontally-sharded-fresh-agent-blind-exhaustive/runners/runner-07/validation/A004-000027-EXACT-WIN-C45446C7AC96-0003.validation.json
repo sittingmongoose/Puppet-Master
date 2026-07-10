@@ -1,0 +1,58 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "attempt_id": "A004-R07-ATTEMPT-000003",
+  "assignment_id": "A004-000027-EXACT-WIN-C45446C7AC96-0003",
+  "agent_instance_id": "1219dab3-dd57-4c16-ac01-9807cef6c759",
+  "agent_path": "/root/a004_r07_exact_0027_1219dab3",
+  "agent_thread_id": "019f4a01-ed1a-7dc2-9de6-a1726e3f45ad",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "window_id": "WIN-C45446C7AC96-0003",
+  "document_path": "Plans/MiscPlan.md",
+  "core_range": [
+    661,
+    908
+  ],
+  "context_ranges": [
+    [
+      649,
+      660
+    ],
+    [
+      909,
+      920
+    ]
+  ],
+  "source_sha256": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000027-EXACT-WIN-C45446C7AC96-0003.json",
+  "capsule_sha256": "7dca6ffbf705a688bde2696f014b49529b8c0a5fd1a9813436387e079d7cce10",
+  "capsule_bytes": 1633,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-C45446C7AC96-0003.txt",
+  "source_excerpt_sha256": "51894088642fa9f051a6d1627d95241e990357b4a19606099a05991be87a461c",
+  "source_excerpt_bytes": 38645,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/raw_results/A004-000027-EXACT-WIN-C45446C7AC96-0003.json",
+  "result_sha256": "00e61df062f488f6066eea9d644c7e0cfc23f23b34b69579907269b997e4f317",
+  "result_bytes": 44686,
+  "validated_at": "2026-07-10T03:21:49Z",
+  "validation_passed": true,
+  "error_count": 0,
+  "json_parse_passed": true,
+  "assignment_metadata_match": true,
+  "capsule_metadata_match": true,
+  "model_effort_match": true,
+  "identity_single_assignment": true,
+  "range_containment_passed": true,
+  "candidate_findings_have_core_evidence": true,
+  "evidence_ids_resolve": true,
+  "exact_text_present_count": 29,
+  "exact_evidence_refs_count": 29,
+  "scope_attestation_passed": true,
+  "scope_spill_count": 0,
+  "wrong_role_leak_count": 0,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "coverage_credit": 1
+}

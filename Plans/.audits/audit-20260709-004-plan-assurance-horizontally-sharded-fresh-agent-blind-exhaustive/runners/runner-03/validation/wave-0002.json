@@ -1,0 +1,19 @@
+{
+  "wave": 2,
+  "status": "pass",
+  "validated_at": "2026-07-10T03:37:19Z",
+  "assignment_ids": [
+    "A004-000039-EXACT-WIN-C45446C7AC96-0002",
+    "A004-000053-EXACT-WIN-EDC80C197D4C-0001",
+    "A004-000067-EXACT-WIN-C45446C7AC96-0001"
+  ],
+  "valid_result_count": 3,
+  "failed_attempt_count": 0,
+  "unique_agent_instance_count": 3,
+  "duplicate_or_recycled_agent_count": 0,
+  "multi_scope_agent_count": 0,
+  "scope_spill_count": 0,
+  "schema_error_count": 0,
+  "range_error_count": 0,
+  "validator_note": "Contiguous core and context ranges are merged for capsule-boundary checks; no result was modified."
+}

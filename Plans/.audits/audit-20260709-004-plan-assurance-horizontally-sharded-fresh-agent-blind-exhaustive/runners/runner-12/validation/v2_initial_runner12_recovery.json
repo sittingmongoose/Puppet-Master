@@ -1,0 +1,56 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "authority_version": 2,
+  "credited_assignment_count": 3,
+  "credited_assignments_preserved": [
+    {
+      "agent_instance_id": "6f21575c-856a-46cd-9b58-1e3edd3bf377",
+      "agent_thread_id": "019f4a00-ba2f-7f31-931a-c81e25efa1d7",
+      "assignment_id": "A004-000012-ADVERSARIAL-WIN-673E34012C23-0004",
+      "attempt": "1",
+      "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/raw_results/A004-000012-ADVERSARIAL-WIN-673E34012C23-0004.json",
+      "result_sha256": "f83e1d86e7e738990443614eb2d04d545686563f54f454d13919eba84d63e745",
+      "runner_id": "runner-12"
+    },
+    {
+      "agent_instance_id": "83cba472-75af-4235-8b05-a3de5d2f7976",
+      "agent_thread_id": "019f4a01-67cd-7c33-a74c-753ec44c6ae7",
+      "assignment_id": "A004-000034-ADVERSARIAL-WIN-19B62D73B9EF-0002",
+      "attempt": "1",
+      "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/raw_results/A004-000034-ADVERSARIAL-WIN-19B62D73B9EF-0002.json",
+      "result_sha256": "1c212df0cfe35db8c5c7392acf2322d8b797e3d00fcf43ce40e4dba5ef1b03a2",
+      "runner_id": "runner-12"
+    },
+    {
+      "agent_instance_id": "8ef7065d-c0c9-4a59-9b44-cd7da687db5e",
+      "agent_thread_id": "019f4a0f-19a8-73e0-ab94-55c67fd6d5e1",
+      "assignment_id": "A004-000048-ADVERSARIAL-WIN-E0E9CAF5963F-0001",
+      "attempt": "1",
+      "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/raw_results/A004-000048-ADVERSARIAL-WIN-E0E9CAF5963F-0001.json",
+      "result_sha256": "e4cddedb073d2ec8a1d40b772712076bc391b66756de27f45313aefd582ea7ef",
+      "runner_id": "runner-12"
+    }
+  ],
+  "new_zero_credit_failure_receipts": [
+    {
+      "assignment_id": "A004-000014-ADVERSARIAL-WIN-74C788D8A63C-0005",
+      "attempt_id": "A004-000014-ADVERSARIAL-WIN-74C788D8A63C-0005-attempt-1",
+      "failure_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/validation/quarantines/A004-000014-ADVERSARIAL-WIN-74C788D8A63C-0005-attempt-1.json"
+    },
+    {
+      "assignment_id": "A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003",
+      "attempt_id": "A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003-attempt-1",
+      "failure_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/validation/quarantines/A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003-attempt-1.json"
+    },
+    {
+      "assignment_id": "A004-000066-ADVERSARIAL-WIN-74C788D8A63C-0003",
+      "attempt_id": "A004-000066-ADVERSARIAL-WIN-74C788D8A63C-0003-attempt-1",
+      "failure_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/validation/quarantines/A004-000066-ADVERSARIAL-WIN-74C788D8A63C-0003-attempt-1.json"
+    }
+  ],
+  "recorded_at": "2026-07-10T03:45:11.808Z",
+  "runner_id": "runner-12",
+  "source_snapshot_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+  "source_snapshot_sha256": "1d97812656a93be521944576cd14303f11024fb84baefc16f5813b3989f9e984",
+  "zero_credit_failure_count": 3
+}

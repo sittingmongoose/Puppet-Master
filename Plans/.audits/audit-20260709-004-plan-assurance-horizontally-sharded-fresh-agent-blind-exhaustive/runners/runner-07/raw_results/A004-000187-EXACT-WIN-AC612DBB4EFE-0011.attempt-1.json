@@ -1,0 +1,686 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000187-EXACT-WIN-AC612DBB4EFE-0011",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000187-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0187_27c77c55",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-AC612DBB4EFE-0011",
+  "doc_id": "DOC-AC612DBB4EFE",
+  "document_path": "Plans/FinalGUISpec.md",
+  "core_range": [
+    3291,
+    3679
+  ],
+  "context_ranges": [
+    [
+      3279,
+      3290
+    ],
+    [
+      3680,
+      3691
+    ]
+  ],
+  "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+  "core_sha256": "692a6c88d62048647a4ff44f79d2b00550c8b13d783e20c750cc35ecef1b5304",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000187-EXACT-WIN-AC612DBB4EFE-0011.json",
+  "capsule_sha256": "d4ce88be30a17a1668d956e2818c3b52ed3accfabb59b2e672d10853a2ff5883",
+  "capsule_bytes": 1643,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-AC612DBB4EFE-0011.txt",
+  "source_excerpt_sha256": "511e347715677f9cf4ae7cd094c6a12e4719d0f9354a43f724c4413e061ca7e9",
+  "source_excerpt_bytes": 36305,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "The core requires four visually distinct scheduler conditions and defines a two-path recovery UX in which safe points remain runtime anchors, never user-facing restore points.",
+      "evidence_ref_ids": [
+        "ER-001",
+        "ER-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "The detailed blocked-state addendum is explicitly superseded and subordinate, yet it carries concrete badge mappings, concurrent-block navigation, remediation commands, and no-auto-retry behavior.",
+      "evidence_ref_ids": [
+        "ER-003",
+        "ER-004",
+        "ER-005",
+        "ER-006"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "Degraded decomposition continues automatically with a visible warning, while all-nodes-blocked behavior is event/projection-driven and persistent rather than timer-driven.",
+      "evidence_ref_ids": [
+        "ER-007",
+        "ER-008"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "summary": "Final GUI owns visible queue, widget, plan-panel, question-form, terminal handoff, and activity-card behavior, while provider routing/configuration internals remain outside this consumer surface.",
+      "evidence_ref_ids": [
+        "ER-009",
+        "ER-010"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "summary": "Terminal cards are bounded, read-only chat previews over shell-owned stable sessions; interactive, TTY, background, watch, and server work belongs to Terminal, retries create new cards, and promoted transcripts cease to be chat-owned.",
+      "evidence_ref_ids": [
+        "ER-011",
+        "ER-012",
+        "ER-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "summary": "Search answer construction requires search-then-read provenance: raw snippets may shortlist results but final citations must come from pages actually read.",
+      "evidence_ref_ids": [
+        "ER-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "summary": "Web cards preserve provider routing, real-browser Site Reader identity, progress/audit fields, narrative placement, provider-specific labels, runtime disclosure, and a provider-class split.",
+      "evidence_ref_ids": [
+        "ER-015",
+        "ER-016",
+        "ER-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "summary": "The sticky Plan panel is the per-thread authoritative live TODO tracker, preserves terminal TODO states across mode changes, and distinguishes TODO statuses from plan-level supersession.",
+      "evidence_ref_ids": [
+        "ER-021",
+        "ER-022"
+      ]
+    },
+    {
+      "observation_id": "OBS-009",
+      "summary": "Question cards are reusable, thread-scoped, continuously persisted PM-managed flows; required answers gate submission, dismissal does not fabricate or auto-submit answers, and headless/HITL-unavailable paths return unavailable.",
+      "evidence_ref_ids": [
+        "ER-023",
+        "ER-024"
+      ]
+    },
+    {
+      "observation_id": "OBS-010",
+      "summary": "Within this core window the visualizer surface contains only its canonical heading and owner-contract reference; substantive visualizer behavior is not present in the core range.",
+      "evidence_ref_ids": [
+        "ER-025"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "severity": "high",
+      "title": "Terminal badge lifecycle has two incompatible canonical vocabularies",
+      "underspecified_obligation": "Terminal/search/diff operation-card badges are first locked to `idle→running→success|error|timeout`, but terminal and inline operation-card badge consumers are later directed to `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`. The core supplies no total mapping, persisted-value rule, or precedence rule, including no mapping for `timeout`.",
+      "consequential_builder_discretion": "Builders can serialize and render different states for the same command outcome, producing incompatible badges, recovery behavior, analytics, and acceptance tests.",
+      "evidence_ref_ids": [
+        "ER-011",
+        "ER-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-002",
+      "severity": "high",
+      "title": "The claimed locked shared-widget status set excludes later required states",
+      "underspecified_obligation": "The core limits shared widget statuses to `pending|running|completed|failed|cancelled|blocked`, while later making `background` a card state and requiring unavailable web/provider cards to carry `status: \"unavailable\"`. It does not define these as extensions, projections, or mappings to the closed set.",
+      "consequential_builder_discretion": "A schema can reject valid runtime cards, silently coerce `background` or `unavailable`, or expose non-interoperable state values across consumers.",
+      "evidence_ref_ids": [
+        "ER-015",
+        "ER-016",
+        "ER-019",
+        "ER-020"
+      ]
+    },
+    {
+      "finding_id": "FIND-003",
+      "severity": "medium",
+      "title": "Required visual distinctions depend on an explicitly superseded mapping",
+      "underspecified_obligation": "The authoritative core requires visual distinction among blocked, retrying/backoff, remediation-in-progress, and terminal-failure conditions. The only concrete color/icon/label mapping in this window sits inside a section declared superseded and subordinate, calls itself canonical, and covers `attention_required`, `blocked`, and `waiting_approval` rather than all four required scheduler conditions.",
+      "consequential_builder_discretion": "Builders must decide whether the superseded badge table remains binding and invent the visual treatment for retrying, remediation, and terminal failure.",
+      "evidence_ref_ids": [
+        "ER-001",
+        "ER-003",
+        "ER-004"
+      ]
+    },
+    {
+      "finding_id": "FIND-004",
+      "severity": "medium",
+      "title": "Terminal promotion and attach-failure recovery lack decision behavior",
+      "underspecified_obligation": "Non-interactive work may promote when it becomes long-running and running output may promote based on heuristic thresholds, but no duration, output, capability, or authority thresholds are specified. Attach-failure recovery is only said to differ for live, ended, and inline-only processes; the three recovery actions and resulting states are absent.",
+      "consequential_builder_discretion": "Implementations can promote at materially different times, transfer transcript ownership differently, and expose incompatible recovery choices for the same attach failure.",
+      "evidence_ref_ids": [
+        "ER-013",
+        "ER-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-005",
+      "severity": "high",
+      "title": "Edit and Resend have an undefined destructive boundary",
+      "underspecified_obligation": "Edit and Resend discard all later `history/work`, but the core does not define whether that includes queued messages, persisted tool results, terminal sessions, subagent activity, files or external side effects, TODO mutations, or audit records. It also specifies no confirmation, rollback, cancellation, or tombstone behavior.",
+      "consequential_builder_discretion": "The same user action may merely hide chat entries in one implementation and irreversibly discard or misrepresent durable work in another.",
+      "evidence_ref_ids": [
+        "ER-018",
+        "ER-020"
+      ]
+    },
+    {
+      "finding_id": "FIND-006",
+      "severity": "medium",
+      "title": "Two-item queue capacity has no overflow contract",
+      "underspecified_obligation": "The queue is FIFO with a maximum of two messages, transient, and unaffected by Stop, but the behavior for a third enqueue attempt is absent. The core does not say whether submission is disabled, rejected with an error, retained in the composer, or replaces an existing item, nor when a slot becomes free.",
+      "consequential_builder_discretion": "Implementations can silently lose, replace, or reorder user input while each claims compliance with the same maximum.",
+      "evidence_ref_ids": [
+        "ER-018"
+      ]
+    },
+    {
+      "finding_id": "FIND-007",
+      "severity": "medium",
+      "title": "Cancellation-with-partial-results is declared without a result contract",
+      "underspecified_obligation": "Long-running web operations must preserve a cancellation-with-partial-results contract, but the listed payload only provides progress fields and `cancelled: true`; completed-results-plus-failure-detail is stated for the stop-on-first-failure batch branch. No partial-result field/ref, finality marker, provenance rule, or cancellation-versus-failure rendering is defined.",
+      "consequential_builder_discretion": "Adapters and GUI consumers can disagree about whether partial data is returned, where it lives, whether it is citable, and how cancellation is presented.",
+      "evidence_ref_ids": [
+        "ER-015",
+        "ER-017"
+      ]
+    },
+    {
+      "finding_id": "FIND-008",
+      "severity": "medium",
+      "title": "Safe-point validity and fresh-attempt consequences are not defined",
+      "underspecified_obligation": "The GUI must distinguish retry-from-safe-point from start-fresh and disable retry when no valid safe point exists, but the core does not identify the validity authority, freshness/revalidation rule, invalidation event, race behavior, or what lineage and prior evidence a fresh attempt retains.",
+      "consequential_builder_discretion": "Different consumers may enable an unsafe retry, disagree after runtime state changes, or reset different portions of attempt history.",
+      "evidence_ref_ids": [
+        "ER-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-009",
+      "severity": "medium",
+      "title": "Seam-review output obligations lack a typed presence contract",
+      "underspecified_obligation": "The core lists verdict, severity-bearing failure classes, evidence/rationale, remediation or graph-patch recommendations, and corroboration requirement/outcome, but does not state which values are mandatory, their cardinality, the condition meant by `when invoked`, or the GUI behavior when an output is absent or malformed.",
+      "consequential_builder_discretion": "Producers and GUI consumers can create incompatible review payloads and render materially different evidence or remediation affordances.",
+      "evidence_ref_ids": [
+        "ER-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-010",
+      "severity": "medium",
+      "title": "Post-approval Plan editing authority is only described as read-mostly",
+      "underspecified_obligation": "The Plan panel has structural editing controls before approval and becomes `read-mostly` after approval, but the core does not enumerate the residual mutations, actor permissions, approval invalidation behavior, or event/conflict handling for edits during execution.",
+      "consequential_builder_discretion": "Builders can allow different post-approval mutations, with divergent execution integrity and audit meaning.",
+      "evidence_ref_ids": [
+        "ER-021"
+      ]
+    },
+    {
+      "finding_id": "FIND-011",
+      "severity": "medium",
+      "title": "Supersession-label proof has no metadata or authority contract",
+      "underspecified_obligation": "The UI may show `superseded by newer run` only when explicit run-relationship metadata proves one of four relationships, but no field names, producer authority, proof rule, conflict rule, or freshness requirement is identified.",
+      "consequential_builder_discretion": "Consumers can infer lineage from different data and disagree about whether the label is permitted.",
+      "evidence_ref_ids": [
+        "ER-022"
+      ]
+    },
+    {
+      "finding_id": "FIND-012",
+      "severity": "high",
+      "title": "Question lifecycle omits its required dismissed, paused, unavailable, and resume paths",
+      "underspecified_obligation": "The core requires explicit dismissed/paused behavior and defines `unavailable` and `dismissed` values, but its only transition sequence is `draft → incomplete → ready_to_submit → submitted → terminal`. It specifies neither transitions into dismissed/unavailable nor the resume transition after dismissal pauses conversation.",
+      "consequential_builder_discretion": "Question cards can persist incompatible states, block or resume conversations differently, and lose or resubmit drafts inconsistently.",
+      "evidence_ref_ids": [
+        "ER-023",
+        "ER-024"
+      ]
+    },
+    {
+      "finding_id": "FIND-013",
+      "severity": "medium",
+      "title": "Provider disclosure conditions are non-deterministic",
+      "underspecified_obligation": "Runtime identity fields are shown `when present`, while requested/effective delta and fallback disclosure appear `when relevant`. The core does not define presence/relevance predicates, which producer decides them, or whether absent disclosure means equality, unsupported data, stale projection, or redaction.",
+      "consequential_builder_discretion": "Two compliant cards can reveal materially different provider substitution and fallback information for the same operation, weakening trust and audit consistency.",
+      "evidence_ref_ids": [
+        "ER-016"
+      ]
+    },
+    {
+      "finding_id": "FIND-014",
+      "severity": "low",
+      "title": "Immediate all-blocked presentation has no measurable acceptance rule",
+      "underspecified_obligation": "The UI must show a persistent blocked banner or card `immediately` from blocked/recovery events and projections, but the core defines no latency bound, event-versus-projection precedence, deduplication rule, or stale-event reconciliation behavior.",
+      "consequential_builder_discretion": "Implementations can differ in timing and flicker behavior without a deterministic conformance test.",
+      "evidence_ref_ids": [
+        "ER-008"
+      ]
+    },
+    {
+      "finding_id": "FIND-015",
+      "severity": "medium",
+      "title": "Remediation actions lack unavailable-path GUI behavior",
+      "underspecified_obligation": "The remediation-ceiling UI presents Replan, Manual fix, and Abort node, while Abort is qualified by `if the graph allows` and Manual fix says to resume after editing. The core does not define when actions are hidden versus disabled, the denial payload/copy, how edit completion is detected, or who authorizes resume.",
+      "consequential_builder_discretion": "Users can receive actionable-looking commands that fail differently or permit inconsistent graph transitions.",
+      "evidence_ref_ids": [
+        "ER-006"
+      ]
+    },
+    {
+      "finding_id": "FIND-016",
+      "severity": "low",
+      "title": "Preview line limits and large-payload promotion lack measurement rules",
+      "underspecified_obligation": "Collapsed and expanded previews are capped at five and fifteen lines and large data moves behind refs/blobs, but the core does not define logical versus wrapped lines, truncation direction, threshold for `large`, ref/blob lifetime, or the required path to full content.",
+      "consequential_builder_discretion": "Responsive layouts can expose different content, and full-output availability can vary despite identical cards.",
+      "evidence_ref_ids": [
+        "ER-012",
+        "ER-019"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "statement": "Safe points are explicitly prohibited from being presented as restore points, and retry-from-safe-point is explicitly distinct from starting fresh.",
+      "evidence_ref_ids": [
+        "ER-002"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "statement": "Concurrent blocked nodes are explicitly preserved as separate actionable items with a count badge, newest-first list, reason, time, actions, and expandable detail.",
+      "evidence_ref_ids": [
+        "ER-005"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "statement": "At remediation ceiling the blocked reason, banner, three named commands, diagnostic lineage visibility, and prohibition on automatic retry are explicit.",
+      "evidence_ref_ids": [
+        "ER-006"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "statement": "The all-nodes-blocked correctness model is explicitly event/projection-driven; polling is limited to external systems without push and is only a freshness aid.",
+      "evidence_ref_ids": [
+        "ER-008"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "statement": "Terminal interaction ownership is explicit: shell owns interactive state, chat owns bounded preview/audit, promoted cards bind stable session identity, and reruns create new cards rather than mutating completed cards.",
+      "evidence_ref_ids": [
+        "ER-011",
+        "ER-012",
+        "ER-013"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "statement": "The terminal action names listed under `Fields:` are explicitly classified as UI actions rather than payload fields merely because of their placement.",
+      "evidence_ref_ids": [
+        "ER-026"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "statement": "Final citation provenance is explicit: raw search snippets are insufficient and selected pages must be read before citation.",
+      "evidence_ref_ids": [
+        "ER-014"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "statement": "The visible identity split between native `Reading Site` and provider-backed `Fetching Site: <url> (via <provider>)` is explicit and exclusive.",
+      "evidence_ref_ids": [
+        "ER-016"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "statement": "Queued chat work is explicitly transient, is not restored across reload/restart, and Stop does not clear it.",
+      "evidence_ref_ids": [
+        "ER-018"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-010",
+      "statement": "The planning panel is explicitly per-thread and authoritative, and completed or blocked TODO state survives return to Ask mode.",
+      "evidence_ref_ids": [
+        "ER-021"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-011",
+      "statement": "TODO statuses are explicitly separated from plan-level `superseded`, which is not a queue-item state.",
+      "evidence_ref_ids": [
+        "ER-022"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-012",
+      "statement": "Question drafts explicitly auto-save, required questions block submission, dismissal never auto-submits, unavailable paths do not fabricate answers, and question visuals do not use `sendPrompt`.",
+      "evidence_ref_ids": [
+        "ER-023",
+        "ER-024"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-013",
+      "statement": "The source explicitly warns that token-bank entries retain typed roles and must not be merged into one untyped schema.",
+      "evidence_ref_ids": [
+        "ER-027",
+        "ER-028",
+        "ER-029",
+        "ER-030"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNKNOWN-001",
+      "statement": "Referenced owner contracts may define mappings, payload schemas, permissions, and recovery behavior absent from this capsule, but their contents cannot be assessed under the named-window-only scope.",
+      "evidence_ref_ids": [
+        "ER-002",
+        "ER-016",
+        "ER-025"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-002",
+      "statement": "The exact visualizer runtime behavior cannot be assessed from the core because it ends at the owner-contract reference.",
+      "evidence_ref_ids": [
+        "ER-025"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-003",
+      "statement": "Whether executable fixtures or validators elsewhere establish conformance for badge mappings, promotion thresholds, post-approval editing, and question pause/resume behavior is unknown; no such acceptance-evidence identifier appears in the cited core obligations.",
+      "evidence_ref_ids": [
+        "ER-011",
+        "ER-019",
+        "ER-021",
+        "ER-024"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-004",
+      "statement": "The owner-defined schema and runtime semantics for `WebAction`, provider routing, `changeTracking`, TODO events, and question aliases are outside this window, so only their GUI carry-through constraints can be confirmed.",
+      "evidence_ref_ids": [
+        "ER-009",
+        "ER-016",
+        "ER-027",
+        "ER-029",
+        "ER-030"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-001",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3291,
+      "line_end": 3296,
+      "range_class": "core",
+      "exact_quote": "### Runtime state presentation\nScheduler surfaces MUST visually distinguish:\n- blocked waiting for prerequisite or approval\n- retrying/backoff\n- remediation in progress\n- terminal failure"
+    },
+    {
+      "evidence_ref_id": "ER-002",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3298,
+      "line_end": 3304,
+      "range_class": "core",
+      "exact_quote": "### Recovery UX rules\n- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points\n- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`\n- if no valid safe point exists, `Retry from safe point` is disabled with an explanation\n- Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md"
+    },
+    {
+      "evidence_ref_id": "ER-003",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3305,
+      "line_end": 3307,
+      "range_class": "core",
+      "exact_quote": "## Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum\n\n> **Superseded — see Canonical Blocked/Recovery Behavior above. Compatibility/source-lineage only.** This section preserves visual-distinction examples and older recovery wording; it is subordinate to the canonical GUI summary and referenced owner docs."
+    },
+    {
+      "evidence_ref_id": "ER-004",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3311,
+      "line_end": 3319,
+      "range_class": "core",
+      "exact_quote": "| State | Badge Color | Icon | Label Text | Tooltip |\n|-------|-------------|------|------------|---------|\n| `attention_required` | Amber | Warning triangle | \"Needs input\" | \"This step needs your input to continue. The system can still make progress on other steps.\" |\n| `blocked` | Red | Stop circle | \"Blocked\" | \"This step is blocked and cannot continue until you take action. All automatic retries are exhausted.\" |\n| `waiting_approval` | Blue | User badge | \"Awaiting approval\" | \"This step is waiting for your approval before proceeding with a sensitive operation.\" |\n\n- `attention_required` and `blocked` MUST be visually distinct -- they represent different escalation levels.\n- `attention_required` allows continued background work; `blocked` does not.\n- Dashboard cards, thread badges, and Run Graph View node badges all use this canonical visual mapping."
+    },
+    {
+      "evidence_ref_id": "ER-005",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3325,
+      "line_end": 3331,
+      "range_class": "core",
+      "exact_quote": "When multiple nodes are blocked simultaneously:\n\n1. The dashboard MUST show a count badge (e.g., \"3 blocked\") on the run card.\n2. Clicking the badge opens a filtered list of all currently blocked nodes, sorted by `blocked_sequence` descending (most recently blocked first).\n3. Each list item shows: node name, `blocked_reason_code` label, time since blocked, and the primary `allowed_action_ids[]` as action buttons.\n4. The user can expand any item to see full blocked detail (explanation, `detail_ref` contents, remediation lineage if applicable).\n5. Multiple concurrent blocked episodes MUST NOT be collapsed into a single notification -- each blocked node is a distinct actionable item."
+    },
+    {
+      "evidence_ref_id": "ER-006",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3337,
+      "line_end": 3346,
+      "range_class": "core",
+      "exact_quote": "When the remediation generation count reaches the ceiling (default: 3 per Plans/Decision_Policy.md):\n\n1. The node transitions to `blocked` with `blocked_reason_code: remediation_ceiling_exceeded`.\n2. The Run Graph View displays a red \"Remediation limit reached\" banner on the node detail panel.\n3. Available actions presented to the user:\n   - **Replan** (`cmd.orchestrator.replan_node`): Trigger a graph replan that may restructure the node's dependencies.\n   - **Manual fix** (`cmd.orchestrator.open_for_edit`): Open the relevant files for manual editing, then resume.\n   - **Abort node** (`cmd.orchestrator.abort_node`): Mark the node as permanently failed and continue the run without it (if the graph allows).\n4. The remediation lineage tree remains visible for diagnostic purposes.\n5. No automatic retry is permitted after ceiling is reached."
+    },
+    {
+      "evidence_ref_id": "ER-007",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3352,
+      "line_end": 3356,
+      "range_class": "core",
+      "exact_quote": "When draft decomposition degrades from graph to flat sequencing (before canonical graph lock):\n\n1. The UI displays an amber warning banner: \"Plan simplified to sequential steps due to structural issues in the decomposition. Performance may be reduced.\"\n2. The banner includes a \"View details\" link that shows the specific `graph_integrity` issues detected.\n3. No user action is required -- the run continues with flat sequencing automatically."
+    },
+    {
+      "evidence_ref_id": "ER-008",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3364,
+      "line_end": 3369,
+      "range_class": "core",
+      "exact_quote": "> **Superseded** — event-driven blocked-state transitions are canonical. The GUI must react to runtime events and projections, not timer-driven pause or warning thresholds.\n\nCanonical rule:\n1. When all runnable nodes are blocked, the runtime emits the relevant blocked/recovery events and the UI shows the corresponding persistent blocked-state banner or card immediately.\n2. The user can resume at any time after resolving blocks.\n3. Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic."
+    },
+    {
+      "evidence_ref_id": "ER-009",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3382,
+      "line_end": 3392,
+      "range_class": "core",
+      "exact_quote": "- The 2026-04-06 packet-alignment register is historical context only. Final GUI packet regeneration follows the narrowed current reset: live widget text consumes repaired owner docs, and any remaining packet-shape defect inside `Plans/Tools.md#10` must not create duplicate or generalized Final GUI canon.\n- `FID-013`: Web and diff cards consume `changeTracking` or its explicit retirement from the Tools owner; GUI text must not regress to stale `change_status` / `change_summary` as the visible contract.\n- `FID-029`: Web approval summaries preserve session-pattern semantics in permission and approval cards.\n- `FID-008`: Site Reader cards require browser-capability disclosure and no-reuse routing identity; provider fetch cannot reuse PM-native `Reading Site`.\n- `FID-009`: Search-then-read citation locality is preserved; final citations come from the actual read path.\n- `FID-021`: `progress_event` carry-through includes `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed`, `pages_total`, `elapsed_ms`, `estimated_remaining_ms`, and `cancelled: true`.\n- `FID-041`: Planning widgets consume `todowrite` statuses/notes and `todoread` active thread/run scope.\n- `FID-040`: `chat.plan_todo_updated` remains the owner-contract definition for durable normalized TODO mutation.\n- `FID-043` / `FID-043B`: Question cards preserve `response_kind`, `validation_state`, and the compatibility rule that `allow_other is a deprecated alias`; `allow_other` normalizes to `allow_freeform` and must not become a new canonical field.\n- `FID-038`: Queue semantics stay transient, and stale `chat_state:v1` restore residue must not rehydrate queued work across reload or restart.\n- `FID-061`: Runtime identity carry-through includes `requested_account_binding`, `operational_identity`, `effective_account_label`, `effective_provider_identity`, and `effective_project_id`; it never revives `requested_persona_id` as GUI identity canon."
+    },
+    {
+      "evidence_ref_id": "ER-010",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3394,
+      "line_end": 3396,
+      "range_class": "core",
+      "exact_quote": "Chat-panel carry-through into promoted widgets includes `activity-card` rendering, `jump-to-latest` badge behavior that re-enables `/auto-follow` when the user returns to the bottom, `/auto-follow` scroll state, `/search/diff` card anatomy, live TODO tracker ownership, and the provider settings layout constraint: provider routing/configuration internals stay OUT of FinalGUISpec while provider-runtime docs remain provisional.\n\nFinal GUI ownership includes chat-visible queue behavior, chat widgets, the sticky plan panel as a live TODO execution tracker, question forms, Agent Config IA, terminal `/open-in-terminal` behavior, and `activity-card` rendering; provider routing/configuration internals stay out of this GUI consumer surface."
+    },
+    {
+      "evidence_ref_id": "ER-011",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3403,
+      "line_end": 3413,
+      "range_class": "core",
+      "exact_quote": "- Operation cards preserve the three-way rendering distinction across terminal, search, and diff/web cards; card-level status badges use the lifecycle `idle→running→success|error|timeout` while owner runtimes keep their richer internal taxonomies.\n- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy: header, status badge, body, and action row with per-type specialization.\n- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.\n- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.\n- Terminal cards default to a collapsed tool line with inline expand for immediate inspection, explicit open/show actions through `Open in Terminal` / `Show Terminal` reveal controls for the canonical terminal session, and an explicit background/continue-in-terminal action for long-running commands.\n- Type-specific primary actions stay distinct: terminal cards expose `Open in Terminal` and `/open-in-terminal`; search cards open or `/focus` the results view `/list`; edit `/diff` cards open the file in the editor with the diff visible.\n- Rendering identity remains explicit: one-shot `bash` tool invocations and search tools render inline, while shell-owned live terminal/output surfaces own longer sessions and full `/output`; Chat or Bottom panel (`Terminal/Output`) pop-out triggers detach or re-dock the shell panel without changing session identity.\n- Terminal-command approval copy may include sandbox/approval/allowlist context when that helps developer-trust-forward user trust, but terminal-first framing applies only where the owning surface is terminal-centric; chat and terminal must not collapse into one undifferentiated transcript.\n- The scope boundary is additive-vs-replacement: `/inline` chat cards, `/command-card` previews, mini-terminal previews, and `/Problems/Ports/Browser` `/linkback` affordances add views into the shell-owned terminal/workflow model rather than minting brand-new pseudo-terminals.\n- This keeps terminal-adjacent previews in-scope as bounded chat-owned views while the shell-first runtime remains canonical; out-of-scope and non-canonical alternatives include independent mini-terminal products or inline pseudo-terminals with separate runtime ownership.\n- Detached or `/popped-out` terminal windows, `/remoted` or browser-adjacent `/presentation` layers, and terminal-adjacent dev-session views are `/reaffirmed` as presentations of canonical terminal sessions, not competing product models."
+    },
+    {
+      "evidence_ref_id": "ER-012",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3423,
+      "line_end": 3435,
+      "range_class": "core",
+      "exact_quote": "- Collapsed preview: 5 lines\n- Expanded preview: 15 lines\n- Persists after completion\n- status, cwd, command summary, elapsed time, exit code / truncation indicator\n- READ-ONLY and non-interactive\n- One card per command\n- Retries create a new terminal and therefore a new mini terminal card; Rerun in Terminal creates a new card rather than mutating the completed card\n- Shell owns interactive state; chat owns preview+audit\n- Commands requiring stdin/TTY start Terminal immediately\n- Background/watch/server actions create terminal-owned session\n- One-shot commands remain chat-inline by default\n- Every promoted command card binds to stable terminal session identity\n- Large payloads store full data behind refs/blobs"
+    },
+    {
+      "evidence_ref_id": "ER-013",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3436,
+      "line_end": 3441,
+      "range_class": "core",
+      "exact_quote": "- non-interactive work may promote if it becomes long-running\n- attach failure recovery differs for live process, ended process, and inline-only completed command\n- `Open in Terminal` and `Show Terminal` must focus the same live session\n- after promotion, chat stops owning the full transcript\n- inline cards persist across thread reload and re-render from persisted metadata\n- search and diff do not stream progressively"
+    },
+    {
+      "evidence_ref_id": "ER-014",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3451,
+      "line_end": 3465,
+      "range_class": "core",
+      "exact_quote": "Core rules:\n- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.\n- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.\n\nFields:\n- Serper-backed Google-result behavior\n- sources\n- categories\n- optional result scraping behavior in Firecrawl `websearch`\n\nRules:\n- search-then-read behavior\n- final citations come from the actual read path\n- raw search snippets alone are not enough provenance for the final answer\n- chat may shortlist with search but must read chosen pages before citing them as final evidence"
+    },
+    {
+      "evidence_ref_id": "ER-015",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3473,
+      "line_end": 3484,
+      "range_class": "core",
+      "exact_quote": "- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.\n- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.\n- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.\n- Batch semantics must preserve the explicit false branch for continue_on_error.\n- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.\n- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.\n- Operation cards are restricted to stateful, time-bounded lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.\n- Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart.\n- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.\n- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.\n- Web activity detail payloads display `adapter_id` examples (e.g. `exa`, `firecrawl`, and `pm_native`); `timestamp` is an ISO 8601 string; `execution_path` may be `pm_site_reader`, `provider_firecrawl_scrape`, or another owner-defined route; and non-fatal `warnings` surface with the activity details.\n- The display schema treats `tool_use_id`, `adapter_id`, `adapter_selection_reason`, `timestamp`, `error_code`, `error_message`, `provenance_badge`, and `execution_path` as string fields, `duration_ms` as number, `cached` as boolean, and `warnings` as string[]."
+    },
+    {
+      "evidence_ref_id": "ER-016",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3485,
+      "line_end": 3497,
+      "range_class": "core",
+      "exact_quote": "- Chat message-stream controls expose a `jump-to-latest` / `jump-to-bottom` to-bottom control with an `unseen-count` badge when the user is away from the bottom, and `/auto-follow` resumes only when the user returns to the bottom.\n- Web/search/diff cards preserve distinct card anatomy: `Searching Web` is the activity label for web search or research discovery, `Reading Site` is reserved for native Site Reader, and `/diff` cards plus search cards do not inherit code-block copy affordances.\n- Web activity card collapsed labels use the concrete operation: `Searching Web: <query>`, `Fetching Site: <url> (via <provider>)`, `Reading Site: <url>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, and `Mapping Site: <url>`; `Reading Site: <url>` is reserved EXCLUSIVELY for the PM-native Site Reader path, while provider-routed or provider-delegated fetch uses `Fetching Site: <url> (via <provider>)`.\n- Narrative order is command trigger in assistant narrative, inline operation card (mini terminal/search/diff), then assistant textual summary `/commentary`; cards do not float out of narrative position.\n- Web operation cards render completed content only on `/completion`; while running, activity progress text may stream labels such as `Researching Web: <query>` or `Crawling Site: example.com (12/25 pages)` for `/25` page caps, and summary rows use `<operation>: <query/url> — N sources` when a source count is available.\n- Web/provider GUI consumers treat `Plans/Tools.md` as the PRIMARY SSOT for `WebAction`, Firecrawl-as-provider routing, `/questionnaire` and TODO carry-through, while FinalGUISpec owns visible card/progress behavior.\n- GUI web cards expose structured `operation_input` as the canonical operation input; legacy `web_input` is source-lineage/compatibility input that normalizes before card rendering. TODO projections surfaced with web/activity progress use `pending | in_progress | completed | blocked | skipped`.\n- Runtime disclosure fields shown by web cards include `requested_account_binding`, `operational_identity`, `effective_account_label`, `effective_provider_identity`, and `effective_project_id` when present.\n- Legacy `/operation-card` references normalize to the operation-card widget family; individual web, terminal, search, and diff card types keep their owner-specific payload contracts.\n- Search and diff/web cards do not expose terminal `show terminal` or `detach/pop-out` affordances; only terminal cards expose those actions, while long-running web operations may use `background` state.\n- Provider disclosure displays the exact provider class split `account-backed|API-backed|no-key`, surfaces `QuestionItem`-aligned question widgets, and keeps shared widget statuses within `pending|running|completed|failed|cancelled|blocked`.\n- Expanded web activity details include operation input, requested/effective runtime delta when relevant, support tier, fallback disclosure when relevant, source count or scope summary, and warning or error text.\n- Rate-limit/outage fallback cards show the failed provider and next same-operation provider in the visible activity label; the audit log records the same explanation in `provider_fallback_summary`."
+    },
+    {
+      "evidence_ref_id": "ER-017",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3504,
+      "line_end": 3516,
+      "range_class": "core",
+      "exact_quote": "- continue_on_error: false\n- stop on the first failure\n- return completed results plus failure detail\n- progress_event\n- tool_use_id\n- operation\n- phase\n- detail\n- pages_completed\n- pages_total\n- elapsed_ms\n- estimated_remaining_ms\n- cancelled: true"
+    },
+    {
+      "evidence_ref_id": "ER-018",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3563,
+      "line_end": 3569,
+      "range_class": "core",
+      "exact_quote": "- Stop/Edit/Resend attach ONLY to most recent user-sent message\n- discards all later history/work\n- FIFO, max 2 queued messages\n- queue is transient and not restart-persisted\n- Stop does NOT clear the queue\n- always-visible copy affordance on fenced code blocks\n- queue state is transient and is not restored across reload or restart"
+    },
+    {
+      "evidence_ref_id": "ER-019",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3578,
+      "line_end": 3584,
+      "range_class": "core",
+      "exact_quote": "- running output may promote out of inline comfort based on heuristic thresholds\n- `blocked` is a card-level state entered from `running` and returned to `running` on unblock\n- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`\n- Terminal and inline operation-card badge consumers align with `assistant-chat-design.md §13` for command-card states: `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`. Generic workflow states such as `completed`, `cancelled`, or `blocked` may appear on other shared widgets, but terminal command cards must map completion to `exited`, cancellation to `terminated`, and recovery/action-needed cases to `attention_required` or blocked-with-reason as specified by the owning chat contract.\n- When the user backgrounds a long-running operation card, the card-state enters `background` state and shows a `backgrounded` badge; completion updates the badge to `completed` or `failed` and notifies the user.\n- Card anatomy is per-card-type: compact previews use 5 lines, expanded detail uses a `/15-line` cap, complete-result cards persist after completion, background cards retain `background` state, FIFO message queues remain separate from operation-card state, and terminal retries expose `Rerun in Terminal` as a new card.\n- Terminal operation actions preserve `Open in Terminal|Show Terminal|Rerun in Terminal|Detach/Pop-Out` as distinct UI actions over the owning terminal session."
+    },
+    {
+      "evidence_ref_id": "ER-020",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3585,
+      "line_end": 3591,
+      "range_class": "core",
+      "exact_quote": "- simple read/grep/glob results remain inline text, not cards\n- Stop becomes disabled when a run completes and no next message is queued\n- Edit restores content into composer and discards later history/work\n- Resend retries the most recent message and discards later history/work\n- blocked responses must be machine-actionable through `allowed_action_ids[]`\n- error naming aligns to `adapter_unavailable`\n- Blocked or unavailable web/provider cards may display exact surfaced reason labels such as `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, and `timeout`; contract payloads still normalize provider failures through owner-owned error codes, and the card carries `status: \"unavailable\"`, `blocked_reason_code`, `allowed_action_ids[]`, and audit routing fields for recovery."
+    },
+    {
+      "evidence_ref_id": "ER-021",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3601,
+      "line_end": 3607,
+      "range_class": "core",
+      "exact_quote": "- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.\n- The sticky Plan panel is per thread and is the authoritative TODO tracker. It shows plan title/summary, TODOs in canonical order, status badge per TODO, dependency hints, owner or delegated-executor badge when relevant, and verification hint.\n- Legacy optional spellings `notes?` and `order_index?` normalize to canonical `notes` and `order_index`; this intentionally retires the source `?` suffix rather than dropping notes or ordering.\n- The sticky Plan panel is a live execution tracker, not a checkbox-only list; inline question forms align to the shared `questionnaire` contract before execution advances.\n- Before approval, the Plan panel exposes structural editing controls for TODO items. After approval, the approved/executing plan becomes an execution-tracker view with read-mostly structure while still showing live status changes.\n- Inline chat progress is limited to compact milestones such as `Started TODO 2/5: add parser tests`, `Completed TODO 2/5`, and `Blocked TODO 3/5: waiting on permission`; clicking a milestone focuses or opens the sticky Plan panel at that item when possible.\n- Completed or blocked plan execution leaves the final TODO states visible in thread and panel history, and returning to Ask mode must not erase the plan/TODO state for that thread."
+    },
+    {
+      "evidence_ref_id": "ER-022",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3609,
+      "line_end": 3623,
+      "range_class": "core",
+      "exact_quote": "Fields:\n- Q&A loop\n- todo_id\n- title\n- summary\n- status\n- dependencies[]\n- order_index\n- owner_hint\n- verification_hint\n- notes\n- pending | in_progress | completed | blocked | skipped\n- superseded\n- `superseded` is plan-level only and is not a queue item state\n- UI copy must not say `superseded by newer run` unless explicit run-relationship metadata proves derivation, continuation, replacement, or validity lineage; otherwise run history remains chronological-first and the label stays unavailable."
+    },
+    {
+      "evidence_ref_id": "ER-023",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3635,
+      "line_end": 3643,
+      "range_class": "core",
+      "exact_quote": "Core rules:\n- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.\n- Question cards are a reusable Assistant/Interviewer/requirements-builder component family rather than Interview-only wording. They support `single_question` and multi-question `questionnaire` flows, draft navigation, out-of-order completion, final submit, and continuous draft persistence.\n- The `question-card` family uses a `question-flow` form for multi-question sets: navigable `/flow` or `/list`, out-of-order answering, edits before final submission, draft state that auto-saves, final submit only when required answers are complete, and exiting or dismissing never auto-submits or performs `auto-submitting` fallback.\n- Question cards may include visuals when `/helpful`; visuals may write to question-flow draft state, but inline visuals are not `question-only` and may also serve user-requested interactive artifacts.\n- Headless or `HITL`-unavailable paths return `status = \"unavailable\"` rather than fabricated answers, and subagent `/brainstorming` must consolidate through the top-level question flow instead of spawning independent user prompts.\n- Task/subagent/question escalation is consumed from `Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`); Final GUI question cards align shared question/runtime display without redefining child-run ownership.\n- Single-choice + Other is represented by `single_question` plus `allow_freeform`; richer preference collection uses the shared multi-select questionnaire contract when the schema sets `multi_select`.\n- Question-card draft persistence is thread-scoped and `/structured`: per-question `draft_value` and partial answers auto-save continuously, restore on `/navigation-return` or `/close`, and expose no manual save control."
+    },
+    {
+      "evidence_ref_id": "ER-024",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3645,
+      "line_end": 3669,
+      "range_class": "core",
+      "exact_quote": "Labels and values:\n- questionnaire\n- single_question\n- unavailable\n- dismissed\n\nRules:\n- NOT via `sendPrompt`\n- question visuals write to PM draft state, not `sendPrompt`\n- Something else\n- Always-visible options\n- Drafts auto-save until submit\n- Exiting/dismissing does NOT auto-submit\n- Thread-scoped draft state\n- status: 'dismissed'\n- draft\n- drafts auto-save continuously\n- required questions block final submit\n- question cards may include a visual\n- users can answer out of order and revise before submit\n- dismissing pauses conversation until resume\n- `draft → incomplete` = user begins answering any question\n- `incomplete → ready_to_submit` = all `required` questions answered\n- `ready_to_submit → submitted` = user confirms submit\n- `submitted → [terminal]` = no further transitions"
+    },
+    {
+      "evidence_ref_id": "ER-025",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3672,
+      "line_end": 3679,
+      "range_class": "core",
+      "exact_quote": "### 15.6 Mermaid and inline visualizer widgets\n\n\n### 15.6A Visualizer runtime contract\n\nThis section defines the canonical contract for this surface.\n\nContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge"
+    },
+    {
+      "evidence_ref_id": "ER-026",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3443,
+      "line_end": 3443,
+      "range_class": "core",
+      "exact_quote": "Compatibility/source-lineage disposition: this extract preserves terminal card payload fields, display actions, and behavior fragments in their source order. `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain display/action tokens, not payload fields solely because they appeared under `Fields:`."
+    },
+    {
+      "evidence_ref_id": "ER-027",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3467,
+      "line_end": 3467,
+      "range_class": "core",
+      "exact_quote": "Compatibility/source-lineage disposition: this extract preserves web/search source tokens. `Serper-backed Google-result behavior`, `sources`, and `categories` are interpreted through Tools/storage/contracts ownership and search-then-read rules, not as a complete GUI-owned schema."
+    },
+    {
+      "evidence_ref_id": "ER-028",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3593,
+      "line_end": 3593,
+      "range_class": "core",
+      "exact_quote": "Compatibility/source-lineage disposition: this extract is a token bank split by typed role through Core rules, ContractRefs, and owner docs. Tool operation names, payload keys, card labels, lifecycle states, permission fragments, and behavior rules remain exact source tokens but are not one untyped schema."
+    },
+    {
+      "evidence_ref_id": "ER-029",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3630,
+      "line_end": 3630,
+      "range_class": "core",
+      "exact_quote": "Compatibility/source-lineage disposition: this extract preserves TODO payload fields, display labels, and status values. `Q&A loop`, `Plan`, `Deep Plan`, and `chat.plan_todo_updated` keep their typed roles through the planning/chat owner contracts rather than becoming ordinary payload fields."
+    },
+    {
+      "evidence_ref_id": "ER-030",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 3671,
+      "line_end": 3671,
+      "range_class": "core",
+      "exact_quote": "Compatibility/source-lineage disposition: this extract preserves question-flow payload fields, display labels, aliases, and lifecycle rules. `questionnaire`, `single_question`, `unavailable`, `dismissed`, and `sendPrompt` constraints are typed through the question-flow Core rules rather than merged into one schema list."
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

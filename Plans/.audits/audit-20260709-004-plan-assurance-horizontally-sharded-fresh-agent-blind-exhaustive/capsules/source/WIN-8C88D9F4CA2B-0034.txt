@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 12503-12514 >>>
+          "requirement": "cmd.file.open_in_system_default has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_in_system_default.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.open_in_system_default records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 12515-12906 >>>
+    "catalog.file_open_with": {
+      "ui_element_id": "catalog.file_open_with",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.open_with",
+      "handler_location": "handlers::file::open_with",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.open_with must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.open_with must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.open_with dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.open_with must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.open_with must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.open_with; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_open_with.availability",
+      "disabled_reason_projection": "state.commands.file_open_with.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.open_with has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.open_with.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_open_with exposes a stable role/name/description matching cmd.file.open_with.",
+        "keyboard_access": "catalog.file_open_with is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_open_with preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_open_with surfaces state.commands.file_open_with.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_open_with.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.open_with reaches handlers::file::open_with with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_with.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_open_with.availability and disabled copy reads state.commands.file_open_with.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_with.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.open_with has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_with.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.open_with records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.file_paste_nodes": {
+      "ui_element_id": "catalog.file_paste_nodes",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.paste_nodes",
+      "handler_location": "handlers::file::paste_nodes",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.paste_nodes must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.paste_nodes must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.paste_nodes dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.paste_nodes must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.paste_nodes must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.paste_nodes; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_paste_nodes.availability",
+      "disabled_reason_projection": "state.commands.file_paste_nodes.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.paste_nodes has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.paste_nodes.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_paste_nodes exposes a stable role/name/description matching cmd.file.paste_nodes.",
+        "keyboard_access": "catalog.file_paste_nodes is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_paste_nodes preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_paste_nodes surfaces state.commands.file_paste_nodes.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_paste_nodes.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.paste_nodes reaches handlers::file::paste_nodes with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_paste_nodes.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_paste_nodes.availability and disabled copy reads state.commands.file_paste_nodes.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_paste_nodes.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.paste_nodes has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_paste_nodes.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.paste_nodes records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.file_rename": {
+      "ui_element_id": "catalog.file_rename",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.rename",
+      "handler_location": "handlers::file::rename",
+      "expected_event_types": [
+        "file.renamed"
+      ],
+      "acceptance_checks": [
+        "cmd.file.rename must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.rename must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.rename dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.rename must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.rename must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.rename; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_rename.availability",
+      "disabled_reason_projection": "state.commands.file_rename.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.file.rename must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "file.renamed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_rename exposes a stable role/name/description matching cmd.file.rename.",
+        "keyboard_access": "catalog.file_rename is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_rename preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_rename surfaces state.commands.file_rename.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_rename.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.rename reaches handlers::file::rename with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_rename.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_rename.availability and disabled copy reads state.commands.file_rename.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_rename.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.rename must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.file_rename.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.file_rename.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.file.rename emits expected event type file.renamed with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.rename emits expected event type file.renamed with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.file_save_local_copy": {
+      "ui_element_id": "catalog.file_save_local_copy",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.save_local_copy",
+      "handler_location": "handlers::file::save_local_copy",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.save_local_copy must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.save_local_copy must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.save_local_copy dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.save_local_copy must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.save_local_copy must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.save_local_copy; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_save_local_copy.availability",
+      "disabled_reason_projection": "state.commands.file_save_local_copy.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.save_local_copy has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.save_local_copy.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_save_local_copy exposes a stable role/name/description matching cmd.file.save_local_copy.",
+        "keyboard_access": "catalog.file_save_local_copy is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_save_local_copy preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_save_local_copy surfaces state.commands.file_save_local_copy.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_save_local_copy.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.save_local_copy reaches handlers::file::save_local_copy with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_save_local_copy.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_save_local_copy.availability and disabled copy reads state.commands.file_save_local_copy.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_save_local_copy.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.save_local_copy has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_save_local_copy.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.save_local_copy records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_conflict_apply_resolution": {
+      "ui_element_id": "catalog.git_conflict_apply_resolution",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.conflict_apply_resolution",
+      "handler_location": "handlers::git::conflict_apply_resolution",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.conflict_apply_resolution must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.conflict_apply_resolution must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.conflict_apply_resolution dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.conflict_apply_resolution must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.conflict_apply_resolution must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.conflict_apply_resolution; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_conflict_apply_resolution.availability",
+      "disabled_reason_projection": "state.commands.git_conflict_apply_resolution.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.conflict_apply_resolution records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.conflict_apply_resolution.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_conflict_apply_resolution exposes a stable role/name/description matching cmd.git.conflict_apply_resolution.",
+        "keyboard_access": "catalog.git_conflict_apply_resolution is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_conflict_apply_resolution preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_conflict_apply_resolution surfaces state.commands.git_conflict_apply_resolution.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_conflict_apply_resolution.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.conflict_apply_resolution reaches handlers::git::conflict_apply_resolution with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_conflict_apply_resolution.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_conflict_apply_resolution.availability and disabled copy reads state.commands.git_conflict_apply_resolution.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_conflict_apply_resolution.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.conflict_apply_resolution records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_conflict_apply_resolution.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.conflict_apply_resolution records dispatch receipt cmd.git.conflict_apply_resolution.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_diff_open": {
+      "ui_element_id": "catalog.git_diff_open",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.diff_open",
+      "handler_location": "handlers::git::diff_open",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.diff_open must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.diff_open must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.diff_open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.diff_open must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.diff_open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.diff_open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_diff_open.availability",
+      "disabled_reason_projection": "state.commands.git_diff_open.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.diff_open records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.diff_open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_diff_open exposes a stable role/name/description matching cmd.git.diff_open.",
+        "keyboard_access": "catalog.git_diff_open is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_diff_open preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_diff_open surfaces state.commands.git_diff_open.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_diff_open.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.diff_open reaches handlers::git::diff_open with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_open.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_diff_open.availability and disabled copy reads state.commands.git_diff_open.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_open.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.diff_open records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_open.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.diff_open records dispatch receipt cmd.git.diff_open.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_diff_search": {
+      "ui_element_id": "catalog.git_diff_search",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.diff_search",
+      "handler_location": "handlers::git::diff_search",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.diff_search must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.diff_search must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.diff_search dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.diff_search must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.diff_search must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.diff_search; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_diff_search.availability",
+      "disabled_reason_projection": "state.commands.git_diff_search.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.diff_search records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.diff_search.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_diff_search exposes a stable role/name/description matching cmd.git.diff_search.",
+        "keyboard_access": "catalog.git_diff_search is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_diff_search preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_diff_search surfaces state.commands.git_diff_search.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_diff_search.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.diff_search reaches handlers::git::diff_search with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_search.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_diff_search.availability and disabled copy reads state.commands.git_diff_search.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_search.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.diff_search records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_search.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.diff_search records dispatch receipt cmd.git.diff_search.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 12907-12918 >>>
+    "catalog.git_diff_set_compare_target": {
+      "ui_element_id": "catalog.git_diff_set_compare_target",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.diff_set_compare_target",
+      "handler_location": "handlers::git::diff_set_compare_target",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.diff_set_compare_target must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.diff_set_compare_target must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.diff_set_compare_target dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.diff_set_compare_target must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.diff_set_compare_target must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

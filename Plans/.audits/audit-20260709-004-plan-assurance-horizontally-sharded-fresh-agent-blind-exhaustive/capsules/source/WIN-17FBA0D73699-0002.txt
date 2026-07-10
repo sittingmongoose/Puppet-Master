@@ -1,0 +1,252 @@
+<<< CONTEXT_BEFORE 347-358 >>>
+context_scope: ui_wiring_references
+implementation_surfaces: [Plans/UI_Wiring_Rules.md]
+node_compile_hint: {mode: reference_boundary, create_worknodes: false}
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0017
+preserved_exact_tokens: ["Plans/Contracts_V0.md", "Plans/UI_Command_Catalog.md", "Plans/Architecture_Invariants.md", "Plans/Progression_Gates.md", "Plans/Wiring_Matrix.md", "Plans/Wiring_Matrix.schema.json", "Plans/evidence.schema.json", "Plans/DRY_Rules.md", "Plans/Decision_Policy.md"]
+negative_constraints:
+  - Do not convert reference rows into competing owner prose.
+owner_hints: [Plans/UI_Wiring_Rules.md]
+consumer_docs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 359-595 >>>
+### UIW-009 - Approve And Build Disabled Reason Projection
+
+```yaml
+plan_unit_id: UIW-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state
+  from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI
+  projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`
+  from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are
+  present. The view layer must not infer enablement from Wiring Matrix row existence, command catalog presence, schema
+  validation, semantic closure, source preservation, or other validators passing. Disabled controls must not dispatch
+  PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces. PNC-019 bootstrap authority for the
+  compiler/harness/certifier path remains a disabled-state reason boundary, not a UI enablement source for ordinary
+  product work.
+gui_related: true
+gui_classification_reason: Defines user-visible Approve And Build disabled state and command-dispatch blocking behavior.
+depends_on: [UIW-002, UIW-003, UIW-006, UIW-007, PWIZ-018, PNC-022]
+unblocks: [PG-060]
+acceptance_criteria:
+  - The Approve And Build UI state consumes buildability_gate_report.json.
+  - The disabled reason projection lists currently open blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason only when present.
+  - Disabled Approve And Build cannot dispatch PlanApproved or create/bind PlanCompileRun.
+  - Bootstrap authority for PNC-019 certification does not enable the control while buildability_gate_passed=false.
+  - Wiring Matrix presence and schema validation are not enough to enable the command.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: disabled_command_false_enablement
+reasoning_tier: high
+context_scope: approve_and_build_ui_wiring
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Planning_Wizard.md
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: approve_and_build_disabled_reason_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+  - Plans/Planning_Wizard.md#PWIZ-018
+preserved_exact_tokens:
+  - "cmd.planning_wizard.approve_and_build"
+  - "disabled_reason"
+  - "blocker families"
+  - "exact owner_docs"
+  - "PNC-019"
+negative_constraints:
+  - Do not infer Approve And Build enablement from Wiring Matrix row existence, command catalog presence, schema validation, semantic closure, source preservation, or validators passing.
+  - Do not let a disabled Approve And Build control emit PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces.
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Planning_Wizard.md
+  - Plans/Wiring_Matrix.production.json
+```
+
+---
+
+<a id="section-1"></a>
+## 1. Rule 1 — UI Command Dispatch Only
+
+The UI layer MUST dispatch only typed `UICommand` messages whose `command_id` values are stable IDs drawn from `Plans/UI_Command_Catalog.md`.
+
+**Hard rules:**
+- The UI MUST NOT call backend services, storage, or domain logic directly.
+- All user-initiated interactions flow through the UI Command Dispatcher boundary (see [§3](#section-3)).
+- No backend mutation may originate from the view layer; the view layer is a pure function of projected state plus outbound `UICommand` emissions.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Architecture_Invariants.md#INV-004, ContractName:Architecture_Invariants.md#INV-011
+
+---
+
+<a id="section-2"></a>
+## 2. Rule 2 — One Element, One Command
+
+Every interactive UI element (button, menu item, link, toggle, slider, form submit) MUST map to exactly one `UICommandID`.
+
+**Hard rules:**
+- The mapping is recorded in the Wiring Matrix (`Plans/Wiring_Matrix.md`, validated by `Plans/Wiring_Matrix.schema.json`).
+- No interactive element may exist without a corresponding wiring matrix entry.
+- No `UICommandID` in `Plans/UI_Command_Catalog.md` may lack a handler registration.
+- Orphan elements (interactive elements with no wiring entry) and orphan commands (catalog entries with no handler) are both gate failures.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Architecture_Invariants.md#INV-012
+
+---
+
+<a id="section-3"></a>
+## 3. UI Command Dispatcher Boundary
+
+The **UI Command Dispatcher** is the architectural boundary between the UI layer and backend domain logic.
+
+### 3.1 Data flow
+
+1. **UI Element** — user interaction produces a `UICommand` envelope.
+2. **UICommand envelope** — contains `command_id` (stable ID from catalog), `args` (typed key-value map), and `correlation_id` (unique per invocation).
+3. **Dispatcher** — routes the envelope to the registered handler by `command_id`.
+4. **Handler** — executes domain logic; MUST NOT be called directly by the UI.
+5. **EventRecord** — handler emits one or more `EventRecord` events (persisted to seglog).
+6. **Projection** — event projections update derived state.
+7. **UI State** — the view layer observes projected state; never mutates state directly.
+
+### 3.2 Flow diagram
+
+```
+UI Element ──► UICommand ──► Dispatcher ──► Handler ──► EventRecord ──► Projection ──► UI State
+   │            (envelope)      (route)      (domain)    (persist)       (derive)       (observe)
+   └────────────────────────────────────────────────────────────────────────────────────────┘
+                                        feedback via projected state
+```
+
+### 3.3 Invariants
+
+- The UI MUST NOT hold a reference to any handler or service; it holds only a dispatch channel.
+- Handlers MUST be stateless with respect to UI concerns; they receive a command envelope and emit events.
+- The dispatcher MUST reject unknown `command_id` values with a structured error (not a silent no-op).
+- Webextract wiring rows must preserve the typed extraction controls: `schema` accepts JSON Schema `draft-07`, `schema_mode` is `strict` or `/lenient`, and `actions` plus `prompt` remain explicit command payload fields rather than UI-only hints.
+- Browser scenario `/acceptance` matrix rows MUST include `scenario_id`, `session_class`, `preconditions`, `user_or_agent_action`, `expected_visible_behavior`, `expected_artifacts_or_context`, `recovery_expectation`, and `platform_notes` so wiring gates can verify visible behavior, artifact/context output, recovery, and platform variance without turning UI wiring into the browser product owner.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Contracts_V0.md#EventRecord, ContractName:Architecture_Invariants.md#INV-004
+
+---
+
+<a id="section-4"></a>
+## 4. Wiring Matrix Concept
+
+
+The **Wiring Matrix** is a verification artifact that binds every interactive UI element to its command handler and expected outcomes.
+
+### 4.1 Row schema
+
+Each row maps:
+
+| Field | Description |
+|-------|-------------|
+| `ui_element_id` | Stable identifier for the interactive element |
+| `ui_location` | Screen / panel / section where the element appears |
+| `ui_command_id` | Stable `UICommandID` from `Plans/UI_Command_Catalog.md` |
+| `handler_location` | Canonical Rust module/function path for the dispatcher target (e.g. `handlers::github_auth::connect` or `crate::core::handlers::auth::connect`) |
+| `expected_event_types` | List of `EventRecord` event types the handler MUST emit |
+| `acceptance_checks` | Deterministic checks that verify correct behavior |
+| `evidence_required` | Artifacts that MUST be produced for gate evidence |
+
+Machine-readable shape:
+- The wiring matrix JSON stores rows under `entries` as a map keyed by `ui_element_id`.
+- This keying enforces uniqueness of interactive element IDs as part of schema validation.
+
+### 4.2 Artifacts
+
+- **Schema:** `Plans/Wiring_Matrix.schema.json` — JSON Schema that the matrix MUST validate against.
+- **Template + examples:** `Plans/Wiring_Matrix.md` — human-readable matrix with inline examples.
+- The matrix is both documentation and testable specification; GATE-010 defines the verifier checks.
+
+ContractRef: SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010
+
+### Search Index Acceleration Wiring Addendum
+
+`Plans/Wiring_Matrix.md` / `/Wiring_Matrix.md` keeps consumer wiring edges for Instant Grep current across `grep`, dirty-layer freshness indicators, build-pipeline status, Search panel controls, and command IDs, but it consumes rather than owns product semantics. Wiring rows and `/reconciliation` checks MUST point back to owner docs for lifecycle, `/publish/storage`, and `/runtime` canon: `Plans/Tools.md` owns grep and index-acceleration behavior, `Plans/storage-plan.md` owns dirty-layer storage and snapshot publication, and `Plans/UI_Command_Catalog.md` owns stable command payloads.
+
+---
+
+<a id="section-5"></a>
+## 5. Autonomous Verification Strategy
+
+All wiring verification is scriptable and runs without paid UI tooling or manual inspection.
+
+### 5.1 Verification checks
+
+1. **Schema validation** — Wiring matrix JSON validates against `Plans/Wiring_Matrix.schema.json`.
+2. **Element uniqueness check** — Every `entries` key is unique and each row's `ui_element_id` matches its key (`one element, one command`).
+3. **Coverage check** — Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.
+4. **Handler registration check** — Every wiring matrix entry's `handler_location` resolves to a real module and function in the Rust source tree, and failures produce a deterministic report containing `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and candidate source files inspected.
+5. **Event emission test** — Tests that exercise command dispatch verify the `expected_event_types` listed in the wiring matrix are emitted.
+6. **Unknown-command rejection test** — Dispatcher tests verify unrecognized `command_id` values return a structured error object and emit no domain events.
+7. **Handler statelessness lint** — Handler modules may depend on command envelopes, domain services, and event types, but MUST NOT import UI widget/view namespaces or keep UI object references.
+8. **UI purity check** — UI/view-layer code may dispatch commands and observe projected state, but direct mutation of domain/projected state outside dispatcher/projection/store modules is a gate failure.
+9. **Dead command detection** — `UICommandID` values found in source code but absent from `Plans/UI_Command_Catalog.md` are flagged as dead commands.
+
+### 5.2 Execution
+
+- GATE-010 checks are deterministic and scriptable.
+- Current automation status is tracked in `Plans/Progression_Gates.md#GATE-010`.
+- Gate failure blocks progression; no manual override is permitted.
+- Evidence bundles produced by the checks conform to `Plans/evidence.schema.json`.
+
+ContractRef: Gate:GATE-010, ContractName:Progression_Gates.md, SchemaID:evidence.schema.json
+
+---
+
+<a id="section-6"></a>
+## 6. References
+
+| Document | Purpose |
+|----------|---------|
+| `Plans/Contracts_V0.md` | Canonical contracts: `UICommand`, `EventRecord`, `AuthState` |
+| `Plans/UI_Command_Catalog.md` | SSOT list of stable `UICommandID` values |
+| `Plans/Architecture_Invariants.md` | Cross-cutting invariants (INV-004, INV-011, INV-012) |
+| `Plans/Progression_Gates.md` | Gate definitions and verifier role (GATE-010) |
+| `Plans/Wiring_Matrix.md` | Wiring matrix template and examples |
+| `Plans/Wiring_Matrix.schema.json` | JSON Schema for wiring matrix validation |
+| `Plans/evidence.schema.json` | Evidence bundle schema |
+| `Plans/DRY_Rules.md` | Anti-drift and SSOT reference rules |
+| `Plans/Decision_Policy.md` | Decision escalation and policy rules |
+
+## Migration Coverage
+
+Original pilot hash: `aae0e662365537fbf58be77eb52a9848401db204e7521288c2e2d75375f268f1`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+| Original spans | Standardized disposition |
+| --- | --- |
+| `UI_Wiring_Rules-S0001` - `UI_Wiring_Rules-S0002` | Scope and authority preserved; covered by `UIW-001`. |
+| `UI_Wiring_Rules-S0003` | GUI concept lineage, route-aware metadata, stale/retired vocabulary, and owner boundaries preserved; covered by `UIW-005`. |
+| `UI_Wiring_Rules-S0004` | Rule 1 hard constraints preserved; covered by `UIW-002`. |
+| `UI_Wiring_Rules-S0005` | Rule 2 hard constraints preserved; covered by `UIW-003`. |
+| `UI_Wiring_Rules-S0006` - `UI_Wiring_Rules-S0009` | Dispatcher boundary, data flow, diagram, and invariants preserved; covered by `UIW-004`. |
+| `UI_Wiring_Rules-S0010` - `UI_Wiring_Rules-S0013` | Wiring Matrix concept, row schema, artifacts, and Instant Grep consumer addendum preserved; covered by `UIW-006`. |
+| `UI_Wiring_Rules-S0014` - `UI_Wiring_Rules-S0016` | Autonomous verification strategy and execution requirements preserved; covered by `UIW-007`. |
+| `UI_Wiring_Rules-S0017` | Reference table preserved; covered by `UIW-008`. |
+
+No WorkNodes, NodeSeeds, executable build tasks, Spec Lock refresh, shard regeneration, evidence refresh, or plan_graph update was performed during this pilot conversion.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime UI wiring rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-58d6d13ed1139428d3f6a692`: `handler_location` grammar is `{crate_root}::{module_path}::{function_name}`. Pre-implementation rows use `handler_status = planned` with `owner_doc_ref`; implementation-ready rows require `handler_status = resolved` and a real module path. Missing handler fallback is `handler_status = missing` and blocks buildability rather than inventing a source path.

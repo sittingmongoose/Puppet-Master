@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE 7944-7955 >>>
+negative_constraints:
+- Tier view labels never replace runtime routing identity.
+compatibility_only_notes:
+- tier_type and tier_id may help UI grouping only as projection labels.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 7956-8336 >>>
+### OSI-029 - Structured Attempt Handoff
+
+```yaml
+plan_unit_id: OSI-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Each failed node attempt emits a structured-attempt-handoff receipt describing what happened, what changed,
+  why it failed or was blocked, and what to try next; retries remain policy-driven and may route to remediation, graph patch,
+  worker replacement, or HITL.
+gui_related: false
+gui_classification_reason: This unit covers retry/remediation handoff records, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: structured_attempt_handoff
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: structured_attempt_handoff
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- structured-attempt-handoff
+- /blocked
+- /caps
+- remediation
+- graph patch
+- /worker replacement
+- /HITL
+- /handoff
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-030 - Lane Pool Parallelism Capacity
+
+```yaml
+plan_unit_id: OSI-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Parallelism uses package/seam lane-pool capacity; stale per-thread queues, per-provider caps, parallel subtasks,
+  and crews-per-tier shapes are migration notes that map into package/seam promotion and lane capacity.
+gui_related: false
+gui_classification_reason: This unit covers parallelism capacity, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lane_pool_parallelism_capacity
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: lane_pool_parallelism_capacity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- package/seam `lane-pool` capacity
+- per-thread
+- per-provider
+- parallel subtasks
+- crews-per-tier
+- package/seam promotion
+negative_constraints: []
+compatibility_only_notes:
+- Older parallelism shapes may appear only as migration notes.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-031 - Rewrite Alignment Event Model
+
+```yaml
+plan_unit_id: OSI-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Rewrite alignment keeps Providers emitting normalized streaming events, centralizes tool gating in the tool
+  policy engine, and represents start/end verification, built-but-not-wired checks, and tier boundary semantics as explicit
+  replayable events.
+gui_related: false
+gui_classification_reason: This unit covers rewrite event model alignment, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: rewrite_alignment_event_model
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: rewrite_alignment_event_model
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0010
+preserved_exact_tokens:
+- Rewrite alignment (2026-02-21)
+- Providers
+- normalized streaming event model
+- tool policy engine
+- built but not wired
+- tier boundary semantics
+- explicit events
+- replayability
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-032 - Persistence And Event Emission
+
+```yaml
+plan_unit_id: OSI-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Rewrite persistence emits canonical seglog events for tier start/end, iteration start/end, verification results,
+  subagent invocation boundaries, and replayable events, while redb persists run metadata, session identity/linkage, and checkpoints
+  from the same orchestrator boundaries.
+gui_related: false
+gui_classification_reason: This unit covers event/persistence boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: persistence_and_event_emission
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: persistence_event_emission
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0011
+preserved_exact_tokens:
+- Seglog
+- canonical seglog stream
+- tier start/end
+- iteration start/end
+- verification results
+- subagent invocation boundaries
+- redb
+- run metadata
+- session identity
+- checkpoints
+negative_constraints:
+- Do not add one-off log files for run history.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-033 - Config Wiring Option B
+
+```yaml
+plan_unit_id: OSI-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: At run start the orchestrator builds execution config by merging GUI config defaults, interview output config,
+  and per-tier overrides with scalar last-writer-wins, array concat/dedup, object deep merge, and validate_config_wiring_for_tier().
+gui_related: true
+gui_classification_reason: This unit includes GUI config defaults and run configuration behavior visible through settings.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: config_wiring_option_b
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: config_wiring_option_b
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0012
+preserved_exact_tokens:
+- 'Config Wiring — Option B: Build at Run Start'
+- config-wiring
+- GUI config defaults
+- config:gui.*
+- Interview output config
+- Per-tier overrides
+- last writer wins
+- concatenate and deduplicate
+- deep merge
+- validate_config_wiring_for_tier()
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-034 - Test Strategy Loading
+
+```yaml
+plan_unit_id: OSI-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: The orchestrator loads .puppet-master/interview/test-strategy.json when present, merges items[].criterion
+  into tier acceptance criteria, injects relevant excerpts into prompt context, and treats missing/invalid input as WARN-only.
+gui_related: false
+gui_classification_reason: This unit covers test strategy loading, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: test_strategy_loading
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: test_strategy_loading
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0013
+preserved_exact_tokens:
+- Test Strategy Loading
+- test-strategy-loading
+- .puppet-master/interview/test-strategy.json
+- items[].criterion
+- tier acceptance criteria
+- prompt context
+- WARN-only
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:pm.test_strategy.schema.v1, PolicyRule:Decision_Policy.md§2'
+```
+
+### OSI-035 - Rewrite Runtime Ontology
+
+```yaml
+plan_unit_id: OSI-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Canonical orchestration identity is Feature Seam, Work Package, Node, graph generation lineage, and lane/worktree
+  lineage; surviving phase/task/subtask language is derived view language, while worktree, recovery, approval, usage, and
+  routing align to run/node/attempt/lane/worktree identity rather than tier_id.
+gui_related: true
+gui_classification_reason: This unit affects derived view language and user-visible orchestration identity.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: rewrite_runtime_ontology
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: rewrite_runtime_ontology
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0014
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+preserved_exact_tokens:
+- node/package/seam graph
+- Feature Seam
+- Work Package
+- Node
+- graph generation lineage
+- lane/worktree lineage
+- phase/task/subtask
+- derived decomposition/view language
+- tier_id
+negative_constraints: []
+compatibility_only_notes:
+- Phase/task/subtask language is derived decomposition/view language only.
+stale_retired_dispositions:
+- Tier-era runtime ontology is retired in favor of node/package/seam graph identity.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< CONTEXT_AFTER 8337-8348 >>>
+### OSI-036 - Graph Owned Worker Runtime Selection
+
+```yaml
+plan_unit_id: OSI-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Worker strategy is graph-owned; node execution selects from provider-entry/account-or-profile models, freezes
+  requested/effective runtime snapshots, uses OpenCode server profiles, direct Codex/Copilot account rows, and PM-native skill/MCP
+  behavior.
+gui_related: false
+gui_classification_reason: This unit covers worker runtime selection, not GUI behavior.

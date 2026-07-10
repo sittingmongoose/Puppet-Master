@@ -1,0 +1,70 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "alert_id": "A004-PROTOCOL-ALERT-0001",
+  "acknowledgement_id": "A004-PROTOCOL-ALERT-0001-ACK",
+  "acknowledged_by_source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "acknowledged_at": "2026-07-10T03:23:00Z",
+  "decision": {
+    "post_ready_code_change_authorized": true,
+    "authorized_scope": "Non-retroactive supplemental static validation of fitting PlanUnit boundary preservation, oversized PlanUnit continuation metadata, and JSON structural continuation metadata.",
+    "not_authorized": [
+      "Redefining or resealing READY_FOR_RUNNERS",
+      "Mutating assignment, window, capsule, or runner-registry launch packets",
+      "Treating supplemental checks as if they were part of the original READY transaction",
+      "Granting substantive result coverage from a prelaunch validator"
+    ],
+    "protocol_drift_acknowledged": true,
+    "packet_invalidation_required": false,
+    "packet_invalidation_reason": "All four READY-sealed packet hashes remain unchanged; both original static claims and the separately frozen supplemental static checks pass. The drift affects validator provenance and authority labeling, not packet contents.",
+    "coverage_effect": "No retroactive credit. Result credit requires the frozen postrun validator and runner receipts."
+  },
+  "authoritative_prelaunch_evidence": {
+    "kind": "original_launch_seal_with_explicit_provenance_limitation",
+    "ready_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/coordination/READY_FOR_RUNNERS.json",
+    "ready_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+    "sealed_validator_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validator_results.json",
+    "sealed_validator_result_sha256": "488f0b2de1928b5e385103d7f68acebb29e1109ed35d80430c4a8c099181f1cb",
+    "sealed_check_count": 10,
+    "sealed_inputs": {
+      "assignment_manifest_sha256": "2dc5d14db8a3f8d6486de66c94463ee99abd5483392f4cfaf36c0d94de29db28",
+      "window_manifest_sha256": "36a657ccc9672a3f9335efe48305372326dd80a2eb07d7527d6cdfc6262c5b3d",
+      "capsule_registry_sha256": "711a8f2697ee0c68b4af64d486b89e6ff831e4aa2b09d5cda63b3ed99ff388f9",
+      "runner_registry_sha256": "4d81e417ce0055ee26f7115b5c84d04e31713e8fc188140921bb359e7adcfbb2"
+    },
+    "executable_provenance": "incomplete",
+    "limitation": "READY sealed validator_results.json but did not seal the validator source hash. The original 10-check output is immutable and authoritative for what READY asserted, but its exact executable cannot be independently reconstructed from the seal alone."
+  },
+  "authorized_supplemental_prelaunch_evidence": {
+    "status": "non_retroactive_addendum",
+    "mutable_source_observed_sha256": "a5794d4a1114f0d053277de8639c208ce36df2e70340ebb8c41f9eb68bc3f17f",
+    "supplemental_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validator_results_supplemental.json",
+    "supplemental_result_sha256": "c703dd61c2a3f73f058411be1a65b6790989a89c37e701b0296bacb287382cc9",
+    "frozen_validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/prelaunch_validator_supplement_v2.py",
+    "frozen_validator_sha256": "990183a63308f3653cb61032da756dae14500d61a3101ea4854dee10afedd13c",
+    "frozen_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/prelaunch_validator_supplement_v2.result.json",
+    "frozen_result_sha256": "bc5bf21856abffd9d571f49a875c1e232f6ed8597155eb377766374cabaf260f",
+    "additional_checks": {
+      "fitting_planunit_boundary_preservation": "pass:5300",
+      "oversized_planunit_continuation_metadata": "pass:10",
+      "json_structural_continuation_metadata": "pass"
+    }
+  },
+  "authoritative_postrun_validation": {
+    "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v1.py",
+    "validator_sha256": "72ba0e669253fcdd070e5d9f2691208ed82292363d85a230f5fdae6217b4aeeb",
+    "initial_snapshot_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v1.initial.json",
+    "initial_snapshot_sha256": "afa544c512032b66326bbebb2275cb59547e6f7648f2b607e23d7e3e9d2a04f9",
+    "initial_status": "in_progress",
+    "initial_receipt_valid_completed_assignments": 16,
+    "initial_violation_count": 0,
+    "pass_rule": "All 2538 assignments have exactly one receipt-valid completion, all agent identities are globally unique, all capsule/source/result hashes match, and all 12 RUNNER_COMPLETE receipts exist."
+  },
+  "deprecated_non_authoritative_entrypoints": {
+    "sha256": "85a7813e430d7f09554e5d5bf4a3cd860578dce16962a0be93960522f9d00d3a",
+    "paths": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/validate_master_manifest.py",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/validate_horizontal_isolation.py"
+    ],
+    "reason": "Byte-identical mutable wrappers over build_launch.validate_existing; neither inspects runner registries, result files, identities, or RUNNER_COMPLETE. Preserved as lineage only."
+  }
+}

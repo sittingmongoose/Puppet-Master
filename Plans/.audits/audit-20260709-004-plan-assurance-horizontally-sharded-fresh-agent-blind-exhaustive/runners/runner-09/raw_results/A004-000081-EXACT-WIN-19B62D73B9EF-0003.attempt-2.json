@@ -1,0 +1,457 @@
+{
+  "schema_version": "1.0",
+  "assignment_id": "A004-000081-EXACT-WIN-19B62D73B9EF-0003",
+  "runner_id": "runner-09",
+  "agent_attestation": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "prior_substantive_assignment_count": 0,
+    "terminal_after_result": true,
+    "no_followup_reuse": true
+  },
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-19B62D73B9EF-0003",
+  "doc_id": "DOC-19B62D73B9EF",
+  "document_path": "Plans/Contracts_V0.md",
+  "core_range": [536, 657],
+  "context_ranges": [[524, 535], [658, 669]],
+  "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000081-EXACT-WIN-19B62D73B9EF-0003.json",
+  "capsule_sha256": "0854e57fcf6d6685d01a14783a4b6a02b227aef9c5d5fd59b17114e5733a446c",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-19B62D73B9EF-0003.txt",
+  "source_excerpt_sha256": "cc639a7b79949c7bab54c5d4b6f8e8c4666019f0ed914ca63ec4d42419233eeb",
+  "observations": [
+    {
+      "id": "OBS-001",
+      "statement": "Scheduler-impacting tool-denial and approval projections are required to use the canonical blocked/action identity packet, including blocked sequence and canonical action IDs, with safe-point, remediation, failure-class, and blocked-reason fields when applicable.",
+      "evidence_ids": ["EV-001", "EV-002"]
+    },
+    {
+      "id": "OBS-002",
+      "statement": "Blocked recovery has one canonical action-ID family: allowed_actions[] is compatibility vocabulary, while ordered allowed_action_ids and blocked_sequence drive runtime actions and GUI/event projections.",
+      "evidence_ids": ["EV-003"]
+    },
+    {
+      "id": "OBS-003",
+      "statement": "The package/seam/lane/account runtime snapshot replaces TierContext; tier-shaped references remain historical trace rather than execution identity.",
+      "evidence_ids": ["EV-005", "EV-022"]
+    },
+    {
+      "id": "OBS-004",
+      "statement": "Pre-attempt blocks use blocked_sequence instead of a fabricated attempt_id; blocked_sequence has a precise per-run/node monotonic rule, and wake_reason is a closed enum.",
+      "evidence_ids": ["EV-006", "EV-007", "EV-008"]
+    },
+    {
+      "id": "OBS-005",
+      "statement": "Route transports decode into one route model, and the bounded route target selects either subject_id or object_kind plus object_id, never both as independent primary selectors.",
+      "evidence_ids": ["EV-004", "EV-011"]
+    },
+    {
+      "id": "OBS-006",
+      "statement": "Usage deep links are explicitly object routes keyed by object_kind usage_event and the canonical usage-event object_id; usage_event_ref cannot bypass that selector model.",
+      "evidence_ids": ["EV-020"]
+    },
+    {
+      "id": "OBS-007",
+      "statement": "Contracts_V0 is a consumer, not owner, of the Executor-owned execution_unit_context schema and its node-native required fields.",
+      "evidence_ids": ["EV-017"]
+    },
+    {
+      "id": "OBS-008",
+      "statement": "Concern actions record actor authority, confirmation, rationale, and exactly one of three reversibility classes, with stronger confirmation required for compensating-only and non-reversible actions.",
+      "evidence_ids": ["EV-014"]
+    },
+    {
+      "id": "OBS-009",
+      "statement": "Projection UI truth uses five named health states derived from committed projection/checkpoint metadata, and mutation gating must consume those trust facts rather than page-local timestamps.",
+      "evidence_ids": ["EV-024", "EV-025"]
+    },
+    {
+      "id": "OBS-010",
+      "statement": "Account routing exposes none, preferred, and required binding values and carries the resulting role-scoped requested/effective account decision into runtime, usage, and surfaces.",
+      "evidence_ids": ["EV-028"]
+    },
+    {
+      "id": "OBS-011",
+      "statement": "Provider streams must retain account attribution, pause class, actor class, package/seam/lane context, and governance-significant handoff/speaker transitions.",
+      "evidence_ids": ["EV-026", "EV-027"]
+    },
+    {
+      "id": "OBS-012",
+      "statement": "Worktree/lane lifecycle is a durable storage family with current projection and retained history; selected_worktree_id is only GUI selection state.",
+      "evidence_ids": ["EV-030"]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "FIND-001",
+      "statement": "The route_payload-to-route_target normalization contract is internally unresolved in this window: canonical route payload makes project_id optional and admits standalone record_id, artifact_id, attempt_id, lane_id, and worktree_id, while route_target requires project_id and exactly one subject_id or object_kind/object_id selector. No rule says whether those standalone IDs are anchors, selector aliases to normalize, or invalid inputs, permitting incompatible producer and router behavior.",
+      "evidence_ids": ["EV-004", "EV-011", "EV-016", "EV-021"]
+    },
+    {
+      "id": "FIND-002",
+      "statement": "The route payload admits destination_surface, destination_tab, filter_payload, scroll_target, and focus_behavior while route_target is limited to selector/scope and rejects per-surface state. The reviewed contract supplies no classification or mapping from those payload fields to target_kind, tab_id, persisted view state, or discarded transport hints, so identical payloads can validate and activate differently.",
+      "evidence_ids": ["EV-010", "EV-016", "EV-021"]
+    },
+    {
+      "id": "FIND-003",
+      "statement": "Route invalid combinations are exhaustively named, but the rejection contract stops at reject-before-open: no error code or payload, caller-visible failure state, recovery path, or acceptance assertion is specified in this window. Implementations can therefore reject the same bad route with materially different observable behavior.",
+      "evidence_ids": ["EV-021"]
+    },
+    {
+      "id": "FIND-004",
+      "statement": "The shared record envelope is not mechanically specified: Good base records include does not establish requiredness, and source_refs/source_refs[], artifact_refs/artifact_refs[], related_record_refs/related_record_refs[], and lineage_refs/lineage_refs[] are presented without stating whether bracketed forms are notation or distinct persisted fields. Cardinality and detail-hydration conformance remain builder discretion.",
+      "evidence_ids": ["EV-013"]
+    },
+    {
+      "id": "FIND-005",
+      "statement": "Concern-action enforcement lacks a decision contract for assigning the reversibility class, proving actor authority, or defining the content and persistence of consequence-specific confirmation. The three classes are named, but authorization and confirmation can be implemented incompatibly while still matching the prose.",
+      "evidence_ids": ["EV-014"]
+    },
+    {
+      "id": "FIND-006",
+      "statement": "The scheduler/safe-point/remediation contract requires one canonical payload block but only offers fields when applicable and mentions remediation resolution enums without listing the enum, field requiredness, applicability conditions, or validation rules. The supposedly singular payload is not schema-testable from this window.",
+      "evidence_ids": ["EV-002", "EV-015"]
+    },
+    {
+      "id": "FIND-007",
+      "statement": "Projection-health classification and mutation gating are nondeterministic: current is defined as caught up enough, stale and degraded can overlap, no precedence or transition rule resolves simultaneous conditions, and no state-to-mutation allow/deny matrix is given. Different projectors can expose different trust and write behavior from the same checkpoint facts.",
+      "evidence_ids": ["EV-024", "EV-025"]
+    },
+    {
+      "id": "FIND-008",
+      "statement": "Stream input_required and input_provided events are required to distinguish node HITL, corroboration pause, and conversational input pause, but no discriminator field, closed value set, owner identity, or required payload is supplied. Downstream consumers cannot mechanically satisfy the distinction.",
+      "evidence_ids": ["EV-026"]
+    },
+    {
+      "id": "FIND-009",
+      "statement": "The required account binding has two possible failure outcomes, blocked or explicit override failure, without a selection rule, override authority, override action identity, or audit evidence requirement. A pinned-account failure therefore has consequentially different legal implementations.",
+      "evidence_ids": ["EV-028"]
+    },
+    {
+      "id": "FIND-010",
+      "statement": "The durable worktree/lane family names a record, current projection, retained lineage, and conflict/suspect/restoring/archive/remove support, but does not define record identity, distinguish lifecycle states from actions, provide transition guards, or state when retained lineage may be removed. The lifecycle cannot be implemented or accepted as a deterministic state machine from this window.",
+      "evidence_ids": ["EV-030"]
+    },
+    {
+      "id": "FIND-011",
+      "statement": "Shared events must be registered and classified as runtime-internal or operator-visible, but this window supplies neither the owner event-model identity nor classification criteria and required projection behavior. Surfaces can disagree on whether the same event is operator-visible without violating an exact rule.",
+      "evidence_ids": ["EV-012"]
+    },
+    {
+      "id": "FIND-012",
+      "statement": "Provider-stream preservation depends on undefined predicates: context is required when handoff or speaker selection affects governance, and SelectSpeakerEvent is protected when governance-relevant, but no criterion determines either condition. Adapters can preserve or demote the same transition differently.",
+      "evidence_ids": ["EV-027"]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NONGAP-001",
+      "statement": "allowed_actions[] is explicitly compatibility-only and ordered allowed_action_ids is the runtime action source.",
+      "evidence_ids": ["EV-003"]
+    },
+    {
+      "id": "NONGAP-002",
+      "statement": "blocked_sequence scope, initial value, and increment trigger are explicit.",
+      "evidence_ids": ["EV-008"]
+    },
+    {
+      "id": "NONGAP-003",
+      "statement": "The wake_reason vocabulary is explicitly closed and its values are enumerated.",
+      "evidence_ids": ["EV-007"]
+    },
+    {
+      "id": "NONGAP-004",
+      "statement": "The route-target primary-selector exclusivity rule and listed invalid field combinations are explicit.",
+      "evidence_ids": ["EV-011", "EV-021"]
+    },
+    {
+      "id": "NONGAP-005",
+      "statement": "Usage-row navigation has an explicit canonical object_kind/object_id mapping.",
+      "evidence_ids": ["EV-020"]
+    },
+    {
+      "id": "NONGAP-006",
+      "statement": "The execution_unit_context authority boundary is explicit: Executor owns the schema and Contracts_V0 consumes it.",
+      "evidence_ids": ["EV-017"]
+    },
+    {
+      "id": "NONGAP-007",
+      "statement": "The five projection-health labels and their descriptive GUI meanings are enumerated, even though deterministic thresholds and gating remain underspecified.",
+      "evidence_ids": ["EV-024"]
+    },
+    {
+      "id": "NONGAP-008",
+      "statement": "The none and preferred account-binding fallback meanings are explicit, and required explicitly means a concrete account is pinned.",
+      "evidence_ids": ["EV-028"]
+    },
+    {
+      "id": "NONGAP-009",
+      "statement": "tool.denied, tool.invoked, and runtime-artifact are explicitly required to share attribution joins when runtime or artifact state is affected.",
+      "evidence_ids": ["EV-018"]
+    },
+    {
+      "id": "NONGAP-010",
+      "statement": "Tier-keyed runtime, usage, and evidence records are explicitly compatibility shapes that must resolve through node-native execution context.",
+      "evidence_ids": ["EV-022"]
+    },
+    {
+      "id": "NONGAP-011",
+      "statement": "OpenSubject explicitly requires subject_id and names its three realization classes.",
+      "evidence_ids": ["EV-019"]
+    },
+    {
+      "id": "NONGAP-012",
+      "statement": "selected_worktree_id is explicitly a GUI selection pointer and not a durable worktree record substitute.",
+      "evidence_ids": ["EV-030"]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "UNK-001",
+      "statement": "The required keys, nullability, invariants, and validation behavior of execution_unit_context cannot be verified inside the allowed window because authority is explicitly delegated to Executor_Protocol and execution_unit_context.schema.json.",
+      "evidence_ids": ["EV-017"]
+    },
+    {
+      "id": "UNK-002",
+      "statement": "The positive canonical requested/effective persona, platform, and model field names cannot be verified here: Prompt_Pipeline is assigned to define them and this window only rejects requested_persona_id/effective_persona_id aliases.",
+      "evidence_ids": ["EV-009", "EV-023"]
+    },
+    {
+      "id": "UNK-003",
+      "statement": "The initial allowed subject_id families, the object_kind enum members beyond examples, and the governed extension mechanism are not visible in this window.",
+      "evidence_ids": ["EV-019"]
+    },
+    {
+      "id": "UNK-004",
+      "statement": "The record type, identity, and retention rules targeted by the durable switch /signal pointer are not identified in this window; only its join purpose and separation from current provider health are stated.",
+      "evidence_ids": ["EV-029"]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 537,
+      "line_end": 537,
+      "quote": "Tool denial and approval projections use the scheduler-impacting payload, not thinner compatibility rows."
+    },
+    {
+      "evidence_id": "EV-002",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 537,
+      "line_end": 537,
+      "quote": "`/event` approval records, storage blocked projections, and runtime action routes stay consistent on `blocked_sequence`, `allowed_action_ids`, `allowed_action_ids[]`, and canonical runtime action routing; when applicable, canonical field names include `safe_point_id`, `remediation_root_id`, `remediation_parent_attempt_id`, `blocked_sequence`, `failure_class`, and `blocked_reason_code`."
+    },
+    {
+      "evidence_id": "EV-003",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 547,
+      "line_end": 547,
+      "quote": "`Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`, `/Contracts_V0.md`, and `/human-in-the-loop.md` consumers must not wire blocked action IDs from both `allowed_actions[]` and `allowed_action_ids[]` as coequal canon; `allowed_actions[]` is compatibility vocabulary, while ordered `allowed_action_ids[]`, `allowed_action_ids`, `blocked_sequence`, and `detail_ref?` are the runtime action source."
+    },
+    {
+      "evidence_id": "EV-004",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 553,
+      "line_end": 553,
+      "quote": "`route_payload`, `primary_route_payload`, `secondary_route_payload?`, `resume_url`, URL deep links, and in-app command dispatch all decode into the same route model; stored `resume_url` fields are serialized transport forms for portability and must not imply a separate routing ontology."
+    },
+    {
+      "evidence_id": "EV-005",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 561,
+      "line_end": 561,
+      "quote": "The shared runtime snapshot is the explicit replacement for `TierContext`. Any execution-unit refs, lane/worktree refs, requested/effective runtime identity, execution role, governance lineage, remediation generation, or `/replan` generation formerly packed into tier context must resolve into the package/seam/lane/account runtime snapshot, with compatibility references to `TierContext`, `tier_id`, and tier-era execution kept only as historical trace."
+    },
+    {
+      "evidence_id": "EV-006",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 563,
+      "line_end": 563,
+      "quote": "`UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`."
+    },
+    {
+      "evidence_id": "EV-007",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 563,
+      "line_end": 563,
+      "quote": "The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and the closed `wake_reason` enum `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`; old HITL request examples are compatibility references only when they resolve into that family."
+    },
+    {
+      "evidence_id": "EV-008",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 565,
+      "line_end": 565,
+      "quote": "`blocked_sequence` is monotonic per `{ run_id, node_id }`, starts at `1`, and increments only when the node transitions from non-blocked to a new blocked episode."
+    },
+    {
+      "evidence_id": "EV-009",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 569,
+      "line_end": 569,
+      "quote": "Effective runtime identity ownership is split by field family, not by whichever feature emits first. `orchestrator-subagent-integration`, `orchestrator-subagent-integration.md`, `/view`, `tier_id`, `tier_type`, `has_errors`, `needs_testing`, `execution-state`, `workspace`, `/domain/framework`, `/platform/model`, and requested/effective persona/platform/model hints remain decomposition, workspace, and live execution-state inputs until the `Plans/Prompt_Pipeline.md` and `/Prompt_Pipeline.md` effective-resolution field family defines which requested/effective runtime identity fields exist and what they mean."
+    },
+    {
+      "evidence_id": "EV-010",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 571,
+      "line_end": 571,
+      "quote": "Destination-only state such as `/view-state`, `active_subview`, `surface-local` tabs, `line`, and `range` belongs to persisted shell/view state or `OpenFile`, not to `route_target`; `OpenFile` may carry `line` and `range`, while base route identity stays limited to selector and scope fields."
+    },
+    {
+      "evidence_id": "EV-011",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 575,
+      "line_end": 575,
+      "quote": "The bounded `route_target` selector rule is explicit. `Contracts_V0`, `Contracts_V0.md`, `route_target`, `subject_id`, `object_kind`, `object_id`, and `target_kind` define target selection and host-surface routing as separate concerns: a route target selects by `subject_id` or by `object_kind` plus `object_id`, never both as independent primary selectors for the same target."
+    },
+    {
+      "evidence_id": "EV-012",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 589,
+      "line_end": 589,
+      "quote": "Scheduling, execution, review/verification, contamination/recovery, remediation/replan, promotion, `HITL`/escalation, worktree/lane, `/lane`, `/replan`, `/recovery`, `/escalation`, `/verification`, and effective-resolution events must be registered in the owner event model before Dashboard, `/Orchestrator/chat`, Orchestrator, or chat surfaces project them. Events may be `runtime-internal` or `operator-visible`, but Orchestrator must not invent a shadow event language outside the shared event family."
+    },
+    {
+      "evidence_id": "EV-013",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 591,
+      "line_end": 591,
+      "quote": "Good base records include `record_id`, `record_kind`, `schema_version`, `project_id`, `run_id?`, `scope_type`, `scope_id`, `status`, `created_at_utc`, `updated_at_utc?`, `summary`, `summary_kind?`, `detail_ref?`, `source_refs`, `source_refs[]`, `artifact_refs`, `artifact_refs[]`, `related_record_refs`, `related_record_refs[]`, `lineage_refs`, `lineage_refs[]`, `actor_ref`, and `requested_effective_snapshot_refs`; shorter projection summaries may reference the shared envelope but must not silently drop these join fields when the user opens detail."
+    },
+    {
+      "evidence_id": "EV-014",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 595,
+      "line_end": 595,
+      "quote": "Each concern action records actor authority, confirmation, rationale, and one reversibility class from `immediate_undo`, `compensating_action_only`, or `non_reversible`; `compensating_action_only` and `non_reversible` require consequence-specific confirmation before execution."
+    },
+    {
+      "evidence_id": "EV-015",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 599,
+      "line_end": 599,
+      "quote": "Scheduler, safe-point, and remediation records use one canonical payload block. `Contracts_V0`, `Contracts_V0.md`, `safe-point`, scheduler payload shapes, remediation lineage, remediation resolution enums, `intra-doc` conflicts, and downstream storage/UI consumers must resolve to one `obviously-canonical` scheduler/safe-point/remediation contract instead of local partial shapes. Approval and recovery schemas use one key strategy: `/recovery`, retained `request_id` values must map explicitly to `blocked_sequence`, and ordered `allowed_action_ids` / `allowed_action_ids[]` remain the runtime action family."
+    },
+    {
+      "evidence_id": "EV-016",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 601,
+      "line_end": 601,
+      "quote": "The canonical internal route payload is separate from command `IDs` and may carry `target_kind`, `project_id?`, `workspace_tab_id?`, `destination_surface`, `destination_tab?`, `focused_run_id?`, `historical_mode?`, `thread_id?`, `wizard_id?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, and `focus_behavior?`."
+    },
+    {
+      "evidence_id": "EV-017",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 603,
+      "line_end": 603,
+      "quote": "The canonical replacement execution-context object is the Executor-owned `execution_unit_context` contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; Contracts_V0 consumes that schema for envelope and join behavior instead of redefining node-native keys or required fields."
+    },
+    {
+      "evidence_id": "EV-018",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 611,
+      "line_end": 611,
+      "quote": "`Contracts_V0`, `Contracts_V0.md`, `tool.denied`, `tool.invoked`, and `runtime-artifact` records share one attribution family whenever scheduler state, runtime action state, or generated artifact state is affected; a stricter `tool.denied` payload must not coexist with thinner `tool.invoked` or runtime-artifact projections that drop node, attempt, actor, account, or runtime snapshot joins."
+    },
+    {
+      "evidence_id": "EV-019",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 613,
+      "line_end": 613,
+      "quote": "`OpenSubject` is the identity-native open contract: it requires `subject_id`, resolves through canonical subject/open rules, and may realize as a workspace document, transient `generated://` buffer, or routed non-editor surface. Initial `subject_id` families must remain narrow and explicit, while the `object_kind` enum family is controlled contract vocabulary with room for later governed extension."
+    },
+    {
+      "evidence_id": "EV-020",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 619,
+      "line_end": 619,
+      "quote": "Cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`; `usage_event_ref` may remain a storage/projection reference, but it must not survive as a top-level route field that bypasses the canonical `object_kind` and `object_id` selector model."
+    },
+    {
+      "evidence_id": "EV-021",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 621,
+      "line_end": 621,
+      "quote": "Route validation rejects invalid-combination payloads before any surface-specific open behavior runs. `route_target` requires `project_id` and one primary selector; it must reject a missing primary selector, competing `subject_id` and `object_kind/object_id` selectors, `object_kind` without `object_id`, `object_id` without `object_kind`, `inspector_target` without an object selector, `tab_id` that conflicts with `target_kind`, `line` or `range` inside `route_target`, and any per-surface state inside `route_target`."
+    },
+    {
+      "evidence_id": "EV-022",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 623,
+      "line_end": 623,
+      "quote": "Runtime record compatibility must not keep stale tier keys as structural canon. `tier_runtime_record` keyed by `run_id` and `tier_id`, `usage_record` keyed by `run_id`, `tier_id`, `attempt_id?`, and `usage_sequence`, and `evidence_record` keyed by `run_id`, `tier_id`, and `evidence_id` are compatibility shapes that must resolve through the node-native execution-context object before projection."
+    },
+    {
+      "evidence_id": "EV-023",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 631,
+      "line_end": 631,
+      "quote": "`Plans/Multi-Account.md`, `/Multi-Account.md`, `Plans/Models_System.md`, `/Models_System.md`, `Plans/Prompt_Pipeline.md`, and `/Prompt_Pipeline.md` are companion owners for account, model, and requested/effective naming, while `Contracts_V0` / `Contracts_V0.md` rejects persisted `requested_persona_id` and `effective_persona_id` aliases as noncanonical historical names."
+    },
+    {
+      "evidence_id": "EV-024",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 633,
+      "line_end": 633,
+      "quote": "`/rebuild`, `/scan`, and `/sections` projections use `current` when caught up enough for normal use, `refreshing` when an old committed projection remains visible while refresh or rebuild runs, `stale` when usable for context but not guaranteed to reflect current runtime truth, `degraded` when a projector or scan partially failed or a dependency signal is missing and some fields/sections are less trustworthy, and `unavailable` when the surface contract cannot currently be answered."
+    },
+    {
+      "evidence_id": "EV-025",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 635,
+      "line_end": 635,
+      "quote": "Projection-health / trust-state records are built from committed projection state, checkpoint refs, and last-updated metadata; mutation gating reads those facts instead of inferring safety from page-local timestamps."
+    },
+    {
+      "evidence_id": "EV-026",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 637,
+      "line_end": 637,
+      "quote": "Stream `usage` events must carry account attribution; `auth_state` carries pool-member account context for failover rotation; `input_required` and `input_provided` distinguish node `HITL`, corroboration pause, and conversational user-input pause."
+    },
+    {
+      "evidence_id": "EV-027",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 639,
+      "line_end": 639,
+      "quote": "Stream envelopes include `actor_kind`, actor-class, package `/seam/lane` context, and `/overseer` relationships when handoff or speaker selection affects governance. `handoff` events must not use bare agent names without package/seam/lane context, and `SelectSpeakerEvent` must not be demoted to `raw_observation` when it carries governance-relevant speaker or overseer transitions for downstream projections."
+    },
+    {
+      "evidence_id": "EV-028",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 645,
+      "line_end": 645,
+      "quote": "Account `/routing` binding values are `none` when no concrete account is requested and policy routing chooses from the eligible pool, `preferred` when a concrete account is requested as a preference and fallback remains allowed, and `required` when a concrete account is pinned and fallback must surface a blocked or explicit override failure."
+    },
+    {
+      "evidence_id": "EV-029",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 647,
+      "line_end": 647,
+      "quote": "`UsageRecord` includes `account_switch_reason` plus a durable switch `/signal` pointer so switch explanations can join History and `/Ledger`; `account_switch_reason` also remains on effective `/runtime` snapshots as `current-run` disclosure. `provider_accounts.health` and `provider_accounts` describe `current-state` health, not durable episode history."
+    },
+    {
+      "evidence_id": "EV-030",
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 657,
+      "line_end": 657,
+      "quote": "Worktree and lane lifecycle state is a first-class storage family. Durable contracts include a worktree record, a lane/worktree projection for current state, historical lineage retention after archive/remove, and conflict `/suspect/restoring/archive/remove` lifecycle support. Project UI state such as `selected_worktree_id?` or `selected_worktree_id` is only a selection pointer and is not a substitute for that durable worktree record family."
+    }
+  ],
+  "scope_attestation": {
+    "files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000081-EXACT-WIN-19B62D73B9EF-0003.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-19B62D73B9EF-0003.txt",
+      "Plans/Contracts_V0.md"
+    ],
+    "read_only": true,
+    "prior_audits_read": false,
+    "other_results_read": false,
+    "unrelated_windows_read": false,
+    "external_research_used": false,
+    "within_capsule_only": true
+  }
+}

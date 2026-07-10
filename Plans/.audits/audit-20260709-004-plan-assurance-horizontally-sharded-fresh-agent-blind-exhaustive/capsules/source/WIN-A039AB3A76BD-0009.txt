@@ -1,0 +1,266 @@
+<<< CONTEXT_BEFORE 3005-3016 >>>
+preserved_exact_tokens:
+  - "attempt / blocked / safe-point / remediation"
+  - "pure lexical dispatch"
+  - "generic failures"
+  - "pre-lock stages"
+  - "queue-analysis visibility"
+  - "canonical UI surface"
+negative_constraints:
+  - "Blocked outcomes must not be mislabeled as generic failures."
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< AUTHORITATIVE_CORE 3017-3253 >>>
+### PG-052 - Packet Structural Repair Gate
+
+```yaml
+plan_unit_id: PG-052
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Packet verification must reject incomplete recovery or unsafe section targeting, including trailing-subsection replace_section plans without a later same-level anchor.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-040"
+  - "PG-051"
+unblocks: []
+acceptance_criteria:
+  - "Packet Structural Repair Gate remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0042
+preserved_exact_tokens:
+  - "append"
+  - "verify_only"
+  - "replace_section"
+  - "Plans/Media_Generation_and_Capabilities.md"
+  - "### 5.2 Disabled-reason messages"
+  - "## 5. UI copy strings"
+  - "## 6. Acceptance criteria"
+  - "/Progression"
+negative_constraints:
+  - "A recovery-plan cannot leave active blockers unresolved by choosing append or verify_only when replace_section is required."
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-053 - Scheduler Canonical Alignment
+
+```yaml
+plan_unit_id: PG-053
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Scheduler packet alignment must preserve canonical event-name precedence, forbid post-lock graph degradation, remove lexical dispatch, and honor wake/restore overrides.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-051"
+unblocks: []
+acceptance_criteria:
+  - "Scheduler Canonical Alignment remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: validation_rule
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0043
+preserved_exact_tokens:
+  - "scheduler.pass"
+  - "legacy aliases"
+  - "run.graph_canonical_locked"
+  - "same-cycle prerequisite wake"
+  - "FileSafe restore-before-rerun"
+negative_constraints:
+  - "Graph degradation fallback is forbidden after run.graph_canonical_locked."
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-054 - Scheduler UI Projection Alignment
+
+```yaml
+plan_unit_id: PG-054
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Scheduler alignment must keep blocked outcomes distinct from failures in UI/projections.
+gui_related: true
+gui_classification_reason: >-
+  This unit validates UI/projection state alignment.
+split_recommended: false
+depends_on:
+  - "PG-045"
+  - "PG-053"
+unblocks: []
+acceptance_criteria:
+  - "Scheduler UI Projection Alignment remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: validation_rule
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0043
+preserved_exact_tokens:
+  - "blocked outcomes"
+  - "failures"
+  - "UI/projections"
+negative_constraints:
+  - "Blocked outcomes must remain distinct from failures in UI/projections."
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-055 - Runtime Packet Contradiction-Fail Consolidation
+
+```yaml
+plan_unit_id: PG-055
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Packet verification must fail if primary or summary docs retain runtime contradictions in dispatch, blocked payloads, identity, clarification state, command IDs, or hidden retries.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-051"
+  - "PG-053"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Packet Contradiction-Fail Consolidation remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0044
+preserved_exact_tokens:
+  - "lexical ready-node selection"
+  - "recovery_options[]"
+  - "allowed_actions[]"
+  - "failure_class"
+  - "analysis_id"
+  - "scheduler_pass_id"
+  - "attention_required"
+  - "exact canonical command ids"
+negative_constraints:
+  - "Provider/auth/tool docs must not authorize hidden local retry loops after runtime classification exists."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-056 - Canonical Blocked Payload Field Name
+
+```yaml
+plan_unit_id: PG-056
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  The sole canonical blocked payload field is allowed_action_ids[]; deprecated names are defects outside deprecation, migration, or gate-detection text.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-055"
+unblocks: []
+acceptance_criteria:
+  - "Canonical Blocked Payload Field Name remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0045
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0046
+preserved_exact_tokens:
+  - "recovery_options[]"
+  - "allowed_actions[]"
+  - "allowed_action_ids[]"
+  - "payload definition"
+  - "schema"
+  - "storage shape"
+  - "contract"
+  - "HITL"
+  - "FileSafe"
+  - "container publishing"
+negative_constraints:
+  - "Accept recovery_options[] or allowed_actions[] only in deprecation notices, migration notes, or gate rules that detect them as defects."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< CONTEXT_AFTER 3254-3265 >>>
+### PG-057 - Runtime Recovery Canonicalization Gate
+
+```yaml
+plan_unit_id: PG-057
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Runtime recovery sweeps must fail deprecated blocked payload fields, stale append-only contradictions, analysis_id queue identity, and blocked-reason-as-failure-class modeling.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.

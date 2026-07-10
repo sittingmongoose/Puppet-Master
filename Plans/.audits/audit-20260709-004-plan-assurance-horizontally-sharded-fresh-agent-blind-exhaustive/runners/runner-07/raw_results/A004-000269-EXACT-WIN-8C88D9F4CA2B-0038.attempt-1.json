@@ -1,0 +1,1062 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000269-EXACT-WIN-8C88D9F4CA2B-0038",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000269-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0269_b2a621fd",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-8C88D9F4CA2B-0038",
+  "doc_id": "DOC-8C88D9F4CA2B",
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "core_range": [
+    14060,
+    14449
+  ],
+  "context_ranges": [
+    [
+      14048,
+      14059
+    ],
+    [
+      14450,
+      14461
+    ]
+  ],
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "core_sha256": "7081fee981c034d8d7d180feead2bd5e14eee53b2301618f1917cdc5080172d8",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000269-EXACT-WIN-8C88D9F4CA2B-0038.json",
+  "capsule_sha256": "5347b8e75ea3ff7c3210ce46e9cdfb1595e2d28799d4c60b3216ab851f79d233",
+  "capsule_bytes": 1663,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-8C88D9F4CA2B-0038.txt",
+  "source_excerpt_sha256": "f954d7f52db6e81dd0ca5a07e8cf7234aa64518763f3a488c3c9e5dad9edf0cd",
+  "source_excerpt_bytes": 30418,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-0001",
+      "observation": "The core contains seven complete GUI command rows, and every row explicitly maps its command to a handler through dispatcher evidence.",
+      "evidence_ref_ids": [
+        "ER-0001",
+        "ER-0002",
+        "ER-0003",
+        "ER-0004",
+        "ER-0005",
+        "ER-0006",
+        "ER-0007"
+      ]
+    },
+    {
+      "observation_id": "OBS-0002",
+      "observation": "Worktree select, switch, and unlock are all placed on the Source Control surface and use no-persist receipt-or-route/open effects; placeholder command_applied events are explicitly invalid and persisted domain events are prohibited.",
+      "evidence_ref_ids": [
+        "ER-0008",
+        "ER-0009",
+        "ER-0010",
+        "ER-0011",
+        "ER-0012",
+        "ER-0013",
+        "ER-0078",
+        "ER-0079",
+        "ER-0080"
+      ]
+    },
+    {
+      "observation_id": "OBS-0003",
+      "observation": "Cancel Workflow uses a no-persist receipt disposition, whereas Compare Last Success is explicitly non-mutating and emits github.actions.readiness_compared with dispatch-correlation metadata.",
+      "evidence_ref_ids": [
+        "ER-0014",
+        "ER-0015",
+        "ER-0016",
+        "ER-0017",
+        "ER-0018",
+        "ER-0019",
+        "ER-0020",
+        "ER-0021",
+        "ER-0022"
+      ]
+    },
+    {
+      "observation_id": "OBS-0004",
+      "observation": "cmd.github.actions is declared the canonical namespace dispatch row, legacy cmd.github_actions rows are described as compatibility aliases, and Open Current Branch is a separate no-persist command.",
+      "evidence_ref_ids": [
+        "ER-0023",
+        "ER-0024",
+        "ER-0025",
+        "ER-0026",
+        "ER-0027",
+        "ER-0028",
+        "ER-0029",
+        "ER-0030"
+      ]
+    },
+    {
+      "observation_id": "OBS-0005",
+      "observation": "Every complete row names an availability selector and disabled-reason projection.",
+      "evidence_ref_ids": [
+        "ER-0031",
+        "ER-0032",
+        "ER-0033",
+        "ER-0034",
+        "ER-0035",
+        "ER-0036",
+        "ER-0037"
+      ]
+    },
+    {
+      "observation_id": "OBS-0006",
+      "observation": "Every complete row requires accessibility evidence covering role or name, keyboard activation, focus handling, and disabled-state announcement.",
+      "evidence_ref_ids": [
+        "ER-0038",
+        "ER-0039",
+        "ER-0040",
+        "ER-0041",
+        "ER-0042",
+        "ER-0043",
+        "ER-0044"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FND-0001",
+      "severity": "high",
+      "finding": "Cancel Workflow exposes an externally mutating operation and handler but defines only a no-persist receipt or route/open disposition. The core does not specify target workflow/run identity, cancellable states, authorization authority, confirmation, idempotency, or command-specific success and failure outcomes, leaving safety-critical behavior to builders.",
+      "evidence_ref_ids": [
+        "ER-0014",
+        "ER-0015",
+        "ER-0016",
+        "ER-0017",
+        "ER-0018",
+        "ER-0065",
+        "ER-0066"
+      ]
+    },
+    {
+      "finding_id": "FND-0002",
+      "severity": "high",
+      "finding": "The cancellation row exposes legacy-form cmd.github_actions.cancel_workflow as its UI command, while the canonical dispatch row says legacy cmd.github_actions rows are compatibility aliases. No canonical cancellation target or argument/result equivalence is identified, so legacy and canonical dispatcher identities can diverge.",
+      "evidence_ref_ids": [
+        "ER-0015",
+        "ER-0024",
+        "ER-0034"
+      ]
+    },
+    {
+      "finding_id": "FND-0003",
+      "severity": "medium",
+      "finding": "Five rows permit either a typed payload/result contract or an explicit route/open no-persist disposition, but each corresponding production-certification clause still requires a typed payload/result assertion. A route/open-only implementation can therefore satisfy one acceptance clause while failing the stated evidence requirement.",
+      "evidence_ref_ids": [
+        "ER-0045",
+        "ER-0046",
+        "ER-0047",
+        "ER-0048",
+        "ER-0049",
+        "ER-0050",
+        "ER-0051",
+        "ER-0052",
+        "ER-0053",
+        "ER-0054"
+      ]
+    },
+    {
+      "finding_id": "FND-0004",
+      "severity": "medium",
+      "finding": "Multiple receipt effects allow a receipt or route/open disposition, yet effect_kind is receipt and the only named effect reference is a dispatch_receipt. No route/open reference, discriminator, result form, or selection rule is defined, making alternative effect evidence non-interoperable.",
+      "evidence_ref_ids": [
+        "ER-0009",
+        "ER-0017",
+        "ER-0025",
+        "ER-0029",
+        "ER-0055",
+        "ER-0056",
+        "ER-0061",
+        "ER-0062",
+        "ER-0063",
+        "ER-0064",
+        "ER-0065",
+        "ER-0066"
+      ]
+    },
+    {
+      "finding_id": "FND-0005",
+      "severity": "medium",
+      "finding": "Worktree Select and Worktree Switch occupy the same UI surface and have equivalent generic receipt scaffolding, but the core does not define the behavioral distinction between selecting a worktree and switching application or repository context, including target identity and resulting state transition.",
+      "evidence_ref_ids": [
+        "ER-0008",
+        "ER-0009",
+        "ER-0010",
+        "ER-0011"
+      ]
+    },
+    {
+      "finding_id": "FND-0006",
+      "severity": "high",
+      "finding": "Worktree Unlock names its handler and receipt behavior but does not define the target lock, lock ownership, authorization, preconditions, force behavior, race handling, or failure semantics. Those omissions leave a consequential repository-state operation discretionary.",
+      "evidence_ref_ids": [
+        "ER-0003",
+        "ER-0012",
+        "ER-0013"
+      ]
+    },
+    {
+      "finding_id": "FND-0007",
+      "severity": "medium",
+      "finding": "Compare Last Success states that a selected run is compared with last-success evidence and emits github.actions.readiness_compared, but it does not define selected-run identity, last-success baseline resolution, comparison dimensions, the no-baseline outcome, event payload fields, or result consumers.",
+      "evidence_ref_ids": [
+        "ER-0019",
+        "ER-0020",
+        "ER-0021",
+        "ER-0022"
+      ]
+    },
+    {
+      "finding_id": "FND-0008",
+      "severity": "medium",
+      "finding": "The canonical cmd.github.actions namespace dispatch row does not define a dispatch envelope, supported subcommands, routing rules, alias set, precedence, or legacy argument/result translation. Its generic no-persist receipt cannot establish compatibility behavior.",
+      "evidence_ref_ids": [
+        "ER-0006",
+        "ER-0023",
+        "ER-0024",
+        "ER-0025",
+        "ER-0026"
+      ]
+    },
+    {
+      "finding_id": "FND-0009",
+      "severity": "medium",
+      "finding": "The seven rows name availability and disabled-reason selectors but do not define availability predicates, dependency freshness, precedence among simultaneous disabled conditions, or exact disabled copy. Command enablement and user-visible failure prevention remain builder-defined.",
+      "evidence_ref_ids": [
+        "ER-0031",
+        "ER-0032",
+        "ER-0033",
+        "ER-0034",
+        "ER-0035",
+        "ER-0036",
+        "ER-0037"
+      ]
+    },
+    {
+      "finding_id": "FND-0010",
+      "severity": "medium",
+      "finding": "The contracts require dispatch evidence to preserve a result and promise deterministic focus recovery after error, but they do not define typed error variants, retryability, partial-effect status, cancellation status, or error-to-receipt behavior. Even Select and Cancel Workflow can therefore expose incompatible failure semantics.",
+      "evidence_ref_ids": [
+        "ER-0067",
+        "ER-0068",
+        "ER-0069",
+        "ER-0070"
+      ]
+    },
+    {
+      "finding_id": "FND-0011",
+      "severity": "medium",
+      "finding": "Accessibility contracts require stable role/name/description, keyboard activation, focus handling, and disabled announcements but do not state the concrete role, accessible name and description, activation keys, focus return target, or announcement timing and copy. The generic regression statement can certify behaviorally incompatible controls.",
+      "evidence_ref_ids": [
+        "ER-0038",
+        "ER-0068",
+        "ER-0075",
+        "ER-0076",
+        "ER-0077"
+      ]
+    },
+    {
+      "finding_id": "FND-0012",
+      "severity": "medium",
+      "finding": "Open Current Branch identifies its menu location and command but does not define repository and remote selection, branch-name encoding, URL destination, internal-route versus external-browser behavior, or open failure outcomes.",
+      "evidence_ref_ids": [
+        "ER-0027",
+        "ER-0028",
+        "ER-0029",
+        "ER-0030"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-0001",
+      "non_gap": "Command-to-handler routing is explicit for all seven complete rows.",
+      "evidence_ref_ids": [
+        "ER-0001",
+        "ER-0002",
+        "ER-0003",
+        "ER-0004",
+        "ER-0005",
+        "ER-0006",
+        "ER-0007"
+      ]
+    },
+    {
+      "non_gap_id": "NG-0002",
+      "non_gap": "Each row explicitly identifies its projected availability and disabled-reason state paths.",
+      "evidence_ref_ids": [
+        "ER-0031",
+        "ER-0032",
+        "ER-0033",
+        "ER-0034",
+        "ER-0035",
+        "ER-0036",
+        "ER-0037"
+      ]
+    },
+    {
+      "non_gap_id": "NG-0003",
+      "non_gap": "Persistence class is explicit at the high level: six commands prohibit unexpected persisted domain events, while Compare Last Success declares github.actions.readiness_compared.",
+      "evidence_ref_ids": [
+        "ER-0018",
+        "ER-0019",
+        "ER-0022",
+        "ER-0026",
+        "ER-0030",
+        "ER-0078",
+        "ER-0079",
+        "ER-0080"
+      ]
+    },
+    {
+      "non_gap_id": "NG-0004",
+      "non_gap": "Accessibility evidence dimensions are explicitly enumerated for every complete row.",
+      "evidence_ref_ids": [
+        "ER-0038",
+        "ER-0039",
+        "ER-0040",
+        "ER-0041",
+        "ER-0042",
+        "ER-0043",
+        "ER-0044"
+      ]
+    },
+    {
+      "non_gap_id": "NG-0005",
+      "non_gap": "Every complete row explicitly enumerates the production-certification evidence categories, including dispatcher, typed payload/result, state, effect, accessibility, and regression evidence.",
+      "evidence_ref_ids": [
+        "ER-0046",
+        "ER-0048",
+        "ER-0050",
+        "ER-0052",
+        "ER-0020",
+        "ER-0024",
+        "ER-0054"
+      ]
+    },
+    {
+      "non_gap_id": "NG-0006",
+      "non_gap": "Compare Last Success explicitly must not imply mutation authority, and its expected event name and correlation fields are stated.",
+      "evidence_ref_ids": [
+        "ER-0019",
+        "ER-0020",
+        "ER-0022"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-0001",
+      "unknown": "The exact argument, success-result, and error-result schemas for all seven commands are unknown.",
+      "evidence_ref_ids": [
+        "ER-0001",
+        "ER-0002",
+        "ER-0003",
+        "ER-0004",
+        "ER-0005",
+        "ER-0006",
+        "ER-0007"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0002",
+      "unknown": "The derivation, precedence, freshness, and exact user-visible copy behind every availability and disabled-reason projection are unknown.",
+      "evidence_ref_ids": [
+        "ER-0031",
+        "ER-0032",
+        "ER-0033",
+        "ER-0034",
+        "ER-0035",
+        "ER-0036",
+        "ER-0037"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0003",
+      "unknown": "The exact state and side-effect distinction between worktree select and worktree switch is unknown.",
+      "evidence_ref_ids": [
+        "ER-0008",
+        "ER-0009",
+        "ER-0010",
+        "ER-0011"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0004",
+      "unknown": "Worktree unlock targeting, authority, safety preconditions, concurrency handling, and failure outcomes are unknown.",
+      "evidence_ref_ids": [
+        "ER-0003",
+        "ER-0012",
+        "ER-0013"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0005",
+      "unknown": "Cancel Workflow target identity, authorization source, eligible statuses, confirmation policy, idempotency, and remote failure handling are unknown.",
+      "evidence_ref_ids": [
+        "ER-0014",
+        "ER-0015",
+        "ER-0016",
+        "ER-0017",
+        "ER-0018"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0006",
+      "unknown": "Compare Last Success baseline selection, comparison algorithm, no-baseline behavior, event payload, and downstream consumer are unknown.",
+      "evidence_ref_ids": [
+        "ER-0020",
+        "ER-0021",
+        "ER-0022"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0007",
+      "unknown": "The supported cmd.github.actions dispatch operations and complete legacy-to-canonical alias mapping are unknown.",
+      "evidence_ref_ids": [
+        "ER-0015",
+        "ER-0023",
+        "ER-0024",
+        "ER-0025"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0008",
+      "unknown": "The schema, reference identity, and selection criteria for an allowed route/open disposition are unknown.",
+      "evidence_ref_ids": [
+        "ER-0009",
+        "ER-0017",
+        "ER-0025",
+        "ER-0029",
+        "ER-0055",
+        "ER-0056",
+        "ER-0061",
+        "ER-0062",
+        "ER-0063",
+        "ER-0064",
+        "ER-0065",
+        "ER-0066"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0009",
+      "unknown": "Concrete accessible names, roles, activation keys, focus targets, disabled announcement behavior, and typed command errors are unknown.",
+      "evidence_ref_ids": [
+        "ER-0038",
+        "ER-0067",
+        "ER-0068",
+        "ER-0069",
+        "ER-0070",
+        "ER-0075",
+        "ER-0076",
+        "ER-0077"
+      ]
+    },
+    {
+      "unknown_id": "UNK-0010",
+      "unknown": "Open Current Branch repository, remote, branch, destination URL, routing mode, and failure behavior are unknown.",
+      "evidence_ref_ids": [
+        "ER-0027",
+        "ER-0028",
+        "ER-0029",
+        "ER-0030"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-0001",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14093,
+      "line_end": 14093,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.git.worktree.select reaches handlers::git::worktree_select with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0002",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14148,
+      "line_end": 14148,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.git.worktree.switch reaches handlers::git::worktree_switch with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0003",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14203,
+      "line_end": 14203,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.git.worktree.unlock reaches handlers::git::worktree_unlock with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0004",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14258,
+      "line_end": 14258,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.github_actions.cancel_workflow reaches handlers::github_actions::cancel_workflow with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0005",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14314,
+      "line_end": 14314,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.github.actions.compare_last_success reaches handlers::github::actions_compare_last_success with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0006",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14373,
+      "line_end": 14373,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.github.actions reaches handlers::github::actions_dispatch with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0007",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14428,
+      "line_end": 14428,
+      "range_class": "core",
+      "exact_quote": "Dispatching cmd.github.actions.open_current_branch reaches handlers::github::actions_open_current_branch with typed args/result contract."
+    },
+    {
+      "evidence_ref_id": "ER-0008",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14062,
+      "line_end": 14062,
+      "range_class": "core",
+      "exact_quote": "\"ui_location\": \"Source Control surface\""
+    },
+    {
+      "evidence_ref_id": "ER-0009",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14078,
+      "line_end": 14078,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.select records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+    },
+    {
+      "evidence_ref_id": "ER-0010",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14117,
+      "line_end": 14117,
+      "range_class": "core",
+      "exact_quote": "\"ui_location\": \"Source Control surface\""
+    },
+    {
+      "evidence_ref_id": "ER-0011",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14133,
+      "line_end": 14133,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.switch records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+    },
+    {
+      "evidence_ref_id": "ER-0012",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14172,
+      "line_end": 14172,
+      "range_class": "core",
+      "exact_quote": "\"ui_location\": \"Source Control surface\""
+    },
+    {
+      "evidence_ref_id": "ER-0013",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14188,
+      "line_end": 14188,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.unlock records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+    },
+    {
+      "evidence_ref_id": "ER-0014",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14227,
+      "line_end": 14227,
+      "range_class": "core",
+      "exact_quote": "\"ui_location\": \"Github Actions surface > Cancel Workflow\""
+    },
+    {
+      "evidence_ref_id": "ER-0015",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14228,
+      "line_end": 14228,
+      "range_class": "core",
+      "exact_quote": "\"ui_command_id\": \"cmd.github_actions.cancel_workflow\""
+    },
+    {
+      "evidence_ref_id": "ER-0016",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14229,
+      "line_end": 14229,
+      "range_class": "core",
+      "exact_quote": "\"handler_location\": \"handlers::github_actions::cancel_workflow\""
+    },
+    {
+      "evidence_ref_id": "ER-0017",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14243,
+      "line_end": 14243,
+      "range_class": "core",
+      "exact_quote": "cmd.github_actions.cancel_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+    },
+    {
+      "evidence_ref_id": "ER-0018",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14277,
+      "line_end": 14277,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.github_actions.cancel_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+    },
+    {
+      "evidence_ref_id": "ER-0019",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14286,
+      "line_end": 14286,
+      "range_class": "core",
+      "exact_quote": "\"github.actions.readiness_compared\""
+    },
+    {
+      "evidence_ref_id": "ER-0020",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14294,
+      "line_end": 14294,
+      "range_class": "core",
+      "exact_quote": "Compares a selected run with last-success evidence and must not imply mutation authority."
+    },
+    {
+      "evidence_ref_id": "ER-0021",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14299,
+      "line_end": 14299,
+      "range_class": "core",
+      "exact_quote": "cmd.github.actions.compare_last_success must emit the declared event types and record dispatch correlation evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0022",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14334,
+      "line_end": 14334,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.github.actions.compare_last_success emits expected event type github.actions.readiness_compared with command_id, origin, correlation_id, and handler target."
+    },
+    {
+      "evidence_ref_id": "ER-0023",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14344,
+      "line_end": 14344,
+      "range_class": "core",
+      "exact_quote": "\"ui_command_id\": \"cmd.github.actions\""
+    },
+    {
+      "evidence_ref_id": "ER-0024",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14353,
+      "line_end": 14353,
+      "range_class": "core",
+      "exact_quote": "Canonical namespace dispatch row; legacy cmd.github_actions rows are compatibility aliases."
+    },
+    {
+      "evidence_ref_id": "ER-0025",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14358,
+      "line_end": 14358,
+      "range_class": "core",
+      "exact_quote": "cmd.github.actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+    },
+    {
+      "evidence_ref_id": "ER-0026",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14392,
+      "line_end": 14392,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.github.actions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+    },
+    {
+      "evidence_ref_id": "ER-0027",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14397,
+      "line_end": 14397,
+      "range_class": "core",
+      "exact_quote": "\"ui_location\": \"Source Control > GitHub Actions > Actions > Open Current Branch\""
+    },
+    {
+      "evidence_ref_id": "ER-0028",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14398,
+      "line_end": 14398,
+      "range_class": "core",
+      "exact_quote": "\"ui_command_id\": \"cmd.github.actions.open_current_branch\""
+    },
+    {
+      "evidence_ref_id": "ER-0029",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14413,
+      "line_end": 14413,
+      "range_class": "core",
+      "exact_quote": "cmd.github.actions.open_current_branch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+    },
+    {
+      "evidence_ref_id": "ER-0030",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14447,
+      "line_end": 14447,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.github.actions.open_current_branch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+    },
+    {
+      "evidence_ref_id": "ER-0031",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14098,
+      "line_end": 14098,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.git_worktree_select.availability and disabled copy reads state.commands.git_worktree_select.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0032",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14153,
+      "line_end": 14153,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.git_worktree_switch.availability and disabled copy reads state.commands.git_worktree_switch.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0033",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14208,
+      "line_end": 14208,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.git_worktree_unlock.availability and disabled copy reads state.commands.git_worktree_unlock.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0034",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14263,
+      "line_end": 14263,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.github_actions_cancel_workflow.availability and disabled copy reads state.commands.github_actions_cancel_workflow.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0035",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14319,
+      "line_end": 14319,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.github_actions_compare_last_success.availability and disabled copy reads state.commands.github_actions_compare_last_success.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0036",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14378,
+      "line_end": 14378,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.github_actions.availability and disabled copy reads state.commands.github_actions.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0037",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14433,
+      "line_end": 14433,
+      "range_class": "core",
+      "exact_quote": "Availability reads state.commands.github_actions_open_current_branch.availability and disabled copy reads state.commands.github_actions_open_current_branch.disabled_reason."
+    },
+    {
+      "evidence_ref_id": "ER-0038",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14108,
+      "line_end": 14108,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0039",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14163,
+      "line_end": 14163,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0040",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14218,
+      "line_end": 14218,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0041",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14273,
+      "line_end": 14273,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0042",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14329,
+      "line_end": 14329,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0043",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14388,
+      "line_end": 14388,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0044",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14443,
+      "line_end": 14443,
+      "range_class": "core",
+      "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+    },
+    {
+      "evidence_ref_id": "ER-0045",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14070,
+      "line_end": 14070,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.select must have a typed payload/result contract or explicit route/open no-persist disposition"
+    },
+    {
+      "evidence_ref_id": "ER-0046",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14073,
+      "line_end": 14073,
+      "range_class": "core",
+      "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0047",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14125,
+      "line_end": 14125,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.switch must have a typed payload/result contract or explicit route/open no-persist disposition"
+    },
+    {
+      "evidence_ref_id": "ER-0048",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14128,
+      "line_end": 14128,
+      "range_class": "core",
+      "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0049",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14180,
+      "line_end": 14180,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.unlock must have a typed payload/result contract or explicit route/open no-persist disposition"
+    },
+    {
+      "evidence_ref_id": "ER-0050",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14183,
+      "line_end": 14183,
+      "range_class": "core",
+      "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0051",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14235,
+      "line_end": 14235,
+      "range_class": "core",
+      "exact_quote": "cmd.github_actions.cancel_workflow must have a typed payload/result contract or explicit route/open no-persist disposition"
+    },
+    {
+      "evidence_ref_id": "ER-0052",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14238,
+      "line_end": 14238,
+      "range_class": "core",
+      "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0053",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14405,
+      "line_end": 14405,
+      "range_class": "core",
+      "exact_quote": "cmd.github.actions.open_current_branch must have a typed payload/result contract or explicit route/open no-persist disposition"
+    },
+    {
+      "evidence_ref_id": "ER-0054",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14408,
+      "line_end": 14408,
+      "range_class": "core",
+      "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence."
+    },
+    {
+      "evidence_ref_id": "ER-0055",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14077,
+      "line_end": 14077,
+      "range_class": "core",
+      "exact_quote": "\"effect_kind\": \"receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0056",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14080,
+      "line_end": 14080,
+      "range_class": "core",
+      "exact_quote": "\"cmd.git.worktree.select.dispatch_receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0061",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14242,
+      "line_end": 14242,
+      "range_class": "core",
+      "exact_quote": "\"effect_kind\": \"receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0062",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14245,
+      "line_end": 14245,
+      "range_class": "core",
+      "exact_quote": "\"cmd.github_actions.cancel_workflow.dispatch_receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0063",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14357,
+      "line_end": 14357,
+      "range_class": "core",
+      "exact_quote": "\"effect_kind\": \"receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0064",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14360,
+      "line_end": 14360,
+      "range_class": "core",
+      "exact_quote": "\"cmd.github.actions.dispatch_receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0065",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14412,
+      "line_end": 14412,
+      "range_class": "core",
+      "exact_quote": "\"effect_kind\": \"receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0066",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14415,
+      "line_end": 14415,
+      "range_class": "core",
+      "exact_quote": "\"cmd.github.actions.open_current_branch.dispatch_receipt\""
+    },
+    {
+      "evidence_ref_id": "ER-0067",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14069,
+      "line_end": 14069,
+      "range_class": "core",
+      "exact_quote": "cmd.git.worktree.select dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect"
+    },
+    {
+      "evidence_ref_id": "ER-0068",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14086,
+      "line_end": 14086,
+      "range_class": "core",
+      "exact_quote": "catalog.git_worktree_select preserves visible focus and returns focus deterministically after dispatch or error."
+    },
+    {
+      "evidence_ref_id": "ER-0069",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14234,
+      "line_end": 14234,
+      "range_class": "core",
+      "exact_quote": "cmd.github_actions.cancel_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect"
+    },
+    {
+      "evidence_ref_id": "ER-0070",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14251,
+      "line_end": 14251,
+      "range_class": "core",
+      "exact_quote": "catalog.github_actions_cancel_workflow preserves visible focus and returns focus deterministically after dispatch or error."
+    },
+    {
+      "evidence_ref_id": "ER-0075",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14084,
+      "line_end": 14084,
+      "range_class": "core",
+      "exact_quote": "catalog.git_worktree_select exposes a stable role/name/description matching cmd.git.worktree.select."
+    },
+    {
+      "evidence_ref_id": "ER-0076",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14085,
+      "line_end": 14085,
+      "range_class": "core",
+      "exact_quote": "catalog.git_worktree_select is reachable and activatable by keyboard where the control is visible."
+    },
+    {
+      "evidence_ref_id": "ER-0077",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14087,
+      "line_end": 14087,
+      "range_class": "core",
+      "exact_quote": "catalog.git_worktree_select surfaces state.commands.git_worktree_select.disabled_reason to assistive technology when unavailable."
+    },
+    {
+      "evidence_ref_id": "ER-0078",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14112,
+      "line_end": 14112,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.git.worktree.select records dispatch receipt cmd.git.worktree.select.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+    },
+    {
+      "evidence_ref_id": "ER-0079",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14167,
+      "line_end": 14167,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.git.worktree.switch records dispatch receipt cmd.git.worktree.switch.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+    },
+    {
+      "evidence_ref_id": "ER-0080",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 14222,
+      "line_end": 14222,
+      "range_class": "core",
+      "exact_quote": "Assert cmd.git.worktree.unlock records dispatch receipt cmd.git.worktree.unlock.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

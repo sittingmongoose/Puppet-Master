@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 14260-14271 >>>
+- state management
+- validation
+- separately from execution logic
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 14272-14661 >>>
+### OSI-139 - Platform Hook Registration Policy
+
+```yaml
+plan_unit_id: OSI-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
+  hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
+  behavior, and Gemini orchestrator-level Direct API hooks without native config files.
+gui_related: false
+gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-138
+- OSI-047
+- OSI-093
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_hook_registration_policy
+node_compile_hint:
+  mode: platform_hook_registration_policy
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- Cursor
+- .cursor/hooks.json
+- ~/.cursor/hooks.json
+- SubagentStart
+- SubagentStop
+- beforeSubmitPrompt
+- afterAgentResponse
+- CLI subagents have reported issues (Feb 2026)
+- orchestrator-level hooks as primary
+- Codex
+- CLI lifecycle outputs
+- Claude Code
+- .claude/settings.json
+- PreToolUse
+- PostToolUse
+- SessionStart
+- SessionEnd
+- exit code 2
+- Gemini
+- Direct API provider
+- No platform-native hook config file
+- Copilot
+negative_constraints: []
+compatibility_only_notes:
+- >-
+  CLI subagents have reported issues (Feb 2026); orchestrator-level hooks remain primary and native hooks are enhancement
+  when fixed.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-140 - BeforeUnit Context Schema
+
+```yaml
+plan_unit_id: OSI-140
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  BeforeUnitContext carries execution identity, lane/worktree, role/account policy, tool use, tier type, platform/model, selected
+  subagents, config snapshot, and known gaps into BeforeUnit hooks.
+gui_related: false
+gui_classification_reason: This unit defines backend hook context schema rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-138
+- OSI-050
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: beforeunit_context_schema
+node_compile_hint:
+  mode: beforeunit_context_schema
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- BeforeUnitContext
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- worktree_id
+- execution_role
+- requested_account_policy
+- tool_use_id
+- tier_type
+- platform
+- model
+- selected_subagents
+- config_snapshot
+- known_gaps
+negative_constraints: []
+compatibility_only_notes:
+- The Rust schema snippet is plan evidence only, not an executable node output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-141 - AfterUnit Context And Completion Status Schema
+
+```yaml
+plan_unit_id: OSI-141
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  AfterUnitContext carries execution identity, lane/worktree, role/account policy, tool use, tier type, platform, subagent
+  output, completion status, and iteration count into AfterUnit hooks, with CompletionStatus variants for success, failure,
+  and warning.
+gui_related: false
+gui_classification_reason: This unit defines backend hook context and completion-status schema.
+split_recommended: false
+depends_on:
+- OSI-138
+- OSI-123
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: afterunit_context_completion_status_schema
+node_compile_hint:
+  mode: afterunit_context_completion_status_schema
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- AfterUnitContext
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- worktree_id
+- execution_role
+- requested_account_policy
+- tool_use_id
+- tier_type
+- platform
+- subagent_output
+- completion_status
+- iteration_count
+- CompletionStatus
+- Success
+- Failure(String)
+- Warning(String)
+negative_constraints: []
+compatibility_only_notes:
+- The Rust schema snippet is plan evidence only, not an executable node output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-142 - Hook Trait Interfaces
+
+```yaml
+plan_unit_id: OSI-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  BeforeUnitHook and AfterUnitHook traits are Send + Sync interfaces that execute against their respective context and expose
+  a hook name.
+gui_related: false
+gui_classification_reason: This unit defines backend trait interfaces.
+split_recommended: false
+depends_on:
+- OSI-140
+- OSI-141
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: hook_trait_interfaces
+node_compile_hint:
+  mode: hook_trait_interfaces
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- BeforeUnitHook
+- AfterUnitHook
+- Send + Sync
+- execute
+- name
+negative_constraints: []
+compatibility_only_notes:
+- The Rust trait snippet is plan evidence only, not an executable node output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-143 - Hook Result Contracts
+
+```yaml
+plan_unit_id: OSI-143
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  BeforeUnitResult communicates active subagent selection, injected context, and block decisions, while AfterUnitResult communicates
+  validation status, validation error, retry request, and retry reason.
+gui_related: false
+gui_classification_reason: This unit defines backend hook result contracts.
+split_recommended: false
+depends_on:
+- OSI-142
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: hook_result_contracts
+node_compile_hint:
+  mode: hook_result_contracts
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- BeforeUnitResult
+- active_subagent
+- injected_context
+- block
+- block_reason
+- AfterUnitResult
+- validation_passed
+- validation_error
+- request_retry
+- retry_reason
+negative_constraints: []
+compatibility_only_notes:
+- The Rust result snippet is plan evidence only, not an executable node output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-144 - Hook Registry Registration Model
+
+```yaml
+plan_unit_id: OSI-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  HookRegistry stores before_unit_hooks and after_unit_hooks and exposes register_before_unit and register_after_unit registration
+  methods.
+gui_related: false
+gui_classification_reason: This unit defines backend hook registry storage and registration.
+split_recommended: false
+depends_on:
+- OSI-142
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: hook_registry_registration_model
+node_compile_hint:
+  mode: hook_registry_registration_model
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- HookRegistry
+- before_unit_hooks
+- after_unit_hooks
+- register_before_unit
+- register_after_unit
+negative_constraints: []
+compatibility_only_notes:
+- The Rust registry snippet is plan evidence only, not an executable node output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 14662-14673 >>>
+### OSI-145 - BeforeUnit Hook Execution Semantics
+
+```yaml
+plan_unit_id: OSI-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  BeforeUnit hook execution runs each hook through safe_hook_main, short-circuits on block, preserves hook-provided active_subagent,
+  accumulates injected contexts joined by blank lines, logs hook failures as warnings, and returns the combined BeforeUnitResult.
+gui_related: false
+gui_classification_reason: This unit defines backend BeforeUnit execution semantics.

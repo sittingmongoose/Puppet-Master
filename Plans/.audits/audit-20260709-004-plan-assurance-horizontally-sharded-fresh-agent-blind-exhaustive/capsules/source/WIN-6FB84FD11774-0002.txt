@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE 384-395 >>>
+  - pldg-20260610-001-ledger-plan-system:atom-0031
+  - pldg-20260610-001-ledger-plan-system:dec-0010
+  - source_ref:chat:design-discussion
+  - source_ref:chat:user-node-readiness-correction
+preserved_exact_tokens: ["node_readiness_report.json", "PlanUnit index", "node-readiness report", "blocked_compiler_contract_incomplete", "runtime_disabled", "Do not create WorkNodes"]
+negative_constraints:
+  - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Plan_Document_System.md
+
+
+<<< AUTHORITATIVE_CORE 396-756 >>>
+### PNC-005 - GUI Routing Inheritance
+
+```yaml
+plan_unit_id: PNC-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: Future NodeSeeds and WorkNodes inherit gui_related from source PlanUnits. If gui_related is true and separate GUI model routing is enabled, the orchestrator routes the task to the configured GUI-capable model or CLI; otherwise it uses the default model.
+gui_related: false
+gui_classification_reason: This is backend/orchestration routing behavior; PDS-007 owns the user-visible setting and is gui_related true.
+depends_on: [PDS-003, PDS-007, PNC-003]
+unblocks: []
+acceptance_criteria:
+  - Future node artifacts preserve gui_related exactly from source PlanUnits.
+  - Routing policy uses a configurable GUI-capable model/CLI without hardcoding a vendor or model name.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future compiler tests.
+  - Future routing-policy tests.
+risk_class: routing_mismatch
+reasoning_tier: standard
+context_scope: future_compiler_and_runtime
+implementation_surfaces: [future NodeSeed compiler, future WorkNode compiler, future runtime router]
+node_compile_hint: {mode: inherit_gui_related, route_to_gui_model_if_enabled: true, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0032
+  - pldg-20260610-001-ledger-plan-system:atom-0033
+  - pldg-20260610-001-ledger-plan-system:atom-0034
+  - pldg-20260610-001-ledger-plan-system:dec-0009
+  - pldg-20260610-001-ledger-plan-system:corr-0003
+  - source_ref:chat:user-gui-classification-correction
+  - source_ref:chat:user-gui-routing-native-setting
+  - source_ref:chat:user-gui-routing-bootstrap-native
+preserved_exact_tokens: ["NodeSeeds", "WorkNodes", "gui_related", "route_to_gui_model_if_enabled", "use different model for GUI elements?", "GUI model", "Antigravity", "Cursor"]
+negative_constraints:
+  - Do not hardcode Antigravity, Cursor, or any specific model name into canonical PlanUnits as the only routing option.
+  - Do not expose a highly granular GUI/UI/icon/image routing taxonomy in the product UI.
+owner_hints: [Plans/Plan_To_Node_Compilation.md, Plans/Plan_Document_System.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Plan_Document_System.md
+
+### PNC-006 - Native Goal Mode Compiler Handoff
+
+```yaml
+plan_unit_id: PNC-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: Future Planning Wizard uses native Goal Mode invisibly for ledger-to-Plans transfer, Plans-to-node conversion after this compiler contract is complete, and audit. Assistant chat can invoke Goal Mode visibly for arbitrary execution tasks.
+gui_related: false
+gui_classification_reason: Goal handoff and compiler orchestration are not GUI implementation work.
+depends_on: [PLS-008, PNC-001]
+unblocks: []
+acceptance_criteria:
+  - Native Goal handoff respects the readiness boundary and does not create nodes before compiler completion.
+  - Audit remains a distinct phase from compilation and execution.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future native Goal integration tests.
+  - Future compiler boundary tests.
+risk_class: phase_boundary
+reasoning_tier: standard
+context_scope: native_future
+implementation_surfaces: [future Planning Wizard, future Goal Mode service, future compiler]
+node_compile_hint: {mode: future_native_goal_handoff, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0029
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Planning Wizard", "Chain Wizard", "native Goal Mode", "ledger-to-Plans", "Plans to work nodes", "audit"]
+negative_constraints:
+  - Chain Wizard is retained only as retired compatibility/source-lineage terminology and must not name the current product.
+stale_retired_dispositions:
+  - Chain Wizard in source lineage is retired; active current-product prose uses Planning Wizard.
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Planning_Ledger_System.md
+
+
+### PNC-008 - Node-Readiness Report Field Contract
+
+```yaml
+plan_unit_id: PNC-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, runtime_enablement_status, no_worknodes_created, and next_required_action. It may recommend grouping questions, but it must never create NodeSeed candidates or WorkNodes; runtime node artifacts belong only to PlanCompile/Executor activation after source indexes, acceptance units, strict schemas, and certification gates are current.
+gui_related: false
+gui_classification_reason: Readiness report structure and routing analysis are backend/orchestration behavior.
+depends_on: [PNC-001, PNC-002, PNC-003, PNC-004, PNC-005]
+unblocks: [BPM-005]
+acceptance_criteria:
+  - The report exposes dependency/build-order blockers separately from model/capability risk.
+  - The report lists gui_related PlanUnits so future routing can inherit the boolean.
+  - The report explicitly states no_worknodes_created=true for index generation even when the compiler contract is complete.
+validation_surfaces:
+  - Plans/.plan_index/node_readiness_report.json
+  - Future node-readiness validator.
+risk_class: false_node_generation
+reasoning_tier: standard
+context_scope: plan_index
+implementation_surfaces: [Plans/.plan_index/node_readiness_report.json]
+node_compile_hint: {mode: readiness_report_schema, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0039
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["status", "status_reason", "source_plan_unit_index", "plan_unit_count", "missing_required_metadata", "dependency_graph_summary", "build_order_blockers", "risk_and_reasoning_summary", "gui_related_units", "runtime_enablement_status", "blocked_compiler_contract_incomplete", "runtime_disabled", "no_worknodes_created", "next_required_action"]
+negative_constraints:
+  - Do not create NodeSeed candidates from a readiness report.
+  - Do not create WorkNodes from node-readiness output.
+owner_hints: [Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
+
+## 4. Runtime Compiler Algorithm And Enablement
+
+The PlanUnit-to-NodeSeed-to-WorkNode compiler contract is accepted for implementation. This acceptance authorizes builders to implement the compiler, schemas, and validators; it does not cause this docs/index repair to emit runtime artifacts, queues, implementation files, or WorkNodes.
+
+```yaml
+plan_unit_id: PNC-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  Runtime PlanCompile is accepted as an implementation contract by a deterministic PlanUnit to NodeSeed to WorkGraph to WorkNodeRequest to Executor intake boundary. The compiler reads the frozen PlanUnit index, acceptance-unit index, dependencies, implementation-surface classifications, validation surfaces, source-control/project context snapshot, and runtime policy snapshot. It excludes retired, source-lineage-only, explicit future, and out-of-scope PlanUnits; converts accepted implementation PlanUnits into non-executable NodeSeed candidates with source PlanUnit refs, acceptance refs, objective, owner area, typed implementation surfaces, read/write candidates, validators, risk, reasoning tier, gui_related, capability requirements, and dependency refs; runs NodeSeed review for coverage, exclusion disposition, missing validators, authority, and sizing; constructs a WorkGraph draft using only typed executable-order edges; emits WorkNodeRequest records only after graph certification; hands requests to Executor intake for source-control, authority, model, test, and scheduler validation; and allows WorkNodeRecord materialization only inside the activation transaction after Executor intake is accepted. Completion certification authority is Goal Runtime's certifier using Executor receipts, test evidence, source-control receipts, runtime artifact refs, unresolved-item disposition, and Auditor/verification receipts. The readiness-guard removal path is: PNC-007 accepted, CV-287 concrete event registration accepted, runtime artifact schemas materialized or future-scoped, dependency graph acyclic, strict handoff/runtime validators green, PNC-019 executable lifecycle certification harness passed with recorded evidence, and node-readiness reporting runtime_enablement_status.compiler_contract_complete=true plus executable_lifecycle_certification_complete=true while no index-generated WorkNodes are emitted.
+gui_related: false
+gui_classification_reason: Runtime compiler algorithm design is backend/orchestration behavior.
+depends_on: [PNC-001, PNC-002, PNC-003]
+unblocks: [PNC-009, PNC-010, PNC-012, PNC-013, GRS-024]
+acceptance_criteria:
+  - The compiler algorithm names deterministic inputs, excluded dispositions, NodeSeed candidate fields, review gates, WorkGraph draft construction, WorkNodeRequest emission, Executor intake, activation, and completion certification authority.
+  - PlanUnit index generation reports compiler_contract_complete=true when Plans are otherwise ready, but reports runtime_enabled=false and executable_lifecycle_certification_complete=false until the PNC-019 harness has passed and recorded evidence, while still reporting no_worknodes_created=true and nodeseed_candidates_created=false for index generation.
+  - Runtime artifacts are produced only by implemented PlanCompile/Executor/Goal Runtime flows, never by editing Plans or regenerating Plans/.plan_index.
+  - Accepted runtime flow does not depend on unresolved deferred PlanUnits.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: compiler_algorithm_contract
+reasoning_tier: high
+context_scope: runtime_compiler
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json, Plans/prd_planning_runtime_contracts.json, Plans/.plan_index/node_readiness_report.json]
+node_compile_hint: {mode: compiler_contract_complete, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false, compiler_contract_complete: true, runtime_blocked_until: executable_lifecycle_certification_evidence}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0030
+  - pldg-20260610-001-ledger-plan-system:q-0001
+  - source_ref:chat:plan-to-node-deferred
+preserved_exact_tokens: ["PlanUnit index", "node-readiness report", "NodeSeed", "WorkNode"]
+negative_constraints:
+  - Do not generate NodeSeeds, WorkNodes, executable queues, final node manifests, implementation files, or production build tasks from this documentation repair or from PlanUnit index generation.
+  - Do not let PlanCompile bypass Executor intake, activation, Goal Runtime completion certification, or Auditor verification receipts.
+owner_hints: [Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
+
+### PNC-009 - Orchestrator Runtime Object And Compiler Boundary
+
+```yaml
+plan_unit_id: PNC-009
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  Canonical Plans may reference owner-defined Orchestrator-facing GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, GoalCompletionReceipt, CapabilityLane, and CertificationTier concepts for future implementation, but Plan_To_Node_Compilation owns only the compiler artifact boundary. Plan/PlanUnit, Node Graph, and Run Graph surfaces may display readiness, blockers, gui_related, receipt status, and compiler contract state from owner projections, but they do not create executable runtime artifacts. Ledger-to-Plans compilation and PlanUnit indexing must not emit executable queues, final node manifests, final build tasks, production build tasks, actual WorkNode artifacts, or NodeSeed candidates before this compiler contract defines those artifacts.
+gui_related: false
+gui_classification_reason: Compiler artifact boundaries and readiness-only contracts are backend/governance behavior, not visual presentation.
+depends_on: [PNC-001, PNC-004, PNC-007, PNC-008]
+unblocks: [GRS-026, OP-022, EP-098, RGV-012]
+acceptance_criteria:
+  - Design-time WorkNode concepts in Plans do not create executable WorkNode artifacts.
+  - PlanUnit indexes and node-readiness reports remain readiness-only.
+  - Missing executable compiler schema keeps NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, and production build tasks absent.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
+risk_class: false_node_generation
+reasoning_tier: high
+context_scope: plan_to_node_orchestrator_runtime_boundary
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/Plan_Document_System.md, Plans/Run_Graph_View.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+node_compile_hint: {mode: orchestrator_runtime_object_boundary, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0004
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0017
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0104
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
+preserved_exact_tokens:
+  - "PlanUnit index"
+  - "node-readiness report"
+  - "NodeSeeds"
+  - "WorkNodes"
+  - "executable queues"
+  - "final build tasks"
+  - "compiler contract"
+  - "PlanUnit"
+  - "Node Graph"
+  - "Run Graph"
+  - "readiness"
+  - "blockers"
+  - "gui_related"
+  - "receipt status"
+  - "do not emit executable queues"
+negative_constraints:
+  - Do not create NodeSeeds or WorkNodes during this Orchestrator design compile unless the compiler contract is completed first.
+  - Do not create executable WorkNodes from Plan/PlanUnit pages before the compiler contract exists.
+  - Do not treat design-time WorkNode terms as permission to create runtime work artifacts.
+owner_hints: [Plans/Plan_To_Node_Compilation.md, Plans/Plan_Document_System.md, Plans/Run_Graph_View.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md]
+```
+
+## 5. Compilation Coverage
+
+| Ledger atom | Disposition |
+| --- | --- |
+| atom-0017 | PNC-001 |
+| atom-0022 | PNC-002 |
+| atom-0023 | PNC-001 |
+| atom-0024 | PNC-003 |
+| atom-0025 | PNC-003 |
+| atom-0026 | PNC-004 |
+| atom-0029 | PNC-006 |
+| atom-0030 | PNC-001, PNC-007 |
+| atom-0031 | PNC-001, PNC-004 |
+| atom-0032 | PNC-005 |
+| atom-0033 | PNC-005; PDS-007 owns the gui_related true user-visible setting PlanUnit. |
+| atom-0034 | PNC-005 |
+| q-0001 | PNC-007 deferred decision. |
+| atom-0039 | PNC-008 |
+
+ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### PNC-010 - PlanCompileRun Design-Only State Machine
+
+```yaml
+plan_unit_id: PNC-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  The current bootstrap/v1 PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch_source, runtime_adapter, status, current_state, current_stage, cursor, last_green_stage, last_green_hashes, blockers, next_required_stage, resume_command_or_action, receipts, and compile_wave_contracts; last_green_stage and next_required_stage are stage_name | null, not free-form strings. Compile waves are bounded subagent assignment contracts: each wave names assignment_id, assigned_agent_role, source_item_refs, read_set, write_set, forbidden_writes, parent_only_writes, result_status, retry_route, resume_ref, durable_evidence_refs, assignment_receipt, completion_receipt, and parent_writeback_required so a parent compiler remains the only writer/adjudicator. retry_route uses the canonical compile_wave_retry_route object with route_kind, target_stage, reason, and optional resume_ref rather than free-form strings; target_stage is a stage_name, except terminal route kinds must use null. The shared compiler core has two adapters, a Codex bootstrap adapter and a native Puppet Master adapter, so the truth model stays shared while execution surfaces differ. Current bootstrap/v1 PlanCompile remains design_only_disabled with automatic_launch_enabled: false, planning_wizard_launch_enabled: false, and codex_bootstrap_launch_enabled: false until an explicit later enablement PlanUnit accepts runtime launch; native_runtime records use the separate PNC-015 branch and must not reinterpret v1 const-false flags as runtime enablement.
+  Resume must be possible through a bounded stage card, stage cards, worklists, compile-wave result receipts, and a single goal prompt carrying the compile_id plus current state refs, and the Codex bootstrap adapter may package Codex work packages without native runtime dispatch. Do not depend on the native Puppet Master scheduler for bootstrap. The explicit no-build boundary is No WorkNodes, No NodeSeeds, No executable queues, No final node manifests, and PlanCompile dry-run/non-executable schema examples may be documented but not emitted as runtime work.
+gui_related: false
+gui_classification_reason: State machine and compiler adapter contracts are backend planning/runtime design, not visual presentation.
+depends_on: [PNC-001, PNC-007, PNC-009]
+unblocks: [PNC-011, PNC-012, PNC-013, PNC-014, GRS-028, OP-023, CV-289]
+acceptance_criteria:
+  - Current bootstrap/v1 PlanCompile stays design_only_disabled until explicit enablement.
+  - The shared compiler core owns one truth model with Codex bootstrap and native Puppet Master adapters.
+  - Resume is possible from durable state fields, source hashes, blockers, and exact NEXT routing without chat memory.
+  - Compile-wave assignment contracts preserve bounded assignments, result status, retry/resume routes, durable evidence, and parent-only writes.
+  - The state machine emits no executable WorkNodes, NodeSeeds, queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: false_node_generation
+reasoning_tier: high
+context_scope: plancompile_design_state_machine
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: plancompile_design_only_state_machine, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0001
+  - pldg-20260617-001-plans-to-code-handoff:atom-0002
+  - pldg-20260617-001-plans-to-code-handoff:atom-0003
+  - pldg-20260617-001-plans-to-code-handoff:atom-0006
+  - pldg-20260617-001-plans-to-code-handoff:atom-0010
+  - pldg-20260617-001-plans-to-code-handoff:atom-0056
+  - pldg-20260617-001-plans-to-code-handoff:dec-0001
+  - pldg-20260617-001-plans-to-code-handoff:dec-0002
+  - pldg-20260617-001-plans-to-code-handoff:dec-0003
+  - pldg-20260617-001-plans-to-code-handoff:corr-0005
+preserved_exact_tokens:
+  - "PlanCompileRun"
+  - "current_state"
+  - "waves"
+  - "receipts"
+  - "shared compiler core"
+  - "Codex bootstrap adapter"
+  - "native Puppet Master adapter"
+  - "one truth model"
+  - "low quality agent"
+  - "low context"
+  - "resume"
+  - "startable from one goal prompt"
+  - "source hashes"
+  - "exact NEXT routing"
+  - "compile_wave_contracts"
+  - "parent_only_writes"
+  - "durable_evidence_refs"
+  - "design_only"
+  - "automatic_launch_enabled: false"
+  - "planning_wizard_launch_enabled: false"
+  - "codex_bootstrap_launch_enabled: false"
+negative_constraints:
+  - Do not build two unrelated compilers that drift.
+  - Do not rely on chat memory or one high-context model remembering the full process.
+  - Do not implement PlanCompile as a giant prompt chain.
+  - Do not create production WorkNodes, executable WorkGraphs, dispatched GoalRuns, or native queues in this phase.
+owner_hints:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+```
+
+### PNC-011 - Low-Context Stage Card Contract
+
+```yaml
+plan_unit_id: PNC-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+    Each design-only PlanCompile stage has a bounded stage_card with stage_id, purpose, read_files, write_files, forbidden_writes, entry_gate, item_boundaries, exit_gate, success_route, blocked_route, assignment_contract, and parent_writeback_policy so a low-context agent can execute or resume the stage from state after explicit runtime enablement, while the current bootstrap remains non-dispatching. Stage success_route and blocked_route use canonical route objects with route_kind, target_stage, reason, and optional resume_ref, and compile worklist blocked_route uses the same exact target object shape, rather than unrestricted strings. target_stage is a stage_name whenever the route chooses a next stage; terminal route kinds must set target_stage to null. Required stage contracts use the canonical registry: preflight_currentness, scope_selection, planunit_normalization, test_repository_discovery, typed_dependency_analysis, implementation_surface_mapping, work_risk_classification, nodeseed_candidate_drafting, split_merge_sizing, candidate_review, workgraph_construction, worknode_request_construction, final_compile_audit_repair, executor_handoff_certification, activation_transaction, and orchestrator_projection.
+gui_related: false
+gui_classification_reason: Stage cards and resumable worklists are compiler process contracts, not GUI implementation.
+depends_on: [PNC-010]
+unblocks: [PNC-012, PNC-013, PNC-014]
+acceptance_criteria:
+  - Every stage names stage_id, read/write/forbidden files, entry and exit gates, item bounds, and exact route objects.
+  - A new low-context agent can resume from stage state without rereading the whole repo.
+  - Stage cards never authorize WorkNodes, NodeSeeds as runtime artifacts, queues, implementation files, or production build tasks.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: low_context_resume_failure
+reasoning_tier: high
+context_scope: plancompile_stage_cards
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: low_context_stage_cards, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0004
+  - pldg-20260617-001-plans-to-code-handoff:atom-0005
+  - pldg-20260617-001-plans-to-code-handoff:dec-0002
+preserved_exact_tokens:
+  - "preflight/currentness"
+  - "PlanUnit normalization"
+  - "dependency/cycle analysis"
+  - "work type and effort classification"
+  - "NodeSeed candidate synthesis"
+  - "WorkGraph draft"
+  - "WorkNode request emission"
+  - "stage_card"
+  - "entry_gate"
+  - "exit_gate"
+  - "item_boundaries"
+negative_constraints:
+  - Do not ask an agent to reason over the full Plan index when a bounded worklist can be used.
+owner_hints:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Planning_Ledger_System.md
+```
+
+
+<<< CONTEXT_AFTER 757-768 >>>
+### PNC-012 - NodeSeed Candidate And Review Gate Contract
+
+```yaml
+plan_unit_id: PNC-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  NodeSeed candidates are non-executable intermediate artifacts. They carry source_plan_unit_ids, source_acceptance_unit_ids, objective, owner_area, implementation_surfaces, read_set, write_set_candidates, acceptance_criteria, validator_candidates, dependency_refs, risk_class, reasoning_tier, work_type, effort, gui_related, frontend_related, capability_requirements, authority policy, sizing, status, and blockers. The NodeSeed review gate proves coverage, excluded dispositions, acceptance criteria, validators or explicit gaps, bounded write surfaces, dependencies, GUI flags, risk/reasoning/capability metadata, and absence of executable WorkNodes before a WorkGraph draft can be considered. Review decision and reviewer_role use canonical node_seed_review_decision and node_seed_reviewer_role enums rather than free-form strings.
+  NodeSeed routing metadata preserves effort_class, capability_lane, and capability_requirements alongside work_type, gui_related, frontend_related, and reasoning_tier before any reviewable candidate can be promoted to a WorkGraph draft.
+gui_related: false
+gui_classification_reason: NodeSeed candidates and review gates are compiler artifact contracts, not visual presentation.

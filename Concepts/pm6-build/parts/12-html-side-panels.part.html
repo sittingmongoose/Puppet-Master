@@ -1,422 +1,423 @@
           <div class="side-panel-view active" id="panel-files">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
-              <span>FILES</span>
+            <div class="files-panel-header pm6-sp-header">
+              <span>FILE MANAGER</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
             </div>
-            <!-- Worktree breadcrumb -->
-            <div class="fm-wt-breadcrumb">
-              <button style="background:none; border:none; color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:4px; font-size:10px; padding:0;" onclick="toggleFileManagerRoot(this)">
+            <!-- Worktree root breadcrumb -->
+            <div class="fm-wt-breadcrumb pm6-fm-crumb">
+              <button class="pm6-fm-rootbtn" onclick="toggleFileManagerRoot(this)" title="Switch worktree root">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-                <span style="color:var(--accent-blue);">feat/dashboard-v2</span>
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <span class="pm6-fm-rootname">main</span>
+                <span class="pm6-fm-chev">&#9662;</span>
               </button>
-              <span style="color:var(--text-muted);">/</span>
-              <span>puppet-master-rs</span>
-              <span style="color:var(--text-muted);">/</span>
-              <span>src</span>
-            </div>
-            <div class="files-search">
-              <div class="search-input-wrap">
-                <input type="text" placeholder="Search files..." class="wizard-input" style="flex:1;">
-                <button class="wizard-btn" style="font-size:11px;">Search</button>
+              <span class="pm6-fm-sep">/</span>
+              <span>tastebook</span>
+              <div class="fm-wt-root-dropdown pm6-fm-rootdd">
+                <div class="pm6-fm-rootitem" data-demo-action="demo.toast" data-demo-arg="File Manager root stays on main in this demo — worktree files open from Source Control &gt; Worktrees">main <span class="pm6-fm-rootmeta">workspace</span></div>
+                <div class="pm6-fm-rootitem" data-demo-action="demo.toast" data-demo-arg="Root switch: orch/lane-b-api (.worktrees/lane-b-api) — demo keeps main mounted">orch/lane-b-api <span class="pm6-fm-rootmeta">Orch: lane-b API</span></div>
+                <div class="pm6-fm-rootitem" data-demo-action="demo.toast" data-demo-arg="Root switch: orch/lane-d-infra (.worktrees/lane-d-infra) — demo keeps main mounted">orch/lane-d-infra <span class="pm6-fm-rootmeta">Orch: lane-d infra</span></div>
+                <div class="pm6-fm-rootitem" data-demo-action="demo.toast" data-demo-arg="Root switch: thread/import-fixes (.worktrees/import-fixes) — demo keeps main mounted">thread/import-fixes <span class="pm6-fm-rootmeta">Thread</span></div>
+                <div class="pm6-fm-rootitem" data-demo-action="demo.toast" data-demo-arg="Root switch: spike/r2-storage (.worktrees/r2-spike) — demo keeps main mounted">spike/r2-storage <span class="pm6-fm-rootmeta">Manual</span></div>
               </div>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKSPACE</summary>
-                <div class="file-tree" style="position:relative;" oncontextmenu="event.preventDefault(); showFileContextMenu(event)">
-                  <div class="folder">▼ src/</div>
-                  <div class="file" data-filename="app.rs" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
-                  <div class="file" data-filename="main.rs">main.rs</div>
-                  <div class="file" data-filename="orchestrator.rs">orchestrator.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
-                  <div class="file" data-filename="workspace.rs">workspace.rs</div>
-                  <div class="folder" style="padding-left:12px;">▼ core/</div>
-                  <div class="file" data-filename="config.rs" style="padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
-                  <div class="file" data-filename="types.rs" style="padding-left:24px;">types.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
-                  <div class="file" data-filename="errors.rs" style="padding-left:24px;">errors.rs</div>
-                  <div class="folder">▼ tests/</div>
-                  <div class="file" style="padding-left:12px;">integration.rs</div>
-                  <div class="file">Cargo.toml</div>
-                  <div class="file">README.md</div>
+            <div class="files-search pm6-fm-search">
+              <input type="text" class="wizard-input" placeholder="Filter files..." id="pm6FmFilter">
+            </div>
+            <div class="panel-content pm6-sp-content">
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">WORKSPACE <span class="pm6-sp-card-meta">18 files</span></div>
+                <div class="file-tree pm6-fm-tree" oncontextmenu="event.preventDefault(); showFileContextMenu(event)">
+                  <div class="folder pm6-fm-folder">&#9662; src/</div>
+                  <div class="file pm6-fm-file pm6-ind1" data-filename="main.rs" data-demo-action="files.open" data-demo-arg="src/main.rs">main.rs</div>
+                  <div class="folder pm6-fm-folder pm6-ind1">&#9662; routes/</div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="recipes.rs" data-demo-action="files.open" data-demo-arg="src/routes/recipes.rs">recipes.rs <span class="git-status pm6-gs-staged">M</span></div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="auth.rs" data-demo-action="files.open" data-demo-arg="src/routes/auth.rs">auth.rs</div>
+                  <div class="folder pm6-fm-folder pm6-ind1">&#9662; services/</div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="image.rs" data-demo-action="files.open" data-demo-arg="src/services/image.rs">image.rs <span class="git-status pm6-gs-mod">M</span></div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="import.rs" data-demo-action="files.open" data-demo-arg="src/services/import.rs">import.rs</div>
+                  <div class="folder pm6-fm-folder">&#9662; migrations/</div>
+                  <div class="file pm6-fm-file pm6-ind1" data-filename="0001_init.sql" data-demo-action="files.open" data-demo-arg="migrations/0001_init.sql">0001_init.sql</div>
+                  <div class="file pm6-fm-file pm6-ind1" data-filename="0002_ratings.sql" data-demo-action="files.open" data-demo-arg="migrations/0002_ratings.sql">0002_ratings.sql</div>
+                  <div class="folder pm6-fm-folder">&#9662; web/src/</div>
+                  <div class="folder pm6-fm-folder pm6-ind1">&#9662; routes/</div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="+page.svelte" data-demo-action="files.open" data-demo-arg="web/src/routes/+page.svelte">+page.svelte</div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="[id]/+page.svelte" data-demo-action="files.open" data-demo-arg="web/src/routes/recipe/[id]/+page.svelte">recipe/[id]/+page.svelte</div>
+                  <div class="folder pm6-fm-folder pm6-ind1">&#9662; lib/</div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="RecipeCard.svelte" data-demo-action="files.open" data-demo-arg="web/src/lib/RecipeCard.svelte">RecipeCard.svelte <span class="git-status pm6-gs-staged">A</span></div>
+                  <div class="file pm6-fm-file pm6-ind2" data-filename="Editor.svelte" data-demo-action="files.open" data-demo-arg="web/src/lib/Editor.svelte">Editor.svelte</div>
+                  <div class="folder pm6-fm-folder">&#9662; .github/workflows/</div>
+                  <div class="file pm6-fm-file pm6-ind1" data-filename="ci.yml" data-demo-action="files.open" data-demo-arg=".github/workflows/ci.yml">ci.yml</div>
+                  <div class="file pm6-fm-file" data-filename="Cargo.toml" data-demo-action="files.open" data-demo-arg="Cargo.toml">Cargo.toml</div>
+                  <div class="file pm6-fm-file" data-filename="docker-compose.yml" data-demo-action="files.open" data-demo-arg="docker-compose.yml">docker-compose.yml</div>
+                  <div class="file pm6-fm-file" data-filename="Dockerfile" data-demo-action="files.open" data-demo-arg="Dockerfile">Dockerfile</div>
+                  <div class="file pm6-fm-file" data-filename="unraid-template.xml" data-demo-action="files.open" data-demo-arg="unraid-template.xml">unraid-template.xml</div>
+                  <div class="file pm6-fm-file" data-filename="README.md" data-demo-action="files.open" data-demo-arg="README.md">README.md</div>
+                  <div class="file pm6-fm-file" data-filename="PRD.md" data-demo-action="files.open" data-demo-arg="PRD.md">PRD.md</div>
 
                   <!-- Context menu (right-click to show) -->
-                  <div class="context-menu-mock" id="fileContextMenu" style="display:none; position:absolute; z-index:200;">
+                  <div class="context-menu-mock" id="fileContextMenu">
                     <div class="ctx-item" onclick="toast('cmd.file.new_file → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New File</div>
                     <div class="ctx-item" onclick="toast('cmd.file.new_folder → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New Folder</div>
                     <div class="ctx-sep"></div>
                     <div class="ctx-item" onclick="toast('cmd.file.rename → prompting new name...'); this.closest('.context-menu-mock').style.display='none'">Rename</div>
-                    <div class="ctx-item" onclick="toast('cmd.file.delete → confirm deletion?'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-magenta);">Delete</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.delete → confirm deletion?'); this.closest('.context-menu-mock').style.display='none'">Delete</div>
                     <div class="ctx-sep"></div>
-                    <div class="ctx-item" onclick="toast('cmd.file.copy_full_path → ~/projects/puppet-master/src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Full Path</div>
-                    <div class="ctx-item" onclick="toast('cmd.file.copy_relative_path → src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Relative Path</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_full_path → ~/projects/tastebook/src/routes/recipes.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Full Path</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_relative_path → src/routes/recipes.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Relative Path</div>
                     <div class="ctx-sep"></div>
-                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Clipboard (workspace-node)</div>
-                    <div class="ctx-item" onclick="toast('cmd.file.copy_nodes → workspace clipboard (not system)'); this.closest('.context-menu-mock').style.display='none'">Copy</div>
-                    <div class="ctx-item" onclick="toast('cmd.file.cut_nodes → armed for paste'); this.closest('.context-menu-mock').style.display='none'">Cut</div>
-                    <div class="ctx-item" onclick="toast('cmd.file.paste_nodes → validating target...'); this.closest('.context-menu-mock').style.display='none'">Paste</div>
+                    <div class="ctx-item" onclick="addFileChipToChat('src/routes/recipes.rs'); this.closest('.context-menu-mock').style.display='none'">Add to Chat</div>
+                    <div class="ctx-item" onclick="toast('cmd.terminal.open → opening at src/'); this.closest('.context-menu-mock').style.display='none'">Open in Terminal</div>
                     <div class="ctx-sep"></div>
-                    <div class="ctx-item" onclick="addFileChipToChat('src/app.rs'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-blue);">Add to Chat</div>
-                    <div class="ctx-item" onclick="toast('cmd.terminal.show → opening at src/'); this.closest('.context-menu-mock').style.display='none'">Open in Terminal</div>
-                    <div class="ctx-sep"></div>
-                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600;">OPEN WITH...</div>
-                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → source_editor'); this.closest('.context-menu-mock').style.display='none'">Source Editor</div>
-                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → image_viewer'); this.closest('.context-menu-mock').style.display='none'">Image Viewer</div>
-                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → workspace_preview'); this.closest('.context-menu-mock').style.display='none'">Workspace Preview</div>
-                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → detached_preview'); this.closest('.context-menu-mock').style.display='none'">Detached Preview</div>
-                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → diff_review'); this.closest('.context-menu-mock').style.display='none'">Diff Review</div>
-                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.open_with → workspace_preview'); this.closest('.context-menu-mock').style.display='none'">Open Preview</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.open_with → diff_review'); this.closest('.context-menu-mock').style.display='none'">Open Diff Review</div>
                     <div class="ctx-item" onclick="toast('cmd.file.save_local_copy → saving to ~/Downloads/...'); this.closest('.context-menu-mock').style.display='none'">Save Local Copy</div>
                   </div>
                 </div>
-              </details>
+              </div>
+              <div class="pm6-sp-footnote">Watching 18 files &middot; .gitignore respected &middot; opens land in the editor</div>
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-search">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="files-panel-header pm6-sp-header">
               <span>SEARCH</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+            <div class="panel-content pm6-sp-content">
+
+              <!-- Index status (tantivy) -->
+              <div class="pm6-sp-card pm6-search-index">
+                <div class="pm6-kv"><span class="pm6-kv-k">Index</span><span class="pm6-chip pm6-chip-ok">Ready</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Engine</span><span class="pm6-kv-v">tantivy</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Documents</span><span class="pm6-kv-v">1,284</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Last indexed</span><span class="pm6-kv-v">commit abc12ef &middot; 4m ago</span></div>
+                <button class="pm6-sp-btn pm6-w100" data-demo-action="demo.toast" data-demo-arg="cmd.search.reindex → tantivy rebuild queued (1,284 docs, ~3s)">Rebuild index</button>
+              </div>
 
               <!-- Query input -->
-              <div style="margin-bottom:var(--sm);">
-                <div style="display:flex; gap:var(--xs); align-items:center;">
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:11px; padding:2px;" onclick="toggleSearchReplace(this)">&#9654;</button>
-                  <input class="wizard-input" placeholder="Search in files..." style="flex:1; padding:4px; font-size:11px;" id="searchQueryInput" oninput="filterSearchResults(this.value)">
-                </div>
-                <div id="searchReplaceRow" style="display:none; gap:var(--xs); align-items:center; margin-top:var(--xs);">
-                  <span style="width:18px;"></span>
-                  <input class="wizard-input" placeholder="Replace..." style="flex:1; padding:4px; font-size:11px;" id="searchReplaceInput">
-                  <button class="wizard-btn primary" style="padding:2px 8px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 occurrences across 3 files')">All</button>
-                </div>
+              <div class="pm6-search-qrow">
+                <button class="pm6-sp-iconbtn" onclick="toggleSearchReplace(this)" title="Toggle replace">&#9656;</button>
+                <input class="wizard-input pm6-flex1" placeholder="Search in files..." id="searchQueryInput" oninput="filterSearchResults(this.value)">
+              </div>
+              <div id="searchReplaceRow" class="pm6-search-replacerow" style="display:none">
+                <span class="pm6-search-indent"></span>
+                <input class="wizard-input pm6-flex1" placeholder="Replace..." id="searchReplaceInput">
+                <button class="pm6-sp-btn" data-demo-action="demo.toast" data-demo-arg="cmd.search.replace_all → replaced 7 occurrences across 3 files">All</button>
               </div>
 
               <!-- Flags -->
-              <div style="display:flex; gap:var(--xs); margin-bottom:var(--md); align-items:center;">
-                <span class="chat-toggle-btn" title="Regex" onclick="this.classList.toggle('active'); toast('Regex: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">.*</span>
-                <span class="chat-toggle-btn" title="Case Sensitive" onclick="this.classList.toggle('active'); toast('Case sensitive: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px;">Aa</span>
-                <span class="chat-toggle-btn" title="Whole Word" onclick="this.classList.toggle('active'); toast('Whole word: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">\\b</span>
-                <span style="flex:1;"></span>
-                <select class="wizard-select" style="padding:var(--xs); font-size:10px;" onchange="toast('cmd.search.set_scope → ' + this.value)">
+              <div class="pm6-search-flags">
+                <span class="chat-toggle-btn pm6-flagbtn" title="Regex" onclick="this.classList.toggle('active'); toast('Regex: ' + (this.classList.contains('active') ? 'on' : 'off'))">.*</span>
+                <span class="chat-toggle-btn pm6-flagbtn" title="Case Sensitive" onclick="this.classList.toggle('active'); toast('Case sensitive: ' + (this.classList.contains('active') ? 'on' : 'off'))">Aa</span>
+                <span class="chat-toggle-btn pm6-flagbtn" title="Whole Word" onclick="this.classList.toggle('active'); toast('Whole word: ' + (this.classList.contains('active') ? 'on' : 'off'))">\b</span>
+                <span class="pm6-flex1"></span>
+                <select class="wizard-select pm6-search-scope" onchange="toast('cmd.search.set_scope → ' + this.value)">
                   <option>All Files</option>
                   <option>Open Files</option>
-                  <option>Custom</option>
+                  <option>src/ only</option>
+                  <option>web/ only</option>
                 </select>
               </div>
 
-              <!-- Results -->
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);" id="searchResultsSummary">RESULTS (7 in 3 files)</summary>
-                <div style="padding:var(--sm); font-size:11px;">
+              <!-- Results for the seeded query -->
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head" id="searchResultsSummary">RESULTS (7 in 3 files)</div>
+                <div class="pm6-search-results">
+                  <div class="pm6-search-note">Showing matches for <span class="pm6-mono">quantity</span></div>
 
-                  <!-- src/app.rs results -->
-                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/app.rs')">src/app.rs <span style="color:var(--text-muted); font-weight:normal;">(3)</span></div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:14')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">14</span> let app = <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::new();
+                  <div class="pm6-search-file" data-demo-action="files.open" data-demo-arg="src/services/import.rs">src/services/import.rs <span class="pm6-search-count">(3)</span></div>
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="src/services/import.rs">
+                    <span class="pm6-search-ln">41</span> fn parse_<span class="search-match">quantity</span>(raw: &amp;str) -&gt; Result&lt;Qty&gt;
                   </div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:42')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">42</span> impl <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> {
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="src/services/import.rs">
+                    <span class="pm6-search-ln">58</span> // mixed fractions: "1 1/2 cup" must not become <span class="search-match">quantity</span> 11/2
                   </div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:89')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">89</span> pub fn run(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>) -&gt;
-                  </div>
-
-                  <!-- src/config.rs results -->
-                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/config.rs')">src/config.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:3')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">3</span> use crate::<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>Config;
-                  </div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:28')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">28</span> fn load_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>_config()
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="src/services/import.rs">
+                    <span class="pm6-search-ln">73</span> normalize_units(<span class="search-match">quantity</span>, unit)
                   </div>
 
-                  <!-- tests/integration.rs results -->
-                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for tests/integration.rs')">tests/integration.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:7')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">7</span> let test_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> = setup();
+                  <div class="pm6-search-file" data-demo-action="files.open" data-demo-arg="src/routes/recipes.rs">src/routes/recipes.rs <span class="pm6-search-count">(2)</span></div>
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="src/routes/recipes.rs">
+                    <span class="pm6-search-ln">112</span> pub <span class="search-match">quantity</span>: f32,
                   </div>
-                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:45')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
-                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">45</span> assert!(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::valid());
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="src/routes/recipes.rs">
+                    <span class="pm6-search-ln">240</span> ingredient.<span class="search-match">quantity</span> * servings_ratio
                   </div>
 
+                  <div class="pm6-search-file" data-demo-action="files.open" data-demo-arg="web/src/lib/Editor.svelte">web/src/lib/Editor.svelte <span class="pm6-search-count">(2)</span></div>
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="web/src/lib/Editor.svelte">
+                    <span class="pm6-search-ln">88</span> &lt;input bind:value={row.<span class="search-match">quantity</span>} /&gt;
+                  </div>
+                  <div class="search-result-item pm6-search-hit" data-demo-action="files.open" data-demo-arg="web/src/lib/Editor.svelte">
+                    <span class="pm6-search-ln">131</span> export let <span class="search-match">quantity</span>Step = 0.25;
+                  </div>
                 </div>
-              </details>
-
-              <!-- Replace selected -->
-              <div style="display:flex; gap:var(--xs);">
-                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_selected → replacing current match...')">Replace</button>
-                <button class="wizard-btn primary" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 across 3 files')">Replace All</button>
               </div>
-              <div style="margin-top:var(--sm); display:flex; gap:var(--xs);">
-                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.previous_result')">&#9650; Prev</button>
-                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.next_result')">&#9660; Next</button>
+
+              <div class="pm6-btnrow">
+                <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.search.replace_selected → replacing current match">Replace</button>
+                <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.search.replace_all → replaced 7 across 3 files">Replace all</button>
+              </div>
+              <div class="pm6-btnrow">
+                <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.search.previous_result">&#9650; Prev</button>
+                <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.search.next_result">&#9660; Next</button>
               </div>
 
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-run">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
-              <span>RUN & DEBUG</span>
+            <div class="files-panel-header pm6-sp-header">
+              <span>RUN &amp; DEBUG</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <button class="wizard-btn primary" style="width:100%; margin-bottom:var(--md); padding:8px; font-weight:bold; font-size:11px; display:flex; justify-content:center; align-items:center; gap:var(--xs);">
-                ▶ Start Debugging (F5)
-              </button>
-              
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">VARIABLES</summary>
-                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
-                  <div class="folder" style="font-weight:bold; padding:4px 0;">▼ Locals</div>
-                  <div class="file" style="padding:4px 0; padding-left:12px;">app: App { ... }</div>
-                  <div class="file" style="padding:4px 0; padding-left:12px;">config: String "dev"</div>
-                </div>
-              </details>
+            <div class="panel-content pm6-sp-content">
+              <div class="pm6-run-launchrow">
+                <select class="wizard-select pm6-flex1" id="pm6RunConfig">
+                  <option>cargo run — tastebook-api</option>
+                  <option>vite dev — tastebook-web</option>
+                  <option>cargo test — import worker suite</option>
+                  <option>compose stack — full dev</option>
+                </select>
+              </div>
+              <button class="pm6-sp-btn pm6-sp-btn-primary pm6-w100" data-demo-action="panels.debug_start">&#9656; Start debugging (F5)</button>
 
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CALL STACK</summary>
-                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
-                  <div class="file" style="padding:4px 0; color:var(--accent-blue);">main.rs:14</div>
-                  <div class="file" style="padding:4px 0; color:var(--text-muted);">app.run() app.rs:42</div>
-                </div>
-              </details>
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">SESSION</div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Adapter</span><span class="pm6-kv-v">DAP &middot; :54112</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">State</span><span class="pm6-chip pm6-chip-warn" id="pm6RunState">Paused at breakpoint</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Limit</span><span class="pm6-kv-v">1 session / project</span></div>
+              </div>
+
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">BREAKPOINTS</div>
+                <div class="pm6-sp-row" data-demo-action="files.open" data-demo-arg="src/services/import.rs"><span class="pm6-bp-dot">&#9679;</span> import.rs:58 <span class="pm6-sp-row-meta">parse_quantity</span></div>
+                <div class="pm6-sp-row" data-demo-action="files.open" data-demo-arg="src/routes/recipes.rs"><span class="pm6-bp-dot">&#9679;</span> recipes.rs:240 <span class="pm6-sp-row-meta">servings_ratio</span></div>
+              </div>
+
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">VARIABLES</div>
+                <div class="pm6-sp-row pm6-mono">raw: &quot;1 1/2 cup&quot;</div>
+                <div class="pm6-sp-row pm6-mono">qty: Qty { value: 11.5, unit: Cup } <span class="pm6-chip pm6-chip-err">wrong</span></div>
+                <div class="pm6-sp-row pm6-mono">servings_ratio: 1.0</div>
+              </div>
+
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">CALL STACK</div>
+                <div class="pm6-sp-row" data-demo-action="files.open" data-demo-arg="src/services/import.rs">normalize_units &middot; import.rs:73</div>
+                <div class="pm6-sp-row" data-demo-action="files.open" data-demo-arg="src/services/import.rs">parse_quantity &middot; import.rs:41</div>
+                <div class="pm6-sp-row pm6-dim" data-demo-action="files.open" data-demo-arg="src/main.rs">main &middot; main.rs:14</div>
+              </div>
+              <div class="pm6-sp-footnote">Debug evidence lands in Runtime Artifacts as an investigation bundle.</div>
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-source">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="files-panel-header pm6-sp-header">
               <span>SOURCE CONTROL</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-
-              <!-- Accordion replaces tab strip for Source Control subviews -->
+            <div class="panel-content pm6-sp-content">
               <div class="sc-accordion">
 
-              <!-- Worktrees section (new, at top) -->
-              <div class="sc-accordion-section open">
-                <div class="sc-accordion-header">
-                  <span class="sa-chevron">&#9656;</span>
-                  <span>Worktrees</span>
-                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">5 active</span>
-                </div>
-                <div class="sc-accordion-body">
-                  <div class="sc-wt-filter-bar">
-                    <button class="sc-wt-filter-btn active" onclick="filterWorktrees(this,'all')">All</button>
-                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'clean')">Clean</button>
-                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'dirty')">Dirty</button>
-                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'conflict')">Conflict</button>
-                  </div>
-                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span class="wt-status-pill clean">clean</span>
-                      <span style="font-weight:600;">feat/dashboard-v2</span>
-                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread0</span>
-                    </div>
-                    <div class="sc-wt-detail">
-                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +42 -8 &middot; 3 files &middot; Last commit: 4m ago</div>
-                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/dashboard-v2')">Diff</button>
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px; color:var(--accent-error);" onclick="event.stopPropagation(); toast('Removing worktree feat/dashboard-v2...')">Remove</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span class="wt-status-pill dirty">2 dirty</span>
-                      <span style="font-weight:600;">feat/schema-update</span>
-                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread2</span>
-                    </div>
-                    <div class="sc-wt-detail">
-                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +80 -16 &middot; 5 files &middot; Last commit: 8m ago</div>
-                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/schema-update')">Diff</button>
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Stashing changes...')">Stash</button>
-                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span class="wt-status-pill clean">clean</span>
-                      <span style="font-weight:600;">feat/oauth2-pkce</span>
-                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-subagents</span>
-                    </div>
-                    <div class="sc-wt-detail">
-                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +122 -11 &middot; 4 files &middot; Last commit: 1m ago</div>
-                    </div>
-                  </div>
-                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span class="wt-status-pill dirty">1 dirty</span>
-                      <span style="font-weight:600;">feat/multi-tenant</span>
-                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-worktree-merge</span>
-                    </div>
-                    <div class="sc-wt-detail">
-                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +130 -4 &middot; 3 files &middot; Tests: 1 failing</div>
-                    </div>
-                  </div>
-                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span class="wt-status-pill clean">clean</span>
-                      <span style="font-weight:600;">perf/analytics-opt</span>
-                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-escalation</span>
-                    </div>
-                    <div class="sc-wt-detail">
-                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +0 -0 &middot; 2 files (read-only) &middot; Blocked</div>
-                    </div>
-                  </div>
-                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); font-size:10px;" onclick="showCreateWorktreeModal()">+ New Worktree</button>
-                </div>
-              </div>
-
-              <!-- Changes section (wraps existing content) -->
+              <!-- === Changes === -->
               <div class="sc-accordion-section open">
                 <div class="sc-accordion-header">
                   <span class="sa-chevron">&#9656;</span>
                   <span>Changes</span>
-                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">1 staged, 2 unstaged</span>
+                  <span class="pm6-acc-meta" id="pm6ScCounts">2 staged, 1 unstaged</span>
                 </div>
                 <div class="sc-accordion-body">
-
-              <!-- ═══ CHANGES subview (inside accordion) ═══ -->
               <div data-sc-view="changes">
-                <div style="margin-bottom:var(--md);">
-                  <select class="wizard-select" style="padding:var(--xs); font-size:11px; width:100%;" onchange="toast('Branch: ' + this.value)">
-                    <option>main</option>
-                    <option>feature/gui-update</option>
-                    <option>hotfix/auth-bug</option>
-                  </select>
-                </div>
+                <select class="wizard-select pm6-w100 pm6-mb-sm" onchange="toast('cmd.git.switch_branch → ' + this.value)">
+                  <option>main</option>
+                  <option>orch/lane-b-api</option>
+                  <option>orch/lane-d-infra</option>
+                  <option>thread/import-fixes</option>
+                  <option>spike/r2-storage</option>
+                </select>
 
-                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STAGED <span class="git-status" style="float:right; color:var(--accent-lime);">1</span></summary>
-                  <div class="file-tree" style="padding:var(--sm);">
-                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
-                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/config.rs (staged)')">src/config.rs <span class="git-status added" style="color:var(--accent-lime);">A</span></span>
-                      <span style="display:flex; gap:2px;">
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.unstage_hunks → src/config.rs')" title="Unstage">−</button>
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/config.rs (confirm?)')" title="Discard">✕</button>
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">STAGED <span class="pm6-chip pm6-chip-ok" id="pm6ScStagedCount">2</span></div>
+                  <div id="pm6ScStaged">
+                    <div class="pm6-sc-file">
+                      <span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → src/routes/recipes.rs (staged: HEAD vs index)">src/routes/recipes.rs <span class="git-status pm6-gs-mod">M</span></span>
+                      <span class="pm6-sc-acts">
+                        <button class="pm6-sp-minibtn" title="Unstage" data-demo-action="demo.toast" data-demo-arg="cmd.git.unstage_hunks → src/routes/recipes.rs">-</button>
+                        <button class="pm6-sp-minibtn pm6-danger" title="Discard" data-demo-action="demo.toast" data-demo-arg="cmd.git.discard_hunks → src/routes/recipes.rs (confirm required)">&#10005;</button>
+                      </span>
+                    </div>
+                    <div class="pm6-sc-file">
+                      <span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → web/src/lib/RecipeCard.svelte (staged: HEAD vs index)">web/src/lib/RecipeCard.svelte <span class="git-status pm6-gs-staged">A</span></span>
+                      <span class="pm6-sc-acts">
+                        <button class="pm6-sp-minibtn" title="Unstage" data-demo-action="demo.toast" data-demo-arg="cmd.git.unstage_hunks → web/src/lib/RecipeCard.svelte">-</button>
+                        <button class="pm6-sp-minibtn pm6-danger" title="Discard" data-demo-action="demo.toast" data-demo-arg="cmd.git.discard_hunks → web/src/lib/RecipeCard.svelte (confirm required)">&#10005;</button>
                       </span>
                     </div>
                   </div>
-                </details>
-
-                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">UNSTAGED <span class="git-status" style="float:right; color:var(--accent-orange);">2</span></summary>
-                  <div class="file-tree" style="padding:var(--sm);">
-                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
-                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/app.rs (unstaged)')">src/app.rs <span class="git-status" style="color:var(--accent-orange);">M</span></span>
-                      <span style="display:flex; gap:2px;">
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → src/app.rs')" title="Stage">+</button>
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/app.rs')" title="Discard">✕</button>
-                      </span>
-                    </div>
-                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center; color:var(--text-muted);">
-                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → Cargo.lock (unstaged)')">Cargo.lock <span class="git-status">U</span></span>
-                      <span style="display:flex; gap:2px;">
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → Cargo.lock')" title="Stage">+</button>
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → Cargo.lock')" title="Discard">✕</button>
-                      </span>
-                    </div>
-                    <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; font-style:italic;">Hunk-level stage/unstage/discard available in diff view</div>
-                  </div>
-                </details>
-
-                <div style="display:flex; gap:var(--xs); margin-bottom:var(--md);">
-                  <input type="text" class="wizard-input" id="scCommitMsg" placeholder="Commit message..." style="padding:4px; font-size:11px; flex:1;">
-                  <button class="wizard-btn primary" style="padding:4px 8px; font-size:11px;" onclick="var msg=document.getElementById('scCommitMsg').value||'(empty)'; toast('Committed: ' + msg)">Commit</button>
                 </div>
 
-                <div style="margin-bottom:var(--md);">
-                  <input class="wizard-input" placeholder="Search in diff (SC owned, not project Search)" style="width:100%; padding:4px; font-size:10px;" oninput="if(this.value.length>2) toast('cmd.git.diff_search → ' + this.value)">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">UNSTAGED <span class="pm6-chip pm6-chip-warn" id="pm6ScUnstagedCount">1</span></div>
+                  <div id="pm6ScUnstaged">
+                    <div class="pm6-sc-file">
+                      <span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → src/services/image.rs (unstaged: index vs working)">src/services/image.rs <span class="git-status pm6-gs-mod">M</span></span>
+                      <span class="pm6-sc-acts">
+                        <button class="pm6-sp-minibtn" title="Stage" data-demo-action="git.stage" data-demo-arg="src/services/image.rs">+</button>
+                        <button class="pm6-sp-minibtn pm6-danger" title="Discard" data-demo-action="demo.toast" data-demo-arg="cmd.git.discard_hunks → src/services/image.rs (confirm required)">&#10005;</button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="pm6-sp-footnote">Hunk-level stage / unstage / discard lives in the diff view.</div>
                 </div>
 
-                <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; margin-bottom:var(--md); border-left:2px solid var(--accent-orange); padding-left:var(--sm);">Git mutations do not participate in editor undo</div>
+                <div class="pm6-sc-commitrow">
+                  <input type="text" class="wizard-input pm6-flex1" id="scCommitMsg" placeholder="Commit message...">
+                  <button class="pm6-sp-btn" id="pm6ScAiBtn" title="Generate with AI" data-demo-action="git.commit_ai"><span class="pm6-ai-spin" id="pm6AiSpin"></span>AI</button>
+                  <button class="pm6-sp-btn pm6-sp-btn-primary" data-demo-action="panels.git_commit">Commit</button>
+                </div>
+                <div class="pm6-btnrow">
+                  <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.git.pull → already up to date with origin/main">Pull</button>
+                  <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.git.push → 2 commits pushed to origin/main">Push</button>
+                  <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.git.fetch → origin refreshed (0 new)">Fetch</button>
+                </div>
+                <div class="pm6-sp-footnote">0 incoming &middot; 2 outgoing &middot; git mutations do not join editor undo</div>
 
-                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CONFLICT REVIEW</summary>
-                  <div style="padding:var(--sm); font-size:11px;">
-                    <div style="padding:4px 0; font-weight:600; color:var(--accent-magenta);">src/merge_target.rs <span style="font-weight:normal; color:var(--text-muted);">— 1 conflict</span></div>
-                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm); font-size:9px; color:var(--text-secondary);">
-                      <span style="padding:2px 6px; border:1px solid var(--border-light); border-radius:3px;">base</span>
-                      <span style="padding:2px 6px; border:1px solid var(--accent-blue); border-radius:3px; color:var(--accent-blue);">ours</span>
-                      <span style="padding:2px 6px; border:1px solid var(--accent-orange); border-radius:3px; color:var(--accent-orange);">theirs</span>
-                    </div>
-                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm);">
-                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Ours')">Apply Ours</button>
-                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Theirs')">Apply Theirs</button>
-                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('Opening merge tool...')">Merge Tool</button>
-                    </div>
-                  </div>
-                </details>
-
-                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">REMOTE PROJECTION STATE</summary>
-                  <div style="padding:var(--sm); font-size:11px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
-                      <span style="color:var(--text-secondary);">Freshness</span>
-                      <span class="remote-badge current" style="cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Freshness: ' + this.textContent)">current</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
-                      <span style="color:var(--text-secondary);">Health</span>
-                      <span class="remote-badge healthy" style="cursor:pointer;" onclick="cycleBadge(this, ['healthy','degraded','unavailable']); toast('Health: ' + this.textContent)">healthy</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
-                      <span style="color:var(--text-secondary);">Write</span>
-                      <span class="remote-badge writable" style="cursor:pointer;" onclick="cycleBadge(this, ['writable','pending_write','blocked','read_only']); toast('Write: ' + this.textContent)">writable</span>
-                    </div>
-                    <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px; opacity:0.5;" onclick="toast('cmd.remote.reconnect → one bounded auto-retry...')">Reconnect</button>
-                    <div style="font-size:9px; color:var(--text-muted); margin-top:var(--xs);">Click badges to cycle states</div>
-                  </div>
-                </details>
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">REMOTE PROJECTION</div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Freshness</span><span class="remote-badge current pm6-cyclable" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Freshness: ' + this.textContent)">current</span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Health</span><span class="remote-badge healthy pm6-cyclable" onclick="cycleBadge(this, ['healthy','degraded','unavailable']); toast('Health: ' + this.textContent)">healthy</span></div>
+                  <div class="pm6-sp-footnote">Click badges to cycle projection states.</div>
+                </div>
               </div>
-                </div><!-- /sc-accordion-body -->
-              </div><!-- /sc-accordion-section Changes -->
+                </div>
+              </div>
 
-              <!-- History accordion section -->
+              <!-- === Worktrees === -->
+              <div class="sc-accordion-section open">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Worktrees</span>
+                  <span class="pm6-acc-meta">4 active</span>
+                </div>
+                <div class="sc-accordion-body">
+                  <div class="sc-wt-filter-bar">
+                    <button class="sc-wt-filter-btn active" onclick="filterWorktrees(this,'all')">All</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'thread')">Threads</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'orchestrator')">Orchestrator</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'manual')">Manual</button>
+                  </div>
+
+                  <div class="sc-wt-row pm6-wt-row" data-wt-state="orchestrator">
+                    <div class="pm6-wt-head">
+                      <span class="pm6-wt-chev">&#9656;</span>
+                      <span class="wt-status-pill clean">clean</span>
+                      <span class="pm6-wt-branch">orch/lane-b-api</span>
+                      <span class="pm6-wt-owner">Orch: lane-b API</span>
+                    </div>
+                    <div class="sc-wt-detail pm6-wt-detail">
+                      <div class="pm6-kv"><span class="pm6-kv-k">Path</span><span class="pm6-kv-v pm6-mono">.worktrees/lane-b-api</span></div>
+                      <div class="pm6-kv"><span class="pm6-kv-k">Base</span><span class="pm6-kv-v">main &middot; age 2h</span></div>
+                      <div class="pm6-btnrow">
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.switch → opening lane-b files (read-only while the lane runs)">Open files</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → lane-b-api vs main (+310 -42)">Compare</button>
+                        <button class="pm6-sp-minibtn" onclick="showMergeModal()">Merge</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="orchestrator">Open lane</button>
+                        <button class="pm6-sp-minibtn pm6-danger" data-demo-action="demo.reason" data-demo-arg="blocked_by_gate" data-demo-disabled="1" data-demo-reason="blocked_by_gate" title="Owned by run #47 — remove unlocks when the lane releases it">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="sc-wt-row pm6-wt-row" data-wt-state="orchestrator">
+                    <div class="pm6-wt-head">
+                      <span class="pm6-wt-chev">&#9656;</span>
+                      <span class="wt-status-pill dirty">dirty</span>
+                      <span class="pm6-wt-branch">orch/lane-d-infra</span>
+                      <span class="pm6-wt-owner">Orch: lane-d infra</span>
+                    </div>
+                    <div class="sc-wt-detail pm6-wt-detail">
+                      <div class="pm6-kv"><span class="pm6-kv-k">Path</span><span class="pm6-kv-v pm6-mono">.worktrees/lane-d-infra</span></div>
+                      <div class="pm6-kv"><span class="pm6-kv-k">Base</span><span class="pm6-kv-v">main &middot; age 2h</span></div>
+                      <div class="pm6-kv"><span class="pm6-kv-k">PR</span><span class="pm6-kv-v" id="pm6ScPr">none yet — unlocks when run #47 completes</span></div>
+                      <div class="pm6-btnrow">
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.switch → opening lane-d files">Open files</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → lane-d-infra vs main (+188 -23)">Compare</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="git.create_pr">Create PR</button>
+                        <button class="pm6-sp-minibtn" id="pm6ScMergePr" data-demo-action="git.merge_pr">Merge PR</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="orchestrator">Open lane</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="sc-wt-row pm6-wt-row" data-wt-state="thread">
+                    <div class="pm6-wt-head">
+                      <span class="pm6-wt-chev">&#9656;</span>
+                      <span class="wt-status-pill clean">clean</span>
+                      <span class="pm6-wt-branch">thread/import-fixes</span>
+                      <span class="pm6-wt-owner">Thread: Import worker debugging</span>
+                    </div>
+                    <div class="sc-wt-detail pm6-wt-detail">
+                      <div class="pm6-kv"><span class="pm6-kv-k">Path</span><span class="pm6-kv-v pm6-mono">.worktrees/import-fixes</span></div>
+                      <div class="pm6-kv"><span class="pm6-kv-k">Base</span><span class="pm6-kv-v">main &middot; age 1d</span></div>
+                      <div class="pm6-btnrow">
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.switch → opening thread worktree files">Open files</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.chat.open → thread: Import worker debugging">Open thread</button>
+                        <button class="pm6-sp-minibtn" onclick="showMergeModal()">Merge</button>
+                        <button class="pm6-sp-minibtn pm6-danger" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.remove → confirm: thread/import-fixes at .worktrees/import-fixes (safe point saved)">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="sc-wt-row pm6-wt-row" data-wt-state="manual">
+                    <div class="pm6-wt-head">
+                      <span class="pm6-wt-chev">&#9656;</span>
+                      <span class="wt-status-pill clean">clean</span>
+                      <span class="pm6-wt-branch">spike/r2-storage</span>
+                      <span class="pm6-wt-owner">Manual</span>
+                    </div>
+                    <div class="sc-wt-detail pm6-wt-detail">
+                      <div class="pm6-kv"><span class="pm6-kv-k">Path</span><span class="pm6-kv-v pm6-mono">.worktrees/r2-spike</span></div>
+                      <div class="pm6-kv"><span class="pm6-kv-k">Base</span><span class="pm6-kv-v">main &middot; age 3d</span></div>
+                      <div class="pm6-btnrow">
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.switch → opening spike files">Open files</button>
+                        <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → r2-storage spike vs main (+64 -0)">Compare</button>
+                        <button class="pm6-sp-minibtn" onclick="showMergeModal()">Merge</button>
+                        <button class="pm6-sp-minibtn pm6-danger" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.remove → confirm: spike/r2-storage at .worktrees/r2-spike">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="pm6-sp-btn pm6-w100 pm6-mt-sm" onclick="showCreateWorktreeModal()">+ New Worktree</button>
+                </div>
+              </div>
+
+              <!-- === History === -->
               <div class="sc-accordion-section">
                 <div class="sc-accordion-header">
                   <span class="sa-chevron">&#9656;</span>
                   <span>History</span>
-                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 commits</span>
+                  <span class="pm6-acc-meta">3 recent</span>
                 </div>
                 <div class="sc-accordion-body">
-
-              <!-- ═══ HISTORY subview ═══ -->
               <div data-sc-view="history">
-                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">COMMITS</summary>
-                  <div style="padding:var(--sm); font-size:11px;">
-                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → abc12ef')">
-                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">abc12ef</span><span style="color:var(--text-muted); font-size:9px;">2h ago</span></div>
-                      <div>Initial commit</div>
-                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
-                    </div>
-                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → def34ab')">
-                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">def34ab</span><span style="color:var(--text-muted); font-size:9px;">5h ago</span></div>
-                      <div>Update README and add config module</div>
-                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
-                    </div>
-                    <div style="padding:4px 0; cursor:pointer;" onclick="toast('cmd.git.show_commit → 789feed')">
-                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">789feed</span><span style="color:var(--text-muted); font-size:9px;">1d ago</span></div>
-                      <div>Set up Cargo workspace</div>
-                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
-                    </div>
-                  </div>
-                </details>
-                <div style="margin-bottom:var(--md);">
-                  <input class="wizard-input" placeholder="Filter commits..." style="width:100%; padding:4px; font-size:10px;" oninput="toast('Filtering: ' + this.value)">
+                <div class="pm6-sc-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit → abc12ef">
+                  <div class="pm6-sc-commit-top"><span class="pm6-mono pm6-sha">abc12ef</span><span class="pm6-sp-row-meta">4m ago</span></div>
+                  <div>feat(search): tantivy query endpoint + ranked results</div>
                 </div>
-                <button class="wizard-btn" style="width:100%; padding:4px; font-size:10px;" onclick="toast('cmd.git.diff_set_compare_target → selecting compare base...')">Set Compare Target</button>
+                <div class="pm6-sc-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit → def34ab">
+                  <div class="pm6-sc-commit-top"><span class="pm6-mono pm6-sha">def34ab</span><span class="pm6-sp-row-meta">2h ago</span></div>
+                  <div>feat(ratings): schema + API + stars UI</div>
+                </div>
+                <div class="pm6-sc-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit → 789feed">
+                  <div class="pm6-sc-commit-top"><span class="pm6-mono pm6-sha">789feed</span><span class="pm6-sp-row-meta">yesterday</span></div>
+                  <div>chore: compose stack + registry cache</div>
+                </div>
+                <button class="pm6-sp-btn pm6-w100 pm6-mt-sm" data-demo-action="demo.toast" data-demo-arg="cmd.git.diff_set_compare_target → pick a commit to compare against first-parent">Set compare target</button>
               </div>
-                </div><!-- /sc-accordion-body -->
-              </div><!-- /sc-accordion-section History -->
+                </div>
+              </div>
 
-              <!-- Graph accordion section -->
+              <!-- === Graph === -->
               <div class="sc-accordion-section">
                 <div class="sc-accordion-header">
                   <span class="sa-chevron">&#9656;</span>
@@ -424,49 +425,41 @@
                 </div>
                 <div class="sc-accordion-body">
               <div data-sc-view="graph">
-                <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">
-                  <div style="font-size:24px; margin-bottom:var(--sm);">&#9794;</div>
-                  <div>Lineage graph visualization</div>
-                  <div style="margin-top:var(--sm); font-size:9px;">Branch ancestry, merge points, commit selection handoff</div>
-                  <button class="wizard-btn" style="margin-top:var(--md); padding:4px 12px; font-size:10px;" onclick="toast('Opening full graph view...')">Open Full Graph</button>
+                <div class="pm6-sc-graph pm6-mono">
+                  <div><span class="pm6-graph-dot pm6-g-main">&#9679;</span> main &nbsp;abc12ef</div>
+                  <div class="pm6-graph-line">&#8627; <span class="pm6-graph-dot pm6-g-lane">&#9679;</span> orch/lane-b-api</div>
+                  <div class="pm6-graph-line">&#8627; <span class="pm6-graph-dot pm6-g-lane">&#9679;</span> orch/lane-d-infra</div>
+                  <div class="pm6-graph-line">&#8627; <span class="pm6-graph-dot pm6-g-thread">&#9679;</span> thread/import-fixes</div>
                 </div>
+                <button class="pm6-sp-btn pm6-w100" data-demo-action="page.go" data-demo-arg="orchestrator:node_graph">Open full graph</button>
               </div>
                 </div>
               </div>
 
-              <!-- Branches & Stash accordion section -->
+              <!-- === Branches & Stash === -->
               <div class="sc-accordion-section">
                 <div class="sc-accordion-header">
                   <span class="sa-chevron">&#9656;</span>
-                  <span>Branches & Stash</span>
-                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 branches, 1 stash</span>
+                  <span>Branches &amp; Stash</span>
+                  <span class="pm6-acc-meta">5 branches, 1 stash</span>
                 </div>
                 <div class="sc-accordion-body">
               <div data-sc-view="branches">
-                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BRANCHES <span class="git-status" style="float:right;">3</span></summary>
-                  <div style="padding:var(--sm); font-size:11px;">
-                    <div style="padding:3px 0; cursor:pointer; display:flex; justify-content:space-between;" onclick="toast('Switch to main')"><span style="font-weight:600;">main</span> <span style="color:var(--accent-lime); font-size:9px;">current</span></div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feature/gui-update')">feature/gui-update</div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to hotfix/auth-bug')">hotfix/auth-bug</div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/dashboard-v2')">feat/dashboard-v2</div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/oauth2-pkce')">feat/oauth2-pkce</div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/multi-tenant')">feat/multi-tenant</div>
-                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to perf/analytics-opt')">perf/analytics-opt</div>
+                <div class="pm6-sp-row" data-demo-action="demo.reason" data-demo-arg="already_done"><span class="pm6-wt-branch">main</span> <span class="pm6-chip pm6-chip-ok">current</span></div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch → orch/lane-b-api (owned by run #47 — opens read-only)">orch/lane-b-api</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch → orch/lane-d-infra (owned by run #47 — opens read-only)">orch/lane-d-infra</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch → thread/import-fixes">thread/import-fixes</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch → spike/r2-storage">spike/r2-storage</div>
+                <div class="pm6-sp-card pm6-mt-sm">
+                  <div class="pm6-sp-card-head">STASH <span class="pm6-chip">1</span></div>
+                  <div class="pm6-sc-file">
+                    <span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="stash@{0}: WIP image resize ladder — 2 files">stash@{0}: WIP image resize ladder</span>
+                    <span class="pm6-sc-acts">
+                      <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.git.stash_pop → applied and dropped stash@{0}">Pop</button>
+                      <button class="pm6-sp-minibtn pm6-danger" data-demo-action="demo.toast" data-demo-arg="cmd.git.stash_drop → confirm drop of stash@{0}">Drop</button>
+                    </span>
                   </div>
-                </details>
-                <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STASH <span class="git-status" style="float:right;">1</span></summary>
-                  <div style="padding:var(--sm); font-size:11px;">
-                    <div style="padding:3px 0; display:flex; justify-content:space-between; align-items:center;">
-                      <span style="cursor:pointer;" onclick="toast('Applying stash@{0}...')">stash@{0}: WIP on main</span>
-                      <div style="display:flex; gap:2px;">
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('git stash pop')">Pop</button>
-                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('git stash drop')">Drop</button>
-                      </div>
-                    </div>
-                  </div>
-                </details>
+                </div>
               </div>
                 </div>
               </div>
@@ -476,141 +469,384 @@
           </div>
 
           <div class="side-panel-view" id="panel-git">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center; border-left-color:var(--accent-blue);">
+            <div class="files-panel-header pm6-sp-header">
               <span>GITHUB ACTIONS</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CURRENT BRANCH RUNS</summary>
-                <div style="padding:var(--sm);">
-                  <div class="docker-container" style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
-                    <div style="display:flex; gap:var(--xs); align-items:center;">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      <span style="font-size: 11px;">build-linux (#42)</span>
-                    </div>
-                    <a href="#" style="font-size:9px; color:var(--text-secondary);">Logs</a>
-                  </div>
-                  <div class="docker-container" style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
-                    <div style="display:flex; gap:var(--xs); align-items:center;">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-lime)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                      <span style="font-size: 11px;">tests-mac (#41)</span>
-                    </div>
-                    <a href="#" style="font-size:9px; color:var(--text-secondary);">Logs</a>
-                  </div>
-                </div>
-              </details>
-              
-              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKFLOWS</summary>
-                <div style="padding:var(--sm); font-size:11px;">
-                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--xs);">
-                    <span>CI Pipeline</span>
-                    <button class="wizard-btn" style="padding:2px 6px; font-size:9px;">Dispatch</button>
-                  </div>
-                  <div style="display:flex; justify-content:space-between;">
-                    <span>Release</span>
-                    <button class="wizard-btn" style="padding:2px 6px; font-size:9px;">Dispatch</button>
-                  </div>
-                </div>
-              </details>
+            <div class="panel-content pm6-sp-content">
 
-              <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">SETTINGS (SECRETS & VARS)</summary>
-                <div style="padding:var(--sm); font-size:11px; color:var(--text-secondary);">
-                  <div>DOCKER_USER (Secret) <span style="float:right; color:var(--accent-lime);">Set</span></div>
-                  <div style="margin-top:var(--xs);">DOCKER_PAT (Secret) <span style="float:right; color:var(--accent-magenta);">Missing</span></div>
-                  <button class="wizard-btn primary" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px;">Manage Secrets</button>
+              <!-- Device-code auth card -->
+              <div class="pm6-sp-card pm6-gh-auth">
+                <div class="pm6-sp-card-head">GITHUB CONNECTION</div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Account</span><span class="pm6-kv-v">jared-dev <span class="pm6-chip pm6-chip-ok">connected</span></span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Requested = effective</span><span class="pm6-kv-v">jared-dev</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Scopes</span><span class="pm6-kv-v pm6-mono" id="pm6GhScopes">repo, read:user, user:email</span></div>
+                <div class="pm6-sp-note pm6-warn-note" id="pm6GhScopeNote"><span class="pm6-note-glyph">&#9888;</span> workflow scope missing — you can view runs but cannot dispatch. Reconnect to add it.</div>
+                <button class="pm6-sp-btn pm6-w100" id="pm6GhReconnect" data-demo-action="git.device_login">Reconnect with workflow scope</button>
+                <div class="pm6-gh-device" id="pm6GhDevice"></div>
+              </div>
+
+              <!-- Current Branch -->
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">CURRENT BRANCH <span class="pm6-chip">main</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Readiness</span><span class="pm6-kv-v" id="pm6GhReadiness">2 of 3 recent runs green</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Snapshot</span><span class="pm6-kv-v">webhook transport &middot; 12s ago</span></div>
+                <div id="pm6GhRuns">
+                  <div class="pm6-gh-run" data-run="wf-312">
+                    <span class="pm6-status-dot pm6-dot-ok">&#9679;</span>
+                    <span class="pm6-gh-run-name">CI — build + test <span class="pm6-sp-row-meta">#312 &middot; main &middot; 2h ago</span></span>
+                    <span class="pm6-chip pm6-chip-ok">success</span>
+                  </div>
+                  <div class="pm6-gh-run" data-run="wf-311">
+                    <span class="pm6-status-dot pm6-dot-ok">&#9679;</span>
+                    <span class="pm6-gh-run-name">CI — build + test <span class="pm6-sp-row-meta">#311 &middot; lane-b-api &middot; 3h ago</span></span>
+                    <span class="pm6-chip pm6-chip-ok">success</span>
+                  </div>
+                  <div class="pm6-gh-run pm6-gh-run-failed" data-run="wf-310">
+                    <span class="pm6-status-dot pm6-dot-err">&#9679;</span>
+                    <span class="pm6-gh-run-name">CI — build + test <span class="pm6-sp-row-meta">#310 &middot; import-fixes &middot; 5h ago</span></span>
+                    <span class="pm6-chip pm6-chip-err" id="pm6GhRun310Chip">failed</span>
+                  </div>
                 </div>
-              </details>
+                <!-- Failure triage: auto-expanded for the failing run -->
+                <div class="pm6-gh-triage" id="pm6GhTriage">
+                  <div class="pm6-gh-triage-head"><span class="pm6-note-glyph">&#9888;</span> Failing job: <b>test</b> &middot; step: <b>cargo test</b></div>
+                  <div class="pm6-gh-log pm6-mono">
+                    <div>test import::normalize_units ... FAILED</div>
+                    <div>assertion failed: qty.value == 1.5 (got 11.5)</div>
+                    <div>&#8627; "1 1/2 cup" parsed as 11/2 — mixed fraction bug</div>
+                  </div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Changed files</span><span class="pm6-kv-v pm6-mono">src/services/import.rs</span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Likely next</span><span class="pm6-kv-v">rerun after the parser fix (already patched by the debug thread)</span></div>
+                  <div class="pm6-btnrow">
+                    <button class="pm6-sp-btn pm6-sp-btn-primary" data-demo-action="git.rerun_workflow" data-demo-arg="wf-310">Rerun</button>
+                    <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="cmd.github.actions.compare_last_success → diffing #310 vs #312 (last green)">Compare last green</button>
+                    <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="Opening run #310 on github.com (browser fallback)">Open in browser</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PR status checks -->
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">STATUS CHECKS</div>
+                <div id="pm6GhChecks">
+                  <div class="pm6-sp-note">No open PR yet — Create PR from Source Control &gt; Worktrees when run #47 completes.</div>
+                </div>
+              </div>
+
+              <!-- Workflows -->
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">WORKFLOWS</div>
+                <div class="pm6-sc-file">
+                  <span class="pm6-sc-fname">CI — build + test</span>
+                  <button class="pm6-sp-minibtn pm6-gh-dispatch" aria-disabled="true" data-demo-reason="not_configured" data-demo-action="demo.reason" data-demo-arg="not_configured" title="Blocked: missing workflow scope — reconnect with the workflow scope to enable dispatch">Dispatch</button>
+                </div>
+                <div class="pm6-sc-file">
+                  <span class="pm6-sc-fname">Release</span>
+                  <button class="pm6-sp-minibtn pm6-gh-dispatch" aria-disabled="true" data-demo-reason="not_configured" data-demo-action="demo.reason" data-demo-arg="not_configured" title="Blocked: missing workflow scope — reconnect with the workflow scope to enable dispatch">Dispatch</button>
+                </div>
+                <div class="pm6-sp-footnote" id="pm6GhDispatchNote">Dispatch is blocked: not_configured (workflow scope). Recovery: Reconnect with workflow scope above.</div>
+              </div>
+
+              <!-- Settings: names only -->
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">SECRETS &amp; VARIABLES <span class="pm6-sp-card-meta">names only</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k pm6-mono">DOCKER_USER</span><span class="pm6-chip pm6-chip-ok">set</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k pm6-mono">DOCKER_PAT</span><span class="pm6-chip pm6-chip-err">missing</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k pm6-mono">REGISTRY_URL</span><span class="pm6-chip pm6-chip-ok">set</span></div>
+                <button class="pm6-sp-btn pm6-w100" data-demo-action="demo.toast" data-demo-arg="Opening repository settings on github.com — secret values never display here">Manage on GitHub</button>
+              </div>
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-docker">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center; border-left-color:var(--accent-orange);">
+            <div class="files-panel-header pm6-sp-header">
               <span>DOCKER MANAGER</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CONTAINERS</summary>
-                <div class="file-tree" style="padding:var(--sm);">
-                  <div class="file" style="color:var(--accent-lime); font-size:11px;">▶ puppet-master-dev <span style="color:var(--text-muted); float:right;">Up 2h</span></div>
-                  <div class="file" style="color:var(--text-muted); font-size:11px;">■ db-redis <span style="float:right;">Exited</span></div>
-                </div>
-              </details>
+            <div class="pm6-dm-runtime">
+              <span class="pm6-status-dot pm6-dot-ok">&#9679;</span> Docker &middot; context <span class="pm6-mono">default</span> <span class="pm6-chip">detected</span>
+            </div>
+            <div class="pm6-dm-chips">
+              <button class="pm6-dm-chip active" data-demo-action="panels.docker_view" data-demo-arg="containers">Containers</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.docker_view" data-demo-arg="images">Images</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.docker_view" data-demo-arg="compose">Compose</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.docker_view" data-demo-arg="registries">Registries</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.docker_view" data-demo-arg="build">Build</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.docker_view" data-demo-arg="publish">Publish/Unraid</button>
+            </div>
+            <div class="panel-content pm6-sp-content">
 
-              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">IMAGES & REGISTRIES</summary>
-                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
-                  <div class="file">sittingmongoose/puppet-master:latest</div>
-                  <div class="file" style="color:var(--text-muted);">node:18-alpine</div>
-                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px;">Browse DockerHub</button>
+              <div data-pm6-dm-view="containers">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">CONTAINERS <span class="pm6-sp-card-meta" id="pm6DmCount">3 running &middot; 1 exited &middot; 1 restarting</span></div>
+                  <div id="pm6DmContainers"></div>
+                  <div class="pm6-sp-footnote">Logs stream into the Docker terminal group below.</div>
                 </div>
-              </details>
-              
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BUILD / BAKE</summary>
-                <div style="padding:var(--sm); font-size:11px;">
-                  <div style="margin-bottom:var(--xs); display:flex; justify-content:space-between;">Target: <span style="color:var(--accent-blue);">default</span></div>
-                  <button class="wizard-btn primary" style="width:100%; padding:4px; font-size:10px;">Build Image</button>
-                </div>
-              </details>
+              </div>
 
-              <details open class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">PUBLISH / UNRAID</summary>
-                <div style="padding:var(--sm); font-size:11px;">
-                  <div style="margin-bottom:var(--xs); display:flex; justify-content:space-between;">Docker Auth: <span style="color:var(--accent-lime);">Authenticated</span></div>
-                  <div style="margin-bottom:var(--sm); display:flex; justify-content:space-between;">Unraid Repo: <span style="color:var(--accent-orange);">Dirty</span></div>
-                  <div style="display:flex; gap:var(--xs);">
-                    <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;">Push Image</button>
-                    <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;">Push XML</button>
+              <div data-pm6-dm-view="images" class="pm6-hidden">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">IMAGES</div>
+                  <div class="pm6-sp-row pm6-mono">jared/tastebook:v1.1 <span class="pm6-sp-row-meta">412 MB</span></div>
+                  <div class="pm6-sp-row pm6-mono">jared/tastebook-worker:v1.1 <span class="pm6-sp-row-meta">388 MB</span></div>
+                  <div class="pm6-sp-row pm6-mono">postgres:16-alpine <span class="pm6-sp-row-meta">243 MB</span></div>
+                  <div class="pm6-sp-row pm6-mono">redis:7-alpine <span class="pm6-sp-row-meta">41 MB</span></div>
+                  <div class="pm6-btnrow">
+                    <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="cmd.docker.pull → pulling postgres:16-alpine (up to date)">Pull</button>
+                    <button class="pm6-sp-btn pm6-flex1" data-demo-action="demo.toast" data-demo-arg="Cleanup advisor: dry-run frees 1.2 GB across 6 dangling layers — protected assets untouched">Cleanup Advisor</button>
                   </div>
                 </div>
-              </details>
+              </div>
+
+              <div data-pm6-dm-view="compose" class="pm6-hidden">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">COMPOSE — tastebook</div>
+                  <div id="pm6DmCompose">
+                    <div class="pm6-sp-row" data-svc="db"><span class="pm6-status-dot pm6-dot-ok">&#9679;</span> db <span class="pm6-sp-row-meta">postgres:16</span></div>
+                    <div class="pm6-sp-row" data-svc="cache"><span class="pm6-status-dot pm6-dot-ok">&#9679;</span> cache <span class="pm6-sp-row-meta">redis:7</span></div>
+                    <div class="pm6-sp-row" data-svc="web"><span class="pm6-status-dot pm6-dot-idle">&#9679;</span> web <span class="pm6-sp-row-meta">tastebook:v1.1</span></div>
+                    <div class="pm6-sp-row" data-svc="worker"><span class="pm6-status-dot pm6-dot-idle">&#9679;</span> worker <span class="pm6-sp-row-meta">tastebook-worker:v1.1</span></div>
+                  </div>
+                  <button class="pm6-sp-btn pm6-sp-btn-primary pm6-w100" data-demo-action="docker.compose_up">Compose up</button>
+                </div>
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">SCENARIOS</div>
+                  <div class="pm6-sc-file">
+                    <span class="pm6-sc-fname">dev — web + db only</span>
+                    <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="Scenario run: services web,db · profile dev · ports 5173,5432">Run</button>
+                  </div>
+                  <div class="pm6-sc-file">
+                    <span class="pm6-sc-fname">import-load — worker x3 <span class="pm6-chip pm6-chip-warn">stale</span></span>
+                    <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="Scenario is stale: compose file changed since it was saved — edit to refresh">Run</button>
+                  </div>
+                </div>
+              </div>
+
+              <div data-pm6-dm-view="registries" class="pm6-hidden">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">REGISTRIES</div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Docker Hub</span><span class="pm6-kv-v">jared <span class="pm6-chip pm6-chip-ok">authenticated</span></span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k pm6-mono">localhost:5000</span><span class="pm6-kv-v">registry-cache <span class="pm6-chip pm6-chip-ok">reachable</span></span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k pm6-mono">ghcr.io</span><span class="pm6-chip pm6-chip-warn" title="Blocked: not_configured — add a token in Settings &gt; Integrations to enable">not_configured</span></div>
+                  <button class="pm6-sp-btn pm6-w100" data-demo-action="demo.toast" data-demo-arg="Browsing Docker Hub: jared/tastebook — 2 tags, last push 6d ago">Browse jared/tastebook</button>
+                </div>
+              </div>
+
+              <div data-pm6-dm-view="build" class="pm6-hidden">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">BUILD / BAKE</div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Dockerfile target</span><span class="pm6-kv-v pm6-mono">runtime</span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Tag</span><span class="pm6-kv-v pm6-mono">jared/tastebook:v1.2</span></div>
+                  <div class="pm6-kv"><span class="pm6-kv-k">Digest</span><span class="pm6-kv-v pm6-mono" id="pm6DmDigest">— not built yet</span></div>
+                  <button class="pm6-sp-btn pm6-sp-btn-primary pm6-w100" data-demo-action="docker.build">Build image</button>
+                  <div class="pm6-sp-footnote">Buildx detected &middot; bake file none &middot; multi-arch amd64+arm64</div>
+                </div>
+              </div>
+
+              <div data-pm6-dm-view="publish" class="pm6-hidden">
+                <div class="pm6-sp-card">
+                  <div class="pm6-sp-card-head">PUBLISH CHAIN <span class="pm6-sp-card-meta">v1.2 &#8594; Unraid</span></div>
+                  <div class="pm6-dm-chain" id="pm6DmChain">
+                    <div class="pm6-dm-stage" data-stage="build"><span class="pm6-dm-stage-dot">1</span><span class="pm6-dm-stage-label">Local build</span><span class="pm6-chip" data-role="state">pending</span></div>
+                    <div class="pm6-dm-stage" data-stage="push"><span class="pm6-dm-stage-dot">2</span><span class="pm6-dm-stage-label">Push tag + digest</span><span class="pm6-chip" data-role="state">pending</span></div>
+                    <div class="pm6-dm-stage" data-stage="hub"><span class="pm6-dm-stage-dot">3</span><span class="pm6-dm-stage-label">Hub repo jared/tastebook</span><span class="pm6-chip pm6-chip-ok" data-role="state">exists</span></div>
+                    <div class="pm6-dm-stage" data-stage="template"><span class="pm6-dm-stage-dot">4</span><span class="pm6-dm-stage-label">Unraid template repo</span><span class="pm6-chip pm6-chip-ok" data-role="state">ready_to_push</span></div>
+                    <div class="pm6-dm-stage" data-stage="unraid"><span class="pm6-dm-stage-dot">5</span><span class="pm6-dm-stage-label">Unraid follow-on</span><span class="pm6-chip" data-role="state">waiting</span></div>
+                  </div>
+                  <div class="pm6-btnrow">
+                    <button class="pm6-sp-btn pm6-flex1" data-demo-action="docker.push">Push image</button>
+                    <button class="pm6-sp-btn pm6-flex1" data-demo-action="docker.template_commit">Commit template</button>
+                    <button class="pm6-sp-btn pm6-flex1" data-demo-action="docker.template_push">Push template</button>
+                  </div>
+                  <div class="pm6-sp-footnote">Repo creation is a hard gate &middot; digest receipts recorded &middot; partial chains show a missing-link marker.</div>
+                </div>
+              </div>
+
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-unraid">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="files-panel-header pm6-sp-header">
               <span>UNRAID TEMPLATES</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">MANAGED PUBLISHING</summary>
-                <div style="padding:var(--sm); font-size:11px;">
-                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--xs);"><span style="color:var(--text-secondary);">Template Repo</span><span style="color:var(--accent-lime);">Ready</span></div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--sm);"><span style="color:var(--text-secondary);">ca_profile.xml</span><span style="color:var(--accent-lime);">Valid</span></div>
-                  <button class="wizard-btn primary" style="width:100%; padding:4px; font-size:10px;">Sync Templates</button>
-                </div>
-              </details>
+            <div class="panel-content pm6-sp-content">
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">MOVED</div>
+                <div class="pm6-sp-note">Unraid publishing now lives in <b>Docker Manager &gt; Publish/Unraid</b> — one surface for the whole chain from build to template push.</div>
+                <button class="pm6-sp-btn pm6-sp-btn-primary pm6-w100" data-demo-action="panels.show" data-demo-arg="panel-docker:publish">Open Docker Manager</button>
+              </div>
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">TEMPLATE REPO MIRROR</div>
+                <div class="pm6-kv"><span class="pm6-kv-k">unraid-template.xml</span><span class="pm6-chip pm6-chip-ok">valid</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Repo state</span><span class="pm6-chip pm6-chip-ok" id="pm6UnraidMirror">ready_to_push</span></div>
+              </div>
             </div>
           </div>
 
           <div class="side-panel-view" id="panel-artifacts">
-            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="files-panel-header pm6-sp-header">
               <span>RUNTIME ARTIFACTS</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
             </div>
-            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">RECENT ARTIFACTS</summary>
-                <div style="padding:var(--sm); font-size:11px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
-                    <span style="color:var(--accent-blue);">plan_graph.json</span>
-                    <span style="color:var(--text-muted);">10:45 AM</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
-                    <span style="color:var(--accent-blue);">evidence_2.2.json</span>
-                    <span style="color:var(--text-muted);">10:38 AM</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
-                    <span style="color:var(--accent-blue);">build_dist.zip</span>
-                    <span style="color:var(--text-muted);">Yesterday</span>
+            <div class="pm6-art-filters">
+              <button class="pm6-dm-chip active" data-demo-action="panels.art_filter" data-demo-arg="all">All</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.art_filter" data-demo-arg="web">Web</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.art_filter" data-demo-arg="browser">Browser</button>
+              <button class="pm6-dm-chip" data-demo-action="panels.art_filter" data-demo-arg="evidence">Evidence</button>
+            </div>
+            <div class="panel-content pm6-sp-content">
+
+              <div class="pm6-art-row" data-pm6-art-family="evidence" data-demo-action="demo.toast" data-demo-arg="Opening diff in the editor — src/services/import.rs (+38 -9)">
+                <div class="pm6-art-l1"><span class="pm6-chip pm6-fam">code_diff</span><span class="pm6-art-label">Import quantity parser fix</span><span class="pm6-chip pm6-chip-ok">success</span></div>
+                <div class="pm6-art-prev pm6-mono">src/services/import.rs +38 -9 &middot; regression fixture added</div>
+                <div class="pm6-art-meta">no fallback &middot; 2 files &middot; node n-19 &middot; 6m ago</div>
+              </div>
+
+              <div class="pm6-art-row" data-pm6-art-family="evidence" data-demo-action="demo.toast" data-demo-arg="Opening validation receipt — cargo test, import worker suite">
+                <div class="pm6-art-l1"><span class="pm6-chip pm6-fam">validation_test</span><span class="pm6-art-label">cargo test — import suite</span><span class="pm6-chip pm6-chip-ok">pass on retry</span></div>
+                <div class="pm6-art-prev pm6-mono">214 passed &middot; 1 failed &#8594; fixed &middot; 3.4s</div>
+                <div class="pm6-art-meta">retry 2 of 2 &middot; 214 cases &middot; lane-b &middot; 5m ago</div>
+              </div>
+
+              <div class="pm6-art-row" data-pm6-art-family="evidence" data-demo-action="demo.toast" data-demo-arg="Opening screenshot — recipe editor upload flow (1440x900)">
+                <div class="pm6-art-l1"><span class="pm6-chip pm6-fam">screenshot</span><span class="pm6-art-label">Recipe editor upload flow</span><span class="pm6-chip pm6-chip-ok">success</span></div>
+                <div class="pm6-art-prev">Before/after pair &middot; media uploader with EXIF strip applied</div>
+                <div class="pm6-art-meta">no fallback &middot; 2 captures &middot; lane-c &middot; 14m ago</div>
+              </div>
+
+              <!-- typed api_web_call (addendum_pm173) -->
+              <div class="pm6-art-row pm6-art-typed" data-pm6-art-family="web">
+                <div class="pm6-art-l1"><span class="pm6-chip pm6-fam pm6-fam-web">api_web_call</span><span class="pm6-art-label">Searching Web: schema.org Recipe markup coverage 2026</span><span class="pm6-chip pm6-chip-ok">completed</span></div>
+                <div class="pm6-art-prev">operation_input: <span class="pm6-mono">query = "schema.org Recipe markup coverage 2026"</span></div>
+                <div class="pm6-art-meta">cmd.chat.web.search &middot; provider model-native &middot; no fallback &middot; cache miss &middot; 5 sources (3 read)</div>
+                <div class="pm6-art-prov">Agent searched web because freshness was required for import coverage claims. <span class="pm6-chip">agent_judgment</span> <span class="pm6-chip">scope *</span> <span class="pm6-chip pm6-chip-ok">approved</span></div>
+                <div class="pm6-btnrow">
+                  <button class="pm6-sp-minibtn" data-demo-action="web.sources" data-demo-arg="op-web-s1">Sources (5)</button>
+                  <button class="pm6-sp-minibtn" data-demo-action="panels.open_chat">Open in Chat</button>
+                </div>
+              </div>
+
+              <!-- typed browser_recording (addendum_pm173) -->
+              <div class="pm6-art-row pm6-art-typed" data-pm6-art-family="browser">
+                <div class="pm6-art-l1"><span class="pm6-chip pm6-fam pm6-fam-web">browser_recording</span><span class="pm6-art-label">Reading Site: seriouseats.com/engineering/quantity-parsing</span><span class="pm6-chip pm6-chip-ok">completed</span></div>
+                <div class="pm6-art-prev">Site Reader session <span class="pm6-mono">sr-114</span> &middot; 42 actions &middot; 1 page &middot; read receipt recorded</div>
+                <div class="pm6-art-meta">Site Reader (primary) &middot; no fallback &middot; citation [3] in research run &middot; 2 fields redacted</div>
+                <div class="pm6-btnrow">
+                  <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="Opening browser evidence drawer — tabs: Page / Actions / Console / Network / Screenshots / Sources">Open</button>
+                  <button class="pm6-sp-minibtn" data-demo-action="demo.toast" data-demo-arg="Replaying 42 captured actions in the browser evidence drawer (read-only)">Watch</button>
+                </div>
+              </div>
+
+              <!-- live research artifact slot -->
+              <div id="pm6ArtLive" data-pm6-art-family="web">
+                <div class="pm6-sp-note pm6-art-empty">Research run in progress — its <span class="pm6-mono">api_web_call</span> artifact lands here with citations when the run completes.</div>
+              </div>
+
+              <!-- investigation bundle -->
+              <div class="pm6-sp-card pm6-art-bundle" data-pm6-art-family="evidence">
+                <div class="pm6-sp-card-head">INVESTIGATION <span class="pm6-mono pm6-sp-card-meta">inv-import-7x</span></div>
+                <div class="pm6-art-prev">Import worker 7x quantity bug — bundle manifest</div>
+                <div class="pm6-art-bundle-chips">
+                  <span class="pm6-chip pm6-chip-ok">final_state: fixed</span>
+                  <span class="pm6-chip">stop_reason: verified_fix</span>
+                  <span class="pm6-chip">artifacts: 5</span>
+                  <span class="pm6-chip pm6-chip-ok">verification: strong</span>
+                </div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="baseline — validation_test: failing suite captured before any change"><span class="pm6-chip pm6-fam">baseline</span> validation_test &middot; failing suite</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="repro — browser_recording: fixture blog imported, quantities exploded 7x"><span class="pm6-chip pm6-fam">repro</span> browser_recording &middot; fixture import</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="diagnosis — tool_llm_trace: mixed-fraction parse traced to normalize_units"><span class="pm6-chip pm6-fam">diagnosis</span> tool_llm_trace &middot; parse trace</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="fix — code_diff: parser patch + regression fixture"><span class="pm6-chip pm6-fam">fix</span> code_diff &middot; parser patch</div>
+                <div class="pm6-sp-row" data-demo-action="demo.toast" data-demo-arg="verification — validation_test: 214 passed, verification_strength strong"><span class="pm6-chip pm6-fam">verification</span> validation_test &middot; suite green</div>
+                <button class="pm6-sp-btn pm6-w100 pm6-mt-sm" data-demo-action="page.go" data-demo-arg="orchestrator:evidence">Open in Orchestrator Evidence</button>
+              </div>
+
+              <div class="pm6-sp-footnote">Rows are compact receipts — payloads load on demand from artifact refs.</div>
+            </div>
+          </div>
+
+          <!-- NEW slim panel: Testing -->
+          <div class="side-panel-view" id="pm6-panel-testing">
+            <div class="files-panel-header pm6-sp-header">
+              <span>TESTING</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/></svg>
+            </div>
+            <div class="panel-content pm6-sp-content">
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">POLICY</div>
+                <div class="pm6-kv"><span class="pm6-kv-k">Visibility</span><span class="pm6-chip pm6-chip-ok">show_when_possible</span></div>
+                <div class="pm6-sp-footnote">Nodes surface test evidence whenever the runner reports it; silent runs are flagged stale.</div>
+              </div>
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">LAST RUN</div>
+                <div class="pm6-kv"><span class="pm6-kv-k">cargo test</span><span class="pm6-chip pm6-chip-ok" id="pm6TestChip">214 passed</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">When</span><span class="pm6-kv-v" id="pm6TestWhen">4m ago &middot; lane-b retry</span></div>
+                <div class="pm6-kv"><span class="pm6-kv-k">History</span><span class="pm6-kv-v">1 failed &#8594; fixed (import suite)</span></div>
+                <div class="pm6-btnrow">
+                  <button class="pm6-sp-btn pm6-flex1" id="pm6TestRunBtn" data-demo-action="panels.test_run">Run tests</button>
+                  <button class="pm6-sp-btn pm6-flex1" data-demo-action="panels.show" data-demo-arg="panel-run">Run &amp; Debug</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NEW slim panel: Agents -->
+          <div class="side-panel-view" id="pm6-panel-agents">
+            <div class="files-panel-header pm6-sp-header">
+              <span>AGENTS</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 12.5h.01M15 12.5h.01"/><path d="M9.5 16h5"/></svg>
+            </div>
+            <div class="panel-content pm6-sp-content">
+              <div class="pm6-sp-card">
+                <div class="pm6-sp-card-head">ACTIVE SUBAGENTS <span class="pm6-chip" id="pm6AgentsCount">3</span></div>
+                <div class="pm6-agent-row">
+                  <span class="pm6-status-dot pm6-dot-run">&#9679;</span>
+                  <span class="pm6-agent-name">lane-b worker <span class="pm6-sp-row-meta">API nodes &middot; run #47</span></span>
+                  <span class="pm6-chip" id="pm6AgentLaneB">running</span>
+                </div>
+                <div class="pm6-agent-row">
+                  <span class="pm6-status-dot pm6-dot-ok">&#9679;</span>
+                  <span class="pm6-agent-name">Test Sleuth <span class="pm6-sp-row-meta">debug thread &middot; 42s</span></span>
+                  <span class="pm6-chip pm6-chip-ok">done</span>
+                </div>
+                <div class="pm6-agent-row">
+                  <span class="pm6-status-dot pm6-dot-idle">&#9679;</span>
+                  <span class="pm6-agent-name">Auditor <span class="pm6-sp-row-meta">review loop &middot; queued</span></span>
+                  <span class="pm6-chip">waiting</span>
+                </div>
+                <div class="pm6-sp-footnote">Mirror of chat subagent chips — expand them in the thread for work streams.</div>
+                <button class="pm6-sp-btn pm6-w100" data-demo-action="panels.open_chat">Open Chat</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- NEW slim panel: Notifications -->
+          <div class="side-panel-view" id="pm6-panel-notify">
+            <div class="files-panel-header pm6-sp-header">
+              <span>NOTIFICATIONS</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            </div>
+            <div class="panel-content pm6-sp-content">
+              <div id="pm6NotifyList">
+                <div class="pm6-notify-row pm6-notify-warn" data-notify="n-usage">
+                  <div class="pm6-art-l1"><span class="pm6-note-glyph">&#9888;</span><span class="pm6-art-label">Claude 5h window at 78%</span><span class="pm6-chip pm6-chip-warn">warning</span></div>
+                  <div class="pm6-art-prev">Approaching the limit — heavy lanes may switch accounts under pressure.</div>
+                  <div class="pm6-btnrow">
+                    <button class="pm6-sp-minibtn" data-demo-action="panels.ack" data-demo-arg="n-usage">Acknowledge</button>
+                    <button class="pm6-sp-minibtn" data-demo-action="panels.snooze" data-demo-arg="n-usage">Snooze 1h</button>
+                    <button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="usage">Open Usage</button>
                   </div>
                 </div>
-              </details>
+                <div class="pm6-notify-row" data-notify="n-index">
+                  <div class="pm6-art-l1"><span class="pm6-status-dot pm6-dot-ok">&#9679;</span><span class="pm6-art-label">Search index refreshed</span><span class="pm6-chip">info</span></div>
+                  <div class="pm6-art-prev">tantivy caught up to commit abc12ef — 1,284 documents.</div>
+                  <div class="pm6-btnrow">
+                    <button class="pm6-sp-minibtn" data-demo-action="panels.ack" data-demo-arg="n-index">Acknowledge</button>
+                  </div>
+                </div>
+              </div>
+              <div class="pm6-sp-note pm6-hidden" id="pm6NotifyEmpty">No alerts — all clear.</div>
             </div>
           </div>
 

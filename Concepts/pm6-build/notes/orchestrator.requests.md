@@ -1,0 +1,4 @@
+- [part 05] check_vocab leftover (G2 hard-fail risk): `.debug-thread-header .debug-target .debug-phase-badge` selector in FROZEN css-shell — needs polish/W2 rename (e.g. `debug-stage-badge`) coordinated with whichever part renders that class.
+- [part 21] check_vocab leftover: "Phase: Root Cause · DAP attached" in debug-thread copy (chat agent's part).
+- [part 23] check_vocab leftovers: "Phase: Root Cause" + "shell tier <code>rich</code>" + "…not asserted at this tier" in floating-chat copy (chat agent's part).
+- [part 25] FYI: legacy `.orch-tab` click handler in js-terminal-demo still owns Orchestrator tab class-toggling; pm6-js-orchestrator layers renders on top via a container listener + PM_PAGES.registerSubtab('orchestrator', …). If W2 rewrites that handler, keep firing plain `.click()` semantics on `.orch-tab[data-tab]` (my subtab router relies on it).

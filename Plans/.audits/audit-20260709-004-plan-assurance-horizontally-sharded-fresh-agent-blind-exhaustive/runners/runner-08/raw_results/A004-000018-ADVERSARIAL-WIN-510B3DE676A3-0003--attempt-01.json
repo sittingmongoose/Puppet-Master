@@ -1,0 +1,1168 @@
+{
+  "schema_version": "a004.document_window_result.v1",
+  "assignment_id": "A004-000018-ADVERSARIAL-WIN-510B3DE676A3-0003",
+  "runner_id": "runner-08",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-510B3DE676A3-0003",
+  "doc_id": "DOC-510B3DE676A3",
+  "document_path": "Plans/storage-plan.md",
+  "agent_thread_id": "019f4a02-b1da-7091-97a1-0bac543944ab",
+  "agent_instance_id": "646C04A1-4E65-4D25-981D-2C0442703D2B",
+  "agent_path": "/root/a004_r08_adversarial_000018_646c04a1",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "hash_verification": {
+    "capsule_sha256_match": true,
+    "source_excerpt_sha256_match": true,
+    "capsule_bytes_match": true,
+    "source_excerpt_bytes_match": true
+  },
+  "scope_attestation": {
+    "files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000018-ADVERSARIAL-WIN-510B3DE676A3-0003.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-510B3DE676A3-0003.txt"
+    ],
+    "other_files_read": false,
+    "prior_audits_seen": false,
+    "other_results_seen": false,
+    "unrelated_windows_seen": false
+  },
+  "observations": [
+    {
+      "observation_id": "O-001",
+      "category": "governance_scope",
+      "summary": "The capsule explicitly limits implementation authority to materialized registry rows and states that the persistence work is partial and not buildable.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 491,
+          "line_end": 491,
+          "quote": "Key templates in this section are inventory and routing aids only; a persisted value family is implementation-authoritative only when the registry row identifies its key shape, value schema id/ref, owner doc, producer, consumers, schema version, encoding, required/optional/nullability fields, replay behavior, migration rule, retention/compaction rule, redaction/no-secret rule, and legacy/canonical crosswalk status."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 510,
+          "line_end": 510,
+          "quote": "This Tier 0C-2 registry is partial persistence-materialization progress only."
+        }
+      ],
+      "implication": "Prose-only families in this window cannot safely be treated as executable storage contracts, and findings about their incompleteness do not contradict a buildability claim because the text explicitly withholds that claim."
+    },
+    {
+      "observation_id": "O-002",
+      "category": "authority_ownership",
+      "summary": "Coordination authority is assigned to seglog records folded into checkpointed redb projections, while JSON mirrors are explicitly non-authoritative.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 516,
+          "line_end": 516,
+          "quote": "Canonical coordination state is not a JSON file family. It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 546,
+          "line_end": 546,
+          "quote": "Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
+        }
+      ],
+      "implication": "Consumers have a clear high-level authority boundary, but correctness depends on the unspecified failure behavior between the two canonical storage layers."
+    },
+    {
+      "observation_id": "O-003",
+      "category": "state_model",
+      "summary": "Concern records have enumerated lifecycle and resolution vocabularies and are structurally separated from source events and projections.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 645,
+          "line_end": 645,
+          "quote": "- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`"
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 646,
+          "line_end": 646,
+          "quote": "- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`"
+        }
+      ],
+      "implication": "The vocabulary is concrete, but the transition and authorization semantics needed to operate it are not present in this capsule."
+    },
+    {
+      "observation_id": "O-004",
+      "category": "gui_attention",
+      "summary": "Attention storage separates causal clustering, user-visible threads, routing ownership, and delivery class.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 700,
+          "line_end": 700,
+          "quote": "Active attention rows carry both `attention_key` and `root_cause_key`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 704,
+          "line_end": 704,
+          "quote": "The cross-shell `attention-routing` record stores delivery class and escalation state separately from owner routing."
+        }
+      ],
+      "implication": "The separation supports coherent cross-surface GUI truth, subject to a missing deterministic severity-to-delivery transition matrix."
+    },
+    {
+      "observation_id": "O-005",
+      "category": "projection_trust",
+      "summary": "Projection recency and integrity are separate axes, and historical focus is persisted across tabs and restart.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 766,
+          "line_end": 766,
+          "quote": "- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 768,
+          "line_end": 768,
+          "quote": "- `projection_freshness` remains the recency axis and `projection_health` remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field."
+        }
+      ],
+      "implication": "The model avoids a single misleading trust flag but needs action-target and commit-time race rules."
+    },
+    {
+      "observation_id": "O-006",
+      "category": "security_privacy",
+      "summary": "External-operation evidence is classified before persistence, indexing, provider use, and export, with masking as the default for sensitive metadata.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 736,
+          "line_end": 736,
+          "quote": "Provider-facing `/AI` or `LLM` features must receive only already-scrubbed payload refs and may not treat a local scrub as provider consent."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "Local history may keep masked references for joinability, but exports, evidence bundles, and screenshots default to masked values unless the selected export profile explicitly permits fuller disclosure."
+        }
+      ],
+      "implication": "The intended privacy posture is conservative, but profile-selection authority and scrub-failure behavior remain material negative space."
+    },
+    {
+      "observation_id": "O-007",
+      "category": "compatibility_migration",
+      "summary": "The capsule requires versioned, idempotent, forward-only migrations and a bounded old-version support period.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 616,
+          "line_end": 616,
+          "quote": "- Migrations are versioned and idempotent; old schema versions must be supported for at least one major release."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 808,
+          "line_end": 808,
+          "quote": "Storage migrations are forward-only and monotonic."
+        }
+      ],
+      "implication": "The direction is explicit, but mixed-version operation, interruption recovery, and retirement criteria are not verifiable here."
+    },
+    {
+      "observation_id": "O-008",
+      "category": "retention_recovery",
+      "summary": "Temporal fields are declared crash-critical and retention anchors are family-specific rather than inferred from filesystem timestamps.",
+      "evidence": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 853,
+          "line_end": 853,
+          "quote": "Storage owns durable temporal fields used by receipts, blocked states, stream views, and projections. These fields are crash-critical overrides to debounced persistence where noted."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 872,
+          "line_end": 872,
+          "quote": "- Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both `retention_anchor_kind` and `retention_anchor_at_utc`; implementations MUST NOT infer the anchor from file mtime alone."
+        }
+      ],
+      "implication": "The retention truth is materially specified, while conditional requiredness and durable flush oracles remain ambiguous."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "candidate_id": "CF-001",
+      "severity": "high",
+      "category": "atomicity_failure_recovery",
+      "claim": "The capsule calls seglog append plus projection a logical append/CAS boundary but guarantees atomicity only for projection rows and the checkpoint inside redb; it does not define recovery for a successful seglog append followed by redb failure, process death, or checkpoint persistence failure.",
+      "why_it_matters": "A crash at that seam can leave an authoritative event without a matching authoritative read model, causing duplicate successor events, stale scheduling decisions, or indefinite checkpoint gaps.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 516,
+          "line_end": 516,
+          "quote": "It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 537,
+          "line_end": 537,
+          "quote": "the append and projection result are one logical append/CAS boundary."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 538,
+          "line_end": 538,
+          "quote": "The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction."
+        }
+      ],
+      "bounded_remediation_need": "Define the durable commit order, every crash point, idempotent seglog-to-redb replay, monotonic checkpoint invariants, caller-visible result semantics after partial success, and failure-injection test oracles."
+    },
+    {
+      "candidate_id": "CF-002",
+      "severity": "high",
+      "category": "lifecycle_recovery",
+      "claim": "Heartbeat expiry is a crash cause, but the listed event families define no heartbeat renewal or lease record, timeout basis, grace policy, clock rule, or deterministic terminal cleanup of active file claims and current operations.",
+      "why_it_matters": "Agents can be falsely declared crashed after pauses or clock anomalies, while stale ownership claims and operations can survive unregister, crash, or abort and mislead schedulers and users.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 524,
+          "line_end": 524,
+          "quote": "- `coordination.agent_crashed` records crash, heartbeat-expiry, process-loss, or worktree-loss resolution."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 529,
+          "line_end": 529,
+          "quote": "- `coordination_agent_projection.v1:{project_id}:{agent_id}` carries latest lifecycle/status, runtime/platform identity, worktree binding, current operation ref, active file claims, `agent_revision`, and `last_applied_event_id`."
+        }
+      ],
+      "bounded_remediation_need": "Specify heartbeat or lease events, monotonic-time and grace semantics, crash-resolution authority, terminal state precedence, and atomic clearing or historical retention rules for operation and file-claim projections."
+    },
+    {
+      "candidate_id": "CF-003",
+      "severity": "medium",
+      "category": "scale_capacity",
+      "claim": "The 32-agent concurrency envelope does not identify whether the limit is per project, process, installation, scheduler, or storage instance, and crossing it permits three materially different behaviors without a deterministic admission rule.",
+      "why_it_matters": "Independent implementations can overload shared storage or expose inconsistent queueing, starvation, latency, and user-visible capacity behavior.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 536,
+          "line_end": 536,
+          "quote": "- The supported v1 concurrency envelope is up to 32 active agents across multiple worktrees. Above that bound, schedulers must queue, throttle, or require an explicit higher-capacity contract."
+        }
+      ],
+      "bounded_remediation_need": "Define the capacity scope, counting lifecycle, responsible admission owner, queue ordering and fairness, overload diagnostics, metrics, and boundary tests at 31, 32, and 33 agents."
+    },
+    {
+      "candidate_id": "CF-004",
+      "severity": "medium",
+      "category": "concurrency_control",
+      "claim": "The append contract accepts expected `agent_revision` or `last_applied_event_id` without defining which guard is required, whether both may be supplied, or how disagreement between them is resolved.",
+      "why_it_matters": "The two values represent different concurrency horizons; choosing either opportunistically can admit a mutation against stale state even though the plan says lost updates are prohibited.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 537,
+          "line_end": 537,
+          "quote": "Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 539,
+          "line_end": 539,
+          "quote": "- Lost updates are prohibited: a stale expected revision returns a coordination conflict diagnostic, and the caller reloads projections before appending a successor event."
+        }
+      ],
+      "bounded_remediation_need": "Choose one normative guard or define an exact equivalence and precedence rule, required-field combinations, checkpoint-lag behavior, conflict payload, and concurrent-writer tests."
+    },
+    {
+      "candidate_id": "CF-005",
+      "severity": "medium",
+      "category": "record_semantics",
+      "claim": "Canonical records are immutable after commit yet every canonical record must contain `updated_at_utc`; the capsule does not state whether that timestamp is fixed at creation, denotes the superseding record time, or permits in-place mutation.",
+      "why_it_matters": "Implementers and auditors can disagree about whether a changed timestamp is a legitimate correction or evidence that immutable canonical history was rewritten.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 554,
+          "line_end": 554,
+          "quote": "- Canonical records are immutable once committed; corrections require a new record with explicit lineage."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 555,
+          "line_end": 555,
+          "quote": "- All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit."
+        }
+      ],
+      "bounded_remediation_need": "Define the invariant for `updated_at_utc` on immutable records and the exact supersession fields and timestamp semantics used by correction records."
+    },
+    {
+      "candidate_id": "CF-006",
+      "severity": "high",
+      "category": "authority_state_transitions",
+      "claim": "The concern canon enumerates states and resolution kinds, including `accepted_risk`, but leaves the promised lifecycle semantics and confirmation matrix as instructions to define rather than an actual transition and authorization contract.",
+      "why_it_matters": "Without permitted transitions, actor authority, preconditions, reopen behavior, and confirmation requirements, a concern can be dismissed or accepted as risk without consistent governance or audit evidence.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 562,
+          "line_end": 562,
+          "quote": "- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 563,
+          "line_end": 563,
+          "quote": "- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 645,
+          "line_end": 646,
+          "quote": "- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`\n- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`"
+        }
+      ],
+      "bounded_remediation_need": "Materialize a transition table with actor permissions, required evidence and confirmation by resolution kind, idempotency, merge/split lineage, reopen semantics, and positive and negative test cases."
+    },
+    {
+      "candidate_id": "CF-007",
+      "severity": "high",
+      "category": "unresolved_ownership",
+      "claim": "The storage owner section explicitly leaves multiple canonical schema and ownership seams unresolved, including a resolution enum conflict, projection ownership, worktree lifecycle, blocked-sequence minting, and base-branch ownership.",
+      "why_it_matters": "These are write-authority and join-identity decisions; implementing consumers before they are reconciled can mint competing fields and incompatible durable records.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 710,
+          "line_end": 710,
+          "quote": "generic `resolved` labels do not overwrite the owner-specific `remediation.resolved` contract; that conflict is a real reconciliation item."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 712,
+          "line_end": 712,
+          "quote": "Remaining reconciliation seams include `/glossary` ownership, `route-payload` normalization, `attention-item` versus `project-summary` projection ownership, and `/worktree` lifecycle split."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 716,
+          "line_end": 716,
+          "quote": "`Executor_Protocol.md` / `Executor_Protocol` and `orchestrator-subagent-integration.md` / `orchestrator-subagent-integration` must define the mint and `/ownership` rules for `blocked_sequence`"
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 718,
+          "line_end": 718,
+          "quote": "`base-branch` ownership must be reconciled before Source Control or UI code mint competing base-branch fields."
+        }
+      ],
+      "bounded_remediation_need": "Resolve each named seam to one owner and canonical field or schema, define compatibility crosswalks and migration order, and keep dependent families deferred until those decisions are materialized."
+    },
+    {
+      "candidate_id": "CF-008",
+      "severity": "medium",
+      "category": "gui_truth_test_oracles",
+      "claim": "The alert model enumerates severity values and delivery classes but only says active-project issues may interrupt when severity requires it; it does not map severities and state transitions to delivery, escalation, suppression, reopening, or acknowledgment behavior.",
+      "why_it_matters": "Different shells can show the same durable alert as a modal, toast, banner, or badge, and tests cannot determine whether retriggering is correct.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 700,
+          "line_end": 700,
+          "quote": "Repeated events with the same `root_cause_key` update one active alert thread; interruptive notifications retrigger only on severity or state transition."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 704,
+          "line_end": 704,
+          "quote": "Delivery classes are `blocking_modal`, `interruptive_toast`, `persistent_banner_or_card`, and `badge_only`; active-project issues may interrupt when severity requires it"
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 708,
+          "line_end": 708,
+          "quote": "Severity uses `info`, `warning`, `attention_required`, and `blocked` with stable meaning"
+        }
+      ],
+      "bounded_remediation_need": "Provide a severity-by-state-by-project-activity delivery matrix, severity ordering, acknowledgment and snooze effects, resolved-to-reopened rules, coalescing windows, and cross-shell conformance tests."
+    },
+    {
+      "candidate_id": "CF-009",
+      "severity": "high",
+      "category": "action_admission_race",
+      "claim": "Mutation safety requires callers to read freshness and lineage fields before trusting a projection, but no commit-time precondition binds the action to the `source_seq`, cursor, health, or policy version that was checked.",
+      "why_it_matters": "A projection can become stale or degraded after the read and before the side effect, creating a time-of-check/time-of-use race despite nominal freshness gating.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 714,
+          "line_end": 714,
+          "quote": "Projection records carry enough freshness and lineage to be trusted after restart: `projection_freshness`, `projection_health`, `last_projected_at_utc`, `source_seq` or an equivalent `/cursor`, `degraded_reason_code`, and `refresh_in_progress`. Mutating actions must read those fields before trusting a derived view."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 769,
+          "line_end": 769,
+          "quote": "- Sensitive action gating evaluates both axes together: stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions."
+        }
+      ],
+      "bounded_remediation_need": "Require action admission to carry an expected source cursor, projection revision, freshness-policy version, and target revision, and atomically reject or revalidate if any value changes before mutation."
+    },
+    {
+      "candidate_id": "CF-010",
+      "severity": "high",
+      "category": "historical_gui_action_safety",
+      "claim": "Historical focus deliberately persists across navigation and restart, but the action-gating rules do not say whether mutations target the focused historical run or the active live run, nor whether historical views are read-only or require explicit retargeting.",
+      "why_it_matters": "A user can follow a coherent historical deep link and invoke a CTA against an unintended live or historical execution target while the UI appears internally consistent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 766,
+          "line_end": 766,
+          "quote": "- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 767,
+          "line_end": 767,
+          "quote": "- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 769,
+          "line_end": 769,
+          "quote": "- Sensitive action gating evaluates both axes together"
+        }
+      ],
+      "bounded_remediation_need": "Define active-versus-focused action target identity, historical-mode read-only defaults, explicit live retarget or confirmation rules, CTA labeling, and restart/deep-link tests."
+    },
+    {
+      "candidate_id": "CF-011",
+      "severity": "medium",
+      "category": "schema_verifiability",
+      "claim": "The provenance prose presents array and optional notation alongside unadorned names as if they were separate fields, without declaring the canonical JSON field name, cardinality, or nullability.",
+      "why_it_matters": "Producers can persist incompatible variants and consumers cannot write one deterministic schema or migration for evidence and export manifests.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 722,
+          "line_end": 722,
+          "quote": "carry derivation provenance fields: `source_event_ids[]`, `source_event_ids`, `blob_ref?`, `blob_ref`, `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 730,
+          "line_end": 730,
+          "quote": "`missing_external_refs[]`, `missing_external_refs`"
+        }
+      ],
+      "bounded_remediation_need": "Name one canonical machine field for each concept and encode array cardinality, optionality, nullability, and compatibility aliases in the authoritative value schemas."
+    },
+    {
+      "candidate_id": "CF-012",
+      "severity": "high",
+      "category": "privacy_authorization",
+      "claim": "Exports may disclose fuller sensitive metadata when a selected export profile permits it, but this capsule does not define who may select that profile, what explicit consent is required, or what audit event proves the disclosure decision.",
+      "why_it_matters": "Private repository, account, cluster, SSH, endpoint, and screenshot-visible identifiers can leave the local trust boundary through a profile choice with no specified authorization or non-repudiation control.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "exports, evidence bundles, and screenshots default to masked values unless the selected export profile explicitly permits fuller disclosure."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 736,
+          "line_end": 736,
+          "quote": "may not treat a local scrub as provider consent."
+        }
+      ],
+      "bounded_remediation_need": "Define profile-selection authority, explicit per-destination consent, confirmation UX, immutable disclosure receipt, allowed data classes, expiration, and deny-by-default behavior for unattended exports."
+    },
+    {
+      "candidate_id": "CF-013",
+      "severity": "high",
+      "category": "redaction_failure_recovery",
+      "claim": "The capsule requires redaction before display persistence, storage, indexing, and provider use, but does not specify fail-closed behavior when a scrubber errors, times out, returns an unknown policy version, or partially writes output.",
+      "why_it_matters": "A transient redaction failure can persist or transmit secret-bearing material even though the success-path rules are strict.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 736,
+          "line_end": 736,
+          "quote": "store the evidence class, data-class label, redaction profile, and whether `scrub-before-persist` and `scrub-before-index` ran before any local persistence or indexing."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 740,
+          "line_end": 740,
+          "quote": "redaction happens before display persistence as well as before storage."
+        }
+      ],
+      "bounded_remediation_need": "Specify fail-closed state transitions, temporary-buffer handling, quarantine and deletion of partial output, retry limits, user-visible diagnostics, and injected scrubber-failure tests for every persistence and egress path."
+    },
+    {
+      "candidate_id": "CF-014",
+      "severity": "high",
+      "category": "legal_hold_cleanup",
+      "claim": "Legal hold suspends cleanup and linked-graph deletion, while logout, unlink, and project-delete cleanup invalidates stored residue; the precedence and post-delete representation of held data are not defined.",
+      "why_it_matters": "An implementation can either violate preservation requirements by deleting held evidence or violate user cleanup expectations by silently retaining identity and endpoint residue without a visible tombstone or explanation.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 730,
+          "line_end": 730,
+          "quote": "`hold_state` applies to runs, receipts, evidence, blocked episodes, and linked blobs/artifacts; a hold suspends pruning, cleanup, export garbage-collection, and linked-graph deletion until explicitly released."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "Logout, unlink, and project-delete cleanup invalidates non-secret residue such as validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+        }
+      ],
+      "bounded_remediation_need": "Declare hold precedence, release authority, delete-time tombstone and masking behavior, deferred-cleanup queue semantics, user-visible disclosure, and tests for logout, unlink, and project deletion with active holds."
+    },
+    {
+      "candidate_id": "CF-015",
+      "severity": "medium",
+      "category": "migration_operations",
+      "claim": "Forward-only, additive-first, one-major-release compatibility does not define mixed-version reader/writer behavior, migration checkpoints, interruption recovery, downgrade refusal, or the evidence required before old-version support is removed.",
+      "why_it_matters": "Rolling upgrades or crashes can leave partially migrated values that new replay rejects and old processes misinterpret, despite migrations being labeled idempotent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 616,
+          "line_end": 616,
+          "quote": "- Migrations are versioned and idempotent; old schema versions must be supported for at least one major release."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 808,
+          "line_end": 808,
+          "quote": "Storage migrations are forward-only and monotonic."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 811,
+          "line_end": 811,
+          "quote": "- new fields are additive first; destructive renames require a migration note in the same section that introduces them"
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 508,
+          "line_end": 508,
+          "quote": "Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template."
+        }
+      ],
+      "bounded_remediation_need": "Define supported version matrices, upgrade ordering, dual-read or translation periods, migration checkpoints and resumability, unsupported-version quarantine, downgrade behavior, retirement evidence, and crash tests."
+    },
+    {
+      "candidate_id": "CF-016",
+      "severity": "high",
+      "category": "temporal_schema_durability",
+      "claim": "Fields introduced as required for records involving waits or timeouts are marked optional, while a later rule says `timeout_class` must be retained; the crash-critical flush language also permits 'immediately or on lifecycle transition' without a transaction or durability boundary.",
+      "why_it_matters": "Timeout recovery can lose the classification that selects the recovery path, and a process crash can lose supposedly crash-critical transitions while still satisfying an ambiguous implementation reading.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 855,
+          "line_end": 856,
+          "quote": "Required fields on any receipt or blocked-state record that involves a wait, timeout, scheduled observation, reconnect, or stale observation:\n- `timeout_class?`"
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 866,
+          "line_end": 866,
+          "quote": "- Receipts and blocked states retain `timeout_class` because recovery differs for `hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, and `user-visible wait timer expiry`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 867,
+          "line_end": 868,
+          "quote": "- Active receipt/session lifecycle changes flush immediately or on lifecycle transition, not only on debounce.\n- Blocked episode creation/resolution flushes immediately or on lifecycle transition, not only on debounce."
+        }
+      ],
+      "bounded_remediation_need": "Use conditional schema requirements keyed by temporal state, define closed enums, specify the atomic commit and fsync or equivalent acknowledgement point, and add kill-at-each-boundary recovery tests."
+    },
+    {
+      "candidate_id": "CF-017",
+      "severity": "high",
+      "category": "canonical_store_operations",
+      "claim": "Startup rehydration assumes usable seglog and redb canonical records, while explicit corruption and disk-full recovery is defined only for non-authoritative mirrors; canonical segment corruption, redb corruption, append failure, and restore behavior are not specified in this capsule.",
+      "why_it_matters": "The system has no bounded operational outcome for loss or corruption of its authoritative state: it may start with incomplete projections, overwrite recoverable data, or continue mutations on an untrusted base.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 590,
+          "line_end": 591,
+          "quote": "- Projection freshness is tracked per projection type; stale projections are recomputed at startup.\n- Startup rehydration restores projections from seglog and redb canonical records."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 545,
+          "line_end": 545,
+          "quote": "- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata."
+        }
+      ],
+      "bounded_remediation_need": "Define canonical-store integrity checks, corruption and disk-full states, read-only or fail-stop admission, seglog repair and redb rebuild authority, backup and restore lineage, operator diagnostics, and destructive recovery confirmation tests."
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "claim": "The capsule explicitly prevents prose key templates and deferred rows from being mistaken for implementation authority or a buildability pass.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 506,
+          "line_end": 506,
+          "quote": "They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 510,
+          "line_end": 510,
+          "quote": "`buildability_gate_passed` remains false."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "claim": "Debug mirror authority, failure classification, and repair source are explicit.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 545,
+          "line_end": 546,
+          "quote": "- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.\n- Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "claim": "File-activity claims are explicitly described as warnings and scheduling inputs rather than exclusive locks.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 522,
+          "line_end": 522,
+          "quote": "- `coordination.agent_file_ownership_updated` records file-activity claims for warnings and scheduling inputs; it is not a FileSafe lock or exclusive lease."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "claim": "Raw secrets are prohibited in persisted values, provider payloads require prior scrubbing and separate consent, and Kubernetes Secrets have a strict non-rendering and non-indexing rule.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 508,
+          "line_end": 508,
+          "quote": "Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 744,
+          "line_end": 744,
+          "quote": "Kubernetes `Secret` resources are never rendered back in full, never indexed, and never included in receipts or `/evidence` beyond kind, `/name/namespace`, and redacted status."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "claim": "Evidence has an explicit exactly-one stability classification and a first-class missing-external state.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 726,
+          "line_end": 726,
+          "quote": "Evidence refs declare exactly one stability class: `embedded_snapshot`, `local_blob_ref`, `external_live_ref`, or `external_missing`."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "claim": "Historical focus is not silently changed by tab switching or restart.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 767,
+          "line_end": 767,
+          "quote": "- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-007",
+      "claim": "Retention anchor sources are explicitly family-specific, and file mtime is forbidden as an inferred substitute.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 871,
+          "line_end": 872,
+          "quote": "- Retention-window anchor semantics are explicit per family: receipts use `creation time` unless a stronger legal-hold or preservation rule applies; log tails and watch buffers use `last observation`; explorer snapshots and stale caches use `last access`; run-scoped completion artifacts use `run completion`.\n- Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both `retention_anchor_kind` and `retention_anchor_at_utc`; implementations MUST NOT infer the anchor from file mtime alone."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-008",
+      "claim": "Stale-window behavior separates inspection from mutation and requires refresh or canonical revalidation for named high-risk surfaces.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 876,
+          "line_end": 876,
+          "quote": "Any record family used for `/watch`, follow-mode, log tails, explorer snapshots, stale caches, or remote runtime projections declares `stale_window_policy`, `stale_window_expires_at_utc`, and the post-expiry behavior: `actionable`, `refresh-first`, or `read-only`."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 883,
+          "line_end": 883,
+          "quote": "- Orchestrator lineage/receipt stitching: stale receipt/lineage views remain inspectable, but run-blocking recovery or CTA actions require canonical revalidation before execution."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-009",
+      "claim": "Legacy event values are compatibility input only, and new writers are required to emit the canonical EventRecord shape.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 481,
+          "line_end": 481,
+          "quote": "Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 481,
+          "line_end": 481,
+          "quote": "new writers MUST emit EventRecord."
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U-001",
+      "question": "Do the external storage value registry and its schemas resolve the field-name, cardinality, nullability, transition, and retention details that remain prose-only here?",
+      "reason_unresolved_within_capsule": "The capsule names those files as machine authority but the assignment forbids reading them.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 491,
+          "line_end": 491,
+          "quote": "`Plans/storage_value_registry.json` is the canonical machine-readable registry for storage value families named in this document."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-002",
+      "question": "Do the referenced coordination contracts define heartbeat leases, terminal cleanup, append-to-projection crash recovery, and the exact revision guard?",
+      "reason_unresolved_within_capsule": "Those contracts are referenced but outside the permitted read boundary.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 548,
+          "line_end": 548,
+          "quote": "ContractRef: ContractName:Plans/Contracts_V0.md#Stable-active-agent-coordination-event-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections, SchemaID:pm.storage_value.coordination_event_records.v1"
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-003",
+      "question": "What are the actual default stale-window thresholds, their units, clock basis, and per-surface policy versions?",
+      "reason_unresolved_within_capsule": "The permitted excerpt ends immediately after the sentence introducing the thresholds, so their values are outside this window.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 885,
+          "line_end": 885,
+          "quote": "Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version:"
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-004",
+      "question": "What access-control, encryption-at-rest, multi-user isolation, backup, and key-custody rules protect redb, seglog, local blobs, and masked metadata?",
+      "reason_unresolved_within_capsule": "The scope table identifies stores and secret placement but does not include these operational security controls, and no outside security document may be read.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 749,
+          "line_end": 754,
+          "quote": "| Scope | Store | What belongs here |\n|---|---|---|\n| Secret | OS credential store only | GitHub API tokens, Docker PATs, browser-login derived credentials, registry/helper secrets |\n| Global app state | redb | shared Source Control defaults, Actions defaults, Docker Manager defaults, hidden-subview policy |\n| Project state | redb | selected repo/worktree, panel subviews, pinned workflows, selected runtime/context, requested auth mode, template repo state |\n| Event ledger | seglog | auth validation, blocked/recovery outcomes, workflow actions, publish results, runtime receipts, cross-surface linkage |"
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-005",
+      "question": "How is 'one major release' defined, and are concurrent old and new binaries supported during that interval?",
+      "reason_unresolved_within_capsule": "The phrase supplies a duration label but no release definition, version matrix, or rolling-upgrade rule.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 616,
+          "line_end": 616,
+          "quote": "old schema versions must be supported for at least one major release."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-006",
+      "question": "Is the 32-active-agent limit global or scoped to a project, process, scheduler, installation, or redb database?",
+      "reason_unresolved_within_capsule": "The capacity sentence does not name the counting scope.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 536,
+          "line_end": 536,
+          "quote": "The supported v1 concurrency envelope is up to 32 active agents across multiple worktrees."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-007",
+      "question": "Does another bounded contract define legal-hold release authority and cleanup behavior during logout, unlink, or project deletion?",
+      "reason_unresolved_within_capsule": "Both requirements appear here, but their precedence and release authority are not resolved inside the capsule.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 730,
+          "line_end": 730,
+          "quote": "a hold suspends pruning, cleanup, export garbage-collection, and linked-graph deletion until explicitly released."
+        },
+        {
+          "document_path": "Plans/storage-plan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "Logout, unlink, and project-delete cleanup invalidates non-secret residue"
+        }
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E-001",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 491,
+      "line_end": 491,
+      "quote": "Key templates in this section are inventory and routing aids only; a persisted value family is implementation-authoritative only when the registry row identifies its key shape, value schema id/ref, owner doc, producer, consumers, schema version, encoding, required/optional/nullability fields, replay behavior, migration rule, retention/compaction rule, redaction/no-secret rule, and legacy/canonical crosswalk status."
+    },
+    {
+      "evidence_id": "E-002",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 506,
+      "line_end": 506,
+      "quote": "They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them."
+    },
+    {
+      "evidence_id": "E-003",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 510,
+      "line_end": 510,
+      "quote": "This Tier 0C-2 registry is partial persistence-materialization progress only."
+    },
+    {
+      "evidence_id": "E-004",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 516,
+      "line_end": 516,
+      "quote": "Canonical coordination state is not a JSON file family. It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints."
+    },
+    {
+      "evidence_id": "E-005",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 524,
+      "line_end": 524,
+      "quote": "- `coordination.agent_crashed` records crash, heartbeat-expiry, process-loss, or worktree-loss resolution."
+    },
+    {
+      "evidence_id": "E-006",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 529,
+      "line_end": 529,
+      "quote": "- `coordination_agent_projection.v1:{project_id}:{agent_id}` carries latest lifecycle/status, runtime/platform identity, worktree binding, current operation ref, active file claims, `agent_revision`, and `last_applied_event_id`."
+    },
+    {
+      "evidence_id": "E-007",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 536,
+      "line_end": 536,
+      "quote": "- The supported v1 concurrency envelope is up to 32 active agents across multiple worktrees. Above that bound, schedulers must queue, throttle, or require an explicit higher-capacity contract."
+    },
+    {
+      "evidence_id": "E-008",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 537,
+      "line_end": 537,
+      "quote": "- A coordination mutation is admitted only through the PM-owned append API. Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`; the append and projection result are one logical append/CAS boundary."
+    },
+    {
+      "evidence_id": "E-009",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 538,
+      "line_end": 538,
+      "quote": "- The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction. Readers that require authority must verify checkpoint coverage for the needed seglog sequence."
+    },
+    {
+      "evidence_id": "E-010",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 539,
+      "line_end": 539,
+      "quote": "- Lost updates are prohibited: a stale expected revision returns a coordination conflict diagnostic, and the caller reloads projections before appending a successor event."
+    },
+    {
+      "evidence_id": "E-011",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 545,
+      "line_end": 546,
+      "quote": "- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.\n- Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
+    },
+    {
+      "evidence_id": "E-012",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 554,
+      "line_end": 555,
+      "quote": "- Canonical records are immutable once committed; corrections require a new record with explicit lineage.\n- All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit."
+    },
+    {
+      "evidence_id": "E-013",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 562,
+      "line_end": 564,
+      "quote": "- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.\n- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.\n- Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable."
+    },
+    {
+      "evidence_id": "E-014",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 616,
+      "line_end": 617,
+      "quote": "- Migrations are versioned and idempotent; old schema versions must be supported for at least one major release.\n- Deprecation is explicit and documented in migration notes."
+    },
+    {
+      "evidence_id": "E-015",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 645,
+      "line_end": 647,
+      "quote": "- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`\n- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`\n- source-event refs, concern records, and concern projections are separate structural layers rather than one collapsed object"
+    },
+    {
+      "evidence_id": "E-016",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 700,
+      "line_end": 700,
+      "quote": "Active attention rows carry both `attention_key` and `root_cause_key`. `attention_key` identifies the user-visible attention thread and owning route, while `root_cause_key` identifies the durable causal cluster for `/coalescing`. Repeated events with the same `root_cause_key` update one active alert thread; interruptive notifications retrigger only on severity or state transition."
+    },
+    {
+      "evidence_id": "E-017",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 704,
+      "line_end": 704,
+      "quote": "Delivery classes are `blocking_modal`, `interruptive_toast`, `persistent_banner_or_card`, and `badge_only`; active-project issues may interrupt when severity requires it"
+    },
+    {
+      "evidence_id": "E-018",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 708,
+      "line_end": 708,
+      "quote": "Severity uses `info`, `warning`, `attention_required`, and `blocked` with stable meaning"
+    },
+    {
+      "evidence_id": "E-019",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 710,
+      "line_end": 710,
+      "quote": "generic `resolved` labels do not overwrite the owner-specific `remediation.resolved` contract; that conflict is a real reconciliation item."
+    },
+    {
+      "evidence_id": "E-020",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 712,
+      "line_end": 712,
+      "quote": "Remaining reconciliation seams include `/glossary` ownership, `route-payload` normalization, `attention-item` versus `project-summary` projection ownership, and `/worktree` lifecycle split."
+    },
+    {
+      "evidence_id": "E-021",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 714,
+      "line_end": 714,
+      "quote": "Projection records carry enough freshness and lineage to be trusted after restart: `projection_freshness`, `projection_health`, `last_projected_at_utc`, `source_seq` or an equivalent `/cursor`, `degraded_reason_code`, and `refresh_in_progress`. Mutating actions must read those fields before trusting a derived view."
+    },
+    {
+      "evidence_id": "E-022",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 716,
+      "line_end": 716,
+      "quote": "`Executor_Protocol.md` / `Executor_Protocol` and `orchestrator-subagent-integration.md` / `orchestrator-subagent-integration` must define the mint and `/ownership` rules for `blocked_sequence`"
+    },
+    {
+      "evidence_id": "E-023",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 718,
+      "line_end": 718,
+      "quote": "`base-branch` ownership must be reconciled before Source Control or UI code mint competing base-branch fields."
+    },
+    {
+      "evidence_id": "E-024",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 722,
+      "line_end": 722,
+      "quote": "carry derivation provenance fields: `source_event_ids[]`, `source_event_ids`, `blob_ref?`, `blob_ref`, `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at`."
+    },
+    {
+      "evidence_id": "E-025",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 726,
+      "line_end": 726,
+      "quote": "Evidence refs declare exactly one stability class: `embedded_snapshot`, `local_blob_ref`, `external_live_ref`, or `external_missing`."
+    },
+    {
+      "evidence_id": "E-026",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 730,
+      "line_end": 730,
+      "quote": "`missing_external_refs[]`, `missing_external_refs`"
+    },
+    {
+      "evidence_id": "E-027",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 730,
+      "line_end": 730,
+      "quote": "`hold_state` applies to runs, receipts, evidence, blocked episodes, and linked blobs/artifacts; a hold suspends pruning, cleanup, export garbage-collection, and linked-graph deletion until explicitly released."
+    },
+    {
+      "evidence_id": "E-028",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 736,
+      "line_end": 736,
+      "quote": "Provider-facing `/AI` or `LLM` features must receive only already-scrubbed payload refs and may not treat a local scrub as provider consent."
+    },
+    {
+      "evidence_id": "E-029",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 740,
+      "line_end": 740,
+      "quote": "redaction happens before display persistence as well as before storage."
+    },
+    {
+      "evidence_id": "E-030",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 742,
+      "line_end": 742,
+      "quote": "Local history may keep masked references for joinability, but exports, evidence bundles, and screenshots default to masked values unless the selected export profile explicitly permits fuller disclosure."
+    },
+    {
+      "evidence_id": "E-031",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 742,
+      "line_end": 742,
+      "quote": "Logout, unlink, and project-delete cleanup invalidates non-secret residue such as validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+    },
+    {
+      "evidence_id": "E-032",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 744,
+      "line_end": 744,
+      "quote": "Kubernetes `Secret` resources are never rendered back in full, never indexed, and never included in receipts or `/evidence` beyond kind, `/name/namespace`, and redacted status."
+    },
+    {
+      "evidence_id": "E-033",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 766,
+      "line_end": 769,
+      "quote": "- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run.\n- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`.\n- `projection_freshness` remains the recency axis and `projection_health` remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field.\n- Sensitive action gating evaluates both axes together: stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions."
+    },
+    {
+      "evidence_id": "E-034",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 808,
+      "line_end": 814,
+      "quote": "Storage migrations are forward-only and monotonic.\n\nRequired rules:\n- new fields are additive first; destructive renames require a migration note in the same section that introduces them\n- stable semantic names stay aligned across runtime, persistence, and events unless an explicit translation layer is defined\n- account/profile-backed runtime records and server-profile-backed runtime records stay distinct durable shapes even when surfaced through one GUI ontology\n- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun"
+    },
+    {
+      "evidence_id": "E-035",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 853,
+      "line_end": 853,
+      "quote": "Storage owns durable temporal fields used by receipts, blocked states, stream views, and projections. These fields are crash-critical overrides to debounced persistence where noted."
+    },
+    {
+      "evidence_id": "E-036",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 855,
+      "line_end": 863,
+      "quote": "Required fields on any receipt or blocked-state record that involves a wait, timeout, scheduled observation, reconnect, or stale observation:\n- `timeout_class?`\n- `wait_state_class?`\n- `source_timer_ref?`\n- `scheduled_workflow_ref?`\n- `last_observation_at_utc?`\n- `transitioned_at_utc`\n- `retention_anchor_kind`\n- `retention_anchor_at_utc`"
+    },
+    {
+      "evidence_id": "E-037",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 866,
+      "line_end": 870,
+      "quote": "- Receipts and blocked states retain `timeout_class` because recovery differs for `hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, and `user-visible wait timer expiry`.\n- Active receipt/session lifecycle changes flush immediately or on lifecycle transition, not only on debounce.\n- Blocked episode creation/resolution flushes immediately or on lifecycle transition, not only on debounce.\n- Follow-mode intent flushes immediately when changed and remains separate from source liveness; restored `follow` still requires source revalidation before a new live stream session is claimed.\n- Last inspected run/node/log context, including `/node/log`, flushes immediately when it changes so crash recovery can restore the inspector without inventing continuity."
+    },
+    {
+      "evidence_id": "E-038",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 871,
+      "line_end": 872,
+      "quote": "- Retention-window anchor semantics are explicit per family: receipts use `creation time` unless a stronger legal-hold or preservation rule applies; log tails and watch buffers use `last observation`; explorer snapshots and stale caches use `last access`; run-scoped completion artifacts use `run completion`.\n- Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both `retention_anchor_kind` and `retention_anchor_at_utc`; implementations MUST NOT infer the anchor from file mtime alone."
+    },
+    {
+      "evidence_id": "E-039",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 876,
+      "line_end": 876,
+      "quote": "Storage records freshness policy separately from retention. Any record family used for `/watch`, follow-mode, log tails, explorer snapshots, stale caches, or remote runtime projections declares `stale_window_policy`, `stale_window_expires_at_utc`, and the post-expiry behavior: `actionable`, `refresh-first`, or `read-only`."
+    },
+    {
+      "evidence_id": "E-040",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 883,
+      "line_end": 883,
+      "quote": "- Orchestrator lineage/receipt stitching: stale receipt/lineage views remain inspectable, but run-blocking recovery or CTA actions require canonical revalidation before execution."
+    },
+    {
+      "evidence_id": "E-041",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 885,
+      "line_end": 885,
+      "quote": "Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version:"
+    },
+    {
+      "evidence_id": "E-042",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 481,
+      "line_end": 481,
+      "quote": "Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input. Upgraders map `type` to `event_type`, populate required identity/version/idempotency/redaction/replay/migration fields, and record `migration.compatibility_event_type`; new writers MUST emit EventRecord."
+    },
+    {
+      "evidence_id": "E-043",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 508,
+      "line_end": 508,
+      "quote": "All persisted values require `schema_version`. Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets. Secret-bearing or sensitive data is represented only by redacted refs, masked metadata, hashes, evidence refs, or external custody refs. Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template."
+    },
+    {
+      "evidence_id": "E-044",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 522,
+      "line_end": 522,
+      "quote": "- `coordination.agent_file_ownership_updated` records file-activity claims for warnings and scheduling inputs; it is not a FileSafe lock or exclusive lease."
+    },
+    {
+      "evidence_id": "E-045",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 590,
+      "line_end": 591,
+      "quote": "- Projection freshness is tracked per projection type; stale projections are recomputed at startup.\n- Startup rehydration restores projections from seglog and redb canonical records."
+    }
+  ],
+  "infrastructure_failure": null,
+  "terminal_after_result": true
+}

@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE 11210-11221 >>>
+  - "`reviews`"
+  - "`usage`"
+  - "`lineage`"
+  - "`details`"
+  - "`/subsection`"
+negative_constraints:
+  - "inspector_target must not replace selector identity."
+  - "inspector_target must not become a universal dumping ground for feature-local anchors."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 11222-11621 >>>
+### CV-168 - Route Open Normalization Anti-Fork
+
+```yaml
+plan_unit_id: CV-168
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Settings, object navigation, search/open entry points, chat links, file-tree
+  selections, and wizard/object links normalize to route_target plus OpenFile or
+  OpenSubject; generated, thread-backed, artifact-backed, browser-session,
+  terminal-session, and dev-session reveals must not mint new routing primitives.
+gui_related: false
+gui_classification_reason: This unit defines route/open normalization boundaries.
+split_recommended: true
+depends_on: [CV-031, CV-055, CV-163]
+unblocks: [CV-172, CV-174]
+acceptance_criteria:
+  - "Settings, object navigation, search/open entry points, chat links, file-tree selections, and wizard/object links normalize to route_target plus OpenFile or OpenSubject."
+  - "Generated, thread-backed, artifact-backed, browser-session, terminal-session, and dev-session reveals do not mint new routing primitives."
+  - "OpenSubject owns document/artifact source realization."
+  - "OpenFile owns workspace-file path opens."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_open_primitive_fork
+reasoning_tier: high
+context_scope: route_open_normalization_antifork
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/FileManager.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: route_open_normalization_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+preserved_exact_tokens:
+  - "`OpenFile`"
+  - "`OpenSubject`"
+  - "`/object/navigation`"
+  - "`/thread-backed`"
+  - "`/artifact-backed`"
+  - "browser-session"
+  - "terminal-session"
+  - "dev-session"
+negative_constraints:
+  - "Consumers must not own bespoke open behavior or mint a new route primitive for generated/thread/artifact/browser/terminal/dev reveals."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-169 - Route Resolver Fields And Alias Normalization
+
+```yaml
+plan_unit_id: CV-169
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Route resolver refinement uses resolver_scope, route_recipe_id?, tab_family?,
+  and open_disposition?, with legacy tab-family and open-disposition labels
+  normalized to canonical underscore field names.
+gui_related: false
+gui_classification_reason: This unit defines route resolver fields and alias normalization.
+split_recommended: true
+depends_on: [CV-163]
+unblocks: [CV-170, CV-172]
+acceptance_criteria:
+  - "resolver_scope closes to project, run, thread, and global."
+  - "open_disposition closes to reuse_existing, open_new, split_group, and focus_only."
+  - "route_recipe_id? and tab_family? remain owner-defined refinement fields."
+  - "Legacy tab-family and open-disposition labels normalize to tab_family and open_disposition."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_resolver_alias_drift
+reasoning_tier: high
+context_scope: route_resolver_fields_aliases
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: route_resolver_alias_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+preserved_exact_tokens:
+  - "`resolver_scope`"
+  - "`route_recipe_id?`"
+  - "`tab_family?`"
+  - "`open_disposition?`"
+  - "`tab-family`"
+  - "`open-disposition`"
+compatibility_only_notes:
+  - "Legacy labels tab-family and open-disposition map to tab_family and open_disposition."
+negative_constraints:
+  - "Producers must use canonical underscore field names in payloads."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-170 - Route Validity InvalidRoute Reject Rules
+
+```yaml
+plan_unit_id: CV-170
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Routes are rejected as invalid_route when target_kind, selector,
+  resolver_scope, tab_family, or open_disposition is invalid for the destination
+  surface; resolver scope is explicit where object kinds can exist in multiple
+  runs, threads, or projects.
+gui_related: false
+gui_classification_reason: This unit defines route validation and reject rules.
+split_recommended: true
+depends_on: [CV-054, CV-169]
+unblocks: [CV-171, CV-172]
+acceptance_criteria:
+  - "Invalid destination, selector, resolver scope, tab family, or open disposition combinations are rejected as invalid_route."
+  - "Resolver scope is explicit when the same object_kind can exist in more than one run, thread, or project."
+  - "tab_id is rejected as shell-local state when it is not valid for the destination surface."
+  - "tab_id does not replace target_kind or inspector_target."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_invalid_combo_acceptance
+reasoning_tier: high
+context_scope: route_validity_reject_rules
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: route_validity_reject_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+preserved_exact_tokens:
+  - "`invalid_route`"
+  - "`resolver_scope`"
+  - "`tab_id`"
+  - "`target_kind`"
+  - "`inspector_target`"
+negative_constraints:
+  - "Invalid destination/scope combinations must not be accepted as valid routes."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-171 - Scoped Resolution Examples And Object Rules
+
+```yaml
+plan_unit_id: CV-171
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Route examples and scoped-resolution rules are normative selector refinements
+  owned by route_target and OpenSubject; chat search, wizard resume, blocked
+  episode, scheduler pass, safe point, remediation, and attempt selectors retain
+  their specified object IDs and focused_run_id requirements.
+gui_related: false
+gui_classification_reason: This unit defines route selector examples and scoped object rules.
+split_recommended: true
+depends_on: [CV-164, CV-170]
+unblocks: []
+acceptance_criteria:
+  - "A chat search result uses object_kind = message with object_id = <message_id>."
+  - "A wizard resume uses object_kind = wizard with object_id = <wizard_id>."
+  - "blocked_episode, scheduler_pass, safe_point, remediation, and attempt keep their specified object_id forms and focused_run_id requirements."
+  - "route_target owns destination, scope, selector, and resolver validation while OpenSubject owns identity-native source opening."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: scoped_route_rule_owner_drift
+reasoning_tier: high
+context_scope: scoped_resolution_examples_object_rules
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: scoped_route_resolution_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+preserved_exact_tokens:
+  - "object_kind = message"
+  - "object_kind = wizard"
+  - "`blocked_sequence`"
+  - "`scheduler_pass_id`"
+  - "`safe_point_id`"
+  - "`remediation_root_id`"
+  - "`attempt_id`"
+negative_constraints:
+  - "Selector precedence, reject rules, route examples, and scoped-resolution rules must not move to consumer-owned behavior."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-172 - Route Reuse And Extra Args Prohibition
+
+```yaml
+plan_unit_id: CV-172
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Route reuse is allowed only when open_disposition permits reuse and the
+  destination still reveals the requested object, scope, and inspector target;
+  OpenFile reuse is one-tab-per-path-per-group, and producers may not add a
+  generic extra-args bag to bypass validation.
+gui_related: false
+gui_classification_reason: This unit defines route reuse and field validation constraints.
+split_recommended: true
+depends_on: [CV-168, CV-169, CV-170]
+unblocks: []
+acceptance_criteria:
+  - "Route activation may reuse an existing destination only when open_disposition permits reuse."
+  - "The existing destination must still reveal the requested object, scope, and inspector target."
+  - "OpenFile reuse is one-tab-per-path-per-group."
+  - "Opening the same path in another group requires explicit multi-group disposition."
+  - "Route producers do not add generic extra-args bags to bypass field validation."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_extra_args_validation_bypass
+reasoning_tier: high
+context_scope: route_reuse_extra_args_prohibition
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: route_reuse_validation_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+preserved_exact_tokens:
+  - "`reuse_existing`"
+  - "`multi-group`"
+  - "`open_disposition`"
+  - "generic extra-args bag"
+negative_constraints:
+  - "Route producers must not add a generic extra-args bag to bypass field validation."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-173 - Debug Target Kind Classification Enum
+
+```yaml
+plan_unit_id: CV-173
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  debug_target_kind is the canonical investigation-target classification for
+  Debug Mode, naming the operational class under investigation and closing to
+  dev_session, browser_target, dap_session, agent_session, and imported_bundle.
+gui_related: false
+gui_classification_reason: This unit defines debug target classification semantics.
+split_recommended: true
+depends_on: [CV-123, CV-163]
+unblocks: [CV-174]
+acceptance_criteria:
+  - "debug_target_kind names the operational class being investigated."
+  - "debug_target_kind closes to dev_session, browser_target, dap_session, agent_session, and imported_bundle."
+  - "debug_target_kind does not replace route_target, OpenSubject, or stored session identities."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_target_kind_route_replacement
+reasoning_tier: high
+context_scope: debug_target_kind_classification
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_target_kind_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0061
+preserved_exact_tokens:
+  - "`debug_target_kind`"
+  - "Debug Mode"
+  - "`dev_session`"
+  - "`browser_target`"
+  - "`dap_session`"
+  - "`agent_session`"
+  - "`imported_bundle`"
+  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+negative_constraints:
+  - "debug_target_kind does not replace route_target, OpenSubject, or stored session identities."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-174 - Debug Imported Bundle And Display Boundary
+
+```yaml
+plan_unit_id: CV-174
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Live or resumable debug targets are PM-controlled target classes, while
+  imported_bundle identifies external evidence that can be inspected and
+  reasoned over without pretending PM can still drive the original runtime
+  target; durable routing and opening continue through canonical route/open
+  contracts.
+gui_related: false
+gui_classification_reason: This unit defines debug imported bundle and display boundaries.
+split_recommended: true
+depends_on: [CV-168, CV-173]
+unblocks: []
+acceptance_criteria:
+  - "dev_session, browser_target, dap_session, and agent_session identify live or resumable PM-controlled targets."
+  - "imported_bundle identifies an external investigation bundle."
+  - "Consumers may display requested and effective target details."
+  - "Durable routing and opening continue through canonical route/open contracts."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_imported_bundle_live_control_confusion
+reasoning_tier: high
+context_scope: debug_imported_bundle_display_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: debug_imported_bundle_boundary_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0061
+preserved_exact_tokens:
+  - "`imported_bundle`"
+  - "requested"
+  - "effective"
+  - "route/open contracts"
+negative_constraints:
+  - "imported_bundle must not pretend PM can still drive the original runtime target."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-175 - OpenSubject Required Fields And Intents
+
+```yaml
+plan_unit_id: CV-175
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  OpenSubject is the canonical identity-native source-open contract with
+  required subject_id and open_intent fields; open_intent is closed to
+  open_source, open_preview, and open_review.
+gui_related: false
+gui_classification_reason: This unit defines source-open contract fields rather than visual presentation.
+split_recommended: false
+depends_on: [CV-168]
+unblocks: [CV-176, CV-177]
+acceptance_criteria:
+  - "OpenSubject requires subject_id and open_intent."
+  - "open_intent accepts only open_source, open_preview, and open_review."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: open_subject_field_drift
+reasoning_tier: high
+context_scope: open_subject_required_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+node_compile_hint:
+  mode: open_subject_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0062
+preserved_exact_tokens:
+  - "`OpenSubject`"
+  - "`subject_id`"
+  - "`open_intent`"
+  - "`open_source`"
+  - "`open_preview`"
+  - "`open_review`"
+negative_constraints: []
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+```
+
+
+<<< CONTEXT_AFTER 11622-11633 >>>
+### CV-176 - OpenSubject Resolution And Route Boundary
+
+```yaml
+plan_unit_id: CV-176
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  OpenSubject resolves canonical identity to OpenFile or to a transient
+  generated://<artifact_id> buffer, while terminal, dev-session, and
+  browser-session reveals normalize through route_target instead of overloading
+  OpenSubject.

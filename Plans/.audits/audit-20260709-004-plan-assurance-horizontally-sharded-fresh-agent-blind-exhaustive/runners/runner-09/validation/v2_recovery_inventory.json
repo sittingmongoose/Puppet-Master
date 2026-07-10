@@ -1,0 +1,27 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-09",
+  "authority_version": 2,
+  "authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "frozen_validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+  "initial_snapshot_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+  "initial_global_credited_assignments_preserved": 17,
+  "initial_runner_credited_assignment_ids_preserved": [
+    "A004-000015-EXACT-WIN-18D335791D83-0001",
+    "A004-000035-EXACT-WIN-9A83204C2DCD-0002",
+    "A004-000045-EXACT-WIN-CC3C85D86FBD-0001",
+    "A004-000061-EXACT-WIN-74C788D8A63C-0004"
+  ],
+  "retry_required_assignment_ids": [
+    "A004-000009-EXACT-WIN-C45446C7AC96-0004",
+    "A004-000059-EXACT-WIN-E36B3E5CECA0-0001",
+    "A004-000081-EXACT-WIN-19B62D73B9EF-0003",
+    "A004-000089-EXACT-WIN-30EBABB890C6-0002",
+    "A004-000103-EXACT-WIN-AF7ED3DB4476-0001"
+  ],
+  "localized_receipt_errors_for_runner": [],
+  "immutable_failure_receipts_added": 5,
+  "raw_results_modified": 0,
+  "prior_receipts_modified": 0,
+  "recorded_at": "2026-07-10T03:43:00Z"
+}

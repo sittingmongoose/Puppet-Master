@@ -1,0 +1,62 @@
+{
+  "agent_instance_id": "019f4a1e-3645-7201-b41b-3f1a33f7d01b",
+  "agent_name": "a004_r10_adv_000046_2ad84c6e",
+  "agent_nickname": "Darwin",
+  "agent_path": "/root/a004_r10_adv_000046_2ad84c6e",
+  "agent_thread_id": "019f4a1e-3645-7201-b41b-3f1a33f7d01b",
+  "assignment_id": "A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001",
+  "assignment_seq": 46,
+  "attempt": 2,
+  "attempt_id": "attempt-2",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "capsule_bytes": 1604,
+  "capsule_package_bytes": 38493,
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001.json",
+  "capsule_sha256": "e82333ef3492807481f57870f7006a90f579a9257364aa2870236d022a6fc613",
+  "completed_at": "2026-07-10T03:49:24.380Z",
+  "context_ranges": [
+    [
+      345,
+      356
+    ]
+  ],
+  "core_range": [
+    1,
+    344
+  ],
+  "coverage_credit": 0,
+  "created_at": "2026-07-10T03:42:01.829Z",
+  "dispatch_receipt_ref": null,
+  "dispatch_receipt_sha256": null,
+  "dispatched_at": null,
+  "doc_id": "DOC-CC3C85D86FBD",
+  "document_path": "Plans/UI_Command_Catalog.md",
+  "fork_turns": "none",
+  "model": "gpt-5.6-sol",
+  "no_followup_reuse": true,
+  "prior_substantive_assignment_count": 0,
+  "reasoning_effort": "ultra",
+  "receipt_schema": "a004.completed_attempt_receipt.v2",
+  "receipt_status": "quarantined",
+  "recorded_at": "2026-07-10T03:51:48.543989Z",
+  "result_bytes": 28984,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/raw_results/failed_attempts/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001__attempt-0002__019f4a1e-3645-7201-b41b-3f1a33f7d01b.json",
+  "result_sha256": "ea4ed445110d22d550c2adc6738471c1063fc0b434168d55285d336db5e62738",
+  "role": "adversarial_negative_space",
+  "runner_id": "runner-10",
+  "runner_thread_id": "019f49e2-18cb-7101-b7cb-0027862d9fcb",
+  "session_ref": "/Users/jaredsmacbookair/.codex/sessions/2026/07/09/rollout-2026-07-09T23-42-01-019f4a1e-3645-7201-b41b-3f1a33f7d01b.jsonl",
+  "source_excerpt_bytes": 36889,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-CC3C85D86FBD-0001.txt",
+  "source_excerpt_sha256": "bc054ae9b6097fd2f1558d9c6958ff8077d778938d697860d7c27cadac7f3bea",
+  "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7",
+  "terminal_after_result": true,
+  "token_estimate": 11873,
+  "validation_errors": [
+    "forced_zero_credit:missing_immutable_prelaunch_dispatch_receipt_v2_pre_notice_inflight"
+  ],
+  "validation_passed": false,
+  "validation_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/validation/failed_attempts/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001__attempt-0002__019f4a1e-3645-7201-b41b-3f1a33f7d01b.json",
+  "validation_sha256": "c4245c9494b51956d7b8542284257040eef6f9b3495d398f497bb8eeb7595bf5",
+  "window_id": "WIN-CC3C85D86FBD-0001"
+}

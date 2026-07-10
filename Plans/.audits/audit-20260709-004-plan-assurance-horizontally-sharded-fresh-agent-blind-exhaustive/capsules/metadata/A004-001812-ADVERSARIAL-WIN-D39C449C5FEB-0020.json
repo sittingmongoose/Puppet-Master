@@ -1,0 +1,43 @@
+{
+  "assignment_id": "A004-001812-ADVERSARIAL-WIN-D39C449C5FEB-0020",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "blindness": {
+    "other_reviewer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_windows": "forbidden"
+  },
+  "context_ranges": [
+    [
+      6697,
+      6708
+    ],
+    [
+      7056,
+      7067
+    ]
+  ],
+  "core_range": [
+    6709,
+    7055
+  ],
+  "core_sha256": "7af584157bee7a765a0ed110945d0318b5e389cbdca5d8290038a5db07816a30",
+  "doc_id": "DOC-D39C449C5FEB",
+  "document_path": "Plans/Models_System.md",
+  "output_required": [
+    "observations",
+    "candidate_findings",
+    "explicit_non_gaps",
+    "unknowns",
+    "exact_evidence_refs"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Independently attack negative space in only this capsule: missing callers, states, transitions, authority, failure/recovery, security/privacy, misleading GUI truth, propagation, operations, scale, compatibility, and test oracles. Do not see or infer the exact reviewer's conclusions.",
+  "role_key": "adversarial",
+  "runner_id": "runner-08",
+  "runner_thread_id": "019f49e2-14f8-7af2-afa3-b2394de435a0",
+  "source_excerpt_bytes": 15609,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-D39C449C5FEB-0020.txt",
+  "source_excerpt_sha256": "b32f645be262ab1e0374ce6f0526df9db3f7573d9e7de8f3991155dabe98d94c",
+  "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b",
+  "window_id": "WIN-D39C449C5FEB-0020"
+}

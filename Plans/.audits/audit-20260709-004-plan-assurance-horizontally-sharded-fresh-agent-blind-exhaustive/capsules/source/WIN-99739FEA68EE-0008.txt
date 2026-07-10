@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 2756-2767 >>>
+FileSafe event payloads must remain rich enough for both analytics and runtime recovery surfaces.
+
+Minimum fields:
+- `guard_type`
+- `pattern_id` or pattern name
+- `timestamp`
+- `command_or_path_summary`
+- `recovery_allowed`
+- `allowed_action_ids[]`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+### 4. Safe-point interaction
+
+<<< AUTHORITATIVE_CORE 2768-3125 >>>
+
+
+A FileSafe block that occurs before execution does not consume a mutation safe point and does not require rollback.
+
+### 5. Acceptance criteria
+
+- FileSafe blocks appear as blocked outcomes with explicit reason codes.
+- FileSafe blocks are not auto-retried.
+- Recovery-capable FileSafe blocks present exact allowed actions.
+- FileSafe analytics data remains usable after runtime integration.
+## FileSafe Blocked Outcome Alignment Addendum (2026-03-09)
+
+FileSafe denials that stop execution are blocked outcomes, not generic execution failures.
+
+### Required behavior
+- classify as `blocked_reason_code = filesafe_blocked`
+- preserve completed local work when safe to do so
+- emit allowed recovery actions such as inspect denial, change policy, or rerun
+- require safe-point restore before retry when policy says the workspace must be rolled back to a known baseline
+
+FileSafe must not silently convert a denial into a retryable transient error.
+## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)
+
+
+This section defines fileSafe Action Mapping and Persistence.
+
+### Shared runtime fields
+FileSafe blocked payloads MUST use the canonical blocked payload:
+- `blocked_reason_code = filesafe_blocked`
+- `allowed_action_ids[]`
+- `preserved_local_work`
+- `requires_safe_point_restore?`
+- `detail_ref?`
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Shared vs local actions
+Shared runtime action IDs remain the canonical recovery families. Labels such as `Approve and add to allowlist` and `Edit and retry` are FileSafe-local affordances layered on top of shared actions and metadata. They are not new shared runtime action IDs unless the global action enum explicitly adopts them.
+
+Required rules:
+- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
+- FileSafe blocked-action recovery maps to `approve_once`, `filesafe_add_rule`, and `open_filesafe_settings` when the current surface can safely offer them; user-facing copy may say approve once/add rule/open FileSafe settings, but the runtime payload keeps the canonical action IDs.
+- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields
+- child runs blocked by FileSafe remain child runs with canonical lineage and status history
+- rerun and restore behavior must preserve canonical child/run/worktree identities
+
+### Restore override
+`filesafe_blocked` is not retryable by default.
+
+If a mutation-capable attempt performed local changes before the FileSafe block was finalized, the blocked projection MUST expose:
+- `preserved_local_work = true`
+- `requires_safe_point_restore = true`
+
+When `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`.
+
+### Persistence
+A FileSafe block is a persistent blocked runtime episode until resolved or superseded.
+
+Context-shaping and handoff rule:
+- FileSafe does not define alternate child continuity or alternate memory behavior.
+- any rerun or restore after FileSafe denial uses canonical handoff reconstruction.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/FileSafe.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### F2-002 - FileSafe Document Authority And Status
+
+```yaml
+plan_unit_id: F2-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe.md is a Plan Document Only implementation plan for Puppet Master with CRITICAL
+  priority, deterministic defaults under Decision_Policy, and no open questions while retaining
+  FileSafe as the source for the described safety policy.
+gui_related: false
+gui_classification_reason: >-
+  This unit records document governance and status rather than GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Guard initialization failure emits a typed startup/runtime diagnostic and blocks affected command/file execution instead of disabling the guard."
+- "Missing or empty command/path allowlists and missing destructive baselines fail closed regardless of strict_mode."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_document_authority_and_status
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0001"
+preserved_exact_tokens:
+- "FileSafe -- Implementation Plan"
+- "Puppet Master"
+- "No open questions"
+- "deterministic defaults"
+- "CRITICAL"
+- "Plan Document Only"
+- "Plans/DRY_Rules.md"
+- "Plans/Contracts_V0.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FileSafe.md follows DRY_Rules and references SSOT contracts in Contracts_V0."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-003 - DRY Implementation Compliance
+
+```yaml
+plan_unit_id: F2-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe implementation work must follow DRY principles by tagging reusable functions, data
+  structures, and helpers, using platform_specs functions for platform data instead of hardcoding,
+  and checking the GUI widget catalog before creating new UI widgets.
+gui_related: true
+gui_classification_reason: >-
+  The span includes the user-visible docs/gui-widget-catalog.md UI widget creation rule.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Approving git status does not approve git status && rm -rf /."
+- "Approved-command UI stores exact normalized command identities rather than prefixes or shell fragments."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: dry_implementation_compliance
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0002"
+preserved_exact_tokens:
+- "// DRY:FN:<name>"
+- "// DRY:DATA:<name>"
+- "// DRY:HELPER:<name>"
+- "platform_specs::"
+- "docs/gui-widget-catalog.md"
+- "never hardcode"
+- "All code in this plan MUST follow DRY principles."
+negative_constraints:
+- "Platform data must use platform_specs:: functions and must not be hardcoded."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-004 - Rewrite Era FileSafe Authority Boundary
+
+```yaml
+plan_unit_id: F2-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  In the rewrite, FileSafe remains authoritative only for safety policy and is implemented
+  primarily through the central tool registry and policy engine, the patch/apply/verify/rollback
+  pipeline, and canonical seglog guard events while Prompt Pipeline owns context compilation and
+  related heuristics.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines safety-policy and runtime ownership boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: rewrite_era_filesafe_authority_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0003"
+preserved_exact_tokens:
+- "FileSafe safety policy only"
+- "central tool registry + policy engine"
+- "permissions, validation, and normalized tool outcomes"
+- "patch/apply/verify/rollback pipeline"
+- "canonical seglog event stream"
+- "Context compilation"
+- "Prompt_Pipeline.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Prompt_Pipeline.md owns context compilation, delta-context selection, cache heuristics, marker files, skill bundling, and compaction strategy."
+- "FileSafe may reference adjacent flows only to define where safety checks run against compiled output."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-005 - Guard Ready Adjacent Inputs And Fail Closed Seams
+
+```yaml
+plan_unit_id: F2-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe consumes adjacent owner-doc contracts only as guard-visible inputs for mutation
+  authorization, rollback, reveal/open routing, runtime dispatch, recovery, or event logging, and
+  it fails closed when required inputs are absent or stale while packet-level elaboration remains
+  non-authoritative until owners expose guard-ready contracts.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines guard input contracts and fail-closed seams.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: guard_ready_adjacent_inputs_and_fail_closed_seams
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0003"
+preserved_exact_tokens:
+- "FileManager shared-buffer /file-tree behavior"
+- "preview /file-type behavior"
+- "/cache/offline/LSP/degraded-state"
+- "/watchers/degraded-state"
+- "/snapshot"
+- "/trust/fallback"
+- "Guard-visible inputs"
+- "/open/reveal/save"
+- "/dirty/recovery/on-disk"
+- "/undo"
+- "/redo"
+- "/symlink/case-sensitivity"
+- "/IME/accessibility"
+- "/browser/session"
+- "/webview"
+- "search-in-diff"
+- "heat-map"
+- "/change-marker"
+negative_constraints:
+- "FileSafe must fail closed when guard-visible inputs are absent or stale."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "External implementation-reference findings do not create FileSafe ownership over FileManager, FinalGUI, preview/browser, terminal, platform-adapter, diff/review, SSH/remote, preview/media, drag/drop, or file explorer correctness."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-006 - Portable Rust And Slint Guard Boundary
+
+```yaml
+plan_unit_id: F2-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe implementation guidance keeps a hard boundary between portable product ideas and
+  implementation patterns tied to Electron or DOM-heavy stacks so guard logic, canonicalization,
+  mutation safety, durability, atomic write, optimistic concurrency, and event logging remain safe
+  for Rust + Slint across macOS, Linux, and Windows.
+gui_related: false
+gui_classification_reason: >-
+  This unit constrains implementation portability rather than visual behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: portable_rust_and_slint_guard_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0003"
+preserved_exact_tokens:
+- "Rust + Slint"
+- "macOS/Linux/Windows"
+- "DOM process"
+- "browser storage"
+- "Electron-only lifecycle behavior"
+- "Guard logic"
+- "canonicalization"
+- "mutation-safety"
+- "/durability"
+- "atomic write"
+- "optimistic concurrency"
+- "event logging"
+negative_constraints:
+- "FileSafe guard behavior must not depend on DOM process, browser storage, or Electron-only lifecycle behavior."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 3126-3137 >>>
+### F2-007 - Command And Route Input Normalization
+
+```yaml
+plan_unit_id: F2-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Cross-surface commands and routing/open seams are guard-visible only when arguments derive from
+  shared route schemas and owner-doc contracts; route_target must not carry source-buffer
+  realization details, file/evidence and attempt/generated surfaces must expose first-class
+  identity, and open-by-identity plus wiring normalization must come from owner docs.

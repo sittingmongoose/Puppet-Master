@@ -1,0 +1,402 @@
+{
+  "agent_id": "/root/window_worker_c",
+  "ambiguities": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:276",
+        "Plans/00-plans-index.md:322-330",
+        "Plans/00-plans-index.md:362-364",
+        "Plans/00-plans-index.md:402-406"
+      ],
+      "id": "AM-001",
+      "statement": "ContractRef membership inconsistently represents owners, consumers, mandatory reconciliation docs, and historical lineage."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:265",
+        "Plans/00-plans-index.md:267",
+        "Plans/00-plans-index.md:274"
+      ],
+      "id": "AM-002",
+      "statement": "Approve And Build sounds executable although the same map prohibits runtime launch and build artifacts."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:256",
+        "Plans/00-plans-index.md:274",
+        "Plans/00-plans-index.md:290"
+      ],
+      "id": "AM-003",
+      "statement": "Live Plans stabilization and the distinction between index-only refresh and governance sealing lack one explicit actor/state oracle."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:298",
+        "Plans/00-plans-index.md:319-320"
+      ],
+      "id": "AM-004",
+      "statement": "Instant Grep runtime-field promotion and browser signal_confidence schema ownership lack a named owner and promotion/registration oracle."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:334-338"
+      ],
+      "id": "AM-006",
+      "statement": "Phase D uses an inconsistent Contracts_V0 path form, relies on truly necessary, and provides no promotion oracle from blocked provider scope to ready scope."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:384"
+      ],
+      "id": "AM-009",
+      "statement": "The threshold that promotes Contracts_V0 from MUST VERIFY to MUST RECONCILE is qualitative."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:386-388"
+      ],
+      "id": "AM-010",
+      "statement": "Worktree visibility has several allowed surfaces but no trigger or surface precedence, while handoff identity currentness is unstated."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:354-358",
+        "Plans/00-plans-index.md:404"
+      ],
+      "id": "AM-011",
+      "statement": "Debug references an unidentified earlier minimum checklist, and terminal canonical behavior is jointly owned without an exact per-field partition."
+    }
+  ],
+  "assignment_id": "ASG-WIN-00-plans-index-0003-EXACT-001",
+  "builder_discretion": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:386-388"
+      ],
+      "id": "BD-001",
+      "statement": "Choose among workspace, file header, Source Control strip, editor status, or breadcrumb for conditional worktree visibility, without repeating it on every row/tab."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:336",
+        "Plans/00-plans-index.md:378"
+      ],
+      "id": "BD-002",
+      "statement": "Additive command/GitHub deepening and minimal Contracts V0 examples are permitted when judged necessary, subject to retirement and phase-order constraints."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:300"
+      ],
+      "id": "BD-003",
+      "statement": "Chat and audit consumers may decide whether to raise clarification, but the canonical owner map controls the final target."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:274",
+        "Plans/00-plans-index.md:290"
+      ],
+      "id": "BD-004",
+      "statement": "Builders determine when live Plans are stable enough for an allowed index refresh, while broader governance and node/build outputs remain prohibited."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:384"
+      ],
+      "id": "BD-005",
+      "statement": "Builders determine when remote identity, freshness, health, or write-availability fields have crossed from prose into persisted/event canon, triggering Contracts V0 reconciliation."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:338"
+      ],
+      "id": "BD-006",
+      "statement": "Provider taxonomy, routing internals, settings layout, and ordering UX remain intentionally outside ready-now implementation scope."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:268",
+        "Plans/00-plans-index.md:276",
+        "Plans/00-plans-index.md:322-330",
+        "Plans/00-plans-index.md:360-364",
+        "Plans/00-plans-index.md:402-406"
+      ],
+      "finding": "ContractRef-driven discovery may include historical lineage, omit mandatory terminal/Debug docs, and miss the instantiated PRD runtime JSON while retaining only its schema.",
+      "id": "CF-001",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:265",
+        "Plans/00-plans-index.md:267",
+        "Plans/00-plans-index.md:274"
+      ],
+      "finding": "Approve And Build may be implemented as launch authority despite the explicit non-executable compile boundary.",
+      "id": "CF-002",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:256",
+        "Plans/00-plans-index.md:274",
+        "Plans/00-plans-index.md:290"
+      ],
+      "finding": "Index-only and governance-seal phase language may permit premature refresh of Spec Lock, shards, evidence, graph, or auto_decisions.",
+      "id": "CF-003",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:298",
+        "Plans/00-plans-index.md:304-308",
+        "Plans/00-plans-index.md:319-320"
+      ],
+      "finding": "Instant Grep runtime fields and signal_confidence lack explicit schema/registration ownership and promotion rules.",
+      "id": "CF-005",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:346-348"
+      ],
+      "finding": "Approval mapping lacks failure, ambiguity, replay, and duplicate-resolution behavior before runtime mutation.",
+      "id": "CF-006",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:382"
+      ],
+      "finding": "Browser cleanup relies on unstable raw line-number cues in other documents.",
+      "id": "CF-007",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:388"
+      ],
+      "finding": "Source Control handoff preserves repo/worktree identifiers but lacks a currentness and failure contract.",
+      "id": "CF-008",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:336-338"
+      ],
+      "finding": "Ready-versus-blocked provider scope and discretionary phase-D additions lack deterministic advancement criteria.",
+      "id": "CF-010",
+      "lead_only": true,
+      "severity": "medium"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "PRD Builder owns intake through Approved PRD Pack and the explicit Planning Wizard handoff; Planning Wizard owns PlanningRun, topic work, conversion/audit, ApprovedPlanPack, compile readiness, GUI states, and Approve And Build.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:263-265"
+      ],
+      "id": "CL-001"
+    },
+    {
+      "claim": "Testing and downstream PlanCompile, Executor, WorkNodeRecord, activation, receipt, and Goal Runtime contracts have named owners and strict JSON/schema scenarios, but this compile enables no runtime/build artifacts; legacy wizard names remain compatibility-only and governance outputs require their designated later phases.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:266-276"
+      ],
+      "id": "CL-002"
+    },
+    {
+      "claim": "Goal_Runtime_System owns durable native Goal Mode behavior, scheduling, child goals, write authority, verification, completion receipts, and evidence; chat and GUI docs own visible controls and model placement, while contract, persistence, permission, artifact, model/account/provider, ledger, and PlanUnit owners supply registered data without creating nodes.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:278-292"
+      ],
+      "id": "CL-004"
+    },
+    {
+      "claim": "Instant Grep authority is split among Tools for query/fallback semantics and index-used events, storage for formats/publication/dirty-layer recovery, Final GUI for indexing visibility, and GitHub Integration for remote verification and no-silent-local-fallback behavior; ambiguous consumers defer to the canonical owner map.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:294-310"
+      ],
+      "id": "CL-006"
+    },
+    {
+      "claim": "Section 15 is browser behavior SSOT, rewrite-tie-in-memo owns rewrite constraints, GUI/file/command docs consume placement and actions, signal_confidence has four locked values, and stale browser engines, hosts, permission matrices, and historical newfeatures ownership are retired.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:313-330"
+      ],
+      "id": "CL-007"
+    },
+    {
+      "claim": "The index is not slash-command, permission, GUI-presentation, or persisted-payload SSOT; reconciliation is ordered across command, tool/permission, GUI, and persistence owners, with ready-now web scope separated from blocked provider-runtime decisions.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:332-342"
+      ],
+      "id": "CL-008"
+    },
+    {
+      "claim": "Artifact, persistence, shared event, tool policy, HITL UX, and permission authority are split; request_id must resolve to canonical blocked_sequence before mutation, and new approvals use scoped blocked_sequence, approval_scope_key, and ordered allowed_action_ids without generic widening.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:344-350"
+      ],
+      "id": "CL-009"
+    },
+    {
+      "claim": "Terminal behavior, persistence, GUI, consumers, commands, events, and routing have named owners; omitting UI Command Catalog, Contracts V0, or Wiring Matrix makes a terminal packet non-buildable.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:352-364"
+      ],
+      "id": "CL-010"
+    },
+    {
+      "claim": "File-manager/editor reconciliation fixes owner boundaries for remote retry, LSP, OpenFile/shared buffers, persistence, GUI, command wiring, browser cleanup, remote contract promotion, and repo/worktree handoff; repo_id and worktree_id must survive Source Control handoff while FileManager does not own worktree lifecycle.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:366-390"
+      ],
+      "id": "CL-011"
+    },
+    {
+      "claim": "Debug Mode authority is split across chat UI, runtime/permission/storage, browser automation, artifacts/contracts/prompts/tools, and consumers; two named document trios are mandatory packet-integrity gates.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:392-406"
+      ],
+      "id": "CL-012"
+    }
+  ],
+  "core_sha256_computed": "aae7f110df0d43a49dd44b87c313f575f103c5f57b846e38832c2c3830c13e3c",
+  "core_sha256_expected": "aae7f110df0d43a49dd44b87c313f575f103c5f57b846e38832c2c3830c13e3c",
+  "cross_window_seams": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:245-258",
+        "Plans/00-plans-index.md:263-292"
+      ],
+      "id": "SEAM-001",
+      "statement": "Preceding context establishes compile/testing/executor/runtime/model/GUI/worktree/receipt/ledger ownership and the non-executable governance boundary that must align with the core PRD and Goal maps."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:313-390",
+        "Plans/00-plans-index.md:408-425"
+      ],
+      "id": "SEAM-002",
+      "statement": "Following context reinforces Section 15, Final GUI, FileManager, storage, retired Chain Wizard, Planning Ledger, and Plan Document roles consumed by the core ownership splits."
+    },
+    {
+      "evidence_refs": [
+        "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/window_context_capsules.jsonl:5"
+      ],
+      "id": "SEAM-003",
+      "statement": "The capsule names adjacent windows WIN-00-plans-index-0002 and WIN-00-plans-index-0004; neither was inspected."
+    }
+  ],
+  "document_path": "Plans/00-plans-index.md",
+  "evidence_refs": {
+    "capsule": "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/window_context_capsules.jsonl:5",
+    "core": "Plans/00-plans-index.md:263-407",
+    "following_context": "Plans/00-plans-index.md:408-425",
+    "preceding_context": "Plans/00-plans-index.md:245-262",
+    "protocol": "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/WINDOW_REVIEW_PROTOCOL.md"
+  },
+  "invalid_for_assurance_coverage": true,
+  "invalid_reason": "Substantive reviewer agent identities were reused across successive window/role assignments, violating the Fresh Agent Isolation Protocol.",
+  "negative_space_observations": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:267",
+        "Plans/00-plans-index.md:274",
+        "Plans/00-plans-index.md:288-290"
+      ],
+      "id": "NS-001",
+      "statement": "The compile descriptions prohibit runtime launch, runtime artifacts, WorkNodes, NodeSeeds, executable queues, manifests, GoalRuns, implementation/build tasks, dispatch, and Orchestrator builds."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:272",
+        "Plans/00-plans-index.md:324-328",
+        "Plans/00-plans-index.md:348"
+      ],
+      "id": "NS-002",
+      "statement": "Legacy wizard names, historical browser material, stale engines/hosts/permission models, allowed_actions, and generic approval widening cannot become peer canon."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:298",
+        "Plans/00-plans-index.md:334",
+        "Plans/00-plans-index.md:356",
+        "Plans/00-plans-index.md:386"
+      ],
+      "id": "NS-003",
+      "statement": "The index and consumer docs must not re-own schemas, permission rules, presentation payloads, freshness/fallback behavior, persistence, or worktree lifecycle."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:264-267"
+      ],
+      "id": "NS-004",
+      "statement": "No retry, cancel, resume, timeout, duplicate-invocation, or idempotency behavior is stated for the two planning approval entrypoints."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:346-348"
+      ],
+      "id": "NS-005",
+      "statement": "No missing, stale, ambiguous, duplicate, or replay behavior is stated for request_id-to-blocked_sequence resolution."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:320",
+        "Plans/00-plans-index.md:326",
+        "Plans/00-plans-index.md:384"
+      ],
+      "id": "NS-006",
+      "statement": "No unknown-value, versioning, migration, or downgrade behavior is stated for signal_confidence, browser capability fields, or promoted remote identity/health fields."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:266"
+      ],
+      "id": "NS-007",
+      "statement": "Official-source capability research has no stated freshness threshold, refresh trigger, or unavailable-source behavior in this map."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:388"
+      ],
+      "id": "NS-008",
+      "statement": "repo_id and worktree_id preservation lacks stated behavior for missing, stale, or conflicted identities."
+    }
+  ],
+  "quality_state": "complete",
+  "result_id": "RES-ASG-WIN-00-plans-index-0003-EXACT-001",
+  "reviewed_context_ranges": [
+    [
+      245,
+      262
+    ],
+    [
+      408,
+      425
+    ]
+  ],
+  "reviewed_core_range": [
+    263,
+    407
+  ],
+  "role": "contract_capability_exact_behavior",
+  "source_hash_verified": true,
+  "status": "SUPERSEDED_INVALID_AGENT_REUSE_FOR_ASSURANCE",
+  "substantive_coverage_credit": 0,
+  "substantive_evidence_disposition": "invalid_never_carry_forward",
+  "superseded_at": "2026-07-10T02:19:17Z",
+  "superseded_by": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "window_id": "WIN-00-plans-index-0003",
+  "zero_writes_confirmed": true
+}

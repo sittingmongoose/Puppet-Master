@@ -1,0 +1,342 @@
+<<< CONTEXT_BEFORE 2222-2233 >>>
+compatibility_only_notes:
+- OpenCode tests and external skill examples are implementation/design references only.
+- 'Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.'
+- The Skills tab is the loaded-skills catalog for discovered, imported, and catalog-installed entries; legacy `/imported/catalog-installed` copy is an alias for those source rows, not a separate source type. It must support browse/search/filter (`/search/filter`), source/readiness (`source-readiness`) filters including `/global/bundled/catalog`, preview/body inspection, validation details, warning details, and source/readiness badges. Rows preserve `referenced_by_persona`, `auto_invokable`, `assistant-auto-usable`, `requires_missing_capability`, `catalog_update_available`, `imported-with-warnings`, and `warning-blocked` badges/flags where applicable.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/OpenCode_Deep_Extraction.md
+- Plans/Tools.md
+- Plans/FinalGUISpec.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2234-2560 >>>
+### SS-032 - Skills Discovery Order Acceptance
+
+```yaml
+plan_unit_id: SS-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: AC-SK01 requires Skills to be discovered from the canonical roots and in the canonical order defined in Skills_System §3.2.
+gui_related: false
+gui_classification_reason: This unit preserves backend discovery ordering and registry behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+- SS-006
+- SS-007
+- SS-008
+unblocks: []
+acceptance_criteria:
+- AC-SK01 remains preserved and addressable as a fine-grained acceptance PlanUnit.
+- Skills MUST be discovered from the canonical roots and in the canonical order defined in §3.2.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from Skills_System-S0030 remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_acceptance_drift
+reasoning_tier: standard
+context_scope: skills_acceptance
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skills_discovery_order_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0030
+preserved_exact_tokens:
+- 8. Acceptance criteria
+- AC-SK01
+- Skills MUST be discovered
+- canonical roots
+- canonical order
+- §3.2
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Skills_System.md#SEARCH-ORDER'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+```
+
+### SS-033 - Duplicate Skill Shadowing GUI Acceptance
+
+```yaml
+plan_unit_id: SS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: AC-SK02 requires duplicate Skill IDs to resolve first-wins while shadowed duplicates remain visible in the GUI.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI visibility for duplicate or shadowed skills.
+split_recommended: false
+depends_on:
+- SS-008
+- SS-023
+- SS-024
+unblocks: []
+acceptance_criteria:
+- AC-SK02 remains preserved and addressable as a fine-grained acceptance PlanUnit.
+- Duplicate Skill IDs MUST be resolved first-wins, and shadowed duplicates MUST be visible in the GUI.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from Skills_System-S0030 remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_acceptance_drift
+reasoning_tier: standard
+context_scope: skills_acceptance
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: duplicate_skill_shadowing_gui_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0030
+preserved_exact_tokens:
+- AC-SK02
+- Duplicate Skill IDs
+- first-wins
+- shadowed duplicates
+- visible in the GUI
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Skills_System.md#SEARCH-ORDER, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes:
+- Shadowed duplicate GUI visibility is owned here as Skills behavior and consumed by FinalGUISpec surfaces through the ContractRef.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+```
+
+### SS-034 - Skill Tool Allowed Roots Acceptance
+
+```yaml
+plan_unit_id: SS-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: AC-SK03 requires the skill tool to enforce that explicit file paths are under allowed discovery roots.
+gui_related: false
+gui_classification_reason: This unit preserves backend tool and permission enforcement rather than visual presentation.
+split_recommended: false
+depends_on:
+- SS-020
+- SS-021
+- SS-022
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- AC-SK03 remains preserved and addressable as a fine-grained acceptance PlanUnit.
+- The `skill` tool MUST enforce that explicit file paths are under allowed discovery roots.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from Skills_System-S0030 remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_acceptance_drift
+reasoning_tier: standard
+context_scope: skills_acceptance
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_tool_allowed_roots_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0030
+preserved_exact_tokens:
+- AC-SK03
+- skill tool
+- "`skill` tool"
+- explicit file paths
+- allowed discovery roots
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+### SS-001 - Skills System Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: SS-001
+unit_type: compatibility_disposition
+status: retired
+owner_doc: Plans/Skills_System.md
+canonical_text: SS-001 is retired after Phase 2B batch 172. Skills_System-S0001 through S0030 are covered by fine-grained SS-002 through SS-034 or explicit split coverage; Skills_System-S0031, S0032, and S0034 are generated structural migration metadata; and Skills_System-S0033 is retained only as retired bridge lineage. SS-001 must not provide product implementation coverage or override SS-002 through SS-034.
+gui_related: false
+gui_classification_reason: This retired compatibility disposition records generated migration-lineage metadata rather than active GUI behavior.
+split_recommended: false
+depends_on:
+- SS-002
+- SS-003
+- SS-004
+- SS-005
+- SS-006
+- SS-007
+- SS-008
+- SS-009
+- SS-010
+- SS-011
+- SS-012
+- SS-013
+- SS-014
+- SS-015
+- SS-016
+- SS-017
+- SS-018
+- SS-019
+- SS-020
+- SS-021
+- SS-022
+- SS-023
+- SS-024
+- SS-025
+- SS-026
+- SS-027
+- SS-028
+- SS-029
+- SS-030
+- SS-031
+- SS-032
+- SS-033
+- SS-034
+unblocks: []
+acceptance_criteria:
+- Skills_System-S0001 through S0030 remain mapped to fine-grained Skills System PlanUnits rather than SS-001.
+- Skills_System-S0031, S0032, and S0034 remain structurally dispositioned generated migration metadata.
+- Skills_System-S0033 remains retired bridge lineage only and does not provide product implementation coverage.
+- SS-001 no longer uses source_preserving_planunit as a node_compile_hint mode.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: retired_bridge_overreach
+reasoning_tier: standard
+context_scope: skills_generated_tail_disposition
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: retired_migration_bridge
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0031
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0032
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0033
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0034
+preserved_exact_tokens:
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+- source_preserving_planunit
+negative_constraints:
+- SS-001 must not provide product implementation coverage for Skills_System-S0001 through S0030 after Phase 2B batch 172.
+- SS-001 must not override SS-002 through SS-034 or structural dispositions.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+compatibility_only_notes:
+- The source_preserving_planunit token is preserved only as retired migration lineage and not as an active node_compile_hint mode.
+stale_retired_dispositions:
+- SS-001 retired the original source-preserving bridge after fine-grained and structural coverage was established.
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Plan_Document_System.md
+- Plans/Bootstrap_Planning_Migration.md
+```
+
+## Migration Coverage
+
+Original hash: `e951f33e7a0c1c8e3d4e6696fac5c14b56591e057e042762614945c15ceb34df`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 171 atomized `Skills_System-S0001` through `Skills_System-S0029` into fine-grained PlanUnits `SS-002` through `SS-031`. Phase 2B batch 172 atomized `Skills_System-S0030` into `SS-032` through `SS-034`, structurally dispositioned generated metadata spans `Skills_System-S0031`, `Skills_System-S0032`, and `Skills_System-S0034`, and retired generated bridge span `Skills_System-S0033` through `SS-001`. No residual source-preserving product bridge remains for `Plans/Skills_System.md`. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07
+
+This addendum closes the residual FABLE Skills rows for invocation-time permission consent, timeout defaults, remediation command refs, and requested import package safety. Import hardening is included as a user-requested scope item, but the Critical/High closure set remains limited to the rows named in the FABLE registry.
+
+### SS-035 - FABLE Residual Skills Invocation And Import Contract
+
+```yaml
+plan_unit_id: SS-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: >-
+  Skill invocation uses a millisecond timeout with default 120000 and max 600000, reports timeout as
+  skill.invocation_timed_out, and routes missing-permission invocation through the canonical Permissions ask
+  flow using blocked_reason_code, approval_scope_key, permission_snapshot_id, and ordered allowed_action_ids.
+  Remediation buttons resolve to stable command refs rather than prose-only labels. Manual archive import rejects
+  path traversal, symlink escape, package-size overflow, expanded-size overflow, archive recursion overflow, and
+  deterministic skill id/name collisions.
+gui_related: true
+gui_classification_reason: Skill cards, remediation actions, permission prompts, and import errors are visible management and invocation surfaces.
+depends_on: [SS-011, SS-025, SS-027, SS-028, PS-041, PS-042]
+unblocks: []
+acceptance_criteria:
+  - "`invoke_skill.timeout` is milliseconds, defaults to 120000, caps at 600000, and expires with cancellation plus `skill.invocation_timed_out`."
+  - Missing permissions produce a blocked payload with `blocked_reason_code = permission_required`, `approval_scope_key`, optional `permission_snapshot_id`, and ordered `allowed_action_ids[]`.
+  - "`Review permissions` routes to `cmd.permissions.review_request`; Skills does not define a local consent dialog."
+  - Remediation commands are `cmd.skills.setup_dependency`, `cmd.permissions.review_request`, `cmd.skills.open_source_for_edit`, and `cmd.skills.review_tool_requirement`.
+  - Archive import rejects zip-slip, absolute paths, symlink/hardlink escape, case-normalized duplicate paths, nested archive recursion above 2, package bytes above 52428800, and expanded bytes above 209715200.
+  - Skill id/name collisions resolve as idempotent same-hash import, explicit Replace, explicit Keep Both with generated suffix, or Cancel; case-only collisions are rejected.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+risk_class: fable_residual_skills_invocation_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Skills_System.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: residual_skills_invocation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1047
+  - fablereport.md:1048
+  - fablereport.md:1049
+  - fablereport.md:1050
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "invoke_skill"
+  - "timeout"
+  - "Needs permission"
+  - "Review permissions"
+  - "Set up Context7"
+  - "Edit skill"
+  - "Review tool setup"
+  - "zip/tar"
+  - "zip-slip"
+negative_constraints:
+  - Do not treat this Skills repair as a UI wiring repair, runtime certification, implementation readiness, or buildability proof.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Skills_System.md
+  - Plans/Permissions_System.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime skills rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-d75fd32061dc8e608952bd68` and `sfk-83bf8b6fcb84de178c4cc3a6`: Skills_System owns backend skill discovery, validation, permissions, and catalog status. GUI placement is consumed by FinalGUISpec/MiscPlan. Backend fields are `skill_id`, `source`, `manifest_ref`, `permission_class`, `enabled`, `validation_state`, `blocked_reason_code?`, and `schema_version`.

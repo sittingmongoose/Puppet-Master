@@ -1,0 +1,36 @@
+{
+  "schema_version": "audit004.runner_checkpoint.v2",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "checkpoint_id": "checkpoint-v2-recovery-0002",
+  "recorded_at": "2026-07-10T04:02:45Z",
+  "assignment_count": 212,
+  "dispatch_attempts": 15,
+  "dispatch_records": 21,
+  "unique_agent_instances": 15,
+  "unique_agent_paths": 15,
+  "unique_agent_threads": 15,
+  "active_fresh_reviewers": 3,
+  "failed_attempt_records": 11,
+  "result_manifest_records": 7,
+  "raw_result_files": 12,
+  "locally_canonical_valid_attempts": 1,
+  "locally_canonical_valid_assignment_ids": [
+    "A004-000007-EXACT-WIN-6690C379876B-0001"
+  ],
+  "frozen_validator_credited_assignments": 0,
+  "known_frozen_validator_contract_issue": "postrun_validator_v2 requires exactly one result-manifest row per assignment, so an immutable rejected original positive row plus a qualifying retry row cannot be credited without prospective authority correction",
+  "preserved_prior_rows": true,
+  "canonical_source_line_validation_required": true,
+  "prior_failures_coverage_credit": 0,
+  "active_assignment_ids": [
+    "A004-000017-EXACT-WIN-510B3DE676A3-0003",
+    "A004-000027-EXACT-WIN-C45446C7AC96-0003",
+    "A004-000037-EXACT-WIN-19B62D73B9EF-0006"
+  ],
+  "file_sha256": {
+    "fresh_agent_assignment_registry.jsonl": "bbebf4ab52567c19d14e2d3e1258739748492c71a5ff28a0cc65aad8365c7fb7",
+    "failed_attempts.jsonl": "19319d4bdae9416dda5acc1371332f9a6bb5fbe1ec17feffe78f57c01ac640fc",
+    "result_manifest.jsonl": "01d9290786344176406dcf2008bc28d0cd62f82a16fb133db6509aff62e8c344"
+  }
+}

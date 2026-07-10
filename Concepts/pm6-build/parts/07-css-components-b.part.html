@@ -178,70 +178,8 @@
       /* Not strictly needed when using display:none, but kept for JS compatibility */
     }
 
-    /* Centered Form Layout */
-    .wizard-form-container {
-      width: 100%;
-      max-width: 1000px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: var(--xl);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: var(--xl);
-    }
-    [data-theme^="retro"] .wizard-form-container {
-      border-radius: 0;
-      box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
-    }
-
-    .wizard-form-header {
-      font-family: var(--display-font);
-      font-size: 24px;
-      color: var(--text-primary);
-      margin-bottom: var(--md);
-    }
-    .wizard-form-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: var(--xl);
-    }
-    
-    .wizard-intent-cards {
-      display: grid;
-      
-      gap: var(--lg);
-    }
-    .wizard-intent-card {
-      padding: var(--xl);
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      gap: var(--sm);
-    }
-    [data-theme^="retro"] .wizard-intent-card { border-radius: 0; }
-    .wizard-intent-card:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-2px);
-    }
-    [data-theme^="retro"] .wizard-intent-card:hover { border-color: var(--accent-lime); }
-    .wizard-intent-card.active {
-      background: var(--accent-blue);
-      color: var(--surface);
-      border-color: var(--accent-blue);
-    }
-    [data-theme^="retro"] .wizard-intent-card.active {
-      background: var(--accent-lime);
-      color: #1A1A1A;
-      border-color: var(--accent-lime);
-    }
-    .wizard-intent-title { font-weight: bold; font-size: 15px; }
-    .wizard-intent-desc { font-size: 12px; opacity: 0.8; }
+    /* (W3 reaper: dead .wizard-form-* and .wizard-intent-* rules removed —
+       wizard rebuilt on pm6-wiz-*; zero markup/JS references.) */
 
     .wizard-fields {
       display: flex;
@@ -264,40 +202,8 @@
     .wizard-input:focus, .wizard-select:focus { border-color: var(--accent-blue); }
     [data-theme^="retro"] .wizard-input:focus, [data-theme^="retro"] .wizard-select:focus { border-color: var(--accent-lime); }
 
-    /* Binder Layout for Documents */
-    .wizard-binder-container {
-      width: 100%;
-      max-width: 100%;
-      flex: 1;
-      display: flex;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-      overflow: hidden;
-      animation: boundsExpand 0.3s ease-out;
-    }
-    [data-theme^="retro"] .wizard-binder-container {
-      border-radius: 0;
-      box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
-    }
-    .wizard-binder-sidebar {
-      width: 260px;
-      background: var(--surface);
-      border-right: 1px solid var(--border-light);
-      display: flex;
-      flex-direction: column;
-      padding: var(--lg);
-      gap: var(--sm);
-    }
-    .wizard-binder-sidebar-title {
-      font-family: var(--display-font);
-      font-size: 12px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: var(--md);
-    }
+    /* (W3 reaper: dead .wizard-binder-* container/sidebar rules removed —
+       zero markup/JS references. .wizard-doc-pill stays: still used.) */
     .wizard-doc-pill {
       padding: var(--md);
       border-radius: 8px;
@@ -332,29 +238,6 @@
     .wizard-doc-status.approved { background: rgba(0,255,0,0.2); }
     .wizard-doc-status.review { background: rgba(255,165,0,0.2); }
     
-    .wizard-binder-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: var(--background);
-      position: relative;
-    }
-    .wizard-binder-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--md) var(--xl);
-      border-bottom: 1px solid var(--border-light);
-      background: var(--surface);
-    }
-    .wizard-binder-view {
-      flex: 1;
-      padding: var(--xl);
-      overflow-y: auto;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--text-primary);
-    }
     /* Markdown & Mermaid Mocks */
     .mock-md h1 { font-size: 24px; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm); }
     .mock-md h2 { font-size: 18px; margin-top: var(--xl); margin-bottom: var(--md); }
@@ -422,7 +305,7 @@
       overflow: hidden;
       min-width: 160px;
     }
-    [data-theme^="retro"] .text-selection-palette { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+    [data-theme^="retro"] .text-selection-palette { border-radius: 0; box-shadow: 3px 3px 0 rgba(0,0,0,0.35); }
     .text-selection-palette.visible { display: flex; }
     .palette-action {
       padding: var(--sm) var(--md);
@@ -481,7 +364,7 @@
       z-index: 200;
     }
     [data-theme^="retro"] .context-menu-mock { border-radius: 0; border: 2px solid var(--accent-orange); }
-    [data-theme^="glass"] .context-menu-mock { backdrop-filter: blur(12px); background: rgba(30,30,50,0.85); }
+    [data-theme^="glass"] .context-menu-mock { background: rgba(30,30,50,0.85); }
     .ctx-item {
       padding: 5px 14px;
       cursor: pointer;
@@ -538,7 +421,7 @@
     .remote-badge.pending-write { background: var(--accent-orange); color: #111; }
     .remote-badge.blocked { background: var(--accent-magenta); color: #fff; }
     .remote-badge.read-only { background: var(--text-muted); color: var(--bg); }
-    [data-theme^="retro"] .remote-badge { border-radius: 0; font-family: var(--font-mono); }
+    [data-theme^="retro"] .remote-badge { border-radius: 0; font-family: var(--mono-font); }
 
     /* ── Source Control subview tabs ── */
     .sc-subview-tabs {

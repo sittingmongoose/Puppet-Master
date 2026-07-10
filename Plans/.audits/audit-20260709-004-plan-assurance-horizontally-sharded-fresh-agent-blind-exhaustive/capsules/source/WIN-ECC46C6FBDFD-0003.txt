@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 752-763 >>>
+- Global ~/.config/puppet-master/skills
+- shadowed
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/MiscPlan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 764-1120 >>>
+### SS-008 - Shadowed And Invalid Skill GUI Visibility
+
+```yaml
+plan_unit_id: SS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The GUI exposes shadowed duplicates and invalid skills with validation errors even though invalid skills are not loadable by ID.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SS-008 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: shadowed_invalid_skill_gui_visibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0013
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0014
+preserved_exact_tokens:
+- shadowed duplicates
+- GUI
+- warning indicator
+- invalid
+- validation errors
+- loadable by ID
+negative_constraints:
+- Invalid skills MUST NOT be loadable by ID, but MUST be listed in the GUI with their validation errors.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FinalGUISpec.md'
+- 'ContractRef: ContractName:Plans/MiscPlan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+```
+
+### SS-009 - Discovery Validation Loader Rules
+
+```yaml
+plan_unit_id: SS-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: During discovery the loader parses YAML frontmatter, validates name and description, enforces directory-name equals Skill ID, marks invalid skills, and prevents invalid lookup by ID.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SS-009 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: discovery_validation_loader_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0014
+preserved_exact_tokens:
+- Parse YAML frontmatter
+- invalid
+- name
+- description
+- directory-name match
+- enclosing folder name
+- Skill ID
+negative_constraints:
+- Invalid skills MUST NOT be loadable by ID.
+- Invalid skills MUST NOT be loadable by ID, but MUST be listed in the GUI with their validation errors.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/MiscPlan.md
+- Plans/Tools.md
+```
+
+### SS-010 - Runtime Registry And Persona Skill Refs
+
+```yaml
+plan_unit_id: SS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The skill registry is the provider-agnostic discovery and validation source, and Persona default_skill_refs resolve against it during prompt/context assembly without implying provider-native runtime installation.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SS-010 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: runtime_registry_persona_skill_refs
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0015
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0016
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0017
+preserved_exact_tokens:
+- MVP runtime surface
+- provider-agnostic
+- skill registry
+- default_skill_refs
+- context assembly
+- provider-native skill file installation
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+- Plans/Personas.md
+```
+
+### SS-011 - Skill Invocation Payload Contract
+
+```yaml
+plan_unit_id: SS-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The canonical skill invocation payload uses skill_id with input, optional context, optional timeout, active project/thread context, and manifest-defined input schema validation.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- CV-215
+unblocks: []
+acceptance_criteria:
+- SS-011 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_invocation_payload_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+preserved_exact_tokens:
+- skill_id
+- invoke_skill
+- input
+- context
+- timeout
+- project_root
+- active_file
+- selection
+- conversation_id
+- input schema
+negative_constraints:
+- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+preserved_contractrefs: []
+compatibility_only_notes:
+- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+- Plans/Contracts_V0.md
+```
+
+### SS-012 - Skill Result Envelope And Resource Safety
+
+```yaml
+plan_unit_id: SS-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The skill result is a structured skill-content envelope with source_type, resource_base_dir?, resource_entries_sample?, metadata?, compatibility display aliases, and FileSafe-constrained relative resource guidance.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SS-012 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_result_envelope_resource_safety
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+preserved_exact_tokens:
+- skill-content
+- title
+- content
+- source_type
+- resource_base_dir?
+- resource_entries_sample?
+- metadata?
+- name
+- built-in
+- /built-in
+- bundled
+- resource-root
+- FileSafe-permitted skill resources
+negative_constraints:
+- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+preserved_contractrefs: []
+compatibility_only_notes:
+- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+### SS-013 - Runtime Readiness And Auto-Invoke Gating
+
+```yaml
+plan_unit_id: SS-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Assistant auto-invocation is limited to runtime-ready, eligible, permission-allowed, auto_invokable skills; warning, invalid, disabled, shadowed, and blocked entries require explicit selection while the tool description exposes the live runtime-ready roster.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SS-013 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: runtime_readiness_auto_invoke_gating
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0028
+preserved_exact_tokens:
+- assistant-awareness
+- runtime-ready
+- auto_invokable
+- runtime-ready-with-warnings
+- ready_with_warnings
+- imported-with-warnings
+- invalid
+- disabled
+- shadowed
+- warning-blocked
+- dynamic tool-description
+- ready
+negative_constraints:
+- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+- 'ContractRef: Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`'
+compatibility_only_notes:
+- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+
+<<< CONTEXT_AFTER 1121-1132 >>>
+### SS-014 - Skill Triggered Execution Boundaries
+
+```yaml
+plan_unit_id: SS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The skill tool does not create hidden nested-task work or own shell/PTX execution; skill-triggered tool work remains under tool permission, Terminal, audit, route-target, project/worktree context, and blocked/recovery contracts.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:

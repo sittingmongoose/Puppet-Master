@@ -7,24 +7,24 @@
       <div id="detachedTerminalBody" style="flex:1; min-height:0; display:flex; flex-direction:column;"></div>
     </div>
 
-    <footer class="status-bar">
+    <footer class="status-bar pm6-status-bar">
       <div class="status-menu-wrap">
-        <button class="status-menu-btn" id="statusMenuBtn" title="Status" onclick="event.stopPropagation(); document.getElementById('statusMenuDropdown').classList.toggle('visible')">[i]</button>
+        <button class="status-menu-btn" id="statusMenuBtn" title="Workspace status" onclick="event.stopPropagation(); document.getElementById('statusMenuDropdown').classList.toggle('visible')"><span class="pm6-ico" data-pm6-icon="info"></span></button>
         <div class="status-menu-dropdown" id="statusMenuDropdown">
           <div class="menu-section">
-            <div class="menu-section-title">Active server</div>
-            <div class="menu-section-content">Coming soon</div>
+            <div class="menu-section-title">Active project</div>
+            <div class="menu-section-content">tastebook &mdash; ~/projects/tastebook &middot; run #47 bound</div>
           </div>
           <div class="menu-section">
             <div class="menu-section-title">MCPs</div>
-            <div class="menu-section-content">puppet-master: 2 MCPs configured</div>
+            <div class="menu-section-content">tastebook: 2 MCPs configured</div>
           </div>
           <div class="menu-section">
             <div class="menu-section-title">LSPs</div>
             <div class="menu-section-content">
-              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > rust-analyzer')">Rust (rust-analyzer): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(local, /, /puppet-master)</span></div>
-              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > tsserver')">TypeScript (tsserver): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(ssh:dev-server, /, /frontend)</span></div>
-              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > pyright')">Python (pyright): <span style="color:var(--text-muted);">Disabled</span></div>
+              <div class="pm6-status-lsp-row" onclick="toast('Settings > LSP > rust-analyzer')">Rust (rust-analyzer): <span class="pm6-status-ok">Ready</span> <span class="pm6-status-fineprint">(local, /, /src)</span></div>
+              <div class="pm6-status-lsp-row" onclick="toast('Settings > LSP > svelte-language-server')">Svelte (svelte-language-server): <span class="pm6-status-ok">Ready</span> <span class="pm6-status-fineprint">(local, /web)</span></div>
+              <div class="pm6-status-lsp-row" onclick="toast('Not configured yet - enable Python support from Settings > LSP to start pyright.')">Python (pyright): <span class="pm6-status-fineprint">Not Configured &mdash; enable in Settings &gt; LSP</span></div>
             </div>
           </div>
           <div class="menu-section">
@@ -33,17 +33,46 @@
           </div>
         </div>
       </div>
-      <span class="status-sep">|</span>
-      <span class="status-root" title="Root folder">~/projects/puppet-master</span>
-      <span class="status-sep">|</span>
-      <span class="status-git">main</span>
-      <span class="status-sync">Up to date</span>
-      <span class="status-commit">abc12ef</span>
-      <span class="status-sep">|</span>
-      <span class="status-ssh">SSH: dev-server 45ms</span>
-      <span class="remote-badge current" style="font-size:9px; cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Remote freshness: ' + this.textContent)">current</span>
-      <span class="status-ssh-rate">In: 12 KB/s | Out: 4 KB/s</span>
-      <span class="status-sep">|</span>
-      <span class="status-snapshot">Last snapshot: 10m ago</span>
+      <span class="pm6-status-chip pm6-status-mode" id="pm6StatusMode" data-demo-action="demo.toast" data-demo-arg="Chat mode is chosen per thread from the composer - this chip mirrors the focused thread." title="Focused chat thread mode">Agent</span>
+      <div class="pm6-status-pop-wrap">
+        <button type="button" class="pm6-status-chip pm6-status-pick" id="pm6StatusPlatform" data-pm6-pop="pm6StatusPlatformPop" title="Requested platform - effective platform is shown per node in the Orchestrator"><span id="pm6StatusPlatformLabel">Claude Code</span><span class="pm6-status-caret">&#9662;</span></button>
+        <div class="pm6-status-pop" id="pm6StatusPlatformPop">
+          <div class="pm6-status-pop-title">Platform &mdash; applies next turn</div>
+          <button type="button" class="pm6-status-pop-item active" data-pm6-pick="platform" data-pm6-value="Claude Code">Claude Code<span class="pm6-status-pop-note">requested &middot; effective</span></button>
+          <button type="button" class="pm6-status-pop-item" data-pm6-pick="platform" data-pm6-value="Codex CLI">Codex CLI<span class="pm6-status-pop-note">signed in</span></button>
+          <button type="button" class="pm6-status-pop-item" data-pm6-pick="platform" data-pm6-value="Cursor CLI">Cursor CLI<span class="pm6-status-pop-note">signed in</span></button>
+        </div>
+      </div>
+      <div class="pm6-status-pop-wrap">
+        <button type="button" class="pm6-status-chip pm6-status-pick" id="pm6StatusModel" data-pm6-pop="pm6StatusModelPop" title="Requested model - changes apply from the next turn"><span id="pm6StatusModelLabel">Fable 5</span><span class="pm6-status-caret">&#9662;</span></button>
+        <div class="pm6-status-pop" id="pm6StatusModelPop">
+          <div class="pm6-status-pop-title">Model &mdash; applies next turn</div>
+          <button type="button" class="pm6-status-pop-item active" data-pm6-pick="model" data-pm6-value="Fable 5">Fable 5<span class="pm6-status-pop-note">default</span></button>
+          <button type="button" class="pm6-status-pop-item" data-pm6-pick="model" data-pm6-value="Sonnet 4.5">Sonnet 4.5<span class="pm6-status-pop-note">faster</span></button>
+          <button type="button" class="pm6-status-pop-item" data-pm6-pick="model" data-pm6-value="Haiku 4.5">Haiku 4.5<span class="pm6-status-pop-note">cheapest</span></button>
+        </div>
+      </div>
+      <span class="pm6-status-ctx" id="pm6StatusCtx" title="Focused thread context: 42k of 128k tokens - click the context circle in Chat for the breakdown">
+        <span class="pm6-status-ctx-label" id="pm6StatusCtxLabel">42k/128k</span>
+        <span class="pm6-status-ctx-bar"><span class="pm6-status-ctx-fill" id="pm6StatusCtxFill"></span></span>
+      </span>
+      <button type="button" class="pm6-status-chip pm6-status-orch" id="pm6StatusOrch" data-demo-action="page.go" data-demo-arg="orchestrator" title="Open the Orchestrator">
+        <span class="pm6-status-dot" id="pm6StatusOrchDot"></span><span id="pm6StatusOrchText">Orchestrator: Ready</span>
+      </button>
+      <span class="pm6-status-index" id="pm6StatusIndex" title="Workspace semantic index">Indexing&hellip;</span>
+      <span class="pm6-status-right">
+        <span class="pm6-status-item pm6-status-branch" data-demo-action="demo.toast" data-demo-arg="On main - orchestrator lanes work in their own worktrees; switch branches from Source Control." title="Current branch"><span class="pm6-ico" data-pm6-icon="branch"></span><span>main</span></span>
+        <span class="pm6-status-item" id="pm6StatusSync" data-demo-action="demo.toast" data-demo-arg="Synced with origin/main - nothing to pull or push." title="Sync state with origin">Up to date</span>
+        <button type="button" class="pm6-status-item pm6-status-ports" id="pm6StatusPorts" data-demo-action="pm6.bottom.show_ports" title="Forwarded ports - open the Ports panel"><span class="pm6-ico" data-pm6-icon="plug"></span><span id="pm6StatusPortsCount">3</span></button>
+        <span class="pm6-status-pop-wrap">
+          <button type="button" class="pm6-status-item pm6-status-bell" id="pm6StatusBell" data-pm6-pop="pm6StatusBellPop" title="Notifications"><span class="pm6-ico" data-pm6-icon="bell"></span><span class="pm6-status-badge" id="pm6StatusBellBadge" hidden>0</span></button>
+          <div class="pm6-status-pop pm6-status-pop-right" id="pm6StatusBellPop">
+            <div class="pm6-status-pop-title">Notifications</div>
+            <div id="pm6StatusBellList">
+              <div class="pm6-status-note-empty">Nothing yet &mdash; approval gates, run milestones and usage alerts land here.</div>
+            </div>
+          </div>
+        </span>
+      </span>
     </footer>
   </div>

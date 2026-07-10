@@ -1,0 +1,231 @@
+<<< CONTEXT_BEFORE 1417-1428 >>>
+          }
+        },
+        "output_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 1429-1644 >>>
+    "ResearchSubagentRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subagent_record_id",
+        "assignment",
+        "status",
+        "created_at_utc"
+      ],
+      "properties": {
+        "subagent_record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_subagent_id": {
+          "type": "string"
+        },
+        "assignment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_scope_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "assigned",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "result_ref": {
+          "type": "string"
+        },
+        "failure_reason_code": {
+          "type": "string"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finished_at_utc": {
+          "type": "string"
+        }
+      }
+    },
+    "ResearchRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation": {
+                "properties": {
+                  "invocation_source": {
+                    "enum": [
+                      "prd",
+                      "planning_wizard"
+                    ]
+                  }
+                },
+                "required": [
+                  "invocation_source"
+                ]
+              }
+            },
+            "required": [
+              "invocation"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "ledger_source_evidence_ref"
+                ]
+              },
+              {
+                "required": [
+                  "plan_source_evidence_ref"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "required": [
+        "research_run_id",
+        "mode",
+        "task",
+        "invocation",
+        "sources",
+        "read_receipts",
+        "citations",
+        "closure_state"
+      ],
+      "properties": {
+        "research_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "deep"
+          ]
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationProvenance"
+        },
+        "provider_mode": {
+          "type": "string",
+          "enum": [
+            "pm_composed",
+            "provider_autonomous"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ResearchSource"
+          }
+        },
+        "read_receipts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ReadReceipt"
+          }
+        },
+        "citations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/CitationRecord"
+          }
+        },
+        "synthesis_steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResearchSynthesisStep"
+          }
+        },
+        "subagent_records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResearchSubagentRecord"
+          }
+        },
+        "closure_state": {
+          "type": "string",
+          "enum": [
+            "sufficient",
+            "partial",
+            "failed",
+            "denied",
+            "cancelled"
+          ]
+        },
+        "subagent_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subquestion_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverage_report_ref": {
+          "type": "string"
+        },
+        "failure_reason_code": {
+          "type": "string"
+        },
+        "ledger_source_evidence_ref": {
+          "type": "string"
+        },
+        "plan_source_evidence_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "DeepResearchRun": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ResearchRun"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "deep"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

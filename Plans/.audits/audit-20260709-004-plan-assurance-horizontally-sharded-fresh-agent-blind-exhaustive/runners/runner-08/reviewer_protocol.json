@@ -1,0 +1,126 @@
+{
+  "schema_version": "a004.reviewer_protocol.v1",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-08",
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "one_assignment_per_agent": true,
+  "terminal_after_result": true,
+  "read_boundary": {
+    "allowed": [
+      "this fixed reviewer protocol",
+      "the assignment capsule named in the prompt",
+      "the source excerpt named in the prompt",
+      "CODEX_THREAD_ID from the process environment"
+    ],
+    "forbidden": [
+      "AGENTS.md",
+      "canonical source documents directly",
+      "other capsules or windows",
+      "all prior audits",
+      "all reviewer results",
+      "all runner directories except this protocol",
+      "git state",
+      "web sources"
+    ]
+  },
+  "preflight": {
+    "verify_sha256_and_bytes": true,
+    "stop_on_mismatch": true,
+    "mismatch_output": "schema-valid infrastructure_failure result"
+  },
+  "universal_lens": [
+    "callers and consumers",
+    "states and transitions",
+    "authority and ownership",
+    "failure and recovery",
+    "security and privacy",
+    "user-visible GUI truth",
+    "downstream propagation",
+    "operations",
+    "scale",
+    "compatibility and migration",
+    "test oracles"
+  ],
+  "role_card": "Independently attack negative space in only this capsule: missing callers, states, transitions, authority, failure/recovery, security/privacy, misleading GUI truth, propagation, operations, scale, compatibility, and test oracles. Do not see or infer the exact reviewer's conclusions.",
+  "evidence_rule": {
+    "exact_original_line_refs_required": true,
+    "short_verbatim_quote_required": true,
+    "quote_must_be_one_contiguous_exact_source_substring": true,
+    "ellipses_paraphrase_and_stitched_fragments_forbidden": true,
+    "allowed_ranges_only": true,
+    "candidate_finding_requires_evidence": true,
+    "absence_outside_capsule_is_unknown": true,
+    "cross_window_synthesis_forbidden": true
+  },
+  "output": {
+    "format": "one JSON object with no Markdown or surrounding prose",
+    "schema_version": "a004.document_window_result.v1",
+    "required_top_level_fields": [
+      "schema_version",
+      "assignment_id",
+      "runner_id",
+      "role",
+      "window_id",
+      "doc_id",
+      "document_path",
+      "model",
+      "reasoning_effort",
+      "agent_instance_id",
+      "agent_path",
+      "agent_thread_id",
+      "hash_verification",
+      "scope_attestation",
+      "observations",
+      "candidate_findings",
+      "explicit_non_gaps",
+      "unknowns",
+      "exact_evidence_refs",
+      "infrastructure_failure",
+      "terminal_after_result"
+    ],
+    "hash_verification_fields": [
+      "capsule_sha256_match",
+      "source_excerpt_sha256_match",
+      "capsule_bytes_match",
+      "source_excerpt_bytes_match"
+    ],
+    "evidence_ref_shape": {
+      "document_path": "exact assigned canonical path",
+      "line_start": "integer",
+      "line_end": "integer",
+      "quote": "short exact quote"
+    },
+    "observation_shape": {
+      "observation_id": "unique O-NNN",
+      "category": "string",
+      "summary": "string",
+      "evidence": "non-empty evidence-ref array",
+      "implication": "string"
+    },
+    "candidate_finding_shape": {
+      "candidate_id": "unique CF-NNN",
+      "severity": "critical, high, medium, or low",
+      "category": "string",
+      "claim": "string",
+      "why_it_matters": "string",
+      "evidence_refs": "non-empty evidence-ref array",
+      "bounded_remediation_need": "string"
+    },
+    "explicit_non_gap_shape": {
+      "non_gap_id": "unique NG-NNN",
+      "claim": "string",
+      "evidence_refs": "non-empty evidence-ref array"
+    },
+    "unknown_shape": {
+      "unknown_id": "unique U-NNN",
+      "question": "string",
+      "reason_unresolved_within_capsule": "string",
+      "related_evidence_refs": "evidence-ref array, possibly empty"
+    },
+    "exact_evidence_ref_shape": {
+      "evidence_id": "unique E-NNN plus evidence-ref fields"
+    },
+    "arrays_may_be_empty": true
+  }
+}

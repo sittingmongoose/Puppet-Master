@@ -1,0 +1,24 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-03",
+  "runner_thread_id": "019f49e2-0d34-7a20-b443-b3c1e7e3f427",
+  "status": "dispatching",
+  "assignment_count": 211,
+  "valid_assignment_count": 6,
+  "failed_attempt_count": 0,
+  "unique_substantive_agents_spawned": 6,
+  "current_wave": 3,
+  "last_completed_assignment_seq": 67,
+  "assigned_capsule_package_bytes": 4291602,
+  "assigned_token_estimate": 1230509,
+  "ready_seal": {
+    "global_assignment_manifest_sha256": "2dc5d14db8a3f8d6486de66c94463ee99abd5483392f4cfaf36c0d94de29db28",
+    "runner_registry_sha256": "4d81e417ce0055ee26f7115b5c84d04e31713e8fc188140921bb359e7adcfbb2",
+    "window_manifest_sha256": "36a657ccc9672a3f9335efe48305372326dd80a2eb07d7527d6cdfc6262c5b3d",
+    "capsule_registry_sha256": "711a8f2697ee0c68b4af64d486b89e6ff831e4aa2b09d5cda63b3ed99ff388f9",
+    "validator_result_sha256": "488f0b2de1928b5e385103d7f68acebb29e1109ed35d80430c4a8c099181f1cb",
+    "prelaunch_validators_passed": true
+  },
+  "started_at": "2026-07-10T03:08:44Z",
+  "updated_at": "2026-07-10T03:37:19Z"
+}

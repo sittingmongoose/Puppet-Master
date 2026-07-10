@@ -1,0 +1,75 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-08",
+  "runner_thread_id": "019f49e2-14f8-7af2-afa3-b2394de435a0",
+  "status": "wave_4_validated_wave_5_active",
+  "authority": {
+    "ready_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/coordination/READY_FOR_RUNNERS.json",
+    "ready_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+    "ready_status": "READY_FOR_RUNNERS",
+    "prelaunch_validation_passed": true,
+    "validator_authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+    "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+    "frozen_validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+    "frozen_validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2"
+  },
+  "assignment_packet": {
+    "ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/assignments/runner-08.jsonl",
+    "sha256": "680a4a723cd92e0ce061cdcd714ef22f1eee4cfcbcb0d5517467a5585548424c",
+    "bytes": 320423,
+    "assignment_count": 212,
+    "validated_assignment_count": 212,
+    "validation_failures": 0,
+    "unique_documents": 65,
+    "total_capsule_package_bytes": 4307221,
+    "total_token_estimate": 1230595
+  },
+  "reviewer_protocol": {
+    "ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/reviewer_protocol_v4.json",
+    "sha256": "990dd9eb2f544fb2d88dcac3f7c534589929b13c95b9df4ce21c5b1c4ea47797",
+    "bytes": 5149,
+    "schema_version": "a004.reviewer_protocol.v4",
+    "evidence_locator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/evidence_locator_v2.py",
+    "evidence_locator_sha256": "d4e67c97f6c9c41f2838cda65be7ab08d93c017ee959263e69aaf0c227e0f7a2",
+    "evidence_locator_bytes": 3612
+  },
+  "progress": {
+    "next_wave": 6,
+    "unique_native_agents_spawned": 15,
+    "completed_attempts": 12,
+    "active_attempts": 3,
+    "failed_substantive_attempts": 8,
+    "prelaunch_quarantined_unspawned_identities": 3,
+    "ingest_error_records": 2,
+    "valid_assignments": 4,
+    "remaining_assignments": 208,
+    "result_manifest_records": 4,
+    "frozen_v2_localized_receipt_errors": 0,
+    "frozen_v2_quarantine_candidates": 0,
+    "frozen_v2_unmanifested_raw_results": 0
+  },
+  "recovery": {
+    "initial_validator_evidence_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+    "initial_validator_evidence_sha256": "1d97812656a93be521944576cd14303f11024fb84baefc16f5813b3989f9e984",
+    "initial_global_credited_digest": "5b34cf7ebf7b1eb8991900e90a4f4e2f422001dd630cb67cc0a6134bad216550",
+    "preserved_runner08_initial_credit": "A004-000008-ADVERSARIAL-WIN-6690C379876B-0001",
+    "latest_validation_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/validation/postrun_v2_wave4_complete.json"
+  },
+  "load_accounting": {
+    "spawned_attempt_capsule_package_bytes": 595414,
+    "spawned_attempt_token_estimate": 178545,
+    "unique_assignment_capsule_package_bytes": 275163,
+    "unique_assignment_token_estimate": 83168
+  },
+  "invariants": {
+    "max_concurrent_agents": 3,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "prior_substantive_assignment_count": 0,
+    "terminal_after_result": true,
+    "no_followup_reuse": true,
+    "persistent_root_metadata_only": true
+  },
+  "created_at": "2026-07-10T03:10:06Z",
+  "updated_at": "2026-07-10T04:07:48Z"
+}

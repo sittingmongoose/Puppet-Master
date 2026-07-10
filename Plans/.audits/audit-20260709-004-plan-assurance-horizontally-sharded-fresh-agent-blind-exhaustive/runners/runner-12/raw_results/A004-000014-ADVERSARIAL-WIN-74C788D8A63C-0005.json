@@ -1,0 +1,1661 @@
+{
+  "assignment_id": "A004-000014-ADVERSARIAL-WIN-74C788D8A63C-0005",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "observations": [
+    {
+      "observation_id": "A004-000014-OBS-001",
+      "summary": "Permission authority is delegated to an external SSOT, but this capsule also supplies implementation summaries and an ordered checklist whose resolution sequences are not equivalent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1281,
+          "line_end": 1281,
+          "excerpt": "> **SSOT:** The canonical permission specification (actions, precedence, granular rules, wildcards, special guards, ask-flow, defaults, resolution algorithm, persistence, and GUI) is **`Plans/Permissions_System.md`**. This section provides implementation-oriented guidance for the tool registry and policy engine integration. It references the SSOT for normative definitions and adds tool-registry-specific details (FileSafe integration, CLI derivation, presets) that are scoped to this document."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "excerpt": "Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6)."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1399,
+          "line_end": 1399,
+          "excerpt": "3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic."
+        }
+      ]
+    },
+    {
+      "observation_id": "A004-000014-OBS-002",
+      "summary": "The implementation checklist's compact tool event shapes are later augmented by blocked-outcome requirements, but no projection or version relationship connects the representations.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1402,
+          "line_end": 1402,
+          "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1471,
+          "line_end": 1471,
+          "excerpt": "When a denial blocks progress, the tool event MUST include or map to:"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1485,
+          "line_end": 1485,
+          "excerpt": "Runtime-facing blocked payloads from tool denials MUST expose:"
+        }
+      ]
+    },
+    {
+      "observation_id": "A004-000014-OBS-003",
+      "summary": "Some capabilities described as optional non-MVP enhancements also appear in mandatory implementation steps or event contracts.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1262,
+          "line_end": 1262,
+          "excerpt": "### 9.2 Enhancements (all optional; not MVP)"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1273,
+          "line_end": 1273,
+          "excerpt": "| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an \"ask\". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1402,
+          "line_end": 1402,
+          "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+        }
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "A004-000014-F001",
+      "title": "FileSafe is not explicitly re-run after argument mutation",
+      "severity": "high",
+      "gap": "The authoritative order performs FileSafe before provider normalization and arg-touching hooks, while the only explicit post-hook recheck names permission and schema.",
+      "why_it_matters": "A normalizer or hook can change a previously checked path or shell argument before dispatch, allowing the executed target to differ from the FileSafe-approved target.",
+      "missing_or_underspecified": "No mandatory FileSafe recheck is named after every path-affecting normalization or hook mutation, and no contract binds the checked canonical target to the target actually dispatched.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1125,
+          "line_end": 1125,
+          "excerpt": "3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1126,
+          "line_end": 1126,
+          "excerpt": "4. Apply provider-specific argument normalizers where the tool surface explicitly allows them, including concrete compatibility fixes such as GLM quoted-JSON unquoting and Qwen XML-wrapper stripping before schema validation."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1129,
+          "line_end": 1129,
+          "excerpt": "7. Re-run permission and schema validation if hook output changed arguments."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1333,
+          "line_end": 1333,
+          "excerpt": "- **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F002",
+      "title": "Ask permissions can become executable provider grants before approval",
+      "severity": "critical",
+      "gap": "Claude and Copilot derivation places allow and ask tools into executable CLI allowlists, while DAE providers execute tools themselves and post-run reconciliation occurs only after execution.",
+      "why_it_matters": "An ask-class mutation can execute before Puppet Master obtains approval, and post-run reconciliation cannot undo an external side effect.",
+      "missing_or_underspecified": "The capsule lacks a provider-by-mode enforcement matrix showing how ask remains non-executable before approval, and lacks a concrete eligibility oracle proving that each DAE provider can enforce the resolved restriction pre-spawn.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1362,
+          "line_end": 1362,
+          "excerpt": "| Claude | Build `--allowedTools \"Read,Edit,Bash\"` from tools that are allow or ask (ask still needs runtime approval). Omit any tool that is deny. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1363,
+          "line_end": 1363,
+          "excerpt": "| Copilot | Build `--allow-tool '...'` list from allow+ask; build `--deny-tool '...'` from deny. If all allow, can use `--allow-all-tools` and only pass `--deny-tool` for denied. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "excerpt": "HTE / DAE split (canonical): the \"before forwarding\" wording above applies to **HTE** only, where Puppet Master remains the tool executor. In **DAE**, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation. Providers that cannot support that restriction path MUST NOT advertise `dae_allowed = true`."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F003",
+      "title": "YOLO authority over explicit denies is ambiguous",
+      "severity": "high",
+      "gap": "YOLO is described both as treating all tools as allow and as merely suppressing ask prompts, without specifying its interaction with project, global, persona, exact, wildcard, and special-guard denies.",
+      "why_it_matters": "Implementations can diverge on whether YOLO bypasses an explicit security denial or only converts ask to allow.",
+      "missing_or_underspecified": "No resolution truth table states which policy outcomes YOLO may override and which denials remain authoritative.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1210,
+          "line_end": 1210,
+          "excerpt": "When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no \"ask\" prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = \"don't ask for tool approval\"; it does **not** disable FileSafe."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "excerpt": "Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6)."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1399,
+          "line_end": 1399,
+          "excerpt": "3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F004",
+      "title": "Flattened MCP names are not collision-safe",
+      "severity": "high",
+      "gap": "The underscore concatenation format is not injective when server slugs or tool names can themselves contain underscores.",
+      "why_it_matters": "Two distinct server/tool tuples can resolve to the same permission key, causing wildcard or per-tool authority to apply to the wrong tool.",
+      "missing_or_underspecified": "The capsule supplies no component grammar, escaping rule, tuple-level identity, collision rejection behavior, or migration behavior for an existing collision.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1214,
+          "line_end": 1214,
+          "excerpt": "MCP tool names use the owner-defined underscore-only format `{server_slug}_{tool_name}`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1219,
+          "line_end": 1219,
+          "excerpt": "- wildcard rules match the underscore form, for example `context7_*`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1221,
+          "line_end": 1221,
+          "excerpt": "- server-level permission rules still apply before per-tool wildcard expansion"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F005",
+      "title": "MCP unavailable classification can turn terminal causes into transient failures",
+      "severity": "high",
+      "gap": "Auth loss and schema mismatch can create the unavailable state, but unavailable calls default to provider_transient unless an undefined stricter classification is selected, while both causes are declared terminal for retry.",
+      "why_it_matters": "A higher layer can retry an invocation that the retry contract says must be terminal, producing loops, repeated prompts, or unnecessary reconnects.",
+      "missing_or_underspecified": "No deterministic cause-to-failure-class table defines the class for startup timeout, transport failure, auth loss, schema mismatch, and health-check failure.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1155,
+          "line_end": 1155,
+          "excerpt": "- auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1225,
+          "line_end": 1225,
+          "excerpt": "When an MCP server is unavailable because of startup timeout, transport failure, auth loss, schema mismatch, or repeated health-check failure, PM treats this as a structured degraded-state condition."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1231,
+          "line_end": 1231,
+          "excerpt": "- Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal)."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F006",
+      "title": "MCP unavailable GUI truth conflicts with hide instructions",
+      "severity": "medium",
+      "gap": "One normative rule forbids silently hiding an unavailable server, while a risk mitigation and implementation checklist both permit or direct hiding its tools.",
+      "why_it_matters": "Different surfaces can show disappearance, degraded state, or unavailable state for the same server, misleading users about configuration and recovery.",
+      "missing_or_underspecified": "No precedence rule distinguishes temporary hiding from visible unavailability or defines the exact registry and GUI transition for startup failure versus transient list failure.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1236,
+          "line_end": 1236,
+          "excerpt": "- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1256,
+          "line_end": 1256,
+          "excerpt": "| **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server's tools for the run or mark unavailable; Doctor shows \"Context7 unavailable\" (§8.7). |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1407,
+          "line_end": 1407,
+          "excerpt": "11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all providers in GUI."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F007",
+      "title": "Retry cap and minimum-delay boundary are not executable deterministically",
+      "severity": "high",
+      "gap": "The text does not state whether the three automatic attempts include the initial dispatch, despite listing three backoff bases, and it clamps a provider minimum delay to the remaining budget without defining whether a too-short retry executes or terminates.",
+      "why_it_matters": "Implementations can perform different numbers of side-effecting calls or violate Retry-After/provider throttling requirements.",
+      "missing_or_underspecified": "Attempt numbering, initial-versus-retry accounting, backoff-to-attempt mapping, deterministic jitter algorithm/serialization, and the nonzero-budget-but-below-minimum transition are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1152,
+          "line_end": 1152,
+          "excerpt": "- transient transport, server-warming, and recoverable bootstrap failures MAY retry automatically, but the total automatic attempts are capped at 3 per invocation"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1153,
+          "line_end": 1153,
+          "excerpt": "- default backoff bases are `1000ms`, `2000ms`, then `4000ms`; jitter is applied as `clamp(base_ms + deterministic_jitter_ms, 0ms, parent_remaining_budget_ms)` where `deterministic_jitter_ms` is selected from the closed interval `[-floor(base_ms * 0.25), +floor(base_ms * 0.25)]` using the invocation id plus attempt number as the seed; a stricter `Retry-After` or provider minimum delay raises the post-jitter floor before the parent-budget clamp"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1164,
+          "line_end": 1164,
+          "excerpt": "- if the remaining budget is exhausted before a retry starts, PM emits a structured timeout or budget result without dispatching the new attempt"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F008",
+      "title": "Similarity-based loop suppression lacks a test oracle",
+      "severity": "medium",
+      "gap": "Near-match signatures, substantial equivalence, and progress are normative decision inputs without algorithms or thresholds.",
+      "why_it_matters": "One implementation can suppress a useful recovery attempt while another loops on effectively identical failures.",
+      "missing_or_underspecified": "Canonical normalization, target identity, signature construction, similarity threshold, progress evidence, collision behavior, and diagnostic fields are not defined.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1165,
+          "line_end": 1165,
+          "excerpt": "- automatic retry suppression compares normalized tool fingerprint, canonical target, error class/status, and near-match argument or stderr signatures; same or substantially equivalent failures without progress MUST stop further retries and emit a diagnostic instead of looping indefinitely"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F009",
+      "title": "Shell safety depends on an undefined cross-shell scanning grammar",
+      "severity": "high",
+      "gap": "Fallback full-string scanning is allowed across Bash, cmd.exe, and PowerShell, but the accepted and rejected grammar is not defined for quoting, expansion, encoded newlines, here-documents, process substitution, environment indirection, aliases, or shell-specific metacharacters.",
+      "why_it_matters": "A parser/scanner mismatch can miss an executable construct or reject a harmless quoted construct, and path escaping can differ from the shell's command parsing.",
+      "missing_or_underspecified": "The capsule lacks a normative shell-family grammar, normalization stage, quote ownership model for the command passed to `-c`, and cross-platform adversarial acceptance corpus.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1172,
+          "line_end": 1172,
+          "excerpt": "- banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1173,
+          "line_end": 1173,
+          "excerpt": "- implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1175,
+          "line_end": 1175,
+          "excerpt": "- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command(\"bash\", \"-c\", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1176,
+          "line_end": 1176,
+          "excerpt": "- shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1177,
+          "line_end": 1177,
+          "excerpt": "- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F010",
+      "title": "Shell isolation and non-blocking queue states are incomplete",
+      "severity": "medium",
+      "gap": "Isolation is scoped per agent tree while claiming no leakage across agent boundaries, and non-blocking queues have no capacity, overflow, ordering, fairness, cancellation, restart, or teardown semantics.",
+      "why_it_matters": "Sibling or parent/child agents may observe shared environment state, and load or shell death races may drop, reorder, starve, or duplicate commands.",
+      "missing_or_underspecified": "The shell ownership key, environment clone/reset boundary, queue state machine, backpressure result, pending-write fate on death, and restart generation behavior are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1178,
+          "line_end": 1178,
+          "excerpt": "- shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1179,
+          "line_end": 1179,
+          "excerpt": "- shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1180,
+          "line_end": 1180,
+          "excerpt": "- `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F011",
+      "title": "Custom tool sandboxing is only resource limiting",
+      "severity": "critical",
+      "gap": "The stated MVP mitigation for arbitrary custom code is a subprocess timeout and output cap, neither of which restricts filesystem, network, credentials, child processes, IPC, or host syscalls.",
+      "why_it_matters": "Arbitrary custom code can escape the intended tool authority and mutate or exfiltrate data before timeout.",
+      "missing_or_underspecified": "No actual isolation boundary, capability set, filesystem scope, network policy, environment filtering, process-tree termination, platform parity, or escape test oracle is specified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1247,
+          "line_end": 1247,
+          "excerpt": "| **Custom tool sandboxing** | Custom tools run arbitrary code; weak sandbox can allow escape or abuse. | MVP: subprocess with timeout (e.g. 60s) and output size cap (e.g. 1 MiB) per §4.3. Document in implementation plan. |"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F012",
+      "title": "Node-native usage alignment is not representable by the declared schemas",
+      "severity": "high",
+      "gap": "The rollup is keyed only by tool name and the listed source event fields contain no node, package, seam, or lane identity, despite requiring consumers to align rollups to those identities.",
+      "why_it_matters": "Consumers cannot deterministically attribute usage or recovery evidence to the graph identity required by the contract.",
+      "missing_or_underspecified": "The source event dimensions, rollup key/value dimensions, aggregation rules across graph identities, and compatibility projection behavior are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1203,
+          "line_end": 1203,
+          "excerpt": "- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ \"bash\": { \"count\": 42, \"p50_ms\": 120, \"p95_ms\": 500, \"error_count\": 2 }, \"grep\": { \"count\": 30, \"p50_ms\": 18, \"p95_ms\": 40, \"error_count\": 0, \"index_used\": { \"true_count\": 24, \"false_count\": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1204,
+          "line_end": 1204,
+          "excerpt": "- **Runtime identity alignment:** Blocked episodes and tool/runtime recovery evidence are `node-native`; tool-facing `usage/evidence/runtime` rollups MUST NOT remain `tier-native` execution authority. Consumers align those rollups to graph `/node/package/seam/lane` identity, and any `tier-aligned` or `tier-native` fields survive only as compatibility/grouping projections."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1402,
+          "line_end": 1402,
+          "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F013",
+      "title": "Usage rollup persistence and aggregation lack a deterministic oracle",
+      "severity": "high",
+      "gap": "The persisted value may be JSON or bincode without a discriminator or version; an optional value is included in a canonical window list; percentile, boundary, late-event, and freshness behavior are unspecified.",
+      "why_it_matters": "Readers can fail to decode stored data or compute different counts and percentiles for the same event stream.",
+      "missing_or_underspecified": "Encoding selection and migration, schema version, numeric types and overflow, percentile algorithm, failed-call inclusion in latency, interval inclusivity, clock source, late-event correction, idempotency, and absent-meta behavior are not defined.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1202,
+          "line_end": 1202,
+          "excerpt": "- **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1203,
+          "line_end": 1203,
+          "excerpt": "- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ \"bash\": { \"count\": 42, \"p50_ms\": 120, \"p95_ms\": 500, \"error_count\": 2 }, \"grep\": { \"count\": 30, \"p50_ms\": 18, \"p95_ms\": 40, \"error_count\": 0, \"index_used\": { \"true_count\": 24, \"false_count\": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1206,
+          "line_end": 1206,
+          "excerpt": "- **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a \"Last updated\" timestamp without opening seglog."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F014",
+      "title": "The Usage error-rate label can conceal blocked activity",
+      "severity": "medium",
+      "gap": "The widget is described as showing error rate, but its numerator excludes denied calls and FileSafe blocks and no user-visible interpretation is specified.",
+      "why_it_matters": "A tool can show zero errors while most attempted operations were blocked, creating misleading operational and policy truth.",
+      "missing_or_underspecified": "No display contract labels the metric as executed-call errors, distinguishes attempted, executed, denied, and FileSafe-blocked counts, or defines the empty denominator state.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1199,
+          "line_end": 1199,
+          "excerpt": "Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the **tool usage widget** (per-tool count, latency, error rate):"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1205,
+          "line_end": 1205,
+          "excerpt": "- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F015",
+      "title": "Permission persistence has two stores without synchronization authority",
+      "severity": "high",
+      "gap": "TOML is called durable configuration, redb stores a backward-compatible merged projection, and the GUI loads and saves permissions, but write direction and conflict semantics are absent.",
+      "why_it_matters": "External edits, GUI writes, crashes, or partial migrations can leave policy evaluation and displayed settings using different permission states.",
+      "missing_or_underspecified": "No source-of-truth direction, transaction boundary, generation identifier, file-watch behavior, parse-error state, atomic-write behavior, projection rebuild rule, downgrade behavior, or protection for permission-file ownership/mode is specified.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1289,
+          "line_end": 1289,
+          "excerpt": "The durable permission config uses TOML files at `~/.config/puppet-master/permissions.toml` (global) and `<project_root>/.puppet-master/permissions.toml` (project). Full schema: `Plans/Permissions_System.md` §9.1."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1291,
+          "line_end": 1291,
+          "excerpt": "For backward compatibility, the merged permission set is also projected to redb as `tool_permissions` in `config:v1`."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1326,
+          "line_end": 1326,
+          "excerpt": "The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F016",
+      "title": "Permission resolution summaries do not define one deterministic order",
+      "severity": "high",
+      "gap": "The canonical summary uses persona, project, and global stages, while the ordered implementation checklist omits them and inserts unknown before exact, wildcard, and granular matching; the gap table separately says unknown falls through to step 7.",
+      "why_it_matters": "The same invocation can resolve to ask, allow, or deny depending on which sequence an implementer follows.",
+      "missing_or_underspecified": "The relationship between unknown detection and exact/wildcard/granular matching, and the placement of persona/project/global rules in the ordered checklist, are not reconciled.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1246,
+          "line_end": 1246,
+          "excerpt": "| **Permission default ambiguity** | New or unknown tools (e.g. new MCP server) may have no explicit permission. | Default table (§10.2): \"Any unknown tool\" → **ask**. Resolution (§10.3) step 3: unknown falls through to step 7. Implement default table as code. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "excerpt": "Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6)."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1399,
+          "line_end": 1399,
+          "excerpt": "3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F017",
+      "title": "Approval actions are not cryptographically or transactionally bound to an invocation",
+      "severity": "high",
+      "gap": "The pending UI payload uses `action_available` and an `approval_scope_key`, while later payloads use `allowed_action_ids[]` and guard metadata; none binds the approval to immutable normalized arguments, policy snapshot, invocation generation, or expiry.",
+      "why_it_matters": "A stale, replayed, or raced approval can authorize a different target or changed invocation, and UI, scheduler, and tool layers can disagree on which action was approved.",
+      "missing_or_underspecified": "The projection between action fields, stable action identifiers, invocation digest, argument version, policy-snapshot binding, nonce/replay behavior, expiry, cancellation, duplicate response, and executed-at-all transition are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1339,
+          "line_end": 1339,
+          "excerpt": "- **Assistant (interactive):** When policy returns **ask**, surface a `blocked_notice` as a **pending approval** to the UI. The notice includes `action_available` (the scoped response options: `deny` / `once` / `for session` / `always`), `blocked_reason_code`, `blocked_sequence`, and `approval_scope_key`. See `Plans/Permissions_System.md` §6 for response semantics."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1474,
+          "line_end": 1474,
+          "excerpt": "- effective permission snapshot identifier"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1475,
+          "line_end": 1475,
+          "excerpt": "- `allowed_action_ids[]`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1489,
+          "line_end": 1489,
+          "excerpt": "- guard/rule metadata needed to bind the exact UI command"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1490,
+          "line_end": 1490,
+          "excerpt": "- `executed_at_all` boolean"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1492,
+          "line_end": 1492,
+          "excerpt": "Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F018",
+      "title": "Same-host web session approval has undefined security and privacy boundaries",
+      "severity": "high",
+      "gap": "A webcrawl approval broadens to four tool families for the same host pattern, but host canonicalization and sensitive-summary handling are not defined.",
+      "why_it_matters": "Ambiguous matching around scheme, port, subdomain, IDN/punycode, redirects, credentials, or DNS changes can over-authorize unrelated destinations, while query and URL previews can expose sensitive data.",
+      "missing_or_underspecified": "Host-pattern grammar, URL canonicalization, redirect re-approval, subdomain and port behavior, credential stripping, DNS-rebinding semantics, preview redaction, truncation, persistence, and audit-log disclosure are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1253,
+          "line_end": 1253,
+          "excerpt": "| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don't log full query/URL in plaintext; keep audit/provenance disclosure aligned with the shared web contracts instead of ad hoc cited-search wording. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1346,
+          "line_end": 1346,
+          "excerpt": "- `websearch summary shows tool name + query preview`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1347,
+          "line_end": 1347,
+          "excerpt": "- `webfetch/webextract summary shows tool name + target host/URL`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1350,
+          "line_end": 1350,
+          "excerpt": "- `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1352,
+          "line_end": 1352,
+          "excerpt": "- `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F019",
+      "title": "FileSafe-blocked outcomes have no defined event path",
+      "severity": "high",
+      "gap": "The checklist forbids emitting `tool.denied` for FileSafe blocks, while the runtime taxonomy requires FileSafe blocks to propagate as blocked outcomes carrying recovery information.",
+      "why_it_matters": "Schedulers, chat, audit, and GUI consumers may receive no durable event from which to reconstruct the blocked episode or bind a recovery action.",
+      "missing_or_underspecified": "No alternative event type, payload schema, persistence rule, correlation identity, or projection into runtime blocked semantics is defined for FileSafe blocks.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1400,
+          "line_end": 1400,
+          "excerpt": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6)."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1446,
+          "line_end": 1446,
+          "excerpt": "- `filesafe_blocked` -> blocked / `filesafe_blocked`"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1455,
+          "line_end": 1455,
+          "excerpt": "Tool outcomes must carry enough information for runtime recovery UI:"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1459,
+          "line_end": 1459,
+          "excerpt": "- whether the action executed at all"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1471,
+          "line_end": 1471,
+          "excerpt": "When a denial blocks progress, the tool event MUST include or map to:"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F020",
+      "title": "Denied-event persistence is both optional and required",
+      "severity": "medium",
+      "gap": "An explicit audit event for denied or declined asks is classified as optional non-MVP, while the implementation checklist mandates `tool.denied` and the addendum mandates fields on the denial event.",
+      "why_it_matters": "MVP implementations can legitimately omit or persist the same event depending on which section they follow, breaking compliance and scheduler observability.",
+      "missing_or_underspecified": "The capsule does not distinguish an optional audit-log projection from the required canonical denial event or state whether either must be durable in seglog.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1262,
+          "line_end": 1262,
+          "excerpt": "### 9.2 Enhancements (all optional; not MVP)"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1273,
+          "line_end": 1273,
+          "excerpt": "| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an \"ask\". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1402,
+          "line_end": 1402,
+          "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1471,
+          "line_end": 1471,
+          "excerpt": "When a denial blocks progress, the tool event MUST include or map to:"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F021",
+      "title": "Permission presets are both optional and implementation-required",
+      "severity": "medium",
+      "gap": "Permission presets are listed under all-optional non-MVP enhancements but receive a canonical mapping section and are required by the GUI implementation checklist.",
+      "why_it_matters": "Scope, acceptance testing, migration, and GUI availability can diverge between implementations.",
+      "missing_or_underspecified": "No precedence statement says whether presets are MVP, optional post-MVP, or merely a non-normative illustration.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1262,
+          "line_end": 1262,
+          "excerpt": "### 9.2 Enhancements (all optional; not MVP)"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1270,
+          "line_end": 1270,
+          "excerpt": "| **Permission presets** | Presets: \"Read-only\" allows read/grep/glob/list/codesearch/chatsearch/logsearch/skill/read-only lsp/question/todoread/todowrite/capabilities.get, asks for webfetch/websearch/logread/task, and denies edit/bash/repo.import/media.generate; \"Plan mode\" allows the Read-only set, asks for the full web family plus logread/task, and denies state mutation; \"Full\" allows read/search/skill/lsp/question/todo with asks for mutation-capable tools. | Simplifies config; maps to assistant modes (Ask, Plan, Agent). Plan mode allows information gathering but not state mutation. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1311,
+          "line_end": 1311,
+          "excerpt": "### 10.4 Presets → config mapping"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1403,
+          "line_end": 1403,
+          "excerpt": "7. **GUI Tool permissions** -- Settings > Permissions (`Plans/Permissions_System.md` §10 plus `Plans/FinalGUISpec.md` §7.4 Settings and inspectors); presets per §10.4; load/save `tool_permissions` (§10.5)."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F022",
+      "title": "Serialized OAuth token writes do not guarantee freshness or durability",
+      "severity": "high",
+      "gap": "Serialization orders writes but does not stop a later stale refresh result from replacing a newer valid token, nor does it define crash-safe persistence or confidentiality.",
+      "why_it_matters": "Concurrent refresh and callback completions can still deterministically commit in the wrong freshness order, while interrupted or insecure persistence can lose or expose credentials.",
+      "missing_or_underspecified": "Token generation/version comparison, stale-write rejection, atomic commit and recovery, per-server/profile scoping, encryption or keychain authority, file permissions, revocation, and partial-write behavior are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1120,
+          "line_end": 1120,
+          "excerpt": "Additive owner-detail for this Tools anchor: provider `finishReason` / `finishReason=length` with `stop_reason = length` on an incomplete tool call is a `no-dispatch` gate before permission, schema, or any tool execution; retry taxonomy is `per-class` with explicit attempt ceilings and bounded recovery posture; loop suppression may use `similarity-based` equivalence only after normalized fingerprint and error-class comparison and must still emit a diagnostic; nested runtime/tool work inherits hierarchical deadline propagation. MCP OAuth state stays stable across tool dispatch: client registration uses a durable `client-id`, callback setup uses the owner-provided `callback-listener`, and token persistence serializes each `token-write` so concurrent refresh or callback paths cannot race or replace a valid token."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F023",
+      "title": "Tool events cannot correlate retries or reproduce retry decisions",
+      "severity": "high",
+      "gap": "Retry jitter and loop suppression depend on invocation identity, attempt number, canonical target, and structured error class/status, but the declared event fields omit all of those.",
+      "why_it_matters": "Operations cannot determine whether `tool.invoked` represents a logical invocation or an individual attempt, reproduce backoff, audit suppression, or compute usage counts consistently across retries.",
+      "missing_or_underspecified": "Invocation ID, attempt number, logical invocation ID, canonical target fingerprint, error class/status, retry decision, suppression reason, and one-event-per-attempt versus one-event-per-invocation semantics are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1153,
+          "line_end": 1153,
+          "excerpt": "- default backoff bases are `1000ms`, `2000ms`, then `4000ms`; jitter is applied as `clamp(base_ms + deterministic_jitter_ms, 0ms, parent_remaining_budget_ms)` where `deterministic_jitter_ms` is selected from the closed interval `[-floor(base_ms * 0.25), +floor(base_ms * 0.25)]` using the invocation id plus attempt number as the seed; a stricter `Retry-After` or provider minimum delay raises the post-jitter floor before the parent-budget clamp"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1165,
+          "line_end": 1165,
+          "excerpt": "- automatic retry suppression compares normalized tool fingerprint, canonical target, error class/status, and near-match argument or stderr signatures; same or substantially equivalent failures without progress MUST stop further retries and emit a diagnostic instead of looping indefinitely"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1203,
+          "line_end": 1203,
+          "excerpt": "- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ \"bash\": { \"count\": 42, \"p50_ms\": 120, \"p95_ms\": 500, \"error_count\": 2 }, \"grep\": { \"count\": 30, \"p50_ms\": 18, \"p95_ms\": 40, \"error_count\": 0, \"index_used\": { \"true_count\": 24, \"false_count\": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1402,
+          "line_end": 1402,
+          "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F024",
+      "title": "The runtime taxonomy claims determinism while leaving classes implementation-specific",
+      "severity": "medium",
+      "gap": "Validation-blocked reason codes are implementation-specific, and failure_class is required only when an undefined applicability condition holds, despite a deterministic-mapping acceptance criterion.",
+      "why_it_matters": "Schedulers and GUIs cannot exhaustively branch on a stable closed taxonomy, and equivalent failures can produce incompatible recovery behavior.",
+      "missing_or_underspecified": "A closed reason-code registry, failure-class applicability table, unknown-code behavior, versioning, and deterministic mapping from validation and denial causes are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1447,
+          "line_end": 1447,
+          "excerpt": "- `validation_blocked` -> blocked / implementation-specific reason code, not generic failure"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1463,
+          "line_end": 1463,
+          "excerpt": "- Tool-layer policy outcomes map deterministically into the shared runtime taxonomy."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1473,
+          "line_end": 1473,
+          "excerpt": "- `failure_class` when applicable"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1487,
+          "line_end": 1487,
+          "excerpt": "- `failure_class?`"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F025",
+      "title": "Seglog retention and sensitive-data deletion remain unresolved",
+      "severity": "medium",
+      "gap": "Retention is only recommended and presents mutually exclusive pruning, compaction, and sampling choices, while web data is recognized as sensitive.",
+      "why_it_matters": "Storage growth, privacy exposure, forensic completeness, and rollup correctness vary materially with the unresolved choice.",
+      "missing_or_underspecified": "The selected retention policy, deletion schedule and failure behavior, compaction atomicity, rollup provenance after raw deletion, sampling semantics, user-data deletion propagation, and sensitive-field redaction lifecycle are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1250,
+          "line_end": 1250,
+          "excerpt": "| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention -- keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1253,
+          "line_end": 1253,
+          "excerpt": "| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don't log full query/URL in plaintext; keep audit/provenance disclosure aligned with the shared web contracts instead of ad hoc cited-search wording. |"
+        }
+      ]
+    },
+    {
+      "finding_id": "A004-000014-F026",
+      "title": "Immutable permission snapshots are not reconciled with dynamic MCP registry state",
+      "severity": "medium",
+      "gap": "Runs freeze permission settings, while MCP clients can degrade, reconnect, and preserve stale tool lists and the GUI is populated from discovered registry tools.",
+      "why_it_matters": "An active run can evaluate a frozen policy against a changing availability or tool-name set, while the GUI may display current registry state rather than the run's effective state.",
+      "missing_or_underspecified": "The run-time registry snapshot boundary, recovery visibility to active runs, stale-list call behavior, permission resolution for newly discovered or renamed tools, and GUI labeling of current versus run-effective state are absent.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1234,
+          "line_end": 1234,
+          "excerpt": "- A transient `listTools()` failure is CRITICAL but not destructive to singleton state: PM retries or marks the server degraded, preserves the last known client identity when safe, and MUST NOT permanently delete the MCP client or make tools vanish forever after one listTools error."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1235,
+          "line_end": 1235,
+          "excerpt": "- One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1255,
+          "line_end": 1255,
+          "excerpt": "| **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1326,
+          "line_end": 1326,
+          "excerpt": "The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list."
+        }
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "A004-000014-NG-001",
+      "statement": "Incomplete or truncated tool calls have an explicit no-dispatch outcome and missing arguments may not be synthesized.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1143,
+          "line_end": 1143,
+          "excerpt": "- if upstream provider output ends with `finishReason=length` or equivalent truncation while a tool invocation is incomplete, PM closes the invocation with a structured truncation error and MUST NOT dispatch the tool"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1144,
+          "line_end": 1144,
+          "excerpt": "- PM closes incomplete `tool_use` payloads with `tool_result(ok=false, error=truncated_by_length)` and MUST NOT synthesize missing arguments"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1145,
+          "line_end": 1145,
+          "excerpt": "- PM MUST reject empty, `/minimal`, or structurally incomplete tool arguments produced by truncation before any permission or execution path is reached"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-002",
+      "statement": "Nested work and retries explicitly inherit and clamp to the parent deadline, with no dispatch after budget exhaustion.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1162,
+          "line_end": 1162,
+          "excerpt": "- every tool/helper invocation receives the parent's current absolute deadline or remaining-budget snapshot"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1163,
+          "line_end": 1163,
+          "excerpt": "- retries, helper restarts, and nested tool work MUST clamp to the remaining budget and MUST NOT extend the parent deadline"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1164,
+          "line_end": 1164,
+          "excerpt": "- if the remaining budget is exhausted before a retry starts, PM emits a structured timeout or budget result without dispatching the new attempt"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-003",
+      "statement": "Auth, permission, schema, validation, content-filter, and safety-stop retry classes are explicitly terminal.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1155,
+          "line_end": 1155,
+          "excerpt": "- auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-004",
+      "statement": "Invalid and denied operations are explicitly prohibited from returning success-shaped fallbacks.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1135,
+          "line_end": 1135,
+          "excerpt": "- invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then \"best effort\" repair the failure afterwards"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1480,
+          "line_end": 1480,
+          "excerpt": "Tools MUST NOT return success-shaped fallbacks for denied work. The denial must remain inspectable as a blocked outcome so the scheduler, chat, and GUI can offer the correct recovery path."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-005",
+      "statement": "YOLO explicitly does not disable FileSafe.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1210,
+          "line_end": 1210,
+          "excerpt": "When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no \"ask\" prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = \"don't ask for tool approval\"; it does **not** disable FileSafe."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-006",
+      "statement": "Question behavior is explicitly bounded for HITL absence and child agents, and headless ask maps to deny or pending HITL.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1302,
+          "line_end": 1302,
+          "excerpt": "| `question` | `allow` only when HITL is available; otherwise `ask` |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1306,
+          "line_end": 1306,
+          "excerpt": "| child-agent `question` | `deny` |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1323,
+          "line_end": 1323,
+          "excerpt": "Child-agent denial of `question` is architectural and remains in force even when the parent preset is broader."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1340,
+          "line_end": 1340,
+          "excerpt": "- **Orchestrator / Interview (headless):** Map `ask` → `deny`, or to **pending-HITL** if HITL is enabled (`Plans/human-in-the-loop.md`)."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-007",
+      "statement": "Policy-blocked calls are explicitly classified as blocked rather than failed, and runtime denial payloads explicitly reject a parallel `recovery_options[]` schema.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1451,
+          "line_end": 1451,
+          "excerpt": "If the tool call never executed because policy blocked it, the outcome is blocked/denied, not execution failure."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1492,
+          "line_end": 1492,
+          "excerpt": "Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-008",
+      "statement": "A single transient MCP list failure is explicitly non-destructive and must remain visible as degraded or unavailable.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1234,
+          "line_end": 1234,
+          "excerpt": "- A transient `listTools()` failure is CRITICAL but not destructive to singleton state: PM retries or marks the server degraded, preserves the last known client identity when safe, and MUST NOT permanently delete the MCP client or make tools vanish forever after one listTools error."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1236,
+          "line_end": 1236,
+          "excerpt": "- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "A004-000014-NG-009",
+      "statement": "Second-pass shell evaluation is prohibited, and dead-shell writes have explicit structured-error behavior.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1174,
+          "line_end": 1174,
+          "excerpt": "- dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1179,
+          "line_end": 1179,
+          "excerpt": "- shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1180,
+          "line_end": 1180,
+          "excerpt": "- `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever"
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "A004-000014-U-001",
+      "unknown": "The blind capsule does not establish whether the external Permissions SSOT resolves the YOLO, resolution-order, approval-binding, preset-scope, and persistence ambiguities identified here.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1281,
+          "line_end": 1281,
+          "excerpt": "> **SSOT:** The canonical permission specification (actions, precedence, granular rules, wildcards, special guards, ask-flow, defaults, resolution algorithm, persistence, and GUI) is **`Plans/Permissions_System.md`**. This section provides implementation-oriented guidance for the tool registry and policy engine integration. It references the SSOT for normative definitions and adds tool-registry-specific details (FileSafe integration, CLI derivation, presets) that are scoped to this document."
+        }
+      ]
+    },
+    {
+      "unknown_id": "A004-000014-U-002",
+      "unknown": "The blind capsule does not establish whether storage-plan defines one encoding, canonical window set, percentile oracle, late-event behavior, or selected retention policy.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1202,
+          "line_end": 1202,
+          "excerpt": "- **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1250,
+          "line_end": 1250,
+          "excerpt": "| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention -- keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |"
+        }
+      ]
+    },
+    {
+      "unknown_id": "A004-000014-U-003",
+      "unknown": "The blind capsule does not establish whether FileSafe or Executor owner contracts define post-mutation rechecks, canonical-target binding, symlink race behavior, and an event type for FileSafe blocks.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1132,
+          "line_end": 1132,
+          "excerpt": "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1331,
+          "line_end": 1331,
+          "excerpt": "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md"
+        }
+      ]
+    },
+    {
+      "unknown_id": "A004-000014-U-004",
+      "unknown": "The blind capsule does not establish whether GUI owner text distinguishes current settings and registry state from an active run's immutable effective snapshot.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1236,
+          "line_end": 1236,
+          "excerpt": "- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure."
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1255,
+          "line_end": 1255,
+          "excerpt": "| **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |"
+        },
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1326,
+          "line_end": 1326,
+          "excerpt": "The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list."
+        }
+      ]
+    },
+    {
+      "unknown_id": "A004-000014-U-005",
+      "unknown": "The blind capsule does not establish whether any external provider contract supplies a concrete DAE jail capability matrix and certification evidence for `dae_allowed`.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Tools.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "excerpt": "HTE / DAE split (canonical): the \"before forwarding\" wording above applies to **HTE** only, where Puppet Master remains the tool executor. In **DAE**, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation. Providers that cannot support that restriction path MUST NOT advertise `dae_allowed = true`."
+        }
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1120,
+      "line_end": 1120,
+      "excerpt": "Additive owner-detail for this Tools anchor: provider `finishReason` / `finishReason=length` with `stop_reason = length` on an incomplete tool call is a `no-dispatch` gate before permission, schema, or any tool execution; retry taxonomy is `per-class` with explicit attempt ceilings and bounded recovery posture; loop suppression may use `similarity-based` equivalence only after normalized fingerprint and error-class comparison and must still emit a diagnostic; nested runtime/tool work inherits hierarchical deadline propagation. MCP OAuth state stays stable across tool dispatch: client registration uses a durable `client-id`, callback setup uses the owner-provided `callback-listener`, and token persistence serializes each `token-write` so concurrent refresh or callback paths cannot race or replace a valid token."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1125,
+      "line_end": 1125,
+      "excerpt": "3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1126,
+      "line_end": 1126,
+      "excerpt": "4. Apply provider-specific argument normalizers where the tool surface explicitly allows them, including concrete compatibility fixes such as GLM quoted-JSON unquoting and Qwen XML-wrapper stripping before schema validation."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1129,
+      "line_end": 1129,
+      "excerpt": "7. Re-run permission and schema validation if hook output changed arguments."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1132,
+      "line_end": 1132,
+      "excerpt": "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1135,
+      "line_end": 1135,
+      "excerpt": "- invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then \"best effort\" repair the failure afterwards"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1143,
+      "line_end": 1143,
+      "excerpt": "- if upstream provider output ends with `finishReason=length` or equivalent truncation while a tool invocation is incomplete, PM closes the invocation with a structured truncation error and MUST NOT dispatch the tool"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1144,
+      "line_end": 1144,
+      "excerpt": "- PM closes incomplete `tool_use` payloads with `tool_result(ok=false, error=truncated_by_length)` and MUST NOT synthesize missing arguments"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1145,
+      "line_end": 1145,
+      "excerpt": "- PM MUST reject empty, `/minimal`, or structurally incomplete tool arguments produced by truncation before any permission or execution path is reached"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1152,
+      "line_end": 1152,
+      "excerpt": "- transient transport, server-warming, and recoverable bootstrap failures MAY retry automatically, but the total automatic attempts are capped at 3 per invocation"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1153,
+      "line_end": 1153,
+      "excerpt": "- default backoff bases are `1000ms`, `2000ms`, then `4000ms`; jitter is applied as `clamp(base_ms + deterministic_jitter_ms, 0ms, parent_remaining_budget_ms)` where `deterministic_jitter_ms` is selected from the closed interval `[-floor(base_ms * 0.25), +floor(base_ms * 0.25)]` using the invocation id plus attempt number as the seed; a stricter `Retry-After` or provider minimum delay raises the post-jitter floor before the parent-budget clamp"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1155,
+      "line_end": 1155,
+      "excerpt": "- auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1162,
+      "line_end": 1162,
+      "excerpt": "- every tool/helper invocation receives the parent's current absolute deadline or remaining-budget snapshot"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1163,
+      "line_end": 1163,
+      "excerpt": "- retries, helper restarts, and nested tool work MUST clamp to the remaining budget and MUST NOT extend the parent deadline"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1164,
+      "line_end": 1164,
+      "excerpt": "- if the remaining budget is exhausted before a retry starts, PM emits a structured timeout or budget result without dispatching the new attempt"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1165,
+      "line_end": 1165,
+      "excerpt": "- automatic retry suppression compares normalized tool fingerprint, canonical target, error class/status, and near-match argument or stderr signatures; same or substantially equivalent failures without progress MUST stop further retries and emit a diagnostic instead of looping indefinitely"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1172,
+      "line_end": 1172,
+      "excerpt": "- banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1173,
+      "line_end": 1173,
+      "excerpt": "- implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1174,
+      "line_end": 1174,
+      "excerpt": "- dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1175,
+      "line_end": 1175,
+      "excerpt": "- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command(\"bash\", \"-c\", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1176,
+      "line_end": 1176,
+      "excerpt": "- shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1177,
+      "line_end": 1177,
+      "excerpt": "- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1178,
+      "line_end": 1178,
+      "excerpt": "- shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1179,
+      "line_end": 1179,
+      "excerpt": "- shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1180,
+      "line_end": 1180,
+      "excerpt": "- `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1199,
+      "line_end": 1199,
+      "excerpt": "Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the **tool usage widget** (per-tool count, latency, error rate):"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1202,
+      "line_end": 1202,
+      "excerpt": "- **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1203,
+      "line_end": 1203,
+      "excerpt": "- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ \"bash\": { \"count\": 42, \"p50_ms\": 120, \"p95_ms\": 500, \"error_count\": 2 }, \"grep\": { \"count\": 30, \"p50_ms\": 18, \"p95_ms\": 40, \"error_count\": 0, \"index_used\": { \"true_count\": 24, \"false_count\": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1204,
+      "line_end": 1204,
+      "excerpt": "- **Runtime identity alignment:** Blocked episodes and tool/runtime recovery evidence are `node-native`; tool-facing `usage/evidence/runtime` rollups MUST NOT remain `tier-native` execution authority. Consumers align those rollups to graph `/node/package/seam/lane` identity, and any `tier-aligned` or `tier-native` fields survive only as compatibility/grouping projections."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1205,
+      "line_end": 1205,
+      "excerpt": "- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1206,
+      "line_end": 1206,
+      "excerpt": "- **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a \"Last updated\" timestamp without opening seglog."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1210,
+      "line_end": 1210,
+      "excerpt": "When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no \"ask\" prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = \"don't ask for tool approval\"; it does **not** disable FileSafe."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1214,
+      "line_end": 1214,
+      "excerpt": "MCP tool names use the owner-defined underscore-only format `{server_slug}_{tool_name}`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1219,
+      "line_end": 1219,
+      "excerpt": "- wildcard rules match the underscore form, for example `context7_*`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1221,
+      "line_end": 1221,
+      "excerpt": "- server-level permission rules still apply before per-tool wildcard expansion"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1225,
+      "line_end": 1225,
+      "excerpt": "When an MCP server is unavailable because of startup timeout, transport failure, auth loss, schema mismatch, or repeated health-check failure, PM treats this as a structured degraded-state condition."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1231,
+      "line_end": 1231,
+      "excerpt": "- Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1234,
+      "line_end": 1234,
+      "excerpt": "- A transient `listTools()` failure is CRITICAL but not destructive to singleton state: PM retries or marks the server degraded, preserves the last known client identity when safe, and MUST NOT permanently delete the MCP client or make tools vanish forever after one listTools error."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1235,
+      "line_end": 1235,
+      "excerpt": "- One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1236,
+      "line_end": 1236,
+      "excerpt": "- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1246,
+      "line_end": 1246,
+      "excerpt": "| **Permission default ambiguity** | New or unknown tools (e.g. new MCP server) may have no explicit permission. | Default table (§10.2): \"Any unknown tool\" → **ask**. Resolution (§10.3) step 3: unknown falls through to step 7. Implement default table as code. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1247,
+      "line_end": 1247,
+      "excerpt": "| **Custom tool sandboxing** | Custom tools run arbitrary code; weak sandbox can allow escape or abuse. | MVP: subprocess with timeout (e.g. 60s) and output size cap (e.g. 1 MiB) per §4.3. Document in implementation plan. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1250,
+      "line_end": 1250,
+      "excerpt": "| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention -- keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1253,
+      "line_end": 1253,
+      "excerpt": "| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don't log full query/URL in plaintext; keep audit/provenance disclosure aligned with the shared web contracts instead of ad hoc cited-search wording. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1255,
+      "line_end": 1255,
+      "excerpt": "| **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1256,
+      "line_end": 1256,
+      "excerpt": "| **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server's tools for the run or mark unavailable; Doctor shows \"Context7 unavailable\" (§8.7). |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1262,
+      "line_end": 1262,
+      "excerpt": "### 9.2 Enhancements (all optional; not MVP)"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1270,
+      "line_end": 1270,
+      "excerpt": "| **Permission presets** | Presets: \"Read-only\" allows read/grep/glob/list/codesearch/chatsearch/logsearch/skill/read-only lsp/question/todoread/todowrite/capabilities.get, asks for webfetch/websearch/logread/task, and denies edit/bash/repo.import/media.generate; \"Plan mode\" allows the Read-only set, asks for the full web family plus logread/task, and denies state mutation; \"Full\" allows read/search/skill/lsp/question/todo with asks for mutation-capable tools. | Simplifies config; maps to assistant modes (Ask, Plan, Agent). Plan mode allows information gathering but not state mutation. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1273,
+      "line_end": 1273,
+      "excerpt": "| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an \"ask\". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1281,
+      "line_end": 1281,
+      "excerpt": "> **SSOT:** The canonical permission specification (actions, precedence, granular rules, wildcards, special guards, ask-flow, defaults, resolution algorithm, persistence, and GUI) is **`Plans/Permissions_System.md`**. This section provides implementation-oriented guidance for the tool registry and policy engine integration. It references the SSOT for normative definitions and adds tool-registry-specific details (FileSafe integration, CLI derivation, presets) that are scoped to this document."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1289,
+      "line_end": 1289,
+      "excerpt": "The durable permission config uses TOML files at `~/.config/puppet-master/permissions.toml` (global) and `<project_root>/.puppet-master/permissions.toml` (project). Full schema: `Plans/Permissions_System.md` §9.1."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1291,
+      "line_end": 1291,
+      "excerpt": "For backward compatibility, the merged permission set is also projected to redb as `tool_permissions` in `config:v1`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1302,
+      "line_end": 1302,
+      "excerpt": "| `question` | `allow` only when HITL is available; otherwise `ask` |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1306,
+      "line_end": 1306,
+      "excerpt": "| child-agent `question` | `deny` |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1309,
+      "line_end": 1309,
+      "excerpt": "Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1311,
+      "line_end": 1311,
+      "excerpt": "### 10.4 Presets → config mapping"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1323,
+      "line_end": 1323,
+      "excerpt": "Child-agent denial of `question` is architectural and remains in force even when the parent preset is broader."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1326,
+      "line_end": 1326,
+      "excerpt": "The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1331,
+      "line_end": 1331,
+      "excerpt": "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1333,
+      "line_end": 1333,
+      "excerpt": "- **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1339,
+      "line_end": 1339,
+      "excerpt": "- **Assistant (interactive):** When policy returns **ask**, surface a `blocked_notice` as a **pending approval** to the UI. The notice includes `action_available` (the scoped response options: `deny` / `once` / `for session` / `always`), `blocked_reason_code`, `blocked_sequence`, and `approval_scope_key`. See `Plans/Permissions_System.md` §6 for response semantics."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1340,
+      "line_end": 1340,
+      "excerpt": "- **Orchestrator / Interview (headless):** Map `ask` → `deny`, or to **pending-HITL** if HITL is enabled (`Plans/human-in-the-loop.md`)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1346,
+      "line_end": 1346,
+      "excerpt": "- `websearch summary shows tool name + query preview`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1347,
+      "line_end": 1347,
+      "excerpt": "- `webfetch/webextract summary shows tool name + target host/URL`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1350,
+      "line_end": 1350,
+      "excerpt": "- `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1352,
+      "line_end": 1352,
+      "excerpt": "- `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1362,
+      "line_end": 1362,
+      "excerpt": "| Claude | Build `--allowedTools \"Read,Edit,Bash\"` from tools that are allow or ask (ask still needs runtime approval). Omit any tool that is deny. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1363,
+      "line_end": 1363,
+      "excerpt": "| Copilot | Build `--allow-tool '...'` list from allow+ask; build `--deny-tool '...'` from deny. If all allow, can use `--allow-all-tools` and only pass `--deny-tool` for denied. |"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1367,
+      "line_end": 1367,
+      "excerpt": "HTE / DAE split (canonical): the \"before forwarding\" wording above applies to **HTE** only, where Puppet Master remains the tool executor. In **DAE**, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation. Providers that cannot support that restriction path MUST NOT advertise `dae_allowed = true`."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1399,
+      "line_end": 1399,
+      "excerpt": "3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1400,
+      "line_end": 1400,
+      "excerpt": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1402,
+      "line_end": 1402,
+      "excerpt": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1403,
+      "line_end": 1403,
+      "excerpt": "7. **GUI Tool permissions** -- Settings > Permissions (`Plans/Permissions_System.md` §10 plus `Plans/FinalGUISpec.md` §7.4 Settings and inspectors); presets per §10.4; load/save `tool_permissions` (§10.5)."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1407,
+      "line_end": 1407,
+      "excerpt": "11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all providers in GUI."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1446,
+      "line_end": 1446,
+      "excerpt": "- `filesafe_blocked` -> blocked / `filesafe_blocked`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1447,
+      "line_end": 1447,
+      "excerpt": "- `validation_blocked` -> blocked / implementation-specific reason code, not generic failure"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1451,
+      "line_end": 1451,
+      "excerpt": "If the tool call never executed because policy blocked it, the outcome is blocked/denied, not execution failure."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1455,
+      "line_end": 1455,
+      "excerpt": "Tool outcomes must carry enough information for runtime recovery UI:"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1459,
+      "line_end": 1459,
+      "excerpt": "- whether the action executed at all"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1463,
+      "line_end": 1463,
+      "excerpt": "- Tool-layer policy outcomes map deterministically into the shared runtime taxonomy."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1471,
+      "line_end": 1471,
+      "excerpt": "When a denial blocks progress, the tool event MUST include or map to:"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1473,
+      "line_end": 1473,
+      "excerpt": "- `failure_class` when applicable"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1474,
+      "line_end": 1474,
+      "excerpt": "- effective permission snapshot identifier"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1475,
+      "line_end": 1475,
+      "excerpt": "- `allowed_action_ids[]`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1480,
+      "line_end": 1480,
+      "excerpt": "Tools MUST NOT return success-shaped fallbacks for denied work. The denial must remain inspectable as a blocked outcome so the scheduler, chat, and GUI can offer the correct recovery path."
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1485,
+      "line_end": 1485,
+      "excerpt": "Runtime-facing blocked payloads from tool denials MUST expose:"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1487,
+      "line_end": 1487,
+      "excerpt": "- `failure_class?`"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1489,
+      "line_end": 1489,
+      "excerpt": "- guard/rule metadata needed to bind the exact UI command"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1490,
+      "line_end": 1490,
+      "excerpt": "- `executed_at_all` boolean"
+    },
+    {
+      "document_path": "Plans/Tools.md",
+      "line_start": 1492,
+      "line_end": 1492,
+      "excerpt": "Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema."
+    }
+  ]
+}

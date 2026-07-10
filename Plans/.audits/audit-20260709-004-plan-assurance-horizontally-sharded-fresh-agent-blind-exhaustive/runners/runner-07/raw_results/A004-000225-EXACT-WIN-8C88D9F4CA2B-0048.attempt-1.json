@@ -1,0 +1,739 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000225-EXACT-WIN-8C88D9F4CA2B-0048",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000225-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0225_b22ba86f",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-8C88D9F4CA2B-0048",
+  "doc_id": "DOC-8C88D9F4CA2B",
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "core_range": [
+    17932,
+    18316
+  ],
+  "context_ranges": [
+    [
+      17920,
+      17931
+    ],
+    [
+      18317,
+      18328
+    ]
+  ],
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "core_sha256": "8f12166eeca2552853c1d093e99aa5623c4fb318b77a08bc77368aaff3a9f6e6",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000225-EXACT-WIN-8C88D9F4CA2B-0048.json",
+  "capsule_sha256": "0ff77997637bc9caba77fd96ba2f1ebe89a5fafcc223c6c4829eb31fa822b528",
+  "capsule_bytes": 1663,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-8C88D9F4CA2B-0048.txt",
+  "source_excerpt_sha256": "0e3381b4143fa08c0e68e8177e686b205e4f9c3165b79f14b1525bb696eac027",
+  "source_excerpt_bytes": 31748,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "A004-000225-O001",
+      "statement": "The core defines seven Orchestrator-page UI elements, each with a distinct command ID and handler location, and each declares an empty expected-event list.",
+      "evidence_ref_ids": [
+        "A004-000225-E015",
+        "A004-000225-E016",
+        "A004-000225-E017",
+        "A004-000225-E018",
+        "A004-000225-E019",
+        "A004-000225-E020",
+        "A004-000225-E021"
+      ]
+    },
+    {
+      "observation_id": "A004-000225-O002",
+      "statement": "Every command repeats the same high-level obligations: typed dispatcher arguments/results, projected availability and disabled reason, preservation of dispatch metadata, and either a typed payload/result contract or a no-persist route/open disposition.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007"
+      ]
+    },
+    {
+      "observation_id": "A004-000225-O003",
+      "statement": "Every effect contract labels its effect kind as receipt, names a command-specific dispatch-receipt reference, and requires either that receipt or an explicit no-persist route/open disposition while forbidding unexpected persisted domain events.",
+      "evidence_ref_ids": [
+        "A004-000225-E008",
+        "A004-000225-E009",
+        "A004-000225-E010",
+        "A004-000225-E011",
+        "A004-000225-E012",
+        "A004-000225-E013",
+        "A004-000225-E014",
+        "A004-000225-E036",
+        "A004-000225-E037",
+        "A004-000225-E038",
+        "A004-000225-E039",
+        "A004-000225-E040",
+        "A004-000225-E041",
+        "A004-000225-E042"
+      ]
+    },
+    {
+      "observation_id": "A004-000225-O004",
+      "statement": "All seven entries repeat an accessibility template covering stable semantics, keyboard reachability and activation, focus preservation and return, and disabled-reason exposure to assistive technology.",
+      "evidence_ref_ids": [
+        "A004-000225-E029",
+        "A004-000225-E030",
+        "A004-000225-E031",
+        "A004-000225-E032",
+        "A004-000225-E033",
+        "A004-000225-E034",
+        "A004-000225-E035"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "A004-000225-F001",
+      "severity": "high",
+      "statement": "The production wiring contract requires typed arguments and results for all seven commands but never defines concrete argument fields, argument types, result variants, or the mapping between a dispatcher result and the permitted route/open disposition. Builders can therefore choose incompatible command ABIs and result models while satisfying the quoted prose.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F002",
+      "severity": "high",
+      "statement": "The seven open commands identify UI elements, an Orchestrator-page location, command IDs, and handlers, but do not specify the resource or view to open, the source and identity of any target, internal versus external routing, destination reuse behavior, or the exact condition that constitutes a successful open. The generic route/open-disposition alternative does not establish those observable behaviors.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007",
+        "A004-000225-E015",
+        "A004-000225-E016",
+        "A004-000225-E017",
+        "A004-000225-E018",
+        "A004-000225-E019",
+        "A004-000225-E020",
+        "A004-000225-E021"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F003",
+      "severity": "high",
+      "statement": "Each effect is classified as receipt and points only to a dispatch_receipt reference, yet both the effect description and event test accept a receipt or an explicit route/open disposition. The core does not say whether a disposition is the receipt, a receipt variant, or a separate alternative, and supplies no discriminator or minimum success/failure fields. Non-equivalent effect records can therefore pass the same production requirement.",
+      "evidence_ref_ids": [
+        "A004-000225-E008",
+        "A004-000225-E009",
+        "A004-000225-E010",
+        "A004-000225-E011",
+        "A004-000225-E012",
+        "A004-000225-E013",
+        "A004-000225-E014",
+        "A004-000225-E036",
+        "A004-000225-E037",
+        "A004-000225-E038",
+        "A004-000225-E039",
+        "A004-000225-E040",
+        "A004-000225-E041",
+        "A004-000225-E042"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F004",
+      "severity": "high",
+      "statement": "The separate open_docker_manager and open_in_docker_manager contracts, and the separate open_github_actions and open_in_github_actions contracts, receive distinct IDs and handlers but otherwise carry the same generic obligations. No cited core line defines the behavioral distinction, required target context, or different success result for either pair, so implementations may alias them or invent incompatible distinctions without violating this window.",
+      "evidence_ref_ids": [
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E006",
+        "A004-000225-E007",
+        "A004-000225-E016",
+        "A004-000225-E017",
+        "A004-000225-E020",
+        "A004-000225-E021"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F005",
+      "severity": "medium",
+      "statement": "Availability and disabled behavior are defined only as projection paths. The core does not define the availability value domain, enabling and authority conditions, source-of-truth ownership, precedence when multiple blockers apply, disabled-copy selection, or transition behavior if availability changes during dispatch. This leaves consequential enablement and invocation-authority decisions to builders.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007",
+        "A004-000225-E022",
+        "A004-000225-E023",
+        "A004-000225-E024",
+        "A004-000225-E025",
+        "A004-000225-E026",
+        "A004-000225-E027",
+        "A004-000225-E028"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F006",
+      "severity": "medium",
+      "statement": "The accessibility templates require a stable role, name, and description but do not state any of those exact semantics; require keyboard activation only where the control is visible without defining visibility or activation behavior; and require deterministic focus return without naming the destination or timing. Disabled-reason exposure likewise lacks an exact announcement condition. Materially different controls can therefore satisfy the same prose.",
+      "evidence_ref_ids": [
+        "A004-000225-E029",
+        "A004-000225-E030",
+        "A004-000225-E031",
+        "A004-000225-E032",
+        "A004-000225-E033",
+        "A004-000225-E034",
+        "A004-000225-E035"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F007",
+      "severity": "medium",
+      "statement": "The core mentions typed results, dispatch errors, and route/open dispositions but defines no failure variants, handler-error versus destination-open-failure distinction, receipt requirement on failure, terminal failure status, retry or cancellation behavior, or exact user-visible failure outcome. Error implementations and acceptance assertions are consequently non-deterministic.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007",
+        "A004-000225-E008",
+        "A004-000225-E009",
+        "A004-000225-E010",
+        "A004-000225-E011",
+        "A004-000225-E012",
+        "A004-000225-E013",
+        "A004-000225-E014",
+        "A004-000225-E029",
+        "A004-000225-E030",
+        "A004-000225-E031",
+        "A004-000225-E032",
+        "A004-000225-E033",
+        "A004-000225-E034",
+        "A004-000225-E035"
+      ]
+    },
+    {
+      "finding_id": "A004-000225-F008",
+      "severity": "medium",
+      "statement": "Dispatch evidence must preserve origin and correlation_id, but the core does not define their producers, validation rules, propagation boundaries, uniqueness or scope, or the consumer and retention contract for the resulting receipt or disposition. Trace records with materially different authority and correlation semantics can satisfy the named-field requirement.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007",
+        "A004-000225-E008",
+        "A004-000225-E009",
+        "A004-000225-E010",
+        "A004-000225-E011",
+        "A004-000225-E012",
+        "A004-000225-E013",
+        "A004-000225-E014"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "A004-000225-NG001",
+      "statement": "The UI-element-to-command-to-handler mapping is explicit for every entry in the core.",
+      "evidence_ref_ids": [
+        "A004-000225-E015",
+        "A004-000225-E016",
+        "A004-000225-E017",
+        "A004-000225-E018",
+        "A004-000225-E019",
+        "A004-000225-E020",
+        "A004-000225-E021"
+      ]
+    },
+    {
+      "non_gap_id": "A004-000225-NG002",
+      "statement": "Every entry explicitly names both its availability selector and its disabled-reason projection path.",
+      "evidence_ref_ids": [
+        "A004-000225-E022",
+        "A004-000225-E023",
+        "A004-000225-E024",
+        "A004-000225-E025",
+        "A004-000225-E026",
+        "A004-000225-E027",
+        "A004-000225-E028"
+      ]
+    },
+    {
+      "non_gap_id": "A004-000225-NG003",
+      "statement": "Every entry explicitly prohibits unexpected persisted domain events and requires a dispatch receipt or explicit no-persist route/open disposition.",
+      "evidence_ref_ids": [
+        "A004-000225-E036",
+        "A004-000225-E037",
+        "A004-000225-E038",
+        "A004-000225-E039",
+        "A004-000225-E040",
+        "A004-000225-E041",
+        "A004-000225-E042"
+      ]
+    },
+    {
+      "non_gap_id": "A004-000225-NG004",
+      "statement": "The core explicitly identifies baseline accessibility dimensions for every control: semantics, keyboard access, focus management, and disabled-state announcement.",
+      "evidence_ref_ids": [
+        "A004-000225-E029",
+        "A004-000225-E030",
+        "A004-000225-E031",
+        "A004-000225-E032",
+        "A004-000225-E033",
+        "A004-000225-E034",
+        "A004-000225-E035"
+      ]
+    },
+    {
+      "non_gap_id": "A004-000225-NG005",
+      "statement": "The acceptance checks explicitly enumerate the dispatch metadata that evidence must preserve: command_id, origin, correlation_id, handler target, result, and receipt or event effect.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "A004-000225-U001",
+      "statement": "Whether concrete payload and result schemas exist outside the reviewed window is unknown under the assigned scope.",
+      "evidence_ref_ids": [
+        "A004-000225-E001",
+        "A004-000225-E002",
+        "A004-000225-E003",
+        "A004-000225-E004",
+        "A004-000225-E005",
+        "A004-000225-E006",
+        "A004-000225-E007"
+      ]
+    },
+    {
+      "unknown_id": "A004-000225-U002",
+      "statement": "Whether another in-scope-independent contract defines the exact destinations, target identities, and distinctions among these open commands is unknown under the assigned scope.",
+      "evidence_ref_ids": [
+        "A004-000225-E015",
+        "A004-000225-E016",
+        "A004-000225-E017",
+        "A004-000225-E018",
+        "A004-000225-E019",
+        "A004-000225-E020",
+        "A004-000225-E021"
+      ]
+    },
+    {
+      "unknown_id": "A004-000225-U003",
+      "statement": "Whether dispatch_receipt or route/open disposition schemas and their consumers are defined elsewhere is unknown under the assigned scope.",
+      "evidence_ref_ids": [
+        "A004-000225-E008",
+        "A004-000225-E009",
+        "A004-000225-E010",
+        "A004-000225-E011",
+        "A004-000225-E012",
+        "A004-000225-E013",
+        "A004-000225-E014"
+      ]
+    },
+    {
+      "unknown_id": "A004-000225-U004",
+      "statement": "Whether the selector paths resolve to separately specified value domains, authority rules, blocker precedence, and transition semantics is unknown under the assigned scope.",
+      "evidence_ref_ids": [
+        "A004-000225-E022",
+        "A004-000225-E023",
+        "A004-000225-E024",
+        "A004-000225-E025",
+        "A004-000225-E026",
+        "A004-000225-E027",
+        "A004-000225-E028"
+      ]
+    },
+    {
+      "unknown_id": "A004-000225-U005",
+      "statement": "Whether exact accessible names, roles, activation conventions, focus targets, and announcement behavior are specified outside this window is unknown under the assigned scope.",
+      "evidence_ref_ids": [
+        "A004-000225-E029",
+        "A004-000225-E030",
+        "A004-000225-E031",
+        "A004-000225-E032",
+        "A004-000225-E033",
+        "A004-000225-E034",
+        "A004-000225-E035"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "A004-000225-E001",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17939,
+      "line_end": 17942,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_corroboration must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_corroboration must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_corroboration dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_corroboration must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E002",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17994,
+      "line_end": 17997,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_docker_manager must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_docker_manager must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_docker_manager dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_docker_manager must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E003",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18049,
+      "line_end": 18052,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_github_actions must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_github_actions must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_github_actions dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_github_actions must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E004",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18104,
+      "line_end": 18107,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_graph_generation must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_graph_generation must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_graph_generation dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_graph_generation must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E005",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18159,
+      "line_end": 18162,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_graph_patch must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_graph_patch must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_graph_patch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_graph_patch must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E006",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18214,
+      "line_end": 18217,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_in_docker_manager must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_in_docker_manager must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_in_docker_manager dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_in_docker_manager must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E007",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18269,
+      "line_end": 18272,
+      "range_class": "core",
+      "exact_quote": "        \"cmd.orchestrator.open_in_github_actions must be registered in the UICommand dispatcher with typed args and result contract\",\n        \"cmd.orchestrator.open_in_github_actions must expose projected state selector and disabled reason before dispatch\",\n        \"cmd.orchestrator.open_in_github_actions dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",\n        \"cmd.orchestrator.open_in_github_actions must have a typed payload/result contract or explicit route/open no-persist disposition\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E008",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17948,
+      "line_end": 17953,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_corroboration has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_corroboration.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E009",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18003,
+      "line_end": 18008,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_docker_manager.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E010",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18058,
+      "line_end": 18063,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_github_actions.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E011",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18113,
+      "line_end": 18118,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_graph_generation has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_graph_generation.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E012",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18168,
+      "line_end": 18173,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_graph_patch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_graph_patch.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E013",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18223,
+      "line_end": 18228,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_in_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_in_docker_manager.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E014",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18278,
+      "line_end": 18283,
+      "range_class": "core",
+      "exact_quote": "      \"effect_contract\": {\n        \"effect_kind\": \"receipt\",\n        \"description\": \"cmd.orchestrator.open_in_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",\n        \"receipt_or_event_refs\": [\n          \"cmd.orchestrator.open_in_github_actions.dispatch_receipt\"\n        ]"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E015",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17932,
+      "line_end": 17937,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_corroboration\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_corroboration\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_corroboration\",\n      \"handler_location\": \"handlers::orchestrator::open_corroboration\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E016",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17987,
+      "line_end": 17992,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_docker_manager\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_docker_manager\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_docker_manager\",\n      \"handler_location\": \"handlers::orchestrator::open_docker_manager\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E017",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18042,
+      "line_end": 18047,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_github_actions\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_github_actions\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_github_actions\",\n      \"handler_location\": \"handlers::orchestrator::open_github_actions\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E018",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18097,
+      "line_end": 18102,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_graph_generation\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_graph_generation\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_graph_generation\",\n      \"handler_location\": \"handlers::orchestrator::open_graph_generation\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E019",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18152,
+      "line_end": 18157,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_graph_patch\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_graph_patch\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_graph_patch\",\n      \"handler_location\": \"handlers::orchestrator::open_graph_patch\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E020",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18207,
+      "line_end": 18212,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_in_docker_manager\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_in_docker_manager\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_in_docker_manager\",\n      \"handler_location\": \"handlers::orchestrator::open_in_docker_manager\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E021",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18262,
+      "line_end": 18267,
+      "range_class": "core",
+      "exact_quote": "    \"catalog.orchestrator_open_in_github_actions\": {\n      \"ui_element_id\": \"catalog.orchestrator_open_in_github_actions\",\n      \"ui_location\": \"Orchestrator page\",\n      \"ui_command_id\": \"cmd.orchestrator.open_in_github_actions\",\n      \"handler_location\": \"handlers::orchestrator::open_in_github_actions\",\n      \"expected_event_types\": [],"
+    },
+    {
+      "evidence_ref_id": "A004-000225-E022",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17946,
+      "line_end": 17947,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_corroboration.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_corroboration.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E023",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18001,
+      "line_end": 18002,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_docker_manager.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_docker_manager.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E024",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18056,
+      "line_end": 18057,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_github_actions.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_github_actions.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E025",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18111,
+      "line_end": 18112,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_graph_generation.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_graph_generation.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E026",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18166,
+      "line_end": 18167,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_graph_patch.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_graph_patch.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E027",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18221,
+      "line_end": 18222,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_in_docker_manager.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_in_docker_manager.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E028",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18276,
+      "line_end": 18277,
+      "range_class": "core",
+      "exact_quote": "      \"state_selector\": \"state.commands.orchestrator_open_in_github_actions.availability\",\n      \"disabled_reason_projection\": \"state.commands.orchestrator_open_in_github_actions.disabled_reason\","
+    },
+    {
+      "evidence_ref_id": "A004-000225-E029",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17955,
+      "line_end": 17959,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_corroboration exposes a stable role/name/description matching cmd.orchestrator.open_corroboration.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_corroboration is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_corroboration preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_corroboration surfaces state.commands.orchestrator_open_corroboration.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E030",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18010,
+      "line_end": 18014,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_docker_manager exposes a stable role/name/description matching cmd.orchestrator.open_docker_manager.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_docker_manager is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_docker_manager preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_docker_manager surfaces state.commands.orchestrator_open_docker_manager.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E031",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18065,
+      "line_end": 18069,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_github_actions exposes a stable role/name/description matching cmd.orchestrator.open_github_actions.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_github_actions is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_github_actions preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_github_actions surfaces state.commands.orchestrator_open_github_actions.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E032",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18120,
+      "line_end": 18124,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_graph_generation exposes a stable role/name/description matching cmd.orchestrator.open_graph_generation.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_graph_generation is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_graph_generation preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_graph_generation surfaces state.commands.orchestrator_open_graph_generation.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E033",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18175,
+      "line_end": 18179,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_graph_patch exposes a stable role/name/description matching cmd.orchestrator.open_graph_patch.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_graph_patch is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_graph_patch preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_graph_patch surfaces state.commands.orchestrator_open_graph_patch.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E034",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18230,
+      "line_end": 18234,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_in_docker_manager exposes a stable role/name/description matching cmd.orchestrator.open_in_docker_manager.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_in_docker_manager is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_in_docker_manager preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_in_docker_manager surfaces state.commands.orchestrator_open_in_docker_manager.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E035",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18285,
+      "line_end": 18289,
+      "range_class": "core",
+      "exact_quote": "      \"accessibility_contract\": {\n        \"role_or_semantics\": \"catalog.orchestrator_open_in_github_actions exposes a stable role/name/description matching cmd.orchestrator.open_in_github_actions.\",\n        \"keyboard_access\": \"catalog.orchestrator_open_in_github_actions is reachable and activatable by keyboard where the control is visible.\",\n        \"focus_management\": \"catalog.orchestrator_open_in_github_actions preserves visible focus and returns focus deterministically after dispatch or error.\",\n        \"disabled_announcement\": \"catalog.orchestrator_open_in_github_actions surfaces state.commands.orchestrator_open_in_github_actions.disabled_reason to assistive technology when unavailable.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E036",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 17983,
+      "line_end": 17984,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_corroboration records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E037",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18038,
+      "line_end": 18039,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_docker_manager records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E038",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18093,
+      "line_end": 18094,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_github_actions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E039",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18148,
+      "line_end": 18149,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_graph_generation records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E040",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18203,
+      "line_end": 18204,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_graph_patch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E041",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18258,
+      "line_end": 18259,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_in_docker_manager records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    },
+    {
+      "evidence_ref_id": "A004-000225-E042",
+      "document_path": "Plans/Wiring_Matrix.production.json",
+      "line_start": 18313,
+      "line_end": 18314,
+      "range_class": "core",
+      "exact_quote": "      \"event_test_requirements\": [\n        \"Assert cmd.orchestrator.open_in_github_actions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\""
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

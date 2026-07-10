@@ -1,0 +1,580 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000255-EXACT-WIN-3D5E0AC7D38B-0002",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000255-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0255_c930735d",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-3D5E0AC7D38B-0002",
+  "doc_id": "DOC-3D5E0AC7D38B",
+  "document_path": "Plans/OpenCode_Deep_Extraction.md",
+  "core_range": [
+    400,
+    787
+  ],
+  "context_ranges": [
+    [
+      388,
+      399
+    ],
+    [
+      788,
+      799
+    ]
+  ],
+  "source_sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c",
+  "core_sha256": "79bdec0bc8ce35f85515252ad6523344592e56c94a1ea45de7cc4e673a7d30fd",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000255-EXACT-WIN-3D5E0AC7D38B-0002.json",
+  "capsule_sha256": "2feb5bc1664dd4fa7d2b822d36422eb28529d64c382011c1eac4cd90a4e2be38",
+  "capsule_bytes": 1649,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-3D5E0AC7D38B-0002.txt",
+  "source_excerpt_sha256": "e14ad50e2e115124f163efae835861fa70d7f791325fe4de00ef6259f069599b",
+  "source_excerpt_bytes": 30416,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-A004-000255-001",
+      "category": "formatter_execution_contract",
+      "observation": "The upstream formatter trigger is event-driven, applies to edits by any tool, filters by extension and enabled state, and executes matching formatters sequentially.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-001"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-002",
+      "category": "formatter_configuration_contract",
+      "observation": "The core defines a built-in auto-detection catalog plus global disablement, per-formatter configuration, runtime $FILE substitution, empty-command skipping, and unconditional enablement for configured custom formatters.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-002",
+        "ER-A004-000255-003"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-003",
+      "category": "skill_discovery_authority",
+      "observation": "Skill discovery has five ordered source classes, with later sources authoritative on name collisions and remote skills downloaded into cache.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-004"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-004",
+      "category": "skill_schema_and_failure_behavior",
+      "observation": "Only skill name and description are core-validated; location and content are loader-derived, additional frontmatter is ignored by core loading, and duplicate names warn before later-loaded replacement.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-005"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-005",
+      "category": "skill_agent_surface_and_permissions",
+      "observation": "Skills are exposed through tool-description XML, a named skill invocation, and slash commands; skill permissions support patterns, skill directories are externally whitelisted, and skill calls are protected during compaction.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-006"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-006",
+      "category": "plugin_loading_and_context",
+      "observation": "Plugin authority is ordered internal, built-in npm, then configured plugins; npm packages are installed and imported, duplicate function initialization is suppressed, and plugin functions receive SDK, project, filesystem, server, and shell context.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-007",
+        "ER-A004-000255-008"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-007",
+      "category": "plugin_capabilities_and_precedence",
+      "observation": "The upstream hook surface can observe all events and alter configuration, tools, authentication, model parameters and headers, permissions, commands, tool arguments and results, shell environment, prompts, compaction, and completed text; upstream plugin tools override colliding built-ins.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-009",
+        "ER-A004-000255-010"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-008",
+      "category": "model_contract_and_failures",
+      "observation": "The upstream model contract defines first-slash provider/model parsing, an ordered default-selection chain, per-agent variants and model overrides, provider-specific transforms and output limits, overflow detection, retryability classification, and nested error-message extraction.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-011",
+        "ER-A004-000255-012",
+        "ER-A004-000255-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-009",
+      "category": "authority_and_consumer_mapping",
+      "observation": "The document directs consumers to canonical Puppet Master owner sections instead of duplicating definitions and explicitly maps formatter, skill, plugin, model, tool, provider-stream, UI-command, storage, and message-taxonomy topics.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-014",
+        "ER-A004-000255-015",
+        "ER-A004-000255-022"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-010",
+      "category": "puppet_master_runtime_and_gui_truth",
+      "observation": "The stated Puppet Master direction is Rust-native prompt and execution infrastructure, Slint as the primary approval surface with CLI fallback, session-scoped approvals, no cross-session permission persistence, and a reject-all cascade.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-011",
+      "category": "explicit_builder_discretion",
+      "observation": "The core expressly leaves choices open for subagent execution transport, MCP prompt integration, formatter detection implementation, and the Rust plugin API mechanism.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-017",
+        "ER-A004-000255-018",
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-012",
+      "category": "state_and_native_surface_contracts",
+      "observation": "The upstream persistent message taxonomy includes a four-state tool lifecycle, while the adopted Puppet Master surface is Rust plus Slint and internal services rather than Tauri or a standalone HTTP server.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-021"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000255-013",
+      "category": "usage_consumer_boundary",
+      "observation": "Usage terminology, persistence semantics, and UI linkage are required to map into usage-feature and storage-plan instead of creating a parallel OpenCode-shaped vocabulary.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-022"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FND-A004-000255-001",
+      "severity": "medium",
+      "category": "formatter_exactness",
+      "finding": "The built-in formatter table is not an exact implementable extension contract because entries use ellipses and the relative phrase \"Same as prettier + more\" without enumerating the complete sets.",
+      "impact": "Implementers can produce different formatter-to-extension coverage while each claiming conformance to the catalog.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-002"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-002",
+      "severity": "medium",
+      "category": "skill_identity_contract",
+      "finding": "The name-mismatch description is internally unclear: it calls detection directory-based while simultaneously saying the frontmatter name, not the directory name, is the key, and it does not state when the defined mismatch error can occur.",
+      "impact": "A builder cannot derive one exact rule for directory-name validation, canonical skill identity, or mismatch failure behavior.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-005"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-003",
+      "severity": "high",
+      "category": "subagent_execution_contract",
+      "finding": "The subagent execution model remains a subprocess-or-thread choice without stated lifecycle, cancellation, isolation, resource, event-ordering, or observable-equivalence invariants.",
+      "impact": "The two permitted implementations can expose materially different orchestrator behavior and failure states.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-004",
+      "severity": "high",
+      "category": "approval_gui_contract",
+      "finding": "Slint is designated primary and CLI a fallback, but the core does not define the fallback trigger, state handoff, outcome parity, timeout behavior, or recovery when the primary surface is unavailable.",
+      "impact": "Approval requests can block, duplicate, or produce inconsistent decisions across GUI and CLI paths.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-017"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-005",
+      "severity": "medium",
+      "category": "mcp_command_contract",
+      "finding": "The statement that Puppet Master MCP prompt integration \"may differ\" supplies no minimum capability, conversion rule, compatibility boundary, or adjudication owner.",
+      "impact": "MCP prompts may be exposed, transformed, or omitted differently by independent implementations.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-017"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-006",
+      "severity": "medium",
+      "category": "formatter_detection_contract",
+      "finding": "Formatter auto-detection may be ported to Rust or delegated to shell scripts, but no selection rule or required parity for environment, timeout, exit-code, and unavailable-command behavior is stated.",
+      "impact": "Formatter availability and failure behavior can vary by implementation and host environment.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-018"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-007",
+      "severity": "high",
+      "category": "plugin_runtime_contract",
+      "finding": "The Rust plugin API is unresolved among WASM, dynamic libraries, subprocesses, and scripting bindings, with no common ABI, lifecycle, permission, isolation, versioning, or failure contract stated in the window.",
+      "impact": "Plugin packaging and runtime behavior cannot be implemented interoperably or validated consistently.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-008",
+      "severity": "medium",
+      "category": "plugin_hook_exactness",
+      "finding": "The upstream table enumerates sixteen hook rows, while the delta calls the interface approximately fifteen hooks, delegates support to an unseen subset, and silently ignores unsupported registrations.",
+      "impact": "The exact supported capability set and compatibility-failure boundary are not derivable from this window, and silent omission can mask nonfunctional plugins.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-009",
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-009",
+      "severity": "high",
+      "category": "provider_transform_conformance",
+      "finding": "Puppet Master must replicate an \"extensive\" provider transform layer, but the core supplies only examples and pointers rather than a normative transform matrix, ordering rules, failure outcomes, or conformance criteria.",
+      "impact": "Provider message, schema, caching, modality, and tool-call normalization can diverge in ways that break provider compatibility.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-012",
+        "ER-A004-000255-019",
+        "ER-A004-000255-020"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-010",
+      "severity": "medium",
+      "category": "model_priority_configuration",
+      "finding": "The hardcoded model priority list is required to become configurable, but no Puppet Master configuration key, schema, default, ordering semantics, invalid-value behavior, or migration rule is given.",
+      "impact": "Default model selection can differ across implementations and upgrades.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-011",
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "finding_id": "FND-A004-000255-011",
+      "severity": "high",
+      "category": "acceptance_evidence",
+      "finding": "The delta section says implementers must address its hooks but attaches no executable validation, receipt, fixture, or pass/fail acceptance criterion to the runtime, formatter, skill, plugin, and model obligations in this window.",
+      "impact": "Completion can be asserted from prose implementation without evidence that the required behavior and compatibility boundaries are satisfied.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-018",
+        "ER-A004-000255-019"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-A004-000255-001",
+      "statement": "The upstream formatter trigger, extension filtering, enabled filtering, and sequential execution order are explicit.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-001"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-002",
+      "statement": "Global formatter disablement, per-formatter fields, $FILE replacement, empty-command skipping, and configured-custom-formatter enablement are explicit.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-003"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-003",
+      "statement": "Skill source precedence and duplicate-name warning-plus-overwrite behavior are explicit.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-004",
+        "ER-A004-000255-005"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-004",
+      "statement": "The plugin-tool collision delta is explicit: OpenCode overrides built-ins, while Puppet Master denies override by default and requires override_builtin true.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-010",
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-005",
+      "statement": "Provider/model identifier parsing and the upstream default-model selection order are explicit.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-011"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-006",
+      "statement": "Permission persistence and reject behavior are explicit: approvals are session-scoped, are not persisted across sessions, and rejection cascades to all pending session permissions.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-017"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-007",
+      "statement": "The native GUI/API boundary is explicit: Rust plus Slint and internal services replace Tauri and standalone HTTP ownership.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-021"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-000255-008",
+      "statement": "The usage vocabulary ownership boundary is explicit and prohibits a parallel OpenCode-shaped usage vocabulary.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-022"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-A004-000255-001",
+      "unknown": "Whether the mapped canonical owner documents fully resolve the candidate gaps cannot be determined from this window.",
+      "reason": "The core supplies SSOT targets and cross-document ownership rules, but those target documents are outside the authorized capsule.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-014",
+        "ER-A004-000255-015",
+        "ER-A004-000255-022"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000255-002",
+      "unknown": "The exact Puppet Master plugin runtime mechanism and supported hook subset are unknown.",
+      "reason": "The core presents multiple runtime alternatives and delegates the supported subset to Plugins_System.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000255-003",
+      "unknown": "The exact GUI-to-CLI approval fallback trigger and state-transfer protocol are unknown.",
+      "reason": "The core establishes primary and fallback surfaces but does not provide their transition contract.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-017"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000255-004",
+      "unknown": "The complete normative provider-normalization matrix and its executable compatibility tests are unknown.",
+      "reason": "The window provides examples, upstream pointers, and a replication obligation but no exhaustive matrix or test references.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-012",
+        "ER-A004-000255-019",
+        "ER-A004-000255-020"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000255-005",
+      "unknown": "Whether acceptance receipts or validators exist elsewhere for the delta hooks is unknown.",
+      "reason": "No such evidence is identified inside the authorized core, and external owner documents and generated evidence are outside scope.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-016",
+        "ER-A004-000255-018",
+        "ER-A004-000255-019"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000255-006",
+      "unknown": "The exact PM-native skill roots and failure semantics for registry resolution, readiness validation, context bundling, and skill-tool invocation are unknown.",
+      "reason": "The core names these runtime dependencies and delegates the contract to Skills_System without defining their local state or failure behavior.",
+      "evidence_ref_ids": [
+        "ER-A004-000255-018"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-A004-000255-001",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 397,
+      "line_end": 397,
+      "range_class": "context",
+      "exact_quote": "- Formatters run automatically after every `File.Event.Edited` bus event. When a file is edited by any tool, the bus fires the event and `Format.init()` catches it, determines the file extension, finds matching enabled formatters, and runs them sequentially."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-002",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 405,
+      "line_end": 410,
+      "range_class": "core",
+      "exact_quote": "Built-in formatters (each with auto-detection logic):\n\n| Formatter | Extensions | Detection |\n|---|---|---|\n| `prettier` | .js, .jsx, .ts, .tsx, .html, .css, .json, .yaml, .md, ... | `prettier` in package.json dependencies |\n| `biome` | Same as prettier + more | `biome.json` / `biome.jsonc` exists |"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-003",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 443,
+      "line_end": 446,
+      "range_class": "core",
+      "exact_quote": "- Config `formatter: false` disables all formatters globally.\n- Per-formatter config: `{ disabled: boolean, command: string[], environment: Record<string, string>, extensions: string[] }`.\n- `$FILE` in the command array is replaced with the actual file path at execution time (line ~115 in `index.ts`).\n- Custom formatters can be added by defining `command` and `extensions` in config. If `command.length === 0`, the formatter is skipped. The `enabled()` check is replaced with `async () => true` for config-defined formatters."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-004",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 459,
+      "line_end": 464,
+      "range_class": "core",
+      "exact_quote": "Skills are discovered from multiple sources in this order (later sources overwrite earlier on name collision):\n1. **External dirs (global)**: `~/.claude/skills/**/SKILL.md`, `~/.agents/skills/**/SKILL.md` (unless `OPENCODE_DISABLE_EXTERNAL_SKILLS` flag is set)\n2. **External dirs (project)**: Walking up from project directory to worktree root, checking `.claude/` and `.agents/` for `skills/**/SKILL.md`\n3. **OpenCode dirs**: `.opencode/{skill,skills}/**/SKILL.md` (project + global config directories)\n4. **Config paths**: `config.skills.paths[]` -- arbitrary directories scanned for `**/SKILL.md`\n5. **Config URLs**: `config.skills.urls[]` -- remote indexes fetched, skills downloaded to cache (`Discovery.pull()`)"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-005",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 474,
+      "line_end": 484,
+      "range_class": "core",
+      "exact_quote": "| Field | Type | Required | Validation |\n|---|---|---|---|\n| `name` | `string` | Yes | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$`, 1-64 chars |\n| `description` | `string` | Yes | 1-1024 chars |\n| `location` | `string` | Auto | Set to file path during loading |\n| `content` | `string` | Auto | Body of the markdown file (after frontmatter) |\n\nAdditional fields from the spec (`license`, `compatibility`, `metadata`) may appear in frontmatter but are not used by the core loading logic -- only `name` and `description` are validated via `Info.pick({ name: true, description: true }).safeParse()`.\n\n- **Name mismatch**: `SkillNameMismatchError` is defined but validation uses directory-based detection (the skill name from frontmatter is used as the key, not the directory name).\n- **Duplicate handling**: If two skills share a name, a warning is logged and the later-loaded skill overwrites the earlier one."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-006",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 493,
+      "line_end": 502,
+      "range_class": "core",
+      "exact_quote": "- Skills are listed in the `skill` tool description with `<available_skills>` XML blocks containing name and description.\n- The agent invokes a skill via `skill({ name })` which loads the skill's content.\n- Skills are also registered as invokable commands (so `/skillname` works from the command palette).\n\n#### 7F.4 Permissions integration\n\n**Behavior summary:**\n- The `skill` permission key supports patterns (e.g., `skill: { \"my-skill\": \"allow\", \"*\": \"deny\" }`).\n- Skill directories are automatically whitelisted for `external_directory` permission (see `agent.ts` line ~55: `skillDirs.map(dir => path.join(dir, \"*\"))` added to whitelisted dirs).\n- Skill tool calls are protected from pruning during compaction (`PRUNE_PROTECTED_TOOLS = [\"skill\"]`)."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-007",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 514,
+      "line_end": 519,
+      "range_class": "core",
+      "exact_quote": "Plugin loading order:\n1. **Internal plugins** (directly imported, not npm-installed): `CodexAuthPlugin`, `CopilotAuthPlugin`, `GitlabAuthPlugin`\n2. **Built-in npm plugins**: `[\"opencode-anthropic-auth@0.0.13\"]` (unless `OPENCODE_DISABLE_DEFAULT_PLUGINS` flag)\n3. **Config plugins**: `config.plugin[]` -- either npm package specifiers (`pkg@version`) or `file://` local paths\n\nFor npm plugins, `BunProc.install(pkg, version)` installs the package, then `import(plugin)` loads it. Deduplication prevents the same function from being initialized twice (via `Set<PluginInstance>`)."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-008",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 528,
+      "line_end": 537,
+      "range_class": "core",
+      "exact_quote": "A plugin is an async function receiving `PluginInput`:\n```\n{ client, project, worktree, directory, serverUrl, $ }\n```\n- `client`: OpenCode SDK client (API access)\n- `project`: Project metadata\n- `worktree` / `directory`: Filesystem context\n- `$`: Bun shell for subprocess execution\n\nThe function returns a `Hooks` object with optional event handlers."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-009",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 546,
+      "line_end": 563,
+      "range_class": "core",
+      "exact_quote": "| Hook | Signature | Purpose |\n|---|---|---|\n| `event` | `({event}) => void` | Receives ALL bus events (subscribed via `Bus.subscribeAll`) |\n| `config` | `(config) => void` | Called once with resolved config |\n| `tool` | `Record<string, ToolDefinition>` | Custom tool definitions (object, not function) |\n| `auth` | `AuthHook` | Authentication provider |\n| `chat.message` | `(input, output) => void` | Called when a new user message is received |\n| `chat.params` | `(input, output) => void` | Modify LLM parameters (temperature, topP, topK, options) |\n| `chat.headers` | `(input, output) => void` | Modify request headers sent to LLM provider |\n| `permission.ask` | `(input, output) => void` | Override permission decisions |\n| `command.execute.before` | `(input, output) => void` | Before command execution (can modify parts) |\n| `tool.execute.before` | `(input, output) => void` | Before tool execution (can modify args) |\n| `tool.execute.after` | `(input, output) => void` | After tool execution (can modify result) |\n| `shell.env` | `(input, output) => void` | Modify shell environment variables |\n| `experimental.chat.messages.transform` | `(input, output) => void` | Modify message history before sending to LLM |\n| `experimental.chat.system.transform` | `(input, output) => void` | Modify system prompt array |\n| `experimental.session.compacting` | `(input, output) => void` | Customize compaction (add context or replace prompt) |\n| `experimental.text.complete` | `(input, output) => void` | Called when text part is complete |"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-010",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 565,
+      "line_end": 570,
+      "range_class": "core",
+      "exact_quote": "#### 7G.4 Custom tools and precedence\n\n**Behavior summary:**\n- Plugins define tools via the `tool` property on the hooks object (a `Record<string, ToolDefinition>`).\n- Plugin tools are loaded in `ToolRegistry` alongside built-in tools.\n- **On name collision, plugin tools override built-in tools** -- this is by design for extensibility."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-011",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 583,
+      "line_end": 598,
+      "range_class": "core",
+      "exact_quote": "- Format: `provider_id/model_id` (e.g., `anthropic/claude-sonnet-4`).\n- `parseModel()` splits on the first `/`: everything before is `providerID`, everything after (joined by `/`) is `modelID`.\n\n#### 7H.2 Default model selection and loading priority\n\n**File pointers:**\n- `defaultModel()`: `packages/opencode/src/provider/provider.ts` (line ~1288)\n- Model priority sorting: `packages/opencode/src/provider/provider.ts` -> `sort()` (line ~1279)\n\n**Behavior summary:**\nLoading priority (first match wins):\n1. **Config `model` field**: `config.model` -> `parseModel()` -> done\n2. **Last used**: Reads `model.json` from state directory, checks each `{providerID, modelID}` against available providers\n3. **First by internal priority**: Sorts available models by priority list `[\"gpt-5\", \"claude-sonnet-4\", \"big-pickle\", \"gemini-3-pro\"]` (descending priority), then by `\"latest\"` suffix, then by ID\n\nNote: CLI flag override happens upstream of `defaultModel()` (at the prompt input level where `model` is passed explicitly)."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-012",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 607,
+      "line_end": 622,
+      "range_class": "core",
+      "exact_quote": "- Model options are set via `config.provider.<provider>.options` and provider-specific loaders.\n- Examples: Anthropic adds `anthropic-beta` headers for claude-code/interleaved-thinking; OpenAI uses `.responses()` API; Bedrock configures region/profile/credentials.\n- **Variants**: Built-in + custom variants, cycling via keybind in UI. Per-agent overrides via `agent.<name>.variant`.\n- **Per-agent model overrides**: `agent.<name>.model` (parsed via `parseModel()`) allows each agent to use a different model.\n\n#### 7H.4 Provider transform layer\n\n**File pointers:**\n- Transform namespace: `packages/opencode/src/provider/transform.ts`\n\n**Behavior summary:**\n- `normalizeMessages()`: Provider-specific message normalization (e.g., Anthropic rejects empty content, Claude needs toolCallId normalization for non-string IDs).\n- `providerOptions()`: Builds provider-specific options (instructions for OpenAI, caching for Anthropic, etc.).\n- `schema()`: Transforms tool JSON schemas for provider compatibility.\n- `maxOutputTokens()`: Determines max output tokens per model (default 32,000 or flag override).\n- Output token limits are set via `OUTPUT_TOKEN_MAX` (configurable via `OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX`)."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-013",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 629,
+      "line_end": 632,
+      "range_class": "core",
+      "exact_quote": "**Behavior summary:**\n- `isOverflow()`: Detects context overflow via regex patterns matching error messages from 12+ providers (Anthropic, Bedrock, OpenAI, Google, xAI, Groq, DeepSeek, etc.).\n- `isRetryable()`: Provider-specific retryability (e.g., OpenAI 404s are treated as retryable).\n- Error message extraction: Attempts to parse `responseBody` JSON for nested error messages."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-014",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 638,
+      "line_end": 640,
+      "range_class": "core",
+      "exact_quote": "This section is the canonical mapping from OpenCode extraction categories to Puppet Master contract sections. Use these targets instead of duplicating definitions.\n\n| # | Extracted Topic | OpenCode Primary File(s) | Puppet Master SSOT Target | Contract Section(s) |"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-015",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 660,
+      "line_end": 679,
+      "range_class": "core",
+      "exact_quote": "| E1 | Formatter trigger | `format/index.ts` | `Plans/Formatters_System.md` | trigger-mechanism |\n| E2 | Built-in formatters | `format/formatter.ts` | `Plans/Formatters_System.md` | built-ins |\n| E3 | Formatter config | `format/index.ts` | `Plans/Formatters_System.md` | config-schema |\n| F1 | Skill discovery | `skill/skill.ts`, `skill/discovery.ts` | `Plans/Skills_System.md` | discovery |\n| F2 | Skill frontmatter | `skill/skill.ts` | `Plans/Skills_System.md` | schema |\n| F3 | Skill-to-agent surface | `command/index.ts` | `Plans/Skills_System.md` | agent-integration |\n| F4 | Skill permissions | `agent/agent.ts` | `Plans/Skills_System.md` | permissions |\n| G1 | Plugin discovery | `plugin/index.ts` | `Plans/Plugins_System.md` | discovery-load-order |\n| G2 | Plugin context | `plugin/index.ts` | `Plans/Plugins_System.md` | plugin-signature |\n| G3 | Plugin hooks | `packages/plugin/src/index.ts` | `Plans/Plugins_System.md` | hook-events |\n| G4 | Custom tools | `plugin/index.ts`, `tool/registry.ts` | `Plans/Plugins_System.md` | custom-tools |\n| H1 | Model ID format | `provider/provider.ts` | `Plans/Models_System.md` | MODEL-ID |\n| H2 | Default selection | `provider/provider.ts` | `Plans/Models_System.md` | SELECTION-PRIORITY |\n| H3 | Model options/variants | `provider/provider.ts`, `provider/transform.ts` | `Plans/Models_System.md` | MODEL-OPTIONS |\n| H4 | Error handling | `provider/error.ts` | `Plans/Models_System.md` | MODEL-ERRORS |\n| -- | Tools + ToolContext | `tool/tool.ts`, `tool/registry.ts` | `Plans/Tools.md` | S3, S3.5, S10 |\n| -- | Provider stream | `provider/transform.ts` | `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md` | S2 (normalized stream) |\n| -- | UI commands | `command/index.ts` | `Plans/UI_Command_Catalog.md` | S2 (stable IDs) |\n| -- | Storage | `session/message-v2.ts` | `Plans/storage-plan.md` | S2.2 (event types) |\n| -- | Message/part taxonomy | `session/message-v2.ts` | `Plans/Contracts_V0.md` | S1 (EventRecord) |"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-016",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 687,
+      "line_end": 700,
+      "range_class": "core",
+      "exact_quote": "## 9. Baseline -> Puppet Master Delta Hooks\n\nEach topic below lists 1-5 specific points where Puppet Master's implementation is expected to **diverge** from the OpenCode baseline. These are the \"delta hooks\" that implementers must address.\n\n### 9A. Run Modes and Enforcement\n1. **Rust-native plan mode**: Puppet Master implements plan mode in Rust, not TypeScript. The system-reminder injection mechanism must be replicated in the Rust prompt builder.\n2. **No Bun dependency**: Plan mode's `PlanExitTool` uses `Question.ask()` which is tied to OpenCode's Node/Bun runtime. Puppet Master implements the approval flow via its Slint GUI (primary) with CLI fallback per `Plans/Permissions_System.md`.\n3. **Plan file location**: OpenCode writes plan files to `.opencode/plans/`. Puppet Master stores plan files at `~/.config/puppet-master/plans/` (global) and `.puppet-master/plans/` (project-level), per existing config path conventions.\n\n### 9B. Subagents and Context Injection\n1. **Subagent execution model**: OpenCode runs subagents in-process via the task tool. Puppet Master's Rust backend may use subprocess-based or thread-based agent execution.\n2. **Prompt assembly in Rust**: The multi-layered prompt pipeline (system + instructions + reminders + transforms) must be reimplemented. Model-specific prompt variants (anthropic.txt, codex_header.txt, gemini.txt) need a Rust equivalent selection mechanism.\n3. **Compaction thresholds**: The 20,000-token reserve and 40,000-token prune-protect values are hardcoded. Puppet Master should make these configurable.\n4. **Plugin prompt transforms**: Puppet Master supports both `experimental.chat.system.transform` and `experimental.chat.messages.transform` hooks under its plugin hook system with the `experimental.` prefix accepted as alias (consistent with the compaction hook alias decision in `Plans/Plugins_System.md`)."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-017",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 702,
+      "line_end": 711,
+      "range_class": "core",
+      "exact_quote": "### 9C. Permissions and Approval Mechanics\n1. **Permission storage**: OpenCode's `always` approvals are session-scoped and not persisted to disk. **Delta:** Puppet Master adopts session-scoped approvals as the default (per `Plans/Permissions_System.md`); persistence across sessions is not supported.\n2. **Rust wildcard engine**: The `Wildcard.match()` regex-based engine must be ported to Rust (or use an existing Rust glob/wildcard library).\n3. **GUI approval flow**: OpenCode's ask/reply cycle uses bus events + server routes. Puppet Master wires adopted approval behavior through PM-native Slint approval surfaces or CLI fallback; older Tauri GUI phrasing is retired/source-lineage only.\n4. **Reject-all cascade**: OpenCode's `reject` reply cascades to ALL pending permissions in the session. Puppet Master preserves this reject-all cascade behavior (matching OpenCode baseline).\n\n### 9D. Commands\n1. **Command discovery paths**: OpenCode uses `.opencode/commands/`. Puppet Master uses project-level `.puppet-master/commands/` and global `~/.config/puppet-master/commands/` (per `Plans/Commands_System.md`).\n2. **Template engine**: The `$ARGUMENTS`, `$1`/`$2`, shell injection, `@file` syntax must be reimplemented in Rust.\n3. **MCP prompt integration**: OpenCode converts MCP prompts to commands. Puppet Master's MCP integration may differ."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-018",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 713,
+      "line_end": 724,
+      "range_class": "core",
+      "exact_quote": "### 9E. Formatters\n1. **Event-driven trigger**: OpenCode uses a bus event (`File.Event.Edited`) to trigger formatting. Puppet Master defines an equivalent `file.edited` event in its Rust event system to trigger formatting.\n2. **Formatter auto-detection**: The enabled() checks (e.g., \"is prettier in package.json?\") must be ported to Rust or delegated to shell scripts.\n3. **Bun-specific commands**: Several formatters use `BunProc.which()` for execution. Puppet Master substitutes with `which`-based system-level package detection and direct process invocation.\n\n### 9F. Skills\n1. **Architecture pattern, not ownership transfer:** OpenCode's skills system is a useful reference because it sits above the provider layer. Puppet Master should follow that pattern architecturally while keeping PM-native skills as the canonical runtime path.\n2. **Compatibility roots:** PM maintains its own canonical roots and also imports compatible roots such as `.claude/skills` and `.agents/skills` per the PM skill system. Compatibility import does not make those external roots canonical.\n3. **Projection posture:** Provider-native or tool-native skill projection is optional compatibility only. PM should not require Codex-specific or GitHub-Copilot-specific skill packaging inside OpenCode because OpenCode itself applies one skill system above its provider list.\n4. **Discovery vs runtime:** OpenCode-style discovery compatibility is useful, but PM runtime correctness still depends on PM registry resolution, readiness validation, context bundling, and the PM `skill` tool.\n\nContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-019",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 725,
+      "line_end": 736,
+      "range_class": "core",
+      "exact_quote": "### 9G. Plugins\n1. **Plugin runtime**: OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Puppet Master's Rust backend must define its own plugin API (WASM, dynamic libraries, subprocess-based, or scripting language bindings).\n2. **Hook interface**: The `Hooks` interface has ~15 named hooks. Puppet Master supports the hook subset defined in `Plans/Plugins_System.md §4`; unsupported hooks are silently ignored at registration.\n3. **Built-in plugins**: OpenCode bundles auth plugins (Codex, Copilot, GitLab). Puppet Master implements auth providers natively (not via plugins), per `Plans/rewrite-tie-in-memo.md`.\n4. **Tool precedence**: Plugin tools overriding built-ins is by design in OpenCode. Puppet Master disallows plugin tools overriding built-in tools by default; override requires explicit `override_builtin: true` (consistent with `Plans/Commands_System.md` override policy).\n\n### 9H. Models\n1. **AI SDK dependency**: OpenCode uses the Vercel AI SDK for model abstraction. Puppet Master implements its own provider abstraction in Rust, per `Plans/Models_System.md`.\n2. **Provider transform layer**: The extensive per-provider normalization (Anthropic empty content filtering, Claude toolCallId normalization, etc.) must be replicated in the Puppet Master provider layer.\n3. **Model priority list**: The hardcoded priority list `[\"gpt-5\", \"claude-sonnet-4\", \"big-pickle\", \"gemini-3-pro\"]` should be configurable in Puppet Master.\n4. **Overflow detection**: The regex-based overflow detection patterns (12+ provider-specific patterns) must be maintained and extended as new providers are added.\n5. **Debug model/memory boundary**: Debug or OpenCode-derived extraction must verify model assumptions against `Plans/Models_System.md` (`/Models_System.md`) and Assistant-only memory assumptions against `Plans/assistant-memory-subsystem.md` (`/assistant-memory-subsystem.md`); this baseline reference does not re-own those budgets, injection rules, or retention boundaries."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-020",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 740,
+      "line_end": 760,
+      "range_class": "core",
+      "exact_quote": "## 10. Upstream Notes Worth Capturing (DRY; file pointers + deltas)\n\n> Purpose: prevent downstream agents from \"assuming Puppet Master == OpenCode\" by recording **where** key upstream models live and the **few deltas** that commonly cause mis-mapping.\n\n### 10.1 Tools + ToolContext (upstream pointers)\n- Plugin tool contract (ToolContext + `ask()` shape): `packages/plugin/src/tool.ts`\n- Internal tool contract (structured `{title, metadata, output, attachments?}` + truncation wrapper): `packages/opencode/src/tool/tool.ts`\n- Tool loading/registry (custom tools from `{tool,tools}/*.{js,ts}` + plugin tools; model-gated tool availability): `packages/opencode/src/tool/registry.ts`\n- Tool lifecycle hooks (not Bus events): `Plugin.trigger(\"tool.execute.before\"|\"tool.execute.after\")` in `packages/opencode/src/session/prompt.ts`\n\n### 10.2 Permissions model (allow/deny/ask, wildcard patterns, replies, errors)\n- Current ruleset-based permissions: `packages/opencode/src/permission/next.ts` + API surface `packages/opencode/src/server/routes/permission.ts`\n  - Replies are `once | always | reject`; `reject` can optionally carry a user correction message (`CorrectedError` vs `RejectedError`).\n  - Wildcard semantics (incl. special-case patterns ending in `\" *\"`): `packages/opencode/src/util/wildcard.ts`\n- Notable delta vs Puppet Master assumptions: OpenCode has *two* permission implementations (`packages/opencode/src/permission/index.ts` and `.../permission/next.ts`). Prefer `next.ts` when extracting current behavior.\n\n### 10.3 Provider abstraction + transform/error layers (providerID/modelID split)\n- Provider/model registry and loader logic (explicit `providerID` + `modelID` split): `packages/opencode/src/provider/provider.ts`\n- Provider message normalization / capability shims (toolCallId normalization, caching flags, modality filtering): `packages/opencode/src/provider/transform.ts`\n- Error parsing and retryability/overflow detection (stream + API-call): `packages/opencode/src/provider/error.ts`\n- Notable delta vs Puppet Master assumptions: a significant amount of \"provider compatibility\" lives in the transform layer (not in the core session stream), so don't assume upstream tool/message parts map 1:1 to any single provider's API."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-021",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 762,
+      "line_end": 771,
+      "range_class": "core",
+      "exact_quote": "### 10.4 Session/message/part taxonomy (what \"a message\" means upstream)\n- Message schema (legacy/simple): `packages/opencode/src/session/message.ts` (parts: `text`, `reasoning`, `tool-invocation`, `file`, ...)\n- Message schema (current/persistent): `packages/opencode/src/session/message-v2.ts` (parts: `text|reasoning|file|tool|step-start|step-finish|snapshot|patch|subtask|retry|compaction|agent`)\n  - Tool part state machine: `pending|running|completed|error` (`ToolState*` in the same file).\n- Notable delta vs Puppet Master assumptions: upstream sometimes injects synthetic messages/parts to satisfy provider constraints (e.g., ensure every `tool_use` has a corresponding `tool_result`; see `packages/opencode/src/session/message-v2.ts` + `packages/opencode/src/session/prompt.ts`).\n\n### 10.5 Server and routes (API surface)\n- Server entry: `packages/opencode/src/server/server.ts` -- Hono-based HTTP server with SSE streaming, CORS, basic auth, and WebSocket support.\n- Route modules: `routes/session.ts`, `routes/permission.ts`, `routes/provider.ts`, `routes/config.ts`, `routes/file.ts`, `routes/mcp.ts`, `routes/pty.ts`, `routes/tui.ts`, `routes/project.ts`, `routes/question.ts`, `routes/experimental.ts`, `routes/global.ts`\n- Notable delta: Puppet Master uses Rust + Slint native surfaces and internal Rust services, not Tauri or a standalone HTTP server. Adopted API surface maps to internal Rust function calls, UICommand dispatch, and permission routes under the current owner docs."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000255-022",
+      "document_path": "Plans/OpenCode_Deep_Extraction.md",
+      "line_start": 776,
+      "line_end": 784,
+      "range_class": "core",
+      "exact_quote": "### 10.7 Usage pipeline and normalization mapping\n- Upstream reference pattern: OpenCode's message-level usage flow (`Session.getUsage`, processor finish-step, and related normalization logic) is useful as an extraction target for how response metadata becomes durable usage records.\n- Puppet Master mapping rule: all extracted usage terminology, persistence semantics, and UI linkage MUST map into `Plans/usage-feature.md` and `Plans/storage-plan.md` rather than creating a parallel OpenCode-shaped usage vocabulary in this document or downstream packets.\n\n## Owner / Consumer Map\n\nThis source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/OpenCode_Deep_Extraction.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.\n\nContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

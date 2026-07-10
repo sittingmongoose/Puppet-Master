@@ -1,0 +1,39 @@
+{
+  "active_authority_sources": 133,
+  "assignment_count": 2538,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "blind_initial_sources": 131,
+  "exact_adversarial_cross_runner_separation": true,
+  "fresh_agent_per_assignment": true,
+  "later_fresh_fleets_required": [
+    "seam",
+    "document_integration",
+    "feature_inventory",
+    "external_research",
+    "feature_synthesis",
+    "scenario_falsification",
+    "shadow_builders",
+    "mutation",
+    "certification"
+  ],
+  "persistent_runner_semantic_work_forbidden": true,
+  "post_freeze_deferred_sources": 2,
+  "runner_count": 12,
+  "runner_token_loads": {
+    "runner-01": 1230574,
+    "runner-02": 1230574,
+    "runner-03": 1230509,
+    "runner-04": 1230509,
+    "runner-05": 1230740,
+    "runner-06": 1230740,
+    "runner-07": 1230595,
+    "runner-08": 1230595,
+    "runner-09": 1230510,
+    "runner-10": 1230510,
+    "runner-11": 1230481,
+    "runner-12": 1230481
+  },
+  "single_writer_namespaces": true,
+  "status": "prelaunch_built",
+  "window_count": 1269
+}

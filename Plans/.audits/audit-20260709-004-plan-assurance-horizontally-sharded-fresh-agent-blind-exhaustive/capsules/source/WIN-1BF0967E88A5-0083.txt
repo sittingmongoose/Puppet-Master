@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 30887-30898 >>>
+negative_constraints:
+- Orchestrator projections must update from committed runtime events/projections rather than timer polling.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Executor, Contracts V0, and Orchestrator Page own referenced wake/projection contracts.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 30899-31283 >>>
+### OSI-424 - Runtime Enum And Counter Family Alignment
+
+```yaml
+plan_unit_id: OSI-424
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Runtime enum and counter alignment preserves orchestrator as a consumer of canonical runtime contracts, classified
+  failure_class, blocked_reason_code, ordered allowed_action_ids, capacity_deferred slot shortage, new attempt_id creation,
+  independent counter families, and retry_count as display-only.
+gui_related: false
+gui_classification_reason: This unit covers backend runtime enum/counter alignment, not GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-017
+- OSI-413
+- OSI-415
+- OSI-421
+- OSI-422
+- OSI-423
+unblocks: []
+acceptance_criteria:
+- S0224 source lines 6414-6426 remain losslessly available for exact-text audit under OSI-424.
+- S0224 source line 6427 remains residual blank boundary coverage for the next structural disposition batch.
+- Orchestrator must not redefine canonical runtime contracts locally.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: runtime_enum_counter_family_alignment
+node_compile_hint:
+  mode: runtime_enum_counter_family_alignment
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0224
+preserved_exact_tokens:
+- failure_class
+- blocked_reason_code
+- allowed_action_ids[]
+- capacity_deferred
+- attempt_id
+- independent counter-family model
+- retry_count
+- display-only
+negative_constraints:
+- The orchestrator is a consumer of canonical runtime contracts and MUST NOT redefine them locally.
+- Treat slot shortage as capacity_deferred, not blocked.
+compatibility_only_notes:
+- retry_count is display-only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Contracts V0, Decision Policy, and Executor Protocol own canonical runtime enums and counters.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md'
+```
+
+## Migration Coverage
+
+Original hash: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 118 atomized `orchestrator-subagent-integration-S0001` through `orchestrator-subagent-integration-S0021` into fine-grained PlanUnits `OSI-002` through `OSI-040`. Phase 2B batch 119 atomized `orchestrator-subagent-integration-S0022` into fine-grained PlanUnits `OSI-041` through `OSI-049`, preserving the trailing `Configuration` / `Subagent Configuration` opening fence as coverage-only boundary material. Phase 2B batch 120 atomized `orchestrator-subagent-integration-S0023` through `orchestrator-subagent-integration-S0040` into fine-grained PlanUnits `OSI-050` through `OSI-074`, including split GUI projection coverage for execution-unit UI inspection and SCM snapshot consumers. Phase 2B batch 121 atomized `orchestrator-subagent-integration-S0041` through `orchestrator-subagent-integration-S0088` into fine-grained PlanUnits `OSI-075` through `OSI-098`, preserving section/checklist boundary spans as attached coverage rather than standalone implementation tasks. Phase 2B batch 122 atomized `orchestrator-subagent-integration-S0089` through `orchestrator-subagent-integration-S0096` into fine-grained PlanUnits `OSI-099` through `OSI-114`, preserving start-verification Rust snippets as plan examples only. Phase 2B batch 123 atomized `orchestrator-subagent-integration-S0097` into fine-grained PlanUnits `OSI-115` through `OSI-127`, preserving end-verification Rust snippets as plan examples only and retaining Document Packaging / DRY gate references. Phase 2B batch 124 atomized `orchestrator-subagent-integration-S0098` through `orchestrator-subagent-integration-S0109` into fine-grained PlanUnits `OSI-128` through `OSI-147`, preserving the HookRegistry Rust snippets as plan examples only and attaching `S0099` as normative setup for `OSI-129`. Phase 2B batch 125 partially atomized `orchestrator-subagent-integration-S0110` source lines 2249-2639 into fine-grained PlanUnits `OSI-148` through `OSI-158`, preserving handoff-validation Rust snippets as plan examples only and treating lines 2573-2585 and 2639 as non-standalone coverage-only example material. Phase 2B batch 126 completed `orchestrator-subagent-integration-S0110` source lines 2640-2822 into fine-grained PlanUnits `OSI-159` through `OSI-165`, preserving Claude/Gemini/Copilot parser snippets, hook validation snippets, ParsedOutput integration, and benefit-summary lines as plan examples or attached coverage only. Phase 2B batch 127 atomized `orchestrator-subagent-integration-S0111` through `orchestrator-subagent-integration-S0118` and `orchestrator-subagent-integration-S0119` source lines 3153-3220 into fine-grained PlanUnits `OSI-166` through `OSI-190`, preserving remediation Rust snippets, continuity/storage negative constraints, platform tables, YAML snippets, and lifecycle-gap compatibility notes as plan evidence or attached coverage only. Phase 2B batch 128 completed `orchestrator-subagent-integration-S0119` source lines 3221-3315 into fine-grained PlanUnits `OSI-191` through `OSI-199`, preserving validation fallback, performance, permission, prompt-injection, hook-adapter, memory extraction, remediation context, and parser strictness gap mitigations as plan evidence or compatibility notes. Phase 2B batch 129 atomized duplicate source spans `orchestrator-subagent-integration-S0120` through `orchestrator-subagent-integration-S0125` into fine-grained PlanUnits `OSI-200` through `OSI-208`, preserving implementation placement, selector guardrails, and platform capability next-step checklist tokens as duplicate-aware compatibility/source-lineage coverage only. Phase 2B batch 130 atomized `orchestrator-subagent-integration-S0126` through `orchestrator-subagent-integration-S0136`, source lines 3370-3428, into fine-grained PlanUnits `OSI-209` through `OSI-234`, preserving implementation placement, config-wiring, verification, coordination, hook, handoff, continuity, remediation, and subagent-availability tokens while recording the prior batch-plan line-end mismatch as a span-map correction. Phase 2B batch 131 atomized `orchestrator-subagent-integration-S0137` through `orchestrator-subagent-integration-S0141` plus partial `orchestrator-subagent-integration-S0142` source lines 3574-3828 into fine-grained PlanUnits `OSI-235` through `OSI-259`, preserving parallel execution, selector DRY, dependency context, crew message-board, routing, throttling, lifecycle, projection, prompt-injection, scenario, platform-field, data-model, registration, and partial status-update API tokens as plan evidence or source-lineage coverage. Phase 2B batch 132 completed `orchestrator-subagent-integration-S0142` source lines 3829-4042 into fine-grained PlanUnits `OSI-260` through `OSI-278`, preserving status mutation, unregister, coordination context, file aggregation, stale projection pruning, serialization, duration helper, pre-execution registration, prompt injection, execution lifecycle, provider coordination, hook enrichment, cadence, event extraction, cross-platform examples, runner contract, and implementation placement tokens as plan evidence only. Phase 2B batch 133 atomized duplicate crew-rule spans `orchestrator-subagent-integration-S0143` through `orchestrator-subagent-integration-S0152` plus partial `orchestrator-subagent-integration-S0153` source lines 4160-4436 into fine-grained PlanUnits `OSI-279` through `OSI-308`, preserving crew rules, retired gap-era notes, executionLimits caps, GUI consumer boundaries, future Assistant guardrails, template/metrics/learning/scheduling enhancements, PRD/interview crew gap notes, research coverage caveats, comparison evidence, message-board examples, routing examples, message examples, orchestrator monitoring, GUI insight projection, and the prompt-injection introduction as plan evidence only. `orchestrator-subagent-integration-S0153` source line 4437 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0153` at source line 4437 so the Rust fence is inspected intact. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+Phase 2B batch 134 supersedes the immediately preceding residual sentence: batch 134 completed `orchestrator-subagent-integration-S0153` source lines 4437-4724 and partially atomized `orchestrator-subagent-integration-S0154` source lines 4725-4836 into fine-grained PlanUnits `OSI-309` through `OSI-327`, preserving the intact prompt-injection Rust fence, message relevance filters, threading, lifecycle/retention caveats, `AgentCommunicator` placement, DRY validation, platform display ContractRefs, command parsing example, orchestrator insights, benefits and mitigation evidence, GUI visualization consumer projection, concurrent-write/atomicity gap, fail-open stale-lock disposition, locking examples, platform process placeholder, and Gap #29 opening as plan evidence only. `orchestrator-subagent-integration-S0154` source line 4837 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0154` at source line 4837.
+Phase 2B batch 135 supersedes the batch 134 residual sentence for S0154: batch 135 completed `orchestrator-subagent-integration-S0154` source lines 4837-5226 into fine-grained PlanUnits `OSI-328` through `OSI-345`, preserving corruption recovery, backup recovery snippets, schema/timestamp validation, stale-agent cleanup compatibility evidence, five-minute prune examples, file-operation extraction reliability, extractor snippets, size and prompt limits, filtered coordination context, conflict resolution and file-locking compatibility evidence, path normalization, event-ingestion fallback, metrics/logging visibility, GUI monitoring consumer projection, and analytics evidence. `orchestrator-subagent-integration-S0155` through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0155` at source line 5227.
+Phase 2B batch 136 supersedes the batch 135 residual sentence for S0155 through S0172: batch 136 atomized `orchestrator-subagent-integration-S0155` through `orchestrator-subagent-integration-S0172` and partial `orchestrator-subagent-integration-S0173` source lines 5623-5626 into fine-grained PlanUnits `OSI-346` through `OSI-374`, preserving coordination query/filtering, backup and schema-versioning examples, parallel worktree execution, conflict-detection examples, concurrency cap ownership, multi-language backend/frontend execution examples, platform capability surfaces, hook/MCP strategies, stale all-CLI transport disposition, capability snapshot rules, and the enhanced invoker fence opening as plan evidence only. `orchestrator-subagent-integration-S0173` source line 5627 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0173` at source line 5627.
+Phase 2B batch 137 supersedes the batch 136 residual sentence for S0173 through S0187: batch 137 completed `orchestrator-subagent-integration-S0173` source lines 5627-5653 and atomized `orchestrator-subagent-integration-S0174` through `orchestrator-subagent-integration-S0187` into fine-grained PlanUnits `OSI-375` through `OSI-394`, preserving enhanced invoker dispatch, platform capability benefits and operational notes, capability follow-up checklist evidence, autonomous QA reference boundaries, exact visual status symbols, ProgressTracker examples, QA inspector interfaces, task/phase inspector snippets, pause-gate GUI projection, rework commit strategy example, and enhanced loop DRY/Executor ContractRefs as plan evidence only. `orchestrator-subagent-integration-S0188` source line 6027 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0188` at source line 6027.
+Phase 2B batch 138 supersedes the batch 137 residual sentence for S0188 through S0223 and partial S0224: batch 138 atomized `orchestrator-subagent-integration-S0188` through `orchestrator-subagent-integration-S0223` and `orchestrator-subagent-integration-S0224` source lines 6414-6426 into fine-grained PlanUnits `OSI-395` through `OSI-424`, preserving autonomous QA benefits/config evidence, media capability gating change summary, sharded graph consumption, Persona runtime/config boundaries, stale `explore` to `explorer` normalization, scored ready-set scheduling, worktree-native conflict control, wake/cascade semantics, temporal wait rules, runtime projection fields, remediation lineage, retry/backoff matrix, decomposition degradation boundary, event-driven GUI projection alignment, runtime scheduler consumer fields, blocked outcome handling, same-cycle scheduling, and runtime enum/counter alignment as plan evidence only. `orchestrator-subagent-integration-S0224` source line 6427 plus generated owner, PlanUnit, and migration-coverage audit spans remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0224` at source line 6427.
+Phase 2B batch 139 supersedes the batch 138 residual sentence for S0224 through S0227: batch 139 structurally dispositioned the residual `orchestrator-subagent-integration-S0224` blank boundary line 6427, generated `orchestrator-subagent-integration-S0225` Owner / Consumer Map, generated `orchestrator-subagent-integration-S0226` PlanUnits heading, and generated `orchestrator-subagent-integration-S0227` OSI-001 bridge/audit material without adding product PlanUnits. `orchestrator-subagent-integration-S0228` source lines 6817-6827 remain temporary residual source-preserving generated Migration Coverage audit/reporting material under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0228` at source line 6817.
+
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### OSI-425 - Persona-Aware Subagent Configuration Recovery
+
+```yaml
+plan_unit_id: OSI-425
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The recovered Subagent Configuration block is a compatibility import/export
+  surface for routing/config, not Persona storage and not active runtime
+  vocabulary. SubagentGuiConfig serializes subagentConfig with
+  enable_tier_subagents, tier_overrides, disabled_subagents, required_subagents,
+  advanced_raw_registry_controls, and canonical subagentPolicy. Runtime
+  admission reads SubagentPolicy (`schema_id: pm.subagent_policy.v1`) with defaults, units, hard limits, retry
+  policy, fanout thresholds, max parallel subagents, max cost per wave, and
+  compatibility aliases; old tier override keys remain search/import aliases
+  only.
+gui_related: true
+gui_classification_reason: The configuration is exposed through user-visible Agent Config and Settings controls even though the persisted record is runtime config.
+depends_on: [P-053, OSI-081, OSI-082, OSI-084, OSI-402, OSI-403]
+unblocks: []
+acceptance_criteria:
+  - The Subagent Configuration YAML fence contains actual YAML and closes before unrelated markdown sections.
+  - Simple v1 tier override lists remain compatibility aliases and normalize through SubagentPolicy before runtime admission.
+  - SubagentPolicy defines numeric defaults, units, hard limits, retry policy, fanout thresholds, max parallel subagents, max cost per wave, and compatibility aliases.
+  - Advanced raw subagent registry controls are available only for advanced/internal use and never replace the Simple v1 flow.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - markdown fence balance review for Plans/orchestrator-subagent-integration.md
+risk_class: subagent_config_loss
+reasoning_tier: standard
+context_scope: orchestrator_subagent_config
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: subagent_config_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0025
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0026
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0027
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0028
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0029
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0033
+  - source_ref:chat:subagent-config-recovery-accepted
+  - source_ref:local:sed-orchestrator-subagent-configuration
+preserved_exact_tokens: ["Subagent Configuration", "subagentConfig", "SubagentGuiConfig", "enable_tier_subagents", "tier_overrides", "disabled_subagents", "required_subagents", "Simple", "Full", "advanced", "phase", "task", "subtask", "iteration"]
+negative_constraints:
+  - Do not keep unrelated markdown inside the Subagent Configuration YAML fence.
+  - Do not store Persona prompt bodies or canonical Persona descriptions in SubagentGuiConfig.
+  - Do not expose full contextual override keys as the default v1 user flow.
+  - Do not treat tier_overrides or enable_tier_subagents as active runtime vocabulary after SubagentPolicy normalization.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```
+
+### OSI-426 - Canonical Subagent Registry Name Recovery
+
+```yaml
+plan_unit_id: OSI-426
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The canonical list of subagent names is the subagent_registry entry set. The registry names runnable delegated-subagent
+  roles and validates launch requests; each entry resolves to Persona identity through persona_registry and records requested
+  versus effective Persona state at runtime. Fixed counts such as 42 subagent types are compatibility/source-lineage only unless
+  regenerated registry evidence proves them current.
+gui_related: false
+gui_classification_reason: Registry identity and launch validation are runtime/config contracts, not visual presentation.
+depends_on: [P-053, OSI-091, OSI-212, OSI-403]
+unblocks: []
+acceptance_criteria:
+  - Launch validation uses subagent_registry names, not provider-native /subagent, /agent, /fleet, or /delegate syntax.
+  - Every subagent registry entry resolves to a Persona or fails validation with a clear requested/effective identity record.
+  - Count-based references such as 42 subagent types remain lineage until generated registry evidence exists.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit
+risk_class: registry_identity_drift
+reasoning_tier: standard
+context_scope: delegated_subagent_registry
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/Commands_System.md]
+node_compile_hint: {mode: registry_name_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0034
+  - source_ref:chat:subagent-registry-list-recovery-accepted
+  - source_ref:Plans/orchestrator-subagent-integration.md:962
+preserved_exact_tokens: ["Canonical list of subagent names", "subagent_registry", "persona_registry", "42 subagent types", "provider-native", "/subagent", "/agent", "/fleet", "/delegate"]
+negative_constraints:
+  - Do not promote a stale inline subagent-name list or count as the registry SSOT.
+  - Do not let provider-native delegation syntax become normative PM runtime behavior.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/DRY_Rules.md]
+```
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### OSI-427 - Cross Run Knowledge Continuity Contract
+
+```yaml
+plan_unit_id: OSI-427
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Orchestrator/subagent integration consumes the shared runtime continuity contract for cross-run
+  knowledge continuity. Subagent extraction and handoff flows must emit continuity records with
+  actor/runtime_identity, project/run/account scope, extraction source, trigger reason, provenance,
+  redaction/retention policy, replay/reconnect behavior, conflict/staleness handling, and storage refs
+  owned by the canonical runtime storage path. `.puppet-master/memory` is rejected as an active storage
+  target for this continuity path.
+gui_related: false
+gui_classification_reason: Cross-run continuity extraction, storage, and handoff records are orchestration/runtime contracts, not visual presentation.
+depends_on: [CV-282, OSI-426]
+unblocks: []
+acceptance_criteria:
+  - Subagent handoffs and extraction records use the shared continuity schema and storage keys.
+  - Continuity provenance, redaction, retention, replay, reconnect, conflict, and staleness handling are explicit.
+  - "`.puppet-master/memory` is not used as active runtime continuity storage."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: cross_run_continuity_gap
+reasoning_tier: high
+context_scope: orchestrator_subagent_cross_run_continuity
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+node_compile_hint: {mode: orchestrator_cross_run_continuity, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0100
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0101
+preserved_exact_tokens: ["Cross-run knowledge continuity", "orchestrator-subagent-integration §4", "no schema, no event family, no storage keys", ".puppet-master/memory"]
+negative_constraints:
+  - Do not use `.puppet-master/memory` as active continuity storage.
+  - Do not treat extraction alternatives as canonical behavior without the shared continuity schema.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### OSI-428 - Bounded Extensive Subagent Waves
+
+```yaml
+plan_unit_id: OSI-428
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
+gui_related: false
+gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
+depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
+unblocks: [OP-022, F3-394]
+acceptance_criteria:
+  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
+  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
+  - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
+  - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
+  - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
+  - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
+  - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
+  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
+  - Parent synthesis and high-end certification remain required for meaningful completion.
+  - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
+  - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Orchestrator subagent wave runtime review
+risk_class: subagent_authority_drift
+reasoning_tier: high
+context_scope: orchestrator_subagent_waves
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
+node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0014
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0031
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0032
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0033
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0034
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0064
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
+preserved_exact_tokens:
+  - "subagents are used extensively"
+  - "bounded"
+  - "cost per wave"
+  - "low end agents"
+  - "higher end agents"
+  - "SubagentWave"
+  - "child_goal"
+  - "subagent_wave"
+  - "bounded_work_unit"
+  - "capability_lane"
+  - "agent_role"
+  - "write_policy"
+  - "parent_synthesis"
+  - "verification_cycle"
+  - "receipt"
+  - "write_mode"
+  - "certification_tier"
+  - "controller"
+  - "planner"
+  - "executor"
+  - "reviewer"
+  - "verifier"
+  - "adjudicator"
+  - "certifier"
+  - "root_cause"
+  - "replan"
+  - "one WorkNode execution"
+  - "one file/window analysis"
+  - "parent completion"
+  - "subagent policy"
+  - "fanout thresholds"
+  - "max parallel subagents"
+  - "max cost per wave"
+  - "bounded input limits"
+  - "retry policy"
+  - "mandatory"
+  - "compatibility/search aliases"
+  - "tier-era wording"
+  - "GoalRun"
+  - "WorkGraph"
+  - "VerificationCycle"
+  - "Receipt"
+negative_constraints:
+  - Do not convert Orchestrator into one smart agent doing everything.
+  - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
+  - Do not let low-end subagents certify parent completion.
+  - Do not let subagents write overlapping live surfaces concurrently.
+  - Do not implement old tier/config-era code samples literally.
+  - Do not preserve old tier-era wording as the canonical execution model.
+  - Do not keep stale tier labels as active canonical runtime semantics.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+### OSI-429 - Ambient Orchestrator Discovery For Agent Context
+
+```yaml
+plan_unit_id: OSI-429
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Orchestrator agent context acquisition routes no-exact-path bug fixes, ambiguous module ownership, read/search misses, broad repo scan avoidance, remote or SSH project orientation, and planning/source context assembly through discover_paths when locating repo code is materially needed. Orchestrator uses ranked candidates to guide reads and delegation, records fallback and selected candidates, and requires exact verification before root-cause claims, Executor handoff, or edits. It skips discovery for pure chat, already verified exact paths, user-forbidden discovery, policy-blocked context, disabled or kill-switch states, unsupported surfaces, or over-budget/backpressure states where existing exact tools are safer.
+gui_related: false
+gui_classification_reason: This is agent orchestration/tool-selection behavior, not GUI presentation.
+depends_on: [T-160, T-161, T-162, CV-291]
+unblocks: [EP-106, ATS-011]
+acceptance_criteria:
+  - Orchestrator uses discover_paths for materially needed repo/source orientation without broad ad hoc scans.
+  - Discovery receipts link to exact verification before root-cause claims, Executor handoff, or edits.
+  - Ambient discovery is bounded by explicit trigger and skip rules.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future orchestrated no-path bug-fix test.
+  - Future SSH-backed project context discovery test.
+  - Future ambient trigger/skip rule tests.
+risk_class: ambient_agent_overreach
+reasoning_tier: standard
+context_scope: orchestrator_agent_context
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, future Orchestrator discovery routing]
+node_compile_hint: {mode: orchestrator_discovery_consumer, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260622-001-fff:atom-0012
+  - pldg-20260622-001-fff:atom-0027
+  - pldg-20260622-001-fff:atom-0030
+  - pldg-20260622-001-fff:atom-0037
+  - pldg-20260622-001-fff:atom-0032
+  - pldg-20260622-001-fff:atom-0043
+  - pldg-20260622-001-fff:atom-0058
+  - pldg-20260622-001-fff:atom-0059
+  - pldg-20260622-001-fff:atom-0092
+  - pldg-20260622-001-fff:atom-0094
+  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#orchestrator_agent_context
+source_atom_ids: [atom-0012, atom-0027, atom-0030, atom-0032, atom-0037, atom-0043, atom-0058, atom-0059, atom-0092, atom-0094]
+preserved_exact_tokens: ["no-exact-path bug fixes", "ambiguous module ownership", "read/search misses", "broad repo scan avoidance", "discover_paths", "exact verification", "pure chat tasks", "already verified exact paths", "user-forbidden discovery", "over-budget/backpressure"]
+negative_constraints:
+  - Do not interpret ambient discovery as search-everything-every-turn behavior.
+  - Do not silently bypass shared discovery with broad local scans when discovery should apply.
+  - Do not bypass user or policy denial with discovery fallbacks.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/Executor_Protocol.md]
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Orchestrator/Subagent Integration owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 31284-31295 >>>
+### OSI-430 - Orchestrator DRY Consumer Retarget
+
+```yaml
+plan_unit_id: OSI-430
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Orchestrator consumes the shared DRY Method Instruction Bundle route from Prompt Pipeline and Agent Rules Context.
+  Any stale Orchestrator-local DRY Method or widget-catalog prose is compatibility/source-lineage only and must not
+  become an active owner. Orchestrator delegated child-runs record DRY effective state and receipt fields through the
+  shared contract rather than route-local enums or local prompt copies.

@@ -1,0 +1,21 @@
+{
+  "agent_instance_id": "a004_r02_adv_000088_0bcc2e",
+  "agent_path": "/root/a004_r02_adv_000088_0bcc2e",
+  "agent_thread_id": "019f4a18-0298-7da3-aff6-bd5f648f11b1",
+  "assignment_id": "A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001",
+  "attempt_id": "A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001__attempt-001",
+  "completed_at": "2026-07-10T03:43:33.879Z",
+  "coverage_credit": 0,
+  "errors": [
+    "exact_evidence_quote_mismatch:10",
+    "evidence_range_spill:18"
+  ],
+  "exact_evidence_validation_passed": false,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-02/raw_results/A004-000088-ADVERSARIAL-WIN-BF7379C57A0F-0001__attempt-001.failed.json",
+  "result_sha256": "121f6329376cfb07335a8b4005122fb84c322668770a4b3cc4e1d5e9000d3a1d",
+  "runner_id": "runner-02",
+  "status": "quarantined",
+  "validation_passed": false
+}

@@ -1,0 +1,161 @@
+<<< CONTEXT_BEFORE 2895-2906 >>>
+        "restore_point_id"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Recovery resume uses checkpoint marker events plus safe-point/restore records; projector checkpoints alone are insufficient.",
+      "migration": "Safe-point and restore-point namespaces remain separate; aliases need explicit migration records.",
+      "retention_compaction": "Retain through recovery, rollback, audit, and hold-state anchors.",
+      "redaction_no_secret_rule": "Permission snapshots store decisions/refs, never credentials or policy secrets.",
+      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+      "deferred_owner": "Plans/Permissions_System.md",
+      "deferred_reason": "Security boundary fixtures are explicitly out of Tier 0C-2 scope.",
+      "reopen_condition": "Reopen in security_boundary/runtime_lifecycle tier."
+    },
+
+<<< AUTHORITATIVE_CORE 2907-3052 >>>
+    {
+      "family_id": "coordination_event_records",
+      "storage_kind": "seglog",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported",
+      "value_schema_id": "pm.storage_value.coordination_event_records.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_event_records",
+      "owner_doc": "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families",
+      "producer": [
+        "AgentCoordinator",
+        "platform hook/event adapters",
+        "coordination mirror exporter"
+      ],
+      "consumers": [
+        "coordination projector",
+        "Orchestrator scheduler",
+        "prompt context assembler",
+        "debug mirror exporter"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "run_id",
+        "thread_id",
+        "agent_id",
+        "agent_type",
+        "parent_run_id",
+        "child_run_id",
+        "node_id",
+        "lane_id",
+        "worktree_id",
+        "platform",
+        "agent_revision",
+        "expected_previous_revision",
+        "last_applied_event_id",
+        "idempotency_key",
+        "operation_id",
+        "path_ref",
+        "path_hash",
+        "mirror_path",
+        "source_checkpoint"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Coordination events replay in seglog order into coordination redb projections; idempotency keys and expected revisions prevent duplicate or stale updates.",
+      "migration": "Legacy active-agents.json and .puppet-master/state/*.json coordination paths migrate only as compatibility/debug mirror inputs; new writers emit EventRecord values.",
+      "retention_compaction": "Coordination EventRecords retain under runtime audit policy; projections and mirrors are rebuildable from seglog plus checkpoints.",
+      "redaction_no_secret_rule": "Store refs, hashes, ids, paths under normal path-redaction policy, and status metadata only; no raw credentials, provider tokens, OAuth values, local credential paths, or machine secrets.",
+      "legacy_canonical_crosswalk_status": "canonical_event_family_deferred_payload_schema",
+      "deferred_owner": "Plans/Contracts_V0.md",
+      "deferred_reason": "Coordination event families are named for FABLE canon repair; executable runtime fixtures and full payload schemas remain outside this bounded repair.",
+      "reopen_condition": "Reopen when runtime lifecycle implementation or buildability claims depend on concrete coordination event payload schemas."
+    },
+    {
+      "family_id": "coordination_read_model_projections",
+      "storage_kind": "redb_projection",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "coordination_agent_projection.v1:{project_id}:{agent_id} | coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id} | coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id} | coordination_snapshot_projection.v1:{project_id}:{projection_scope} | projector.checkpoint.coordination:{project_id}",
+      "value_schema_id": "pm.storage_value.coordination_read_model_projections.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_read_model_projections",
+      "owner_doc": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "producer": [
+        "coordination projector"
+      ],
+      "consumers": [
+        "Orchestrator scheduler",
+        "AgentCoordinator",
+        "prompt context assembler",
+        "debug mirror exporter",
+        "inspection views"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "agent_id",
+        "path_hash",
+        "operation_id",
+        "projection_scope",
+        "agent_revision",
+        "last_applied_event_id",
+        "source_sequence_id",
+        "checkpoint"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Projection rows rebuild from coordination EventRecords; authoritative readers verify projector checkpoint coverage before scheduling or prompt use.",
+      "migration": "File-backed coordination state is not migration authority. Projections rebuild from seglog and may optionally export debug mirrors.",
+      "retention_compaction": "Projection rows are disposable and compactable by scope; canonical coordination history remains in seglog EventRecords.",
+      "redaction_no_secret_rule": "Projection values contain coordination metadata, refs, and redacted path hashes only; no raw provider secret or credential data persists.",
+      "legacy_canonical_crosswalk_status": "canonical_projection_deferred_value_schema",
+      "deferred_owner": "Plans/storage-plan.md",
+      "deferred_reason": "Read-model key families are named for canon repair; materialized projection schemas remain part of later runtime implementation.",
+      "reopen_condition": "Reopen when scheduler, prompt injection, or runtime lifecycle implementation depends on concrete coordination projection schemas."
+    },
+    {
+      "family_id": "coordination_debug_mirror_exports",
+      "storage_kind": "redb_projection",
+      "status": "compatibility_alias",
+      "tier": "migration_only",
+      "key_shape": ".puppet-master/state/active-agents.json | .puppet-master/state/agent-messages.json | .puppet-master/state/verification-{node_id}-end.json | .puppet-master/state/handoff-validation-{node_id}.json | coordination_mirror_export.v1:{project_id}:{mirror_kind}",
+      "value_schema_id": "pm.storage_value.coordination_debug_mirror_exports.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_debug_mirror_exports",
+      "owner_doc": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "producer": [
+        "PM coordination projection/export code"
+      ],
+      "consumers": [
+        "debug/export readers",
+        "interoperability views"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "mirror_kind",
+        "mirror_path",
+        "source_sequence_id",
+        "source_checkpoint",
+        "export_status",
+        "exported_at_utc",
+        "error_code",
+        "quarantine_ref"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Mirrors are regenerated from seglog/redb after projection commit and are never replay authority.",
+      "migration": "Existing .puppet-master/state coordination JSON paths are retired source-lineage or compatibility/debug exports only.",
+      "retention_compaction": "Mirror files may be overwritten, quarantined, or deleted; canonical coordination state remains recoverable from seglog/redb.",
+      "redaction_no_secret_rule": "Mirror exports must obey normal export redaction; no secrets, tokens, credentials, OAuth values, local credential paths, or machine secrets.",
+      "legacy_canonical_crosswalk_status": "compatibility_debug_export_only",
+      "deferred_owner": "Plans/storage-plan.md",
+      "deferred_reason": "This compatibility alias records mirror-only disposition; it is intentionally non-canonical and not build-blocking.",
+      "reopen_condition": "Reopen if a consumer reads a coordination mirror for scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation authority."
+    }
+  ]
+}

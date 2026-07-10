@@ -1,0 +1,401 @@
+<<< CONTEXT_BEFORE 1850-1861 >>>
+- Manual Override
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Each instruction/rules target has exactly one control mode and PM Controlled targets regenerate only from saved canonical
+  instruction source.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 1862-2233 >>>
+### ARC-028 - AGENTS.md Authoring Lint
+
+```yaml
+plan_unit_id: ARC-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: AGENTS.md Light Enforcement requires authoring-time lint when users edit AGENTS.md in Puppet Master, warning
+  or erroring on directory trees, long command encyclopedias, architecture tours, redundant discoverable info, and enforcing
+  budgets such as max bytes, max lines, and max headings.
+gui_related: false
+gui_classification_reason: This unit covers lint policy and content budgets, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: agents_md_authoring_lint
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: agents_md_authoring_lint
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0038
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0039
+preserved_exact_tokens:
+- AGENTS.md Light Enforcement (Product)
+- Authoring-time lint
+- directory trees
+- long command encyclopedias
+- architecture tours
+- redundant discoverable info
+- max bytes
+- 6–10KB
+- max lines
+- '80'
+- max headings
+- '6'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-029 - Runtime Instruction Budget
+
+```yaml
+plan_unit_id: ARC-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Runtime budget enforcement computes total instruction bytes and estimated tokens before a run, warns on threshold
+  exceedance, can block runs in strict mode until reduced, never truncates Work Bundle acceptance criteria, truncates examples/illustrative
+  sections first, and uses deterministic truncation policy.
+gui_related: false
+gui_classification_reason: This unit covers runtime budget calculation and non-GUI truncation policy.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_instruction_budget
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: runtime_instruction_budget
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0040
+preserved_exact_tokens:
+- Runtime budget enforcement
+- compute total instruction bytes + estimated tokens
+- warn on threshold exceed
+- strict mode enabled
+- block run until reduced
+- deterministic truncation policy
+- never truncate Work Bundle acceptance criteria
+- truncate “examples/illustrative” sections first
+negative_constraints:
+- Work Bundle acceptance criteria must never be truncated.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-030 - Truncation Recording
+
+```yaml
+plan_unit_id: ARC-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Runtime budget enforcement records truncation in run metadata and UI whenever deterministic truncation occurs.
+gui_related: true
+gui_classification_reason: This unit covers user-visible truncation reporting in run metadata and UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: truncation_recording
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: truncation_recording
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0040
+preserved_exact_tokens:
+- record truncation in run metadata and UI
+- truncation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Truncation reporting must be visible to the user.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-031 - Context Assembly Acceptance
+
+```yaml
+plan_unit_id: ARC-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Acceptance criteria require scoped AGENTS.md inclusion/exclusion according to the scoped toggle, attempt N+1
+  to include only the most recent same-lineage attempt_journal when enabled, Parent Summary toggle and 10-line cap behavior,
+  and promotion to require replacement/condense when AGENTS.md budget would be exceeded.
+gui_related: false
+gui_classification_reason: This unit covers testable runtime acceptance, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: context_assembly_acceptance
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: context_assembly_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0041
+preserved_exact_tokens:
+- Acceptance Criteria (Testable)
+- scoped AGENTS enabled
+- scoped AGENTS disabled
+- attempt N+1
+- most recent attempt_journal
+- same node lineage
+- Parent summary injection
+- 10 lines
+- Promotion never grows AGENTS.md beyond budget
+- replacement/condense
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-032 - GUI Acceptance
+
+```yaml
+plan_unit_id: ARC-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Acceptance criteria require the GUI to expose the three toggles with correct defaults and display injected
+  context breakdown including truncation.
+gui_related: true
+gui_classification_reason: This unit directly covers GUI toggles and injected-context display.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_acceptance
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: gui_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0041
+preserved_exact_tokens:
+- GUI exposes the three toggles
+- correct defaults
+- displays injected context breakdown including truncation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-033 - Lint Acceptance
+
+```yaml
+plan_unit_id: ARC-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Acceptance criteria require AGENTS.md lint to flag wiki-content patterns and budget violations, with strict
+  mode able to block runs.
+gui_related: false
+gui_classification_reason: This unit covers lint acceptance and strict-mode blocking, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: lint_acceptance
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: lint_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0041
+preserved_exact_tokens:
+- AGENTS.md lint
+- wiki-content patterns
+- budget violations
+- strict mode can block runs
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-034 - Route-Aware Context
+
+```yaml
+plan_unit_id: ARC-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Route Context and Attention Destination Rules preserve resume_url as the precedent for precise recovery routes,
+  generalize internal payload routes to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings, keep concern-specific
+  future record/action docs out of instruction-rule sources, and require historical /current run switching not to change project-level
+  layout identity.
+gui_related: true
+gui_classification_reason: This unit covers user-visible attention destinations, Chat/Source Control/GitHub/Usage/Settings
+  routes, and layout identity.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: route_aware_context
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: route_aware_context
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0042
+preserved_exact_tokens:
+- Route Context and Attention Destination Rules
+- resume_url
+- deep link
+- Orchestrator
+- Chat
+- Source Control
+- GitHub
+- Usage
+- Settings
+- controlled coarse destination enum/family
+- concern-specific future record/action docs
+- /action
+- /current
+- must not change layout identity
+- project-level rather than run-level
+negative_constraints:
+- Historical /current run switching must not change layout identity.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The route contract layer owns the controlled coarse destination enum/family.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 2234-2245 >>>
+### ARC-035 - Owner Consumer Boundary
+
+```yaml
+plan_unit_id: ARC-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: The Owner / Consumer Map preserves that source-preserving standardization keeps original owner and consumer
+  boundaries, Plans/agent-rules-context.md remains owner for the behavior described by its preserved sections, and cross-doc
+  ownership follows ContractRefs and boundary notes already present in the source text.
+gui_related: false
+gui_classification_reason: This unit records standardization owner/consumer boundaries, not GUI behavior.

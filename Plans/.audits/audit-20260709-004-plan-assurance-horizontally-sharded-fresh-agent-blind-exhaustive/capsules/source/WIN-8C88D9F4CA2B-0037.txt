@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 13663-13674 >>>
+          "requirement": "cmd.git.worktree.open records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.open records dispatch receipt cmd.git.worktree.open.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 13675-14059 >>>
+    "catalog.git_worktree_open_files": {
+      "ui_element_id": "catalog.git_worktree_open_files",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.open_files",
+      "handler_location": "handlers::git::worktree_open_files",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.open_files must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.open_files must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.open_files dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.open_files must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.open_files must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.open_files; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_open_files.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_open_files.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.open_files records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.open_files.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_open_files exposes a stable role/name/description matching cmd.git.worktree.open_files.",
+        "keyboard_access": "catalog.git_worktree_open_files is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_open_files preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_open_files surfaces state.commands.git_worktree_open_files.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_open_files.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.open_files reaches handlers::git::worktree_open_files with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_files.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_open_files.availability and disabled copy reads state.commands.git_worktree_open_files.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_files.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.open_files records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_files.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.open_files records dispatch receipt cmd.git.worktree.open_files.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_prune": {
+      "ui_element_id": "catalog.git_worktree_prune",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.prune",
+      "handler_location": "handlers::git::worktree_prune",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.prune must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.prune must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.prune dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.prune must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.prune must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.prune; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_prune.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_prune.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.prune records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.prune.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_prune exposes a stable role/name/description matching cmd.git.worktree.prune.",
+        "keyboard_access": "catalog.git_worktree_prune is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_prune preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_prune surfaces state.commands.git_worktree_prune.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_prune.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.prune reaches handlers::git::worktree_prune with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_prune.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_prune.availability and disabled copy reads state.commands.git_worktree_prune.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_prune.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.prune records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_prune.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.prune records dispatch receipt cmd.git.worktree.prune.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_recover": {
+      "ui_element_id": "catalog.git_worktree_recover",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.recover",
+      "handler_location": "handlers::git::worktree_recover",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.recover must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.recover must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.recover dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.recover must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.recover must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.recover; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_recover.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_recover.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.recover records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.recover.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_recover exposes a stable role/name/description matching cmd.git.worktree.recover.",
+        "keyboard_access": "catalog.git_worktree_recover is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_recover preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_recover surfaces state.commands.git_worktree_recover.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_recover.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.recover reaches handlers::git::worktree_recover with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_recover.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_recover.availability and disabled copy reads state.commands.git_worktree_recover.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_recover.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.recover records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_recover.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.recover records dispatch receipt cmd.git.worktree.recover.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_release": {
+      "ui_element_id": "catalog.git_worktree_release",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.release",
+      "handler_location": "handlers::git::worktree_release",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.release must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.release must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.release dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.release must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.release must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.release; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_release.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_release.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.release records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.release.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_release exposes a stable role/name/description matching cmd.git.worktree.release.",
+        "keyboard_access": "catalog.git_worktree_release is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_release preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_release surfaces state.commands.git_worktree_release.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_release.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.release reaches handlers::git::worktree_release with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_release.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_release.availability and disabled copy reads state.commands.git_worktree_release.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_release.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.release records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_release.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.release records dispatch receipt cmd.git.worktree.release.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_remove": {
+      "ui_element_id": "catalog.git_worktree_remove",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.remove",
+      "handler_location": "handlers::git::worktree_remove",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.remove must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.remove must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.remove dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.remove must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.remove; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_remove.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_remove.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.remove records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.remove.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_remove exposes a stable role/name/description matching cmd.git.worktree.remove.",
+        "keyboard_access": "catalog.git_worktree_remove is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_remove preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_remove surfaces state.commands.git_worktree_remove.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_remove.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.remove reaches handlers::git::worktree_remove with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_remove.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_remove.availability and disabled copy reads state.commands.git_worktree_remove.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_remove.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.remove records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_remove.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.remove records dispatch receipt cmd.git.worktree.remove.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_request_prune": {
+      "ui_element_id": "catalog.git_worktree_request_prune",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.request_prune",
+      "handler_location": "handlers::git::worktree_request_prune",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.request_prune must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.request_prune must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.request_prune dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.request_prune must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.request_prune must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.request_prune; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_request_prune.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_request_prune.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.request_prune records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.request_prune.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_request_prune exposes a stable role/name/description matching cmd.git.worktree.request_prune.",
+        "keyboard_access": "catalog.git_worktree_request_prune is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_request_prune preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_request_prune surfaces state.commands.git_worktree_request_prune.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_request_prune.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.request_prune reaches handlers::git::worktree_request_prune with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_request_prune.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_request_prune.availability and disabled copy reads state.commands.git_worktree_request_prune.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_request_prune.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.request_prune records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_request_prune.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.request_prune records dispatch receipt cmd.git.worktree.request_prune.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_reuse": {
+      "ui_element_id": "catalog.git_worktree_reuse",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.reuse",
+      "handler_location": "handlers::git::worktree_reuse",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.reuse must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.reuse must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.reuse dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.reuse must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.reuse must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.worktree.reuse; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_reuse.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_reuse.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.worktree.reuse records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.reuse.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_reuse exposes a stable role/name/description matching cmd.git.worktree.reuse.",
+        "keyboard_access": "catalog.git_worktree_reuse is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_reuse preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_reuse surfaces state.commands.git_worktree_reuse.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_reuse.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.worktree.reuse reaches handlers::git::worktree_reuse with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_reuse.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_reuse.availability and disabled copy reads state.commands.git_worktree_reuse.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_reuse.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.worktree.reuse records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_reuse.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.reuse records dispatch receipt cmd.git.worktree.reuse.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 14060-14071 >>>
+    "catalog.git_worktree_select": {
+      "ui_element_id": "catalog.git_worktree_select",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.select",
+      "handler_location": "handlers::git::worktree_select",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.select must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.select must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.select dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.select must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.select must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

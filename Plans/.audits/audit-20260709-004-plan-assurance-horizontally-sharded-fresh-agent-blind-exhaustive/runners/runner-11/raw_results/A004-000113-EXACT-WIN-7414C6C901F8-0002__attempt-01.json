@@ -1,0 +1,317 @@
+{
+  "assignment_id": "A004-000113-EXACT-WIN-7414C6C901F8-0002",
+  "observations": [
+    {
+      "id": "OBS-01",
+      "observation": "Surface ownership is intentionally separated: editor/LSP owns semantic affordances, Problems owns aggregated diagnostics, Search remains text-first, and the code index remains state-owning independently of LSP.",
+      "evidence_refs": ["E01", "E02", "E15"]
+    },
+    {
+      "id": "OBS-02",
+      "observation": "Chat LSP supplies completion, symbol resolution, hover, and definition navigation; it reuses editor server instances, is read-only for MVP, and packages diagnostics without becoming another diagnostics owner.",
+      "evidence_refs": ["E04"]
+    },
+    {
+      "id": "OBS-03",
+      "observation": "Server startup has a strong registration-before-spawn invariant with an ordered session-map mutation, subprocess spawn, and ready-or-failed transition.",
+      "evidence_refs": ["E06"]
+    },
+    {
+      "id": "OBS-04",
+      "observation": "The canonical tool inventory names nine read-only operations and one approval-gated rename operation, defines the legacy lsp_rename alias, and gives minimum input fields plus a four-value status enum.",
+      "evidence_refs": ["E08", "E09"]
+    },
+    {
+      "id": "OBS-05",
+      "observation": "MVP transport is stdio-only; TCP-only servers are supported through user-configured stdio bridge commands rather than native socket transport.",
+      "evidence_refs": ["E10"]
+    },
+    {
+      "id": "OBS-06",
+      "observation": "Settings > LSP is specified as a searchable registry and inspector surface with catalog, custom-server, override/reset, provenance, validation, requested-state, and effective-state presentation.",
+      "evidence_refs": ["E14"]
+    },
+    {
+      "id": "OBS-07",
+      "observation": "Worktree sessions are keyed by host, server, and canonical on-host worktree path; they survive thread switches and terminate with worktree existence rather than thread focus.",
+      "evidence_refs": ["E16"]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "CF-01",
+      "severity": "high",
+      "title": "MVP release boundary conflicts with the phase inventory",
+      "gap": "Section 6 says all listed editor and Chat features are MVP and that desktop editor and Chat are implemented from the start. Section 12 then says Phase 1 must ship first without Chat, assigns Chat and full editor navigation to Phase 2, and lists references, rename, and formatting again in Phase 3 despite making them Phase 2 requirements. The contract does not state whether Phase 1 may be released as MVP or whether completion of Phase 2 is the actual MVP gate.",
+      "consequence": "Builders can legitimately ship materially different feature sets under the same MVP label, and acceptance cannot determine whether Chat and full navigation are release-blocking.",
+      "evidence_refs": ["E05", "E11", "E12"]
+    },
+    {
+      "finding_id": "CF-02",
+      "severity": "high",
+      "title": "Problems panel is simultaneously canonical, required, and optional",
+      "gap": "Problems is declared the canonical aggregated-diagnostics owner, Phase 1 explicitly includes the Problems panel, but the implementation checklist describes mapping diagnostics to an optional Problems panel.",
+      "consequence": "An implementation can satisfy the checklist while omitting the surface that other requirements treat as the canonical diagnostics owner and Chat destination.",
+      "evidence_refs": ["E01", "E04", "E15", "E19", "E20"]
+    },
+    {
+      "finding_id": "CF-03",
+      "severity": "high",
+      "title": "Canonical operation contract lacks operation-specific result schemas",
+      "gap": "The section claims an exact operation inventory, normalized parameter shapes, and a result envelope, but enumerates only common request fields and status. It does not define result bodies for definitions, references, hover, symbols, implementations, call hierarchy, calls, or rename; it also omits coordinate base/encoding, partial-result meaning, unavailable/error detail, and rename receipt shape.",
+      "consequence": "Tool producers and consumers must invent incompatible response payloads even while conforming to the named operations and status enum.",
+      "evidence_refs": ["E08", "E09"]
+    },
+    {
+      "finding_id": "CF-04",
+      "severity": "high",
+      "title": "Failure-record retention and restart policy have unresolved alternatives",
+      "gap": "Failed handshakes may either mark the existing record failed or tear the handle down; spawn failures may either clean the record up or mark it failed. Crash recovery similarly offers a manual restart button or automatic restart, while later checklist text requires restart with backoff. No selection rule, retry ceiling, reset rule, or terminal state resolves these alternatives.",
+      "consequence": "Session-slot occupancy, observability, automatic recovery, and user control vary by implementation.",
+      "evidence_refs": ["E06", "E07", "E11", "E20"]
+    },
+    {
+      "finding_id": "CF-05",
+      "severity": "high",
+      "title": "Chat server selection is not reconciled with path/root/context attachment",
+      "gap": "The general attachment contract says actual attach is path/root/context-driven with requirement, availability, root discovery, and primary/supplementary conflict resolution. Chat instead selects an appropriate server based on language detection, including virtual code blocks. No rule identifies host, root identity, project URI, primary server, or collision behavior for a virtual block or a multi-server language.",
+      "consequence": "The same Chat code block can be routed to different server instances or the wrong worktree while each implementation appears compliant.",
+      "evidence_refs": ["E02", "E04", "E16"]
+    },
+    {
+      "finding_id": "CF-06",
+      "severity": "high",
+      "title": "Requested-to-effective Settings precedence is unspecified",
+      "gap": "The GUI must expose overlap resolution, global and project scope, per-server enablement, built-in overrides, path exclusions, missing binaries, and requested versus effective state, but the contract gives no precedence or merge algorithm among those inputs and no exact primary-versus-supplementary server selection rule.",
+      "consequence": "Displayed effective state and runtime attachment can disagree across implementations for identical configuration.",
+      "evidence_refs": ["E02", "E14"]
+    },
+    {
+      "finding_id": "CF-07",
+      "severity": "medium",
+      "title": "Document and workspace admission limits leave consequential selection policy open",
+      "gap": "The mitigation permits either open-tab-only admission or an unspecified N-most-recent policy, makes the document cap optional with 50 only as an example, and caps initialization roots at 10 without defining which roots win, how ties are ordered, or how excluded roots/documents later enter the server.",
+      "consequence": "Diagnostics and semantic capability availability can differ by arbitrary recency and root-selection choices.",
+      "evidence_refs": ["E07"]
+    },
+    {
+      "finding_id": "CF-08",
+      "severity": "medium",
+      "title": "Sync-barrier, timeout, and debounce completion semantics are not exact in this window",
+      "gap": "Feature requests must pass sync barriers, timeouts discard responses, and didChange is debounced at 100 ms, but the window does not define when a barrier is satisfied, whether save/close/navigation flushes pending changes, how document versions bind responses, or the N-timeout threshold and recovery behavior.",
+      "consequence": "Builders can expose stale results, reorder save/change events, or suppress different features after different timeout histories.",
+      "evidence_refs": ["E07", "E17"]
+    },
+    {
+      "finding_id": "CF-09",
+      "severity": "high",
+      "title": "Referenced §9.1 acceptance criteria do not exist in the reviewed section sequence",
+      "gap": "Section 9 is followed directly by Section 10, yet Phase 3 and the checklist repeatedly route enhancements and their acceptance criteria to §9.1.",
+      "consequence": "The named acceptance authority is non-resolvable, so Phase 3 completion and enhancement behavior lack their promised criteria.",
+      "evidence_refs": ["E08", "E09", "E10", "E12", "E13"]
+    },
+    {
+      "finding_id": "CF-10",
+      "severity": "medium",
+      "title": "Session, UI, effective-state, and tool-status vocabularies lack a mapping",
+      "gap": "The window uses starting/ready/failed for records, Initializing/Ready/Error for status UI, disabled/degraded/unavailable/misconfigured for capability and registry state, and ok/partial/unavailable/error for tool results without defining transitions or mappings between these domains.",
+      "consequence": "Consumers cannot derive a deterministic tool status or GUI label from a session/runtime state.",
+      "evidence_refs": ["E01", "E06", "E07", "E08", "E11", "E14", "E15"]
+    },
+    {
+      "finding_id": "CF-11",
+      "severity": "high",
+      "title": "Mandatory acceptance evidence is absent from the implementation checklist",
+      "gap": "The phases provide prose outcomes and checkboxes, while diagnostics verification gates and evidence snapshots are explicitly optional. No required executable tests or receipts cover registration ordering, crash recovery, stale-response rejection, fallback truthfulness, operation envelopes, Settings precedence, or worktree lifecycle; the referenced §9.1 acceptance criteria are missing.",
+      "consequence": "Checklist completion can be asserted without reproducible proof of the exact lifecycle and contract behavior.",
+      "evidence_refs": ["E11", "E12", "E13"]
+    },
+    {
+      "finding_id": "CF-12",
+      "severity": "high",
+      "title": "Approval-gated mutations lack a complete transaction contract",
+      "gap": "Rename is approval-gated and later Chat mutations require preview/confirmation plus FileSafe-backed workspace/applyEdit, but the window does not specify the approving actor, preview contents, cancellation/denial result, stale-edit revalidation, atomicity, partial-failure handling, rollback, or success receipt.",
+      "consequence": "Rename and code-action implementations can apply different safety and failure semantics while claiming the same approval gate.",
+      "evidence_refs": ["E04", "E09", "E13", "E17"]
+    },
+    {
+      "finding_id": "CF-13",
+      "severity": "medium",
+      "title": "Rewrite provenance and compatibility identity obligations lack exact payloads",
+      "gap": "LSP-facing UI is required to carry corroboration/promotion/patch lineage, compatibility task_id must resolve to node/package/seam/lane/attempt identity, and addenda must expose a final field set, but this window supplies neither the lineage fields nor resolution/failure rules nor a consolidated event/diagnostic/evidence/apply-edit schema.",
+      "consequence": "Evidence and diagnostics can be attached to inconsistent runtime identities or lose provenance at compatibility boundaries.",
+      "evidence_refs": ["E03"]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NG-01",
+      "non_gap": "Fallback truthfulness is explicit: index/text/regex/heuristic navigation may remain available, but fallback must not claim diagnostics, semantic features, or healthy attached-server state.",
+      "evidence_refs": ["E01", "E02"]
+    },
+    {
+      "id": "NG-02",
+      "non_gap": "Search and Problems ownership is explicit: Search owns text search and replace-in-files, while Problems owns aggregated diagnostics.",
+      "evidence_refs": ["E01", "E02", "E15"]
+    },
+    {
+      "id": "NG-03",
+      "non_gap": "Registration-before-spawn ordering is explicit through lock acquisition, insertion with starting status, lock release, process spawn, and ready-or-failed transition.",
+      "evidence_refs": ["E06"]
+    },
+    {
+      "id": "NG-04",
+      "non_gap": "Chat MVP mutation authority is bounded: Chat intelligence is read-only, reuses editor servers, and any later mutation must use explicit preview/confirmation and FileSafe-backed workspace/applyEdit.",
+      "evidence_refs": ["E04"]
+    },
+    {
+      "id": "NG-05",
+      "non_gap": "The canonical operation names, workspaceSymbol query requirement, position-based input fields, rename inputs, alias treatment, approval classification, and status enum are expressly listed.",
+      "evidence_refs": ["E08", "E09"]
+    },
+    {
+      "id": "NG-06",
+      "non_gap": "Transport scope is unambiguous: PM speaks stdio for MVP and documents bridge commands for TCP-only servers; native TCP is out of scope.",
+      "evidence_refs": ["E10"]
+    },
+    {
+      "id": "NG-07",
+      "non_gap": "The worktree session identity key and thread-switch retention rule are explicit.",
+      "evidence_refs": ["E16"]
+    },
+    {
+      "id": "NG-08",
+      "non_gap": "The minimum Settings registry controls, metadata, badges, validation states, filtering dimensions, and custom-versus-built-in actions are extensively enumerated.",
+      "evidence_refs": ["E14"]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "UNK-01",
+      "unknown": "Whether later §§14.2, 14.3, 14.4, 14.6, 14.8, or §17.2 define the missing timeout values, sync-barrier protocol, version binding, root selection, virtual-document routing, or diagnostic schema details.",
+      "why_unresolved": "Those sections are referenced but fall outside the assigned excerpt and were not inspected.",
+      "evidence_refs": ["E04", "E07", "E11"]
+    },
+    {
+      "id": "UNK-02",
+      "unknown": "Whether FileSafe, FileManager, storage-plan, FinalGUISpec, or other ContractRef owners define mutation atomicity, status mapping, routing, identity resolution, or configuration precedence.",
+      "why_unresolved": "The assigned window delegates to those contracts, but blindness rules prohibit opening them.",
+      "evidence_refs": ["E01", "E03", "E04", "E14", "E16", "E17"]
+    },
+    {
+      "id": "UNK-03",
+      "unknown": "The exact built-in server catalog, overlap data, root finders, ESLint rules, and Slint registration behavior.",
+      "why_unresolved": "The implementation phases point to §§3.2, 3.3, and 3.3.1, which are outside the excerpt.",
+      "evidence_refs": ["E11", "E13"]
+    },
+    {
+      "id": "UNK-04",
+      "unknown": "Whether §9.1 was deleted, renamed, or intended to be generated elsewhere.",
+      "why_unresolved": "The reviewed sequence moves from §9 directly to §10 but later text still treats §9.1 as an acceptance authority.",
+      "evidence_refs": ["E08", "E09", "E10", "E12"]
+    },
+    {
+      "id": "UNK-05",
+      "unknown": "The exact shutdown timeout, pending-request disposition, and failure behavior when a worktree is removed.",
+      "why_unresolved": "The core requires graceful shutdown but provides no further shutdown protocol in the assigned range.",
+      "evidence_refs": ["E16"]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "id": "E01",
+      "ref": "Plans/LSPSupport.md:297-301",
+      "excerpt": "diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation"
+    },
+    {
+      "id": "E02",
+      "ref": "Plans/LSPSupport.md:304-312",
+      "excerpt": "Index feeds search; LSP feeds editing."
+    },
+    {
+      "id": "E03",
+      "ref": "Plans/LSPSupport.md:318-325",
+      "excerpt": "must carry `/corroboration/promotion/patch` lineage"
+    },
+    {
+      "id": "E04",
+      "ref": "Plans/LSPSupport.md:337-356",
+      "excerpt": "Chat LSP remains read-only for MVP"
+    },
+    {
+      "id": "E05",
+      "ref": "Plans/LSPSupport.md:362-364",
+      "excerpt": "LSP is MVP -- implement with the desktop editor and Chat from the start."
+    },
+    {
+      "id": "E06",
+      "ref": "Plans/LSPSupport.md:372-387",
+      "excerpt": "the session record is cleaned up or marked `failed`"
+    },
+    {
+      "id": "E07",
+      "ref": "Plans/LSPSupport.md:397-401",
+      "excerpt": "offer \"Restart language server\" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s)."
+    },
+    {
+      "id": "E08",
+      "ref": "Plans/LSPSupport.md:409-415",
+      "excerpt": "The canonical tool surface is nine read-only operations plus one write/approval-gated `rename`"
+    },
+    {
+      "id": "E09",
+      "ref": "Plans/LSPSupport.md:417-442",
+      "excerpt": "`rename` requires `path` + `position` + `newName`."
+    },
+    {
+      "id": "E10",
+      "ref": "Plans/LSPSupport.md:443-457",
+      "excerpt": "MVP: Client talks stdio only"
+    },
+    {
+      "id": "E11",
+      "ref": "Plans/LSPSupport.md:486-503",
+      "excerpt": "Phase 2 -- Editor navigation + Chat LSP"
+    },
+    {
+      "id": "E12",
+      "ref": "Plans/LSPSupport.md:505-512",
+      "excerpt": "implemented per §9.1 acceptance criteria."
+    },
+    {
+      "id": "E13",
+      "ref": "Plans/LSPSupport.md:516-535",
+      "excerpt": "map to editor UI and optional Problems panel."
+    },
+    {
+      "id": "E14",
+      "ref": "Plans/LSPSupport.md:541-552",
+      "excerpt": "Requested state and effective state must both be shown"
+    },
+    {
+      "id": "E15",
+      "ref": "Plans/LSPSupport.md:556-560",
+      "excerpt": "Problems remains the owner of aggregated diagnostics display"
+    },
+    {
+      "id": "E16",
+      "ref": "Plans/LSPSupport.md:568-580",
+      "excerpt": "LSP session lifecycle is tied to worktree existence, not thread focus"
+    },
+    {
+      "id": "E17",
+      "ref": "Plans/LSPSupport.md:288-292",
+      "excerpt": "feature requests are gated behind sync barriers so stale document versions do not leak into the UI"
+    },
+    {
+      "id": "E19",
+      "ref": "Plans/LSPSupport.md:490-495",
+      "excerpt": "Diagnostics: Subscribe to publishDiagnostics; map to editor underlines + gutter; Problems panel"
+    },
+    {
+      "id": "E20",
+      "ref": "Plans/LSPSupport.md:519-531",
+      "excerpt": "Diagnostics: subscribe to publishDiagnostics; map to editor UI and optional Problems panel."
+    }
+  ]
+}

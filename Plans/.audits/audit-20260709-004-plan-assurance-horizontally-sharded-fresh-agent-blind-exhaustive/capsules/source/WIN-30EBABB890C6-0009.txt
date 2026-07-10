@@ -1,0 +1,379 @@
+<<< CONTEXT_BEFORE 2866-2877 >>>
+- "Projection completeness is by behavior class, not ad hoc exception."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/human-in-the-loop.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/interview-subagent-integration.md"
+- "Plans/human-in-the-loop.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2878-3227 >>>
+### W-039 - Phase Dependency Order
+
+```yaml
+plan_unit_id: W-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Implementation sequencing keeps Phase 1 config wiring before worktree/Git phases, Phase 3.1 git binary resolution before worktree merge checks, and Phase 5 tests after Phase 2 and Phase 3 implementation behavior exists."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-037
+- W-038
+unblocks: []
+acceptance_criteria:
+- "W-039 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: phase_ordering
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0064
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0065
+preserved_exact_tokens:
+- "Implementation Checklist"
+- "Dependency order"
+- "Phase 1 before Phase 2/3"
+- "Phase 3.1 before Phase 2.11"
+- "Phase 5 after Phase 2/3"
+negative_constraints:
+- "Do not implement worktree or Git behavior before the run-start config blocker is wired."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+### W-040 - Phase 1 Config Wiring Checklist
+
+```yaml
+plan_unit_id: W-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Phase 1 wires GUI runtime settings into Dashboard run start without requiring Save, including current_project.path, Enable parallel execution, Git enablement if exposed, branch fields, and failure messaging for config build/discovery."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible Source Control, Git/worktree GUI, configuration, checklist, or runtime disclosure behavior."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-037
+- W-038
+- W-049
+unblocks: []
+acceptance_criteria:
+- "W-040 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: config_wiring_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0066
+preserved_exact_tokens:
+- "Phase 1: Config wiring (blocker)"
+- "current_project.path"
+- "Dashboard Run/Start"
+- "Enable parallel execution"
+- "Enable Git"
+- "Auto PR"
+- "Save not required"
+- "PuppetMasterConfig"
+negative_constraints:
+- "Run/Start must use the in-memory GUI config even if the user has not clicked Save."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### W-041 - Phase 2 Worktree Checklist
+
+```yaml
+plan_unit_id: W-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Phase 2 worktree implementation covers active_worktrees state, create/list/existence/merge behavior, conflict recording, state-file persistence, gitignore coverage, Doctor checks, and path-safety enforcement."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-004
+- W-007
+- W-008
+- W-009
+- W-011
+- W-012
+- W-020
+- W-023
+unblocks: []
+acceptance_criteria:
+- "W-041 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0067
+preserved_exact_tokens:
+- "Phase 2: Worktrees"
+- "active_worktrees"
+- "list_worktrees()"
+- "worktree_exists"
+- "merge_worktree"
+- "worktree-conflicts.json"
+- "STATE_FILES.md"
+- "Doctor"
+- "realpath"
+negative_constraints:
+- "Worktree operations must not bypass path-safety and existence checks."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+### W-042 - Phase 3 Git Checklist
+
+```yaml
+plan_unit_id: W-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Phase 3 git implementation resolves the git binary once, performs status/commit/push/PR behavior through canonical helpers and GitHub HTTPS API, formats PM commits, and records git-actions.log entries."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-023
+- W-024
+- W-025
+- W-026
+- W-028
+- W-029
+- W-030
+unblocks: []
+acceptance_criteria:
+- "W-042 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: git_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0068
+preserved_exact_tokens:
+- "Phase 3: Git"
+- "resolve_git_executable()"
+- "GitHub HTTPS API"
+- "No GitHub CLI"
+- "CommitFormatter"
+- "pm:"
+- "git-actions.log"
+- "cmd.git.status"
+negative_constraints:
+- "Do not shell out to GitHub CLI for PR creation in this scope."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+### W-043 - Phase 4 GUI Checklist
+
+```yaml
+plan_unit_id: W-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Phase 4 GUI work exposes Settings branch controls, Source Control panels, clean-workspace affordances, PR status/action display, conflict UI, and DRY widget reuse without creating duplicate widget implementations."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible Source Control, Git/worktree GUI, configuration, checklist, or runtime disclosure behavior."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-027
+- W-031
+- W-032
+- W-033
+- W-034
+- W-035
+- W-036
+unblocks: []
+acceptance_criteria:
+- "W-043 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: source_control_gui_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0069
+preserved_exact_tokens:
+- "Phase 4: GUI"
+- "Branching tab"
+- "Enable Git"
+- "Auto PR"
+- "Source Control page"
+- "Clean workspace now"
+- "DRY:WIDGET"
+- "conflict UI"
+negative_constraints:
+- "Do not duplicate reusable Source Control widgets."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Widget_System.md"
+```
+
+### W-044 - Phase 5 Testing And Acceptance
+
+```yaml
+plan_unit_id: W-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Phase 5 testing and acceptance require config wiring tests, worktree lifecycle tests, Git integration tests, GUI handler tests, and acceptance criteria proving GUI settings affect runtime, worktrees are tracked, and Git/PR operations use configured policy."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible Source Control, Git/worktree GUI, configuration, checklist, or runtime disclosure behavior."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-040
+- W-041
+- W-042
+- W-043
+unblocks: []
+acceptance_criteria:
+- "W-044 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: phase_acceptance_validation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0070
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0071
+preserved_exact_tokens:
+- "Phase 5: Testing and docs"
+- "Acceptance criteria (per phase)"
+- "Unit/integration tests"
+- "GUI smoke tests"
+- "Settings branch fields"
+- "PR URL/status"
+negative_constraints:
+- "Phase 5 validation must not run before Phase 2 and Phase 3 behavior exists."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+
+<<< CONTEXT_AFTER 3228-3239 >>>
+### W-045 - Phase Source Hints
+
+```yaml
+plan_unit_id: W-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Implementation source hints route Phase 2 and Phase 3 work to the listed Rust modules, state files, requirement docs, and gitignore updates without making these hints executable build tasks."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:

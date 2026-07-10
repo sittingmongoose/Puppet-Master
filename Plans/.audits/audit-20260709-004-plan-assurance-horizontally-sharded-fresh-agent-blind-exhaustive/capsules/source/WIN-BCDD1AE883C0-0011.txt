@@ -1,0 +1,379 @@
+<<< CONTEXT_BEFORE 3563-3574 >>>
+preserved_exact_tokens:
+  - "`{commit}`"
+  - "`{version}`"
+  - "`{timestamp}`"
+  - "`YYYYMMDD-HHMMSSZ`"
+  - "`[a-z0-9_.-]`"
+negative_constraints:
+  - "An empty post-sanitization tag is invalid and must block publish with explicit remediation text."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3575-3924 >>>
+### CRAU-048 - Post Publish Unraid Follow On Sequence
+
+```yaml
+plan_unit_id: CRAU-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  After successful image publishing, Puppet Master generates or updates Unraid
+  XML when enabled, updates the target template repo when managed workflow is
+  enabled, auto-commits template-repo changes by default, does not auto-push by
+  default, and presents a one-click push action from the UI.
+gui_related: true
+gui_classification_reason: The follow-on sequence includes visible one-click push and enabled/disabled Unraid generation behavior.
+split_recommended: false
+depends_on: [CRAU-045, CRAU-046, CRAU-047]
+unblocks: [CRAU-049, CRAU-057, CRAU-059]
+acceptance_criteria:
+  - Unraid XML generation/update runs after successful image publishing when enabled.
+  - Managed template-repo workflow updates the target template repo when enabled.
+  - Auto-commit is default for template-repo change.
+  - Auto-push is not default.
+  - One-click push action is presented from the UI.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: follow_on_side_effect_drift
+reasoning_tier: standard
+context_scope: post_publish_unraid_follow_on_sequence
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: post_publish_follow_on_sequence
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0042
+preserved_exact_tokens:
+  - "`Generate/Update Unraid XML after successful publish`"
+  - "auto-commit"
+  - "do not auto-push"
+  - "one-click push"
+negative_constraints:
+  - "Template-repo remote push must not become automatic by default."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-049 - Managed Unraid Artifact Classes
+
+```yaml
+plan_unit_id: CRAU-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  The managed Unraid flow produces exactly three artifact classes: Application
+  template XML at maintainer_slug/project_slug.xml, Maintainer profile XML at
+  ca_profile.xml, and repo-managed image assets under assets/maintainer/ when
+  users upload images instead of referencing external URLs.
+gui_related: true
+gui_classification_reason: Generated artifacts are user-visible outputs and appear in managed Unraid publishing surfaces.
+split_recommended: false
+depends_on: [CRAU-048]
+unblocks: [CRAU-050, CRAU-051, CRAU-052, CRAU-057]
+acceptance_criteria:
+  - Application template XML is written at <maintainer_slug>/<project_slug>.xml.
+  - Maintainer profile XML is written at ca_profile.xml.
+  - Uploaded image assets are repo-managed under assets/maintainer/.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: artifact_shape_loss
+reasoning_tier: standard
+context_scope: managed_unraid_artifact_classes
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: unraid_artifact_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0044
+preserved_exact_tokens:
+  - "`<maintainer_slug>/<project_slug>.xml`"
+  - "`ca_profile.xml`"
+  - "`assets/maintainer/`"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-050 - Artifact Input Provenance Matrix
+
+```yaml
+plan_unit_id: CRAU-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  The Unraid artifact input provenance matrix preserves each canonical PM field
+  with primary source, fallback or user override, auto-commit requirement, and
+  auto-push requirement, including project_slug, display_name, image_ref,
+  image_digest, registry_host, web_ui_url, support_url, overview_markdown,
+  icon_source, category_labels[], config_items[], maintainer_slug, and
+  maintainer_profile.
+gui_related: false
+gui_classification_reason: Artifact provenance is model and generation metadata, not primarily visual presentation.
+split_recommended: false
+depends_on: [CRAU-049]
+unblocks: [CRAU-051, CRAU-053]
+acceptance_criteria:
+  - The provenance matrix preserves primary source, fallback/user override, auto-commit, and auto-push columns.
+  - All canonical PM fields named in the source span remain represented.
+  - docker_publish_result, preview/runtime URL, shared/per-project ca_profile state, and user overrides remain distinct provenance sources.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provenance_mapping_loss
+reasoning_tier: standard
+context_scope: artifact_input_provenance_matrix
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: artifact_provenance_matrix
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0045
+preserved_exact_tokens:
+  - "`project_slug`"
+  - "`image_ref`"
+  - "`docker_publish_result`"
+  - "`docker_publish_result.digest[]`"
+  - "`registry_host`"
+  - "`web_ui_url`"
+  - "`overview_markdown`"
+  - "`category_labels[]`"
+  - "`config_items[]`"
+  - "`maintainer_profile`"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-051 - Application Template Round Trip Contract
+
+```yaml
+plan_unit_id: CRAU-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  The first implementation supports deterministic generation and round-trip
+  update of the application template conceptual fields, may use an internal
+  normalized model rather than hard-coding UI logic to raw XML tags, must map the
+  normalized model 1:1 to emitted XML and document it, and must preserve unknown
+  fields from an existing template unless the user explicitly removes them.
+gui_related: true
+gui_classification_reason: Template fields and update behavior are surfaced through user-visible editing/generation flows.
+split_recommended: true
+split_recommendation_reason: Source span S0046 mixes minimum field support with normalized model and passthrough preservation rules.
+depends_on: [CRAU-050]
+unblocks: [CRAU-052, CRAU-053, CRAU-054]
+acceptance_criteria:
+  - First implementation supports the listed conceptual fields including display name, image reference, registry host, overview, support URL, web UI URL, icon/image source, category labels, config entries, maintainer slug, and owning template path.
+  - Internal normalized model maps 1:1 to emitted XML and is documented.
+  - Unknown fields present in existing templates are preserved unless explicitly removed by the user.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: template_roundtrip_data_loss
+reasoning_tier: high
+context_scope: application_template_round_trip
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: application_template_round_trip
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0046
+preserved_exact_tokens:
+  - "deterministic generation"
+  - "round-trip update"
+  - "normalized model"
+  - "1:1"
+negative_constraints:
+  - "Unknown fields present in an existing template must be preserved on update unless the user explicitly removes them."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-052 - ca_profile Editability And Round Trip Contract
+
+```yaml
+plan_unit_id: CRAU-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  The statement that all ca_profile.xml fields are editable requires both a
+  structured editor for canonical known fields and an advanced raw XML editor for
+  any unmodeled field, element, attribute, or passthrough content; both save
+  paths preserve passthrough content, existing ca_profile.xml parses into a
+  normalized editor model, minimum editable controls cover maintainer display
+  name, slug, overview/about, support URL, and icon/image source, uploaded images
+  copy into the managed template repo by default, and external URL mode preserves
+  the exact URL entered.
+gui_related: true
+gui_classification_reason: Structured and raw XML editors, editable controls, uploaded image handling, and URL mode are visible maintainer profile UI behavior.
+split_recommended: true
+split_recommendation_reason: Source spans S0047-S0048 combine an empty heading and detailed editability/round-trip requirements.
+depends_on: [CRAU-049, CRAU-051]
+unblocks: [CRAU-053, CRAU-056]
+acceptance_criteria:
+  - All-fields-editable claim requires both structured editor and advanced raw XML editor.
+  - Structured editor round-trips through the normalized model used by generation/update.
+  - Unknown or unmodeled content remains editable through raw XML and saves preserve unmodified passthrough content verbatim.
+  - Existing ca_profile.xml preserves all fields including fields not exposed individually by the current UI.
+  - Uploaded images copy into the managed template repo by default; external URL mode preserves the exact entered URL.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: profile_editability_overclaim
+reasoning_tier: high
+context_scope: ca_profile_editability_round_trip
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: ca_profile_round_trip_editability
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0047
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0048
+preserved_exact_tokens:
+  - "`ca_profile.xml`"
+  - "Structured editor"
+  - "Advanced raw XML editor"
+  - "round-trip"
+negative_constraints:
+  - "Puppet Master MUST NOT claim \"all fields editable\" unless both layers exist."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-053 - Template Review Gate And needs_review State
+
+```yaml
+plan_unit_id: CRAU-053
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Generated template output treats image_ref as final only after successful
+  Docker publish, marks the result needs_review when support_url,
+  overview_markdown, or icon_source is missing or when existing XML cannot map
+  safely, allows local save and local auto-commit during needs_review, blocks
+  auto-push, surfaces a visible Docker Manager warning, and preserves existing
+  fields rather than dropping data silently.
+gui_related: true
+gui_classification_reason: needs_review warning, local inspection/editing, and auto-push blocking are visible Docker Manager behavior.
+split_recommended: false
+depends_on: [CRAU-046, CRAU-051, CRAU-052]
+unblocks: [CRAU-055, CRAU-057, CRAU-063]
+acceptance_criteria:
+  - Successful Docker publish is required before image_ref is final.
+  - Missing support_url, overview_markdown, or icon_source marks needs_review.
+  - needs_review does not block local save or local auto-commit.
+  - needs_review blocks auto-push and surfaces visible warning in Docker Manager.
+  - Existing fields that cannot be mapped safely are preserved and marked needs_review.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: review_gate_bypass
+reasoning_tier: high
+context_scope: template_review_gate_needs_review
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: template_review_gate
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0049
+preserved_exact_tokens:
+  - "`image_ref`"
+  - "`support_url`"
+  - "`overview_markdown`"
+  - "`icon_source`"
+  - "`needs_review`"
+negative_constraints:
+  - "`needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push."
+  - "Puppet Master must not drop unmapped existing XML data silently."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-054 - Application Template XML Root And Passthrough Emission
+
+```yaml
+plan_unit_id: CRAU-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Application template XML emission uses exact root Container version 2, emits
+  known child elements in canonical order Name, Repository, Registry, Network,
+  MyIP, WebUI, Support, Overview, Category, Icon, and repeated Config, emits
+  Overview as CDATA, escapes other known text nodes, omits optional known
+  elements when empty, and preserves unknown elements, attributes, comments, and
+  root attributes verbatim on round-trip unless the user explicitly removes them.
+gui_related: true
+gui_classification_reason: Generated XML output is inspected and edited through user-visible Unraid template flows.
+split_recommended: true
+split_recommendation_reason: Source span S0051 also includes Config mapping rules split into CRAU-055.
+depends_on: [CRAU-051]
+unblocks: [CRAU-055, CRAU-056]
+acceptance_criteria:
+  - Root element is exactly <Container version=\"2\">.
+  - Known child order remains Name, Repository, Registry, Network, MyIP, WebUI, Support, Overview, Category, Icon, repeated Config.
+  - Overview emits as CDATA; other known text nodes emit escaped text.
+  - Unknown elements, attributes, XML comments, and root attributes preserve verbatim on round-trip unless explicitly removed.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: xml_shape_drift
+reasoning_tier: high
+context_scope: application_template_xml_root_passthrough
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: xml_emission_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0051
+preserved_exact_tokens:
+  - "`<Container version=\"2\">`"
+  - "`Name`"
+  - "`Repository`"
+  - "`Registry`"
+  - "`Network`"
+  - "`MyIP`"
+  - "`WebUI`"
+  - "`Support`"
+  - "`Overview`"
+  - "`Category`"
+  - "`Icon`"
+  - "`Config`"
+negative_constraints:
+  - "Unknown XML content must not be dropped during round-trip unless explicitly removed by the user."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< CONTEXT_AFTER 3925-3936 >>>
+### CRAU-055 - Config XML Mapping And Review Fallback
+
+```yaml
+plan_unit_id: CRAU-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  First implementation Config mapping supports Port, Path, Variable, and Device
+  shapes with required Name, Target, Default, Display, Required, Mask, and Mode
+  rules; Display defaults to always unless explicitly hidden, Required is true
+  only when mandatory for a successful run, Mask is true only for secret

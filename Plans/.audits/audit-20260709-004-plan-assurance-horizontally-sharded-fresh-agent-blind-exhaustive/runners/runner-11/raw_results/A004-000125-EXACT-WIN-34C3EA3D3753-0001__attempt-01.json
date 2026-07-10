@@ -1,0 +1,562 @@
+{
+  "assignment_id": "A004-000125-EXACT-WIN-34C3EA3D3753-0001",
+  "observations": [
+    {
+      "id": "O01",
+      "statement": "The locked integration boundary assigns hosted GitHub operations to the GitHub API, defaults authentication to OAuth device-code in the github_api realm, stores secrets only in the OS credential store, assigns local Git to the local git binary, assigns remote Git to SSH subprocesses, and requires interactive UI controls to dispatch UICommand IDs without UI-layer business logic.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:23-29"
+      ]
+    },
+    {
+      "id": "O02",
+      "statement": "This document is explicitly a consumer/UX layer over external canonical contracts and forbids cross-consumption between github_api and copilot_github tokens or state; Copilot account switching cannot alter GitHub API, Git transport, or worktree authority.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:45-47",
+        "Plans/GitHub_Integration.md:66-67",
+        "Plans/GitHub_Integration.md:72-76"
+      ]
+    },
+    {
+      "id": "O03",
+      "statement": "Source Control and GitHub Actions are separate GUI owners: Source Control owns Git-first repository/worktree behavior, while GitHub Actions owns hosted workflow, run, log, dispatch, and repository Actions administration. GitHub API is internal plumbing and GitHub Copilot is not a GitHub Integration GUI surface.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:86-90"
+      ]
+    },
+    {
+      "id": "O04",
+      "statement": "Source Control specifies an exact accordion accessibility label and deterministic compare targets for unstaged, staged, untracked, history, and conflict entry points.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:92-96"
+      ]
+    },
+    {
+      "id": "O05",
+      "statement": "compare_origin is a closed eight-value set. Compare pivots carry canonical project/repo/worktree and origin identity, and an origin that cannot be revalidated cannot silently substitute the current branch.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:96-100"
+      ]
+    },
+    {
+      "id": "O06",
+      "statement": "Cache, route, and recovery state is scoped by project, selected repository, and effective github_api account, while multi-lane operation retains active repo/worktree/run binding instead of flattening all work into one current branch.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:98-100"
+      ]
+    },
+    {
+      "id": "O07",
+      "statement": "Account-sensitive GitHub surfaces display Requested account, Requested binding, Effective account, Switch reason, and execution role, while storing only resource, capability/readiness, and route/open references needed to reproduce the canonical identity snapshot.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:102-108"
+      ]
+    },
+    {
+      "id": "O08",
+      "statement": "Multi-run search routing cannot silently change focused_run_id. A safe-point retry requires a pre-mutation confirmation containing repository, worktree, branch, baseline/head, safe_point_id, affected-file summary, owner run/node/attempt, and the post-restore action; declining leaves the blocked episode unchanged.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:110-114"
+      ]
+    },
+    {
+      "id": "O09",
+      "statement": "GitHub Actions has three stable subviews—Current Branch, Workflows, and Settings—with explicit ownership for readiness/run controls, workflow inventory/detail/dispatch, and hosted administration. Compatibility entry points route to the appropriate owner.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:116-118"
+      ]
+    },
+    {
+      "id": "O10",
+      "statement": "Pinned critical workflows are owned by Workflows and use canonical pin/unpin commands with compatibility aliases. Replay compares against the last successful run on the same workflow and branch, provides deterministic no-baseline alternatives, and preserves original commit/ref semantics for reruns.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:120-122"
+      ]
+    },
+    {
+      "id": "O11",
+      "statement": "Current Branch shows its active worktree/branch without background runs stealing focus. Authored workflow files and hosted administrative state have separate sources of truth, and repository Actions administration produces durable receipts even outside a run.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:124-128"
+      ]
+    },
+    {
+      "id": "O12",
+      "statement": "Actions readiness is event-driven and refreshed at named lifecycle/UI events. A visibly stale snapshot cannot authorize rerun, dispatch, or dependent Orchestrator execution; missing hosted-admin scope yields read-only inventory and scope disclosure instead of implied value visibility.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:126-128"
+      ]
+    },
+    {
+      "id": "O13",
+      "statement": "Actions-to-code correlation is expressly heuristic remediation rather than canonical proof. Missing or ambiguous correlation falls back to an uncertainty-labeled commit/workflow diff or presents candidate worktrees/commits; incomplete run-impact evidence is displayed as a partial impact map.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:130-134"
+      ]
+    },
+    {
+      "id": "O14",
+      "statement": "Secret readiness is name/scope/environment based and never claims post-creation value inspection. Failure triage owns failing job/step compression, log expansion/download/browser fallback, and retained truncation metadata. Strategy-tier changes reset only the per-tier reproduction-attempt budget.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:134-140"
+      ]
+    },
+    {
+      "id": "O15",
+      "statement": "The window provides an Actions readiness reason set, preserves ordered allowed_action_ids and active repo/branch or detached-HEAD context, distinguishes attention_required from blocked, and requires policy-specific governance blockers and receipts rather than a generic branch mismatch.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:144-148"
+      ]
+    },
+    {
+      "id": "O16",
+      "statement": "Source Control is worktree-native: it presents ownership, recovery, prune protection, safe-point awareness, historical/orphaned lineage, narrow-pane expandable rows, project-local filtering, and two-level scrolling. Unresolvable restart ownership becomes unknown ownership rather than an implicit unlock.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:150-160"
+      ]
+    },
+    {
+      "id": "O17",
+      "statement": "Hosted repositories and workflows retain distinct lifecycle states. Archived repositories preserve read-only history while deterministically disabling mutation, and deleted workflow definitions remain historical_only without rebinding to a same-named current workflow.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:162-164"
+      ]
+    },
+    {
+      "id": "O18",
+      "statement": "GitHub surfaces consume canonical runtime outcome and failure-class mappings, preserve usage/account/model/run identity, and must pass listener, OAuth, FileSafe, storage-root, startup-lock, and writable-store gates before hosted mutation.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:170-180"
+      ]
+    },
+    {
+      "id": "O19",
+      "statement": "GitHub route/OpenSubject consumers preserve stable object identity, propagate GitHub concern metadata, use explicit graph-patch records, project canonical blocked runtime overlays for approval, bind PR review approvals and CI checks to execution identity, and treat absent fresh Actions observation as stale/unknown rather than skipped or failed.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:184-200"
+      ]
+    },
+    {
+      "id": "O20",
+      "statement": "Context lines extend security gates to all GitHub surfaces, require canonicalization and project/cache-root containment for inbound remote paths, and fix SSH reconnect behavior at a 30-second keepalive, one bounded automatic retry, then explicit Reconnect. Remote search cannot silently fall back to local behavior.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:202-207",
+        "Plans/GitHub_Integration.md:209-211"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "F01",
+      "severity": "medium",
+      "statement": "The canonical owner-section headings for Source Control/worktree handshake and GitHub stable account identity have no direct body in this window. Their acceptance obligations must be inferred from later reconciliation prose rather than a locally testable handshake or stable-identity contract.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:4-13",
+        "Plans/GitHub_Integration.md:98-108"
+      ]
+    },
+    {
+      "id": "F02",
+      "severity": "medium",
+      "statement": "The change summary claims conditional PR/Issues panel visibility with a deterministic disabled state, but the assigned core does not provide the visibility predicate, disabled-state reason model, commands, or acceptance behavior for that surface.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:34-39",
+        "Plans/GitHub_Integration.md:116-118"
+      ]
+    },
+    {
+      "id": "F03",
+      "severity": "medium",
+      "statement": "Anti-drift text says every operational statement requires a ContractRef annotation, but the window does not define whether the later section-level ContractRef satisfies that rule for the many intervening standalone requirements. This leaves compliance interpretation discretionary.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:72-76",
+        "Plans/GitHub_Integration.md:92-96",
+        "Plans/GitHub_Integration.md:162-166"
+      ]
+    },
+    {
+      "id": "F04",
+      "severity": "high",
+      "statement": "Transfer closure requires live canonical repair or explicit retirement evidence and rejects annotations alone, but this window supplies no evidence-record shape, required producer, validator, or pass/fail rule for deciding that the requirement is met.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:102-108"
+      ]
+    },
+    {
+      "id": "F05",
+      "severity": "high",
+      "statement": "When compare identity cannot be revalidated, the contract permits either degraded historical review or blocked mutation without specifying the predicate choosing between them. It also makes origin refs conditional on availability without defining the minimum identity required for each compare_origin.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:96-100"
+      ]
+    },
+    {
+      "id": "F06",
+      "severity": "high",
+      "statement": "Readiness is described as using a fresher event-driven observation and bounded refresh, but no freshness TTL, maximum refresh bound, event ordering rule, or clock-skew policy determines when a snapshot becomes stale or which observation wins.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:126-128"
+      ]
+    },
+    {
+      "id": "F07",
+      "severity": "medium",
+      "statement": "Pinned workflow health-badge windows and replay comparison-window lengths are persisted concepts, but their units, defaults, minimum/maximum bounds, expiration, and migration behavior are unspecified.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:120-122"
+      ]
+    },
+    {
+      "id": "F08",
+      "severity": "medium",
+      "statement": "Failure-triage tiers determine default log-fetch volume, yet the tier set and byte/line/time limits are not enumerated. The selection rules for the 'last relevant logs' and 'likely next action' are also unspecified.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:136-140"
+      ]
+    },
+    {
+      "id": "F09",
+      "severity": "high",
+      "statement": "The readiness reasons are introduced as candidate details while simultaneously called canonical, and the window does not map each reason to its ordered allowed_action_ids. Policy-specific blocker prose likewise lacks exact reason tokens and action ordering for each policy case.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:144-148"
+      ]
+    },
+    {
+      "id": "F10",
+      "severity": "high",
+      "statement": "Strong Source Control actions require scope, consequence, and confirmation boundaries, but the window does not enumerate qualifying commands, confirmation fields, cancellation behavior, stale-confirmation revalidation, or receipt requirements.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:150-160"
+      ]
+    },
+    {
+      "id": "F11",
+      "severity": "medium",
+      "statement": "The narrow-pane Worktrees layout leaves breakpoint values, internal max-height, icon-only transition behavior, and overflow/focus behavior to the builder, so responsive acceptance cannot be evaluated exactly from this window.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:158-160"
+      ]
+    },
+    {
+      "id": "F12",
+      "severity": "high",
+      "statement": "Lifecycle states are enumerated, but transition and capability rules are complete only for selected archive/deleted cases. The window does not define deterministic mutation, routing, relink, recovery, or terminality behavior for renamed_redirected, transferred, remote_mismatch, or repository deleted states.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:162-164"
+      ]
+    },
+    {
+      "id": "F13",
+      "severity": "high",
+      "statement": "GitHub route targets may emit fetched content to an active route such as a local file or artifact storage, but destination selection, overwrite authority, cache/provenance behavior, fetch failure handling, and partial metadata propagation are not specified.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:184-191"
+      ]
+    },
+    {
+      "id": "F14",
+      "severity": "high",
+      "statement": "Graph patch requests have named fields, but graph_patch_result fields, validation failures, concurrency/generation mismatch behavior, apply atomicity, rollback, and durable receipt requirements are absent.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:184-191"
+      ]
+    },
+    {
+      "id": "F15",
+      "severity": "high",
+      "statement": "Remote paths must be canonicalized and contained, but the contract does not state the rejection event/state, user-visible recovery, audit evidence, or behavior when canonicalization itself fails. The exceptional hard_gate list also lacks exact authority and release conditions.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:202-207"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "N01",
+      "statement": "Secret persistence boundaries are explicit: secrets are confined to the OS credential store, secret values are not persisted in workflow readiness state, and hosted secret readiness is name/scope based.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:23-29",
+        "Plans/GitHub_Integration.md:126-134"
+      ]
+    },
+    {
+      "id": "N02",
+      "statement": "Source Control versus GitHub Actions ownership is explicit, including compatibility routing and the prohibition against collapsing hosted behavior into Source Control.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:86-90",
+        "Plans/GitHub_Integration.md:116-118"
+      ]
+    },
+    {
+      "id": "N03",
+      "statement": "Default compare targets are exact for all five named entry contexts, including a four-way identity set for conflicted-file review.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:92-96"
+      ]
+    },
+    {
+      "id": "N04",
+      "statement": "Requested/effective account disclosure and the prohibition on silent focused-run changes are explicit.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:102-114"
+      ]
+    },
+    {
+      "id": "N05",
+      "statement": "Stale Actions state cannot authorize mutation, and absence of a fresh scheduled-workflow observation cannot itself be interpreted as skipped or failed.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:126-128",
+        "Plans/GitHub_Integration.md:193-200"
+      ]
+    },
+    {
+      "id": "N06",
+      "statement": "Heuristic run-to-code linkage is explicitly prevented from becoming canonical truth, with uncertainty and multi-candidate fallbacks.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:130-134"
+      ]
+    },
+    {
+      "id": "N07",
+      "statement": "Archived-repository and deleted-workflow behavior is explicit enough to prevent mutation of archived state and accidental rebinding of historical workflow receipts.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:162-164"
+      ]
+    },
+    {
+      "id": "N08",
+      "statement": "Restart recovery explicitly preserves unresolved worktree ownership as unknown instead of silently unlocking it.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:150-160"
+      ]
+    },
+    {
+      "id": "N09",
+      "statement": "Remote execution has an exact retry-count boundary and explicit post-retry Reconnect requirement, while inbound paths have an explicit project/cache-root containment rule and remote search has a no-silent-local-fallback rule.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:202-207",
+        "Plans/GitHub_Integration.md:209-211"
+      ]
+    },
+    {
+      "id": "N10",
+      "statement": "Replay semantics explicitly prevent a rerun from being presented as testing the latest branch head unless a new dispatch occurs.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:120-122"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "statement": "The exact AuthState, AuthPolicy, AuthEvent, device-code polling, token-storage, and GitHub API call contracts cannot be assessed from this window because they are intentionally delegated to external owners.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:51-67"
+      ]
+    },
+    {
+      "id": "U02",
+      "statement": "The payloads, result schemas, authorization requirements, and catalog existence of referenced UICommand IDs cannot be confirmed from this window.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:23-29",
+        "Plans/GitHub_Integration.md:51-64"
+      ]
+    },
+    {
+      "id": "U03",
+      "statement": "The concrete ConfigKey schema, storage serialization, retention, migrations, and project-scope enforcement cannot be verified because their catalog rules are imported from storage-plan.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:98-100",
+        "Plans/GitHub_Integration.md:116-118"
+      ]
+    },
+    {
+      "id": "U04",
+      "statement": "Safe-point event payloads, FileSafe authorization decisions, storage startup failure payloads, and mutation-gate implementation details remain external to the assigned excerpt.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:110-114",
+        "Plans/GitHub_Integration.md:170-180"
+      ]
+    },
+    {
+      "id": "U05",
+      "statement": "The exact shared blocked payload, failure-class mapping, kill/done event schemas, usage fields, and read-only degraded-state contracts cannot be validated without their referenced owner documents.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:144-148",
+        "Plans/GitHub_Integration.md:170-180"
+      ]
+    },
+    {
+      "id": "U06",
+      "statement": "The canonical route_target and OpenSubject schemas, object-identity validation algorithm, and active-route contract are not present in the window.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:184-191"
+      ]
+    },
+    {
+      "id": "U07",
+      "statement": "The numeric wall-clock, no-new-evidence, and repro-attempt limits and strategy-tier definitions cannot be determined because only the imported reset rule appears here.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:136-140"
+      ]
+    },
+    {
+      "id": "U08",
+      "statement": "The storage-owned remote-search staging, verification, re-anchor, dirty-layer, and snapshot-authority contracts cannot be assessed from the context lines.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:202-207",
+        "Plans/GitHub_Integration.md:209-211"
+      ]
+    },
+    {
+      "id": "U09",
+      "statement": "Whether live canonical repair or explicit retirement evidence already exists for any owner-level gap is unknown under the assignment's blindness constraint.",
+      "evidence_refs": [
+        "Plans/GitHub_Integration.md:102-108"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "ref": "Plans/GitHub_Integration.md:4-13",
+      "used_by": ["F01"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:23-29",
+      "used_by": ["O01", "N01", "U02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:34-39",
+      "used_by": ["F02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:45-47",
+      "used_by": ["O02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:51-64",
+      "used_by": ["U01", "U02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:51-67",
+      "used_by": ["U01"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:66-67",
+      "used_by": ["O02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:72-76",
+      "used_by": ["O02", "F03"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:86-90",
+      "used_by": ["O03", "N02"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:92-96",
+      "used_by": ["O04", "F03", "N03"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:96-100",
+      "used_by": ["O05", "F05"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:98-100",
+      "used_by": ["O06", "F01", "U03"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:102-108",
+      "used_by": ["O07", "F01", "F04", "U09"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:102-114",
+      "used_by": ["N04"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:110-114",
+      "used_by": ["O08", "U04"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:116-118",
+      "used_by": ["O09", "F02", "N02", "U03"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:116-124",
+      "used_by": ["O10"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:120-122",
+      "used_by": ["O10", "F07", "N10"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:124-128",
+      "used_by": ["O11"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:126-128",
+      "used_by": ["O12", "F06", "N01", "N05"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:126-134",
+      "used_by": ["N01"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:130-134",
+      "used_by": ["O13", "N06"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:134-140",
+      "used_by": ["O14"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:136-140",
+      "used_by": ["F08", "U07"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:144-148",
+      "used_by": ["O15", "F09", "U05"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:150-160",
+      "used_by": ["O16", "F10", "N08"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:158-160",
+      "used_by": ["F11"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:162-164",
+      "used_by": ["O17", "F12", "N07"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:162-166",
+      "used_by": ["F03"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:170-180",
+      "used_by": ["O18", "U04", "U05"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:184-191",
+      "used_by": ["O19", "F13", "F14", "U06"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:184-200",
+      "used_by": ["O19"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:193-200",
+      "used_by": ["N05"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:202-207",
+      "used_by": ["O20", "F15", "N09", "U08"]
+    },
+    {
+      "ref": "Plans/GitHub_Integration.md:209-211",
+      "used_by": ["O20", "N09", "U08"]
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE 6642-6653 >>>
+- Recovery commands must bind to blocked-episode identity rather than request-level surrogates.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), ContractName:Plans/Wiring_Matrix.md#UI command handler rule'
+compatibility_only_notes:
+- timestamp/run/thread fallback is compatibility-only when stronger route identity is unavailable.
+stale_retired_dispositions:
+- normalization metadata must survive for wrappers and deprecated aliases.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+split_recommendation_reason: UI_Command_Catalog-S0052 safely splits visible recovery copy and button/menu mapping from backend metadata, resolver, and permission carry-through behavior.
+```
+
+
+<<< AUTHORITATIVE_CORE 6654-7023 >>>
+### UCC-096 - Assistant Chat Goal Slash Commands
+
+```yaml
+plan_unit_id: UCC-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  UI_Command_Catalog registers the Assistant Chat Goal Mode command family. `/goal`, Goal button/chip/icon activation, and natural-language Goal Mode activation dispatch `cmd.chat.goal.start`; `/goal again`, natural-language update requests, and the small update icon beside Goal status dispatch `cmd.chat.goal.update`. These command IDs route to Goal Runtime without defining concrete Goal event payload schemas.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Assistant Chat slash commands, Goal chip/icon activation, and status-update command surfaces.
+depends_on:
+  - ACD-416
+  - GRS-002
+unblocks: []
+acceptance_criteria:
+  - "`/goal` is registered as a reserved Assistant Chat Goal activation slash command."
+  - "`/goal again` is registered as the active-goal update slash command."
+  - "Button/chip/icon and natural-language activation normalize to `cmd.chat.goal.start`."
+  - "Natural-language updates and the Goal status update icon normalize to `cmd.chat.goal.update`."
+  - Command registration does not invent concrete Goal event payload schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future command catalog/wiring review
+risk_class: goal_command_owner_gap
+reasoning_tier: standard
+context_scope: assistant_chat_goal_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: assistant_chat_goal_command_registration
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "button/chip/icon"
+  - "natural-language activation"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "clicking a little icon next to the goal status"
+negative_constraints:
+  - Do not let `/goal` or `/goal again` remain unregistered local Assistant Chat prose.
+  - Do not invent concrete Goal event payload schemas in the command catalog.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/assistant-chat-design.md
+```
+
+### UCC-001 - UI Command Catalog Generated Artifact Residual
+
+```yaml
+plan_unit_id: UCC-001
+unit_type: compatibility_disposition
+status: retired
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: UCC-001 is retired after Phase 2B batch 191 as active source-preserving product coverage. UI_Command_Catalog-S0001 through S0052 are covered by fine-grained UCC-002 through UCC-095 or explicit structural/reference dispositions, and later command repairs such as UCC-096 carry post-migration command canon; UI_Command_Catalog-S0053 through S0056 are generated owner/consumer map, PlanUnits heading, retired bridge, and Migration Coverage tail material. UCC-001 remains migration lineage only and must not override implementation-facing UI Command Catalog PlanUnits.
+gui_related: true
+gui_classification_reason: The retired bridge preserves GUI-bearing UI Command Catalog source history, but no longer provides product implementation coverage.
+split_recommended: false
+depends_on:
+- UCC-002
+- UCC-003
+- UCC-004
+- UCC-005
+- UCC-006
+- UCC-007
+- UCC-008
+- UCC-009
+- UCC-010
+- UCC-011
+- UCC-012
+- UCC-013
+- UCC-014
+- UCC-015
+- UCC-016
+- UCC-017
+- UCC-018
+- UCC-019
+- UCC-020
+- UCC-021
+- UCC-022
+- UCC-023
+- UCC-024
+- UCC-025
+- UCC-026
+- UCC-027
+- UCC-028
+- UCC-029
+- UCC-030
+- UCC-031
+- UCC-032
+- UCC-033
+- UCC-034
+- UCC-035
+- UCC-036
+- UCC-037
+- UCC-038
+- UCC-039
+- UCC-040
+- UCC-041
+- UCC-042
+- UCC-043
+- UCC-044
+- UCC-045
+- UCC-046
+- UCC-047
+- UCC-048
+- UCC-049
+- UCC-050
+- UCC-051
+- UCC-052
+- UCC-053
+- UCC-054
+- UCC-055
+- UCC-056
+- UCC-057
+- UCC-058
+- UCC-059
+- UCC-060
+- UCC-061
+- UCC-062
+- UCC-063
+- UCC-064
+- UCC-065
+- UCC-066
+- UCC-067
+- UCC-068
+- UCC-069
+- UCC-070
+- UCC-071
+- UCC-072
+- UCC-073
+- UCC-074
+- UCC-075
+- UCC-076
+- UCC-077
+- UCC-078
+- UCC-079
+- UCC-080
+- UCC-081
+- UCC-082
+- UCC-083
+- UCC-084
+- UCC-085
+- UCC-086
+- UCC-087
+- UCC-088
+- UCC-089
+- UCC-090
+- UCC-091
+- UCC-092
+- UCC-093
+- UCC-094
+- UCC-095
+unblocks: []
+acceptance_criteria:
+- Plans/UI_Command_Catalog.md has no active node_compile_hint.mode=source_preserving_planunit coverage after Phase 2B batch 191.
+- UI_Command_Catalog-S0053, S0054, and S0056 are structural generated-tail dispositions, while UI_Command_Catalog-S0055 is retired bridge lineage through UCC-001.
+- UCC-001 remains migration lineage only and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: ui_command_catalog_generated_tail_after_batch_191
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: generated_artifact_residual
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0053
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0055
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0056
+preserved_exact_tokens:
+- source_preserving_planunit
+- generated_artifact_residual
+- Migration Coverage
+- PlanUnits
+- UI_Command_Catalog-S0053
+- UI_Command_Catalog-S0056
+- UCC-001 - UI Command Catalog (Canonical) Source-Preserving PlanUnit
+- Owner / Consumer Map
+negative_constraints:
+- UCC-001 must not provide product implementation coverage for UI_Command_Catalog-S0001 through S0052 after Phase 2B batch 191.
+- UCC-001 must not override UCC-002 through UCC-095 or later fine-grained UI Command Catalog PlanUnits.
+- Do not rely on one coarse source_preserving_planunit as the final implementation standard for UI_Command_Catalog.md.
+preserved_contractrefs:
+- Residual generated-tail ContractRefs, anchors, aliases, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and exact tokens remain preserved by span_map and coverage_map.
+compatibility_only_notes:
+- The exact token source_preserving_planunit is retained only as historical migration vocabulary; UCC-001 is no longer active product coverage.
+stale_retired_dispositions:
+- UCC-001 - UI Command Catalog (Canonical) Source-Preserving PlanUnit is retired as a bridge and remains migration lineage only.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+## Migration Coverage
+
+Original hash: `de7fa9f47cbbaac910b668db4778c3faea7d2a32334ade64545dec448b22ac79`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Phase 2B batch 188 atomized `UI_Command_Catalog-S0001` through `UI_Command_Catalog-S0024` into fine-grained PlanUnits `UCC-002` through `UCC-036`. Phase 2B batch 189 atomized `UI_Command_Catalog-S0025` through `UI_Command_Catalog-S0032`, `UI_Command_Catalog-S0034` through `UI_Command_Catalog-S0036` into fine-grained PlanUnits `UCC-037` through `UCC-060` and structurally dispositioned `UI_Command_Catalog-S0033`. Phase 2B batch 190 atomized `UI_Command_Catalog-S0037` through `UI_Command_Catalog-S0046`, `UI_Command_Catalog-S0048`, and runtime recovery material in `UI_Command_Catalog-S0049` into fine-grained PlanUnits `UCC-061` through `UCC-090`, while structurally dispositioning `UI_Command_Catalog-S0047` and the references portion of `UI_Command_Catalog-S0049`. Phase 2B batch 191 atomized `UI_Command_Catalog-S0050` through `UI_Command_Catalog-S0052` into fine-grained PlanUnits `UCC-091` through `UCC-095`, structurally dispositioned generated tail spans `UI_Command_Catalog-S0053`, `UI_Command_Catalog-S0054`, and `UI_Command_Catalog-S0056`, and retired `UI_Command_Catalog-S0055` / `UCC-001` as generated artifact residual lineage. `Plans/UI_Command_Catalog.md` now has no active `source_preserving_planunit`; `UCC-001` remains migration lineage only and must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### UCC-097 - Planning Wizard And Plan Compile Command Family
+
+```yaml
+plan_unit_id: UCC-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: 'If the required end-of-turn ledger write fails, mark the active thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until durable synchronization is repaired. The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build carries the final-review compare-and-swap currentness inputs and fails closed when the PlanningRun revision, topic map version, ApprovedPlanPack hash, project-context snapshot hash, PlanUnit or acceptance-unit index hash, testing policy hash, or final audit/closure hash has drifted. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting
+  build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Approve And Build intentionally navigates to Orchestrator Plan Compile, but later transitions present strong Open Build and status actions rather than forcibly moving the user whenever state changes.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Planning_Ledger_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/Orchestrator_Page.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0012
+- pldg-20260618-001-prd-planning-wizard:atom-0028
+- pldg-20260618-001-prd-planning-wizard:atom-0101
+- pldg-20260618-001-prd-planning-wizard:atom-0107
+- pldg-20260618-001-prd-planning-wizard:atom-0154
+- pldg-20260618-001-prd-planning-wizard:atom-0155
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+source_atom_ids:
+- atom-0012
+- atom-0028
+- atom-0101
+- atom-0107
+- atom-0154
+- atom-0155
+decision_refs:
+- dec-0004
+- dec-0008
+- dec-0020
+correction_refs:
+- corr-0011
+- corr-0012
+preserved_exact_tokens:
+- ledger_sync_blocked
+- Approve PRD for Planning Wizard
+- Approve And Build
+- Orchestrator
+- Plan Compile tab
+- pause
+- cancel
+- resume
+- inspect evidence
+- Open Build
+negative_constraints: []
+owner_hints:
+- Plans/Planning_Ledger_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Orchestrator_Page.md
+- Plans/Commands_System.md
+```
+
+### UCC-098 - PRD And Planning Runtime Command Contracts
+
+```yaml
+plan_unit_id: UCC-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: 'UI_Command_Catalog owns the typed PRD Builder, Planning Wizard, and Plan Compile UICommand family contract. Each `cmd.prd_builder.*`, `cmd.planning_wizard.*`, and `cmd.plan_compile.*` command must define a non-generic payload contract, result contract, enablement guards, disabled reason codes, receipt effects, stale-projection policy, idempotency-key fields, and recovery routes in the runtime contract packet. Required commands include PRD source import, PRD answers, source annotations, conflict resolution, Approve PRD for Planning Wizard, pack reopen, Planning Wizard start, add/split/merge/rename/reorder/mark_impacted/defer/reopen topic, accepted amendment, Approve And Build, Plan Compile pause/resume/cancel/retry, inspect blocker/evidence/assignment, request bounded recompile, and Open Build. Approve And Build uses a deterministic idempotency key derived from project_id, approved_plan_pack_id, pack_version, pack_hash, PlanningRun revision, topic map version, and final audit/closure hash; its approval transaction compares all final-review CAS inputs, writes approval_cas_receipt, creates or binds the PlanCompileRun synchronously, and may only leave projection identity reconciliation pending, not the run identity itself. Commands_System may display or invoke these UICommands from user-authored command surfaces, but it does not own their payload, result, permission, receipt, or recovery semantics.'
+gui_related: true
+gui_classification_reason: Defines visible command behavior and dispatch contracts.
+depends_on: [UCC-097, PNC-018]
+unblocks: [CS-052, F3-398, OP-025]
+acceptance_criteria:
+- Runtime command contracts reject generic `object`, `{}`, `any`, or `Record<string, any>` payload/result definitions.
+- Topic rename, reorder, mark_impacted, Approve And Build, and Open Build commands are present and typed.
+- Approve And Build always returns or binds a PlanCompileRun identity in the approval transaction.
+- Approve And Build payload and disabled-state contracts carry final-review CAS/currentness fields rather than relying on generic project context freshness.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: gui_command_contract_drift
+reasoning_tier: high
+context_scope: prd_planning_ui_commands
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+- scripts/pm-prd-planning-runtime-validate.py
+node_compile_hint:
+  mode: ui_command_contracts
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/UI_Command_Catalog.md#UCC-097
+- Plans/Commands_System.md#CS-052
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-014
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-015
+preserved_exact_tokens:
+- Approve And Build
+- plan_compile_run_id
+- approval_cas_receipt
+- pending_identity_reconciliation
+- rename
+- reorder
+- mark_impacted
+- disabled reason
+- idempotency
+- stale-projection
+negative_constraints:
+- Do not let Commands_System re-own UICommand payload/result semantics.
+- Do not allow Approve And Build to return a success state with no PlanCompileRun identity.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+
+<<< CONTEXT_AFTER 7024-7035 >>>
+### UCC-099 - Discovery-Routed Search And Picker Command Compatibility
+
+```yaml
+plan_unit_id: UCC-099
+unit_type: constraint
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  UI command catalog compatibility preserves existing GUI command names and shortcuts while path/context discovery routes through DiscoveryService. Quick Open, command palette fuzzy file search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker do not require a parallel cmd.discovery.* GUI command family. cmd.search.* remains Search/content command canon, and DiscoveryService is the path/context routing substrate for compatible surfaces. Discovery/frecency reset controls require storage/search settings owner reconciliation before adding new command IDs.
+gui_related: true
+gui_classification_reason: This is user-visible command naming, shortcut, and command routing compatibility.
+depends_on: [F3-399, SP-217, T-160]

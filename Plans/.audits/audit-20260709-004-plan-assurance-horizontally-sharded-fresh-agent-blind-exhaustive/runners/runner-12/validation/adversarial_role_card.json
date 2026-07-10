@@ -1,0 +1,67 @@
+{
+  "card_id": "audit004.adversarial_negative_space.v1",
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "freshness": {
+    "prior_substantive_assignment_count": 0,
+    "one_assignment_only": true,
+    "terminal_after_result": true,
+    "followup_reuse_forbidden": true,
+    "subagent_spawning_forbidden": true
+  },
+  "blindness": {
+    "prior_audits": "forbidden",
+    "other_reviewer_results": "forbidden",
+    "other_capsules_or_windows": "forbidden",
+    "canonical_source_beyond_excerpt": "forbidden",
+    "web_or_network": "forbidden",
+    "filesystem_mutation": "forbidden"
+  },
+  "universal_lens": [
+    "missing callers",
+    "missing states",
+    "missing transitions",
+    "missing authority",
+    "failure and recovery",
+    "security and privacy",
+    "misleading GUI truth",
+    "propagation",
+    "operations",
+    "scale",
+    "compatibility",
+    "test oracles"
+  ],
+  "output_rules": {
+    "format": "one JSON object only, with no Markdown fence or prose",
+    "required_fields": [
+      "assignment_id",
+      "role",
+      "status",
+      "observations",
+      "candidate_findings",
+      "explicit_non_gaps",
+      "unknowns",
+      "exact_evidence_refs"
+    ],
+    "evidence_shape": {
+      "document_path": "assigned document only",
+      "line_start": "integer within core or permitted context",
+      "line_end": "integer within core or permitted context",
+      "excerpt": "nonempty verbatim text from assigned excerpt"
+    },
+    "candidate_finding_fields": [
+      "finding_id",
+      "title",
+      "severity",
+      "gap",
+      "why_it_matters",
+      "missing_or_underspecified",
+      "evidence_refs"
+    ],
+    "exact_evidence_refs": "deduplicated list containing every nested evidence ref",
+    "no_finding_behavior": "return an empty candidate_findings array and use explicit_non_gaps or unknowns",
+    "repair_recommendations": "forbidden beyond describing the missing or underspecified contract",
+    "exact_reviewer_conclusions": "must not be inferred or mentioned"
+  },
+  "infrastructure_failure_rule": "If the capsule or source excerpt hash or byte size mismatches, return status infrastructure_failure, keep substantive arrays empty, describe only the mismatch in unknowns, and perform no semantic review."
+}

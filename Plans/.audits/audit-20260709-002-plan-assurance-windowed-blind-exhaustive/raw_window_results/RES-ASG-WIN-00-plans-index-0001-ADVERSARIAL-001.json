@@ -1,0 +1,407 @@
+{
+  "agent_id": "/root/window_worker_c",
+  "ambiguities": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:1",
+        "Plans/00-plans-index.md:34-35",
+        "Plans/00-plans-index.md:69"
+      ],
+      "id": "AM-001",
+      "statement": "Authoritative map, does not override detail, and routing relationships only leave conflict precedence unclear when the index summary and an owner document disagree."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:4",
+        "Plans/00-plans-index.md:21",
+        "Plans/00-plans-index.md:25-30"
+      ],
+      "id": "AM-002",
+      "statement": "No open questions and deterministic defaults coexist with explicitly open blockers, deferred families, future reverification, and route-specific readiness."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:19",
+        "Plans/00-plans-index.md:24",
+        "Plans/00-plans-index.md:27-30"
+      ],
+      "id": "AM-003",
+      "statement": "Registered, strict, production, fully materializes, partial closure, and closes only are status terms with different proof strengths but no machine-visible status taxonomy in this window."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:26",
+        "Plans/00-plans-index.md:29-30"
+      ],
+      "id": "AM-004",
+      "statement": "buildability_gate_passed remains false is expressed as a validator rule and current state without a named transition authority or temporal scope for eventually changing it."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:13-32",
+        "Plans/00-plans-index.md:37-65"
+      ],
+      "id": "AM-005",
+      "statement": "The required reading order is scoped to orchestrator rewrite canon-collapse but can appear globally mandatory, while many newly registered critical owner and readiness documents are absent."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:21",
+        "Plans/00-plans-index.md:25",
+        "Plans/00-plans-index.md:32"
+      ],
+      "id": "AM-006",
+      "statement": "Current toolchain and provider assertions do not identify a freshness receipt, expiry threshold, or deterministic response when official live truth differs."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:29"
+      ],
+      "id": "AM-007",
+      "statement": "deferred_not_build_blocking classification includes consequential permission and runtime-facing families, but its risk threshold and authority are not stated here."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:69-86"
+      ],
+      "id": "AM-008",
+      "statement": "Primary owner, primary doc, cross-owner, strongly implicated, adjacent owner, stale consumer, already implicated, and impacted_docs labels have no defined obligation or lifecycle differences."
+    }
+  ],
+  "assignment_id": "ASG-WIN-00-plans-index-0001-ADVERSARIAL-001",
+  "builder_discretion": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:15"
+      ],
+      "id": "BD-001",
+      "statement": "Builders determine when live Plans and allowed indexes are stable enough for an explicit governance seal."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:25"
+      ],
+      "id": "BD-002",
+      "statement": "Implementers determine how and when to reverify Rust/Slint releases and what to do if official stable versions differ."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:21"
+      ],
+      "id": "BD-003",
+      "statement": "Provider readiness remains route/model/account-specific without a decision algorithm in this map."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:23"
+      ],
+      "id": "BD-004",
+      "statement": "Whole-MVP container runtime families are capability-probed and gated without a stated minimum capability set or degradation policy."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:29"
+      ],
+      "id": "BD-005",
+      "statement": "Owners define reasons and reopen conditions for deferred storage families, including permissions and browser/worktree state."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:60-64",
+        "Plans/00-plans-index.md:79-85"
+      ],
+      "id": "BD-006",
+      "statement": "Reconciliation participants determine what counts as stale tier-era, request-era, or mixed-era canon and when owner/consumer reconciliation is complete."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:31"
+      ],
+      "id": "BD-007",
+      "statement": "Live provider projection sync is deferred to a separate lane whose trigger, permission boundary, and failure policy are unspecified here."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:4",
+        "Plans/00-plans-index.md:21",
+        "Plans/00-plans-index.md:25-30"
+      ],
+      "finding": "No open questions and deterministic defaults may falsely signal semantic closure despite explicit lifecycle, harness, security, persistence, GUI, currentness, and provider blockers.",
+      "id": "CF-001",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:26",
+        "Plans/00-plans-index.md:29-30"
+      ],
+      "finding": "Buildability gating lacks an atomic, fail-closed currentness contract across blocker, gate, and node-readiness artifacts, while buildability_gate_passed is required to remain false without an explicit future transition protocol.",
+      "id": "CF-002",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:25"
+      ],
+      "finding": "The trusted local daemon for browser-hosted GUI access to OS capabilities is a consequential security boundary with no stated authentication, origin, authorization, or compromise model.",
+      "id": "CF-003",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:21",
+        "Plans/00-plans-index.md:25",
+        "Plans/00-plans-index.md:32"
+      ],
+      "finding": "Static provider and Rust/Slint currentness assertions lack receipts, expiry, migration, and deterministic mismatch handling.",
+      "id": "CF-004",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:24",
+        "Plans/00-plans-index.md:26",
+        "Plans/00-plans-index.md:29-30"
+      ],
+      "finding": "Production, fully materialized, and closed security/behavioral labels can be flattened into implementation readiness even though the evidence is explicitly non-executable and permission/runtime families remain deferred.",
+      "id": "CF-005",
+      "lead_only": true,
+      "severity": "high"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:13-32",
+        "Plans/00-plans-index.md:37-65"
+      ],
+      "finding": "The anti-drift reading order and owner-first rules lack a reconciliation oracle and omit many later-registered critical owners, allowing stale consumers to appear compliant.",
+      "id": "CF-006",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:4",
+        "Plans/00-plans-index.md:10-12",
+        "Plans/00-plans-index.md:25-32",
+        "Plans/00-plans-index.md:65"
+      ],
+      "finding": "The change summary is not chronologically ordered and its ContractRef declarations do not clearly encode all authorities introduced, creating currentness and traversal risk.",
+      "id": "CF-007",
+      "lead_only": true,
+      "severity": "medium"
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:69-86"
+      ],
+      "finding": "Cross-doc seam classifications and the impacted_docs seam lack defined obligations, ownership, transition-to-reconciled state, and acceptance evidence.",
+      "id": "CF-008",
+      "lead_only": true,
+      "severity": "medium"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "The index presents itself as an authoritative navigation and canonicalization map that follows DRY and deterministic decision policy, but does not override owner-plan detail or re-own subsystem behavior.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:1-4",
+        "Plans/00-plans-index.md:34-35",
+        "Plans/00-plans-index.md:69"
+      ],
+      "id": "CL-001"
+    },
+    {
+      "claim": "The change summary registers owner routing, lineage retirements, strict schemas, validators, production-named artifacts, and repeated non-executable boundaries across planning, providers, GUI, containers, and runtime contracts.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:11-24"
+      ],
+      "id": "CL-002"
+    },
+    {
+      "claim": "Provider, GUI/toolchain, and model-capability authority is currentness-sensitive: routes are model/account-specific, Rust/Slint versions require live reverification, and Models_System owns active capability provenance while Contracts V0 carries only snapshot references.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:21",
+        "Plans/00-plans-index.md:25",
+        "Plans/00-plans-index.md:32"
+      ],
+      "id": "CL-003"
+    },
+    {
+      "claim": "Implementation-readiness registries, matrices, reports, and scripts gate buildability; Approve And Build remains disabled while blockers are open or PNC-019 remains hard-disabled, and structural or validator evidence is explicitly insufficient.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:26"
+      ],
+      "id": "CL-004"
+    },
+    {
+      "claim": "Execution context, EventRecord, and storage-value schemas register versioned ownership and partial persistence materialization, while numerous runtime, security, GUI, provider, permission, and lifecycle blockers remain open or deferred.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:27-29"
+      ],
+      "id": "CL-005"
+    },
+    {
+      "claim": "Non-executable closure evidence closes only spec/schema/validator/fixture scope, leaves runtime lifecycle and clean-room harness open, keeps PNC-019 disabled and buildability false, and authorizes no runtime or product work.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:30"
+      ],
+      "id": "CL-006"
+    },
+    {
+      "claim": "Web operation schemas, no-secret projection artifacts, lineage receipts, fixtures, and coverage maps register broad policy and contract shapes, but generated governance refresh, live provider sync, and executable implementation remain separate lanes.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:31"
+      ],
+      "id": "CL-007"
+    },
+    {
+      "claim": "Legacy platform_specs authority is retired; Models_System owns context, token, fallback, provenance, and requested/effective capability fields.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:32"
+      ],
+      "id": "CL-008"
+    },
+    {
+      "claim": "A fixed ten-document owner-first reading order precedes primary consumers, and mirrors are reconciled only after owners and consumers.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:37-65"
+      ],
+      "id": "CL-009"
+    },
+    {
+      "claim": "The cross-doc guard classifies primary owners, adjacent consumers, stale consumers, and impacted docs for contract, storage, UI, usage, run-graph, HITL, executor, and artifact seams without transferring behavioral ownership to the index.",
+      "evidence_refs": [
+        "Plans/00-plans-index.md:67-86"
+      ],
+      "id": "CL-010"
+    }
+  ],
+  "core_sha256_computed": "c0285b053fedf55788c73c5a6c331af59dcbf6636d80e9d0c85345c9947d5e5d",
+  "core_sha256_expected": "c0285b053fedf55788c73c5a6c331af59dcbf6636d80e9d0c85345c9947d5e5d",
+  "cross_window_seams": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:1-4",
+        "Plans/00-plans-index.md:34-35",
+        "Plans/00-plans-index.md:69"
+      ],
+      "id": "SEAM-001",
+      "statement": "Core authority and navigation disclaimers are completed by the context guard stating that the index records routing only and owner entries retain behavioral canon."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:67-68",
+        "Plans/00-plans-index.md:69-86"
+      ],
+      "id": "SEAM-002",
+      "statement": "The Cross-doc owner-map guard heading begins in the core and its operative routing taxonomy occupies the authorized following context."
+    },
+    {
+      "evidence_refs": [
+        "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/window_context_capsules.jsonl:3"
+      ],
+      "id": "SEAM-003",
+      "statement": "The capsule declares no previous window and names WIN-00-plans-index-0002 as next; that window was not inspected."
+    }
+  ],
+  "document_path": "Plans/00-plans-index.md",
+  "evidence_refs": {
+    "capsule": "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/window_context_capsules.jsonl:3",
+    "core": "Plans/00-plans-index.md:1-68",
+    "following_context": "Plans/00-plans-index.md:69-86",
+    "protocol": "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/WINDOW_REVIEW_PROTOCOL.md"
+  },
+  "invalid_for_assurance_coverage": true,
+  "invalid_reason": "Substantive reviewer agent identities were reused across successive window/role assignments, violating the Fresh Agent Isolation Protocol.",
+  "negative_space_observations": [
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:26",
+        "Plans/00-plans-index.md:29-30"
+      ],
+      "id": "NS-001",
+      "statement": "No fail-closed behavior, atomic snapshot identity, staleness rule, or TOCTOU protection is stated for the blocker registry, gate matrix/report, node-readiness report, and approval decision."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:25"
+      ],
+      "id": "NS-002",
+      "statement": "The trusted local daemon boundary lacks stated authentication, origin binding, capability scoping, revocation, transport, local-network exposure, CSRF, or compromised-browser behavior."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:21"
+      ],
+      "id": "NS-003",
+      "statement": "Provider retirement and replacement lack stated migration, rollback, unavailable-provider, in-flight-operation, credential-transfer, or account-conflict behavior."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:27-29",
+        "Plans/00-plans-index.md:32"
+      ],
+      "id": "NS-004",
+      "statement": "Schema registrations expose versions but this window gives no unknown-version, downgrade, replay-idempotency, concurrent-writer, partial-migration, or corrupt-record behavior."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:29-30"
+      ],
+      "id": "NS-005",
+      "statement": "Permission, browser, terminal, worktree, project-state, provider, and GUI storage families are deferred as non-build-blocking without adversarial criteria showing when their absence becomes security- or launch-critical."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:31"
+      ],
+      "id": "NS-006",
+      "statement": "Web schemas and negative fixtures cover permission, cache, egress, timeout, unavailable-browser, and citation cases, but no executable enforcement, malicious-content containment, SSRF boundary, runtime redaction, or failed-sync rollback is established here."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:60-64",
+        "Plans/00-plans-index.md:69-86"
+      ],
+      "id": "NS-007",
+      "statement": "Owner-first reconciliation has no completion oracle, conflict adjudicator, version receipt, stale-term detector, or atomic update rule across owners, consumers, summaries, and checklists."
+    },
+    {
+      "evidence_refs": [
+        "Plans/00-plans-index.md:15",
+        "Plans/00-plans-index.md:17-18",
+        "Plans/00-plans-index.md:22-23",
+        "Plans/00-plans-index.md:31"
+      ],
+      "id": "NS-008",
+      "statement": "Governance-seal and generated-artifact registrations lack stated cancel, retry, resume, rollback, or partial-write behavior when a refresh fails."
+    }
+  ],
+  "quality_state": "complete",
+  "result_id": "RES-ASG-WIN-00-plans-index-0001-ADVERSARIAL-001",
+  "reviewed_context_ranges": [
+    [
+      69,
+      86
+    ]
+  ],
+  "reviewed_core_range": [
+    1,
+    68
+  ],
+  "role": "adversarial_negative_space",
+  "source_hash_verified": true,
+  "status": "SUPERSEDED_INVALID_AGENT_REUSE_FOR_ASSURANCE",
+  "substantive_coverage_credit": 0,
+  "substantive_evidence_disposition": "invalid_never_carry_forward",
+  "superseded_at": "2026-07-10T02:19:17Z",
+  "superseded_by": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "window_id": "WIN-00-plans-index-0001",
+  "zero_writes_confirmed": true
+}

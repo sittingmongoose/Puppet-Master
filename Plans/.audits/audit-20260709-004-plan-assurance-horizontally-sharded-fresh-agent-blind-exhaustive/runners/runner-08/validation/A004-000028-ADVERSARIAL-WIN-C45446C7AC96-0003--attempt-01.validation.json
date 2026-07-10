@@ -1,0 +1,27 @@
+{
+  "assignment_id": "A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003",
+  "attempt_no": 1,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "errors": [
+    "evidence_quote_mismatch:observations:0:1:687-687",
+    "evidence_quote_mismatch:candidate_findings:0:2:733-733",
+    "evidence_quote_mismatch:candidate_findings:2:2:735-735",
+    "evidence_quote_mismatch:candidate_findings:4:0:671-671",
+    "evidence_quote_mismatch:candidate_findings:6:1:748-748",
+    "evidence_quote_mismatch:candidate_findings:6:2:798-798",
+    "evidence_quote_mismatch:candidate_findings:7:1:799-799",
+    "evidence_quote_mismatch:candidate_findings:11:1:750-750",
+    "evidence_quote_mismatch:candidate_findings:18:1:835-836",
+    "evidence_quote_mismatch:explicit_non_gaps:4:0:836-836",
+    "evidence_quote_mismatch:explicit_non_gaps:5:0:877-877",
+    "evidence_quote_mismatch:exact_evidence_refs:1:671-672",
+    "evidence_quote_mismatch:exact_evidence_refs:9:748-749"
+  ],
+  "passed": false,
+  "result_bytes": 43021,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/raw_results/A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003--attempt-01.json",
+  "result_sha256": "ca32baf4cd3a0cf69e5b8e56c1c5a491eb5ad14496d423f788610ec041af8f7b",
+  "runner_id": "runner-08",
+  "schema_version": "a004.runner_attempt_validation.v1",
+  "validated_at": "2026-07-10T03:20:11.000Z"
+}

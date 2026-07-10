@@ -1,0 +1,16 @@
+{
+  "audit_id": "audit-20260709-001-plan-assurance-blind-exhaustive",
+  "status": "SUPERSEDED_INVALID_METHOD_FOR_ASSURANCE",
+  "complete": false,
+  "valid_assurance_coverage": false,
+  "invalid_for_assurance_coverage": true,
+  "superseded_by": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+  "reset_at": "2026-07-10T01:47:02Z",
+  "coverage_carried_forward": "none",
+  "document_coverage": null,
+  "feature_coverage": null,
+  "research_coverage": null,
+  "scenario_coverage": null,
+  "mutation_coverage": null,
+  "reason": "The run began without mandatory semantic per-document windows, exact core-line coverage, two independent roles per window, seam review, and fresh document integration."
+}

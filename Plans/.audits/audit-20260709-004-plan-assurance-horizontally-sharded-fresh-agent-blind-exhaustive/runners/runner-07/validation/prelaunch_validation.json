@@ -1,0 +1,20 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "validated_at": "2026-07-10T03:08:33Z",
+  "validation_passed": true,
+  "error_count": 0,
+  "assignment_count": 212,
+  "unique_assignment_ids": 212,
+  "unique_window_ids": 212,
+  "capsule_metadata_bytes_total": 348133,
+  "source_excerpt_bytes_total": 3959724,
+  "capsule_package_bytes_total": 4307857,
+  "capsule_package_bytes_max": 42462,
+  "token_estimate_total": 1230595,
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "ready_status": "READY_FOR_RUNNERS",
+  "prelaunch_validation_passed": true,
+  "old_audit_substantive_credit": 0
+}

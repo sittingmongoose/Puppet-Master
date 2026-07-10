@@ -1,0 +1,628 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000141-EXACT-WIN-CC3C85D86FBD-0003",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000141-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0141_7e232fd2",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-CC3C85D86FBD-0003",
+  "doc_id": "DOC-CC3C85D86FBD",
+  "document_path": "Plans/UI_Command_Catalog.md",
+  "core_range": [
+    625,
+    884
+  ],
+  "context_ranges": [
+    [
+      613,
+      624
+    ],
+    [
+      885,
+      896
+    ]
+  ],
+  "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7",
+  "core_sha256": "68b71ff3134e30e83d903b2601d5471400067ad3f72640786a4dda7f297578b1",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000141-EXACT-WIN-CC3C85D86FBD-0003.json",
+  "capsule_sha256": "d36f077d233cd4fedee7be8069f8b172f4c366e7c5e56a9aa1e6ca6841909c45",
+  "capsule_bytes": 1643,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-CC3C85D86FBD-0003.txt",
+  "source_excerpt_sha256": "cf65ec83c1152aecb821a95f62f83c9a493c2a10bf67bf71a133a4e4b71b3fc0",
+  "source_excerpt_bytes": 36128,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "Docker Manager exposes distinct build, Bake, container lifecycle, access, logging, inspection, repository, registry, drift, and cleanup capabilities with row-level preconditions.",
+      "evidence_ref_ids": [
+        "EV-002",
+        "EV-005",
+        "EV-006"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "Docker compatibility commands are intended to normalize into concrete canonical families, while registry publication authority remains split between Orchestrator after-build effects and Docker Manager publication actions.",
+      "evidence_ref_ids": [
+        "EV-003",
+        "EV-004",
+        "EV-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "The Kubernetes family covers apply, diff, logs, privileged exec, port forwarding, context and namespace selection, and Helm preview/install, with a shared disabled-state taxonomy and domain-bound approval lineage.",
+      "evidence_ref_ids": [
+        "EV-009",
+        "EV-010"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "summary": "Project-scope worktree commands own inventory, selection, navigation, comparison, creation, destructive lifecycle actions, recovery, lineage focus, ownership release, and lock state, with explicit stale-run and blocked-worktree safety rules.",
+      "evidence_ref_ids": [
+        "EV-011",
+        "EV-012",
+        "EV-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "summary": "Chat thread lifecycle commands preserve transcript and lineage on archive, require confirmation and no active run for delete, and preserve stable thread, message, and worktree identities across rename.",
+      "evidence_ref_ids": [
+        "EV-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "summary": "Context Lens GUI truth fixes the owner control beside the chat search bar, supports mute, focus, and subcompact modes with multi-select, distinguishes clearing from canonical-history mutation, and requires confirmation for Subcompact creation.",
+      "evidence_ref_ids": [
+        "EV-015"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "summary": "Assistant thread worktree commands share a Git/local-capability base guard, add command-specific visibility and enablement, route Open Files through the project command, and explicitly exclude arbitrary Bind Existing from the MVP.",
+      "evidence_ref_ids": [
+        "EV-016",
+        "EV-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "summary": "Chat context compaction defines a thread payload, three domain events, nine result statuses, visible or receipt-backed result disclosure, and supersession of earlier thread-usage command IDs.",
+      "evidence_ref_ids": [
+        "EV-018",
+        "EV-019"
+      ]
+    },
+    {
+      "observation_id": "OBS-009",
+      "summary": "Browser, terminal, and dev-session commands have distinct ownership within one shell/runtime family; browser commands expose preview, focus, detach, DevTools, capture, share, takeover, promotion, and recovery capabilities on named GUI surfaces.",
+      "evidence_ref_ids": [
+        "EV-020",
+        "EV-021",
+        "EV-022",
+        "EV-023"
+      ]
+    },
+    {
+      "observation_id": "OBS-010",
+      "summary": "Browser capture events must preserve attachment kind, chip, session, optional thread, status, and provenance, while share-state commands are expressly prohibited from implicitly serializing captured page context.",
+      "evidence_ref_ids": [
+        "EV-024"
+      ]
+    },
+    {
+      "observation_id": "OBS-011",
+      "summary": "Terminal ownership is stable across promotion and handoff, chat retains bounded previews and audit pointers, historical views retain the execution-time policy snapshot, and canonical commands cover reveal, rerun, detach, focus, pane layout, close, and restart/replace.",
+      "evidence_ref_ids": [
+        "EV-025",
+        "EV-026"
+      ]
+    },
+    {
+      "observation_id": "OBS-012",
+      "summary": "Acceptance and audit evidence is represented by successful-build validation snapshots, cleanup receipt checks, Docker/Kubernetes lineage refs, visible or receipt-backed compaction outcomes, and frozen terminal permission/runtime snapshots.",
+      "evidence_ref_ids": [
+        "EV-002",
+        "EV-006",
+        "EV-010",
+        "EV-019",
+        "EV-025"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "severity": "high",
+      "title": "The Exec Shell compatibility alias drops the canonical authorization precondition",
+      "description": "The canonical attach-shell row requires permission_allowed, but cmd.docker.exec is declared as its compatibility alias while requiring only Docker availability and a running container. The result depends on whether implementations evaluate the alias row before or after normalization, creating consequential discretion over an audited shell authorization gate.",
+      "evidence_ref_ids": [
+        "EV-003",
+        "EV-004"
+      ]
+    },
+    {
+      "finding_id": "FIND-002",
+      "severity": "high",
+      "title": "Repository creation confirmation is not contractually bound to a fresh permission and immutable request tuple",
+      "description": "The initiating command requires permission_allowed and proposes a namespace/repository/privacy tuple, but the final side-effecting confirmation is enabled solely by confirmation visibility. No request identifier, tuple hash, target-missing recheck, or permission recheck appears in the row, despite the later requirement to refresh effective capability before mutation.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-010"
+      ]
+    },
+    {
+      "finding_id": "FIND-003",
+      "severity": "high",
+      "title": "Cleanup execution is not bound to the reviewed cleanup scan",
+      "description": "The scan performs protected-asset and receipt checks, and prune is described as occurring after dry-run review, but prune requires only selected targets and permission. The contract supplies no scan receipt, scan version, freshness guard, protected-set snapshot, or reviewed-target identity, allowing implementations to execute against absent or stale review state.",
+      "evidence_ref_ids": [
+        "EV-006"
+      ]
+    },
+    {
+      "finding_id": "FIND-004",
+      "severity": "high",
+      "title": "Docker and Kubernetes integrity requirements lack exact payload, event, result, and receipt schemas",
+      "description": "Both command tables expose only ID, label, description, and preconditions. The prose nevertheless requires canonical payload normalization, shared permission/account/receipt/lineage checks, exact approval binding, cross-surface refs, and capability refresh. Within this canonical window, no fields or emitted outcomes encode those obligations, leaving interoperability and enforcement materially discretionary.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-007",
+        "EV-008",
+        "EV-010"
+      ]
+    },
+    {
+      "finding_id": "FIND-005",
+      "severity": "high",
+      "title": "Worktree lock state does not guard the remove command that lock promises to prevent",
+      "description": "cmd.git.worktree.lock is specified to prevent accidental removal, but cmd.git.worktree.remove has no !worktree_locked or equivalent explicit precondition. Because prune_policy_allows is not defined in the window, the canonical rows do not establish whether lock state is necessarily included in that gate.",
+      "evidence_ref_ids": [
+        "EV-012"
+      ]
+    },
+    {
+      "finding_id": "FIND-006",
+      "severity": "high",
+      "title": "Worktree override authority and fail-closed safety payloads are underspecified",
+      "description": "Active or blocked-preserved worktrees may be acted on if an explicit override policy allows and records an override, but the authorizer, scope, duration, required reason, and receipt fields are not stated. Safe commands need only carry 'enough' lineage data, safe_point_id is optional, and the exact active, blocked, safe-point, and lineage gate predicates are not defined.",
+      "evidence_ref_ids": [
+        "EV-013"
+      ]
+    },
+    {
+      "finding_id": "FIND-007",
+      "severity": "high",
+      "title": "Thread-scoped worktree removal conflicts with project-scope clean and lineage gates",
+      "description": "The thread command is enabled whenever no active thread run exists and expressly permits dirty removal after confirmation. The project command requires worktree_clean, prune_policy_allows, and lineage_gate_passed, while the wrapper family may normalize to project operations. The capsule gives no reconciliation rule for a dirty thread removal that the project command cannot execute.",
+      "evidence_ref_ids": [
+        "EV-012",
+        "EV-013",
+        "EV-016",
+        "EV-017"
+      ]
+    },
+    {
+      "finding_id": "FIND-008",
+      "severity": "high",
+      "title": "Context Lens command identities are not deterministically dispatchable from the catalog",
+      "description": "The table contains purposes and notes but no payloads, preconditions, events, or result contracts. In particular, set_mode has no encoded mode field, message selection has no thread/message identity, and Subcompact apply/revert has no selected-region, summary-artifact, confirmation, or source-ref payload shape.",
+      "evidence_ref_ids": [
+        "EV-015"
+      ]
+    },
+    {
+      "finding_id": "FIND-009",
+      "severity": "medium",
+      "title": "The compaction result-state machine is only partially evented",
+      "description": "Only started, completed, and failed domain events are named, while already_running, cancelled, no_op, degraded, unavailable, and retry_scheduled are also normative result statuses. The contract does not map those statuses to events or receipts, state whether they are terminal, or define correlation and retry fields.",
+      "evidence_ref_ids": [
+        "EV-018",
+        "EV-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-010",
+      "severity": "medium",
+      "title": "Superseded Usage commands lack a complete concrete migration mapping",
+      "description": "Three Usage command IDs are forbidden as canonical IDs, but only legacy open and focus callers receive a vague route/open normalization. No concrete replacement command ID is named, and legacy close has no stated normalization or rejection behavior.",
+      "evidence_ref_ids": [
+        "EV-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-011",
+      "severity": "high",
+      "title": "Optional browser thread identity leaves capture destination and revocation scope ambiguous",
+      "description": "Capture-to-chat commands and revoke_share_with_agent permit thread_id to be omitted, and the emitted capture contract also makes thread_id optional. The capsule defines neither an active-thread fallback nor failure behavior, and it does not state whether omission during revocation revokes one implicit thread or every shared thread.",
+      "evidence_ref_ids": [
+        "EV-022",
+        "EV-024"
+      ]
+    },
+    {
+      "finding_id": "FIND-012",
+      "severity": "high",
+      "title": "Browser stop-agent command emits a dev-session stop without identifying the dev session",
+      "description": "Browser and dev-session behavior have distinct owners, yet cmd.browser.stop_agent_keep_browser accepts only browser_session_id while emitting dev.session.stopped. No owning dev_session_id, agent/run identity, resolution rule, ambiguity failure, or no-associated-dev-session result is specified.",
+      "evidence_ref_ids": [
+        "EV-020",
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FIND-013",
+      "severity": "medium",
+      "title": "Browser takeover actions have two unresolved command encodings",
+      "description": "cmd.browser.take_over carries a three-value takeover_choice, while each value also has a standalone command row. The capsule does not identify the aggregate command as an alias or UI-only dispatcher, define whether it delegates to the concrete command, or prevent duplicate state-change events.",
+      "evidence_ref_ids": [
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FIND-014",
+      "severity": "high",
+      "title": "Canonical terminal payloads leave target selection and process termination discretionary",
+      "description": "The terminal section declares itself canonical, but rerun supplies an unenumerated same-session flag or new-session request with no default, focus permits several optional identities plus an undefined last-relevant fallback without precedence, close_pane accepts an unenumerated optional termination_policy and may either change layout or stop a session, and restart_replace names an unenumerated policy. These choices materially affect which live session is targeted and whether a process is terminated.",
+      "evidence_ref_ids": [
+        "EV-025",
+        "EV-026"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "statement": "Registry publication authority is explicitly separated between the Orchestrator after-build side effect and Docker Manager publish commands, while requiring shared permission, account, receipt, and lineage checks.",
+      "evidence_ref_ids": [
+        "EV-007"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "statement": "Kubernetes aliases, disabled-state copy, exact domain-bound approval scope, cross-surface lineage names, and mutation-time capability refresh are explicitly stated.",
+      "evidence_ref_ids": [
+        "EV-010"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "statement": "Unsafe worktree choices may be revealed for experts but must remain non-executable while active-run, blocked, safe-point, or lineage gates fail.",
+      "evidence_ref_ids": [
+        "EV-013"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "statement": "Worktree recovery fails closed on unresolved post-restart ownership by marking unknown ownership instead of silently unlocking.",
+      "evidence_ref_ids": [
+        "EV-012"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "statement": "Archive preservation and rename identity invariants are explicit for thread transcript, lineage, citations, attachments, audit metadata, thread ID, message IDs, and worktree lineage.",
+      "evidence_ref_ids": [
+        "EV-014"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "statement": "Context Lens explicitly distinguishes Turn Off and selection clearing from canonical-history mutation, requires confirmation for Subcompact creation, and requires canonical source refs for rehydration.",
+      "evidence_ref_ids": [
+        "EV-015"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "statement": "Arbitrary Bind Existing is explicitly excluded from the Assistant thread-worktree MVP, and the base capability variables are defined.",
+      "evidence_ref_ids": [
+        "EV-016",
+        "EV-017"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "statement": "Browser share and revoke operations are explicitly prevented from masquerading as capture operations or serializing page context without a separate capture command.",
+      "evidence_ref_ids": [
+        "EV-024"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "statement": "Terminal session ownership, bounded chat previews, live-terminal reveal controls, secondary-artifact linkback, and frozen historical policy/runtime evidence are explicitly protected.",
+      "evidence_ref_ids": [
+        "EV-025"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "statement": "The exact concrete payload schemas, event families, result enums, and receipt schemas for Docker and Kubernetes commands cannot be determined from this capsule.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-007",
+        "EV-008",
+        "EV-010"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "statement": "The definitions and authoritative producers of permission_allowed, prune_policy_allows, lineage_gate_passed, cleanup review freshness, and related mutation gates are not stated in the assigned window.",
+      "evidence_ref_ids": [
+        "EV-006",
+        "EV-012",
+        "EV-013"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "statement": "The exact outcome when thread-scoped dirty removal reaches project-scope clean, safe-point, blocked-state, and lineage enforcement is unknown.",
+      "evidence_ref_ids": [
+        "EV-012",
+        "EV-013",
+        "EV-016"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "statement": "The concrete replacement command and close behavior for superseded thread-usage callers are unknown.",
+      "evidence_ref_ids": [
+        "EV-019"
+      ]
+    },
+    {
+      "unknown_id": "UNK-005",
+      "statement": "The fallback capture destination and the one-thread-versus-all-threads revocation effect when browser thread_id is absent are unknown.",
+      "evidence_ref_ids": [
+        "EV-022",
+        "EV-024"
+      ]
+    },
+    {
+      "unknown_id": "UNK-006",
+      "statement": "The mapping from browser_session_id to the dev session and agent that stop_agent_keep_browser must terminate is unknown.",
+      "evidence_ref_ids": [
+        "EV-020",
+        "EV-023"
+      ]
+    },
+    {
+      "unknown_id": "UNK-007",
+      "statement": "Terminal focus precedence, rerun default session choice, termination_policy values, restart/replace policy values, and their failure outcomes are unknown.",
+      "evidence_ref_ids": [
+        "EV-026"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EV-001",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 626,
+      "line_end": 626,
+      "range_class": "core",
+      "exact_quote": "| Command ID | Label | Description | Preconditions |"
+    },
+    {
+      "evidence_ref_id": "EV-002",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 628,
+      "line_end": 637,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.build` | Build Image | Compatibility alias for the selected `cmd.docker.build.*` path | `docker_available && build_target_selected` |\n| `cmd.docker.build.select_target` | Select Build Target | Selects Dockerfile, context, target stage, platform, and build mode before build or bake | `docker_available && build_candidate_present` |\n| `cmd.docker.build.run` | Run Build | Runs the selected Docker build path and records last successful build target plus validation snapshot | `docker_available && build_target_selected` |\n| `cmd.docker.bake.preview` | Preview Bake | Previews resolved Bake targets and platforms without publishing | `docker_available && bake_file_resolved` |\n| `cmd.docker.bake.run` | Run Bake | Runs the selected `cmd.docker.bake.*` target | `docker_available && bake_target_selected` |\n| `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |\n| `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |\n| `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |\n| `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |\n| `cmd.docker.container.open` | Open Container Access | Opens a resolved URL or access target for a running container when confidence is sufficient | `docker_available && container_running && access_target_resolved` |"
+    },
+    {
+      "evidence_ref_id": "EV-003",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 639,
+      "line_end": 639,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.container.attach_shell` | Attach Shell | Starts an audited `docker exec/attach` shell session in a running container | `docker_available && container_running && permission_allowed` |"
+    },
+    {
+      "evidence_ref_id": "EV-004",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 643,
+      "line_end": 643,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.exec` | Exec Shell | Compatibility alias for `cmd.docker.container.attach_shell` | `docker_available && container_running` |"
+    },
+    {
+      "evidence_ref_id": "EV-005",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 653,
+      "line_end": 655,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.create_repository` | Create Repository | Starts the protected DockerHub repository creation confirmation flow for the proposed namespace/repository/privacy tuple | `registry_target_missing && permission_allowed` |\n| `cmd.docker.create_repository.confirm` | Confirm Repository Creation | Confirms the protected repository creation request after showing namespace, repository name, privacy, and private-by-default notice | `repository_creation_confirmation_visible` |\n| `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |"
+    },
+    {
+      "evidence_ref_id": "EV-006",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 660,
+      "line_end": 661,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |\n| `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |"
+    },
+    {
+      "evidence_ref_id": "EV-007",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 663,
+      "line_end": 665,
+      "range_class": "core",
+      "exact_quote": "The grouped command token `cmd.docker.compose.scenario.save/run/edit/delete` denotes the scenario command family; payloads use the concrete ids above. Legacy Docker rows normalize into canonical `cmd.docker.container.*`, `cmd.docker.compose.*`, `cmd.docker.bake.*`, or registry command families and MUST NOT introduce new payload shapes.\n`cmd.docker.show` and `cmd.docker.switch_subview` are shell/view-state compatibility wrappers for opening Docker Manager and selecting a Docker Manager subview. They do not replace concrete Docker Manager domain-action rows such as build, compose, registry, cleanup, or Kubernetes commands.\nDocker `/publish/repo-management` and `/lineage` routes preserve the authority split: `cmd.orchestrator.push_image` is the Orchestrator after-build remote side-effect step, while `cmd.docker.image.push` and `cmd.docker.registry.tag_push` are Docker Manager registry publish commands that must share the same permission, account, receipt, and lineage checks rather than claiming a separate event family."
+    },
+    {
+      "evidence_ref_id": "EV-008",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 671,
+      "line_end": 671,
+      "range_class": "core",
+      "exact_quote": "| Command ID | Label | Description | Preconditions |"
+    },
+    {
+      "evidence_ref_id": "EV-009",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 673,
+      "line_end": 681,
+      "range_class": "core",
+      "exact_quote": "| `cmd.docker.k8s.apply` | Apply Manifest | Applies a selected manifest or Helm-rendered manifest inside the selected project scope | `k8s_connected && manifest_selected && permission_allowed` |\n| `cmd.docker.k8s.diff` | Diff Manifest | Diffs selected manifests against the selected context, namespace, or workload where supported | `k8s_connected && manifest_selected` |\n| `cmd.docker.k8s.logs` | View Workload Logs | Opens workload or pod logs with follow, paused snapshot, and historical modes | `k8s_connected && workload_selected` |\n| `cmd.docker.k8s.exec` | Exec In Workload | Starts an audited privileged exec session in the selected pod/container | `k8s_connected && workload_running && permission_allowed` |\n| `cmd.docker.k8s.port_forward` | Port Forward | Starts an audited port-forward with local bind address/port recorded | `k8s_connected && workload_selected && permission_allowed` |\n| `cmd.docker.k8s.select_context` | Select Context | Selects the project-focused Kubernetes context and revalidates capability | `k8s_available` |\n| `cmd.docker.k8s.select_namespace` | Select Namespace | Selects the namespace within the selected context and refreshes workload focus | `k8s_connected` |\n| `cmd.docker.k8s.helm_preview` | Preview Helm | Renders Helm output for the selected release/chart without applying it | `k8s_project_detected && helm_source_selected` |\n| `cmd.docker.k8s.helm_install` | Install Helm | Installs or upgrades the selected Helm release after permission and diff review | `k8s_connected && helm_source_selected && permission_allowed` |"
+    },
+    {
+      "evidence_ref_id": "EV-010",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 683,
+      "line_end": 687,
+      "range_class": "core",
+      "exact_quote": "The grouped command token `cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace` denotes the canonical Docker Manager Kubernetes family. Existing `cmd.k8s.*`, `set_context`, and `set_namespace` rows are compatibility aliases until migrated; canonical payloads use `cmd.docker.k8s.*`.\n\nDocker Manager and `/Kubernetes` command availability copy uses the shared disabled-state taxonomy from the containers and worktree owner docs: `Unsupported`, `Not configured`, `Unauthorized`, `Unreachable`, `Degraded`, and `Partial capability`. UI command rows surface those canonical `/UX-state` reason families from runtime projection state instead of inventing panel-local Docker/Kubernetes disabled wording; legacy `cmd.container.*` references are retired to the active `cmd.docker.*` and `cmd.docker.k8s.*` namespaces.\n\nDocker and Kubernetes side-effect commands use domain-bound approval scoping: registry promotion binds approval to the exact registry/namespace/repository, digest/tag target, and publish action; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation. Cross-surface receipts retain `docker_refs` and `kubernetes_refs` lineage, and runtime drift-detection or `/trust/proxy` blockers must refresh effective capability before mutation."
+    },
+    {
+      "evidence_ref_id": "EV-011",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 693,
+      "line_end": 693,
+      "range_class": "core",
+      "exact_quote": "These commands manage repository-level worktree inventory, ownership, safe actions, and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in section 2.6.1. The grouped tokens `cmd.git.worktree.list/select/open/compare/prune/recover`, `cmd.git.worktree.open|compare|recover|prune|focus_lineage`, and `cmd.git.worktree.recover/prune/remove/reuse` denote the canonical project-scope safe-worktree command set; payloads use the concrete IDs below."
+    },
+    {
+      "evidence_ref_id": "EV-012",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 703,
+      "line_end": 711,
+      "range_class": "core",
+      "exact_quote": "| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree after confirmation, lineage, safe-point, blocked-state, and cleanup gates pass | `git_available && worktree_selected && worktree_clean && prune_policy_allows && lineage_gate_passed` |\n| `cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata after active-run, blocked, safe-point, and lineage gates pass | `git_available && worktree_selected && prune_policy_allows && lineage_gate_passed` |\n| `cmd.git.worktree.request_prune` | Request Worktree Prune | Compatibility alias for approval-gated prune/remove request flows | `git_available && worktree_selected` |\n| `cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner after reuse gates pass | `git_available && worktree_selected && ownership_resolvable && worktree_clean && lineage_gate_passed` |\n| `cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage; if ownership cannot be resolved after restart, marks `unknown ownership` rather than unlocking silently | `git_available && worktree_selected` |\n| `cmd.git.worktree.focus_lineage` | Focus Worktree Lineage | Focuses the selected worktree's owner run, branch lineage, receipt, or `/orphaned` tombstone context without mutating it | `git_available && worktree_selected` |\n| `cmd.git.worktree.release` | Release Worktree Ownership | Releases runtime ownership after lineage-safe completion, archival, or an explicit recorded override | `git_available && worktree_selected && ownership_resolvable` |\n| `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |\n| `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |"
+    },
+    {
+      "evidence_ref_id": "EV-013",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 714,
+      "line_end": 720,
+      "range_class": "core",
+      "exact_quote": "Rules:\n- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, navigation, ownership release, recovery, prune/remove, and reuse entrypoints.\n- `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.\n- Manual prune/remove/reuse is forbidden while the worktree is `active` or `blocked_preserved` unless explicit override policy allows it and records the override.\n- Safe worktree action commands carry enough `repo_id`, `worktree_id`, optional `safe_point_id`, lane/run/package refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session safety.\n- `show-unsafe-actions` expert mode may reveal disabled choices but must not make them executable while active run, blocked, safe-point, or lineage gates fail.\n- Optional confirmation strictness applies before destructive or ownership-changing actions, including remove, prune, and reuse."
+    },
+    {
+      "evidence_ref_id": "EV-014",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 728,
+      "line_end": 738,
+      "range_class": "core",
+      "exact_quote": "The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denotes chat thread lifecycle and discovery commands, not message-level delete or file-restore behavior.\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |\n| `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |\n| `cmd.chat.delete` | Delete Thread | Deletes the selected thread from ordinary navigation after retention/worktree cleanup confirmation | `thread_selected && delete_confirmed && !active_run_in_thread` |\n| `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |\n| `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |\n| `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |\n| `cmd.chat.search` | Search Thread | Searches within the selected thread and restores focus to exact message matches | `thread_selected` |"
+    },
+    {
+      "evidence_ref_id": "EV-015",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 744,
+      "line_end": 754,
+      "range_class": "core",
+      "exact_quote": "Context Lens command IDs stay in lockstep with `Plans/assistant-chat-design.md`, `Plans/Wiring_Matrix.md`, and `Plans/FinalGUISpec.md` for placement, mode activation, message-selection toggles, multi-select behavior, Subcompact apply/revert, clear/reset behavior, and the dropdown `Turn Off` label.\n\n| Command ID | Purpose | Notes |\n|---|---|---|\n| `cmd.chat.context_lens.toggle` | Open or close the Context Lens dropdown | Owner control lives in the top-right of the chat window, immediately to the right of the search bar. |\n| `cmd.chat.context_lens.set_mode` | Set active mode to `mute`, `focus`, or `subcompact` | Multi-select is supported in all modes. |\n| `cmd.chat.context_lens.turn_off` | Exit Context Lens mode and clear active selection state | Dropdown entry label is `Turn Off`. |\n| `cmd.chat.context_lens.toggle_message_selection` | Toggle one message into or out of the active selection set | Applies immediately in `mute` and `focus`. |\n| `cmd.chat.context_lens.clear_selection` | Clear the current active selection set | Does not mutate canonical history. |\n| `cmd.chat.context_lens.apply_subcompact` | Apply Subcompact to the current selected region | Requires explicit user confirmation because it creates a local summary artifact. |\n| `cmd.chat.context_lens.revert_subcompact` | Restore a previously subcompacted region to full effective-context state | Uses canonical source refs for rehydration. |"
+    },
+    {
+      "evidence_ref_id": "EV-016",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 760,
+      "line_end": 771,
+      "range_class": "core",
+      "exact_quote": "Six commands for assistant thread-level worktree operations. All share the base when-clause `activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`; each row adds its own visibility and enablement when-clause.\n\n| Command ID | Slash command | Label | Description | Extra when-clause |\n|---|---|---|---|---|\n| `cmd.chat.worktree.create` | `/worktree create` | Create Worktree | Creates a worktree for the active thread and opens the create/bind dialog | visible when `!activeThreadHasWorktree`; enabled when visible |\n| `cmd.chat.worktree.unbind` | `/worktree unbind` | Unbind Worktree | Detaches the active thread from its worktree while keeping the worktree on disk | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |\n| `cmd.chat.worktree.remove` | `/worktree remove` | Remove Worktree | Detaches and prunes the active thread's worktree, with confirmation if dirty | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |\n| `cmd.chat.worktree.merge` | `/worktree merge [--squash|--rebase]` | Merge Worktree | Opens the merge-back dialog for the active thread's worktree | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun && !worktreeDirty && !worktreeHasConflicts && !worktreeDetachedHead && !mergeLockHeld` |\n| `cmd.chat.worktree.pr` | `/worktree pr` | Create PR | Opens the PR creation panel for the active thread's worktree branch | visible when `activeThreadHasWorktree && projectHasGitHubRemote`; enabled when `!activeThreadHasActiveRun && !worktreeDetachedHead` |\n| `cmd.chat.worktree.info` | `/worktree` | Worktree Info | Shows the active thread's current worktree binding and status without mutation | visible when `activeThreadHasWorktree`; enabled when visible |\n\n`Open Files` routes through the project-scope `cmd.git.worktree.open` command. Arbitrary Bind Existing remains outside the Assistant thread-worktree MVP and must not be exposed as `cmd.chat.worktree.bind_existing`."
+    },
+    {
+      "evidence_ref_id": "EV-017",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 775,
+      "line_end": 782,
+      "range_class": "core",
+      "exact_quote": "**Context variable definitions:**\n- `activeThreadExists`: a chat thread is selected in the assistant panel\n- `activeThreadHasWorktree`: active thread has a non-null worktree binding in redb\n- `activeThreadHasActiveRun`: active thread has a run in progress against the bound worktree\n- `projectIsGitRepo`: active project has a `.git` directory\n- `projectIsRemoteNonSSH`: project is remote-mode but not SSH-tunneled (worktrees unsupported)\n- `projectHasGitHubRemote`: project git config contains a `github.com` remote URL\n- `worktreeDirty`, `worktreeHasConflicts`, `worktreeDetachedHead`, and `mergeLockHeld`: projection-backed guards from the bound worktree and merge lock state"
+    },
+    {
+      "evidence_ref_id": "EV-018",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 786,
+      "line_end": 791,
+      "range_class": "core",
+      "exact_quote": "| Command ID | Payload | Domain event(s) | UI surface(s) |\n|---|---|---|---|\n| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed`, `context.compaction.failed`; result status `started | already_running | cancelled | no_op | degraded | unavailable | retry_scheduled | completed | failed` | Chat context circle Compact Now action, command palette |\n| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |\n| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |\n| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |"
+    },
+    {
+      "evidence_ref_id": "EV-019",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 793,
+      "line_end": 799,
+      "range_class": "core",
+      "exact_quote": "Rules:\n- hover-summary disclosure is passive UI and does not require its own stable command ID\n- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`\n- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action\n- the command result must surface already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed outcomes through visible status or receipt-backed detail\n- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs\n- Legacy callers that still cite `cmd.chat.open_thread_usage` or `cmd.chat.focus_thread_usage` normalize to route/open Usage context and are not pure shell or layout toggles."
+    },
+    {
+      "evidence_ref_id": "EV-020",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 803,
+      "line_end": 812,
+      "range_class": "core",
+      "exact_quote": "Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.\n\n#### Browser preview and browsing commands\n\nRules:\n- Browser export can retrieve more than the viewport, but normal browsing stays slice-based.\n- Browser automation commands for Debug investigations carry the chosen URL plus normalized `/domain/session` identity so command routing can bind the browser session, permission scope, and evidence bundle without relying on a freeform label.\n- Browser command inventory is expanded beyond the older `/focus/detach/share/revoke` shorthand. That shorthand maps only to the concrete focus, detach, share, and revoke rows below; `/screenshot/devtools/automation` maps to screenshot capture, DevTools, automation takeover, promotion, and recovery command rows in this table.\n- This `Plans/UI_Command_Catalog.md` browser section is canonical and packetizable only when consumers reference concrete `cmd.browser.*` command IDs, payloads, and emitted events from this catalog plus the behavior owner in `Plans/Section15_MVP_Promoted_Features_Spec.md`, rather than stale aggregate browser labels.\n- `Research_session` permission is gated by the parent web tool permission; e.g., `webfetch` permission covers browser actions performed within the owning `webfetch` call."
+    },
+    {
+      "evidence_ref_id": "EV-021",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 816,
+      "line_end": 821,
+      "range_class": "core",
+      "exact_quote": "| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |\n| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |\n| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |\n| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |\n| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |\n| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |"
+    },
+    {
+      "evidence_ref_id": "EV-022",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 822,
+      "line_end": 829,
+      "range_class": "core",
+      "exact_quote": "| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |\n| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |\n| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |\n| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |\n| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |\n| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |\n| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |\n| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |"
+    },
+    {
+      "evidence_ref_id": "EV-023",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 830,
+      "line_end": 837,
+      "range_class": "core",
+      "exact_quote": "| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |\n| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |\n| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser takeover prompt |\n| `cmd.browser.stop_agent_keep_browser` | `{ browser_session_id }` | `browser.session.takeover_state_changed`, `dev.session.stopped` | browser takeover prompt, browser chrome |\n| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspace_tab_id? }` | `browser.session.promoted` | browser chrome, command palette |\n| `cmd.browser.reopen` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |\n| `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |\n| `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |"
+    },
+    {
+      "evidence_ref_id": "EV-024",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 839,
+      "line_end": 841,
+      "range_class": "core",
+      "exact_quote": "Capture event rules:\n- `browser.context_captured` MUST carry `attachment_type: \"browser_element_context\" | \"browser_selection_context\"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.\n- `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command."
+    },
+    {
+      "evidence_ref_id": "EV-025",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 847,
+      "line_end": 860,
+      "range_class": "core",
+      "exact_quote": "This section defines the canonical contract for this surface.\n\nCore rules:\n- Terminal promotion and handoff are LOCKED so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.\n- Terminal-handoff routing is the canonical bridge from chat/tool cards into live terminal sessions; it preserves session identity and must not re-own the terminal session under an individual tool.\n- The `/terminal` surface consumes the command identities in this section; callers use these stable command IDs rather than inventing terminal-local aliases.\n- Terminal action canon must preserve the distinct terminal actions in owned command-table rows. Distinct terminal actions must keep owned command-table rows and do not collapse terminal actions into one normalized target.\n- chat-callable one-shot tools such as bash, grep, codesearch, chatsearch, logsearch, and logread stay in-chat by default with concise expandable audit/result blocks; interactive, long-running, or stdin-requiring shell/PTY work promotes to Terminal, Output, or Ports surfaces with chat retaining pointers and bounded `/previews`.\n- One-shot bash/command cards retain the exact command text in the chat message, expose bounded expandable `/output`, and keep full large output behind refs/blobs owned by the runtime surface.\n- Command cards label completed shell work as `Ran: <command>` and active shell work as `Running: <command>`; web/search operation cards label discovery summaries as `<operation>: <query/url> — N sources`.\n- PM built-in agents performing shell-like automation default to PTY-backed terminal execution when work is user-inspectable, multi-step, long-running, or likely to need intervention; non-PTY hidden execution is reserved for infrastructure-like helper work where shell semantics are irrelevant. Agent-originated Output and agent-originated inline `/summaries` must not impersonate a pseudo-console; when a canonical terminal session exists they expose a compact-audit pointer plus `live-terminal` reveal/focus controls.\n- Terminal-originated work and terminal-originated secondary artifacts can emit `/Problems/Ports`, `/Ports/Output`, and `/port/output` items without surrendering terminal ownership of the live session. Those items carry `/linkback`, reveal-origin, and same-session routing to the originating terminal when one exists; preview surfaces may link to the preview-driving dev session or terminal, but reveal is navigation rather than surface replacement.\n- Historical command and audit details show the frozen permission/runtime snapshot that actually governed execution, including policy/mode/project changes; current Settings state must not replace historical `/policy/mode/project` evidence.\n- Dedicated log and audit surfaces provide richer search plus `/filter/drill-down`, `/changes`, `/summaries`, `/transparency`, and `/logging/subagents` over event-log summaries and blobs, while in-thread transparency remains concise and user-facing."
+    },
+    {
+      "evidence_ref_id": "EV-026",
+      "document_path": "Plans/UI_Command_Catalog.md",
+      "line_start": 862,
+      "line_end": 872,
+      "range_class": "core",
+      "exact_quote": "| Command ID | Payload | Domain event(s) | UI surface(s) |\n| --- | --- | --- | --- |\n| `cmd.terminal.open` | label `Open in Terminal`; `terminal_session_id`; reveal existing session context; optional `origin_surface`, `reveal-origin`, and `/linkback` refs | terminal session reveal/focus | command cards, terminal surfaces, Problems, Ports, Output, previews |\n| `cmd.terminal.show` | label `Show Terminal`; `terminal_session_id`; focus the same live session already associated with the card or route context | terminal session reveal/focus | command cards, terminal surfaces |\n| `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | new terminal launch; command replay | command cards, terminal surfaces |\n| `cmd.terminal.detach` | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |\n| `cmd.terminal.focus` | `terminal_session_id?`, `terminal_pane_id?`, `dev_session_id?`, `/last-relevant` fallback mode | terminal reveal/focus | command cards, command palette, terminal surfaces |\n| `cmd.terminal.split_pane` | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |\n| `cmd.terminal.move_pane` | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |\n| `cmd.terminal.close_pane` | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |\n| `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

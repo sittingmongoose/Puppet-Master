@@ -1,0 +1,198 @@
+<<< CONTEXT_BEFORE 443-454 >>>
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "cardinality_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "attempt_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 455-637 >>>
+    "executor_activation_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "states",
+        "records",
+        "transaction_rules"
+      ],
+      "properties": {
+        "states": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "enum": [
+              "activation_pending",
+              "records_materialized",
+              "entrypoints_queued",
+              "start_event_pending",
+              "active",
+              "cancelled_before_mutation"
+            ]
+          }
+        },
+        "records": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "transaction_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "testing_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "records",
+        "selection_rules",
+        "visible_session_rules",
+        "cleanup_rules"
+      ],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/record_contract"
+          }
+        },
+        "selection_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "visible_session_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "cleanup_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "ui_command_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "command_kind",
+        "payload_contract",
+        "result_contract",
+        "enablement_guards",
+        "disabled_reason_codes",
+        "receipt_effects",
+        "stale_projection_policy",
+        "idempotency_key_fields",
+        "recovery_routes"
+      ],
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.(prd_builder|planning_wizard|plan_compile)\\."
+        },
+        "command_kind": {
+          "enum": [
+            "domain_action",
+            "navigation_wrapper",
+            "shell_view"
+          ]
+        },
+        "payload_contract": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "result_contract": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "enablement_guards": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "disabled_reason_codes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "receipt_effects": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "stale_projection_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key_fields": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "recovery_routes": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "clean_room_harness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "harness_id",
+        "state_machine",
+        "positive_scenarios",
+        "negative_scenarios",
+        "certification_authority_rules"
+      ],
+      "properties": {
+        "harness_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state_machine": {
+          "$ref": "#/$defs/non_empty_string_list"
+        },
+        "positive_scenarios": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "$ref": "#/$defs/harness_scenario"
+          }
+        },
+        "negative_scenarios": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/harness_scenario"
+          }
+        },
+        "certification_authority_rules": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    },
+    "harness_scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "stimulus",
+        "expected_terminal_state",
+        "must_prove"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stimulus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_terminal_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "must_prove": {
+          "$ref": "#/$defs/non_empty_string_list"
+        }
+      }
+    }
+  }
+}

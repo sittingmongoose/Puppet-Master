@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-04",
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "role": "adversarial_negative_space",
+  "one_assignment_only": true,
+  "read_only": true,
+  "pre_review_handshake": {
+    "instruction": "Before substantive review, read CODEX_THREAD_ID from the environment and send the parent /root one metadata-only collaboration message containing assignment_id, agent_instance_id, agent_path, agent_thread_id, model, reasoning_effort, and status=dispatch_started. Then continue without waiting for a reply.",
+    "semantic_content_forbidden": true
+  },
+  "scope": {
+    "allowed_reads": [
+      "this protocol card",
+      "the one assigned capsule metadata JSON",
+      "the one assigned source excerpt TXT"
+    ],
+    "forbidden_reads": [
+      "full document",
+      "other windows or capsules",
+      "manifests",
+      "prior audits",
+      "other audit results",
+      "web or external sources",
+      "repository history",
+      "unrelated workspace files"
+    ],
+    "findings_must_concern_core": true,
+    "context_may_support_only": true,
+    "other_reviewer_conclusions_forbidden": true
+  },
+  "preflight": {
+    "verify_capsule_sha256_and_bytes": true,
+    "verify_source_excerpt_sha256_and_bytes": true,
+    "mismatch_status": "invalid_infrastructure",
+    "mismatch_coverage_count": 0
+  },
+  "universal_lens": [
+    "missing callers or actors",
+    "missing states or transitions",
+    "authority and ownership",
+    "failure and recovery",
+    "security and privacy",
+    "misleading GUI truth",
+    "propagation across named boundaries",
+    "operations and observability",
+    "scale and concurrency",
+    "compatibility and migration",
+    "test oracles and acceptance evidence",
+    "internal precision and contradictions",
+    "impossible obligations",
+    "underspecified defaults",
+    "claims unverifiable from supplied text"
+  ],
+  "lens_guard": "Do not demand detail clearly owned elsewhere unless this window claims to own or must route the contract. Separate candidate findings from explicit non-gaps and unknowns.",
+  "evidence_rule": {
+    "required_for_every_nested_item": true,
+    "fields": [
+      "document_path",
+      "line_start",
+      "line_end",
+      "range_class",
+      "excerpt"
+    ],
+    "range_class_values": [
+      "core",
+      "context"
+    ],
+    "line_numbers_are_original_document_lines": true,
+    "excerpt_is_short_exact_copy": true,
+    "candidate_finding_requires_core_evidence": true,
+    "exact_evidence_refs_is_deduplicated_union": true
+  },
+  "output": {
+    "format": "exactly one valid JSON object with no markdown or commentary",
+    "top_level_required": [
+      "schema_version",
+      "status",
+      "assignment_id",
+      "runner_id",
+      "role",
+      "window_id",
+      "doc_id",
+      "document_path",
+      "source_sha256",
+      "capsule_ref",
+      "capsule_sha256",
+      "capsule_bytes",
+      "source_excerpt_ref",
+      "source_excerpt_sha256",
+      "source_excerpt_bytes",
+      "core_range",
+      "context_ranges",
+      "model",
+      "reasoning_effort",
+      "prior_substantive_assignment_count",
+      "terminal_after_result",
+      "no_followup_reuse",
+      "agent_instance_id",
+      "agent_path",
+      "agent_thread_id",
+      "observations",
+      "candidate_findings",
+      "explicit_non_gaps",
+      "unknowns",
+      "exact_evidence_refs"
+    ],
+    "status_values": [
+      "valid_result",
+      "invalid_infrastructure"
+    ],
+    "observation_shape": {
+      "observation_id": "O-001",
+      "statement": "string",
+      "evidence_refs": "nonempty array"
+    },
+    "candidate_finding_shape": {
+      "finding_id": "F-001",
+      "severity": "critical|high|medium|low",
+      "title": "string",
+      "gap": "string",
+      "why_it_matters": "string",
+      "missing_contract": "string",
+      "confidence": "high|medium|low",
+      "evidence_refs": "nonempty array including core evidence"
+    },
+    "explicit_non_gap_shape": {
+      "non_gap_id": "N-001",
+      "statement": "string",
+      "evidence_refs": "nonempty array"
+    },
+    "unknown_shape": {
+      "unknown_id": "U-001",
+      "question": "string",
+      "reason_unresolved": "string",
+      "evidence_refs": "nonempty array"
+    },
+    "evidence_ref_shape": {
+      "document_path": "assigned document_path",
+      "line_start": "integer",
+      "line_end": "integer",
+      "range_class": "core|context",
+      "excerpt": "short exact source excerpt"
+    }
+  },
+  "terminal_rule": "After returning the single final JSON result, produce no further output and accept no further substantive assignment."
+}

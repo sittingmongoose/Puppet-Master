@@ -1,24 +1,32 @@
+  /* pm6 W2 (js-integration): PRD mock refreshed to the Tastebook story + current
+     vocab (seam/package/lane/node, Auditor review loop, Approve And Build chain).
+     Pill lookups are null-guarded — the rebuilt wizard keeps these hooks as inert
+     legacy stubs, so #pill-* ids may be absent. */
   function showPRDMock(id) {
     const el = document.getElementById("prd-mock-content");
+    if (!el) return;
     if(id === "prd") {
-      el.innerHTML = "<h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Executive Summary</h2><p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p><h2>2. Functional Requirements</h2><ul><li>FR1: The system shall support PRD Builder intake, Planning Wizard refinement, and Plan Compile handoff state.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: Orchestrator must project Plan Compile progress before any later runtime handoff.</li><li>FR4: The Planning Wizard must capture requirements and preserve source refs for PlanUnits.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul><h2>4. Auditor review loop</h2><p>The system integrates document validation and canonical alignment so PRD state can be compiled into PlanUnits before implementation work is dispatched.</p><h2>5. Out of Scope</h2><p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>";
+      el.innerHTML = "<h1>PRD — Tastebook v1.2</h1><p><strong>Status:</strong> Accepted for Planning Wizard | <strong>Target run:</strong> pcr-47</p><h2>1. Summary</h2><p>Tastebook is a recipe-sharing app — SvelteKit front end, Rust/Axum API, Postgres 16, Docker for everything. v1.2 ships the media pipeline (image-processing package) and hardens import-from-URL so photos look great without users thinking about sizes and imports survive messy recipe blogs.</p><h2>2. Functional Requirements</h2><ul><li>FR1: Image pipeline — resize ladder and EXIF strip, published as the image-processing package behind a stable seam (gate at node n-13; lane-c media work consumes it only after the seam reports available).</li><li>FR2: Import-from-URL worker gains retries, input sanitization, and mixed-fraction unit normalization (the \"1 1/2 cup\" regression).</li><li>FR3: The storage decision (Cloudflare R2 for images and backups) flows from the Planning Wizard questionnaire into the deployment topics.</li><li>FR4: Agent execution stays provider-agnostic across Claude Code, Codex, Cursor, Copilot, and Antigravity CLI, with requested-vs-effective routing surfaced in the GUI.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Cached media renditions serve under 150 ms p95.</li><li>NFR2: A poisoned import never blocks the queue — failed jobs park at a safe point with a typed reason.</li><li>NFR3: Usage stays inside provider quotas; per-lane budget caps are enforced.</li></ul><h2>4. Auditor review loop</h2><p>Every topic closes through the Auditor review loop before PlanUnits compile. Acceptance: 23 PlanUnits across 4 lanes, seam boundaries hold, zero open findings.</p><h2>5. Approval chain</h2><p>cmd.prd_builder.approve_for_planning_wizard → cmd.planning_wizard.approve_and_build → cmd.runtime.approve → cmd.plan_compile.open_build. Approve And Build in the Planning Wizard is the only launch control — no second Start Build confirmation anywhere.</p><h2>6. Out of Scope</h2><p>Meal planning, mobile apps, and federation are deferred.</p><p style=\"margin-top:var(--md);\"><button type=\"button\" style=\"cursor:pointer; padding:6px 12px;\" onclick=\"if(window.PM_PAGES&&PM_PAGES.go){PM_PAGES.go('wizard'); if(window.toast) toast('cmd.prd_builder.approve_for_planning_wizard → Planning Wizard');}else if(window.toast){toast('Unavailable: demo_scope');}\">Approve for Planning Wizard</button> <span style=\"font-size:10px; color:var(--text-muted);\">cmd.prd_builder.approve_for_planning_wizard</span></p>";
     } else if(id === "seeds") {
-      el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in accepted PRD and Planning Wizard decisions before Plan Compile.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"compile_config\": {\n    \"auto_approve\": false,\n    \"handoff_target\": \"orchestrator.plan_compile\"\n  }\n}</pre>";
+      el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in accepted PRD and Planning Wizard decisions before Plan Compile.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"story\": \"tastebook-v1.2\",\n  \"storage_decision\": \"cloudflare_r2\",\n  \"compile_config\": {\n    \"auto_approve\": false,\n    \"handoff_target\": \"orchestrator.plan_compile\",\n    \"launch_chain\": [\n      \"cmd.prd_builder.approve_for_planning_wizard\",\n      \"cmd.planning_wizard.approve_and_build\",\n      \"cmd.runtime.approve\",\n      \"cmd.plan_compile.open_build\"\n    ]\n  }\n}</pre>";
     } else if(id === "arch") {
-      el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>We are using a Rust backend connected to a Slint UI via channels. Persistent state is maintained using `redb`.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>UI[Slint Window] -->|Events| Backend[Rust Core];<br>Backend --> DB[(Redb)];<br>Backend --> Agents{{Agent Subsystem}};<br></div>";
+      el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>SvelteKit web client talking to a Rust/Axum API. Postgres 16 owns durable state, Redis backs queues and caching, and everything ships as Docker images (jared/tastebook:v1.2) with an Unraid template as the publish target.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>Web[SvelteKit] -->|HTTP| API[Rust/Axum];<br>API --> DB[(Postgres 16)];<br>API --> Cache[(Redis)];<br>API --> IMG{{image-processing package}};<br>Worker[import-worker] --> API;<br></div><h2>3. Seams and lanes</h2><p>lane-b publishes the image-processing package behind its seam; lane-c media work unblocks on seam_available (the gate you see at node n-13 in run pcr-47). Each lane works in its own worktree and promotes lane_to_package, then package_to_seam_available once the Auditor review loop signs off.</p>";
     }
     document.querySelectorAll(".prd-pill").forEach(p => p.classList.remove("active"));
-    document.getElementById("pill-" + id).classList.add("active");
+    var pill = document.getElementById("pill-" + id);
+    if (pill) pill.classList.add("active");
   }
   function showExecMock(id) {
     const el = document.getElementById("exec-mock-content");
+    if (!el) return;
     if(id === "exec") {
       el.innerHTML = "<h1>Plan Compile State</h1><h2>Stage: PRD Intake</h2><p><strong>Surface:</strong> PRD Builder</p><p>- Normalize requirements intake.<br>- Preserve accepted constraints, source refs, and out-of-scope notes.<br>- Prepare the Planning Wizard ledger snapshot.</p><h2>Stage: PlanUnits</h2><p><strong>Surface:</strong> Planning Wizard</p><p>- Draft stable PlanUnits from accepted planning state.<br>- Carry dependency, risk, validation, and GUI-routing metadata.<br>- Preserve source refs for compile traceability.</p><h2>Stage: Node Readiness</h2><p><strong>Surface:</strong> Plan Compile</p><p>- Produce node-readiness metadata only.<br>- Use the accepted PNC-007 compiler contract as the runtime-readiness boundary while this concept fixture remains non-emitting.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p><h2>Stage: Orchestrator Handoff</h2><p><strong>Surface:</strong> Orchestrator Plan Compile</p><p>- Publish the approved compile state for later handoff.<br>- Materialize runtime artifacts only through compiler, Executor intake, activation, and Goal Runtime certification contracts.</p>";
     } else if(id === "manifest") {
       el.innerHTML = "<h1>Handoff Manifest</h1><p>This manifest records the approved compile state before Orchestrator handoff.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"state\": \"ready_for_plan_compile\",\n  \"handoff_target\": \"orchestrator.plan_compile\",\n  \"artifacts\": [\n    \"PlanUnit index\",\n    \"node-readiness report\",\n    \"source-ref matrix\"\n  ]\n}</pre>";
     }
     document.querySelectorAll(".exec-pill").forEach(p => p.classList.remove("active"));
-    document.getElementById("pill-" + id).classList.add("active");
+    var pill = document.getElementById("pill-" + id);
+    if (pill) pill.classList.add("active");
   }
   window.showPRDMock = showPRDMock;
   window.showExecMock = showExecMock;
@@ -1404,9 +1412,17 @@
   editorThemeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   // ── Initial Editor Load ──
+  /* pm6 W2 (js-integration): the dashboard's editor tabs now carry Tastebook
+     paths (src/main.rs, src/models/recipe.rs, …) and pm6-js-dashboard wraps
+     switchEditorPane1Tab / switchEditorPane2CodeTab to render Tastebook bodies
+     for those paths (delegating unknown names back to this part's renderer).
+     Boot through the wrapped switchers so the initial panes match the active
+     tabs; the legacy FILE_DATA render remains the fallback. */
   setTimeout(function() {
-    renderFileToPane('app.rs', 'pane1', true);
-    renderFileToPane('config.rs', 'pane2', true);
+    if (typeof window.switchEditorPane1Tab === 'function') window.switchEditorPane1Tab('src/main.rs');
+    else renderFileToPane('app.rs', 'pane1', true);
+    if (typeof window.switchEditorPane2CodeTab === 'function') window.switchEditorPane2CodeTab('src/models/recipe.rs');
+    else renderFileToPane('config.rs', 'pane2', true);
   }, 100);
 
   if (window.switchToChatThread) { window.switchToChatThread('thread0'); }

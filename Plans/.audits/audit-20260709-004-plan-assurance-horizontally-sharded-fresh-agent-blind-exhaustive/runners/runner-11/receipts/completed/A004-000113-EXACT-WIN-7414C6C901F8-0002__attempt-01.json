@@ -1,0 +1,65 @@
+{
+  "receipt_type": "completed_attempt",
+  "immutable": true,
+  "assignment_id": "A004-000113-EXACT-WIN-7414C6C901F8-0002",
+  "attempt": 1,
+  "runner_id": "runner-11",
+  "agent_instance_id": "a004_r11_exact_000113_7a4d2e91",
+  "agent_path": "/root/a004_r11_exact_000113_7a4d2e91",
+  "agent_thread_id": "019f4a1b-bf52-7f71-9375-260f561163b7",
+  "agent_thread_id_status": "verified_from_native_session_meta",
+  "agent_nickname": "Hume",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "model_verified_from_turn_context": true,
+  "reasoning_effort_verified_from_turn_context": true,
+  "role": "contract_capability_exact_behavior",
+  "window_id": "WIN-7414C6C901F8-0002",
+  "doc_id": "DOC-7414C6C901F8",
+  "document_path": "Plans/LSPSupport.md",
+  "core_range": [
+    295,
+    586
+  ],
+  "overlap_ranges": [
+    [
+      283,
+      294
+    ],
+    [
+      587,
+      598
+    ]
+  ],
+  "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+  "core_sha256": "ab4845782b20ae1f454499e05526aa2b62cfc4ab2d85216a68bf41beb9229bf2",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000113-EXACT-WIN-7414C6C901F8-0002.json",
+  "capsule_sha256": "2dae63de52026c7e9fc57141bb168857f6a0cb4e12c42dad7d047465c4d0103b",
+  "capsule_bytes": 1635,
+  "capsule_package_bytes": 39448,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-7414C6C901F8-0002.txt",
+  "source_excerpt_sha256": "01b5d20c77ec67f05d4c5249f314ade4e9133b751909de9c185e3405d13f32ea",
+  "source_excerpt_bytes": 37813,
+  "created_at": "2026-07-10T03:39:20.501Z",
+  "completed_at": "2026-07-10T03:45:08.126Z",
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "attempt_status": "terminal_quarantined_zero_coverage",
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-11/raw_results/A004-000113-EXACT-WIN-7414C6C901F8-0002__attempt-01.json",
+  "result_sha256": "47d673b24fe08088fed1705f9febaa15fadf500473e79c86d1892e42148f9e1d",
+  "valid_coverage": false,
+  "coverage_credit": 0,
+  "validation_passed": false,
+  "validation_status": "quarantined",
+  "permanent_zero_credit": true,
+  "protocol_failure_code": "v2_prelaunch_dispatch_receipt_missing",
+  "actual_token_usage": {
+    "input_tokens": 53343,
+    "cached_input_tokens": 41728,
+    "output_tokens": 11218,
+    "reasoning_output_tokens": 6562,
+    "total_tokens": 64561
+  },
+  "completion_receipt_created_at": "2026-07-10T03:45:51Z"
+}

@@ -1,0 +1,1121 @@
+{
+  "schema_version": "a004.document_window_result.v1",
+  "assignment_id": "A004-000038-ADVERSARIAL-WIN-19B62D73B9EF-0006",
+  "runner_id": "runner-08",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-19B62D73B9EF-0006",
+  "doc_id": "DOC-19B62D73B9EF",
+  "document_path": "Plans/Contracts_V0.md",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "agent_instance_id": "DCCF9742-2CA1-48A8-832C-ECA4BDFC41B8",
+  "agent_path": "/root/a004_r08_adversarial_000038_dccf9742",
+  "agent_thread_id": "019f4a29-8811-7430-be4b-1d645f9e860c",
+  "hash_verification": {
+    "capsule_sha256_match": true,
+    "source_excerpt_sha256_match": true,
+    "capsule_bytes_match": true,
+    "source_excerpt_bytes_match": true
+  },
+  "scope_attestation": {
+    "files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/reviewer_protocol_v4.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/evidence_locator_v2.py",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000038-ADVERSARIAL-WIN-19B62D73B9EF-0006.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-19B62D73B9EF-0006.txt"
+    ],
+    "other_files_read": false,
+    "prior_audits_seen": false,
+    "other_results_seen": false,
+    "unrelated_windows_seen": false
+  },
+  "observations": [
+    {
+      "observation_id": "O-001",
+      "category": "callers_and_capability_state",
+      "summary": "The provider capability envelope is caller-scoped and distinguishes instance enablement from current usability while carrying permission, redaction, verification, artifact, and confidence metadata.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1123,
+          "line_end": 1123,
+          "quote": "Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1129,
+          "line_end": 1129,
+          "quote": "Capability availability is caller-scoped and cannot be inferred from global provider enablement alone."
+        }
+      ],
+      "implication": "Consumers are expected to evaluate capability state for the actual caller rather than projecting a global provider switch."
+    },
+    {
+      "observation_id": "O-002",
+      "category": "transport_and_normalization",
+      "summary": "All transport classes are intended to converge on one normalized provider stream and consumer branching by transport is prohibited.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1216,
+          "line_end": 1216,
+          "quote": "Consumers MUST NOT branch on transport class. All provider output is consumed through the unified normalized stream."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1190,
+          "line_end": 1190,
+          "quote": "Provider and stream seams require explicit contract-version governance. A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories; new fields require a contract-versioned owner path before persistence or UI projections consume them."
+        }
+      ],
+      "implication": "Adapter-specific facts must be normalized without changing consumer-visible semantics."
+    },
+    {
+      "observation_id": "O-003",
+      "category": "runtime_attribution",
+      "summary": "Tool runtime attribution is required in authoritative persisted payloads, and denial payloads retain requested actor and account identity for explanation.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1232,
+          "line_end": 1232,
+          "quote": "**runtime/tool/artifact attribution** must live in the authoritative payload shape itself."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1279,
+          "line_end": 1279,
+          "quote": "Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields."
+        }
+      ],
+      "implication": "Attribution is intended to survive persistence and downstream joins rather than exist only in an analytics projection."
+    },
+    {
+      "observation_id": "O-004",
+      "category": "question_lifecycle",
+      "summary": "Question handling defines runtime transitions and a separate output-status vocabulary.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1361,
+          "line_end": 1361,
+          "quote": "Runtime state triggers are `pending` to `active` when the question is presented, `active` to `answered` or `submitted` when the user submits a response, `active` to `dismissed` when the user dismisses it, and `active` to `expired` when a configured timeout is reached."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "quote": "Question input envelopes carry `mode: \"single_question\" | \"questionnaire\"` and output `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"`."
+        }
+      ],
+      "implication": "Persistence, tool responses, and GUI projection require an explicit mapping between the two vocabularies."
+    },
+    {
+      "observation_id": "O-005",
+      "category": "web_event_ownership",
+      "summary": "Web activity reuses the generic tool event families, with web-operation vocabulary restricted to payload classification.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1375,
+          "line_end": 1375,
+          "quote": "`tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1375,
+          "line_end": 1375,
+          "quote": "The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unless a future analytics contract explicitly introduces one."
+        }
+      ],
+      "implication": "Web audit, denial, usage, and attribution joins should remain in the established tool-event namespace."
+    },
+    {
+      "observation_id": "O-006",
+      "category": "fallback_disclosure",
+      "summary": "Provider fallback has an explicit summary field and an audit-to-chat disclosure consistency rule.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`."
+        }
+      ],
+      "implication": "Fallback is intended to remain user-visible and auditable rather than being reduced to only an effective adapter."
+    },
+    {
+      "observation_id": "O-007",
+      "category": "reference_first_payloads",
+      "summary": "Large web payloads and raw debug material are kept out of inline event projections and moved through references or blobs.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1383,
+          "line_end": 1383,
+          "quote": "Inline event/meta fields are short previews, counts, enum-like routing/provenance values, and stable error codes. Full extracted page bodies, long research synthesis notes, large source sets, crawl page inventories, and map graph payloads must move by ref or `/blob` rather than being duplicated into every event projection."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1465,
+          "line_end": 1465,
+          "quote": "raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads"
+        }
+      ],
+      "implication": "Inline payload scale and accidental raw-secret duplication are deliberately constrained."
+    },
+    {
+      "observation_id": "O-008",
+      "category": "debug_event_family",
+      "summary": "Debug investigations use a generic state-change event plus explicit export and import records.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1451,
+          "line_end": 1451,
+          "quote": "`debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?`"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1457,
+          "line_end": 1457,
+          "quote": "`debug.investigation.exported` | `investigation_id`, `bundle_id`, `schema_id`, `item_count`, `artifact_count`, `redaction_profile`"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1458,
+          "line_end": 1458,
+          "quote": "`debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind`"
+        }
+      ],
+      "implication": "The state machine and bundle trust rules must be derivable from these generic event shapes or an owner contract."
+    },
+    {
+      "observation_id": "O-009",
+      "category": "compatibility_normalization",
+      "summary": "Several legacy input names remain accepted only through ingress normalization.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "quote": "`allow_other` is a deprecated alias for canonical `allow_freeform`; plain-text compatibility wording may say allow_other is a deprecated alias, but consumers may accept it only as a compatibility input and must normalize it before persistence, validation, or rendering."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1355,
+          "line_end": 1355,
+          "quote": "Legacy `web_input` normalizes to `operation_input` at ingress and remains compatibility/source-lineage only."
+        }
+      ],
+      "implication": "Migration correctness depends on deterministic normalization before persistence and rendering."
+    },
+    {
+      "observation_id": "O-010",
+      "category": "requirements_quality_compatibility",
+      "summary": "Requirements-quality payloads mix legacy pass verdicts with active Auditor-cycle states and additionally require a skipped value.",
+      "evidence": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1295,
+          "line_end": 1295,
+          "quote": "`pass_verdict` | Legacy verdict value for compatibility rows; active Auditor cycle reports record certified, blocked, pass, fail, or repaired state as applicable."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1311,
+          "line_end": 1311,
+          "quote": "`pass_verdict` must support `skipped` where the flow needs it."
+        }
+      ],
+      "implication": "Consumers need a deterministic discriminator and mapping between legacy and active quality-result semantics."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "candidate_id": "CF-001",
+      "severity": "high",
+      "category": "states_transitions_and_gui_truth",
+      "claim": "The caller-scoped capability payload is not defined as a freshness-bounded snapshot: `where applicable` leaves field applicability open, while no observation time, expiry, revision, invalidation trigger, or legal transition rules are specified here for `enabled_on_instance`, `usable_now`, `blocked_reason`, `verification_state`, or `source_confidence`.",
+      "why_it_matters": "A cached or partially populated capability record can continue to report `usable_now` after credentials, permissions, account selection, routing, or verification state changes, producing inconsistent routing and misleading GUI availability.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1123,
+          "line_end": 1123,
+          "quote": "Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1129,
+          "line_end": 1129,
+          "quote": "Capability availability is caller-scoped and cannot be inferred from global provider enablement alone."
+        }
+      ],
+      "bounded_remediation_need": "Define a field-applicability matrix, closed state and reason enums, `observed_at`, expiry or freshness policy, a capability revision, invalidation triggers, legal transitions, and oracle cases for permission/account/route changes."
+    },
+    {
+      "candidate_id": "CF-002",
+      "severity": "high",
+      "category": "security_privacy_and_operations",
+      "claim": "The capsule makes artifact and blob references the boundary for sensitive or large material but does not define reference authorization, caller or tenant binding, integrity verification, retention and expiry, revocation, missing-target behavior, or redaction propagation.",
+      "why_it_matters": "A reference can become a bearer capability or leak sensitive logs and generated artifacts even when secret bytes are absent from the event itself; stale, swapped, unauthorized, or deleted targets can also make audit evidence unverifiable.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1123,
+          "line_end": 1123,
+          "quote": "Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1466,
+          "line_end": 1466,
+          "quote": "raw material is referenced through artifact or blob refs owned by the appropriate artifact system"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1465,
+          "line_end": 1465,
+          "quote": "raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads"
+        }
+      ],
+      "bounded_remediation_need": "Define a shared reference envelope with owning scope, opaque identifier, content hash and algorithm, media or schema type, redaction state, authorization decision, retention and expiry, revocation behavior, and deterministic missing or unauthorized outcomes."
+    },
+    {
+      "candidate_id": "CF-003",
+      "severity": "high",
+      "category": "authority_and_downstream_propagation",
+      "claim": "CV-294 requires `permission_snapshot_id` in caller-scoped capability payloads, but the authoritative tool invocation and denial attribution contract shown here does not propagate a permission snapshot or policy-decision reference.",
+      "why_it_matters": "Persisted execution and denial receipts cannot prove which permission state authorized or rejected an action, especially after permissions change, weakening forensic, recovery, and policy-regression oracles.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1123,
+          "line_end": 1123,
+          "quote": "Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1232,
+          "line_end": 1232,
+          "quote": "**runtime/tool/artifact attribution** must live in the authoritative payload shape itself."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1278,
+          "line_end": 1278,
+          "quote": "permission and denial surfaces must still expose effective actor and account identity."
+        }
+      ],
+      "bounded_remediation_need": "Require `permission_snapshot_id` and a stable policy-decision or denial-decision reference on invoked and denied payloads, with an explicit pre-resolution or unavailable representation."
+    },
+    {
+      "candidate_id": "CF-004",
+      "severity": "medium",
+      "category": "compatibility_and_stream_operations",
+      "claim": "The capsule mandates contract-version governance for provider streams but does not itself specify a required version field, version negotiation, unknown-version behavior, event ordering, replay cursor, deduplication key, reconnect semantics, backpressure, or terminal-event invariant.",
+      "why_it_matters": "CLI, SSE, and direct transports have different interruption and delivery behavior; without pinned common semantics, adapters can conform nominally while duplicating, reordering, dropping, or prematurely completing tool and usage events.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1190,
+          "line_end": 1190,
+          "quote": "Provider and stream seams require explicit contract-version governance. A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories; new fields require a contract-versioned owner path before persistence or UI projections consume them."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1177,
+          "line_end": 1177,
+          "quote": "**Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing."
+        }
+      ],
+      "bounded_remediation_need": "Pin a minimum normalized-stream envelope containing schema version, stream and event identity, sequence, attempt identity, replay cursor, terminal classification, deduplication rules, reconnect behavior, and unsupported-version failure behavior, or make the external owner contract explicitly normative for each item."
+    },
+    {
+      "candidate_id": "CF-005",
+      "severity": "high",
+      "category": "failure_recovery_and_test_oracles",
+      "claim": "The web operation event mapping conflates successful and attempted-completed outcomes under `tool.invoked`, conditions `error_code` on `success = false`, but does not state where `success` is required or define started, in-flight, cancelled, timed-out, crashed, retried, or indeterminate outcomes.",
+      "why_it_matters": "Audit and GUI consumers cannot reliably distinguish an operation that never started, failed after side effects, was cancelled, is still running, or succeeded; retry logic can duplicate external operations.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1375,
+          "line_end": 1375,
+          "quote": "`tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1377,
+          "line_end": 1377,
+          "quote": "`provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`."
+        }
+      ],
+      "bounded_remediation_need": "Define a closed operation lifecycle, required outcome and terminality fields, cancellation and timeout mapping, side-effect uncertainty state, retry lineage, idempotency key, and transition test vectors."
+    },
+    {
+      "candidate_id": "CF-006",
+      "severity": "high",
+      "category": "states_transitions_and_ownership",
+      "claim": "The question lifecycle uses runtime terminal state `expired` but output status `timed_out` without an explicit normalization rule, and delegates terminal versus restorable behavior to an unspecified owning surface.",
+      "why_it_matters": "Storage, tool responses, chat, and questionnaires can disagree about whether a timed-out or dismissed question is terminal, resumable, or already submitted, causing duplicate prompts, lost drafts, or invalid resumption.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1361,
+          "line_end": 1361,
+          "quote": "Runtime state triggers are `pending` to `active` when the question is presented, `active` to `answered` or `submitted` when the user submits a response, `active` to `dismissed` when the user dismisses it, and `active` to `expired` when a configured timeout is reached."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "quote": "Question input envelopes carry `mode: \"single_question\" | \"questionnaire\"` and output `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"`."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1361,
+          "line_end": 1361,
+          "quote": "`answered`, `submitted`, `dismissed`, and `expired` remain terminal or explicitly restorable question outcomes according to the owning surface."
+        }
+      ],
+      "bounded_remediation_need": "Publish one canonical state machine with runtime-to-output mappings, single-question versus questionnaire submission semantics, owner identity, restoration authority, timeout behavior, draft retention rules, and illegal-transition oracles."
+    },
+    {
+      "candidate_id": "CF-007",
+      "severity": "medium",
+      "category": "compatibility_and_migration",
+      "claim": "Legacy aliases are required to normalize before persistence, but no shared rule defines precedence, rejection, or telemetry when canonical and alias fields are both supplied with conflicting values.",
+      "why_it_matters": "Different ingress paths can silently choose different values, producing non-deterministic persistence, replay, validation, and GUI rendering during migration.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1367,
+          "line_end": 1367,
+          "quote": "`allow_other` is a deprecated alias for canonical `allow_freeform`; plain-text compatibility wording may say allow_other is a deprecated alias, but consumers may accept it only as a compatibility input and must normalize it before persistence, validation, or rendering."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1355,
+          "line_end": 1355,
+          "quote": "Legacy `web_input` normalizes to `operation_input` at ingress and remains compatibility/source-lineage only."
+        }
+      ],
+      "bounded_remediation_need": "Define one alias-collision policy covering equal duplicate values, conflicting values, canonical precedence or rejection, warning emission, migration metrics, and round-trip fixtures."
+    },
+    {
+      "candidate_id": "CF-008",
+      "severity": "high",
+      "category": "scale_operations_and_downstream_propagation",
+      "claim": "Batch web operations require parent and per-URL child audit events but specify no mandatory batch identifier, parent-event reference, child index or URL identity rule, expected and completed counts, parent-finalization rule, retry lineage, or deduplication behavior.",
+      "why_it_matters": "Under concurrency, partial failure, retry, or event reordering, consumers cannot prove which children belong to a batch or whether aggregate status is complete and accurate.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1385,
+          "line_end": 1385,
+          "quote": "Batch web operations preserve one parent audit event for the batch and child audit events per URL. The parent event carries the batch-level tool use, routing metadata, adapter selection, and aggregate status; each child event carries URL-level status, provider attempt refs, cache fields, and error/provenance metadata."
+        }
+      ],
+      "bounded_remediation_need": "Require batch and parent correlation IDs, stable child identities, expected/completed counts, aggregate-status derivation, parent finalization, partial-failure semantics, retry attempt lineage, and idempotency oracles."
+    },
+    {
+      "candidate_id": "CF-009",
+      "severity": "high",
+      "category": "failure_recovery_security_and_audit",
+      "claim": "`provider_fallback_occurred` is present while `provider_fallback_summary` is optional, and the summary describes only one failed provider and the next attempted provider rather than a complete attempt chain with effective account, permission, policy, region, and terminal outcome.",
+      "why_it_matters": "Multi-hop fallback can cross accounts, entitlements, data-residency boundaries, or providers while leaving an incomplete audit trail; optional summaries also undermine the stated requirement that chat and audit disclose the route consistently.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1377,
+          "line_end": 1377,
+          "quote": "`provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`."
+        }
+      ],
+      "bounded_remediation_need": "When fallback occurs, require an ordered attempt array with attempt references, requested and effective adapter/provider/account, permission snapshot, cause, timestamps, outcome, retryability, policy or consent decision, terminal selection, and redacted user-facing summary."
+    },
+    {
+      "candidate_id": "CF-010",
+      "severity": "medium",
+      "category": "user_visible_gui_truth",
+      "claim": "`result_quality_hint` is optional even though it is the specified mechanism for distinguishing snippet-only, extracted-page, site-reader, and synthesized evidence depth; no unknown/default rendering behavior is defined.",
+      "why_it_matters": "A result without the hint can be rendered as if it has stronger evidence than it does, particularly making search snippets appear equivalent to page reads or multi-source synthesis.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1353,
+          "line_end": 1353,
+          "quote": "`result_quality_hint` is an optional common web output field with exact values `search_snippets_only`, `extracted_pages`, `site_reader_pages`, and `research_synthesis`. It describes the evidence depth behind the returned result so consumers can distinguish snippet-only search results, provider-extracted page bodies, PM Site Reader page reads, and synthesized multi-source research."
+        }
+      ],
+      "bounded_remediation_need": "Require the hint for result-bearing operations or add an explicit `unknown` value, define derivation per execution path, and require conservative GUI rendering and test fixtures when the value is missing or unsupported."
+    },
+    {
+      "candidate_id": "CF-011",
+      "severity": "medium",
+      "category": "failure_and_recovery",
+      "claim": "HTTP 402 and HTTP 429 are both normalized to `rate_limited`, conflating payment or credit exhaustion with transient throttling.",
+      "why_it_matters": "Retry and recovery differ materially: backoff can resolve 429, while 402 commonly needs billing, balance, or entitlement repair. Treating both identically can cause retry storms and misleading user guidance.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1409,
+          "line_end": 1410,
+          "quote": "- HTTP 429 → `rate_limited`\n- HTTP 402 → `rate_limited`"
+        }
+      ],
+      "bounded_remediation_need": "Introduce a distinct payment, credits, or entitlement code, or require a structured non-retryable reason and recovery action while retaining a broader availability category for compatibility."
+    },
+    {
+      "candidate_id": "CF-012",
+      "severity": "high",
+      "category": "states_transitions_and_test_oracles",
+      "claim": "The debug investigation state-change event exposes free `phase`, `state`, rollback, stop, retry, resume, and attention-related fields without defining closed phase/state enums, legal transitions, terminal completion or cancellation states, rollback failure semantics, or idempotency.",
+      "why_it_matters": "Independent producers and projectors can accept contradictory or impossible investigation states, strand instrumentation, or disagree on whether an investigation can resume or has safely terminated.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1451,
+          "line_end": 1451,
+          "quote": "`debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?`"
+        }
+      ],
+      "bounded_remediation_need": "Define closed phase, state, rollback, stop, and attention enums; a transition table including completion, cancellation, failure, retry, and resume; monotonic event ordering; idempotency; and invalid-transition fixtures."
+    },
+    {
+      "candidate_id": "CF-013",
+      "severity": "high",
+      "category": "security_privacy_and_migration",
+      "claim": "Debug export records a redaction profile, but the corresponding import payload has no required redaction state, content hash, signature, source trust level, authorization decision, schema-validation result, or quarantine outcome.",
+      "why_it_matters": "An imported bundle can be tampered with, over-privileged, insufficiently redacted, or contain hostile references while still appearing as a normal imported investigation.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1457,
+          "line_end": 1457,
+          "quote": "`debug.investigation.exported` | `investigation_id`, `bundle_id`, `schema_id`, `item_count`, `artifact_count`, `redaction_profile`"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1458,
+          "line_end": 1458,
+          "quote": "`debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind`"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1465,
+          "line_end": 1465,
+          "quote": "raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads"
+        }
+      ],
+      "bounded_remediation_need": "Require import integrity and authenticity verification, source trust classification, authorization, redaction-profile compatibility, schema-validation outcome, artifact-ref validation, reject or quarantine states, and negative import fixtures."
+    },
+    {
+      "candidate_id": "CF-014",
+      "severity": "medium",
+      "category": "gui_truth_and_compatibility",
+      "claim": "The provenance badge is typed as arbitrary `string`, declares a canonical set, retains `provider_scrape` as a pending extension, and allows narrowed consumers to expose only `site_reader` plus that pending value without defining behavior for the other canonical values.",
+      "why_it_matters": "Consumers can silently drop, mislabel, or invent provenance values, undermining stable joins and user-visible distinctions between snippets, extraction, synthesis, crawl, and map results.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1355,
+          "line_end": 1355,
+          "quote": "Web result payloads also carry `provenance_badge?: string`, with the canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization and must be marked as such wherever a narrowed locked set is required."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1355,
+          "line_end": 1355,
+          "quote": "Narrowed TypeScript-style consumers may render the owner-owned subset as `provenance_badge?: 'site_reader' | 'provider_scrape'` only when they also preserve that proposed-extension caveat."
+        }
+      ],
+      "bounded_remediation_need": "Use a versioned closed enum with an explicit unknown-extension representation, define migration status for `provider_scrape`, and require every narrowed consumer to preserve or conservatively render all owner-owned canonical values."
+    },
+    {
+      "candidate_id": "CF-015",
+      "severity": "medium",
+      "category": "compatibility_and_test_oracles",
+      "claim": "The requirements-quality contract mixes legacy and active meanings in `pass_verdict`, names five active states in prose, then separately requires `skipped`, without a closed enum, artifact-kind discriminator, or mapping between legacy pass rows and Auditor-cycle outcomes.",
+      "why_it_matters": "Import, export, search, launch gating, and GUI consumers can interpret the same value differently or omit `skipped`, producing inconsistent quality and launch decisions.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1295,
+          "line_end": 1295,
+          "quote": "`pass_verdict` | Legacy verdict value for compatibility rows; active Auditor cycle reports record certified, blocked, pass, fail, or repaired state as applicable."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1311,
+          "line_end": 1311,
+          "quote": "`pass_verdict` must support `skipped` where the flow needs it."
+        }
+      ],
+      "bounded_remediation_need": "Define an artifact-kind or schema-version discriminator, closed legacy and active verdict enums, a total normalization mapping including `skipped`, launch-gate semantics, and compatibility fixtures."
+    },
+    {
+      "candidate_id": "CF-016",
+      "severity": "medium",
+      "category": "authority_and_failure_recovery",
+      "claim": "Denial surfaces are required to expose effective actor and account identity even though requested account or policy routing can be denied before an effective identity is resolved; no explicit unresolved or requested-only identity state is defined.",
+      "why_it_matters": "Producers may fabricate an effective identity, copy the requested identity into the effective field, or omit required attribution, making denial explanations and policy audits unreliable.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1278,
+          "line_end": 1278,
+          "quote": "permission and denial surfaces must still expose effective actor and account identity."
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1279,
+          "line_end": 1279,
+          "quote": "Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields."
+        }
+      ],
+      "bounded_remediation_need": "Add an identity-resolution state, define nullable or absent effective fields for pre-resolution denial, preserve requested-only attribution, require a policy-decision reference, and provide pre-binding denial fixtures."
+    },
+    {
+      "candidate_id": "CF-017",
+      "severity": "low",
+      "category": "authority_and_state_lifecycle",
+      "claim": "Owner-hint resolution defines advisory and resolved values and a delegation-resolution trigger but no unresolved, rejected, conflicted, superseded, or invalidated state, resolver authority, decision reason, or mapping revision.",
+      "why_it_matters": "A stale or conflicting provider, model, Persona, or role mapping can remain effective without an auditable way to explain or revoke it.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1397,
+          "line_end": 1397,
+          "quote": "`owner_hint` starts as advisory tool output. Crew or delegation resolution records `owner_hint_advisory` and `owner_hint_resolved`, including the concrete `/model/persona` mapping when resolution selects a provider, model, Persona, or role binding. The advisory-to-effective lifecycle trigger is delegation resolution, not a user action."
+        }
+      ],
+      "bounded_remediation_need": "Define a versioned resolution record with resolver identity and authority, candidate and effective values, decision reason, unresolved or rejected states, supersession and invalidation behavior, and deterministic re-resolution triggers."
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "claim": "The contract explicitly prevents global provider enablement from being treated as proof of caller usability.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1129,
+          "line_end": 1129,
+          "quote": "Capability availability is caller-scoped and cannot be inferred from global provider enablement alone."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "claim": "The contract explicitly prohibits storing secret values, OAuth URLs, and local account material in artifacts.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1132,
+          "line_end": 1132,
+          "quote": "Secret values, OAuth URLs, and local account material are never stored in artifacts."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "claim": "Consumer branching on provider transport class is explicitly prohibited.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1216,
+          "line_end": 1216,
+          "quote": "Consumers MUST NOT branch on transport class. All provider output is consumed through the unified normalized stream."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "claim": "Provider support-state projections have a closed vocabulary that distinguishes native from projected support.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1196,
+          "line_end": 1196,
+          "quote": "Provider support-state projections use the closed values `native`, `native_projected`, and `projected` so UI/help surfaces can distinguish provider-native support from PM-projected compatibility."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "claim": "Catalog presence alone is explicitly insufficient to render unverified or gated direct-provider candidates as green.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1197,
+          "line_end": 1197,
+          "quote": "Direct-provider catalog candidates remain route-specific. Alibaba/Qwen, MiniMax, Z.AI/Zhipu, Kimi, and similar coding-plan rows use the latest owner PlanUnits for current support state: verified rows may be first-class, while unverified, regional, entitlement-gated, balance-gated, or disabled rows must not be promoted as green from catalog presence alone."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "claim": "A parallel web-specific persisted event family is explicitly prohibited.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1375,
+          "line_end": 1375,
+          "quote": "The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unless a future analytics contract explicitly introduces one."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-007",
+      "claim": "Large extracted, research, crawl, and map payloads are explicitly required to move by reference or blob rather than being duplicated into event projections.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1383,
+          "line_end": 1383,
+          "quote": "Inline event/meta fields are short previews, counts, enum-like routing/provenance values, and stable error codes. Full extracted page bodies, long research synthesis notes, large source sets, crawl page inventories, and map graph payloads must move by ref or `/blob` rather than being duplicated into every event projection."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-008",
+      "claim": "Missing prior change-tracking state is explicitly informational rather than an error.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1422,
+          "line_end": 1422,
+          "quote": "When `change_tracking` is requested with no previous cached fetch, the result is INFORMATIONAL: return `change_status: \"new\"` and `no_previous_version` in `warnings[]`, not `error_code`."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-009",
+      "claim": "Question option objects have a locked canonical wire format, and legacy string arrays are normalized before persistence or rendering.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1363,
+          "line_end": 1363,
+          "quote": "`options` format is locked as `Array<{id: string, label: string, description?: string}>` object-array wire format. `string[]` remains backwards-compatible only for legacy `single_question` inputs and is auto-expanded to `{id: str, label: str}` before persistence or rendering."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-010",
+      "claim": "Fallback disclosure is explicitly required to match between audit wording and chat activity.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`."
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U-001",
+      "question": "Does the externally owned normalized-stream schema define version negotiation, ordering, replay, reconnect, deduplication, backpressure, and terminal-event behavior?",
+      "reason_unresolved_within_capsule": "The capsule delegates the full stream schema to another document that is outside the blind read boundary.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1177,
+          "line_end": 1177,
+          "quote": "**Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-002",
+      "question": "Does the owning artifact system define authorization, tenant binding, integrity, retention, revocation, and missing-target behavior for artifact and blob references?",
+      "reason_unresolved_within_capsule": "The capsule assigns raw-material ownership to an unspecified appropriate artifact system but does not expose that system's dereference contract.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1466,
+          "line_end": 1466,
+          "quote": "raw material is referenced through artifact or blob refs owned by the appropriate artifact system"
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-003",
+      "question": "Which concrete surface owns question restoration decisions, and how is that owner represented in persisted state?",
+      "reason_unresolved_within_capsule": "The lifecycle delegates terminal versus restorable outcomes to the owning surface without naming an owner field or arbitration rule.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1361,
+          "line_end": 1361,
+          "quote": "`answered`, `submitted`, `dismissed`, and `expired` remain terminal or explicitly restorable question outcomes according to the owning surface."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-004",
+      "question": "Does the parent-orchestrator contract persist subagent question escalation and define timeout, parent failure, reassignment, and cancellation behavior?",
+      "reason_unresolved_within_capsule": "The capsule delegates the escalation decision to a referenced assistant-chat section outside the blind boundary.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1371,
+          "line_end": 1371,
+          "quote": "Subagents MUST NOT invoke the `question` tool to address users directly; they escalate to the parent orchestrator per `assistant-chat-design.md §15.2`, and the parent decides whether to surface the question to the user."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-005",
+      "question": "What durable correlation key is guaranteed when a legacy event envelope omits both `run_id` and `thread_id`?",
+      "reason_unresolved_within_capsule": "The context permits both identifiers to be absent, while the preceding full envelope definition is outside this window.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1159,
+          "line_end": 1159,
+          "quote": "Writers SHOULD include `run_id` and `thread_id` whenever available, but `EventEnvelopeV1` does not require them."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-006",
+      "question": "Are debug phase and state enums, transition rules, and secure bundle-import validation defined in an external owner contract?",
+      "reason_unresolved_within_capsule": "The capsule lists generic fields and external ContractRefs but contains no closed lifecycle or import trust rules, and external documents cannot be inspected in this assignment.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1451,
+          "line_end": 1451,
+          "quote": "`debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?`"
+        },
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1458,
+          "line_end": 1458,
+          "quote": "`debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind`"
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-007",
+      "question": "Does another owner contract prohibit fallback across account, region, entitlement, privacy, or data-residency boundaries without a new permission or consent decision?",
+      "reason_unresolved_within_capsule": "This capsule describes rate-limit and outage fallback disclosure but not eligibility or authorization for the next provider.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/Contracts_V0.md",
+          "line_start": 1379,
+          "line_end": 1379,
+          "quote": "For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted."
+        }
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E-001",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1123,
+      "line_end": 1123,
+      "quote": "Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable."
+    },
+    {
+      "evidence_id": "E-002",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1123,
+      "line_end": 1123,
+      "quote": "Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets."
+    },
+    {
+      "evidence_id": "E-003",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1132,
+      "line_end": 1132,
+      "quote": "Secret values, OAuth URLs, and local account material are never stored in artifacts."
+    },
+    {
+      "evidence_id": "E-004",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1190,
+      "line_end": 1190,
+      "quote": "Provider and stream seams require explicit contract-version governance. A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories; new fields require a contract-versioned owner path before persistence or UI projections consume them."
+    },
+    {
+      "evidence_id": "E-005",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1375,
+      "line_end": 1375,
+      "quote": "`tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations."
+    },
+    {
+      "evidence_id": "E-006",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1361,
+      "line_end": 1361,
+      "quote": "Runtime state triggers are `pending` to `active` when the question is presented, `active` to `answered` or `submitted` when the user submits a response, `active` to `dismissed` when the user dismisses it, and `active` to `expired` when a configured timeout is reached."
+    },
+    {
+      "evidence_id": "E-007",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1367,
+      "line_end": 1367,
+      "quote": "Question input envelopes carry `mode: \"single_question\" | \"questionnaire\"` and output `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"`."
+    },
+    {
+      "evidence_id": "E-008",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1361,
+      "line_end": 1361,
+      "quote": "`answered`, `submitted`, `dismissed`, and `expired` remain terminal or explicitly restorable question outcomes according to the owning surface."
+    },
+    {
+      "evidence_id": "E-009",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1367,
+      "line_end": 1367,
+      "quote": "`allow_other` is a deprecated alias for canonical `allow_freeform`; plain-text compatibility wording may say allow_other is a deprecated alias, but consumers may accept it only as a compatibility input and must normalize it before persistence, validation, or rendering."
+    },
+    {
+      "evidence_id": "E-010",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1355,
+      "line_end": 1355,
+      "quote": "Legacy `web_input` normalizes to `operation_input` at ingress and remains compatibility/source-lineage only."
+    },
+    {
+      "evidence_id": "E-011",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1385,
+      "line_end": 1385,
+      "quote": "Batch web operations preserve one parent audit event for the batch and child audit events per URL. The parent event carries the batch-level tool use, routing metadata, adapter selection, and aggregate status; each child event carries URL-level status, provider attempt refs, cache fields, and error/provenance metadata."
+    },
+    {
+      "evidence_id": "E-012",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1379,
+      "line_end": 1379,
+      "quote": "For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted."
+    },
+    {
+      "evidence_id": "E-013",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1379,
+      "line_end": 1379,
+      "quote": "Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`."
+    },
+    {
+      "evidence_id": "E-014",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1353,
+      "line_end": 1353,
+      "quote": "`result_quality_hint` is an optional common web output field with exact values `search_snippets_only`, `extracted_pages`, `site_reader_pages`, and `research_synthesis`. It describes the evidence depth behind the returned result so consumers can distinguish snippet-only search results, provider-extracted page bodies, PM Site Reader page reads, and synthesized multi-source research."
+    },
+    {
+      "evidence_id": "E-015",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1409,
+      "line_end": 1410,
+      "quote": "- HTTP 429 → `rate_limited`\n- HTTP 402 → `rate_limited`"
+    },
+    {
+      "evidence_id": "E-016",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1451,
+      "line_end": 1451,
+      "quote": "`debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?`"
+    },
+    {
+      "evidence_id": "E-017",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1457,
+      "line_end": 1457,
+      "quote": "`debug.investigation.exported` | `investigation_id`, `bundle_id`, `schema_id`, `item_count`, `artifact_count`, `redaction_profile`"
+    },
+    {
+      "evidence_id": "E-018",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1458,
+      "line_end": 1458,
+      "quote": "`debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind`"
+    },
+    {
+      "evidence_id": "E-019",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1177,
+      "line_end": 1177,
+      "quote": "**Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing."
+    },
+    {
+      "evidence_id": "E-020",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1129,
+      "line_end": 1129,
+      "quote": "Capability availability is caller-scoped and cannot be inferred from global provider enablement alone."
+    },
+    {
+      "evidence_id": "E-021",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1216,
+      "line_end": 1216,
+      "quote": "Consumers MUST NOT branch on transport class. All provider output is consumed through the unified normalized stream."
+    },
+    {
+      "evidence_id": "E-022",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1197,
+      "line_end": 1197,
+      "quote": "Direct-provider catalog candidates remain route-specific. Alibaba/Qwen, MiniMax, Z.AI/Zhipu, Kimi, and similar coding-plan rows use the latest owner PlanUnits for current support state: verified rows may be first-class, while unverified, regional, entitlement-gated, balance-gated, or disabled rows must not be promoted as green from catalog presence alone."
+    },
+    {
+      "evidence_id": "E-023",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1383,
+      "line_end": 1383,
+      "quote": "Inline event/meta fields are short previews, counts, enum-like routing/provenance values, and stable error codes. Full extracted page bodies, long research synthesis notes, large source sets, crawl page inventories, and map graph payloads must move by ref or `/blob` rather than being duplicated into every event projection."
+    },
+    {
+      "evidence_id": "E-024",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1422,
+      "line_end": 1422,
+      "quote": "When `change_tracking` is requested with no previous cached fetch, the result is INFORMATIONAL: return `change_status: \"new\"` and `no_previous_version` in `warnings[]`, not `error_code`."
+    },
+    {
+      "evidence_id": "E-025",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1375,
+      "line_end": 1375,
+      "quote": "The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unless a future analytics contract explicitly introduces one."
+    },
+    {
+      "evidence_id": "E-026",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1466,
+      "line_end": 1466,
+      "quote": "raw material is referenced through artifact or blob refs owned by the appropriate artifact system"
+    },
+    {
+      "evidence_id": "E-027",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1465,
+      "line_end": 1465,
+      "quote": "raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads"
+    },
+    {
+      "evidence_id": "E-028",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1232,
+      "line_end": 1232,
+      "quote": "**runtime/tool/artifact attribution** must live in the authoritative payload shape itself."
+    },
+    {
+      "evidence_id": "E-029",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1278,
+      "line_end": 1278,
+      "quote": "permission and denial surfaces must still expose effective actor and account identity."
+    },
+    {
+      "evidence_id": "E-030",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1279,
+      "line_end": 1279,
+      "quote": "Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields."
+    },
+    {
+      "evidence_id": "E-031",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1371,
+      "line_end": 1371,
+      "quote": "Subagents MUST NOT invoke the `question` tool to address users directly; they escalate to the parent orchestrator per `assistant-chat-design.md §15.2`, and the parent decides whether to surface the question to the user."
+    },
+    {
+      "evidence_id": "E-032",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1397,
+      "line_end": 1397,
+      "quote": "`owner_hint` starts as advisory tool output. Crew or delegation resolution records `owner_hint_advisory` and `owner_hint_resolved`, including the concrete `/model/persona` mapping when resolution selects a provider, model, Persona, or role binding. The advisory-to-effective lifecycle trigger is delegation resolution, not a user action."
+    },
+    {
+      "evidence_id": "E-033",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1355,
+      "line_end": 1355,
+      "quote": "Web result payloads also carry `provenance_badge?: string`, with the canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization and must be marked as such wherever a narrowed locked set is required."
+    },
+    {
+      "evidence_id": "E-034",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1355,
+      "line_end": 1355,
+      "quote": "Narrowed TypeScript-style consumers may render the owner-owned subset as `provenance_badge?: 'site_reader' | 'provider_scrape'` only when they also preserve that proposed-extension caveat."
+    },
+    {
+      "evidence_id": "E-035",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1159,
+      "line_end": 1159,
+      "quote": "Writers SHOULD include `run_id` and `thread_id` whenever available, but `EventEnvelopeV1` does not require them."
+    },
+    {
+      "evidence_id": "E-036",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1377,
+      "line_end": 1377,
+      "quote": "`provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`."
+    },
+    {
+      "evidence_id": "E-037",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1295,
+      "line_end": 1295,
+      "quote": "`pass_verdict` | Legacy verdict value for compatibility rows; active Auditor cycle reports record certified, blocked, pass, fail, or repaired state as applicable."
+    },
+    {
+      "evidence_id": "E-038",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1311,
+      "line_end": 1311,
+      "quote": "`pass_verdict` must support `skipped` where the flow needs it."
+    },
+    {
+      "evidence_id": "E-039",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1196,
+      "line_end": 1196,
+      "quote": "Provider support-state projections use the closed values `native`, `native_projected`, and `projected` so UI/help surfaces can distinguish provider-native support from PM-projected compatibility."
+    },
+    {
+      "evidence_id": "E-040",
+      "document_path": "Plans/Contracts_V0.md",
+      "line_start": 1363,
+      "line_end": 1363,
+      "quote": "`options` format is locked as `Array<{id: string, label: string, description?: string}>` object-array wire format. `string[]` remains backwards-compatible only for legacy `single_question` inputs and is auto-expanded to `{id: str, label: str}` before persistence or rendering."
+    }
+  ],
+  "infrastructure_failure": null,
+  "terminal_after_result": true
+}

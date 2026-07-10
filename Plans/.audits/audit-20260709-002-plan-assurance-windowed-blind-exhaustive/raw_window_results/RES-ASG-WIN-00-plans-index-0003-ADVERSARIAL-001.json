@@ -1,0 +1,402 @@
+{
+  "agent_id": "/root/window_worker_b",
+  "ambiguities": [
+    {
+      "id": "AMB-001",
+      "line_refs": [
+        "265-274"
+      ],
+      "statement": "Approve And Build and runtime-capable v2 contracts coexist with an explicit no-runtime-launch boundary; disabled-state GUI behavior, resulting receipt, and later activation authority are unspecified."
+    },
+    {
+      "id": "AMB-002",
+      "line_refs": [
+        "256",
+        "274",
+        "290"
+      ],
+      "statement": "Governance registration may refresh Spec Lock, shards, evidence, graph, and decisions after stability, while PRD and Goal maps describe those artifacts as explicit-seal-only; phase equivalence is unclear."
+    },
+    {
+      "id": "AMB-003",
+      "line_refs": [
+        "281",
+        "288"
+      ],
+      "statement": "Goal Runtime owns runtime write authority while consuming a readiness-only ledger/Plan boundary that creates no WorkNodes or NodeSeeds; the permitted execution/materialization boundary is not explicit here."
+    },
+    {
+      "id": "AMB-004",
+      "line_refs": [
+        "298-300"
+      ],
+      "statement": "Instant Grep runtime fields exist only if promoted, and clarification consumers may ask questions, but promotion authority, timeout/default behavior, and unavailable-user handling are unnamed."
+    },
+    {
+      "id": "AMB-005",
+      "line_refs": [
+        "320",
+        "326"
+      ],
+      "statement": "Browser permission precedence is called deterministic without being enumerated, and no rule explains how signal_confidence values constrain actions, recovery, or user warnings."
+    },
+    {
+      "id": "AMB-006",
+      "line_refs": [
+        "338-340"
+      ],
+      "statement": "The web command family is ready-now while provider taxonomy, selection, routing, and ordering remain blocked, leaving effective-provider behavior unresolved."
+    },
+    {
+      "id": "AMB-007",
+      "line_refs": [
+        "380",
+        "384"
+      ],
+      "statement": "Contracts_V0 promotion depends on whether remote identity/health fields are canonized beyond storage/UI prose, but that threshold and adjudicator are not defined."
+    },
+    {
+      "id": "AMB-008",
+      "line_refs": [
+        "386-388"
+      ],
+      "statement": "Worktree context may appear at several surfaces only when ambiguity or conflicted state matters; priority, consistency, stale-ID handling, and the testable meaning of matters are unspecified."
+    }
+  ],
+  "assignment_id": "ASG-WIN-00-plans-index-0003-ADVERSARIAL-001",
+  "builder_discretion": [
+    {
+      "id": "BD-001",
+      "line_refs": [
+        "266"
+      ],
+      "statement": "Testing owners must determine current official sources and safe installation behavior, but this index supplies no freshness or trust oracle."
+    },
+    {
+      "id": "BD-002",
+      "line_refs": [
+        "287"
+      ],
+      "statement": "Model/account/provider owners determine requested/effective resolution consumed by Goal Runtime; failover and unavailable-provider policy are deferred."
+    },
+    {
+      "id": "BD-003",
+      "line_refs": [
+        "298-300"
+      ],
+      "statement": "Instant Grep runtime fields are conditional on promotion, and chat/audit consumers may clarify ambiguity without gaining final authority."
+    },
+    {
+      "id": "BD-004",
+      "line_refs": [
+        "338"
+      ],
+      "statement": "Provider taxonomy, routing internals, provider settings layout, and global/per-operation ordering UX are explicitly blocked from ready-now slash-command invention."
+    },
+    {
+      "id": "BD-005",
+      "line_refs": [
+        "378",
+        "384"
+      ],
+      "statement": "UI Command and GitHub docs may deepen additively only while retiring claims that smaller command sets are complete; remote persisted/event fields may trigger Contracts reconciliation."
+    },
+    {
+      "id": "BD-006",
+      "line_refs": [
+        "386-388"
+      ],
+      "statement": "GUI worktree context may use workspace, header, Source Control strip, editor status, or breadcrumb placement, but repeated per-row/per-tab symbols are disallowed by default."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "CF-001",
+      "lead_only": true,
+      "line_refs": [
+        "281-288"
+      ],
+      "severity": "high",
+      "statement": "Invisible/internal goals combine durable scheduling, child creation, attachments, and write authority without explicit privilege inheritance, disclosure, cancellation, resource caps, or adversarial-input boundaries."
+    },
+    {
+      "id": "CF-002",
+      "lead_only": true,
+      "line_refs": [
+        "315-328"
+      ],
+      "severity": "high",
+      "statement": "The browser authority map exposes capture, persistence, recovery, auth handoff, and allow/ask/deny permissions without explicit origin isolation, sensitive-data capture rules, permission revocation, or hostile-page containment."
+    },
+    {
+      "id": "CF-003",
+      "lead_only": true,
+      "line_refs": [
+        "346-349"
+      ],
+      "severity": "high",
+      "statement": "The request_id-to-blocked_sequence compatibility gate precedes runtime mutation but lacks atomicity, idempotency, replay, expiry, revocation, and TOCTOU semantics for scoped actions."
+    },
+    {
+      "id": "CF-004",
+      "lead_only": true,
+      "line_refs": [
+        "298-308"
+      ],
+      "severity": "medium",
+      "statement": "Instant Grep requires no silent local fallback while remote-cache verification, dirty-layer recovery, freshness, cache authenticity, overload, and degraded/offline user behavior remain unexpressed in the index map."
+    },
+    {
+      "id": "CF-005",
+      "lead_only": true,
+      "line_refs": [
+        "357",
+        "362-364"
+      ],
+      "severity": "high",
+      "statement": "Terminal packets are non-buildable without UI_Command_Catalog, Contracts_V0, and Wiring_Matrix, yet the section ContractRef omits all three required command/contract/wiring owners."
+    },
+    {
+      "id": "CF-006",
+      "lead_only": true,
+      "line_refs": [
+        "370-388"
+      ],
+      "severity": "high",
+      "statement": "One-bounded-auto-retry remote reconnect, shared buffers, multi-root handoff, and command coherence lack failure atomicity, stale-state validation, and executable acceptance beyond document inclusion."
+    },
+    {
+      "id": "CF-007",
+      "lead_only": true,
+      "line_refs": [
+        "402-406"
+      ],
+      "severity": "high",
+      "statement": "Debug packetization mandates Commands, Glossary, Wiring, Contracts, Prompt Pipeline, and GitHub coverage, but its ContractRef omits those mandatory companions and supplies no semantic or executable closure oracle."
+    },
+    {
+      "id": "CF-008",
+      "lead_only": true,
+      "line_refs": [
+        "265-274"
+      ],
+      "severity": "medium",
+      "statement": "Approve And Build and runtime-capable schemas have no specified truthful disabled-state behavior while the compile explicitly cannot launch runtime or emit artifacts."
+    }
+  ],
+  "claims": [
+    {
+      "id": "CLM-001",
+      "line_refs": [
+        "263-276"
+      ],
+      "statement": "PRD_Builder owns intake through Approved PRD Pack and explicit Wizard handoff; Planning_Wizard owns PlanningRun through ApprovedPlanPack and Approve And Build; strict runtime contracts exist, but runtime launch, artifacts, executable work, builds, and dispatch remain disabled."
+    },
+    {
+      "id": "CLM-002",
+      "line_refs": [
+        "280-292"
+      ],
+      "statement": "Goal_Runtime owns invisible/internal goals, durable scheduler state, attachments, child goals, weak-model safety, write authority, approval boundaries, evidence, and completion; chat owns visible controls, while contract, storage, permission, model, provider, and artifact owners supply consumed state."
+    },
+    {
+      "id": "CLM-003",
+      "line_refs": [
+        "294-310"
+      ],
+      "statement": "Instant Grep authority is split across Tools query/fallback semantics, storage dirty-layer publication/recovery, FinalGUI disclosure/settings, and GitHub remote-cache verification with no silent local fallback; consumers may clarify ambiguity but final decisions follow canonical owners."
+    },
+    {
+      "id": "CLM-004",
+      "line_refs": [
+        "313-330"
+      ],
+      "statement": "Section15 owns browser behavior, sessions, actions, capture, permissions, persistence, recovery, and non-goals; rewrite-tie-in owns architecture; browser confidence values are closed to four enums, and stale runtime, permission, capture, and placement alternatives are retired."
+    },
+    {
+      "id": "CLM-005",
+      "line_refs": [
+        "332-342"
+      ],
+      "statement": "Slash-command reconciliation is locked into four owner phases; ready-now scope includes web operations, permissions, provenance, bounded defaults, and payloads, while provider taxonomy, routing internals, settings layout, and provider-ordering UX remain blocked."
+    },
+    {
+      "id": "CLM-006",
+      "line_refs": [
+        "344-350"
+      ],
+      "statement": "Artifact, HITL, and tool approval authority is split by presentation, persistence, envelope, policy, UX, and permission semantics; request_id must resolve to blocked_sequence before mutation, and new approvals use blocked_sequence, approval_scope_key, and ordered allowed_action_ids without scope widening."
+    },
+    {
+      "id": "CLM-007",
+      "line_refs": [
+        "352-364"
+      ],
+      "statement": "Terminal behavior, placement, persistence, commands, events, wiring, policy, health, permissions, and terminology have separate owners; packets omitting UI_Command_Catalog, Contracts_V0, or Wiring_Matrix are declared non-buildable."
+    },
+    {
+      "id": "CLM-008",
+      "line_refs": [
+        "366-384"
+      ],
+      "statement": "File/editor reconciliation locks Crosswalk, GitHub remote retry, LSP fallback, FileManager shared-buffer behavior, runtime identity/persistence, and FinalGUI placement ownership; packetization requires command wiring, stale-canon replacement, and a MUST CHANGE/RECONCILE/VERIFY register."
+    },
+    {
+      "id": "CLM-009",
+      "line_refs": [
+        "384-390"
+      ],
+      "statement": "Remote/event identity can promote Contracts_V0 from verification to reconciliation; worktree lifecycle stays outside FileManager, repo_id/worktree_id must survive Source Control handoff, and GUI context appears when multi-root, non-default, ambiguous, or conflicted state matters."
+    },
+    {
+      "id": "CLM-010",
+      "line_refs": [
+        "392-406"
+      ],
+      "statement": "Debug ownership spans chat lifecycle, runtime posture, persisted investigation state, browser automation/auth/takeover, artifacts/events/prompts/tools, GUI and remote consumers; two mandatory document triplets must remain in scope to avoid semantic, persistence, prompt, routing, and remote drift."
+    }
+  ],
+  "cross_window_seams": [
+    {
+      "id": "SEAM-001",
+      "line_refs": [
+        "245-267"
+      ],
+      "statement": "Backward context establishes design-only PlanCompile, Executor/Goal ownership, receipt/evidence boundaries, and disabled runtime assumptions consumed by the PRD map."
+    },
+    {
+      "id": "SEAM-002",
+      "line_refs": [
+        "263-276"
+      ],
+      "statement": "The PRD map delegates lifecycle details to schema and owner documents outside this window, while retaining a strict no-launch boundary."
+    },
+    {
+      "id": "SEAM-003",
+      "line_refs": [
+        "280-292"
+      ],
+      "statement": "Goal Runtime depends on ledger, PlanUnit, readiness, provider, permission, storage, chat, GUI, and artifact owners not reviewed here."
+    },
+    {
+      "id": "SEAM-004",
+      "line_refs": [
+        "313-406"
+      ],
+      "statement": "Browser, terminal, file/editor, and debug maps repeatedly intersect Section15, FinalGUI, storage, commands, permissions, GitHub, artifacts, and wiring, creating cross-packet precedence and synchronized-reconciliation seams."
+    },
+    {
+      "id": "SEAM-005",
+      "line_refs": [
+        "408-425"
+      ],
+      "statement": "Forward context begins the broader authoritative Plan table and restates canonical roles for rewrite, Section15, chat, FinalGUI, GitHub, FileManager, LSP, storage, ledger, and Plan docs."
+    },
+    {
+      "id": "SEAM-006",
+      "line_refs": [
+        "272",
+        "284",
+        "418",
+        "422"
+      ],
+      "statement": "Legacy chain-wizard material remains lineage in both PRD/Goal maps and the forward owner table, while GitHub still references it for legacy examples."
+    }
+  ],
+  "document_path": "Plans/00-plans-index.md",
+  "evidence_refs": [
+    "Plans/00-plans-index.md:245-262",
+    "Plans/00-plans-index.md:263-310",
+    "Plans/00-plans-index.md:313-350",
+    "Plans/00-plans-index.md:352-390",
+    "Plans/00-plans-index.md:392-407",
+    "Plans/00-plans-index.md:408-425"
+  ],
+  "invalid_for_assurance_coverage": true,
+  "invalid_reason": "Substantive reviewer agent identities were reused across successive window/role assignments, violating the Fresh Agent Isolation Protocol.",
+  "negative_space_observations": [
+    {
+      "id": "NS-001",
+      "line_refs": [
+        "266"
+      ],
+      "statement": "Testing research, safe installation, Auto/On/Off behavior, redaction, and receipts lack freshness periods, offline behavior, supply-chain verification, rollback, privilege limits, and failure defaults in this window."
+    },
+    {
+      "id": "NS-002",
+      "line_refs": [
+        "281-288"
+      ],
+      "statement": "Invisible goals, child goals, attachments, scheduler updates, weak-model safety, and write authority lack explicit recursion/resource limits, privilege inheritance, disclosure, cancel/kill, duplicate scheduling, crash recovery, and malicious-attachment handling."
+    },
+    {
+      "id": "NS-003",
+      "line_refs": [
+        "298-308"
+      ],
+      "statement": "Instant Grep lacks stated behavior for stale readers, concurrent publication, corrupt/dirty indexes, rebuild overload, false negatives, hostile regexes, poisoned remote caches, offline no-fallback operation, and analytics privacy."
+    },
+    {
+      "id": "NS-004",
+      "line_refs": [
+        "315-328"
+      ],
+      "statement": "Browser ownership mentions permissions, capture, persistence, and recovery without stating origin isolation, cookie/credential boundaries, downloads, clipboard, local files, certificate failures, permission revocation, capture redaction, or hostile-page containment."
+    },
+    {
+      "id": "NS-005",
+      "line_refs": [
+        "334-340"
+      ],
+      "statement": "Slash-command phases lack partial-apply rollback/resume, parser and alias-conflict handling, malicious payload/tool-output behavior, provenance spoofing defenses, and user-visible behavior when ready-now web operations require blocked provider routing."
+    },
+    {
+      "id": "NS-006",
+      "line_refs": [
+        "346-349"
+      ],
+      "statement": "Approval compatibility lacks collision, missing-map, replay, expiry, revocation, scope-key canonicalization, duplicate/unknown action, snapshot-currentness, atomic mutation, and approval-to-execution TOCTOU behavior."
+    },
+    {
+      "id": "NS-007",
+      "line_refs": [
+        "354-362",
+        "370-388"
+      ],
+      "statement": "Terminal and file/editor maps omit shell-escape and secret controls, cancel/kill, remote disconnect and partial-write recovery, shared-buffer concurrency, external file changes, unsaved-state preservation, stale worktree validation, and malicious LSP-server boundaries."
+    },
+    {
+      "id": "NS-008",
+      "line_refs": [
+        "394-404"
+      ],
+      "statement": "Debug auto-ingestion, attach-to-chat, auth handoff, attention_required, takeover, persisted investigation state, and remote scope lack consent, secret/PII redaction, prompt-injection containment, payload bounds, session-hijack prevention, revocation, and deletion behavior."
+    }
+  ],
+  "quality_state": "complete",
+  "result_id": "RES-ASG-WIN-00-plans-index-0003-ADVERSARIAL-001",
+  "reviewed_context_ranges": [
+    [
+      245,
+      262
+    ],
+    [
+      408,
+      425
+    ]
+  ],
+  "reviewed_core_range": [
+    263,
+    407
+  ],
+  "role": "adversarial_negative_space",
+  "source_hash": "aae7f110df0d43a49dd44b87c313f575f103c5f57b846e38832c2c3830c13e3c",
+  "source_hash_verified": true,
+  "status": "SUPERSEDED_INVALID_AGENT_REUSE_FOR_ASSURANCE",
+  "substantive_coverage_credit": 0,
+  "substantive_evidence_disposition": "invalid_never_carry_forward",
+  "superseded_at": "2026-07-10T02:19:17Z",
+  "superseded_by": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "window_id": "WIN-00-plans-index-0003",
+  "zero_writes_confirmed": true
+}
