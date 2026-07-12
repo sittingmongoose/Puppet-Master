@@ -1,0 +1,88 @@
+{
+  "schema_version": "a005-c1-v32-compatibility-closure-readiness-v1",
+  "status": "BLOCKED_PREPARATION_ONLY_FUTURE_CLOSURE_AUTHORITY_ABSENT",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "attempt_id": "attempt-0002",
+  "slot_id": "c1-atomic8-prelaunch",
+  "authority_sha256": "85ba6aa150e56d2ebde41f38ae95e60f11e4ec367753b082700027c5efa9c7ac",
+  "tool_seal_sha256": "0eef631b84453d275472ce642870027b6d1d9cea803a575b84fad649abaeb6d7",
+  "test_evidence_sha256": "57185bf20a55f66d6c6de999e87df935b822f2efacb94c0e5d93864bdb4ed493",
+  "failed_invocation_lineage_sha256": "f37d5505997c0a3941c7ad2a0b72a22146a4faf812b37dffd7b6bb5d72a4ef5f",
+  "native_binding_sha256": "b1afef3408afdfc923fbb12286825df5aa4ea6f2a64a9c1d25a5c0733237f442",
+  "report": {
+    "sha256": "7d392c58db6d9832ba71d4e53c735a6acc10ab9742d4fdba0a60031e0fa51f14",
+    "status": "PASS",
+    "byte_count": 1226,
+    "link_count": 1,
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "credit": 0
+  },
+  "native_identity": {
+    "controller_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+    "controller_turn_id": "019f5593-4c96-7681-b59a-ea357e84f052",
+    "controller_prefix_line_count": 1450,
+    "controller_prefix_sha256": "6294f0777463e1f8f5270ef3fc716ea06f392dd037622d8e7ea0238845b23248",
+    "reviewer_thread_id": "019f5594-f3a0-71e3-a21b-4b30594703b7",
+    "reviewer_turn_id": "019f5594-f421-7fa1-b32a-067243fd9406",
+    "reviewer_session_line_count": 298,
+    "reviewer_session_sha256": "0f465434e17c49d982d5bd37df25a2ae85d9d7f735af94ee1aa5d6a1e5692273",
+    "actual_model": "gpt-5.6-luna",
+    "actual_reasoning_effort": "max",
+    "fork_context": false,
+    "fork_turns": "none",
+    "descendant_spawn_count": 0,
+    "followup_count": 0
+  },
+  "failed_sealed_writer_invocation": {
+    "invocation_count": 1,
+    "retry_count": 0,
+    "native_call_id": "call_SywcyFHqI8W6CQ6ajZK28lrI",
+    "exit_code": 1,
+    "exception": "TypeError: stat() got an unexpected keyword argument 'follow_symlinks'",
+    "capture_written": false,
+    "checkpoint_written": false,
+    "sealed_writer_mutated": false
+  },
+  "compatibility_closure": {
+    "fix": "os.lstat plus O_NOFOLLOW descriptor identity checks",
+    "v31_output_contract_preserved": true,
+    "future_tool_present": true,
+    "future_tool_invoked": false,
+    "future_authority_path": "CLOSURE_INVOCATION_AUTHORITY_V32.json",
+    "future_authority_present": false,
+    "fixed_capture_present": false,
+    "fixed_checkpoint_present": false
+  },
+  "policy": {
+    "v32_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "maximum_concurrent_atomic8": 1,
+    "launch_authorized": false
+  },
+  "tests": {
+    "new_temporary_fixture_passed": 461,
+    "new_temporary_fixture_failed": 0,
+    "preserved_v30_passed": 825,
+    "preserved_v30_failed": 0,
+    "grand_total_passed": 1286
+  },
+  "blockers": [
+    "future_closure_invocation_authority_absent",
+    "fixed_c1_controller_native_capture_absent",
+    "fixed_c1_controller_native_checkpoint_absent"
+  ],
+  "next_action": "issue_new_append_only_closure_invocation_authority_then_invoke_only_v32_compat_tool_once_in_separate_controller_turn",
+  "scope": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "credit": 0,
+    "spawn": "none",
+    "spawn_count": 0,
+    "results": 0,
+    "receipts": 0,
+    "runtime_native_capture_rows": 0,
+    "activation_transactions": 0,
+    "launches": 0
+  }
+}

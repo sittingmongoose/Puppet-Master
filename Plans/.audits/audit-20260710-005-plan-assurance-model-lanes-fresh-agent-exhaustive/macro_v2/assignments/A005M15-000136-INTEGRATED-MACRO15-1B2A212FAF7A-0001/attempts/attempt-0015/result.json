@@ -1,0 +1,791 @@
+{
+  "assignment_id": "A005M15-000136-INTEGRATED-MACRO15-1B2A212FAF7A-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"description\": \"Defines the wiring between Puppet Master UI elements, command dispatchers, handlers, and expected domain events. Each entry maps a UI element to its command, handler, expected events, and acceptance criteria.\",",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The artifact has an explicit feature boundary connecting visible UI elements to dispatch, handlers, emitted events, and proof criteria.",
+      "item_id": "A005M15-000136-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/Wiring_Matrix.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:description",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:type",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.description",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The schema defines a wiring matrix whose entries trace a Puppet Master UI element through command dispatch and a handler to expected events and acceptance criteria.",
+      "title": "UI-to-domain wiring matrix contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "  \"required\": [\n    \"$schema\",\n    \"schema_id\",\n    \"generated_at\",\n    \"entries\"\n  ],",
+          "line_end": 13,
+          "line_start": 8,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can reject missing envelope metadata and undeclared root fields, reducing accidental schema drift.",
+      "item_id": "A005M15-000136-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/Wiring_Matrix.schema.json",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "The root object is closed and requires its schema URL, schema identifier, generation timestamp, and entries map.",
+      "title": "Closed and versioned document envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"description\": \"A single wiring entry mapping a Puppet Master UI element to its command, handler, expected events, and acceptance checks.\",",
+          "line_end": 46,
+          "line_start": 46,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "        \"ui_element_id\",\n        \"ui_location\",\n        \"ui_command_id\",\n        \"handler_location\",\n        \"expected_event_types\",\n        \"acceptance_checks\",\n        \"evidence_required\",\n        \"state_selector\",\n        \"disabled_reason_projection\",\n        \"effect_contract\",\n        \"accessibility_contract\",\n        \"test_evidence\",\n        \"event_test_requirements\"",
+          "line_end": 60,
+          "line_start": 48,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every production entry must declare identity, location, command, callable handler, event expectations, state gating, effects, accessibility, and test proof.",
+      "item_id": "A005M15-000136-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "WiringEntry is a closed required-field contract spanning the UI, dispatcher, Rust handler, domain-event, state-projection, accessibility, and evidence surfaces.",
+      "title": "Required end-to-end wiring entry"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "propagation",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"description\": \"Stable identifier for the UI element (e.g., \\\"btn.github.connect\\\", \\\"menu.lsp.goto_def\\\"). Lowercase, dot-separated. Must match the containing entries key.\"",
+          "line_end": 66,
+          "line_start": 66,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "unenforced_cross_field_equality",
+      "impact": "A matrix can validate while its map key names one UI element and ui_element_id names another, corrupting lookup, ownership, and coverage accounting.",
+      "item_id": "A005M15-000136-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The prose requires ui_element_id to equal the containing entries key, but the schema only gives both locations the same lexical pattern and cannot enforce their equality.",
+      "title": "Entry key and UI identity can diverge"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"description\": \"Typed projection selector that controls whether the UI command can be shown or dispatched.\"",
+          "line_end": 110,
+          "line_start": 110,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "          \"description\": \"Typed projection selector for the disabled reason surfaced by the UI before dispatch.\"",
+          "line_end": 116,
+          "line_start": 116,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The matrix makes command availability and its user-visible disabled explanation traceable to typed state projections.",
+      "item_id": "A005M15-000136-I005",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "Each entry must bind dispatch visibility or eligibility to a state selector and bind the pre-dispatch disabled explanation to a disabled_reason projection.",
+      "title": "State-gated dispatch and disabled-reason projection"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "              \"enum\": [\n                \"event\",\n                \"receipt\",\n                \"route_open\",\n                \"ui_only\",\n                \"mixed\"\n              ]",
+          "line_end": 135,
+          "line_start": 129,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Effect expectations are classified and must include a description plus at least one named receipt or event reference.",
+      "item_id": "A005M15-000136-I006",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The effect contract distinguishes event, receipt, route-open, UI-only, and mixed effects while requiring descriptive and reference-based proof.",
+      "title": "Typed effect outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"description\": \"List of event type strings emitted by the handler. May be empty for UI-only commands that declare no persisted domain event. Each entry should match an EventRecord type string.\",",
+          "line_end": 86,
+          "line_start": 86,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "              \"minItems\": 1,",
+          "line_end": 143,
+          "line_start": 143,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "ui_only_reference_semantics_undefined",
+      "impact": "Authors of a UI-only command must invent a non-event reference or violate the effect contract, so validators and builders can reach incompatible interpretations.",
+      "item_id": "A005M15-000136-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The schema explicitly permits no persisted domain event for UI-only commands, but effect_contract still requires receipt_or_event_refs with at least one item for every effect_kind, including ui_only.",
+      "title": "UI-only commands have an ambiguous mandatory effect reference"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "gui_truth",
+        "acceptance_oracles",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"role_or_semantics\",\n            \"keyboard_access\",\n            \"focus_management\",\n            \"disabled_announcement\"",
+          "line_end": 158,
+          "line_start": 155,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Each UI wiring row must state four concrete accessibility expectations that can be carried into regression evidence.",
+      "item_id": "A005M15-000136-I008",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "Accessibility is mandatory per entry through role or semantics, keyboard access, focus management, and disabled-state announcement fields.",
+      "title": "Mandatory accessibility contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "operations",
+        "acceptance_oracles",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "                  \"dispatcher_fixture\",\n                  \"state_projection\",\n                  \"receipt_or_event_assertion\",\n                  \"accessibility_regression\",\n                  \"event_test\",\n                  \"route_open_fixture\"",
+          "line_end": 203,
+          "line_start": 198,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The matrix can enumerate evidence across dispatch, state, outcomes, accessibility, events, and route opening rather than relying only on prose assertions.",
+      "item_id": "A005M15-000136-I009",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "Every entry requires one or more test-evidence records, each with a test identifier, an enumerated evidence kind, and a non-empty requirement, plus one or more event-test requirements.",
+      "title": "Structured per-entry acceptance evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"description\": \"Optional route/open proof for commands that navigate by canonical route_target and OpenSubject identity.\",",
+          "line_end": 224,
+          "line_start": 224,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "            \"route_target_required\",\n            \"open_subject_required\",\n            \"route_target_object_kind_when_usage_event_ref\",\n            \"correlation_passthrough\"",
+          "line_end": 229,
+          "line_start": 226,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "When present, route proof states target and subject requirements, usage-event object kind, and correlation propagation.",
+      "item_id": "A005M15-000136-I010",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The optional route contract models route-target and OpenSubject requirements plus correlation passthrough for navigation commands.",
+      "title": "Route-open proof contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "                \"route_open\",",
+          "line_end": 132,
+          "line_start": 132,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "        \"route_contract\": {",
+          "line_end": 221,
+          "line_start": 221,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "missing_conditional_requirement",
+      "impact": "A route_open effect can validate without canonical target, subject identity, correlation propagation, or route-open evidence, defeating the advertised navigation proof.",
+      "item_id": "A005M15-000136-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "route_contract is optional and no if/then constraint requires it when effect_kind is route_open or mixed.",
+      "title": "Route effects do not require route proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "consumers",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "missing_callers_consumers",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"minProperties\": 0,",
+          "line_end": 32,
+          "line_start": 32,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "empty_artifact_passes_validation",
+      "impact": "A generated wiring matrix can be structurally valid while proving no interactive UI wiring at all, so schema validation cannot serve as a production-coverage gate.",
+      "item_id": "A005M15-000136-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The required entries property explicitly accepts an empty object through minProperties zero.",
+      "title": "An empty wiring matrix is schema-valid"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"description\": \"List of event type strings emitted by the handler. May be empty for UI-only commands that declare no persisted domain event. Each entry should match an EventRecord type string.\",",
+          "line_end": 86,
+          "line_start": 86,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "        \"event_test_requirements\": {",
+          "line_end": 213,
+          "line_start": 213,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "cross_field_consistency_unenforced",
+      "impact": "A row can claim one event set, cite unrelated effect references, and provide unrelated tests while still validating, allowing false propagation and acceptance evidence.",
+      "item_id": "A005M15-000136-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "No schema constraint ties expected_event_types to effect_contract.receipt_or_event_refs, test_evidence, or event_test_requirements, and the prose only says event names should match EventRecord strings.",
+      "title": "Events, effects, and tests can contradict one another"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"state_selector\",\n        \"disabled_reason_projection\",\n        \"effect_contract\",\n        \"accessibility_contract\",\n        \"test_evidence\",\n        \"event_test_requirements\"",
+          "line_end": 60,
+          "line_start": 55,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "operational_and_authority_contracts_absent",
+      "impact": "Builders must invent safety-critical behavior for authorization, retries, races, partial effects, offline use, rollback, audit support, privacy, destructive actions, and localized user feedback.",
+      "item_id": "A005M15-000136-I014",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The required wiring surface has no fields for actor authority or owner, authorization policy, idempotency or concurrency, failure and retry behavior, rollback, offline semantics, privacy lifecycle, localization, observability, or destructive-action confirmation.",
+      "title": "Safety and operational semantics are left to builders"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "scale_performance",
+        "scale_limits",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"minProperties\": 0,",
+          "line_end": 32,
+          "line_start": 32,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "            \"type\": \"string\",\n            \"minLength\": 1",
+          "line_end": 89,
+          "line_start": 88,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "resource_bounds_unspecified",
+      "impact": "Untrusted or generated matrices can contain arbitrarily many entries and arbitrarily large arrays or strings, leaving memory, render, validation, and support limits undefined.",
+      "item_id": "A005M15-000136-I015",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The schema supplies lower bounds but no maximum entry count, array size, or string length for matrix content.",
+      "title": "Matrix resource limits are unbounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"format\": \"date-time\",",
+          "line_end": 27,
+          "line_start": 27,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "validator_format_policy_unspecified",
+      "impact": "Different validators or configurations may accept different generated_at values, so acceptance behavior can drift across build and migration tooling.",
+      "item_id": "A005M15-000136-I016",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties"
+      ],
+      "statement": "generated_at uses the date-time format annotation, but this schema does not state that consumers must enable format assertion or name a validator policy.",
+      "title": "Timestamp validation depends on consumer policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"additionalProperties\": false,",
+          "line_end": 45,
+          "line_start": 45,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        },
+        {
+          "exact_quote": "          \"pattern\": \"^[a-z][a-z0-9]*(\\\\.[a-z][a-z0-9_]*)*$\",",
+          "line_end": 65,
+          "line_start": 65,
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Unknown nested fields and malformed stable identifiers are rejected before downstream consumers act on them.",
+      "item_id": "A005M15-000136-I017",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs"
+      ],
+      "statement": "The schema deliberately closes the root and WiringEntry objects and constrains key identifier namespaces with regular expressions.",
+      "title": "Structural input hardening is explicit"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        259
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/Wiring_Matrix.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:description",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/Wiring_Matrix.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.description",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-000136-I001",
+        "A005M15-000136-I002",
+        "A005M15-000136-I003",
+        "A005M15-000136-I004",
+        "A005M15-000136-I005",
+        "A005M15-000136-I006",
+        "A005M15-000136-I007",
+        "A005M15-000136-I008",
+        "A005M15-000136-I009",
+        "A005M15-000136-I010",
+        "A005M15-000136-I011",
+        "A005M15-000136-I012",
+        "A005M15-000136-I013",
+        "A005M15-000136-I014",
+        "A005M15-000136-I015",
+        "A005M15-000136-I016",
+        "A005M15-000136-I017"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 259 core lines and all 21 assigned semantic and structural units. The schema strongly defines closed wiring rows, state and disabled-state projection, effect and route proof, accessibility, and test evidence, while leaving cross-field identity, conditional route/UI-only semantics, empty coverage, operational safety, resource bounds, and validator policy under-specified.",
+      "window_id": "WIN-1B2A212FAF7A-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-1B2A212FAF7A-0001",
+    "document_path": "Plans/Wiring_Matrix.schema.json",
+    "micro_window_ids": [
+      "WIN-1B2A212FAF7A-0001"
+    ],
+    "source_sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical EventRecord contract defines the exact event type namespace and cross-field equality required for expected_event_types?",
+      "Which command or routing contract requires route_contract when effect_kind is route_open or mixed and defines OpenSubject and correlation semantics?",
+      "Which governance gate supplies the authoritative interactive-element inventory so an empty or incomplete entries map cannot pass production coverage?",
+      "Which runtime contracts own authorization, idempotency, retries, rollback, offline behavior, privacy lifecycle, destructive-action confirmation, localization, and observability for each command?"
+    ],
+    "feature_family_keys": [
+      "wiring-matrix",
+      "ui-command-dispatch",
+      "state-projection",
+      "domain-event-propagation",
+      "route-open-proof",
+      "accessibility-evidence",
+      "acceptance-oracles"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 cross-property key and value equality patterns",
+      "JSON Schema 2020-12 format-assertion date-time validator interoperability",
+      "UI command wiring matrix conditional effect and evidence schema patterns",
+      "Schema validation resource limits for untrusted generated JSON artifacts"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000136_attempt_0015_terminal"
+}

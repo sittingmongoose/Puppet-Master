@@ -1,0 +1,2469 @@
+L00004586	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004587	preserved_contractrefs:
+L00004588	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004589	compatibility_only_notes:
+L00004590	- Legacy routing shorthand such as /SSH, /WSL/container-or-similar, /render, and /replaces resolves through process-host, renderer, and requested/effective host contracts.
+L00004591	stale_retired_dispositions: []
+L00004592	owner_hints:
+L00004593	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004594	- Plans/storage-plan.md
+L00004595	- Plans/Permissions_System.md
+L00004596	```
+L00004597	
+L00004598	### SMPFS-068 - Renderer Accessibility Text Model Matrix
+L00004599	
+L00004600	```yaml
+L00004601	plan_unit_id: SMPFS-068
+L00004602	unit_type: requirement
+L00004603	status: accepted
+L00004604	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004605	canonical_text: Renderer modes, clipboard, IME, accessibility, text/selection model, TUI capture, terminal shortcuts, and requested/effective renderer disclosure remain first-class acceptance requirements across platforms.
+L00004606	gui_related: true
+L00004607	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004608	split_recommended: false
+L00004609	depends_on:
+L00004610	- PDS-003
+L00004611	- PDS-004
+L00004612	- PDS-005
+L00004613	- PNC-001
+L00004614	- SP-001
+L00004615	- PS-001
+L00004616	- UCC-001
+L00004617	unblocks: []
+L00004618	acceptance_criteria:
+L00004619	- SMPFS-068 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004620	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004621	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004622	validation_surfaces:
+L00004623	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004624	- python3 scripts/pm-plan-index.py validate
+L00004625	risk_class: renderer_accessibility_drift
+L00004626	reasoning_tier: standard
+L00004627	context_scope: terminal_renderer_gui
+L00004628	implementation_surfaces:
+L00004629	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004630	node_compile_hint:
+L00004631	  mode: renderer_accessibility_text_model_matrix
+L00004632	  create_worknodes: false
+L00004633	source_lineage:
+L00004634	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0041
+L00004635	preserved_exact_tokens:
+L00004636	- /render-mode
+L00004637	- interactive rich
+L00004638	- plain /log/CI
+L00004639	- machine-readable /export
+L00004640	- degraded ASCII /low-capability
+L00004641	- /spectacle
+L00004642	- Clipboard
+L00004643	- IME
+L00004644	- accessibility
+L00004645	- Unicode
+L00004646	- TUI capture
+L00004647	- requested/effective
+L00004648	negative_constraints:
+L00004649	- Effective renderer mode MUST be disclosed whenever it differs from the requested preference.
+L00004650	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004651	preserved_contractrefs:
+L00004652	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004653	compatibility_only_notes: []
+L00004654	stale_retired_dispositions: []
+L00004655	owner_hints:
+L00004656	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004657	- Plans/storage-plan.md
+L00004658	- Plans/Permissions_System.md
+L00004659	- Plans/UI_Command_Catalog.md
+L00004660	```
+L00004661	
+L00004662	### SMPFS-069 - Platform Acceptance And Legacy Routing
+L00004663	
+L00004664	```yaml
+L00004665	plan_unit_id: SMPFS-069
+L00004666	unit_type: requirement
+L00004667	status: accepted
+L00004668	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004669	canonical_text: Platform acceptance covers macOS, Linux, Windows, WSL, Wayland, X11, dock/detach, package/runtime dependencies, and legacy shorthand resolved through process-host, renderer, and requested/effective capability contracts.
+L00004670	gui_related: false
+L00004671	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004672	split_recommended: false
+L00004673	depends_on:
+L00004674	- PDS-003
+L00004675	- PDS-004
+L00004676	- PDS-005
+L00004677	- PNC-001
+L00004678	- SP-001
+L00004679	- PS-001
+L00004680	unblocks: []
+L00004681	acceptance_criteria:
+L00004682	- SMPFS-069 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004683	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004684	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004685	validation_surfaces:
+L00004686	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004687	- python3 scripts/pm-plan-index.py validate
+L00004688	risk_class: platform_acceptance_drift
+L00004689	reasoning_tier: standard
+L00004690	context_scope: terminal_platforms
+L00004691	implementation_surfaces:
+L00004692	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004693	node_compile_hint:
+L00004694	  mode: platform_acceptance_legacy_routing
+L00004695	  create_worknodes: false
+L00004696	source_lineage:
+L00004697	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0041
+L00004698	preserved_exact_tokens:
+L00004699	- macOS
+L00004700	- Linux
+L00004701	- Windows
+L00004702	- WSL
+L00004703	- Wayland
+L00004704	- /X11
+L00004705	- /dock/detach
+L00004706	- package/runtime dependencies
+L00004707	- /SSH
+L00004708	- /WSL/container-or-similar
+L00004709	- /render
+L00004710	- /replaces
+L00004711	negative_constraints:
+L00004712	- PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004713	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004714	preserved_contractrefs:
+L00004715	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004716	compatibility_only_notes:
+L00004717	- /SSH, /WSL/container-or-similar, /render, and /replaces are legacy shorthand resolved through canonical host/render contracts.
+L00004718	stale_retired_dispositions: []
+L00004719	owner_hints:
+L00004720	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004721	- Plans/storage-plan.md
+L00004722	- Plans/Permissions_System.md
+L00004723	```
+L00004724	
+L00004725	### SMPFS-070 - Terminal Subsystem Layers And Gates
+L00004726	
+L00004727	```yaml
+L00004728	plan_unit_id: SMPFS-070
+L00004729	unit_type: requirement
+L00004730	status: accepted
+L00004731	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004732	canonical_text: Terminal subsystem architecture has explicit process-host, PTY transport, VT/ANSI grid buffer engine, renderer, shell-integration metadata, and workspace/session UI layers with acceptance gates for platform behavior.
+L00004733	gui_related: false
+L00004734	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004735	split_recommended: false
+L00004736	depends_on:
+L00004737	- PDS-003
+L00004738	- PDS-004
+L00004739	- PDS-005
+L00004740	- PNC-001
+L00004741	- SP-001
+L00004742	- RM-025
+L00004743	unblocks: []
+L00004744	acceptance_criteria:
+L00004745	- SMPFS-070 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004746	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004747	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004748	validation_surfaces:
+L00004749	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004750	- python3 scripts/pm-plan-index.py validate
+L00004751	risk_class: terminal_layer_drift
+L00004752	reasoning_tier: standard
+L00004753	context_scope: terminal_architecture
+L00004754	implementation_surfaces:
+L00004755	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004756	node_compile_hint:
+L00004757	  mode: terminal_subsystem_layers_gates
+L00004758	  create_worknodes: false
+L00004759	source_lineage:
+L00004760	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004761	preserved_exact_tokens:
+L00004762	- process host
+L00004763	- PTY /session/process transport
+L00004764	- VT /ANSI/grid/buffer
+L00004765	- renderer
+L00004766	- shell-integration metadata
+L00004767	- workspace/session UI
+L00004768	- acceptance gates
+L00004769	negative_constraints:
+L00004770	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004771	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004772	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004773	preserved_contractrefs:
+L00004774	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004775	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004776	compatibility_only_notes: []
+L00004777	stale_retired_dispositions: []
+L00004778	owner_hints:
+L00004779	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004780	- Plans/storage-plan.md
+L00004781	- Plans/Run_Modes.md
+L00004782	```
+L00004783	
+L00004784	### SMPFS-071 - Terminal Parser Replay Requirements
+L00004785	
+L00004786	```yaml
+L00004787	plan_unit_id: SMPFS-071
+L00004788	unit_type: requirement
+L00004789	status: accepted
+L00004790	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004791	canonical_text: Terminal parser and replay requirements preserve mutable grid/buffer state, scrollback and selection anchors, command-block annotations, replay fixtures, resize/reflow, huge output, Unicode/IME, search, and TUI capture behavior.
+L00004792	gui_related: false
+L00004793	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004794	split_recommended: false
+L00004795	depends_on:
+L00004796	- PDS-003
+L00004797	- PDS-004
+L00004798	- PDS-005
+L00004799	- PNC-001
+L00004800	- SP-001
+L00004801	unblocks: []
+L00004802	acceptance_criteria:
+L00004803	- SMPFS-071 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004804	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004805	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004806	validation_surfaces:
+L00004807	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004808	- python3 scripts/pm-plan-index.py validate
+L00004809	risk_class: terminal_parser_replay_drift
+L00004810	reasoning_tier: standard
+L00004811	context_scope: terminal_parser
+L00004812	implementation_surfaces:
+L00004813	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004814	node_compile_hint:
+L00004815	  mode: terminal_parser_replay_requirements
+L00004816	  create_worknodes: false
+L00004817	source_lineage:
+L00004818	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004819	preserved_exact_tokens:
+L00004820	- /VT
+L00004821	- /ANSI/grid/buffer
+L00004822	- scrollback
+L00004823	- selection anchors
+L00004824	- command-block annotations
+L00004825	- replay fixtures
+L00004826	- resize/reflow
+L00004827	- huge output
+L00004828	- Unicode
+L00004829	- IME
+L00004830	- search
+L00004831	- TUI capture
+L00004832	negative_constraints:
+L00004833	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004834	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004835	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004836	preserved_contractrefs:
+L00004837	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004838	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004839	compatibility_only_notes: []
+L00004840	stale_retired_dispositions: []
+L00004841	owner_hints:
+L00004842	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004843	- Plans/storage-plan.md
+L00004844	```
+L00004845	
+L00004846	### SMPFS-072 - Non Ship Terminal Rendering Constraints
+L00004847	
+L00004848	```yaml
+L00004849	plan_unit_id: SMPFS-072
+L00004850	unit_type: requirement
+L00004851	status: accepted
+L00004852	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004853	canonical_text: A DOM-style, document-style, line-widget-per-output, or string-concatenation terminal core is non-ship; terminal output is mutable grid/buffer state rendered by a purpose-built terminal engine.
+L00004854	gui_related: true
+L00004855	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004856	split_recommended: false
+L00004857	depends_on:
+L00004858	- PDS-003
+L00004859	- PDS-004
+L00004860	- PDS-005
+L00004861	- PNC-001
+L00004862	- SP-001
+L00004863	unblocks: []
+L00004864	acceptance_criteria:
+L00004865	- SMPFS-072 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004866	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004867	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004868	validation_surfaces:
+L00004869	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004870	- python3 scripts/pm-plan-index.py validate
+L00004871	risk_class: terminal_rendering_constraint_drift
+L00004872	reasoning_tier: standard
+L00004873	context_scope: terminal_rendering_gui
+L00004874	implementation_surfaces:
+L00004875	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004876	node_compile_hint:
+L00004877	  mode: non_ship_terminal_rendering_constraints
+L00004878	  create_worknodes: false
+L00004879	source_lineage:
+L00004880	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004881	preserved_exact_tokens:
+L00004882	- DOM-style
+L00004883	- document-style
+L00004884	- one widget per line forever
+L00004885	- line-widget
+L00004886	- string-concatenation
+L00004887	- non-ship
+L00004888	- mutable grid/buffer state
+L00004889	negative_constraints:
+L00004890	- A DOM-style terminal rendering architecture for the terminal core is non-ship.
+L00004891	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004892	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004893	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004894	preserved_contractrefs:
+L00004895	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004896	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004897	compatibility_only_notes: []
+L00004898	stale_retired_dispositions: []
+L00004899	owner_hints:
+L00004900	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004901	- Plans/storage-plan.md
+L00004902	```
+L00004903	
+L00004904	### SMPFS-073 - Native Buffer Render Performance Model
+L00004905	
+L00004906	```yaml
+L00004907	plan_unit_id: SMPFS-073
+L00004908	unit_type: requirement
+L00004909	status: accepted
+L00004910	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004911	canonical_text: Terminal performance requires off-UI-thread PTY and buffer work, diff/dirty-region painting, throttled rendering, bounded memory, stable scroll/selection/focus, and platform performance tests.
+L00004912	gui_related: true
+L00004913	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004914	split_recommended: false
+L00004915	depends_on:
+L00004916	- PDS-003
+L00004917	- PDS-004
+L00004918	- PDS-005
+L00004919	- PNC-001
+L00004920	- SP-001
+L00004921	unblocks: []
+L00004922	acceptance_criteria:
+L00004923	- SMPFS-073 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004924	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004925	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004926	validation_surfaces:
+L00004927	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004928	- python3 scripts/pm-plan-index.py validate
+L00004929	risk_class: terminal_performance_drift
+L00004930	reasoning_tier: standard
+L00004931	context_scope: terminal_rendering_gui
+L00004932	implementation_surfaces:
+L00004933	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004934	node_compile_hint:
+L00004935	  mode: native_buffer_render_performance_model
+L00004936	  create_worknodes: false
+L00004937	source_lineage:
+L00004938	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004939	preserved_exact_tokens:
+L00004940	- off-UI-thread
+L00004941	- diff/dirty-region painting
+L00004942	- throttled rendering
+L00004943	- bounded memory
+L00004944	- scroll
+L00004945	- selection
+L00004946	- focus
+L00004947	- performance tests
+L00004948	negative_constraints:
+L00004949	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004950	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004951	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004952	preserved_contractrefs:
+L00004953	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004954	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004955	compatibility_only_notes: []
+L00004956	stale_retired_dispositions: []
+L00004957	owner_hints:
+L00004958	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004959	- Plans/storage-plan.md
+L00004960	```
+L00004961	
+L00004962	### SMPFS-074 - Terminal Observability Events
+L00004963	
+L00004964	```yaml
+L00004965	plan_unit_id: SMPFS-074
+L00004966	unit_type: requirement
+L00004967	status: accepted
+L00004968	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004969	canonical_text: Terminal observability records structured lifecycle and state-transition events including create, attach, ready, start/finish command, interrupt, terminate, kill, detach, reattach, move-window, resize, focus/visibility, cwd/profile changes, renderer errors, shell-integration changes, selection/clipboard failures, and capability fallback.
+L00004970	gui_related: false
+L00004971	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004972	split_recommended: false
+L00004973	depends_on:
+L00004974	- PDS-003
+L00004975	- PDS-004
+L00004976	- PDS-005
+L00004977	- PNC-001
+L00004978	- SP-001
+L00004979	- CV-215
+L00004980	unblocks: []
+L00004981	acceptance_criteria:
+L00004982	- SMPFS-074 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004983	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004984	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004985	validation_surfaces:
+L00004986	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004987	- python3 scripts/pm-plan-index.py validate
+L00004988	risk_class: terminal_observability_drift
+L00004989	reasoning_tier: standard
+L00004990	context_scope: terminal_observability
+L00004991	implementation_surfaces:
+L00004992	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004993	node_compile_hint:
+L00004994	  mode: terminal_observability_events
+L00004995	  create_worknodes: false
+L00004996	source_lineage:
+L00004997	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004998	preserved_exact_tokens:
+L00004999	- session create
+L00005000	- /attach/ready/start-command/finish-command
+L00005001	- interrupt
+L00005002	- /terminate/kill
+L00005003	- detach
+L00005004	- /reattach/move-window
+L00005005	- resize
+L00005006	- /focus/visibility
+L00005007	- cwd/profile changes
+L00005008	- renderer errors
+L00005009	- shell-integration state changes
+L00005010	- selection and clipboard failures
+L00005011	- capability fallback
+L00005012	negative_constraints:
+L00005013	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00005014	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00005015	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00005016	preserved_contractrefs:
+L00005017	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00005018	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00005019	compatibility_only_notes: []
+L00005020	stale_retired_dispositions: []
+L00005021	owner_hints:
+L00005022	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005023	- Plans/storage-plan.md
+L00005024	- Plans/Contracts_V0.md
+L00005025	```
+L00005026	
+L00005027	### SMPFS-075 - Terminal Diagnostics Visibility
+L00005028	
+L00005029	```yaml
+L00005030	plan_unit_id: SMPFS-075
+L00005031	unit_type: requirement
+L00005032	status: accepted
+L00005033	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005034	canonical_text: Terminal settings and diagnostics expose renderer mode/fallback, shell-integration capability tier/source, last restore outcome, transcript persistence and retention availability, and recent errors/events relevant to the current pane.
+L00005035	gui_related: true
+L00005036	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005037	split_recommended: false
+L00005038	depends_on:
+L00005039	- PDS-003
+L00005040	- PDS-004
+L00005041	- PDS-005
+L00005042	- PNC-001
+L00005043	- SP-001
+L00005044	- UCC-001
+L00005045	unblocks: []
+L00005046	acceptance_criteria:
+L00005047	- SMPFS-075 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005048	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005049	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005050	validation_surfaces:
+L00005051	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005052	- python3 scripts/pm-plan-index.py validate
+L00005053	risk_class: terminal_diagnostics_ui_drift
+L00005054	reasoning_tier: standard
+L00005055	context_scope: terminal_diagnostics_gui
+L00005056	implementation_surfaces:
+L00005057	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005058	node_compile_hint:
+L00005059	  mode: terminal_diagnostics_visibility
+L00005060	  create_worknodes: false
+L00005061	source_lineage:
+L00005062	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00005063	preserved_exact_tokens:
+L00005064	- settings/diagnostics
+L00005065	- renderer mode/fallback state
+L00005066	- shell integration capability tier/source
+L00005067	- last restore outcome
+L00005068	- transcript persistence availability/retention status
+L00005069	- recent terminal errors/events
+L00005070	negative_constraints:
+L00005071	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00005072	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00005073	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00005074	preserved_contractrefs:
+L00005075	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00005076	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00005077	compatibility_only_notes: []
+L00005078	stale_retired_dispositions: []
+L00005079	owner_hints:
+L00005080	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005081	- Plans/storage-plan.md
+L00005082	- Plans/UI_Command_Catalog.md
+L00005083	```
+L00005084	
+L00005085	### SMPFS-076 - Terminal Diagnostic Privacy And Bundles
+L00005086	
+L00005087	```yaml
+L00005088	plan_unit_id: SMPFS-076
+L00005089	unit_type: requirement
+L00005090	status: accepted
+L00005091	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005092	canonical_text: Terminal diagnostic logging records metadata, state transitions, failure codes, and performance counters without indiscriminate shell-content capture; user-requested diagnostic bundles clearly label transcript content as absent, partial, or included.
+L00005093	gui_related: false
+L00005094	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005095	split_recommended: false
+L00005096	depends_on:
+L00005097	- PDS-003
+L00005098	- PDS-004
+L00005099	- PDS-005
+L00005100	- PNC-001
+L00005101	- SP-001
+L00005102	- PS-001
+L00005103	unblocks: []
+L00005104	acceptance_criteria:
+L00005105	- SMPFS-076 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005106	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005107	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005108	validation_surfaces:
+L00005109	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005110	- python3 scripts/pm-plan-index.py validate
+L00005111	risk_class: terminal_diagnostic_privacy_drift
+L00005112	reasoning_tier: standard
+L00005113	context_scope: terminal_diagnostics
+L00005114	implementation_surfaces:
+L00005115	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005116	node_compile_hint:
+L00005117	  mode: terminal_diagnostic_privacy_bundles
+L00005118	  create_worknodes: false
+L00005119	source_lineage:
+L00005120	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00005121	preserved_exact_tokens:
+L00005122	- metadata
+L00005123	- state transitions
+L00005124	- failure codes
+L00005125	- performance counters
+L00005126	- diagnostic bundle
+L00005127	- absent
+L00005128	- partial
+L00005129	- included
+L00005130	- transcript excerpts
+L00005131	negative_constraints:
+L00005132	- Diagnostic logging must not indiscriminately capture or duplicate full shell content.
+L00005133	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00005134	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00005135	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00005136	preserved_contractrefs:
+L00005137	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00005138	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00005139	compatibility_only_notes: []
+L00005140	stale_retired_dispositions: []
+L00005141	owner_hints:
+L00005142	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005143	- Plans/storage-plan.md
+L00005144	- Plans/Permissions_System.md
+L00005145	```
+L00005146	
+L00005147	### SMPFS-077 - Terminal Rollback Snapshot Boundary
+L00005148	
+L00005149	```yaml
+L00005150	plan_unit_id: SMPFS-077
+L00005151	unit_type: requirement
+L00005152	status: accepted
+L00005153	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005154	canonical_text: Rollback/snapshot boundaries allow terminal metadata, layout state, settings, and retained transcript artifacts to be snapshotted, but not arbitrary live PTY or process undo after commands have executed.
+L00005155	gui_related: false
+L00005156	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005157	split_recommended: false
+L00005158	depends_on:
+L00005159	- PDS-003
+L00005160	- PDS-004
+L00005161	- PDS-005
+L00005162	- PNC-001
+L00005163	- SP-001
+L00005164	- RM-025
+L00005165	unblocks: []
+L00005166	acceptance_criteria:
+L00005167	- SMPFS-077 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005168	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005169	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005170	validation_surfaces:
+L00005171	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005172	- python3 scripts/pm-plan-index.py validate
+L00005173	risk_class: terminal_rollback_boundary_drift
+L00005174	reasoning_tier: standard
+L00005175	context_scope: terminal_recovery
+L00005176	implementation_surfaces:
+L00005177	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005178	node_compile_hint:
+L00005179	  mode: terminal_rollback_snapshot_boundary
+L00005180	  create_worknodes: false
+L00005181	source_lineage:
+L00005182	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00005183	preserved_exact_tokens:
+L00005184	- Rollback/snapshot boundary
+L00005185	- terminal metadata
+L00005186	- layout state
+L00005187	- settings
+L00005188	- retained transcript artifacts
+L00005189	- live PTY runtime/process state
+L00005190	- restart/rerun/reopen/restore-structure
+L00005191	negative_constraints:
+L00005192	- PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed.
+L00005193	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00005194	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00005195	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00005196	preserved_contractrefs:
+L00005197	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00005198	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00005199	compatibility_only_notes: []
+L00005200	stale_retired_dispositions: []
+L00005201	owner_hints:
+L00005202	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005203	- Plans/storage-plan.md
+L00005204	- Plans/Run_Modes.md
+L00005205	```
+L00005206	
+L00005207	### SMPFS-078 - Terminal Noise And Queryable State
+L00005208	
+L00005209	```yaml
+L00005210	plan_unit_id: SMPFS-078
+L00005211	unit_type: requirement
+L00005212	status: accepted
+L00005213	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005214	canonical_text: Repeated identical terminal failures are coalesced under the /noise rule while persistent degraded state remains inspectable, and major terminal subsystem state is queryable per pane/session and project-wide without scraping rendered UI text.
+L00005215	gui_related: true
+L00005216	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005217	split_recommended: false
+L00005218	depends_on:
+L00005219	- PDS-003
+L00005220	- PDS-004
+L00005221	- PDS-005
+L00005222	- PNC-001
+L00005223	- SP-001
+L00005224	- UCC-001
+L00005225	unblocks: []
+L00005226	acceptance_criteria:
+L00005227	- SMPFS-078 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005228	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005229	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005230	validation_surfaces:
+L00005231	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005232	- python3 scripts/pm-plan-index.py validate
+L00005233	risk_class: terminal_noise_state_drift
+L00005234	reasoning_tier: standard
+L00005235	context_scope: terminal_diagnostics_gui
+L00005236	implementation_surfaces:
+L00005237	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005238	node_compile_hint:
+L00005239	  mode: terminal_noise_queryable_state
+L00005240	  create_worknodes: false
+L00005241	source_lineage:
+L00005242	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00005243	preserved_exact_tokens:
+L00005244	- /noise
+L00005245	- persistent degraded conditions
+L00005246	- typed events
+L00005247	- state-transition boundaries
+L00005248	- queryable per pane/session
+L00005249	- project-wide
+L00005250	- without scraping rendered UI text
+L00005251	negative_constraints:
+L00005252	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00005253	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00005254	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00005255	preserved_contractrefs:
+L00005256	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00005257	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00005258	compatibility_only_notes:
+L00005259	- All major terminal subsystems emit typed events at state-transition boundaries, and diagnostic state is queryable per pane/session and project-wide without scraping rendered UI text.
+L00005260	stale_retired_dispositions: []
+L00005261	owner_hints:
+L00005262	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005263	- Plans/storage-plan.md
+L00005264	- Plans/UI_Command_Catalog.md
+L00005265	```
+L00005266	
+L00005267	### SMPFS-079 - Terminal Acceptance Criteria
+L00005268	
+L00005269	```yaml
+L00005270	plan_unit_id: SMPFS-079
+L00005271	unit_type: requirement
+L00005272	status: accepted
+L00005273	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005274	canonical_text: Terminal acceptance requires deterministic two-section, multi-tab, one-to-four pane behavior across docked/detached presentation, same-session reveal, restart identity minting, honest historical restore, terminal/output/problems/debug/ports linkback, and responsive huge-output/search/scrollback paths.
+L00005275	gui_related: true
+L00005276	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005277	split_recommended: false
+L00005278	depends_on:
+L00005279	- PDS-003
+L00005280	- PDS-004
+L00005281	- PDS-005
+L00005282	- PNC-001
+L00005283	- SP-001
+L00005284	- UCC-001
+L00005285	- WM-001
+L00005286	unblocks: []
+L00005287	acceptance_criteria:
+L00005288	- SMPFS-079 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005289	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005290	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005291	validation_surfaces:
+L00005292	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005293	- python3 scripts/pm-plan-index.py validate
+L00005294	risk_class: terminal_acceptance_drift
+L00005295	reasoning_tier: standard
+L00005296	context_scope: terminal_acceptance_gui
+L00005297	implementation_surfaces:
+L00005298	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005299	node_compile_hint:
+L00005300	  mode: terminal_acceptance_criteria
+L00005301	  create_worknodes: false
+L00005302	source_lineage:
+L00005303	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0043
+L00005304	preserved_exact_tokens:
+L00005305	- two terminal sections
+L00005306	- multi-tab behavior
+L00005307	- one-to-four pane tabs
+L00005308	- docked
+L00005309	- detached
+L00005310	- same-session reveal
+L00005311	- new terminal_session_id
+L00005312	- historical sessions
+L00005313	- huge-output
+L00005314	- search
+L00005315	- scrollback
+L00005316	negative_constraints: []
+L00005317	preserved_contractrefs:
+L00005318	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+L00005319	compatibility_only_notes: []
+L00005320	stale_retired_dispositions: []
+L00005321	owner_hints:
+L00005322	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005323	- Plans/storage-plan.md
+L00005324	- Plans/UI_Command_Catalog.md
+L00005325	- Plans/Wiring_Matrix.md
+L00005326	```
+L00005327	
+L00005328	### SMPFS-080 - Hot Live Reload Semantics
+L00005329	
+L00005330	```yaml
+L00005331	plan_unit_id: SMPFS-080
+L00005332	unit_type: requirement
+L00005333	status: accepted
+L00005334	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005335	canonical_text: Dev sessions are stack-aware and distinguish hot reload from live reload, with explicit cleanup and termination rules for project switch and app shutdown.
+L00005336	gui_related: false
+L00005337	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005338	split_recommended: false
+L00005339	depends_on:
+L00005340	- PDS-003
+L00005341	- PDS-004
+L00005342	- PDS-005
+L00005343	- PNC-001
+L00005344	- SP-001
+L00005345	- RM-025
+L00005346	unblocks: []
+L00005347	acceptance_criteria:
+L00005348	- SMPFS-080 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005349	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005350	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005351	validation_surfaces:
+L00005352	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005353	- python3 scripts/pm-plan-index.py validate
+L00005354	risk_class: hot_reload_semantics_drift
+L00005355	reasoning_tier: standard
+L00005356	context_scope: dev_loop_reload
+L00005357	implementation_surfaces:
+L00005358	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005359	node_compile_hint:
+L00005360	  mode: hot_live_reload_semantics
+L00005361	  create_worknodes: false
+L00005362	source_lineage:
+L00005363	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0044
+L00005364	preserved_exact_tokens:
+L00005365	- Hot Reload
+L00005366	- Live Reload
+L00005367	- Fast Iteration
+L00005368	- dev sessions
+L00005369	- stack-aware
+L00005370	- project switch
+L00005371	- app shutdown
+L00005372	- termination/cleanup rules
+L00005373	negative_constraints: []
+L00005374	preserved_contractrefs: []
+L00005375	compatibility_only_notes: []
+L00005376	stale_retired_dispositions: []
+L00005377	owner_hints:
+L00005378	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005379	- Plans/storage-plan.md
+L00005380	- Plans/Run_Modes.md
+L00005381	```
+L00005382	
+L00005383	### SMPFS-081 - Hot Live Reload UI
+L00005384	
+L00005385	```yaml
+L00005386	plan_unit_id: SMPFS-081
+L00005387	unit_type: requirement
+L00005388	status: accepted
+L00005389	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005390	canonical_text: Hot/live reload UI discloses fallback to live reload, and one-click launch, status, logs, errors, and termination rules are required.
+L00005391	gui_related: true
+L00005392	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005393	split_recommended: false
+L00005394	depends_on:
+L00005395	- PDS-003
+L00005396	- PDS-004
+L00005397	- PDS-005
+L00005398	- PNC-001
+L00005399	- UCC-001
+L00005400	- WM-001
+L00005401	unblocks: []
+L00005402	acceptance_criteria:
+L00005403	- SMPFS-081 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005404	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005405	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005406	validation_surfaces:
+L00005407	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005408	- python3 scripts/pm-plan-index.py validate
+L00005409	risk_class: hot_reload_ui_drift
+L00005410	reasoning_tier: standard
+L00005411	context_scope: dev_loop_reload_gui
+L00005412	implementation_surfaces:
+L00005413	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005414	node_compile_hint:
+L00005415	  mode: hot_live_reload_ui
+L00005416	  create_worknodes: false
+L00005417	source_lineage:
+L00005418	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0044
+L00005419	preserved_exact_tokens:
+L00005420	- fallback to live reload
+L00005421	- UI copy and state
+L00005422	- one-click launch
+L00005423	- status
+L00005424	- logs
+L00005425	- errors
+L00005426	- termination rules
+L00005427	negative_constraints: []
+L00005428	preserved_contractrefs: []
+L00005429	compatibility_only_notes: []
+L00005430	stale_retired_dispositions: []
+L00005431	owner_hints:
+L00005432	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005433	- Plans/UI_Command_Catalog.md
+L00005434	- Plans/Wiring_Matrix.md
+L00005435	```
+L00005436	
+L00005437	### SMPFS-082 - Sound Effects Settings
+L00005438	
+L00005439	```yaml
+L00005440	plan_unit_id: SMPFS-082
+L00005441	unit_type: requirement
+L00005442	status: accepted
+L00005443	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005444	canonical_text: Sound effects are grouped settings, not per-view ad hoc toggles, and sound notifications follow action-needed/completion semantics while respecting do-not-disturb or muted-state shell policy.
+L00005445	gui_related: true
+L00005446	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005447	split_recommended: false
+L00005448	depends_on:
+L00005449	- PDS-003
+L00005450	- PDS-004
+L00005451	- PDS-005
+L00005452	- PNC-001
+L00005453	- UCC-001
+L00005454	- PS-001
+L00005455	unblocks: []
+L00005456	acceptance_criteria:
+L00005457	- SMPFS-082 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005458	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005459	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005460	validation_surfaces:
+L00005461	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005462	- python3 scripts/pm-plan-index.py validate
+L00005463	risk_class: sound_settings_drift
+L00005464	reasoning_tier: standard
+L00005465	context_scope: sound_settings_gui
+L00005466	implementation_surfaces:
+L00005467	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005468	node_compile_hint:
+L00005469	  mode: sound_effects_settings
+L00005470	  create_worknodes: false
+L00005471	source_lineage:
+L00005472	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0045
+L00005473	preserved_exact_tokens:
+L00005474	- Sound Effects Settings
+L00005475	- grouped as settings
+L00005476	- per-view ad hoc toggles
+L00005477	- action-needed
+L00005478	- completion semantics
+L00005479	- do-not-disturb
+L00005480	- muted-state
+L00005481	negative_constraints: []
+L00005482	preserved_contractrefs: []
+L00005483	compatibility_only_notes: []
+L00005484	stale_retired_dispositions: []
+L00005485	owner_hints:
+L00005486	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005487	- Plans/UI_Command_Catalog.md
+L00005488	- Plans/Permissions_System.md
+L00005489	```
+L00005490	
+L00005491	### SMPFS-083 - Instant Project Switch Command Semantics
+L00005492	
+L00005493	```yaml
+L00005494	plan_unit_id: SMPFS-083
+L00005495	unit_type: requirement
+L00005496	status: accepted
+L00005497	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005498	canonical_text: Instant project switch defaults to switching the active workspace tab, while an alternate command opens the target project in a new workspace tab.
+L00005499	gui_related: false
+L00005500	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005501	split_recommended: false
+L00005502	depends_on:
+L00005503	- PDS-003
+L00005504	- PDS-004
+L00005505	- PDS-005
+L00005506	- PNC-001
+L00005507	- UCC-001
+L00005508	- SP-001
+L00005509	unblocks: []
+L00005510	acceptance_criteria:
+L00005511	- SMPFS-083 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005512	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005513	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005514	validation_surfaces:
+L00005515	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005516	- python3 scripts/pm-plan-index.py validate
+L00005517	risk_class: project_switch_command_drift
+L00005518	reasoning_tier: standard
+L00005519	context_scope: project_switch
+L00005520	implementation_surfaces:
+L00005521	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005522	node_compile_hint:
+L00005523	  mode: instant_project_switch_command_semantics
+L00005524	  create_worknodes: false
+L00005525	source_lineage:
+L00005526	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+L00005527	preserved_exact_tokens:
+L00005528	- Instant Project Switch
+L00005529	- default switch target
+L00005530	- active workspace tab
+L00005531	- alternate command
+L00005532	- new workspace tab
+L00005533	negative_constraints: []
+L00005534	preserved_contractrefs: []
+L00005535	compatibility_only_notes: []
+L00005536	stale_retired_dispositions: []
+L00005537	owner_hints:
+L00005538	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005539	- Plans/UI_Command_Catalog.md
+L00005540	- Plans/storage-plan.md
+L00005541	```
+L00005542	
+L00005543	### SMPFS-084 - Instant Project Switch State And Edge UI
+L00005544	
+L00005545	```yaml
+L00005546	plan_unit_id: SMPFS-084
+L00005547	unit_type: requirement
+L00005548	status: accepted
+L00005549	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005550	canonical_text: Project switching recalculates project-scoped config, sessions, terminal cwd, browser preview state, effective tool/MCP/Persona state, preserves old project background activity through attention surfaces, and exposes deterministic missing-path, duplicate-path, and in-flight-run states.
+L00005551	gui_related: true
+L00005552	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005553	split_recommended: false
+L00005554	depends_on:
+L00005555	- PDS-003
+L00005556	- PDS-004
+L00005557	- PDS-005
+L00005558	- PNC-001
+L00005559	- UCC-001
+L00005560	- SP-001
+L00005561	- T-001
+L00005562	unblocks: []
+L00005563	acceptance_criteria:
+L00005564	- SMPFS-084 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005565	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005566	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005567	validation_surfaces:
+L00005568	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005569	- python3 scripts/pm-plan-index.py validate
+L00005570	risk_class: project_switch_ui_drift
+L00005571	reasoning_tier: standard
+L00005572	context_scope: project_switch_gui
+L00005573	implementation_surfaces:
+L00005574	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005575	node_compile_hint:
+L00005576	  mode: instant_project_switch_state_edge_ui
+L00005577	  create_worknodes: false
+L00005578	source_lineage:
+L00005579	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+L00005580	preserved_exact_tokens:
+L00005581	- project-scoped config
+L00005582	- sessions
+L00005583	- terminal cwd
+L00005584	- browser preview state
+L00005585	- effective tool/MCP/persona state
+L00005586	- background activity
+L00005587	- badges/attention surfaces
+L00005588	- missing-path
+L00005589	- duplicate-path
+L00005590	- in-flight-run
+L00005591	negative_constraints: []
+L00005592	preserved_contractrefs: []
+L00005593	compatibility_only_notes: []
+L00005594	stale_retired_dispositions: []
+L00005595	owner_hints:
+L00005596	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005597	- Plans/UI_Command_Catalog.md
+L00005598	- Plans/storage-plan.md
+L00005599	- Plans/Tools.md
+L00005600	```
+L00005601	
+L00005602	### SMPFS-085 - Browser Site Reader Web Boundary
+L00005603	
+L00005604	```yaml
+L00005605	plan_unit_id: SMPFS-085
+L00005606	unit_type: requirement
+L00005607	status: accepted
+L00005608	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005609	canonical_text: The built-in browser and click-to-context browser-interaction topic is separate from websearch, provider-routed webfetch, site/page reading intents, and Site Reader-only behavior.
+L00005610	gui_related: false
+L00005611	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005612	split_recommended: false
+L00005613	depends_on:
+L00005614	- PDS-003
+L00005615	- PDS-004
+L00005616	- PDS-005
+L00005617	- PNC-001
+L00005618	- T-001
+L00005619	- CV-215
+L00005620	unblocks: []
+L00005621	acceptance_criteria:
+L00005622	- SMPFS-085 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005623	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005624	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005625	validation_surfaces:
+L00005626	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005627	- python3 scripts/pm-plan-index.py validate
+L00005628	risk_class: browser_web_boundary_drift
+L00005629	reasoning_tier: standard
+L00005630	context_scope: browser_web_boundary
+L00005631	implementation_surfaces:
+L00005632	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005633	node_compile_hint:
+L00005634	  mode: browser_site_reader_web_boundary
+L00005635	  create_worknodes: false
+L00005636	source_lineage:
+L00005637	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005638	preserved_exact_tokens:
+L00005639	- Built-in Browser and Click-to-Context
+L00005640	- Site Reader v1
+L00005641	- browser-interaction
+L00005642	- websearch
+L00005643	- webfetch
+L00005644	- web-operation family
+L00005645	- Reading Site
+L00005646	- Site Reader-only behavior
+L00005647	negative_constraints:
+L00005648	- Provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005649	- Browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.
+L00005650	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005651	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005652	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005653	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005654	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005655	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005656	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005657	preserved_contractrefs:
+L00005658	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005659	compatibility_only_notes: []
+L00005660	stale_retired_dispositions: []
+L00005661	owner_hints:
+L00005662	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005663	- Plans/Tools.md
+L00005664	- Plans/Contracts_V0.md
+L00005665	```
+L00005666	
+L00005667	### SMPFS-086 - Web Research Labels And Degradation UI
+L00005668	
+L00005669	```yaml
+L00005670	plan_unit_id: SMPFS-086
+L00005671	unit_type: requirement
+L00005672	status: accepted
+L00005673	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005674	canonical_text: Promoted GUI consumes web research activity cards without re-owning tool routing, preserving Searching Web and reserved Reading Site labels, Site Reader detail-level choices, token-efficient fetches, observe/read path separation, and free-tier/provider-limit degradation before unavailable actions.
+L00005675	gui_related: true
+L00005676	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005677	split_recommended: false
+L00005678	depends_on:
+L00005679	- PDS-003
+L00005680	- PDS-004
+L00005681	- PDS-005
+L00005682	- PNC-001
+L00005683	- T-001
+L00005684	- UCC-001
+L00005685	- PS-001
+L00005686	unblocks: []
+L00005687	acceptance_criteria:
+L00005688	- SMPFS-086 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005689	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005690	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005691	validation_surfaces:
+L00005692	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005693	- python3 scripts/pm-plan-index.py validate
+L00005694	risk_class: web_research_ui_drift
+L00005695	reasoning_tier: standard
+L00005696	context_scope: browser_research_gui
+L00005697	implementation_surfaces:
+L00005698	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005699	node_compile_hint:
+L00005700	  mode: web_research_labels_degradation_ui
+L00005701	  create_worknodes: false
+L00005702	source_lineage:
+L00005703	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005704	preserved_exact_tokens:
+L00005705	- 'Searching Web: <query>'
+L00005706	- 'Reading Site: <url>'
+L00005707	- /detail-level
+L00005708	- minimal
+L00005709	- summary
+L00005710	- full
+L00005711	- /fetches
+L00005712	- /observe
+L00005713	- /automation
+L00005714	- /free-tier
+L00005715	- provider-limit degradation
+L00005716	negative_constraints:
+L00005717	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005718	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005719	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005720	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005721	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005722	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005723	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005724	preserved_contractrefs:
+L00005725	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005726	compatibility_only_notes: []
+L00005727	stale_retired_dispositions: []
+L00005728	owner_hints:
+L00005729	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005730	- Plans/Tools.md
+L00005731	- Plans/UI_Command_Catalog.md
+L00005732	- Plans/Permissions_System.md
+L00005733	```
+L00005734	
+L00005735	### SMPFS-087 - PM Managed Browser Runtime
+L00005736	
+L00005737	```yaml
+L00005738	plan_unit_id: SMPFS-087
+L00005739	unit_type: requirement
+L00005740	status: accepted
+L00005741	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005742	canonical_text: PM browser runtime is capability-first and PM-managed CEF by default; wef, cargo-wef, Wry/hybrid, OS webviews, Playwright/CDP sidecars, chromiumoxide, and Chrome-for-Testing helpers remain candidates or comparison inputs until packaging, update, install, verification, and health strategy is explicit.
+L00005743	gui_related: false
+L00005744	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00005745	split_recommended: false
+L00005746	depends_on:
+L00005747	- PDS-003
+L00005748	- PDS-004
+L00005749	- PDS-005
+L00005750	- PNC-001
+L00005751	- SP-001
+L00005752	- T-001
+L00005753	unblocks: []
+L00005754	acceptance_criteria:
+L00005755	- SMPFS-087 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005756	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005757	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005758	validation_surfaces:
+L00005759	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005760	- python3 scripts/pm-plan-index.py validate
+L00005761	risk_class: browser_runtime_drift
+L00005762	reasoning_tier: standard
+L00005763	context_scope: browser_runtime
+L00005764	implementation_surfaces:
+L00005765	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005766	node_compile_hint:
+L00005767	  mode: pm_managed_browser_runtime
+L00005768	  create_worknodes: false
+L00005769	source_lineage:
+L00005770	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005771	preserved_exact_tokens:
+L00005772	- PM-managed CEF runtime
+L00005773	- wef
+L00005774	- cargo-wef
+L00005775	- runtime_unavailable
+L00005776	- Wry/hybrid
+L00005777	- OS webviews
+L00005778	- Playwright/CDP sidecars
+L00005779	- chromiumoxide
+L00005780	- Chrome-for-Testing
+L00005781	- packaging/update/install strategy
+L00005782	negative_constraints:
+L00005783	- If the selected path uses an auto-downloaded CEF binary distribution via cargo-wef, requested/effective browser state must surface runtime_unavailable until the pinned binary is present, verified, and healthy.
+L00005784	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005785	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005786	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005787	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005788	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005789	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005790	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005791	preserved_contractrefs:
+L00005792	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005793	compatibility_only_notes:
+L00005794	- wef and cargo-wef are implementation candidates only until packaging/update/install strategy is explicit.
+L00005795	stale_retired_dispositions: []
+L00005796	owner_hints:
+L00005797	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005798	- Plans/storage-plan.md
+L00005799	- Plans/Tools.md
+L00005800	```
+L00005801	
+L00005802	### SMPFS-088 - Browser Requested Effective Disclosure
+L00005803	
+L00005804	```yaml
+L00005805	plan_unit_id: SMPFS-088
+L00005806	unit_type: requirement
+L00005807	status: accepted
+L00005808	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005809	canonical_text: Browser runtime capability state is requested/effective and must disclose runtime_unavailable, degraded capability, visible-host support, platform differences, and capability-degradation before offering unavailable features.
+L00005810	gui_related: true
+L00005811	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005812	split_recommended: false
+L00005813	depends_on:
+L00005814	- PDS-003
+L00005815	- PDS-004
+L00005816	- PDS-005
+L00005817	- PNC-001
+L00005818	- T-001
+L00005819	- PS-001
+L00005820	- SP-001
+L00005821	unblocks: []
+L00005822	acceptance_criteria:
+L00005823	- SMPFS-088 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005824	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005825	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005826	validation_surfaces:
+L00005827	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005828	- python3 scripts/pm-plan-index.py validate
+L00005829	risk_class: browser_effective_disclosure_drift
+L00005830	reasoning_tier: standard
+L00005831	context_scope: browser_capability_gui
+L00005832	implementation_surfaces:
+L00005833	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005834	node_compile_hint:
+L00005835	  mode: browser_requested_effective_disclosure
+L00005836	  create_worknodes: false
+L00005837	source_lineage:
+L00005838	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005839	preserved_exact_tokens:
+L00005840	- requested/effective browser state
+L00005841	- runtime_unavailable
+L00005842	- /capability-degradation
+L00005843	- visible host
+L00005844	- cross-platform embedding
+L00005845	- degraded-but-supported
+L00005846	negative_constraints:
+L00005847	- PM must not leave browser fallback behavior or effective capability disclosure under-specified.
+L00005848	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005849	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005850	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005851	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005852	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005853	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005854	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005855	preserved_contractrefs:
+L00005856	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005857	compatibility_only_notes: []
+L00005858	stale_retired_dispositions: []
+L00005859	owner_hints:
+L00005860	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005861	- Plans/Tools.md
+L00005862	- Plans/Permissions_System.md
+L00005863	- Plans/storage-plan.md
+L00005864	```
+L00005865	
+L00005866	### SMPFS-089 - Browser Chip Capture And Share Flow
+L00005867	
+L00005868	```yaml
+L00005869	plan_unit_id: SMPFS-089
+L00005870	unit_type: requirement
+L00005871	status: accepted
+L00005872	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005873	canonical_text: Browser click, highlight, capture, and share flows use explicit user-triggered chips; cmd.browser.share_with_agent and revoke_share_with_agent update explicit browser-session share state only.
+L00005874	gui_related: true
+L00005875	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005876	split_recommended: false
+L00005877	depends_on:
+L00005878	- PDS-003
+L00005879	- PDS-004
+L00005880	- PDS-005
+L00005881	- PNC-001
+L00005882	- T-001
+L00005883	- UCC-001
+L00005884	- PS-001
+L00005885	unblocks: []
+L00005886	acceptance_criteria:
+L00005887	- SMPFS-089 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005888	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005889	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005890	validation_surfaces:
+L00005891	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005892	- python3 scripts/pm-plan-index.py validate
+L00005893	risk_class: browser_chip_flow_drift
+L00005894	reasoning_tier: standard
+L00005895	context_scope: browser_context_gui
+L00005896	implementation_surfaces:
+L00005897	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005898	node_compile_hint:
+L00005899	  mode: browser_chip_capture_share_flow
+L00005900	  create_worknodes: false
+L00005901	source_lineage:
+L00005902	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005903	preserved_exact_tokens:
+L00005904	- chip-based model
+L00005905	- visible, user-triggered chips
+L00005906	- cmd.browser.share_with_agent
+L00005907	- cmd.browser.revoke_share_with_agent
+L00005908	- browser-session share state
+L00005909	- hidden automatic context injection
+L00005910	negative_constraints:
+L00005911	- Browser-derived context enters a thread only through visible, user-triggered chips, never through hidden automatic context injection.
+L00005912	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005913	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005914	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005915	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005916	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005917	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005918	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005919	preserved_contractrefs:
+L00005920	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005921	compatibility_only_notes: []
+L00005922	stale_retired_dispositions: []
+L00005923	owner_hints:
+L00005924	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005925	- Plans/Tools.md
+L00005926	- Plans/UI_Command_Catalog.md
+L00005927	- Plans/Permissions_System.md
+L00005928	```
+L00005929	
+L00005930	### SMPFS-090 - Browser Attachment And Prompt Limits
+L00005931	
+L00005932	```yaml
+L00005933	plan_unit_id: SMPFS-090
+L00005934	unit_type: requirement
+L00005935	status: accepted
+L00005936	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005937	canonical_text: Browser text selection and element pick create browser_selection_context and browser_element_context chips, while screenshots and combined captures create runtime-artifact references and must not inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005938	gui_related: true
+L00005939	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00005940	split_recommended: false
+L00005941	depends_on:
+L00005942	- PDS-003
+L00005943	- PDS-004
+L00005944	- PDS-005
+L00005945	- PNC-001
+L00005946	- T-001
+L00005947	- RAP-024
+L00005948	- PS-001
+L00005949	unblocks: []
+L00005950	acceptance_criteria:
+L00005951	- SMPFS-090 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00005952	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00005953	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00005954	validation_surfaces:
+L00005955	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005956	- python3 scripts/pm-plan-index.py validate
+L00005957	risk_class: browser_prompt_limit_drift
+L00005958	reasoning_tier: standard
+L00005959	context_scope: browser_context_gui
+L00005960	implementation_surfaces:
+L00005961	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005962	node_compile_hint:
+L00005963	  mode: browser_attachment_prompt_limits
+L00005964	  create_worknodes: false
+L00005965	source_lineage:
+L00005966	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00005967	preserved_exact_tokens:
+L00005968	- browser_selection_context
+L00005969	- browser_element_context
+L00005970	- runtime-artifact references
+L00005971	- selected browser context chip
+L00005972	- raw unbounded page bodies
+L00005973	- DOM dumps
+L00005974	- screenshots
+L00005975	- prompt text
+L00005976	negative_constraints:
+L00005977	- Browser screenshot and combined selection+screenshot actions MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005978	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00005979	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00005980	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00005981	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00005982	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00005983	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00005984	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00005985	preserved_contractrefs:
+L00005986	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00005987	compatibility_only_notes: []
+L00005988	stale_retired_dispositions: []
+L00005989	owner_hints:
+L00005990	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005991	- Plans/Tools.md
+L00005992	- Plans/Runtime_Artifacts_Panel.md
+L00005993	- Plans/Permissions_System.md
+L00005994	```
+L00005995	
+L00005996	### SMPFS-091 - Named Browser Action Taxonomy
+L00005997	
+L00005998	```yaml
+L00005999	plan_unit_id: SMPFS-091
+L00006000	unit_type: requirement
+L00006001	status: accepted
+L00006002	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006003	canonical_text: The browser control plane remains named-action based, covering tab lifecycle, richer interactions, wait primitives, dialogs, file uploads, storage controls, network routing/mocking, trace/video capture, page/PDF export, test verification, coordinate fallback, and locator generation.
+L00006004	gui_related: false
+L00006005	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006006	split_recommended: false
+L00006007	depends_on:
+L00006008	- PDS-003
+L00006009	- PDS-004
+L00006010	- PDS-005
+L00006011	- PNC-001
+L00006012	- T-001
+L00006013	- CV-215
+L00006014	unblocks: []
+L00006015	acceptance_criteria:
+L00006016	- SMPFS-091 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006017	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006018	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006019	validation_surfaces:
+L00006020	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006021	- python3 scripts/pm-plan-index.py validate
+L00006022	risk_class: browser_action_taxonomy_drift
+L00006023	reasoning_tier: standard
+L00006024	context_scope: browser_actions
+L00006025	implementation_surfaces:
+L00006026	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006027	node_compile_hint:
+L00006028	  mode: named_browser_action_taxonomy
+L00006029	  create_worknodes: false
+L00006030	source_lineage:
+L00006031	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006032	preserved_exact_tokens:
+L00006033	- named-action
+L00006034	- list
+L00006035	- create
+L00006036	- select
+L00006037	- close
+L00006038	- hover
+L00006039	- drag
+L00006040	- select option
+L00006041	- fill form
+L00006042	- press key
+L00006043	- navigate back
+L00006044	- wait for time
+L00006045	- wait for text
+L00006046	- wait for text disappearance
+L00006047	- storage-state
+L00006048	- network
+L00006049	- trace/video
+L00006050	- PDF export
+L00006051	- locator generation
+L00006052	negative_constraints:
+L00006053	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006054	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006055	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006056	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006057	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006058	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006059	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006060	preserved_contractrefs:
+L00006061	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006062	compatibility_only_notes: []
+L00006063	stale_retired_dispositions: []
+L00006064	owner_hints:
+L00006065	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006066	- Plans/Tools.md
+L00006067	- Plans/Contracts_V0.md
+L00006068	```
+L00006069	
+L00006070	### SMPFS-092 - DevTools And Test Debug Boundaries
+L00006071	
+L00006072	```yaml
+L00006073	plan_unit_id: SMPFS-092
+L00006074	unit_type: requirement
+L00006075	status: accepted
+L00006076	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006077	canonical_text: Embedded/detached DevTools, agent/browser introspection, and advanced browser test-debug flows are explicit opt-in or named-action surfaces; raw DevTools/CDP scripting and page-code execution are not the default PM browser contract.
+L00006078	gui_related: true
+L00006079	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006080	split_recommended: false
+L00006081	depends_on:
+L00006082	- PDS-003
+L00006083	- PDS-004
+L00006084	- PDS-005
+L00006085	- PNC-001
+L00006086	- T-001
+L00006087	- UCC-001
+L00006088	- PS-001
+L00006089	unblocks: []
+L00006090	acceptance_criteria:
+L00006091	- SMPFS-092 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006092	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006093	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006094	validation_surfaces:
+L00006095	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006096	- python3 scripts/pm-plan-index.py validate
+L00006097	risk_class: devtools_boundary_drift
+L00006098	reasoning_tier: standard
+L00006099	context_scope: browser_devtools_gui
+L00006100	implementation_surfaces:
+L00006101	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006102	node_compile_hint:
+L00006103	  mode: devtools_test_debug_boundaries
+L00006104	  create_worknodes: false
+L00006105	source_lineage:
+L00006106	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006107	preserved_exact_tokens:
+L00006108	- DevTools
+L00006109	- embedded
+L00006110	- detached
+L00006111	- /test-debug
+L00006112	- browser_run_code
+L00006113	- browser_evaluate
+L00006114	- raw DevTools/CDP
+L00006115	- named browser actions
+L00006116	- active browser-session capability state
+L00006117	negative_constraints:
+L00006118	- Raw DevTools/CDP exposure is not an unresolved browser-contract question.
+L00006119	- Page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM guaranteed browser contract.
+L00006120	- Advanced browser /test-debug remains opt-in and MUST NOT replace the named browser/testing action contract as PM default surface.
+L00006121	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006122	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006123	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006124	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006125	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006126	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006127	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006128	preserved_contractrefs:
+L00006129	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006130	compatibility_only_notes: []
+L00006131	stale_retired_dispositions: []
+L00006132	owner_hints:
+L00006133	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006134	- Plans/Tools.md
+L00006135	- Plans/UI_Command_Catalog.md
+L00006136	- Plans/Permissions_System.md
+L00006137	```
+L00006138	
+L00006139	### SMPFS-093 - Browser Artifact Pipeline
+L00006140	
+L00006141	```yaml
+L00006142	plan_unit_id: SMPFS-093
+L00006143	unit_type: requirement
+L00006144	status: accepted
+L00006145	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006146	canonical_text: Browser screenshots, traces, combined selection/screenshot captures, DevTools automation artifacts, and evidence actions use the runtime-artifact pipeline with naming, retention, manifest shape, chat rendering, privacy redaction, permission disclosure, and requested/effective capability state.
+L00006147	gui_related: true
+L00006148	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006149	split_recommended: false
+L00006150	depends_on:
+L00006151	- PDS-003
+L00006152	- PDS-004
+L00006153	- PDS-005
+L00006154	- PNC-001
+L00006155	- T-001
+L00006156	- RAP-024
+L00006157	- PS-001
+L00006158	unblocks: []
+L00006159	acceptance_criteria:
+L00006160	- SMPFS-093 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006161	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006162	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006163	validation_surfaces:
+L00006164	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006165	- python3 scripts/pm-plan-index.py validate
+L00006166	risk_class: browser_artifact_pipeline_drift
+L00006167	reasoning_tier: standard
+L00006168	context_scope: browser_artifacts_gui
+L00006169	implementation_surfaces:
+L00006170	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006171	node_compile_hint:
+L00006172	  mode: browser_artifact_pipeline
+L00006173	  create_worknodes: false
+L00006174	source_lineage:
+L00006175	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006176	preserved_exact_tokens:
+L00006177	- browser screenshots
+L00006178	- traces
+L00006179	- combined selection+screenshot captures
+L00006180	- artifact pipeline
+L00006181	- naming
+L00006182	- retention
+L00006183	- manifest shape
+L00006184	- chat rendering
+L00006185	- privacy redaction
+L00006186	- runtime-artifact references
+L00006187	- /screenshot/devtools/automation
+L00006188	negative_constraints:
+L00006189	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006190	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006191	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006192	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006193	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006194	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006195	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006196	preserved_contractrefs:
+L00006197	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006198	compatibility_only_notes: []
+L00006199	stale_retired_dispositions: []
+L00006200	owner_hints:
+L00006201	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006202	- Plans/Tools.md
+L00006203	- Plans/Runtime_Artifacts_Panel.md
+L00006204	- Plans/Permissions_System.md
+L00006205	```
+L00006206	
+L00006207	### SMPFS-094 - Browser Session Persistence And Profiles
+L00006208	
+L00006209	```yaml
+L00006210	plan_unit_id: SMPFS-094
+L00006211	unit_type: requirement
+L00006212	status: accepted
+L00006213	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006214	canonical_text: Browser session persistence covers history, cookies, storage, auth sessions, profile { name, saveChanges }, project-scoped normal sessions, workspace_preview/detached_preview sharing, isolated automation_session and auth_session profiles, restore eligibility, and crash recovery.
+L00006215	gui_related: false
+L00006216	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006217	split_recommended: false
+L00006218	depends_on:
+L00006219	- PDS-003
+L00006220	- PDS-004
+L00006221	- PDS-005
+L00006222	- PNC-001
+L00006223	- SP-001
+L00006224	- T-001
+L00006225	unblocks: []
+L00006226	acceptance_criteria:
+L00006227	- SMPFS-094 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006228	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006229	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006230	validation_surfaces:
+L00006231	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006232	- python3 scripts/pm-plan-index.py validate
+L00006233	risk_class: browser_profile_drift
+L00006234	reasoning_tier: standard
+L00006235	context_scope: browser_persistence
+L00006236	implementation_surfaces:
+L00006237	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006238	node_compile_hint:
+L00006239	  mode: browser_session_persistence_profiles
+L00006240	  create_worknodes: false
+L00006241	source_lineage:
+L00006242	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006243	preserved_exact_tokens:
+L00006244	- 'profile: { name: string, saveChanges: boolean }'
+L00006245	- cookies
+L00006246	- localStorage
+L00006247	- workspace_preview
+L00006248	- detached_preview
+L00006249	- automation_session
+L00006250	- auth_session
+L00006251	- project-scoped
+L00006252	- persistent profile/store
+L00006253	- restore eligibility
+L00006254	- crash recovery
+L00006255	negative_constraints:
+L00006256	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006257	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006258	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006259	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006260	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006261	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006262	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006263	preserved_contractrefs:
+L00006264	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006265	compatibility_only_notes:
+L00006266	- /localStorage slash notation remains lineage for the canonical localStorage storage field.
+L00006267	stale_retired_dispositions: []
+L00006268	owner_hints:
+L00006269	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006270	- Plans/storage-plan.md
+L00006271	- Plans/Tools.md
+L00006272	```
+L00006273	
+L00006274	### SMPFS-095 - Browser Tab Cap And Retargeting
+L00006275	
+L00006276	```yaml
+L00006277	plan_unit_id: SMPFS-095
+L00006278	unit_type: requirement
+L00006279	status: accepted
+L00006280	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006281	canonical_text: 'Browser tab-cap handling is no-silent-retargeting/no LRU reuse: PM prompts, blocks, explicitly closes, or opens detached rather than silently retargeting an existing browser subject.'
+L00006282	gui_related: true
+L00006283	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006284	split_recommended: false
+L00006285	depends_on:
+L00006286	- PDS-003
+L00006287	- PDS-004
+L00006288	- PDS-005
+L00006289	- PNC-001
+L00006290	- T-001
+L00006291	- UCC-001
+L00006292	unblocks: []
+L00006293	acceptance_criteria:
+L00006294	- SMPFS-095 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006295	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006296	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006297	validation_surfaces:
+L00006298	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006299	- python3 scripts/pm-plan-index.py validate
+L00006300	risk_class: browser_retargeting_drift
+L00006301	reasoning_tier: standard
+L00006302	context_scope: browser_tabs_gui
+L00006303	implementation_surfaces:
+L00006304	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006305	node_compile_hint:
+L00006306	  mode: browser_tab_cap_retargeting
+L00006307	  create_worknodes: false
+L00006308	source_lineage:
+L00006309	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006310	preserved_exact_tokens:
+L00006311	- no-silent-retargeting
+L00006312	- no LRU reuse
+L00006313	- prompt
+L00006314	- block
+L00006315	- explicitly close
+L00006316	- open detached
+L00006317	- browser subject
+L00006318	negative_constraints:
+L00006319	- PM must prompt, block, explicitly close, or open detached rather than silently retargeting an existing browser subject.
+L00006320	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006321	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006322	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006323	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006324	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006325	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006326	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006327	preserved_contractrefs:
+L00006328	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006329	compatibility_only_notes: []
+L00006330	stale_retired_dispositions: []
+L00006331	owner_hints:
+L00006332	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006333	- Plans/Tools.md
+L00006334	- Plans/UI_Command_Catalog.md
+L00006335	```
+L00006336	
+L00006337	### SMPFS-096 - Browser Lifecycle Distribution Platform Guarantees
+L00006338	
+L00006339	```yaml
+L00006340	plan_unit_id: SMPFS-096
+L00006341	unit_type: requirement
+L00006342	status: accepted
+L00006343	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006344	canonical_text: PM-managed browser helpers use helper/subprocess lifecycle, crash detection, restart policy, sandboxing, diagnostics, per-platform bundle layout, update rules, signature/hash verification, uninstall/removal evidence, and explicit Linux/macOS/Windows platform guarantees.
+L00006345	gui_related: false
+L00006346	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006347	split_recommended: false
+L00006348	depends_on:
+L00006349	- PDS-003
+L00006350	- PDS-004
+L00006351	- PDS-005
+L00006352	- PNC-001
+L00006353	- SP-001
+L00006354	- PS-001
+L00006355	- T-001
+L00006356	unblocks: []
+L00006357	acceptance_criteria:
+L00006358	- SMPFS-096 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006359	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006360	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006361	validation_surfaces:
+L00006362	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006363	- python3 scripts/pm-plan-index.py validate
+L00006364	risk_class: browser_lifecycle_distribution_drift
+L00006365	reasoning_tier: standard
+L00006366	context_scope: browser_distribution
+L00006367	implementation_surfaces:
+L00006368	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006369	node_compile_hint:
+L00006370	  mode: browser_lifecycle_distribution_platform_guarantees
+L00006371	  create_worknodes: false
+L00006372	source_lineage:
+L00006373	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006374	preserved_exact_tokens:
+L00006375	- helper/subprocess layout
+L00006376	- /subprocess
+L00006377	- startup
+L00006378	- shutdown
+L00006379	- crash detection
+L00006380	- restart policy
+L00006381	- sandboxing
+L00006382	- diagnostics
+L00006383	- bundle layout
+L00006384	- update rules
+L00006385	- signature/hash verification
+L00006386	- /hash
+L00006387	- uninstall/removal
+L00006388	- /removal
+L00006389	- macOS
+L00006390	- Linux
+L00006391	- Windows
+L00006392	negative_constraints:
+L00006393	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006394	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006395	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006396	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006397	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006398	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006399	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006400	preserved_contractrefs:
+L00006401	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006402	compatibility_only_notes: []
+L00006403	stale_retired_dispositions: []
+L00006404	owner_hints:
+L00006405	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006406	- Plans/storage-plan.md
+L00006407	- Plans/Permissions_System.md
+L00006408	- Plans/Tools.md
+L00006409	```
+L00006410	
+L00006411	### SMPFS-097 - Browser Permissions And Safety
+L00006412	
+L00006413	```yaml
+L00006414	plan_unit_id: SMPFS-097
+L00006415	unit_type: requirement
+L00006416	status: accepted
+L00006417	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006418	canonical_text: Browser actions, storage/auth use, DevTools flows, artifact capture, agent-vs-user authority, permission keys, trust tiers, auth/session sensitivity, and no-silent-fallback blocked semantics are governed by Permissions and safety contracts.
+L00006419	gui_related: false
+L00006420	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006421	split_recommended: false
+L00006422	depends_on:
+L00006423	- PDS-003
+L00006424	- PDS-004
+L00006425	- PDS-005
+L00006426	- PNC-001
+L00006427	- PS-001
+L00006428	- T-001
+L00006429	unblocks: []
+L00006430	acceptance_criteria:
+L00006431	- SMPFS-097 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006432	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006433	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006434	validation_surfaces:
+L00006435	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006436	- python3 scripts/pm-plan-index.py validate
+L00006437	risk_class: browser_permission_drift
+L00006438	reasoning_tier: standard
+L00006439	context_scope: browser_safety
+L00006440	implementation_surfaces:
+L00006441	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006442	node_compile_hint:
+L00006443	  mode: browser_permissions_safety
+L00006444	  create_worknodes: false
+L00006445	source_lineage:
+L00006446	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006447	preserved_exact_tokens:
+L00006448	- permission keys
+L00006449	- trust tiers
+L00006450	- agent-vs-user authority
+L00006451	- auth/session sensitivity
+L00006452	- no-silent-fallback blocked semantics
+L00006453	- browser action
+L00006454	- storage/auth
+L00006455	- DevTools flow
+L00006456	- artifact capture
+L00006457	negative_constraints:
+L00006458	- No-silent-fallback blocked semantics govern every browser action, storage/auth use, DevTools flow, and artifact capture.
+L00006459	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006460	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006461	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006462	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006463	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006464	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006465	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006466	preserved_contractrefs:
+L00006467	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006468	compatibility_only_notes: []
+L00006469	stale_retired_dispositions: []
+L00006470	owner_hints:
+L00006471	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006472	- Plans/Permissions_System.md
+L00006473	- Plans/Tools.md
+L00006474	```
+L00006475	
+L00006476	### SMPFS-098 - Browser Chrome Controls And Test Plan
+L00006477	
+L00006478	```yaml
+L00006479	plan_unit_id: SMPFS-098
+L00006480	unit_type: requirement
+L00006481	status: accepted
+L00006482	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006483	canonical_text: Browser command/UI surfaces expose inspect, screenshot, DevTools, automation controls, exact browser chrome controls, status indicators, activity disclosure, and scenario-driven acceptance criteria for preview, interaction, screenshots, DevTools, auth, crash recovery, restore, and cross-platform packaging.
+L00006484	gui_related: true
+L00006485	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006486	split_recommended: false
+L00006487	depends_on:
+L00006488	- PDS-003
+L00006489	- PDS-004
+L00006490	- PDS-005
+L00006491	- PNC-001
+L00006492	- T-001
+L00006493	- UCC-001
+L00006494	- PS-001
+L00006495	unblocks: []
+L00006496	acceptance_criteria:
+L00006497	- SMPFS-098 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006498	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006499	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006500	validation_surfaces:
+L00006501	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006502	- python3 scripts/pm-plan-index.py validate
+L00006503	risk_class: browser_controls_testplan_drift
+L00006504	reasoning_tier: standard
+L00006505	context_scope: browser_controls_gui
+L00006506	implementation_surfaces:
+L00006507	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006508	node_compile_hint:
+L00006509	  mode: browser_chrome_controls_test_plan
+L00006510	  create_worknodes: false
+L00006511	source_lineage:
+L00006512	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006513	preserved_exact_tokens:
+L00006514	- inspect
+L00006515	- screenshot
+L00006516	- devtools
+L00006517	- automation
+L00006518	- browser chrome controls
+L00006519	- status indicators
+L00006520	- activity disclosure
+L00006521	- local HTML preview
+L00006522	- web app interaction
+L00006523	- auth flow
+L00006524	- crash recovery
+L00006525	- cross-platform packaging
+L00006526	negative_constraints:
+L00006527	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006528	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006529	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006530	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006531	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006532	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006533	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006534	preserved_contractrefs:
+L00006535	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006536	compatibility_only_notes: []
+L00006537	stale_retired_dispositions: []
+L00006538	owner_hints:
+L00006539	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006540	- Plans/Tools.md
+L00006541	- Plans/UI_Command_Catalog.md
+L00006542	- Plans/Permissions_System.md
+L00006543	```
+L00006544	
+L00006545	### SMPFS-099 - Browser Reference Material Dispositions
+L00006546	
+L00006547	```yaml
+L00006548	plan_unit_id: SMPFS-099
+L00006549	unit_type: requirement
+L00006550	status: accepted
+L00006551	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006552	canonical_text: Playwright MCP, Chrome DevTools MCP, BrowserMCP, Saik0s/mcp-browser-use, browser-use, chromiumoxide, Wry, WebView2, WKWebView, WebKitGTK, OS webviews, CDP sidecars, and MCP config shapes remain reference, comparison, lineage, or background inputs and do not replace PM-owned browser architecture.
+L00006553	gui_related: false
+L00006554	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006555	split_recommended: false
+L00006556	depends_on:
+L00006557	- PDS-003
+L00006558	- PDS-004
+L00006559	- PDS-005
+L00006560	- PNC-001
+L00006561	- T-001
+L00006562	unblocks: []
+L00006563	acceptance_criteria:
+L00006564	- SMPFS-099 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006565	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006566	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006567	validation_surfaces:
+L00006568	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006569	- python3 scripts/pm-plan-index.py validate
+L00006570	risk_class: browser_reference_disposition_drift
+L00006571	reasoning_tier: standard
+L00006572	context_scope: browser_reference_material
+L00006573	implementation_surfaces:
+L00006574	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006575	node_compile_hint:
+L00006576	  mode: browser_reference_material_dispositions
+L00006577	  create_worknodes: false
+L00006578	source_lineage:
+L00006579	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006580	preserved_exact_tokens:
+L00006581	- Playwright MCP
+L00006582	- Chrome DevTools MCP
+L00006583	- BrowserMCP/mcp
+L00006584	- Saik0s/mcp-browser-use
+L00006585	- browser-use
+L00006586	- chromiumoxide
+L00006587	- Wry
+L00006588	- WebView2
+L00006589	- WKWebView
+L00006590	- WebKitGTK
+L00006591	- OS webviews
+L00006592	- CDP
+L00006593	- storage-state
+L00006594	- cdpEndpoint
+L00006595	negative_constraints:
+L00006596	- Reference material does not change PM design center away from a PM-owned built-in browser surface.
+L00006597	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006598	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006599	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006600	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006601	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006602	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006603	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006604	preserved_contractrefs:
+L00006605	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006606	compatibility_only_notes:
+L00006607	- Reference/comparison/background labels remain lineage only and do not become PM product commands or core architecture.
+L00006608	stale_retired_dispositions: []
+L00006609	owner_hints:
+L00006610	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006611	- Plans/Tools.md
+L00006612	```
+L00006613	
+L00006614	### SMPFS-100 - Browser Action Schema And Output Shape
+L00006615	
+L00006616	```yaml
+L00006617	plan_unit_id: SMPFS-100
+L00006618	unit_type: requirement
+L00006619	status: accepted
+L00006620	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006621	canonical_text: The canonical browser action table and output shape preserve action_id, bucket, tier, permission_layer, allowed_session_classes, requested_capabilities, artifacts_emitted, degradation_or_blocking_behavior, user_visible_entry_points, typed output sections, fields, limits, sequential execution, URL validation, and invalid_input errors.
+L00006622	gui_related: false
+L00006623	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006624	split_recommended: false
+L00006625	depends_on:
+L00006626	- PDS-003
+L00006627	- PDS-004
+L00006628	- PDS-005
+L00006629	- PNC-001
+L00006630	- T-001
+L00006631	- CV-215
+L00006632	unblocks: []
+L00006633	acceptance_criteria:
+L00006634	- SMPFS-100 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006635	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006636	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006637	validation_surfaces:
+L00006638	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006639	- python3 scripts/pm-plan-index.py validate
+L00006640	risk_class: browser_action_schema_drift
+L00006641	reasoning_tier: standard
+L00006642	context_scope: browser_action_schema
+L00006643	implementation_surfaces:
+L00006644	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006645	node_compile_hint:
+L00006646	  mode: browser_action_schema_output_shape
+L00006647	  create_worknodes: false
+L00006648	source_lineage:
+L00006649	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+L00006650	preserved_exact_tokens:
+L00006651	- action_id
+L00006652	- bucket
+L00006653	- tier
+L00006654	- guaranteed_everyday
+L00006655	- advanced_debug_testing
+L00006656	- permission_layer
+L00006657	- allowed_session_classes
+L00006658	- requested_capabilities
+L00006659	- artifacts_emitted
+L00006660	- degradation_or_blocking_behavior
+L00006661	- user_visible_entry_points
+L00006662	- Open tabs
+L00006663	- Page state
+L00006664	- Snapshot
+L00006665	- New console messages
+L00006666	- Modal state
+L00006667	- Downloads
+L00006668	- timeout_ms
+L00006669	- invalid_input
+L00006670	- 5 MB default
+L00006671	- 5000ms
+L00006672	- 30000ms
+L00006673	- 30s
+L00006674	- HTTP(S)
+L00006675	- https://
+L00006676	negative_constraints:
+L00006677	- Unknown type values produce invalid_input error.
+L00006678	- Reject non-HTTP(S) schemes and malformed URLs.
+L00006679	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00006680	- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+L00006681	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00006682	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00006683	- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00006684	- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00006685	- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+L00006686	preserved_contractrefs:
+L00006687	- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+L00006688	compatibility_only_notes: []
+L00006689	stale_retired_dispositions: []
+L00006690	owner_hints:
+L00006691	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006692	- Plans/Tools.md
+L00006693	- Plans/Contracts_V0.md
+L00006694	```
+L00006695	
+L00006696	### SMPFS-101 - Promoted Command Families
+L00006697	
+L00006698	```yaml
+L00006699	plan_unit_id: SMPFS-101
+L00006700	unit_type: requirement
+L00006701	status: accepted
+L00006702	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006703	canonical_text: The UI command catalog exposes stable command families for project switching/open-new-tab, workspace tabs, detached windows, thread context detail, branching, browser controls, terminal actions, dev-session actions, and catalog lifecycle actions.
+L00006704	gui_related: true
+L00006705	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006706	split_recommended: false
+L00006707	depends_on:
+L00006708	- PDS-003
+L00006709	- PDS-004
+L00006710	- PDS-005
+L00006711	- PNC-001
+L00006712	- UCC-001
+L00006713	- WM-001
+L00006714	- ACD-008
+L00006715	unblocks: []
+L00006716	acceptance_criteria:
+L00006717	- SMPFS-101 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006718	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006719	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006720	validation_surfaces:
+L00006721	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006722	- python3 scripts/pm-plan-index.py validate
+L00006723	risk_class: promoted_command_family_drift
+L00006724	reasoning_tier: standard
+L00006725	context_scope: command_catalog_gui
+L00006726	implementation_surfaces:
+L00006727	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006728	node_compile_hint:
+L00006729	  mode: promoted_command_families
+L00006730	  create_worknodes: false
+L00006731	source_lineage:
+L00006732	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0048
+L00006733	preserved_exact_tokens:
+L00006734	- project switch
+L00006735	- project open-in-new-workspace-tab
+L00006736	- workspace tab create
+L00006737	- detached window
+L00006738	- thread context detail
+L00006739	- branch-from-restore
+L00006740	- browser open
+L00006741	- terminal show
+L00006742	- dev-session start
+L00006743	- catalog install
+L00006744	negative_constraints: []
+L00006745	preserved_contractrefs:
+L00006746	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md'
+L00006747	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+L00006748	compatibility_only_notes: []
+L00006749	stale_retired_dispositions: []
+L00006750	owner_hints:
+L00006751	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006752	- Plans/UI_Command_Catalog.md
+L00006753	- Plans/Wiring_Matrix.md
+L00006754	- Plans/assistant-chat-design.md
+L00006755	```
+L00006756	
+L00006757	### SMPFS-102 - Command Category And Identity Reveal Rules
+L00006758	
+L00006759	```yaml
+L00006760	plan_unit_id: SMPFS-102
+L00006761	unit_type: requirement
+L00006762	status: accepted
+L00006763	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006764	canonical_text: Open in Terminal and Show Terminal normalize to the terminal command family, terminal layout and runtime actions remain separate command categories, and cross-surface reveal commands target canonical identities such as terminal_session_id and dev_session_id rather than freeform labels.
+L00006765	gui_related: true
+L00006766	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006767	split_recommended: false
+L00006768	depends_on:
+L00006769	- PDS-003
+L00006770	- PDS-004
+L00006771	- PDS-005
+L00006772	- PNC-001
+L00006773	- UCC-001
+L00006774	- WM-001
+L00006775	- SP-001
+L00006776	- CV-215
+L00006777	unblocks: []
+L00006778	acceptance_criteria:
+L00006779	- SMPFS-102 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006780	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006781	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006782	validation_surfaces:
+L00006783	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006784	- python3 scripts/pm-plan-index.py validate
+L00006785	risk_class: command_identity_reveal_drift
+L00006786	reasoning_tier: standard
+L00006787	context_scope: command_catalog_gui
+L00006788	implementation_surfaces:
+L00006789	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006790	node_compile_hint:
+L00006791	  mode: command_category_identity_reveal_rules
+L00006792	  create_worknodes: false
+L00006793	source_lineage:
+L00006794	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0048
+L00006795	preserved_exact_tokens:
+L00006796	- Open in Terminal
+L00006797	- Show Terminal
+L00006798	- terminal command family
+L00006799	- terminal layout changes
+L00006800	- terminal runtime actions
+L00006801	- terminal_session_id
+L00006802	- dev_session_id
+L00006803	- freeform labels
+L00006804	negative_constraints: []
+L00006805	preserved_contractrefs:
+L00006806	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md'
+L00006807	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+L00006808	compatibility_only_notes: []
+L00006809	stale_retired_dispositions: []
+L00006810	owner_hints:
+L00006811	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006812	- Plans/UI_Command_Catalog.md
+L00006813	- Plans/Wiring_Matrix.md
+L00006814	- Plans/storage-plan.md
+L00006815	- Plans/Contracts_V0.md
+L00006816	```
+L00006817	
+L00006818	### SMPFS-103 - Project Restore Identity
+L00006819	
+L00006820	```yaml
+L00006821	plan_unit_id: SMPFS-103
+L00006822	unit_type: requirement
+L00006823	status: accepted
+L00006824	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006825	canonical_text: Project restore uses stable project_id rather than raw path alone, preserving restore semantics as identity-driven runtime state.
+L00006826	gui_related: false
+L00006827	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006828	split_recommended: false
+L00006829	depends_on:
+L00006830	- PDS-003
+L00006831	- PDS-004
+L00006832	- PDS-005
+L00006833	- PNC-001
+L00006834	- SP-001
+L00006835	unblocks: []
+L00006836	acceptance_criteria:
+L00006837	- SMPFS-103 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006838	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006839	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006840	validation_surfaces:
+L00006841	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006842	- python3 scripts/pm-plan-index.py validate
+L00006843	risk_class: section15_tail_drift
+L00006844	reasoning_tier: standard
+L00006845	context_scope: section15_tail
+L00006846	implementation_surfaces:
+L00006847	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006848	node_compile_hint:
+L00006849	  mode: project_restore_identity
+L00006850	  create_worknodes: false
+L00006851	source_lineage:
+L00006852	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00006853	preserved_exact_tokens:
+L00006854	- project_id
+L00006855	- raw path alone
+L00006856	- project restore
+L00006857	negative_constraints:
+L00006858	- Project restore uses stable project_id, not raw path alone.
+L00006859	preserved_contractrefs:
+L00006860	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00006861	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00006862	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00006863	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00006864	compatibility_only_notes: []
+L00006865	stale_retired_dispositions: []
+L00006866	owner_hints:
+L00006867	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006868	- Plans/storage-plan.md
+L00006869	```
+L00006870	
+L00006871	### SMPFS-104 - Workspace And Detached Surface Restore
+L00006872	
+L00006873	```yaml
+L00006874	plan_unit_id: SMPFS-104
+L00006875	unit_type: requirement
+L00006876	status: accepted
+L00006877	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006878	canonical_text: Workspace tabs restore independently, and detached windows restore only when their surface class and platform support allow deterministic restoration.
+L00006879	gui_related: true
+L00006880	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006881	split_recommended: false
+L00006882	depends_on:
+L00006883	- PDS-003
+L00006884	- PDS-004
+L00006885	- PDS-005
+L00006886	- PNC-001
+L00006887	- SP-001
+L00006888	- UCC-001
+L00006889	unblocks: []
+L00006890	acceptance_criteria:
+L00006891	- SMPFS-104 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006892	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006894	validation_surfaces:
+L00006895	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006896	- python3 scripts/pm-plan-index.py validate
+L00006897	risk_class: section15_tail_drift
+L00006898	reasoning_tier: standard
+L00006899	context_scope: section15_tail
+L00006900	implementation_surfaces:
+L00006901	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006902	node_compile_hint:
+L00006903	  mode: workspace_detached_surface_restore
+L00006904	  create_worknodes: false
+L00006905	source_lineage:
+L00006906	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00006907	preserved_exact_tokens:
+L00006908	- workspace tabs restore independently
+L00006909	- detached windows
+L00006910	- surface class
+L00006911	- platform support
+L00006912	negative_constraints: []
+L00006913	preserved_contractrefs:
+L00006914	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00006915	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00006916	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00006917	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00006918	compatibility_only_notes: []
+L00006919	stale_retired_dispositions: []
+L00006920	owner_hints:
+L00006921	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006922	- Plans/storage-plan.md
+L00006923	- Plans/UI_Command_Catalog.md
+L00006924	```
+L00006925	
+L00006926	### SMPFS-105 - Normal Browser Restore Scope
+L00006927	
+L00006928	```yaml
+L00006929	plan_unit_id: SMPFS-105
+L00006930	unit_type: requirement
+L00006931	status: accepted
+L00006932	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006933	canonical_text: Normal browser tabs restore by project and workspace tab while preserving profile scope; detached normal browsing restores with the originating normal browsing session when supported.
+L00006934	gui_related: true
+L00006935	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00006936	split_recommended: false
+L00006937	depends_on:
+L00006938	- PDS-003
+L00006939	- PDS-004
+L00006940	- PDS-005
+L00006941	- PNC-001
+L00006942	- SP-001
+L00006943	- T-001
+L00006944	unblocks: []
+L00006945	acceptance_criteria:
+L00006946	- SMPFS-105 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00006947	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006948	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006949	validation_surfaces:
+L00006950	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006951	- python3 scripts/pm-plan-index.py validate
+L00006952	risk_class: section15_tail_drift
+L00006953	reasoning_tier: standard
+L00006954	context_scope: section15_tail
+L00006955	implementation_surfaces:
+L00006956	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006957	node_compile_hint:
+L00006958	  mode: normal_browser_restore_scope
+L00006959	  create_worknodes: false
+L00006960	source_lineage:
+L00006961	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00006962	preserved_exact_tokens:
+L00006963	- normal browser tabs
+L00006964	- project
+L00006965	- workspace tab
+L00006966	- profile scope
+L00006967	- detached normal browsing
+L00006968	- originating normal browsing session
+L00006969	negative_constraints: []
+L00006970	preserved_contractrefs:
+L00006971	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00006972	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00006973	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00006974	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00006975	compatibility_only_notes: []
+L00006976	stale_retired_dispositions: []
+L00006977	owner_hints:
+L00006978	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006979	- Plans/storage-plan.md
+L00006980	- Plans/Tools.md
+L00006981	```
+L00006982	
+L00006983	### SMPFS-106 - Auth And Automation Restart Boundaries
+L00006984	
+L00006985	```yaml
+L00006986	plan_unit_id: SMPFS-106
+L00006987	unit_type: requirement
+L00006988	status: accepted
+L00006989	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00006990	canonical_text: Auth sessions and automation sessions do not auto-resume active work after restart, and auth_session must not auto-close on presumed success because completion requires explicit user or provider/flow evidence.
+L00006991	gui_related: false
+L00006992	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00006993	split_recommended: false
+L00006994	depends_on:
+L00006995	- PDS-003
+L00006996	- PDS-004
+L00006997	- PDS-005
+L00006998	- PNC-001
+L00006999	- SP-001
+L00007000	- PS-001
+L00007001	- T-001
+L00007002	unblocks: []
+L00007003	acceptance_criteria:
+L00007004	- SMPFS-106 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007005	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007006	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007007	validation_surfaces:
+L00007008	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007009	- python3 scripts/pm-plan-index.py validate
+L00007010	risk_class: section15_tail_drift
+L00007011	reasoning_tier: standard
+L00007012	context_scope: section15_tail
+L00007013	implementation_surfaces:
+L00007014	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007015	node_compile_hint:
+L00007016	  mode: auth_automation_restart_boundaries
+L00007017	  create_worknodes: false
+L00007018	source_lineage:
+L00007019	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007020	preserved_exact_tokens:
+L00007021	- auth_session
+L00007022	- automation sessions
+L00007023	- auto-resume
+L00007024	- auto-close
+L00007025	- presumed success
+L00007026	- explicit user or provider/flow evidence
+L00007027	negative_constraints:
+L00007028	- auth_session must not auto-close on presumed success; PM cannot reliably infer completion across arbitrary sites.
+L00007029	preserved_contractrefs:
+L00007030	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007031	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007032	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007033	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007034	compatibility_only_notes: []
+L00007035	stale_retired_dispositions: []
+L00007036	owner_hints:
+L00007037	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007038	- Plans/storage-plan.md
+L00007039	- Plans/Permissions_System.md
+L00007040	- Plans/Tools.md
+L00007041	```
+L00007042	
+L00007043	### SMPFS-107 - Terminal And Dev Restore Verification
+L00007044	
+L00007045	```yaml
+L00007046	plan_unit_id: SMPFS-107
+L00007047	unit_type: requirement
+L00007048	status: accepted
+L00007049	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007050	canonical_text: Terminal sessions and dev sessions have explicit restore eligibility; running processes are never assumed alive after restart, and terminal restart or replacement creates a new terminal_session_id.
+L00007051	gui_related: false
+L00007052	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007053	split_recommended: false
+L00007054	depends_on:

@@ -1,0 +1,18 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-dispatch-receipt-v1",
+  "epoch_id": "cross-shard-shadow-epoch-0001",
+  "batch_id": "cross-shard-shadow-batch-0001",
+  "assignment_id": "A005CSS-0027",
+  "attempt_id": "attempt-0001",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "agent_path": "/root/a005_cross_shard_shadow_0027_attempt_0001_terminal",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0027_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "fresh_child": true,
+  "fork_turns": "none",
+  "dispatch_intent_sha256": "d0be482aac1072b6bc2a717c6fdc2bbd0e48532f73a2180ce5cc84d23d192fd9",
+  "packet_sha256": "4717c8ee75e2549e034ada4201fe6210ccc8953bc69e6bc4a294a6ddceb22659",
+  "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/cross_shard_shadow_v1/A005CSS-0027/attempts/attempt-0001"
+}

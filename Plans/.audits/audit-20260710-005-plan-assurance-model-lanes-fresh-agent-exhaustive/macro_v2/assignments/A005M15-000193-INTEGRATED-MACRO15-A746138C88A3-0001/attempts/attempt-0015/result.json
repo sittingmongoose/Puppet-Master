@@ -1,0 +1,773 @@
+{
+  "assignment_id": "A005M15-000193-INTEGRATED-MACRO15-A746138C88A3-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "    \"type_payload\": {",
+          "line_end": 104,
+          "line_start": 104,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The envelope is closed to undeclared top-level keys and requires stable artifact identity, projection metadata, routing, and a typed payload.",
+      "item_id": "A005M15-000193-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The root defines a draft-2020-12 closed object whose required fields include schema and artifact identity, project/run/attempt identity, creation and projection metadata, retention and routing, and type_payload referencing ApiWebCallPayload.",
+      "title": "Closed runtime-artifact envelope"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"projection_freshness\": {",
+          "line_end": 87,
+          "line_start": 87,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "    \"retention_class\": {",
+          "line_end": 93,
+          "line_start": 93,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "unconstrained_operational_metadata",
+      "impact": "Producers can emit arbitrary or empty freshness, health, retention, and timestamp strings, so consumers and GUIs cannot reliably classify freshness, health, lifecycle, or ordering without out-of-schema conventions.",
+      "item_id": "A005M15-000193-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Required operational metadata is only typed as string: projection_freshness, projection_health, and retention_class have no enums or minimum lengths, and created_at_utc has no date-time format, leaving their semantics and validation to builders.",
+      "title": "Freshness, health, retention, and time are semantically open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "authority", "acceptance_oracles", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "              \"agent_reason\"",
+          "line_end": 132,
+          "line_start": 132,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Agent-originated and planning-originated invocations cannot validate without a nonempty reason, preserving a minimal explanation trail.",
+      "item_id": "A005M15-000193-I003",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "InvocationProvenance requires agent_reason whenever invocation_source is agent_initiated, goal, prd, planning_wizard, or subagent.",
+      "title": "Automated invocation reason is conditionally required"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "failures_recovery", "acceptance_oracles", "builder_discretion", "invalid_states_transitions", "untrusted_inputs", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\n        \"action_type\"\n      ],",
+          "line_end": 180,
+          "line_start": 178,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "action_specific_preconditions_absent",
+      "impact": "Structurally valid actions can be non-executable or unsafe, such as navigate without url, click without selector or locator, upload_file without files, or handle_dialog without dialog_action.",
+      "item_id": "A005M15-000193-I004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "BrowserActionInput requires only action_type and has no conditional schemas tying each action to the parameters it needs.",
+      "title": "Browser actions admit missing action-specific inputs"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"input_action_label\": {",
+          "line_end": 217,
+          "line_start": 217,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "duplicate_action_discriminators_uncoupled",
+      "impact": "A payload may claim one canonical action while preserving a contradictory legacy/display label, forcing consumers to choose an undocumented precedence rule.",
+      "item_id": "A005M15-000193-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001"
+      ],
+      "statement": "action_type and input_action_label enumerate overlapping spellings but no rule requires the label to correspond to the canonical action_type.",
+      "title": "Action type and input label can contradict"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "security_privacy", "builder_discretion", "untrusted_inputs", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"url\": {\n          \"type\": \"string\"\n        },",
+          "line_end": 265,
+          "line_start": 263,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "unvalidated_locator_and_url_inputs",
+      "impact": "Empty or malformed browser destinations and opaque locator strings pass validation, deferring URI policy, scheme safety, locality restrictions, and executable-locator validity to runtime code.",
+      "item_id": "A005M15-000193-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001"
+      ],
+      "statement": "Browser action url, selector, locator_ref, query, values, and file refs lack action-specific nonempty, format, count, or safety constraints.",
+      "title": "Browser locator and destination inputs are weakly constrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "security_privacy", "operations", "builder_discretion", "privacy_data_lifecycle", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"CachePolicy\": {",
+          "line_end": 332,
+          "line_start": 332,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"redaction_profile_id\": {",
+          "line_end": 346,
+          "line_start": 346,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "cache_privacy_invariants_absent",
+      "impact": "Caching can be represented without an explicit store decision, key, expiry, or redaction profile, and conflicting combinations are not rejected.",
+      "item_id": "A005M15-000193-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "CachePolicy has no required fields or conditional invariants connecting store, max_age_seconds, cache_key_ref, and redaction_profile_id.",
+      "title": "Cache policy does not enforce privacy or lifecycle decisions"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "operations", "scale_performance", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\n        \"web_operation\",\n        \"tool_id\",\n        \"query\"\n      ],",
+          "line_end": 358,
+          "line_start": 354,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "          \"maximum\": 30000",
+          "line_end": 503,
+          "line_start": 503,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Search, fetch, and extract have discriminated inputs, and embedded extract action sequences are bounded to ten actions and thirty seconds.",
+      "item_id": "A005M15-000193-I008",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The first definition block specifies separate search, read, and extract inputs with fixed operation/tool pairs, required primary query or URL inputs, and a hard extract action timeout ceiling.",
+      "title": "Search, read, and extract inputs are explicitly discriminated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\n        \"web_operation\",\n        \"tool_id\",\n        \"task\"\n      ],",
+          "line_end": 514,
+          "line_start": 510,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "research_mode_and_bounds_optional",
+      "impact": "Standalone research inputs can omit mode and autonomy semantics or request unbounded source/read counts, leaving workload, cost, and execution-depth behavior to adapters.",
+      "item_id": "A005M15-000193-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "WebResearchInput requires only web_operation, tool_id, and task; research_mode, depth_hint, max_sources, auto_read_cap, autonomous, starting_urls, and schema behavior remain optional, while numeric maxima are absent.",
+      "title": "Research execution mode and scale are underconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "security_privacy", "operations", "scale_performance", "builder_discretion", "authority_boundaries", "untrusted_inputs", "offline_network_loss", "scale_limits", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\n        \"web_operation\",\n        \"tool_id\",\n        \"root_url\"\n      ],",
+          "line_end": 585,
+          "line_start": 581,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "traversal_safety_and_limits_optional",
+      "impact": "A traversal request may omit origin confinement, robots behavior, deduplication, page limits, and depth limits, allowing adapters to diverge on network scope, load, and policy compliance.",
+      "item_id": "A005M15-000193-I010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "WebTraversalInput requires only operation, tool, and root_url; max_pages, max_depth, same_origin_only, include/exclude paths, respect_robots, and dedup are optional, with no maximum page or depth bound and no URI-format constraint.",
+      "title": "Traversal can be unbounded and policy-ambiguous"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["capabilities", "contracts", "propagation", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "      \"enum\": [\"native\", \"model_native\", \"native_ish\", \"near_native\", \"pm_composed\", \"partial\", \"fallback_only\", \"unsupported\", \"unavailable\"]",
+          "line_end": 644,
+          "line_start": 644,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Artifacts can express a finite provider-support classification suitable for compatibility and fallback reporting.",
+      "item_id": "A005M15-000193-I011",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002"
+      ],
+      "statement": "ProviderSupportTier is a closed nine-value enum spanning native through unavailable support states.",
+      "title": "Provider support tier vocabulary is closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "operations", "acceptance_oracles", "invalid_states_transitions", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "                \"enum\": [\"completed\", \"failed\", \"cancelled\", \"timeout\"]",
+          "line_end": 654,
+          "line_start": 654,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "                \"enum\": [\"failed\", \"timeout\"]",
+          "line_end": 665,
+          "line_start": 665,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "terminal_failure_metadata_incomplete",
+      "impact": "Cancelled and denied jobs may carry no machine-readable cause; failed and timed-out jobs may have an empty cause string, weakening recovery, support, and rollback decisions.",
+      "item_id": "A005M15-000193-I012",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "WebOperationJob requires finished_at_utc for completed, failed, cancelled, and timeout, but requires failure_reason_code only for failed and timeout; denied has neither conditional requirement, and the reason code has no minimum length.",
+      "title": "Job terminal metadata leaves cancellation and denial unexplained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["states_transitions", "failures_recovery", "propagation", "operations", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"polling\", \"running\", \"partial\", \"completed\", \"failed\", \"cancelled\", \"timeout\", \"denied\"]},",
+          "line_end": 681,
+          "line_start": 681,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"cancelled\": {\"type\": \"boolean\"},",
+          "line_end": 695,
+          "line_start": 695,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "job_state_machine_not_encoded",
+      "impact": "Artifacts can represent contradictory cancellation state and cannot be schema-checked for legal progress, terminal immutability, stale polling, or race resolution.",
+      "item_id": "A005M15-000193-I013",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The job schema enumerates statuses but defines no allowed transitions, timestamp ordering, concurrency token, or coupling between status and the independent cancelled boolean.",
+      "title": "Web job lifecycle is a vocabulary, not a state machine"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "              \"required\": [\"web_operation\", \"tool_id\", \"operation_input\"],\n              \"properties\": {\n                \"web_operation\": {\"const\": \"search\"},\n                \"tool_id\": {\"const\": \"websearch\"},\n                \"operation_input\": {\"$ref\": \"#/$defs/WebSearchInput\"}",
+          "line_end": 729,
+          "line_start": 725,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can dispatch by a stable operation/tool pair and validate the corresponding operation-specific input shape.",
+      "item_id": "A005M15-000193-I014",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "ApiWebCallPayload uses mutually discriminated branches to couple each of search, read, extract, research, deep_research, crawl, and map to its expected tool and input definition.",
+      "title": "Operation, tool, and input are dispatch-coupled"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "failures_recovery", "acceptance_oracles", "builder_discretion", "partial_failure", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"then\": {\"required\": [\"content_ref\", \"read_receipt_refs\"]}",
+          "line_end": 810,
+          "line_start": 810,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"read_receipt_refs\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\",\n            \"minLength\": 1\n          }\n        },",
+          "line_end": 1013,
+          "line_start": 1007,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "success_evidence_can_be_empty",
+      "impact": "A successful read, extract, or research result can satisfy required evidence fields with empty arrays or empty reference strings, producing a formally successful but unverifiable artifact.",
+      "item_id": "A005M15-000193-I015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Success conditionals require evidence-property presence for read, extract, and research, but read_receipt_refs and citation_refs have no minItems and content, source, answer, and run evidence references are not consistently constrained nonempty.",
+      "title": "Successful evidence-bearing operations can carry empty evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "consumers", "failures_recovery", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "partial_failure", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\n        \"source_system\",\n        \"redacted_request_ref\",\n        \"redacted_response_ref\",\n        \"web_operation\",\n        \"tool_id\",\n        \"operation_input\",\n        \"invocation\",\n        \"success\",\n        \"provider_fallback_occurred\"\n      ],",
+          "line_end": 870,
+          "line_start": 860,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "operation_success_oracles_incomplete",
+      "impact": "A successful search, crawl, or map may expose no result, map, page count, node count, or evidence reference, so downstream consumers cannot distinguish productive success from an empty assertion.",
+      "item_id": "A005M15-000193-I016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The schema defines success-specific result requirements for read, extract, and research only; search, crawl, and map have no corresponding success oracle or required output reference.",
+      "title": "Search and traversal success need no result artifact"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["failures_recovery", "operations", "acceptance_oracles", "builder_discretion", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"denial_reason_code\": {",
+          "line_end": 1021,
+          "line_start": 1021,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"error_code\": {",
+          "line_end": 1036,
+          "line_start": 1036,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "negative_outcome_contract_absent",
+      "impact": "A failed or denied call can provide no reason, retry classification, partial-result marker, or recovery instruction, preventing deterministic recovery and honest user-facing failure reporting.",
+      "item_id": "A005M15-000193-I017",
+      "item_type": "failure_recovery",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json"
+      ],
+      "statement": "denial_reason_code, error_code, error_message, warnings, and job are optional and no conditional requires any of them when success is false or a job is denied, failed, cancelled, or timed out.",
+      "title": "Failed and denied calls may be explanation-free"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["authority", "security_privacy", "builder_discretion", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"permission_snapshot_id\": {\"type\": \"string\"},",
+          "line_end": 687,
+          "line_start": 687,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"invocation\": {\n          \"$ref\": \"#/$defs/InvocationProvenance\"\n        },",
+          "line_end": 912,
+          "line_start": 910,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "authorization_evidence_not_required",
+      "impact": "Network reads, uploads, clicks, form fills, and other consequential browser actions can validate without evidence of the authority decision under which they ran.",
+      "item_id": "A005M15-000193-I018",
+      "item_type": "authority",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The payload requires invocation provenance but not a permission snapshot or authorization decision; permission_snapshot_id exists only as an optional field inside an optional job.",
+      "title": "Invocation provenance is not authorization proof"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "partial_failure", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"provider_fallback_occurred\": {\n          \"type\": \"boolean\"\n        },\n        \"provider_fallback_summary\": {",
+          "line_end": 934,
+          "line_start": 931,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "fallback_invariants_absent",
+      "impact": "Consumers can receive fallback=true with no explanation or adapter lineage, or fallback=false alongside divergent requested and effective adapters, undermining compatibility and support diagnostics.",
+      "item_id": "A005M15-000193-I019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003"
+      ],
+      "statement": "provider_fallback_occurred is required, but true does not require provider_fallback_summary, requested_adapter_id, effective_adapter_id, or adapter_selection_reason, and false imposes no adapter-equality invariant.",
+      "title": "Fallback declaration is not tied to fallback evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "authority", "propagation", "acceptance_oracles", "builder_discretion", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "            \"anyOf\": [\n              {\"required\": [\"ledger_source_evidence_ref\"]},\n              {\"required\": [\"plan_source_evidence_ref\"]}\n            ]",
+          "line_end": 856,
+          "line_start": 853,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"ledger_source_evidence_ref\": {\n          \"type\": \"string\"\n        },",
+          "line_end": 952,
+          "line_start": 950,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "planning_evidence_presence_without_content",
+      "impact": "A PRD- or Planning-Wizard-originated call can pass the evidence conditional with an empty string, defeating the intended lineage oracle.",
+      "item_id": "A005M15-000193-I020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Planning-originated invocations must contain a ledger or plan evidence property, but both reference fields are unconstrained strings and may be empty.",
+      "title": "Planning-source evidence can be present but empty"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["states_transitions", "failures_recovery", "propagation", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "gui_misleading_states", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"success\": {\n          \"type\": \"boolean\"\n        },",
+          "line_end": 915,
+          "line_start": 913,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        },
+        {
+          "exact_quote": "        \"job\": {\n          \"$ref\": \"#/$defs/WebOperationJob\"\n        },",
+          "line_end": 1029,
+          "line_start": 1027,
+          "path": "Plans/runtime_artifact_api_web_call.schema.json",
+          "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+        }
+      ],
+      "gap_kind": "result_and_job_state_uncoupled",
+      "impact": "One artifact can claim success while its embedded job is failed, denied, cancelled, timed out, or still running, allowing downstream UI and automation to display or act on mutually incompatible states.",
+      "item_id": "A005M15-000193-I021",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The required payload success boolean and optional embedded job status have no consistency rule, and there is no revision or concurrency field to adjudicate competing result and job updates.",
+      "title": "Payload success can contradict embedded job status"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 107],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": ["A005M15-000193-I001", "A005M15-000193-I002"],
+      "reviewed": true,
+      "summary": "Reviewed the complete closed root envelope, required identity/routing/payload fields, optional lineage refs, and unconstrained operational metadata under exact and adversarial lenses.",
+      "window_id": "WIN-A746138C88A3-0001"
+    },
+    {
+      "core_range": [108, 506],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": ["A005M15-000193-I003", "A005M15-000193-I004", "A005M15-000193-I005", "A005M15-000193-I006", "A005M15-000193-I007", "A005M15-000193-I008"],
+      "reviewed": true,
+      "summary": "Reviewed invocation provenance, browser action vocabulary and parameters, cache policy, and search/read/extract inputs, including discriminators, safety preconditions, privacy, bounds, and acceptance behavior.",
+      "window_id": "WIN-A746138C88A3-0002"
+    },
+    {
+      "core_range": [507, 717],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": ["A005M15-000193-I009", "A005M15-000193-I010", "A005M15-000193-I011", "A005M15-000193-I012", "A005M15-000193-I013"],
+      "reviewed": true,
+      "summary": "Reviewed research and traversal inputs, provider support tiers, web-operation job fields and conditionals, and negative-space risks around bounds, network policy, terminal reasons, and lifecycle consistency.",
+      "window_id": "WIN-A746138C88A3-0003"
+    },
+    {
+      "core_range": [718, 1045],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": ["A005M15-000193-I014", "A005M15-000193-I015", "A005M15-000193-I016", "A005M15-000193-I017", "A005M15-000193-I018", "A005M15-000193-I019", "A005M15-000193-I020", "A005M15-000193-I021"],
+      "reviewed": true,
+      "summary": "Reviewed the operation dispatch union, payload success and planning conditionals, complete result/reference surface, fallback and authority evidence, job embedding, and closure suffix under exact and adversarial lenses.",
+      "window_id": "WIN-A746138C88A3-0004"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A746138C88A3-0001",
+    "document_path": "Plans/runtime_artifact_api_web_call.schema.json",
+    "micro_window_ids": ["WIN-A746138C88A3-0001", "WIN-A746138C88A3-0002", "WIN-A746138C88A3-0003", "WIN-A746138C88A3-0004"],
+    "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines permission-snapshot requirements and authority checks for network access, file upload, form fill, click, dialog handling, crawl, and map operations?",
+      "Which consumer owns reconciliation when ApiWebCallPayload.success conflicts with WebOperationJob.status, and what ordering or revision rule is canonical?",
+      "Which retention, redaction, cache, and evidence-lifecycle contracts constrain the required redacted refs and optional content, citation, receipt, and research refs?",
+      "Which GUI contract prevents empty or contradictory success, denial, fallback, freshness, and job states from being shown as authoritative?"
+    ],
+    "feature_family_keys": [
+      "runtime-artifact-envelope",
+      "api-web-call-dispatch",
+      "browser-action-input",
+      "web-search-fetch-extract",
+      "web-research-traversal",
+      "web-operation-job-lifecycle",
+      "web-evidence-and-lineage",
+      "provider-fallback-and-support-tier"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 conditional validation patterns for discriminated action parameter requirements",
+      "JSON Schema invariants for asynchronous job state machines terminal states and contradictory status flags",
+      "security controls for URL validation SSRF prevention browser automation uploads and web crawlers",
+      "evidence completeness oracles for web search extraction research crawl and map result schemas"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000193_attempt_0015_terminal"
+}

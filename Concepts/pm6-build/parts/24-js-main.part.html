@@ -168,8 +168,9 @@
         alpha: [
           { t: 'line', c: '$ cargo build --workspace' },
           { t: 'line', c: '   Compiling puppet-master v0.1.0' },
-          { t: 'line stderr', c: 'error[E0433]: unresolved import `slint`' },
-          { t: 'line info', c: '  --> src/main.rs:12:5' }
+          { t: 'line', c: '    Finished `dev` profile [unoptimized + debuginfo] in 8.42s' },
+          { t: 'line', c: '$ cargo test --workspace' },
+          { t: 'line', c: 'test result: ok. 214 passed; 0 failed; 0 ignored' }
         ],
         beta: [{ t: 'line info', c: '[historical transcript — PTY not live after restart]' }],
         gamma: [

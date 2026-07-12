@@ -1,0 +1,59 @@
+{
+  "credit": 0,
+  "current_post_replay_snapshot": {
+    "byte_count": 153696,
+    "canonical_sorted_path_byte_count_sha256_digest": "04810da2a9935e1fc5bcabc4e17853d53345494f59f4f0ca4f894c92ead205e5",
+    "file_count": 19,
+    "file_mode_required": "0444",
+    "files": [
+      {"byte_count": 10778, "path": "AUTHORITY_C2_COMPATIBILITY_V32.json", "sha256": "a6290ffa3734ac4301986107325a820b651d0f385079958a1df9ef6e4ddca45f"},
+      {"byte_count": 1238, "path": "DEDUP_PRECHECK_C2.json", "sha256": "d5932b3bebe41af0dee788c3f29765f7d451582177494392212074bb4c036cff"},
+      {"byte_count": 5866, "path": "PRIOR_C2_INVOCATION_BASELINE.json", "sha256": "81d473ad635ece863b2526d7473408413f740f0a351f0ab8775d4cb2790584b1"},
+      {"byte_count": 4033, "path": "READINESS_BLOCKED_C2_V32.json", "sha256": "c62d76814ecccfafcf07121bb56e6c6d94238aead52a8b887e2f4fc190f8336f"},
+      {"byte_count": 4231, "path": "TERMINAL_PREPARATION_C2_V32.json", "sha256": "9c009f970680cde50be5c6407c5f3ee37dd103ba4543642e13a028fc00cb2032"},
+      {"byte_count": 3228, "path": "TEST_EVIDENCE_C2_V32.json", "sha256": "08389c81c8e85a0cf50b115299ca729bf59f163f0bad019d9f5f144bc8be5d8a"},
+      {"byte_count": 4559, "path": "TOOL_SEAL_C2_V32.json", "sha256": "22414075c077d8ff4ba4ede930b4ec0e5bc43226f5d024c4c5f9990feae3de59"},
+      {"byte_count": 2004, "path": "fixtures/sessions/controller.jsonl", "sha256": "105fe78a967372c39ea4984cc96890c8971284455e6c68732bfdaf9e17e29e3f"},
+      {"byte_count": 1082, "path": "fixtures/sessions/reviewer.jsonl", "sha256": "8e527d65780b535e265da4890c1967d1c8bed5b442ca734428324a619531b78a"},
+      {"byte_count": 1509, "path": "fixtures/valid-c2-atomic8-prelaunch-report.json", "sha256": "a916e52e5b8994cce2000df919c899718ce41b2f7abc15f9f5be71b7adc3619d"},
+      {"byte_count": 4829, "path": "fixtures/valid-c2-fresh-native-binding.json", "sha256": "eb810239d9eb58e69181571232f3413e5592996aa07219fd8a372ee68db45b68"},
+      {"byte_count": 2948, "path": "schemas/c2_atomic8_prelaunch_report_v32.schema.json", "sha256": "efb6424cad1f104ef3095983f005958b48ea81d3bb75d5da7bc3fb17eff08bd6"},
+      {"byte_count": 8932, "path": "schemas/c2_fresh_native_binding_v32.schema.json", "sha256": "32f726cda0776dca22ebf8e297229e410236ad8d1eaeff24093fe86b0c2e6efc"},
+      {"byte_count": 1711, "path": "schemas/c2_future_capture_authority_v32.schema.json", "sha256": "d4c45e398073bf632bfec27ae821c535073652fffa3680ea6ee07ffe3a7bdb26"},
+      {"byte_count": 1840, "path": "schemas/c2_future_reviewer_authority_v32.schema.json", "sha256": "b5b5320ed1be04c85fdcf9fcd220928c6f951f102f77ab126620a2b2c7a52410"},
+      {"byte_count": 52726, "path": "tools/c2_closure_core_v32.py", "sha256": "d63c9ff1996ba3faffae388055014af942aca77879e3f9fe785c88857b0c735e"},
+      {"byte_count": 4000, "path": "tools/capture_c2_controller_native_v32.py", "sha256": "66a81caefe39af50719ac17dceea8bef3b11cdd75701c8c0e65f58423f87228c"},
+      {"byte_count": 21845, "path": "tools/test_c2_compatibility_v32.py", "sha256": "4ce93a3d90521021f32f14ded52616306538df22c4350552dff144deb49d05ef"},
+      {"byte_count": 16337, "path": "tools/verify_c2_compatibility_preparation_v32.py", "sha256": "301de5c424ab31843fa3ca340b8b71ed630566296dee6bf6a6c5886853021809"}
+    ],
+    "interpretation": "UNCREDITED_IN_FLIGHT_POST_REPLAY_DRIFT_FROZEN_NOT_A_REPAIR",
+    "terminal_sha256": "9c009f970680cde50be5c6407c5f3ee37dd103ba4543642e13a028fc00cb2032"
+  },
+  "immutable_predecessor_path": "..",
+  "root_replayed_rejection": {
+    "exact_hashes": {
+      "authority": "a6290ffa3734ac4301986107325a820b651d0f385079958a1df9ef6e4ddca45f",
+      "readiness": "699ee3d75227d8efb1b03a482ff394cc81aa5c537f2f98c32f7f46f57fa1d520",
+      "terminal": "e584e8925a3cde96947918a10077edb7c4850a58546fc8402c2bd8d02eafced2",
+      "test_evidence": "08389c81c8e85a0cf50b115299ca729bf59f163f0bad019d9f5f144bc8be5d8a",
+      "test_script": "4ce93a3d90521021f32f14ded52616306538df22c4350552dff144deb49d05ef",
+      "tool_seal": "133f1669390fddcf42cead05a5a48c4d2c4b054df2044cb7c9b5bb57253e04dd",
+      "verifier": "cfa01dd498fadc22e32c23ee7e43ae9cd600038dcca53393e5d6bc0d4293fa69"
+    },
+    "new_c2_tests": {
+      "failed": 0,
+      "passed": 1260
+    },
+    "overall_status": "FAIL_CLOSED_ZERO_CREDIT",
+    "runtime_errors": [
+      "runtime-hash-seed"
+    ],
+    "verifier_errors": [
+      "runtime-hash-seed",
+      "tool-seal-drift:tools/verify_c2_compatibility_preparation_v32.py"
+    ]
+  },
+  "schema_version": "a005-c2-compatibility-v1-rejection-lineage-v1",
+  "status": "IMMUTABLE_REJECTED_PREDECESSOR_BOUND_ZERO_CREDIT",
+  "supersession_rule": "V1_BYTES_AND_MODES_MUST_NOT_CHANGE;V2_IS_APPEND_ONLY_LOCALIZED_SUBDIRECTORY"
+}

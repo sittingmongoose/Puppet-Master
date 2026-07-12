@@ -1,0 +1,1065 @@
+{
+  "assignment_id": "A005M15-000072-INTEGRATED-MACRO15-A27048DCD484-0005",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"disposition\": \"concept_only_owner_adjudicated\",",
+          "line_end": 11957,
+          "line_start": 11957,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 11963,
+          "line_start": 11963,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_authority_boundary",
+      "impact": "Prevents the concept inventory from being mistaken for canonical production behavior or executable evidence.",
+      "item_id": "M15-W33-I01",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-032",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The inventory explicitly classifies these controls as concept-only, owner-adjudicated lineage and requires canonical owner acceptance plus production command, state, receipt, and test evidence before promotion.",
+      "title": "Concept-only authority boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Refresh\",",
+          "line_end": 11951,
+          "line_start": 11951,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 11954,
+          "line_start": 11954,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 11958,
+          "line_start": 11958,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"wiring_matrix_key\": null,",
+          "line_end": 11959,
+          "line_start": 11959,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "unwired_production_looking_controls",
+      "impact": "A builder cannot derive authoritative refresh, analytics, filtering, export, pagination, persona, provider, or model behavior, and a GUI could imply actions and state changes that have no canonical command or receipt.",
+      "item_id": "M15-W33-I02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-032",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The window inventories production-looking Usage and Agent Configuration controls, but the controls have empty command tokens and no canonical command or wiring key; behavior, callers, state transitions, failures, receipts, and falsifiable acceptance remain outside this source unit.",
+      "title": "Usage and agent controls are intentionally unwired"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\",",
+          "line_end": 12510,
+          "line_start": 12510,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.\",",
+          "line_end": 12511,
+          "line_start": 12511,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_promotion_gate",
+      "impact": "Makes retirement or canonical promotion an explicit prerequisite and blocks accidental implementation from the mock surface.",
+      "item_id": "M15-W34-I01",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-033",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Codex ChatGPT summary is explicitly flagged as needing either a concrete UICommand or retirement, and promotion requires owner-supplied command, state, handler, receipt, and test evidence.",
+      "title": "Production promotion gate is named"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "gui_misleading_states",
+        "accessibility",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Refresh Usage\",",
+          "line_end": 12414,
+          "line_start": 12414,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 12421,
+          "line_start": 12421,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"missing_accessible_name_candidate\"",
+          "line_end": 12424,
+          "line_start": 12424,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 12427,
+          "line_start": 12427,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "refresh_action_without_command_state_or_accessible_name",
+      "impact": "A production copy could announce refresh without performing or verifying it, omit failure and stale-state handling, and expose an inaccessible action.",
+      "item_id": "M15-W34-I02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-033",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Provider refresh and credential actions present actionable labels while remaining commandless and unwired; several are explicitly flagged as missing accessible-name candidates, and the inventory supplies no success, stale, error, retry, or receipt oracle.",
+      "title": "Provider actions can imply unverified refresh"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "propagation",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"onchange\": \"toast('Billing entity set to: ' + this.value); this.closest('.provider-row').querySelector('.state-badge').textContent='Ready'; this.closest('.provider-row').querySelector('.state-badge').className='state-badge ready'; this.closest('.provider-row').querySelector('.state-badge').removeAttribute('style'); var prEl=this.closest('.provider-row').querySelector('.gh-copilot-premium'); if(prEl) prEl.style.display='block';\"",
+          "line_end": 12769,
+          "line_start": 12769,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 12774,
+          "line_start": 12774,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 12778,
+          "line_start": 12778,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "client_side_readiness_fabrication",
+      "impact": "An unvalidated selection can make the GUI claim Copilot is Ready and reveal premium UI without authenticated authority, producing misleading security and billing state.",
+      "item_id": "M15-W35-I01",
+      "item_type": "gui_truth",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-034",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The concept handler for Copilot billing selection directly rewrites the state badge to Ready and reveals premium content, yet the control has no command token or canonical command; no validation, authorization, failure, or receipt is bound to that transition.",
+      "title": "Billing selection fabricates Ready state in the GUI"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Cursor CLI CLI-backed Ready Auth: Browser Login Refresh\",",
+          "line_end": 13010,
+          "line_start": 13010,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\",",
+          "line_end": 13020,
+          "line_start": 13020,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.\",",
+          "line_end": 13021,
+          "line_start": 13021,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_production_evidence_rejection",
+      "impact": "The reconciliation record itself rejects the visible Ready label as production evidence and prevents silent promotion.",
+      "item_id": "M15-W35-I02",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-034",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Cursor CLI Ready/Auth summary is explicitly treated as production-looking concept lineage that must gain an owned UICommand and evidence or be retired.",
+      "title": "Ready labels are explicitly non-production"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"OpenCode Local Dev Managed Connected 127.0.0.1:4096 Refresh\",",
+          "line_end": 13170,
+          "line_start": 13170,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 13173,
+          "line_start": 13173,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 13177,
+          "line_start": 13177,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Team Staging Attached Stale opencode.staging.acme.com:8080 Refresh\",",
+          "line_end": 13307,
+          "line_start": 13307,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 13310,
+          "line_start": 13310,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "server_health_state_without_authoritative_transition_contract",
+      "impact": "Connected and Stale can become decorative claims; offline loss, concurrent refresh, stale-result ordering, and partial discovery failures have no authoritative transition or receipt.",
+      "item_id": "M15-W36-I01",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-035",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Managed and attached OpenCode server summaries expose Connected and Stale labels, endpoints, and refresh affordances, but no canonical command, state source, ordering rule, failure state, or receipt is bound in this unit.",
+      "title": "OpenCode health labels lack authoritative state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "accessibility",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Restart Server\",",
+          "line_end": 13220,
+          "line_start": 13220,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 13227,
+          "line_start": 13227,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"missing_accessible_name_candidate\"",
+          "line_end": 13230,
+          "line_start": 13230,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "recovery_action_without_lifecycle_or_rollback",
+      "impact": "Restart or reconnect could race active work, lose server state, or falsely report recovery, with no defined cancellation, rollback, retry, or user-support evidence.",
+      "item_id": "M15-W36-I02",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-035",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Restart Server, Reconnect, and Refresh Discovery are production-shaped recovery controls with no command tokens or lifecycle contract, and the restart control is also flagged as a missing accessible-name candidate.",
+      "title": "Server recovery controls have no recovery contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"type\": \"checkbox\",",
+          "line_end": 13600,
+          "line_start": 13600,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"disabled\": \"\"",
+          "line_end": 13601,
+          "line_start": 13601,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"disabled_control_missing_visible_reason_ref\"",
+          "line_end": 13607,
+          "line_start": 13607,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "disabled_control_without_reason",
+      "impact": "Users cannot understand eligibility, recover from the disabled state, or distinguish unsupported configuration from transient unavailability.",
+      "item_id": "M15-W37-I01",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-036",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Three disabled configuration checkboxes are explicitly flagged as lacking a visible reason reference; no enabling precondition, explanation consumer, or recovery transition is supplied.",
+      "title": "Disabled configuration has no visible reason"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "partial_failure",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"type\": \"checkbox\",",
+          "line_end": 13712,
+          "line_start": 13712,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"onchange\": \"toast(this.checked ? 'AGENTS.md enabled' : 'AGENTS.md disabled')\"",
+          "line_end": 13713,
+          "line_start": 13713,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 13718,
+          "line_start": 13718,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "configuration_toggle_without_persistence_or_effective_state",
+      "impact": "A checked state can claim instructions are enabled without proving file resolution, persistence, scope, reload outcome, or the effective configuration consumed by an agent.",
+      "item_id": "M15-W37-I02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-036",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "AGENTS.md, Parent Summary, Scoped AGENTS.md, and Attempt Journal toggles only carry toast-oriented inline handlers and no command token; persistence, precedence, effective-state propagation, failure, and receipt contracts are absent.",
+      "title": "Instruction toggles do not prove effective configuration"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "consumers",
+        "gui_truth",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"skill-creator Creates new skill files from templates Global Ready Allow Deny Ask\",",
+          "line_end": 13899,
+          "line_start": 13899,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 13911,
+          "line_start": 13911,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"missing_accessible_name_candidate\"",
+          "line_end": 13912,
+          "line_start": 13912,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "custom_interaction_without_role_or_accessible_name",
+      "impact": "Keyboard and assistive-technology users may be unable to discover or operate skill controls, while the concatenated label is difficult to localize or announce meaningfully.",
+      "item_id": "M15-W38-I01",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-037",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The skill rows use custom div interaction surfaces and are explicitly flagged for missing roles and accessible-name candidates; the same pattern repeats for skill-creator, test-fixer, and code-reviewer.",
+      "title": "Skill rows are inaccessible custom targets"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"value\": \"sk-web-12345***\"",
+          "line_end": 14157,
+          "line_start": 14157,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"disposition\": \"concept_fixture_only\",",
+          "line_end": 14165,
+          "line_start": 14165,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 14169,
+          "line_start": 14169,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_fixture_excluded_from_acceptance",
+      "impact": "Prevents the masked mock key from being treated as a credential lifecycle contract or acceptance proof.",
+      "item_id": "M15-W38-I02",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-037",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The masked API-key-looking value is explicitly marked as a concept fixture and excluded from acceptance evidence until replaced by a real state contract.",
+      "title": "Masked key fixture is explicitly non-evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"3\",",
+          "line_end": 14254,
+          "line_start": 14254,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"type\": \"number\",",
+          "line_end": 14256,
+          "line_start": 14256,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"value\": \"3\"",
+          "line_end": 14257,
+          "line_start": 14257,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 14260,
+          "line_start": 14260,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "concurrency_limits_without_semantics_or_bounds",
+      "impact": "Invalid or unsafe values can create oversubscription, starvation, race amplification, or undefined recovery, and tests cannot determine which scheduler or workload each value governs.",
+      "item_id": "M15-W39-I01",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-038",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Four concept numeric inputs expose only values 3, 2, 2, and 2; this unit defines no semantic names, minimums, maximums, units, scheduler ownership, validation, live-update behavior, or rollback rules.",
+      "title": "Concurrency inputs lack bounds and operational meaning"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "compatibility_migration",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"All Settings\",",
+          "line_end": 14383,
+          "line_start": 14383,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"href\": \"#a-all\"",
+          "line_end": 14385,
+          "line_start": 14385,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"command_tokens\": [],",
+          "line_end": 14388,
+          "line_start": 14388,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_concept_navigation_only",
+      "impact": "The settings taxonomy is preserved as design lineage without asserting production navigation, routing, ownership, or load behavior.",
+      "item_id": "M15-W39-I02",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-038",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "All Settings and the category tabs are hash-link concept controls with no command token; under the repeated owner-adjudicated disposition they preserve taxonomy but do not establish production routing.",
+      "title": "Settings taxonomy remains concept navigation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Retro Dark Basic Light\",",
+          "line_end": 14909,
+          "line_start": 14909,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"100\",",
+          "line_end": 14932,
+          "line_start": 14932,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"type\": \"range\",",
+          "line_end": 14934,
+          "line_start": 14934,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"input\",",
+          "line_end": 14958,
+          "line_start": 14958,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Orbitron & Rajdhani Inter & Mono\",",
+          "line_end": 15008,
+          "line_start": 15008,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "appearance_controls_without_semantics_persistence_or_accessibility",
+      "impact": "Production implementation cannot know what 100 measures, what the checkboxes toggle, how theme/font choices propagate or persist, how failures recover, or how accessible names and localized labels should be exposed.",
+      "item_id": "M15-W40-I01",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-039",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The settings surface inventories theme, a numeric range, two generically labeled checkboxes, and font families without owned semantics, bounds, persistence, propagation, failure handling, localization, or acceptance oracles.",
+      "title": "Appearance settings are semantically incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"disposition\": \"concept_only_owner_adjudicated\",",
+          "line_end": 15014,
+          "line_start": 15014,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 15015,
+          "line_start": 15015,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"wiring_matrix_key\": null,",
+          "line_end": 15016,
+          "line_start": 15016,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 15020,
+          "line_start": 15020,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_non_production_classification",
+      "impact": "Prevents the appearance controls and settings taxonomy from silently becoming implementation authority.",
+      "item_id": "M15-W40-I02",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-039",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The final settings controls are explicitly concept-only and carry neither a canonical command nor a wiring key; owner-doc acceptance and production evidence remain mandatory.",
+      "title": "Settings controls remain outside production authority"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [11942, 12328],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-032",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W33-I01", "M15-W33-I02"],
+      "reviewed": true,
+      "summary": "Reviewed Usage and Agent Configuration concept controls; confirmed the explicit non-production boundary and found no canonical command, wiring, state, receipt, or test contract for production-looking actions.",
+      "window_id": "WIN-A27048DCD484-0033"
+    },
+    {
+      "core_range": [12329, 12707],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-033",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W34-I01", "M15-W34-I02"],
+      "reviewed": true,
+      "summary": "Reviewed provider usage, preference, credential, and refresh controls; promotion requirements are explicit, while refresh behavior and accessibility remain unwired and unoracled.",
+      "window_id": "WIN-A27048DCD484-0034"
+    },
+    {
+      "core_range": [12708, 13104],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-034",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W35-I01", "M15-W35-I02"],
+      "reviewed": true,
+      "summary": "Reviewed Copilot, Gemini, Cursor, and Claude CLI concept controls; identified client-side Ready-state fabrication and confirmed that production-looking readiness labels are explicitly non-production.",
+      "window_id": "WIN-A27048DCD484-0035"
+    },
+    {
+      "core_range": [13105, 13486],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-035",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W36-I01", "M15-W36-I02"],
+      "reviewed": true,
+      "summary": "Reviewed managed and attached OpenCode server controls; health labels and restart/reconnect/discovery recovery actions lack authoritative state, lifecycle, failure, rollback, and receipt contracts.",
+      "window_id": "WIN-A27048DCD484-0036"
+    },
+    {
+      "core_range": [13487, 13862],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-036",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W37-I01", "M15-W37-I02"],
+      "reviewed": true,
+      "summary": "Reviewed model, API-key, instruction-file, summary, journal, and editor controls; disabled reasons and effective persisted configuration semantics are absent.",
+      "window_id": "WIN-A27048DCD484-0037"
+    },
+    {
+      "core_range": [13863, 14244],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-037",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W38-I01", "M15-W38-I02"],
+      "reviewed": true,
+      "summary": "Reviewed skill permissions, discovery, API-key fixture, and concurrency-heading controls; custom skill targets have explicit accessibility gaps, while the masked key is correctly excluded from acceptance evidence.",
+      "window_id": "WIN-A27048DCD484-0038"
+    },
+    {
+      "core_range": [14245, 14623],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-038",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W39-I01", "M15-W39-I02"],
+      "reviewed": true,
+      "summary": "Reviewed concurrency numeric inputs, model display, and the first settings taxonomy tabs; concurrency semantics and safe limits are absent, while taxonomy remains concept-only navigation.",
+      "window_id": "WIN-A27048DCD484-0039"
+    },
+    {
+      "core_range": [14624, 15021],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-039",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": ["M15-W40-I01", "M15-W40-I02"],
+      "reviewed": true,
+      "summary": "Reviewed remaining settings taxonomy, search, theme, range, checkbox, and font controls; appearance semantics are incomplete, and the explicit concept-only authority boundary remains intact.",
+      "window_id": "WIN-A27048DCD484-0040"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0005",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": [
+      "WIN-A27048DCD484-0033",
+      "WIN-A27048DCD484-0034",
+      "WIN-A27048DCD484-0035",
+      "WIN-A27048DCD484-0036",
+      "WIN-A27048DCD484-0037",
+      "WIN-A27048DCD484-0038",
+      "WIN-A27048DCD484-0039",
+      "WIN-A27048DCD484-0040"
+    ],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner document, if any, accepts each Usage ledger refresh, filter, export, pagination, analytics, provider, and model behavior?",
+      "Which authoritative service validates provider credentials and billing entities before the GUI may display Ready?",
+      "Where are OpenCode server health, restart, reconnect, discovery, offline, stale-result ordering, and rollback transitions owned?",
+      "Where are AGENTS.md, scoped instructions, parent summaries, and attempt journals resolved, persisted, reloaded, and surfaced as effective state?",
+      "Which authority defines Allow, Deny, and Ask permission semantics and their propagation to skills?",
+      "Which scheduler owns the four concurrency values, and what bounds, units, live-update, and rollback rules apply?",
+      "Which settings owner defines theme, scale, checkbox, and font semantics, persistence, accessibility, localization, and migration?"
+    ],
+    "feature_family_keys": [
+      "usage-ledger-controls",
+      "agent-provider-model-configuration",
+      "provider-auth-billing-and-usage",
+      "opencode-server-management",
+      "instruction-file-and-journal-controls",
+      "skill-permissions-and-credential-fixtures",
+      "concurrency-and-settings-navigation",
+      "appearance-settings"
+    ],
+    "research_queries": [
+      "authoritative provider readiness state machine credential refresh failure receipt design",
+      "accessible disabled controls visible reason keyboard screen reader patterns",
+      "server reconnect restart stale discovery race rollback UX patterns",
+      "secure API key settings masking storage rotation and privacy lifecycle patterns",
+      "runtime concurrency limit validation dynamic reconfiguration rollback observability patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000072_attempt_0015_terminal"
+}

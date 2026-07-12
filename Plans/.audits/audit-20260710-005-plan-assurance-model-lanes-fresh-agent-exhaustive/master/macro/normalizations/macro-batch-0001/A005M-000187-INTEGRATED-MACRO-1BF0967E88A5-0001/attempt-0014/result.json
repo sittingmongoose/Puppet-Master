@@ -1,0 +1,1845 @@
+{
+  "assignment_id": "A005M-000187-INTEGRATED-MACRO-1BF0967E88A5-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "propagation",
+        "authority_boundaries",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Every child spawn, retry, cancellation, timeout, pause, resume, and completion path MUST preserve PM lineage fields (`run_id`, `thread_id`, `parent_run_id`, `child_run_id`) plus requested/effective runtime descriptors where applicable. Parent oversight and audit visibility are mandatory even when a child is executing through a bridged provider surface.",
+          "line_end": 39,
+          "line_start": 39,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "Child effective-authority is clamped before dispatch and audited after completion. Parent restrictions clamp the canonical `child-permission` envelope: child tool policy, write scope, FileSafe scope, mode ceiling, provider/model/account availability, and crew admission. Pre-dispatch budget denial, post-response budget-overrun recording, completion, cancellation, kill, terminal cleanup, child-session / provider-process teardown, and `budget-outcome` supervision all use the same canonical runtime outcome taxonomy.",
+          "line_end": 47,
+          "line_start": 47,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a strong parent-supervision invariant for delegated execution.",
+      "item_id": "MRI-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The owner text requires lineage preservation on every child lifecycle path and clamps tool, write, FileSafe, mode, provider/model/account, and crew authority before dispatch, with audit after completion.",
+      "title": "Child lineage and effective-authority ceiling are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "operations",
+        "compatibility_migration",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The scheduling model is graph-native: runnable graph nodes, DAG readiness, scored ready-set selection, and runtime-selection use plan-graph, plan_graph, project_plan_graph_index, project_plan_graph_index.schema.json, plan_graph.schema.json, `/project/plan_graph/index.json`, puppet-master/project/plan_graph/index.json, `/node`, `/node/runtime`, node shard files, and sharded-only execution inputs. Any `Phase / Task / Subtask / Iteration`, Phase, Task, Subtask, Iteration, tier_id, active-tier, TierChanged, tier-scoped, tier-keyed, tier-native, runnable-unit, or TierContext language is derived display or compatibility context only. Lexicographic-style selection is retired in favor of the scored ready-set.",
+          "line_end": 86,
+          "line_start": 86,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "Worktree allocation is package-based by default with seam/lane exceptions documented by policy. SCM and /worktree behavior uses Plans/WorktreeGitImprovement.md, /WorktreeGitImprovement.md, package-based lane pools, branch-per-tier compatibility notes, contamination quarantine, restore-before-reuse, same-cycle event-driven update, file-lease rejection, first-class `/update`, `/backoff`, steady-state avoidance, worktree-native isolation, and safe-point-aware `/transition` recovery. Dependent nodes stay same-lane by default; promote-then-fork occurs only when it improves safe parallelism.",
+          "line_end": 90,
+          "line_start": 90,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes the intended runtime ontology and ownership boundaries against which later implementation prose can be tested.",
+      "item_id": "MRI-002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The exact contract retires tier/FIFO execution ownership in favor of DAG readiness, a scored ready-set, package/seam lane capacity, and package-based worktree allocation with quarantine and safe-point recovery.",
+      "title": "Graph-native scheduling and package/seam lane ownership are named"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "scale_performance",
+        "scale_limits",
+        "ambiguity_unknowns",
+        "unknown_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The scheduling model is graph-native: runnable graph nodes, DAG readiness, scored ready-set selection, and runtime-selection use plan-graph, plan_graph, project_plan_graph_index, project_plan_graph_index.schema.json, plan_graph.schema.json, `/project/plan_graph/index.json`, puppet-master/project/plan_graph/index.json, `/node`, `/node/runtime`, node shard files, and sharded-only execution inputs. Any `Phase / Task / Subtask / Iteration`, Phase, Task, Subtask, Iteration, tier_id, active-tier, TierChanged, tier-scoped, tier-keyed, tier-native, runnable-unit, or TierContext language is derived display or compatibility context only. Lexicographic-style selection is retired in favor of the scored ready-set.",
+          "line_end": 86,
+          "line_start": 86,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "Scheduler and account selection fallbacks are deterministic. Graph scheduling uses package-based /graph lane pools, /capacity-aware ready-set filtering, blocked constraints, and wake reasons before dispatch. If a preferred subagent, Persona, provider, or /provider/model candidate is unavailable after capability filtering, the orchestrator falls through to the next eligible candidate while recording requested Persona, effective Persona, selection reason, skipped Persona controls, and any requested_account_policy /control frame that explains how selection occurred.",
+          "line_end": 98,
+          "line_start": 98,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_algorithm_and_oracle",
+      "impact": "Independent builders can produce incompatible schedulers, and low-score work can starve without any falsifiable acceptance oracle.",
+      "item_id": "MRI-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The source repeatedly makes a scored ready-set canonical and calls fallbacks deterministic, but it does not define score inputs, ordering, tie-breaking, aging, starvation prevention, or how wake reasons change priority under sustained capacity pressure.",
+      "title": "Scored ready-set has no score, tie-break, aging, or starvation contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "failures_recovery",
+        "concurrency_races",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Task-tool delegation must honor per-target deny rules and must reject unsafe self-dispatch loops. A long-running task that returns a `session_id` is still governed by the same child lifecycle, resume, timeout, and parent supervision rules rather than becoming an unowned detached session.",
+          "line_end": 55,
+          "line_start": 55,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_negative_oracle",
+      "impact": "A task can recursively dispatch itself through aliases or child chains until budgets or concurrency are exhausted.",
+      "item_id": "MRI-004",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The contract requires rejection of unsafe self-dispatch loops but never identifies the identity comparison, graph-cycle rule, recursion ceiling, rejection outcome, or test fixture that proves direct and indirect loops are stopped.",
+      "title": "Unsafe self-dispatch rejection lacks a detection and test oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Subagents may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only within the parent-granted child permission ceiling and only when delegated source reading, bounded crawl/map, dynamic-page visual state, iframe/form evidence, console/network diagnostics, or source currentness is material to the assignment. These calls route through the PM WebOperation/BrowserAction dispatcher with `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader`; each record carries `invocation_source = subagent`, required `agent_reason`, source_subagent_id lineage, permission/capability gates, visible operation cards, and `subagent_evidence_receipts`. Subagent web/browser evidence is advisory to the parent and must not create WorkNodes, NodeSeeds, runtime queues, implementation files, build tasks, hidden inter-agent channels, or permission escalation beyond the parent envelope.",
+          "line_end": 59,
+          "line_start": 59,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_privacy_lifecycle",
+      "impact": "Read-only browsing can still exfiltrate or durably retain credentials, personal data, cross-origin content, and diagnostic payloads in receipts.",
+      "item_id": "MRI-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "Permission gates, visible cards, and evidence receipts are required, but the source does not define URL/header/cookie/form/console redaction, sensitive-page denial, evidence retention/deletion, iframe-origin handling, or what child and parent views may disclose.",
+      "title": "Delegated web/browser evidence lacks a privacy and data-lifecycle contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "acceptance_oracles",
+        "gui_truth",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Missing/invalid file is WARN-only (no crash); continue execution with PRD/plan criteria only.",
+          "line_end": 161,
+          "line_start": 161,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "degraded_oracle_not_projected",
+      "impact": "A run can appear verified while strategy-derived criteria were omitted because of a parse failure.",
+      "item_id": "MRI-006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The orchestrator may silently continue with fewer acceptance criteria when the optional strategy file is invalid; there is no required run-receipt bit, GUI state, or promotion rule distinguishing full criteria from degraded criteria.",
+      "title": "Invalid test-strategy input is WARN-only without criteria-integrity disclosure"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "ownership",
+        "consumers",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Task and question escalation remain parent-owned. Subagents may request clarification only by escalating through the parent orchestrator; they do not address users directly, and task alignment follows the parent `/question` flow plus the child lifecycle contract instead of a child-local ask channel.",
+          "line_end": 63,
+          "line_start": 63,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents hidden child-user conversations and centralizes consolidation of escalations.",
+      "item_id": "MRI-007",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "Children do not get a direct user channel; clarification is routed through the parent question flow, preserving parent ownership of user interaction.",
+      "title": "User-question escalation is explicitly parent-mediated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "authority",
+        "propagation",
+        "authority_boundaries",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Subagents and agent harnesses may receive containerized-host capability context only under the parent goal, run mode,",
+          "line_end": 271,
+          "line_start": 271,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- Parent synthesis preserves host_execution_receipt, cleanup_retention_receipt, subagent outcome, and blocked_reason_code families.",
+          "line_end": 286,
+          "line_start": 286,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides the intended authority boundary for HTE/DAE host delegation.",
+      "item_id": "MRI-008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "OSI-431 explicitly binds host capability context to parent goal, run mode, execution-unit, worktree/jail, permission, FileSafe, and host ceilings and preserves blocked host families for parent synthesis.",
+      "title": "OSI-431 defines a strong containerized-host child clamp"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "authority_boundaries",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "validation_surfaces:\n  - python3 scripts/pm-plan-index.py validate\n  - future subagent host-capability authority fixture",
+          "line_end": 289,
+          "line_start": 287,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_executable_fixture",
+      "impact": "A build can satisfy plan structure while still allowing hidden host channels, DAE escalation, or blocked-outcome misclassification.",
+      "item_id": "MRI-009",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "The PlanUnit's executable runtime invariant is not paired with a present fixture: plan-index validation can validate metadata, while the only host-authority fixture is explicitly future work.",
+      "title": "OSI-431 runtime enforcement is backed only by a future fixture"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "cross_document_seams",
+        "states_transitions",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Tier-level phrasing in this status block is compatibility and search-lineage only. Live orchestration uses capability_lane, agent_role, write_mode, certification_tier, and graph/package/seam/lane identity.",
+          "line_end": 28,
+          "line_start": 28,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "let mut subagent_names = self.subagent_selector.select_for_tier(\n            tier_node.tier_type,\n            &tier_context,\n        );",
+          "line_end": 400,
+          "line_start": 397,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "tier_type: tier_node.tier_type,",
+          "line_end": 629,
+          "line_start": 629,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "internal_contract_contradiction",
+      "impact": "Implementers can build the explicitly retired runtime ontology as the real scheduler and persistence keyspace.",
+      "item_id": "MRI-010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "After declaring tier vocabulary compatibility-only and graph/package/seam/lane identity canonical, the integration code still selects, routes, identifies, and builds context around TierNode, TierType, select_for_tier, and tier overrides without a normalization boundary.",
+      "title": "Normative-looking implementation code revives the retired tier ontology"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "concurrency_races",
+        "propagation",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "let agent_id = format!(\"{}-{}\", subagent_name, tier_node.id);",
+          "line_end": 449,
+          "line_start": 449,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "self.coordinator.register_agent(ActiveAgent {\n                agent_id: agent_id.clone(),\n                platform,\n                node_id: tier_node.id.clone(),\n                worktree_path: context.worktree_path.clone(),",
+          "line_end": 454,
+          "line_start": 450,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "identity_key_under_specified",
+      "impact": "Concurrent or retried runs can overwrite, unregister, or attribute activity to the wrong agent and worktree.",
+      "item_id": "MRI-011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The coordination key is only subagent name plus tier-node id, while the ActiveAgent record omits run, thread, parent-child, attempt, package, seam, and lane identity required by the owner contract.",
+      "title": "ActiveAgent identity can collide across runs and attempts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "for result in results {\n                result??; // Propagate errors\n            }",
+          "line_end": 484,
+          "line_start": 482,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "// Unregister agents from coordination state after execution\n        for subagent_name in &subagent_names {\n            let agent_id = format!(\"{}-{}\", subagent_name, tier_node.id);\n            self.coordinator.unregister_agent(&agent_id).await?;\n        }",
+          "line_end": 503,
+          "line_start": 499,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "cleanup_not_exception_safe",
+      "impact": "Failed children can remain registered as active, retain worktree/file claims, and leave sibling lifecycle state inconsistent.",
+      "item_id": "MRI-012",
+      "item_type": "failure_recovery",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "Both parallel result propagation and sequential child execution can return before the later unregister loop; no finally/drop guard, cancellation fan-out, idempotent teardown, or reconciliation path is specified.",
+      "title": "Error propagation bypasses coordination cleanup"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "failures_recovery",
+        "partial_failure",
+        "observability_support",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "self.coordinator.register_agent(ActiveAgent {",
+          "line_end": 450,
+          "line_start": 450,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Coordination registration failure:** If coordination registration fails, log warning and continue (coordination is best-effort)",
+          "line_end": 605,
+          "line_start": 605,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "behavioral_contradiction",
+      "impact": "Equivalent implementations can either abort or proceed on the same coordination failure, producing incompatible run outcomes.",
+      "item_id": "MRI-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "The error policy says registration and updates warn and continue, but the sample uses `await?` for registration, activity updates, file updates, and unregister; no authoritative precedence or event outcome resolves the mismatch.",
+      "title": "Best-effort coordination prose contradicts fail-fast code"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "propagation",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "from the supervising PM surface. Child agents can consume host_capability_ref, host_profile_id, host_assignment_id,",
+          "line_end": 273,
+          "line_start": 273,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "let invocation = self.build_subagent_invocation(\n            subagent_name,\n            &tier_node.description,\n            tier_context,\n            coordination_context,\n        )?;",
+          "line_end": 526,
+          "line_start": 521,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "accepted_contract_not_wired",
+      "impact": "The central PlanUnit can be implemented as prose-only while child runs execute without host authority context or cleanup receipts.",
+      "item_id": "MRI-014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "The accepted PlanUnit names host_capability_ref, host_profile_id, host_assignment_id, host receipts, and blocked payloads, but the invocation and ExecutionUnitContext sample carry none of them and identify no caller that supplies or reconciles them.",
+      "title": "OSI-431 host capability and receipt fields are not wired into the shown child invocation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "untrusted_inputs",
+        "security_privacy",
+        "authority_boundaries",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "let file_operations = self.extract_file_operations_from_output(&output)?;\n        self.coordinator.update_agent_files(&agent_id, &file_operations).await?;",
+          "line_end": 545,
+          "line_start": 544,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "// Extract from task_report (parse file mentions)\n        // Implementation: regex or text parsing to find file paths",
+          "line_end": 594,
+          "line_start": 593,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "untrusted_path_ingestion",
+      "impact": "A malicious or malformed child output can claim arbitrary host paths, poison conflict detection, or disclose local path data.",
+      "item_id": "MRI-015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "statement": "File paths extracted from child findings or later free-text parsing are written into coordination state without defining canonicalization, workspace containment, symlink handling, existence checks, lease ownership, or FileSafe validation.",
+      "title": "Model-reported file operations are trusted without FileSafe normalization"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "ambiguity_unknowns",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "// Get platform and model for this tier\n        let platform = self.get_platform_for_tier(tier_node.tier_type)?;\n        let model = self.get_model_for_tier(tier_node.tier_type)?;",
+          "line_end": 442,
+          "line_start": 440,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- the orchestrator may request a provider family pool, but the frozen requested/effective runtime snapshot must still identify the concrete provider entry selected for each node worker.",
+          "line_end": 198,
+          "line_start": 198,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "runtime_identity_collapsed",
+      "impact": "Heterogeneous children cannot be audited or billed correctly and account restrictions may be applied at the wrong granularity.",
+      "item_id": "MRI-016",
+      "item_type": "consumer",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The code obtains one platform and model for the tier and passes them to all children; it does not show the required concrete provider entry, requested/effective account, Persona, effort, or selection receipt per child.",
+      "title": "Per-child effective provider/account selection is collapsed to one tier platform/model"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "scale_limits",
+        "compatibility_migration",
+        "cross_document_seams",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The stale later-stage example `Enforce maximum concurrent crews (e.g., 20 total)` from `Gap #45: Crew performance and scalability` is non-canonical. Crew and child admission use the executionLimits owner contract; no later-stage prose may reintroduce parallel caps that compete with that SSOT.",
+          "line_end": 51,
+          "line_start": 51,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "max_parallel_subagents: 4\n      hard_max_parallel_subagents: 8\n      max_subagents_per_wave: 8\n      hard_max_subagents_per_wave: 12",
+          "line_end": 689,
+          "line_start": 686,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "competing_ssot_limits",
+      "impact": "Admission can differ depending on which limit record a caller reads, and a local hard cap can override the true owner contract.",
+      "item_id": "MRI-017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The prologue forbids later prose from introducing competing parallel caps, yet SubagentPolicy defines normal and hard parallel/wave/time/tool limits as canonical runtime defaults without an exact mapping to the executionLimits owner.",
+      "title": "SubagentPolicy reintroduces parallel limits that the prologue assigns to executionLimits SSOT"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "operations",
+        "concurrency_races",
+        "recovery_rollback",
+        "unknown_unknowns",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Define concrete worktree allocation strategy: each `execution_unit_context` receives a lane-managed worktree lease; package or seam reuse is allowed only when lineage matches the lane assignment and no contamination guard is active.",
+          "line_end": 770,
+          "line_start": 770,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- Define contamination, reuse, and cleanup rules for that strategy: contaminated worktrees are quarantined until recovery clears the blocker, reuse requires clean lineage plus no dirty/conflict state, and cleanup waits for archive, receipt, and recovery checks instead of age alone.",
+          "line_end": 771,
+          "line_start": 771,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_concurrency_protocol",
+      "impact": "Two children can satisfy the prose predicates concurrently and mutate the same worktree, or an expired owner can resume after reassignment.",
+      "item_id": "MRI-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The allocation text defines eligibility, quarantine, and cleanup predicates but not atomic lease acquisition, compare-and-swap ownership, fencing tokens, renewal/expiry, crash takeover, or double-release behavior.",
+      "title": "Worktree lease semantics omit atomicity and fencing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`scm_lineage_snapshot` is a projector-owned Orchestrator consumer snapshot assembled from canonical runtime, storage, and Source Control records for UI inspection, run receipts, blocked `/recovery`, and later `/reconciliation`. It does not replace the owner records. Every run, node, `/tier/attempt`, and attempt consumer must be able to resolve `project_id`, `repo_id`, `repo_root`, `worktree_id`, `worktree_path`, `worktree_status`, `branch_name`, `base_branch`, `upstream_remote`, `upstream_branch`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, `ahead_count`, `behind_count`, `dirty_file_count`, `conflict_file_count`, `owner_run_id`, `owner_node_id`, compatibility `owner_tier_id`, `owner_attempt_id`, `safe_point_id`, `requires_safe_point_restore`, active git operation, last commit summary, and `pr_ref`.",
+          "line_end": 776,
+          "line_start": 776,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "projection_privacy_unspecified",
+      "impact": "Support bundles, shared UI, or exported receipts may disclose usernames, directory topology, repository names, and private branch metadata.",
+      "item_id": "MRI-019",
+      "item_type": "consumer",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The GUI/receipt consumer snapshot includes repo_root and worktree_path plus branch and commit metadata, but no redaction, remote-support export, tenancy boundary, retention, or local-machine disclosure rules are defined.",
+      "title": "SCM projection exposes local paths without disclosure policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "observability_support",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Gate:** Only run provider connectivity smoke tests when the appropriate env var is set and required transport prerequisites are available. If not set or prerequisite missing, skip with a clear message (for example, \"skipped: Cursor CLI not available\", \"skipped: OpenCode endpoint not configured\", or \"skipped: Gemini API key missing\").",
+          "line_end": 849,
+          "line_start": 849,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "if std::env::var(\"RUN_CURSOR_CLI_SMOKE\").is_err() {\n        return;\n    }",
+          "line_end": 876,
+          "line_start": 874,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "false_green_test_gate",
+      "impact": "CI and reviewers can treat an unexecuted provider path as a passing verification surface.",
+      "item_id": "MRI-020",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The prose requires a clear skip message, but the example returns immediately when the gate is absent and therefore provides neither a test failure nor observable skipped-evidence receipt.",
+      "title": "Environment-gated smoke examples silently pass without running"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "authority_boundaries",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "assert!(stdout.contains(\"code-reviewer\") || stdout.contains(\"INVOKED\") || !stdout.trim().is_empty(),",
+          "line_end": 970,
+          "line_start": 970,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).",
+          "line_end": 1003,
+          "line_start": 1003,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "weak_acceptance_oracle",
+      "impact": "A provider can ignore the subagent or plan-mode request and still pass all specified assertions.",
+      "item_id": "MRI-021",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The invocation example accepts any non-empty output, while plan-mode verification makes honoring the mode optional and suggests checking only that flags appeared; neither oracle proves role application, read-only behavior, or absence of writes.",
+      "title": "Invocation and plan-mode assertions do not prove the promised behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "observability_support",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "compatibility_migration",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Seglog:** Emit to the canonical seglog stream: tier start/end, iteration start/end, verification results, subagent invocation boundaries, and any event that must be replayable. Use the unified event model; do not add one-off log files for run history.",
+          "line_end": 139,
+          "line_start": 139,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.",
+          "line_end": 857,
+          "line_start": 857,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "competing_observability_store",
+      "impact": "Diagnostics can diverge from canonical receipts and retain provider output outside governed storage.",
+      "item_id": "MRI-022",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The test sections repeatedly allow ad hoc evidence log files even though the rewrite section says replayable run history must use the unified seglog and forbids one-off log files; ownership, retention, and redaction are unresolved.",
+      "title": "Optional raw CLI evidence logs compete with the canonical event stream"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "authority_boundaries",
+        "states_transitions",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.",
+          "line_end": 1053,
+          "line_start": 1053,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- parent mode is a hard ceiling.",
+          "line_end": 1055,
+          "line_start": 1055,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Closes the obvious delegated-plan privilege-escalation path at the contract level.",
+      "item_id": "MRI-023",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The source explicitly permits delegated analysis in ask/plan while prohibiting silent widening into execution authority and requires required/optional classification.",
+      "title": "Planning children remain read-only under the parent mode ceiling"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "offline_network_loss",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "states_transitions",
+        "scale_performance"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "retryable_reasons:\n        - provider_transient\n        - rate_limit\n        - tool_timeout\n        - coordination_conflict",
+          "line_end": 717,
+          "line_start": 713,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_network_recovery_protocol",
+      "impact": "A dropped stream can duplicate costly work or tool effects, lose usage/output, or strand a child in a nonterminal state.",
+      "item_id": "MRI-024",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The retry policy names provider_transient, rate_limit, and tool_timeout, but does not define offline detection, partial-stream durability, idempotency keys, reconnect/resume versus reroute, duplicated tool effects, or parent/child state reconciliation after connection loss.",
+      "title": "Offline and mid-stream network-loss recovery is unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "compatibility_migration",
+        "contracts",
+        "test_falsifiability",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "// DRY requirement: must use platform_specs::cli_binary_names() \u2014 never hardcode \"agent\" or \"cursor-agent\"",
+          "line_end": 924,
+          "line_start": 924,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": ".unwrap_or(\"agent\");",
+          "line_end": 937,
+          "line_start": 937,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "example_violates_normative_rule",
+      "impact": "Builders copying the sample can bypass the provider registry and make tests pass against a different binary than production selection.",
+      "item_id": "MRI-025",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "statement": "The example says never hardcode agent/cursor-agent but supplies `agent` as the fallback and hardcodes a platform-specific function, leaving migration behavior dependent on stale binary assumptions.",
+      "title": "Test helper hardcodes a provider binary despite its own DRY prohibition"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "behavior",
+        "consumers",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Global toggle:** In Config, above the tier cards, add one toggle: \"Use plan mode for all tiers\". Message e.g. `Message::ConfigUsePlanModeAllTiersToggled(bool)`. Handler: if `true`, set all four tier configs' `plan_mode` to `true` and persist `use_plan_mode_all_tiers = true`; if `false`, set all to `false` (or restore from `last_per_tier_plan_mode`) and persist. When global is on, tier plan_mode toggles are disabled and show true; when global is off, tier toggles are editable.",
+          "line_end": 1077,
+          "line_start": 1077,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Persistence:** Ensure `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) are saved/loaded with the rest of GUI config.",
+          "line_end": 1080,
+          "line_start": 1080,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a concrete UI flow, subject to the separate ontology and effective-state defects recorded below.",
+      "item_id": "MRI-026",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The source specifies persisted global state, tier-value synchronization, disabling of subordinate controls, Wizard defaults, and a one-click action, providing concrete GUI/backend behavior for the legacy tier projection.",
+      "title": "Global and per-tier plan-mode GUI behavior is specified end to end"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "gui_misleading_states",
+        "compatibility_migration",
+        "cross_document_seams",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "All previously \"optional\" or \"later\" plan-mode and subagent GUI/backend items are **in scope now**. The following specifies frontend and backend so they work end-to-end.",
+          "line_end": 1065,
+          "line_start": 1065,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "The rewrite no longer treats `Phase -> Task -> Subtask -> Iteration` as the canonical orchestration ontology.",
+          "line_end": 167,
+          "line_start": 167,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "gui_runtime_ontology_contradiction",
+      "impact": "Users can believe a tier toggle directly governs runtime while the canonical scheduler has no tier execution owner, producing misleading configuration and audit state.",
+      "item_id": "MRI-027",
+      "item_type": "gui_truth",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The GUI/backend section declares all tier plan-mode and subagent items in scope now and persists four-tier controls, while the document's owner contract says tier language is compatibility-only and active runtime policy is graph/package/seam/lane based; no projection-to-canonical mapping or effective-state disclosure is specified.",
+      "title": "In-scope GUI makes retired tier controls look like live execution authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "untrusted_inputs",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; \"Edit\" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID.",
+          "line_end": 1112,
+          "line_start": 1112,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; \"Edit\" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID.",
+          "line_end": 1112,
+          "line_start": 1112,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "untrusted_instruction_supply_chain",
+      "impact": "A repository-controlled persona can inject hostile instructions into delegated runs or acquire broader tool influence when imported as canonical PM content.",
+      "item_id": "MRI-028",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "Provider-native agent files can be imported and their instructions normalized by an AI pass, but the source does not require quarantine, prompt-injection detection, provenance display before activation, size/encoding limits, capability stripping, review/approval, or rollback to the exact imported body.",
+      "title": "Persona import and AI trimming lack untrusted-content controls"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "destructive_actions",
+        "recovery_rollback",
+        "states_transitions",
+        "consumers",
+        "privacy_data_lifecycle"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; \"Edit\" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID.",
+          "line_end": 1112,
+          "line_start": 1112,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "destructive_lifecycle_missing",
+      "impact": "Deletion can break runtime bindings or make historical receipts non-reproducible without a recoverable state transition.",
+      "item_id": "MRI-029",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "Users may delete any imported or user-created Persona, but the plan does not define confirmation, undo/tombstone retention, behavior for bound subagent entries and active/frozen runs, or how audit history resolves a deleted Persona.",
+      "title": "Persona deletion has no dependency, confirmation, or rollback contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "invalid_states_transitions",
+        "partial_failure",
+        "failures_recovery",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as \"complete with warnings\" rather than failing the run.",
+          "line_end": 1212,
+          "line_start": 1212,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: \"Could not parse output from [Provider]. [Retry] [Skip] [View raw output].\"",
+          "line_end": 1225,
+          "line_start": 1225,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "contradictory_terminal_state",
+      "impact": "Identical malformed output can either promote a tier as complete or block for user action, corrupting parent completion and retry behavior.",
+      "item_id": "MRI-030",
+      "item_type": "state_transition",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "One resolution says retry exhaustion creates a partial output and completes with warnings; the next says generic extraction plus retry exhaustion is a Provider error surfaced to the user with Retry/Skip/View raw output. No precedence, canonical state, or transition defines which outcome applies.",
+      "title": "Parser exhaustion has two incompatible terminal outcomes"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.",
+          "line_end": 1222,
+          "line_start": 1222,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.",
+          "line_end": 1226,
+          "line_start": 1226,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "raw_output_privacy_lifecycle_missing",
+      "impact": "Provider output can durably expose credentials, source content, personal data, or oversized hostile payloads through logs and UI.",
+      "item_id": "MRI-031",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The parser contract logs an initial excerpt and preserves all raw output, then offers a user-facing raw-output view, without secret detection, tool-argument redaction, retention duration, access control, size limits, or support-export policy.",
+      "title": "Raw provider output retention and display lack redaction boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Global toggle:** In Config, above the tier cards, add one toggle: \"Use plan mode for all tiers\". Message e.g. `Message::ConfigUsePlanModeAllTiersToggled(bool)`. Handler: if `true`, set all four tier configs' `plan_mode` to `true` and persist `use_plan_mode_all_tiers = true`; if `false`, set all to `false` (or restore from `last_per_tier_plan_mode`) and persist. When global is on, tier plan_mode toggles are disabled and show true; when global is off, tier toggles are editable.",
+          "line_end": 1077,
+          "line_start": 1077,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Section:** Add a \"Subagents\" section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.",
+          "line_end": 1111,
+          "line_start": 1111,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "required_dimensions_omitted",
+      "impact": "The prescribed GUI can be unusable with assistive technology and brittle in translated locales, with no acceptance tests to detect it.",
+      "item_id": "MRI-032",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The detailed toggles, buttons, list editors, errors, tooltips, Persona previews, and retry actions do not specify accessible names, keyboard/focus behavior, screen-reader status announcements, contrast/error semantics, localization keys, pluralization, text expansion, or right-to-left layout.",
+      "title": "GUI specifications omit accessibility and localization contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "cross_document_seams",
+        "behavior"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.",
+          "line_end": 1168,
+          "line_start": 1168,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Mitigation:** In platform runners, when building the prompt or args for a subagent, use platform_specs or a small adapter (e.g. `subagent_prompt_prefix(platform, subagent_name) -> String`) so that: Cursor => `/subagent_name ` + user prompt; Codex/Claude/Gemini/Copilot => \"As <subagent_name>, \" + user prompt in system or first message, or omit if platform has no convention. Document in AGENTS.md which platforms support which subagent semantics. Implement the adapter so adding a new platform is a single match arm or config entry.",
+          "line_end": 1362,
+          "line_start": 1362,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "adapter_policy_contradiction",
+      "impact": "Builders cannot tell whether PM-native child records or provider prompt conventions own delegation semantics, creating provider-specific behavior drift.",
+      "item_id": "MRI-033",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The delegated contract says provider-native subagent syntax is not normative, and DRY rules prohibit platform match statements, but the mitigation prescribes a Cursor slash-prefix adapter and says a new platform can be added by a match arm or config entry.",
+      "title": "Provider-native subagent syntax is both forbidden and prescribed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_performance",
+        "ambiguity_unknowns",
+        "unknown_unknowns",
+        "states_transitions",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Mitigation:** Cache detection per workspace path (cache key: canonical workspace path). Invalidate when the config is reloaded or the workspace path for the run changes. Expose a single entry point (e.g. `get_project_context(workspace) -> Result<ProjectContext>`) that returns cached value if valid. Phase 1/2 implement this; the orchestrator calls that entry point instead of running detection on every tier. Consider a TTL or \"cache for the duration of the run\" so long sessions don't hold stale data if the user edits the repo.",
+          "line_end": 1368,
+          "line_start": 1368,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "unresolved_cache_policy",
+      "impact": "Long runs can select the wrong language/domain worker after repository changes, while aggressive invalidation can repeat expensive scans.",
+      "item_id": "MRI-034",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The source requires invalidation on config/workspace changes but merely suggests either a TTL or run-duration cache; it does not define file-change invalidation, canonical-path failures, symlink retargeting, multi-project isolation, or which stale result is safe.",
+      "title": "Project-context cache freshness remains an open implementation choice"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "inputs_outputs",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Mitigation:** **Rule: required wins.** When building the final subagent list: (1) Start from selected list or override list. (2) Add all names in `required_subagents`. (3) Remove any name in `disabled_subagents` unless it is in `required_subagents`. Document this in code and in the Config UI tooltip. In the UI, optionally grey out or hide in the disabled list any name that appears in required.",
+          "line_end": 1373,
+          "line_start": 1373,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier \"use no subagents\" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.",
+          "line_end": 1378,
+          "line_start": 1378,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents divergent final-list construction for two common configuration cases.",
+      "item_id": "MRI-035",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "statement": "The source resolves two otherwise ambiguous selection edges: required entries win over disabled entries, and missing or empty overrides preserve auto-selection.",
+      "title": "Required/disabled conflict and empty override semantics are deterministic"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "destructive_actions",
+        "recovery_rollback",
+        "states_transitions",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Mitigation:** Follow existing Config save behavior: save on explicit Save action and/or mark dirty and prompt on leave. Ensure `use_plan_mode_all_tiers`, `last_per_tier_plan_mode` (if used), and the full `subagent` block (SubagentGuiConfig) are part of the same `GuiConfig` struct and are written in the same `gui_config::save_config()` call from the Config view so we never persist only tier config without plan-mode global or subagent settings. When the user clicks Save on any Config tab, the entire `gui_config` (including these fields) is serialized to the same YAML file.",
+          "line_end": 1383,
+          "line_start": 1383,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "persistence_transition_ambiguous",
+      "impact": "Users can lose settings or persist a mixed old/new configuration while believing the complete GuiConfig was saved.",
+      "item_id": "MRI-036",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The mitigation does not choose between explicit save, autosave, and dirty-state prompting and does not define atomic write, crash recovery, partial serialization failure, cross-tab concurrency, or rollback behavior.",
+      "title": "Config durability behavior remains 'save and/or prompt'"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "failures_recovery",
+        "recovery_rollback",
+        "ambiguity_unknowns",
+        "behavior"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:",
+          "line_end": 1440,
+          "line_start": 1440,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back \"Ask at least N questions\"); if max is `Some(m)` and count > m, either reject or accept depending on product rule; otherwise accept.",
+          "line_end": 1452,
+          "line_start": 1452,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "contradictory_state_transition",
+      "impact": "The same question count can force completion, reject completion, or accept completion depending on which paragraph an implementer follows.",
+      "item_id": "MRI-037",
+      "item_type": "state_transition",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The resolved soft-cap rule force-completes after max+1 and never rejects valid answers, but the later wiring instruction still leaves over-max behavior as 'either reject or accept depending on product rule.'",
+      "title": "Interview max-question transition is both resolved and unresolved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "ambiguity_unknowns",
+        "gui_truth",
+        "acceptance_oracles",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Minimum questions per phase** (e.g. `min_questions_per_phase: u32`, default 3).\n   - **Max questions per phase** with an **Unlimited** option (e.g. `max_questions_per_phase: Option<u32>`; `None` = unlimited).",
+          "line_end": 1431,
+          "line_start": 1430,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "input_domain_unspecified",
+      "impact": "Invalid combinations can create impossible completion conditions, immediate force completion, overflow, or inconsistent global/per-phase behavior.",
+      "item_id": "MRI-038",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The numeric contract defines defaults, optional unlimited max, and max+1 arithmetic but not min<=max, zero handling, per-phase override precedence, integer bounds/overflow, migration from the old field, or validation errors shown to users.",
+      "title": "Interview min/max domain validation is absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "states_transitions",
+        "failures_recovery",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:",
+          "line_end": 1440,
+          "line_start": 1440,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "**Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md.",
+          "line_end": 1462,
+          "line_start": 1462,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "gate_bypass_contradiction",
+      "impact": "A runaway or merely long architecture interview can advance without the explicit confirmation that policy says is mandatory.",
+      "item_id": "MRI-039",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The max-question rule force-completes a phase without an exception for confirmation gates, while require_architecture_confirmation says the flow must wait for explicit confirmation before allowing phase completion; precedence and recovery are not defined.",
+      "title": "Force-completion can bypass required architecture confirmation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "propagation",
+        "missing_callers_consumers",
+        "builder_discretion",
+        "gui_truth",
+        "gui_misleading_states",
+        "capabilities"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "**Wiring:** Add `vision_provider: String` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. When building requests that include images, use this platform (filtered by platform_specs vision capability). If no image flow exists yet, wire the field and leave the behavior as \"use when implementing image/vision flows\"; document that in the plan or code.",
+          "line_end": 1466,
+          "line_start": 1466,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "3. **Runtime use:** In the execution path (orchestrator, phase manager, prompt builder, runner), **read** the field and use it to decide behavior (e.g. min/max question checks, plan_mode, subagent list). No \"dead\" fields in the execution config.",
+          "line_end": 1486,
+          "line_start": 1486,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "dead_config_field_authorized",
+      "impact": "The GUI can persist a preferred vision provider that has no effect while validation still sees the field as present.",
+      "item_id": "MRI-040",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The plan requires adding a string field and selecting vision-capable requests, but explicitly permits wiring the field without runtime behavior if no image flow exists, contradicting the later no-dead-fields wiring rule and leaving requested/effective provider disclosure absent.",
+      "title": "vision_provider is allowed to remain a dead execution field"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "missing_callers_consumers",
+        "observability_support",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "**Rule:** The orchestrator (or a shared validation layer) runs a **config-wiring check at each tier boundary** -- when entering a Phase, when entering a Task, when entering a Subtask, and when entering an Iteration. The check verifies that the config that **should** affect execution at that tier is **present and actually used** (e.g. tier config exists, plan_mode is read from config, interview limits are present in interview config when in interview flow). This catches \"built but not wired\" even when the checklist is missed.",
+          "line_end": 1500,
+          "line_start": 1500,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Single validation entry point:** Introduce a function or small module, e.g. `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>`. It receives the current tier type (Phase/Task/Subtask/Iteration), the config (or the relevant slice: tier config, interview config, subagent config), and optional context (e.g. \"interview run\" vs \"main run\"). It checks the items above for that tier and returns Ok or an error listing what is missing or unused.",
+          "line_end": 1522,
+          "line_start": 1522,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "oracle_cannot_observe_claimed_property",
+      "impact": "Built-but-not-wired fields can pass validation merely because they exist in the snapshot, defeating the feature's central purpose.",
+      "item_id": "MRI-041",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The validator is required to prove that configuration is present and actually used, yet its proposed inputs are only tier type, config snapshot, and context; no runtime-use instrumentation, provenance token, consumed-field trace, or mutation-based test oracle is defined.",
+      "title": "Config-snapshot validator cannot prove a field is actually used"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "authority_boundaries",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "states_transitions",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Fail-fast vs warn:** **Recommendation:** Fail fast (return error, log, and surface to user) when a **required** execution-affecting field is missing from the execution config (e.g. tier config for that tier is absent). **Warn** (log and optionally toast) when a field exists in GUI/file config but is not present in the execution config (classic \"built but not wired\"). This keeps runs from proceeding with wrong config while highlighting wiring gaps without blocking if the product chooses to allow default behavior for optional fields.",
+          "line_end": 1524,
+          "line_start": 1524,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "VerificationPolicy::WarnAndContinue => {\n                        tracing::warn!(\"Tier start verification failed: {:?}\", verification_result.findings);\n                        // Continue with tier execution",
+          "line_end": 1619,
+          "line_start": 1617,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "failure_policy_under_resolved",
+      "impact": "A run may spawn with absent required config and only a warning, while the UI and receipts can imply verification occurred successfully enough to proceed.",
+      "item_id": "MRI-042",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The text recommends fail-fast for required execution fields but leaves optional-field defaults to product choice, and the sample exposes a general WarnAndContinue policy even for VerificationStatus::Fail; no non-overridable failure class protects required authority/config invariants.",
+      "title": "Required-field failure can still be warn-and-continue"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "observability_support",
+        "ownership",
+        "cross_document_seams",
+        "operations",
+        "privacy_data_lifecycle",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Verification results are persisted as seglog/redb events and projections (`config.validation.*`, `run.qa_cycle_*`, HITL events), not as authoritative ad hoc JSON files.",
+          "line_end": 1548,
+          "line_start": 1548,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Log verification results:** Log verification results to `.puppet-master/logs/verification.log`",
+          "line_end": 1576,
+          "line_start": 1576,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "competing_persistence_contract",
+      "impact": "Operators can see divergent verification histories, and sensitive findings may escape canonical retention and redaction controls.",
+      "item_id": "MRI-043",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004",
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "statement": "The lifecycle alignment says verification is persisted as seglog/redb and not authoritative ad hoc JSON, while the responsibility list mandates `.puppet-master/logs/verification.log`; the prologue separately forbids one-off run-history logs, with no projection/diagnostic distinction or retention owner.",
+      "title": "Verification persistence requires both canonical events and a forbidden ad hoc log"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "missing_callers_consumers",
+        "ownership",
+        "unknown_unknowns",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **UI wiring check (GUI projects):** If `.puppet-master/project/ui/` exists and the current tier node's scope involves UI work, verify that the node's `contract_refs` include at least one wiring matrix entry or command catalog ID. At end-of-tier, re-run the \"no unbound UI actions\" check against the current state of `ui/wiring_matrix.json` to ensure new interactive elements added during execution are wired.",
+          "line_end": 1562,
+          "line_start": 1562,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "conditional_guard_unowned",
+      "impact": "A mislabeled or mixed-scope node can add interactive UI while bypassing the no-unbound-actions check entirely.",
+      "item_id": "MRI-044",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The UI wiring check is conditional on both directory existence and the node scope involving UI work, but the source does not define the classifier, owner, false-negative behavior, generated/dynamic UI handling, or a required failure when scope metadata is missing.",
+      "title": "UI-scope detection is an unowned bypass point"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_performance",
+        "scale_limits",
+        "builder_discretion",
+        "failures_recovery",
+        "operations",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.",
+          "line_end": 1388,
+          "line_start": 1388,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.",
+          "line_end": 1388,
+          "line_start": 1388,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "unbounded_verification_fanout",
+      "impact": "Nested retries and mandatory review can exhaust budgets or deadlock scarce lanes, especially when verification failures recursively trigger more reviewers.",
+      "item_id": "MRI-045",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "statement": "The plan requires full checks and a reviewer at every end boundary, retry, and quality failure, but does not reconcile this fan-out with parent budgets, lane capacity, deduplication, cancellation, priority, or behavior when the reviewer itself fails or times out.",
+      "title": "Full boundary verification has no bounded cost or overload behavior"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        262
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/orchestrator-subagent-integration.md"
+      ],
+      "item_ids": [
+        "MRI-001",
+        "MRI-002",
+        "MRI-003",
+        "MRI-004",
+        "MRI-005",
+        "MRI-006",
+        "MRI-007"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-1BF0967E88A5-0001; evidence is carried by item_ids MRI-001, MRI-002, MRI-003, MRI-004, MRI-005, MRI-006, MRI-007.",
+      "window_id": "WIN-1BF0967E88A5-0001"
+    },
+    {
+      "core_range": [
+        263,
+        655
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-001"
+      ],
+      "item_ids": [
+        "MRI-008",
+        "MRI-009",
+        "MRI-010",
+        "MRI-011",
+        "MRI-012",
+        "MRI-013",
+        "MRI-014",
+        "MRI-015",
+        "MRI-016"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-1BF0967E88A5-0002; evidence is carried by item_ids MRI-008, MRI-009, MRI-010, MRI-011, MRI-012, MRI-013, MRI-014, MRI-015, MRI-016.",
+      "window_id": "WIN-1BF0967E88A5-0002"
+    },
+    {
+      "core_range": [
+        656,
+        1050
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-002"
+      ],
+      "item_ids": [
+        "MRI-017",
+        "MRI-018",
+        "MRI-019",
+        "MRI-020",
+        "MRI-021",
+        "MRI-022",
+        "MRI-023",
+        "MRI-024",
+        "MRI-025"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-1BF0967E88A5-0003; evidence is carried by item_ids MRI-017, MRI-018, MRI-019, MRI-020, MRI-021, MRI-022, MRI-023, MRI-024, MRI-025.",
+      "window_id": "WIN-1BF0967E88A5-0003"
+    },
+    {
+      "core_range": [
+        1051,
+        1380
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-003"
+      ],
+      "item_ids": [
+        "MRI-026",
+        "MRI-027",
+        "MRI-028",
+        "MRI-029",
+        "MRI-030",
+        "MRI-031",
+        "MRI-032",
+        "MRI-033",
+        "MRI-034",
+        "MRI-035"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-1BF0967E88A5-0004; evidence is carried by item_ids MRI-026, MRI-027, MRI-028, MRI-029, MRI-030, MRI-031, MRI-032, MRI-033, MRI-034, MRI-035.",
+      "window_id": "WIN-1BF0967E88A5-0004"
+    },
+    {
+      "core_range": [
+        1381,
+        1777
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-431",
+        "SEMANTIC:PLANUNIT:OSI-431:CONT-004"
+      ],
+      "item_ids": [
+        "MRI-036",
+        "MRI-037",
+        "MRI-038",
+        "MRI-039",
+        "MRI-040",
+        "MRI-041",
+        "MRI-042",
+        "MRI-043",
+        "MRI-044",
+        "MRI-045"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-1BF0967E88A5-0005; evidence is carried by item_ids MRI-036, MRI-037, MRI-038, MRI-039, MRI-040, MRI-041, MRI-042, MRI-043, MRI-044, MRI-045.",
+      "window_id": "WIN-1BF0967E88A5-0005"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO-1BF0967E88A5-0001",
+    "document_path": "Plans/orchestrator-subagent-integration.md",
+    "micro_window_ids": [
+      "WIN-1BF0967E88A5-0001",
+      "WIN-1BF0967E88A5-0002",
+      "WIN-1BF0967E88A5-0003",
+      "WIN-1BF0967E88A5-0004",
+      "WIN-1BF0967E88A5-0005"
+    ],
+    "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [],
+    "feature_family_keys": [],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m_000187_attempt_0014_terminal"
+}

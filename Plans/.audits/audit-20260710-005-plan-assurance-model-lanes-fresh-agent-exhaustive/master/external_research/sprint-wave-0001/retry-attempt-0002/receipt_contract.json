@@ -1,0 +1,47 @@
+{
+  "schema_version": "external-research-receipt-contract-v2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "attempt_id": "attempt-0002",
+  "status": "prepared_no_receipts",
+  "receipt_written_only_after": "terminal result exists, validates against the pinned packet/schema, and the native direct child returns PMR1",
+  "required_fields": [
+    "audit_id",
+    "sprint_id",
+    "attempt_id",
+    "assignment_id",
+    "controller_thread_id",
+    "agent_path",
+    "task_thread_id",
+    "model",
+    "reasoning_effort",
+    "fresh_child",
+    "fork_turns",
+    "descendants_forbidden",
+    "followup_messages_forbidden",
+    "packet_sha256",
+    "result_sha256",
+    "output_directory",
+    "result_path",
+    "terminal_turn_status",
+    "terminal_response_prefix"
+  ],
+  "exact_values": {
+    "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "fresh_child": true,
+    "fork_turns": "none",
+    "descendants_forbidden": true,
+    "followup_messages_forbidden": true,
+    "terminal_turn_status": "completed",
+    "terminal_response_prefix": "PMR1"
+  },
+  "duplicate_receipts_forbidden": true,
+  "premature_receipts_forbidden": true,
+  "current_receipt_count": 0,
+  "current_result_count": 0,
+  "coverage_credit": 0,
+  "research_credit": 0
+}
+

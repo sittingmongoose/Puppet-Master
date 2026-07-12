@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:puppet-master:audit005:exhaustive299:runtime-compatibility-v2:runtime-lock",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["command_contract", "expected_runtime", "schema_version", "status"],
+  "properties": {
+    "command_contract": {"type": "object"},
+    "expected_runtime": {"type": "object"},
+    "schema_version": {"const": "audit005-exhaustive299-runtime-lock-v2"},
+    "status": {"const": "HARD_PINNED_AUDIT_RUNTIME"}
+  }
+}

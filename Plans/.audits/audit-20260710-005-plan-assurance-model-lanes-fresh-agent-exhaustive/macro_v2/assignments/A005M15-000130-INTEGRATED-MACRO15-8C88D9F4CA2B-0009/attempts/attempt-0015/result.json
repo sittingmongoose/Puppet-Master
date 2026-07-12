@@ -1,0 +1,539 @@
+{
+  "assignment_id": "A005M15-000130-INTEGRATED-MACRO15-8C88D9F4CA2B-0009",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "consumers", "gui_truth", "acceptance_oracles", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.github_actions.show dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+          "line_end": 15228,
+          "line_start": 15228,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The window consistently binds visible commands to dispatcher targets, projected availability, disabled reasons, receipt or event effects, accessibility behavior, and regression fixtures.",
+      "item_id": "M15-000130-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-041", "STRUCTURAL:$.entries"],
+      "statement": "GitHub Actions, GitHub connection, and graph controls have a repeated production-certification envelope covering dispatch identity, state projection, effects, accessibility, and tests.",
+      "title": "Window 41 has consistent command wiring scaffolding"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "acceptance_oracles", "invalid_states_transitions", "concurrency_races", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Validates workflow dispatch readiness before any workflow run action and must preserve disabled/blocker reasons.  Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+          "line_end": 15398,
+          "line_start": 15398,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "stale_readiness_race",
+      "impact": "A workflow may change between validation and dispatch, allowing a stale successful validation to authorize a run or allowing blocker reasons to describe a superseded revision.",
+      "item_id": "M15-000130-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-041"],
+      "statement": "Dispatch-readiness validation does not bind its result to a workflow identity, immutable revision, input digest, freshness interval, or atomic compare-and-dispatch rule, and no adversarial test covers state change after validation.",
+      "title": "Dispatch readiness is vulnerable to time-of-check/time-of-use drift"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "authority", "failures_recovery", "security_privacy", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.graph.approve_hitl has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 15573,
+          "line_start": 15573,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "hitl_authority_and_durability_unspecified",
+      "impact": "Approval or denial could be replayed, applied by an unauthorized actor, race with another decision, or become unauditable as a durable state transition despite controlling downstream execution.",
+      "item_id": "M15-000130-I003",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-041"],
+      "statement": "The HITL approve command specifies only a no-persist receipt and omits approver identity, permission and policy scope, decision target and version, exclusivity, idempotency, replay handling, durable decision state, and recovery semantics.",
+      "title": "HITL approval lacks authority and durable transition contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "failures_recovery", "security_privacy", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.github.disconnect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 15518,
+          "line_start": 15518,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "connection_lifecycle_unspecified",
+      "impact": "Disconnect may leave credentials, cached authorization, inflight operations, or UI projections active, while reconnect failures and offline behavior have no deterministic recovery oracle.",
+      "item_id": "M15-000130-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-041"],
+      "statement": "GitHub connect and disconnect wiring omits credential acquisition and revocation ownership, token storage and deletion, permission checks, cancellation of inflight work, cache invalidation, partial-failure recovery, and offline handling.",
+      "title": "GitHub connection lifecycle has no security or recovery contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "gui_truth", "acceptance_oracles", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "Production wiring contract for cmd.lsp.find_references; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+          "line_end": 15795,
+          "line_start": 15795,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Each command has a traceable handler, availability projection, disabled reason, receipt assertion, accessible control contract, and test-evidence identifiers.",
+      "item_id": "M15-000130-I005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-042", "STRUCTURAL:$.entries"],
+      "statement": "Graph denial, provider setup routing, and the LSP commands in window 42 consistently declare the baseline production wiring evidence envelope.",
+      "title": "Window 42 preserves baseline wiring and accessibility evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.lsp.format_document must have a typed payload/result contract or explicit route/open no-persist disposition",
+          "line_end": 15847,
+          "line_start": 15847,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "lsp_edit_transaction_unspecified",
+      "impact": "Formatting, code action, and rename can apply edits to stale buffers, partially modify multiple files, overwrite concurrent changes, or leave the workspace inconsistent without a deterministic rollback path.",
+      "item_id": "M15-000130-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-042"],
+      "statement": "The LSP code-action and formatting commands do not state document URI and version preconditions, selection encoding, workspace-edit validation, atomic multi-file application, conflict detection, cancellation, timeout, partial-apply recovery, rollback, or untrusted-server response limits.",
+      "title": "LSP edit commands lack versioned atomic application semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "failures_recovery", "partial_failure", "untrusted_inputs", "offline_network_loss", "scale_limits", "gui_misleading_states", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.lsp.find_references has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 15800,
+          "line_start": 15800,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "lsp_query_result_lifecycle_unspecified",
+      "impact": "Large, delayed, malformed, or superseded result sets can be rendered as current truth, exhaust resources, or strand focus and loading state after cancellation or server loss.",
+      "item_id": "M15-000130-I007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-042"],
+      "statement": "Find references and navigation commands omit result size limits and pagination, stale-result suppression, cancellation and timeout behavior, malformed location handling, offline/server-loss states, empty-result GUI truth, and result-consumer ownership.",
+      "title": "LSP query commands omit result and cancellation lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "gui_truth", "acceptance_oracles", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.model.list is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+          "line_end": 16229,
+          "line_start": 16229,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The model entries explicitly strengthen the generic dispatcher contract with typed error and UICommandResponse requirements and reject fabricated command-applied events.",
+      "item_id": "M15-000130-I008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-043", "STRUCTURAL:$.entries"],
+      "statement": "Window 43 maintains the common wiring envelope and gives model list and refresh more explicit typed response and canonical-event constraints.",
+      "title": "Model commands improve response and event specificity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "ownership", "consumers", "failures_recovery", "propagation", "operations", "scale_performance", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.model.refresh emits the declared domain event(s) and records dispatch correlation evidence.",
+          "line_end": 16297,
+          "line_start": 16297,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "catalog_refresh_reconciliation_unspecified",
+      "impact": "Concurrent refreshes, provider timeouts, partial catalogs, rate limits, or stale cached data can produce a success event and misleading available-model projection without a defined settlement rule.",
+      "item_id": "M15-000130-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-043"],
+      "statement": "Model refresh lacks provider fan-out ownership, deduplication and cancellation, cache/freshness policy, partial-success representation, retry/backoff, offline fallback, event payload and version, projection update rules, and consumer reconciliation or rollback oracles.",
+      "title": "Model refresh event does not define partial or concurrent refresh outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "concurrency_races", "recovery_rollback", "offline_network_loss", "gui_misleading_states", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.lsp.restart_server has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 16185,
+          "line_start": 16185,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "restart_lifecycle_unspecified",
+      "impact": "Repeated or concurrent restart requests can orphan processes, drop diagnostics or edits, leave the GUI reporting availability prematurely, and offer no bounded recovery from restart failure.",
+      "item_id": "M15-000130-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-043"],
+      "statement": "LSP restart does not define quiesce, process termination and replacement states, inflight-request cancellation, document resynchronization, concurrency coalescing, timeout, retry, rollback, or readiness projection and evidence.",
+      "title": "LSP restart is modeled as a receipt without lifecycle states"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.nav.open_usage_subject must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+          "line_end": 16459,
+          "line_start": 16459,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The route contract prevents loss of UsageRecord/provider/runtime lineage and requires stable subject identity plus an explicit receipt fixture.",
+      "item_id": "M15-000130-I011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044", "STRUCTURAL:$.entries"],
+      "statement": "The Usage subject route is unusually concrete: it binds usage_event_ref to usage_event object kind, requires OpenSubject, lists correlation passthrough fields, and tests stable identity and receipt behavior.",
+      "title": "Usage subject navigation has concrete identity and passthrough wiring"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.nav.open_usage_subject rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id.",
+          "line_end": 16507,
+          "line_start": 16507,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "reject_or_normalize_ambiguity",
+      "impact": "Two conforming implementations may handle the same malformed or conflicting route input differently, affecting security, user-visible errors, correlation integrity, and test determinism.",
+      "item_id": "M15-000130-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044"],
+      "statement": "The route oracle allows either rejection or normalization without choosing precedence, defining derivation of stable object_id, specifying conflicting supplied values, or stating the error/result contract.",
+      "title": "Usage route malformed-input behavior is intentionally ambiguous"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["authority", "security_privacy", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.nav.open_usage_subject must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id",
+          "line_end": 16460,
+          "line_start": 16460,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "usage_route_privacy_boundary_unspecified",
+      "impact": "A route payload may expose cross-run, cross-thread, provider, receipt, trace, or raw-payload identifiers to a caller or surface that lacks authority, and retained references may outlive underlying data policy.",
+      "item_id": "M15-000130-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044"],
+      "statement": "Full correlation passthrough is required without defining caller authorization, field-level redaction, tenant/run/thread isolation, raw payload access checks, missing or expired reference behavior, retention, or audit logging for sensitive navigation.",
+      "title": "Usage correlation passthrough lacks an authorization and data-lifecycle boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "propagation", "compatibility_migration", "acceptance_oracles", "invalid_states_transitions", "partial_failure", "recovery_rollback", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.notifications.destination.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 16609,
+          "line_start": 16609,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.notifications.destination.toggle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 16719,
+          "line_start": 16719,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "durable_notification_mutation_modeled_as_no_persist",
+      "impact": "Creation, deletion, enablement, and later update/mapping/override changes can modify durable configuration while producing only generic no-persist receipts, leaving projection propagation, audit history, retries, migration, rollback, and convergence untestable.",
+      "item_id": "M15-000130-I014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044"],
+      "statement": "Notification destination create, delete, and toggle commands are named as durable mutations but declare no persisted domain event and do not specify storage authority, version preconditions, idempotency, downstream projection updates, conflict handling, undo, or rollback.",
+      "title": "Notification mutations conflict with no-persist effect contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "acceptance_oracles", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.",
+          "line_end": 17081,
+          "line_start": 17081,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every visible control in the window has a common minimum oracle for semantic identity, keyboard activation, focus restoration, and unavailable-state announcement.",
+      "item_id": "M15-000130-I015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-045", "STRUCTURAL:$.entries"],
+      "statement": "Window 45 retains explicit accessibility regression evidence alongside dispatcher, state-projection, and effect fixtures for notification and onboarding commands.",
+      "title": "Window 45 consistently requires accessibility evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "ownership", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.notifications.destination.update has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 16774,
+          "line_start": 16774,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.notifications.mapping.update has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 16829,
+          "line_start": 16829,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "notification_configuration_transition_unspecified",
+      "impact": "Concurrent edits and partial storage or projection failures can lose configuration or report success without downstream convergence; builders must invent versioning, durable effects, and rollback semantics.",
+      "item_id": "M15-000130-I016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-045"],
+      "statement": "Destination update, mapping update, and override set continue the no-persist pattern for configuration mutations and omit authoritative old/new values, revision or compare-and-swap preconditions, idempotency keys, durable event identity, propagation completion, conflict GUI, migration, and rollback tests.",
+      "title": "Notification updates lack authoritative durable transition semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "failures_recovery", "security_privacy", "operations", "scale_performance", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "offline_network_loss", "scale_limits", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.notifications.destination.test records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 16698,
+          "line_start": 16698,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "external_test_delivery_unspecified",
+      "impact": "A test can deliver duplicate or sensitive messages, incur cost, trigger remote rate limits, or fail ambiguously while the local receipt alone appears successful.",
+      "item_id": "M15-000130-I017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044"],
+      "statement": "Notification destination test is an external side effect but has no typed target and sample payload constraints, authorization, secret redaction, confirmation, idempotency, timeout, retry/backoff, rate and cost limits, remote-result settlement, cancellation, or partial-failure oracle.",
+      "title": "Notification test delivery is treated as a local no-persist receipt"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "ownership", "consumers", "gui_truth", "failures_recovery", "operations", "scale_performance", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "scale_limits", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "cmd.onboarding.free_models.retry emits the declared domain event(s) and records dispatch correlation evidence.",
+          "line_end": 17113,
+          "line_start": 17113,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "onboarding_refresh_recovery_unspecified",
+      "impact": "Repeated clicks, automatic refresh, offline startup, provider partial failure, or an empty catalog can produce duplicate work or events and leave onboarding in a misleading or unrecoverable state.",
+      "item_id": "M15-000130-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-045"],
+      "statement": "Free-model refresh and retry do not define attempt identity, coalescing or cancellation, backoff and retry budget, provider fan-out settlement, cache and freshness policy, offline and empty/error states, event payload version, localization of failure copy, or transition from retry to usable onboarding state.",
+      "title": "Onboarding refresh and retry events omit recovery state-machine semantics"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [15219, 15609],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-041", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-000130-I001", "M15-000130-I002", "M15-000130-I003", "M15-000130-I004"],
+      "reviewed": true,
+      "summary": "Reviewed GitHub Actions show/switch/unpin/readiness, GitHub connect/disconnect, and graph HITL approval wiring. Baseline dispatch, projection, receipt/event, accessibility, and evidence contracts are strong; stale readiness, HITL authority/durability, and connection security/recovery remain under-specified.",
+      "window_id": "WIN-8C88D9F4CA2B-0041"
+    },
+    {
+      "core_range": [15610, 16001],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-042", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-000130-I005", "M15-000130-I006", "M15-000130-I007"],
+      "reviewed": true,
+      "summary": "Reviewed graph denial, provider setup, and LSP code action, find references, format document/selection, and goto definition wiring. Repeated certification scaffolding is explicit, but edit atomicity/versioning and query result/cancellation lifecycles are absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0042"
+    },
+    {
+      "core_range": [16002, 16393],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-043", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-000130-I008", "M15-000130-I009", "M15-000130-I010"],
+      "reviewed": true,
+      "summary": "Reviewed LSP goto/open/rename/restart, model list/refresh, and nav focus routing. Model response and event constraints are stronger than the generic pattern, while model refresh reconciliation and LSP restart lifecycle semantics remain open.",
+      "window_id": "WIN-8C88D9F4CA2B-0043"
+    },
+    {
+      "core_range": [16394, 16755],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-000130-I011", "M15-000130-I012", "M15-000130-I013", "M15-000130-I014", "M15-000130-I017"],
+      "reviewed": true,
+      "summary": "Reviewed nav subject routing, the detailed Usage subject route, and notification destination create/delete/test/toggle wiring. Usage identity and correlation passthrough are concrete, but malformed-input choice, privacy/authority boundaries, and durable notification mutation effects are unresolved.",
+      "window_id": "WIN-8C88D9F4CA2B-0044"
+    },
+    {
+      "core_range": [16756, 17154],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-045", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-000130-I015", "M15-000130-I016", "M15-000130-I018"],
+      "reviewed": true,
+      "summary": "Reviewed notification destination update, mapping update, override set, first-run onboarding, free-model defer/refresh/retry, and accessibility evidence. Durable notification transitions, external test delivery settlement, and onboarding refresh/retry recovery require additional contracts.",
+      "window_id": "WIN-8C88D9F4CA2B-0045"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0009",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": ["WIN-8C88D9F4CA2B-0041", "WIN-8C88D9F4CA2B-0042", "WIN-8C88D9F4CA2B-0043", "WIN-8C88D9F4CA2B-0044", "WIN-8C88D9F4CA2B-0045"],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Where are the authoritative typed payload, result, error, idempotency, and version-precondition contracts for the generic UI commands bound in these entries?",
+      "Which canonical state and event owner durably records HITL approval or denial and notification configuration mutation outcomes?",
+      "Which Usage and privacy contracts authorize correlation-field and raw-payload-reference passthrough across run, thread, provider, and artifact boundaries?",
+      "Which lifecycle specification defines LSP workspace-edit atomicity, server restart recovery, and stale-result suppression?"
+    ],
+    "feature_family_keys": ["github-actions-dispatch", "github-connection", "graph-hitl", "lsp-commands", "model-catalog", "usage-subject-routing", "notification-configuration", "onboarding-free-models"],
+    "research_queries": [
+      "TOCTOU-safe workflow dispatch readiness revision binding and atomic validation patterns",
+      "durable human-in-the-loop approval authorization idempotency replay and audit event design",
+      "LSP workspace edit versioning atomic multi-file application cancellation and rollback",
+      "notification configuration event sourcing idempotent external test delivery and partial-failure settlement",
+      "privacy-safe correlation identifier routing raw payload references and field-level authorization"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000130_attempt_0015_terminal"
+}

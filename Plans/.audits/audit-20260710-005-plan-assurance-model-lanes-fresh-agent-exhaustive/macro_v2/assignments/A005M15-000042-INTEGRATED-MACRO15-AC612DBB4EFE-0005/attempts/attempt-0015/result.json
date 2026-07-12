@@ -1,0 +1,608 @@
+{
+  "assignment_id": "A005M15-000042-INTEGRATED-MACRO15-AC612DBB4EFE-0005",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "ownership", "consumers", "gui_truth", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "  The unified Settings surface exposes the canonical 19-tab registry so run-touched settings",
+          "line_end": 9371,
+          "line_start": 9371,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Settings remains the durable preference surface.\"",
+          "line_end": 9647,
+          "line_start": 9647,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes the visible Settings and Agent Config ownership grammar, registry, diagnostics, and durable-preference boundary for this window.",
+      "item_id": "M15-W27-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-107", "PLANUNIT:F3-108", "PLANUNIT:F3-109", "PLANUNIT:F3-110", "PLANUNIT:F3-111", "PLANUNIT:F3-112", "PLANUNIT:F3-113"],
+      "statement": "The window explicitly defines indexing administration, provider/web disclosure, the 19-tab Settings registry, help and legacy aliases, storage/usage owner routing, requested/effective operational identity display, and Agent Config management while reserving durable preferences to Settings.",
+      "title": "Settings and Agent Config surface contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "failures_recovery", "security_privacy", "offline_network_loss", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- \"The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.\"",
+          "line_end": 9278,
+          "line_start": 9278,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "test_falsifiability",
+      "impact": "Builders must invent interaction outcomes and negative-path oracles, allowing incompatible behavior while generic migration and index validators still pass.",
+      "item_id": "M15-W27-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-107", "SEMANTIC:PLANUNIT:F3-108", "SEMANTIC:PLANUNIT:F3-109", "SEMANTIC:PLANUNIT:F3-110", "SEMANTIC:PLANUNIT:F3-111", "SEMANTIC:PLANUNIT:F3-112", "SEMANTIC:PLANUNIT:F3-113"],
+      "statement": "The units enumerate substantial UI behavior but their repeated acceptance criteria only prove source preservation, fine-grained addressability, traceability, and absence of work-node creation; they do not specify falsifiable outcomes for errors, destructive indexing actions, offline data, accessibility, localization, privacy, or recovery.",
+      "title": "Settings behavior lacks executable acceptance oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "gui_truth", "failures_recovery", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "  Agent-Config setup copy separates setup success from operational evidence, exposes stable",
+          "line_end": 9772,
+          "line_start": 9772,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"`required` must bind or block.\"",
+          "line_end": 9926,
+          "line_start": 9926,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines protected persona behavior, provider diagnostics, deterministic account binding display, Docker ownership, panel persistence, and Terminal preference ownership.",
+      "item_id": "M15-W28-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-114", "PLANUNIT:F3-115", "PLANUNIT:F3-116", "PLANUNIT:F3-117", "PLANUNIT:F3-118", "PLANUNIT:F3-119", "PLANUNIT:F3-120"],
+      "statement": "The window specifies Personas mutability and protection, provider evidence and failover disclosure, Docker Manager shell routing, requested and effective account identity, durable panel preferences, and Terminal Settings coverage with explicit owner boundaries.",
+      "title": "Agent, runtime identity, and Terminal ownership contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "authority_boundaries", "failures_recovery", "destructive_actions", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- \"$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/\"",
+          "line_end": 9750,
+          "line_start": 9750,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Protected core built-ins are read-only and not deletable, disableable, or shadowable.\"",
+          "line_end": 9702,
+          "line_start": 9702,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "privacy_and_authorization",
+      "impact": "Diagnostics and persona operations could leak sensitive local metadata or permit inconsistent mutations because authorization, redaction, retention, failure atomicity, and audit requirements are not defined.",
+      "item_id": "M15-W28-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-114", "SEMANTIC:PLANUNIT:F3-115", "SEMANTIC:PLANUNIT:F3-116", "SEMANTIC:PLANUNIT:F3-117", "SEMANTIC:PLANUNIT:F3-118", "SEMANTIC:PLANUNIT:F3-119", "SEMANTIC:PLANUNIT:F3-120"],
+      "statement": "The text exposes provider storage paths, credential evidence filenames, account-local drift, and persona mutation controls, but does not define access control, redaction, retention, deletion auditing, transactional restore, or behavior when evidence is missing, stale, malformed, or concurrently updated.",
+      "title": "Provider evidence and persona mutations lack data-lifecycle rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "propagation", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "  Project attention items are reusable attention rows with stable identity, primary route payload,",
+          "line_end": 10214,
+          "line_start": 10214,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Canonical blocked episodes are never suppressed by quiet windows.\"",
+          "line_end": 10362,
+          "line_start": 10362,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Creates shared status, attention, concern, notification, routing, and compatibility vocabulary across project-facing surfaces.",
+      "item_id": "M15-W29-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-121", "PLANUNIT:F3-122", "PLANUNIT:F3-123", "PLANUNIT:F3-124", "PLANUNIT:F3-125", "PLANUNIT:F3-126", "PLANUNIT:F3-127"],
+      "statement": "The window defines Terminal shortcut grouping, Skills readiness badges, project summary precedence, stable attention routes, durable concern concepts, notification quieting and escalation, and a minimum concern record with blocking_effect distinct from severity.",
+      "title": "Project attention and concern propagation contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "observability_support", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  Notification and project-facing help surfaces share cadence, severity, quieting, recurrence,",
+          "line_end": 10320,
+          "line_start": 10320,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"`blocking_effect` stays explicitly separate from `severity`.\"",
+          "line_end": 10415,
+          "line_start": 10415,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "state_machine_ambiguity",
+      "impact": "Different consumers can calculate incompatible visibility, recurrence, dismissal, and escalation outcomes, producing misleading project status and notification storms or suppression.",
+      "item_id": "M15-W29-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-121", "SEMANTIC:PLANUNIT:F3-122", "SEMANTIC:PLANUNIT:F3-123", "SEMANTIC:PLANUNIT:F3-124", "SEMANTIC:PLANUNIT:F3-125", "SEMANTIC:PLANUNIT:F3-126", "SEMANTIC:PLANUNIT:F3-127"],
+      "statement": "Cadence, recurrence, dismissal, resolution, quieting, blocked precedence, trust downgrade, and the five-level escalation ladder are named but lack a complete transition table, timing thresholds, idempotency keys, concurrent-update rules, and per-surface consistency oracles.",
+      "title": "Concern and notification lifecycle is not fully deterministic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "scale_performance"],
+      "evidence": [
+        {
+          "exact_quote": "  Alerts gate hard-block presentation on canonical exhausted or blocked evidence, bundle cascades",
+          "line_end": 10432,
+          "line_start": 10432,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Streaming updates mutate existing rows rather than replacing the full list.\"",
+          "line_end": 10792,
+          "line_start": 10792,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines alert evidence and routing authority plus the core chat layout, command-result disclosure, controls, and stable virtualized streaming behavior.",
+      "item_id": "M15-W30-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-128", "PLANUNIT:F3-129", "PLANUNIT:F3-130", "PLANUNIT:F3-131", "PLANUNIT:F3-132", "PLANUNIT:F3-133", "PLANUNIT:F3-134"],
+      "statement": "The window gates hard-block alerts on canonical evidence, assigns runtime attention ownership and mirror behavior, enumerates alert lifecycle actions, and defines Chat layout, compaction result states, header controls, virtualization, row identity, and streaming follow behavior.",
+      "title": "Alert authority and threaded chat behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime alert lifecycle covers auto-resolution, historical seen state, acknowledge, snooze,",
+          "line_end": 10537,
+          "line_start": 10537,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"A mute or snooze must not suppress blocking confirmations or `security-sensitive` failures.\"",
+          "line_end": 10574,
+          "line_start": 10574,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "lifecycle_and_concurrency",
+      "impact": "Concurrent acknowledgements, auto-resolution, bulk operations, streaming updates, and mirror refreshes may race, duplicate work, or leave irreconcilable UI and canonical states.",
+      "item_id": "M15-W30-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-128", "SEMANTIC:PLANUNIT:F3-129", "SEMANTIC:PLANUNIT:F3-130", "SEMANTIC:PLANUNIT:F3-131", "SEMANTIC:PLANUNIT:F3-132", "SEMANTIC:PLANUNIT:F3-133", "SEMANTIC:PLANUNIT:F3-134"],
+      "statement": "The alert lifecycle and bulk-action contract names preview, result, rollback, coalescing, aging, auto-resolution, and partial success, but omits transition legality, operation identity, retry and deduplication rules, rollback preconditions, stale-mirror arbitration, and scale bounds for virtualized streaming rows.",
+      "title": "Alert and streaming concurrency semantics are underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "authority", "ownership", "consumers", "gui_truth", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "  File Manager is the persistent project-tree side panel for tree navigation and file discovery,",
+          "line_end": 10969,
+          "line_start": 10969,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"DOM/browser-coupled assumptions must not shape the canonical Slint/Rust architecture.\"",
+          "line_end": 11168,
+          "line_start": 11168,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines chat composer and queue behavior, command and shell ownership, File Manager and File Editor scope, and architectural negative constraints.",
+      "item_id": "M15-W31-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-135", "PLANUNIT:F3-136", "PLANUNIT:F3-137", "PLANUNIT:F3-138", "PLANUNIT:F3-139", "PLANUNIT:F3-140", "PLANUNIT:F3-141"],
+      "statement": "The window specifies composer controls and a two-entry transient FIFO queue, canonical slash-command routing, File Manager ownership and actions, File Editor buffers and preview capabilities, and constraints against browser-coupled or external-product authority.",
+      "title": "Composer, File Manager, and File Editor contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["failures_recovery", "security_privacy", "untrusted_inputs", "offline_network_loss", "concurrency_races", "partial_failure", "recovery_rollback", "scale_limits", "accessibility", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  MVP implementation-ready PM-native obligations.",
+          "line_end": 11023,
+          "line_start": 11023,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"File Manager owns tree navigation and file discovery, but not semantic search, diff-local search, or runtime artifact browsing.\"",
+          "line_end": 11004,
+          "line_start": 11004,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "implementation_readiness",
+      "impact": "The implementation-ready claim leaves builders to choose security, recovery, conflict, scale, and accessibility behavior for destructive and remote-capable editor operations.",
+      "item_id": "M15-W31-GAP",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-135", "SEMANTIC:PLANUNIT:F3-136", "SEMANTIC:PLANUNIT:F3-137", "SEMANTIC:PLANUNIT:F3-138", "SEMANTIC:PLANUNIT:F3-139", "SEMANTIC:PLANUNIT:F3-140", "SEMANTIC:PLANUNIT:F3-141"],
+      "statement": "Despite declaring File Manager operations MVP implementation-ready, the window does not define path authorization, symlink and traversal handling, clipboard conflict semantics, atomic Cut/Paste and drop behavior, remote disconnect recovery, buffer conflict resolution, preview sandboxing, large-file limits, or keyboard and screen-reader oracles.",
+      "title": "File operations are called ready without safety contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  PM remains a native workbench with explicit file-tree, diff, LSP, terminal, workspace-service,",
+          "line_end": 11187,
+          "line_start": 11187,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Durable annotation actions stay disabled unless stable semantic anchor IDs are available.\"",
+          "line_end": 11387,
+          "line_start": 11387,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines native Rust and Slint ownership, browser identity, MVP GUI seams, stable annotation gating, delegated activity inspection, and log/audit inspection.",
+      "item_id": "M15-W32-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-142", "PLANUNIT:F3-143", "PLANUNIT:F3-144", "PLANUNIT:F3-145", "PLANUNIT:F3-146", "PLANUNIT:F3-147", "PLANUNIT:F3-148"],
+      "statement": "The window establishes native service boundaries, browser-session identity and legacy aliases, an MVP seam inventory, annotation activation and persistence components, Agent Activity, and a searchable log/audit inspector with on-demand payload dereference.",
+      "title": "Native workbench, annotation, and audit-inspector contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "authority_boundaries", "untrusted_inputs", "partial_failure", "recovery_rollback", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  PM ships lightweight in-thread transparency and a dedicated searchable log/audit inspector with",
+          "line_end": 11510,
+          "line_start": 11510,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"The inspector does not eagerly expand large refs or blobs.\"",
+          "line_end": 11546,
+          "line_start": 11546,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "privacy_and_data_lifecycle",
+      "impact": "Search, drill-down, dereference, and export can expose credentials, prompts, user content, or cross-project records without a canonical enforcement or audit policy.",
+      "item_id": "M15-W32-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-142", "SEMANTIC:PLANUNIT:F3-143", "SEMANTIC:PLANUNIT:F3-144", "SEMANTIC:PLANUNIT:F3-145", "SEMANTIC:PLANUNIT:F3-146", "SEMANTIC:PLANUNIT:F3-147", "SEMANTIC:PLANUNIT:F3-148"],
+      "statement": "The annotation, activity, and log/audit surfaces include durable note records, payload dereference, search, drill-down, and export but do not specify project or role authorization, field redaction, retention and deletion, export classification, malicious payload rendering, or recovery from missing and corrupt references.",
+      "title": "Review and audit data lacks privacy and access policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "ownership", "consumers", "gui_truth", "failures_recovery", "compatibility_migration", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved",
+          "line_end": 11615,
+          "line_start": 11615,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"SelectableText supports copy without converting the field into an editable input.\"",
+          "line_end": 11898,
+          "line_start": 11898,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines document-review persistence, bundle approval gating, runtime pane ownership and identity, runtime tooling panes, widget ownership, and copyable read-only text behavior.",
+      "item_id": "M15-W33-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-149", "PLANUNIT:F3-150", "PLANUNIT:F3-151", "PLANUNIT:F3-152", "PLANUNIT:F3-153", "PLANUNIT:F3-154", "PLANUNIT:F3-155"],
+      "statement": "The window defines embedded document review state, bundle revision and approval progression, the bottom runtime zone and stable Terminal/browser identity, Problems/Output/Debug/Ports capabilities, the atomic widget catalog boundary, and SelectableText selection and copy behavior.",
+      "title": "Review, runtime-zone, and widget primitive contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "compatibility_migration", "offline_network_loss", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- \"draft -> in_review -> all_notes_resolved -> approved -> merged\"",
+          "line_end": 11643,
+          "line_start": 11643,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  across docking, focus changes, and restart recovery, with persisted tab selection, order, labels,",
+          "line_end": 11715,
+          "line_start": 11715,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "recovery_and_transition_integrity",
+      "impact": "Crashes or concurrent review, docking, and restore operations can regress approval state, duplicate tabs, lose selections, or bind recovered state to the wrong project or browser session.",
+      "item_id": "M15-W33-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-149", "SEMANTIC:PLANUNIT:F3-150", "SEMANTIC:PLANUNIT:F3-151", "SEMANTIC:PLANUNIT:F3-152", "SEMANTIC:PLANUNIT:F3-153", "SEMANTIC:PLANUNIT:F3-154", "SEMANTIC:PLANUNIT:F3-155"],
+      "statement": "Bundle progression and restart-restored runtime identities are specified as outcomes, but legal reverse transitions, concurrent Resubmit and approval, crash atomicity, schema version migration, stale session invalidation, duplicate identity reconciliation, and recovery acceptance tests are absent.",
+      "title": "Approval and restored-tab state lack integrity rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "propagation", "compatibility_migration", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "  rules require atomic behavior, focus, theme-token reuse, accessible labels, stable identity, and",
+          "line_end": 11915,
+          "line_start": 11915,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"UI updates render from the new projection state rather than optimistic ad hoc local rewrites unless explicitly marked pending.\"",
+          "line_end": 12147,
+          "line_start": 12147,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes atomic widget rules, Rust-owned reactive projections, state categories, command mutation boundaries, conflict policies, and narrow versioned shell persistence.",
+      "item_id": "M15-W34-EXACT",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-156", "PLANUNIT:F3-157", "PLANUNIT:F3-158", "PLANUNIT:F3-159", "PLANUNIT:F3-160", "PLANUNIT:F3-161", "PLANUNIT:F3-162"],
+      "statement": "The window defines widget category invariants, a reactive Rust-owned projection architecture, UI/session/project/global state taxonomy, command-first mutation flow, UI and project conflict approaches, and stable-key versioned persistence with forward rewrite of deprecated keys.",
+      "title": "Widget and state architecture contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "compatibility_migration", "gui_misleading_states", "scale_performance", "observability_support", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  State conflict resolution uses last-write-wins for UI state, merge strategy for project state",
+          "line_end": 12164,
+          "line_start": 12164,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- \"Migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family.\"",
+          "line_end": 12252,
+          "line_start": 12252,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "conflict_and_migration_semantics",
+      "impact": "Implementations can lose updates or diverge across processes and versions while still claiming last-write-wins, merge, batched projection, or successful migration behavior.",
+      "item_id": "M15-W34-GAP",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-156", "SEMANTIC:PLANUNIT:F3-157", "SEMANTIC:PLANUNIT:F3-158", "SEMANTIC:PLANUNIT:F3-159", "SEMANTIC:PLANUNIT:F3-160", "SEMANTIC:PLANUNIT:F3-161", "SEMANTIC:PLANUNIT:F3-162"],
+      "statement": "Last-write-wins does not define the ordering clock or writer scope; project merge has no algorithm or conflict artifact; batched invoke_from_event_loop mutations lack backpressure and ordering rules; forward migration lacks transactional rollback, corruption handling, idempotence, and mixed-version behavior.",
+      "title": "State conflict and migration algorithms remain open"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [9259, 9654],
+      "covered_source_unit_refs": ["PLANUNIT:F3-107", "PLANUNIT:F3-108", "PLANUNIT:F3-109", "PLANUNIT:F3-110", "PLANUNIT:F3-111", "PLANUNIT:F3-112", "PLANUNIT:F3-113", "SEMANTIC:PLANUNIT:F3-107", "SEMANTIC:PLANUNIT:F3-108", "SEMANTIC:PLANUNIT:F3-109", "SEMANTIC:PLANUNIT:F3-110", "SEMANTIC:PLANUNIT:F3-111", "SEMANTIC:PLANUNIT:F3-112", "SEMANTIC:PLANUNIT:F3-113"],
+      "item_ids": ["M15-W27-EXACT", "M15-W27-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed all seven Settings and Agent Config units exactly and adversarially; extracted the ownership contract and missing behavioral oracles.",
+      "window_id": "WIN-AC612DBB4EFE-0027"
+    },
+    {
+      "core_range": [9655, 10044],
+      "covered_source_unit_refs": ["PLANUNIT:F3-114", "PLANUNIT:F3-115", "PLANUNIT:F3-116", "PLANUNIT:F3-117", "PLANUNIT:F3-118", "PLANUNIT:F3-119", "PLANUNIT:F3-120", "SEMANTIC:PLANUNIT:F3-114", "SEMANTIC:PLANUNIT:F3-115", "SEMANTIC:PLANUNIT:F3-116", "SEMANTIC:PLANUNIT:F3-117", "SEMANTIC:PLANUNIT:F3-118", "SEMANTIC:PLANUNIT:F3-119", "SEMANTIC:PLANUNIT:F3-120"],
+      "item_ids": ["M15-W28-EXACT", "M15-W28-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed personas, provider evidence, failover, Docker routing, account binding, panel persistence, and Terminal ownership, including privacy and mutation failure cases.",
+      "window_id": "WIN-AC612DBB4EFE-0028"
+    },
+    {
+      "core_range": [10045, 10423],
+      "covered_source_unit_refs": ["PLANUNIT:F3-121", "PLANUNIT:F3-122", "PLANUNIT:F3-123", "PLANUNIT:F3-124", "PLANUNIT:F3-125", "PLANUNIT:F3-126", "PLANUNIT:F3-127", "SEMANTIC:PLANUNIT:F3-121", "SEMANTIC:PLANUNIT:F3-122", "SEMANTIC:PLANUNIT:F3-123", "SEMANTIC:PLANUNIT:F3-124", "SEMANTIC:PLANUNIT:F3-125", "SEMANTIC:PLANUNIT:F3-126", "SEMANTIC:PLANUNIT:F3-127"],
+      "item_ids": ["M15-W29-EXACT", "M15-W29-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed shortcut, Skills, project status, attention, concern, notification, and record-shape units, including lifecycle and cross-surface consistency attacks.",
+      "window_id": "WIN-AC612DBB4EFE-0029"
+    },
+    {
+      "core_range": [10424, 10799],
+      "covered_source_unit_refs": ["PLANUNIT:F3-128", "PLANUNIT:F3-129", "PLANUNIT:F3-130", "PLANUNIT:F3-131", "PLANUNIT:F3-132", "PLANUNIT:F3-133", "PLANUNIT:F3-134", "SEMANTIC:PLANUNIT:F3-128", "SEMANTIC:PLANUNIT:F3-129", "SEMANTIC:PLANUNIT:F3-130", "SEMANTIC:PLANUNIT:F3-131", "SEMANTIC:PLANUNIT:F3-132", "SEMANTIC:PLANUNIT:F3-133", "SEMANTIC:PLANUNIT:F3-134"],
+      "item_ids": ["M15-W30-EXACT", "M15-W30-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed alert evidence, attention authority, alert lifecycle, and threaded-chat behavior with concurrency, rollback, stale mirror, and scale lenses.",
+      "window_id": "WIN-AC612DBB4EFE-0030"
+    },
+    {
+      "core_range": [10800, 11178],
+      "covered_source_unit_refs": ["PLANUNIT:F3-135", "PLANUNIT:F3-136", "PLANUNIT:F3-137", "PLANUNIT:F3-138", "PLANUNIT:F3-139", "PLANUNIT:F3-140", "PLANUNIT:F3-141", "SEMANTIC:PLANUNIT:F3-135", "SEMANTIC:PLANUNIT:F3-136", "SEMANTIC:PLANUNIT:F3-137", "SEMANTIC:PLANUNIT:F3-138", "SEMANTIC:PLANUNIT:F3-139", "SEMANTIC:PLANUNIT:F3-140", "SEMANTIC:PLANUNIT:F3-141"],
+      "item_ids": ["M15-W31-EXACT", "M15-W31-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed composer, queue, command, File Manager, File Editor, and architecture constraints with destructive, remote, untrusted-input, and accessibility attacks.",
+      "window_id": "WIN-AC612DBB4EFE-0031"
+    },
+    {
+      "core_range": [11179, 11556],
+      "covered_source_unit_refs": ["PLANUNIT:F3-142", "PLANUNIT:F3-143", "PLANUNIT:F3-144", "PLANUNIT:F3-145", "PLANUNIT:F3-146", "PLANUNIT:F3-147", "PLANUNIT:F3-148", "SEMANTIC:PLANUNIT:F3-142", "SEMANTIC:PLANUNIT:F3-143", "SEMANTIC:PLANUNIT:F3-144", "SEMANTIC:PLANUNIT:F3-145", "SEMANTIC:PLANUNIT:F3-146", "SEMANTIC:PLANUNIT:F3-147", "SEMANTIC:PLANUNIT:F3-148"],
+      "item_ids": ["M15-W32-EXACT", "M15-W32-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed native boundaries, browser identities, GUI seams, annotations, activity, and audit inspection, including authorization, privacy, redaction, and corrupt-reference cases.",
+      "window_id": "WIN-AC612DBB4EFE-0032"
+    },
+    {
+      "core_range": [11557, 11905],
+      "covered_source_unit_refs": ["PLANUNIT:F3-149", "PLANUNIT:F3-150", "PLANUNIT:F3-151", "PLANUNIT:F3-152", "PLANUNIT:F3-153", "PLANUNIT:F3-154", "PLANUNIT:F3-155", "SEMANTIC:PLANUNIT:F3-149", "SEMANTIC:PLANUNIT:F3-150", "SEMANTIC:PLANUNIT:F3-151", "SEMANTIC:PLANUNIT:F3-152", "SEMANTIC:PLANUNIT:F3-153", "SEMANTIC:PLANUNIT:F3-154", "SEMANTIC:PLANUNIT:F3-155"],
+      "item_ids": ["M15-W33-EXACT", "M15-W33-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed document and bundle review, runtime-zone identity, debug panes, widget scope, and SelectableText with transition, crash, migration, and restore attacks.",
+      "window_id": "WIN-AC612DBB4EFE-0033"
+    },
+    {
+      "core_range": [11906, 12260],
+      "covered_source_unit_refs": ["PLANUNIT:F3-156", "PLANUNIT:F3-157", "PLANUNIT:F3-158", "PLANUNIT:F3-159", "PLANUNIT:F3-160", "PLANUNIT:F3-161", "PLANUNIT:F3-162", "SEMANTIC:PLANUNIT:F3-156", "SEMANTIC:PLANUNIT:F3-157", "SEMANTIC:PLANUNIT:F3-158", "SEMANTIC:PLANUNIT:F3-159", "SEMANTIC:PLANUNIT:F3-160", "SEMANTIC:PLANUNIT:F3-161", "SEMANTIC:PLANUNIT:F3-162"],
+      "item_ids": ["M15-W34-EXACT", "M15-W34-GAP"],
+      "reviewed": true,
+      "summary": "Reviewed widgets, reactive projections, state categories, command mutation, conflicts, and persistence with ordering, merge, backpressure, corruption, and mixed-version attacks.",
+      "window_id": "WIN-AC612DBB4EFE-0034"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-AC612DBB4EFE-0005",
+    "document_path": "Plans/FinalGUISpec.md",
+    "micro_window_ids": ["WIN-AC612DBB4EFE-0027", "WIN-AC612DBB4EFE-0028", "WIN-AC612DBB4EFE-0029", "WIN-AC612DBB4EFE-0030", "WIN-AC612DBB4EFE-0031", "WIN-AC612DBB4EFE-0032", "WIN-AC612DBB4EFE-0033", "WIN-AC612DBB4EFE-0034"],
+    "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner documents define executable acceptance oracles for the Settings, FileManager, runtime-alert, annotation, and state-persistence behaviors summarized here?",
+      "Where are the canonical authorization, redaction, retention, and export policies for provider evidence, durable annotations, and log/audit payloads?",
+      "Which contract owns operation identity, concurrency, rollback, and recovery semantics shared by alert bulk actions, file mutations, bundle approval, and projection updates?"
+    ],
+    "feature_family_keys": ["settings-and-agent-config", "project-attention-and-alerts", "chat-and-composer", "file-manager-and-editor", "annotations-and-audit", "runtime-zone-and-review", "widgets-and-state"],
+    "research_queries": [
+      "desktop application secure diagnostic path disclosure and redaction patterns",
+      "offline first state merge deterministic conflict resolution UI",
+      "crash consistent desktop workspace session and tab restoration",
+      "accessible virtualized streaming chat and log viewer requirements"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000042_attempt_0015_terminal"
+}

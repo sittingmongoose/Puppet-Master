@@ -1,0 +1,56 @@
+{
+  "agent_path": "/root/a005m15_b10_000202_attempt_0015_terminal",
+  "assignment_id": "A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0010",
+  "coverage_credit": 1,
+  "credited_micro_window_ids": [
+    "WIN-10C169040E5A-0001"
+  ],
+  "dispatch_intent": {
+    "bytes": 2129,
+    "exists": true,
+    "path": "master/macro/dispatch/macro-batch-0010/A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001/attempt-0015/dispatch_intent.json",
+    "sha256": "f9df1c85fb8e29f29928d2aac24283589ed6556df17999d17756a1708c15556d"
+  },
+  "dispatch_receipt": {
+    "bytes": 1046,
+    "exists": true,
+    "path": "master/macro/dispatch/macro-batch-0010/A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001/attempt-0015/dispatch_receipt.json",
+    "sha256": "05d17ee2e288da7fe427248480fdca6333aeab664ec03fb99eac73a51036bfb2"
+  },
+  "dual_mechanical_validation_confirmed": true,
+  "epoch_id": "epoch-0015",
+  "fresh_identity_confirmed": true,
+  "independent_errors": [],
+  "independent_validation_sha256": "1be423cdfb72aa1a10d6850f080f0abb845c8a74fa772483616dd5de1c3d938d",
+  "native_child_thread_id": "019f500f-0005-7380-ba62-526438ede3c2",
+  "native_child_thread_state": "idle",
+  "native_child_turn_error": null,
+  "native_child_turn_id": "019f500f-007b-7ae0-9f99-6e0a47f7d8a0",
+  "native_child_turn_status": "completed",
+  "normalization_receipt": {
+    "bytes": null,
+    "exists": false,
+    "path": "master/macro/normalizations/macro-batch-0010/A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001/attempt-0015/normalization_receipt.json",
+    "sha256": null
+  },
+  "primary_errors": [],
+  "primary_validation_sha256": "e5b2168b4381e2e07418ab99f9a5dccc0d9bb956c57cce8029f5f29610937f26",
+  "raw_output_payload": {
+    "bytes": 23213,
+    "exists": true,
+    "path": "macro_v2/assignments/A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001/attempts/attempt-0015/result.json",
+    "sha256": "687325d1502bd48a928535961f11bf5763e47cea903101809a255210f4396efe"
+  },
+  "result_payload": {
+    "bytes": 23213,
+    "exists": true,
+    "path": "macro_v2/assignments/A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001/attempts/attempt-0015/result.json",
+    "sha256": "687325d1502bd48a928535961f11bf5763e47cea903101809a255210f4396efe"
+  },
+  "schema_version": "macro-attempt-outcome-v1",
+  "status": "credited",
+  "terminal_response_prefix": "PMR1"
+}

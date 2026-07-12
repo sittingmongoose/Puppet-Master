@@ -1,0 +1,2251 @@
+{
+  "assignment_id": "A005M15-000019-INTEGRATED-MACRO15-19B62D73B9EF-0005",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Successful or attempted-completed web operations use tool.invoked.",
+          "line_end": 8331,
+          "line_start": 8331,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents event-family forks and keeps storage and analytics consumers on shared tool events.",
+      "item_id": "A005M15-CV-111",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-111",
+        "SEMANTIC:PLANUNIT:CV-111"
+      ],
+      "statement": "Web operations are bound to tool.invoked for attempted/completed activity and tool.denied for policy or user denial; web.operation remains payload classification, not a parallel event family.",
+      "title": "Canonical web-operation event families"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - tool.invoked.payload.meta preserves common web fields including web_operation, tool_id, operation_input_ref, operation_input_preview, invocation_source, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code.",
+          "line_end": 8381,
+          "line_start": 8381,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "underspecified_payload_schema",
+      "impact": "Independent producers can emit structurally different payloads that all appear compliant, weakening validation, compatibility, and GUI projections.",
+      "item_id": "A005M15-CV-112",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-112",
+        "SEMANTIC:PLANUNIT:CV-112"
+      ],
+      "statement": "The unit enumerates many common and operation-specific payload.meta fields but does not state required-versus-optional status, types, size limits, or per-operation applicability for the listed fields.",
+      "title": "Web meta field requiredness is not closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "gui_truth",
+        "observability_support",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - provider_fallback_summary? records failed provider, cause, and next same-operation provider.",
+          "line_end": 8437,
+          "line_start": 8437,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents effective-adapter fields from hiding rate-limit or outage routing.",
+      "item_id": "A005M15-CV-113",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-113",
+        "SEMANTIC:PLANUNIT:CV-113"
+      ],
+      "statement": "Provider fallback records the failed provider, cause, and next same-operation provider and requires audit wording aligned with visible chat disclosure.",
+      "title": "Fallback disclosure is auditable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "scale_performance",
+        "propagation",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Large web payload bodies move by ref or /blob rather than being duplicated into every event projection.",
+          "line_end": 8485,
+          "line_start": 8485,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Constrains event bloat while preserving aggregate and URL-level auditability.",
+      "item_id": "A005M15-CV-114",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-114",
+        "SEMANTIC:PLANUNIT:CV-114"
+      ],
+      "statement": "Large web bodies move by ref or blob while batch operations retain one parent audit event and per-URL child events.",
+      "title": "Large web data is reference-first with parent-child audit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "ownership",
+        "consumers",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - runtime_snapshot, task_id, subagent_type, resumed, chat.plan_todo_updated, /turn, /todo, and /tokens fields are preserved where they participate in projection.",
+          "line_end": 8533,
+          "line_start": 8533,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents local tool-result decorations from fragmenting runtime identity.",
+      "item_id": "A005M15-CV-115",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-115",
+        "SEMANTIC:PLANUNIT:CV-115"
+      ],
+      "statement": "Runtime snapshot, task, subagent, resumed, plan TODO, turn, todo, and token fields are preserved where they participate in projection and remain shared payload extensions.",
+      "title": "Runtime snapshot fields are cross-cutting"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - subagent.spawn_requested and subagent.spawn_completed preserve the same PM lineage envelope as subagent.spawned and subagent.completed.",
+          "line_end": 8585,
+          "line_start": 8585,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents parallel lifecycle namespaces and preserves parent-child attribution.",
+      "item_id": "A005M15-CV-116",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-116",
+        "SEMANTIC:PLANUNIT:CV-116"
+      ],
+      "statement": "Subagent lifecycle uses subagent.* and request/completion variants retain the same PM lineage envelope as spawned/completed variants; legacy chat aliases normalize into it.",
+      "title": "Subagent namespace and lineage are canonical"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Structural item creation, removal, or reordering may emit one event per affected todo_id.",
+          "line_end": 8640,
+          "line_start": 8640,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "concurrency_and_partial_failure_gap",
+      "impact": "Concurrent or partially persisted reorder events can yield divergent durable TODO order and misleading chat projections.",
+      "item_id": "A005M15-CV-117",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-117",
+        "SEMANTIC:PLANUNIT:CV-117"
+      ],
+      "statement": "Structural creation, removal, or reordering may emit one event per affected todo_id, but the contract supplies no transaction, sequence, version, or idempotency rule for multi-item mutations.",
+      "title": "TODO structural mutations lack ordering and atomicity rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Raw logs, full trace payloads, full DOM dumps, request /response bodies, cookies, /storage values, and binary blobs are reference-first by default.",
+          "line_end": 8690,
+          "line_start": 8690,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Protects model context and constrains untrusted or sensitive evidence ingestion.",
+      "item_id": "A005M15-CV-118",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-118",
+        "SEMANTIC:PLANUNIT:CV-118"
+      ],
+      "statement": "Raw logs, traces, DOM dumps, request/response bodies, cookies, storage values, and binary blobs are reference-first; bounded previews or attachments require an owner contract.",
+      "title": "Verbose evidence cannot auto-inline"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "states_transitions",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - owner_hint starts as advisory tool output.",
+          "line_end": 8740,
+          "line_start": 8740,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents advisory metadata or user-side display state from silently gaining execution authority.",
+      "item_id": "A005M15-CV-119",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-119",
+        "SEMANTIC:PLANUNIT:CV-119"
+      ],
+      "statement": "owner_hint begins as advisory output and only delegation resolution records convert it into concrete effective provider, model, Persona, or role binding.",
+      "title": "Owner hints become effective only through resolution"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Firecrawl-specific HTTP and provider errors map to PM canonical error codes exactly as specified.",
+          "line_end": 8789,
+          "line_start": 8789,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_mapping_oracle",
+      "impact": "Builders and tests cannot determine whether a particular provider response maps correctly without an unstated external table.",
+      "item_id": "A005M15-CV-120",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-120",
+        "SEMANTIC:PLANUNIT:CV-120"
+      ],
+      "statement": "The unit requires Firecrawl HTTP and provider errors to map exactly as specified, but the assigned text does not enumerate the actual provider-status-to-canonical-code mapping table.",
+      "title": "Web provider mapping is indirect rather than falsifiable here"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "compatibility_migration",
+        "failures_recovery",
+        "recovery_rollback",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Listed legacy web_* aliases normalize into canonical web error taxonomy values.",
+          "line_end": 8837,
+          "line_start": 8837,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents compatibility aliases from becoming a second error family.",
+      "item_id": "A005M15-CV-121",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-121",
+        "SEMANTIC:PLANUNIT:CV-121"
+      ],
+      "statement": "Legacy web-operation aliases normalize into the canonical taxonomy, with projection staleness treated as freshness plus refresh/retry handling rather than a parallel error code.",
+      "title": "Legacy web errors normalize to one taxonomy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - 'change_tracking with no previous cached fetch returns change_status: \"new\" and no_previous_version in warnings[].'",
+          "line_end": 8893,
+          "line_start": 8893,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Avoids false-failure presentation and preserves a closed error taxonomy.",
+      "item_id": "A005M15-CV-122",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-122",
+        "SEMANTIC:PLANUNIT:CV-122"
+      ],
+      "statement": "When no prior cached fetch exists, change tracking emits change_status new and no_previous_version in warnings rather than an error_code.",
+      "title": "First change-tracking observation is informational"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "consumers",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - debug.investigation.started, state_changed, target_bound, context_item_added, context_item_state_changed, instrumentation_state_changed, verification_recorded, exported, and imported events are preserved.",
+          "line_end": 8943,
+          "line_start": 8943,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "invalid_transition_and_replay_gap",
+      "impact": "Out-of-order or replayed events can produce inconsistent investigation status across storage, artifacts, and chat consumers.",
+      "item_id": "A005M15-CV-123",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-123",
+        "SEMANTIC:PLANUNIT:CV-123"
+      ],
+      "statement": "The contract registers the investigation event types and minimum identity domains but does not define legal transition order, duplicate handling, idempotency, or terminal-state behavior.",
+      "title": "Investigation event transitions lack sequencing semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "contracts",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes are not duplicated inside debug investigation payloads.",
+          "line_end": 8996,
+          "line_start": 8996,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Reduces secret duplication and keeps sensitive-data ownership in the artifact system.",
+      "item_id": "A005M15-CV-124",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-124",
+        "SEMANTIC:PLANUNIT:CV-124"
+      ],
+      "statement": "Debug investigation payloads cannot duplicate raw secrets, log dumps, trace blobs, or binary bytes; raw data moves by artifact/blob refs and summaries retain redaction state.",
+      "title": "Debug payloads exclude raw sensitive material"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - account_id, selected_billing_entity_id, auth_realm, and auth_surface are omitted when they do not apply.",
+          "line_end": 9048,
+          "line_start": 9048,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Preserves semantic distinction between absent and explicit values across persisted and evented auth state.",
+      "item_id": "A005M15-CV-125",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-125",
+        "SEMANTIC:PLANUNIT:CV-125"
+      ],
+      "statement": "AuthState is the canonical provider-subject snapshot and provider-owned optional fields are omitted when inapplicable rather than null-padded.",
+      "title": "Auth snapshots omit inapplicable fields"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - selected_billing_entity_id is conditionally required only when quota bucket depends on entity selection.",
+          "line_end": 9100,
+          "line_start": 9100,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents placeholder backfill and looser consumer-local optionality.",
+      "item_id": "A005M15-CV-126",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-126",
+        "SEMANTIC:PLANUNIT:CV-126"
+      ],
+      "statement": "selected_billing_entity_id is required only when quota selection depends on it, while provider-owned auth fields are omitted when unused and external OpenCode servers have stable identity rules.",
+      "title": "Billing and server-profile fields are conditional"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "offline_network_loss",
+        "failures_recovery",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Provider calls refresh credentials first when within the provider-defined pre-expiry window, defaulting to 20% of remaining lifetime where no stronger owner contract exists.",
+          "line_end": 9156,
+          "line_start": 9156,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "refresh_timing_and_concurrency_gap",
+      "impact": "Different clients can refresh at incompatible times or race multiple refreshes, causing avoidable 401s, token overwrites, and provider load.",
+      "item_id": "A005M15-CV-127",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-127",
+        "SEMANTIC:PLANUNIT:CV-127"
+      ],
+      "statement": "The default pre-expiry rule is stated as 20 percent of remaining lifetime, but no reference instant, token lifetime basis, minimum window, or concurrent refresh-coalescing rule is defined.",
+      "title": "Credential pre-expiry window formula is ambiguous"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Provider-level chips are derived from lower-level account-state dimensions.",
+          "line_end": 9212,
+          "line_start": 9212,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "gui_derivation_mapping_gap",
+      "impact": "The same account facts can render contradictory status chips across surfaces, including false-ready or false-failed states.",
+      "item_id": "A005M15-CV-128",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-128",
+        "SEMANTIC:PLANUNIT:CV-128"
+      ],
+      "statement": "The contract closes three orthogonal state dimensions and says provider-level chips are derived, but it does not define the complete precedence/mapping from state combinations to LoggedOut, LoggedIn, AuthExpired, or AuthFailed.",
+      "title": "Derived auth chip mapping is not enumerated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "gui_truth",
+        "authority_boundaries",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Accounts not In Sync carry one-line remediation text and primary actions.",
+          "line_end": 9264,
+          "line_start": 9264,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "remediation_action_schema_gap",
+      "impact": "Surfaces may offer inconsistent or unauthorized remediation controls and cannot test deterministic action presentation.",
+      "item_id": "A005M15-CV-129",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-129",
+        "SEMANTIC:PLANUNIT:CV-129"
+      ],
+      "statement": "Accounts not In Sync must include one-line remediation text and primary actions, but action IDs, ordering, eligibility, localization keys, and disabled-state behavior are unspecified.",
+      "title": "Remediation action contract lacks stable identifiers"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Filesystem and cache roots use stable IDs such as account_id and connection_profile_id rather than display names.",
+          "line_end": 9309,
+          "line_start": 9309,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents display-name path drift and surface-local vocabulary forks.",
+      "item_id": "A005M15-CV-130",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-130",
+        "SEMANTIC:PLANUNIT:CV-130"
+      ],
+      "statement": "Filesystem and cache roots use stable account or connection-profile IDs, and non-auth provider meanings use requested/effective or provider_identity fields rather than colliding with AuthState.provider.",
+      "title": "Stable IDs govern auth storage roots"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Provider auth method defaults from the source span are preserved.",
+          "line_end": 9364,
+          "line_start": 9364,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_provider_default_matrix",
+      "impact": "Auto mode behavior and setup UI cannot be independently implemented or falsified from this contract.",
+      "item_id": "A005M15-CV-131",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-131",
+        "SEMANTIC:PLANUNIT:CV-131"
+      ],
+      "statement": "The unit says provider auth method defaults from the source span are preserved, but the assigned PlanUnit does not state the default for each named provider.",
+      "title": "Provider auth defaults are not enumerated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "localization",
+        "security_privacy",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Anthropic setup action label is Sign in to Console/API.",
+          "line_end": 9410,
+          "line_start": 9410,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Avoids misleading users about billing and usage authority.",
+      "item_id": "A005M15-CV-132",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-132",
+        "SEMANTIC:PLANUNIT:CV-132"
+      ],
+      "statement": "Codex copy distinguishes plan-backed ChatGPT access from API-key use, and Anthropic setup preserves a stable action label and billing/rate-limit helper meaning.",
+      "title": "Auth copy separates billing paths"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "authority",
+        "states_transitions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - gemini_cli remains preserved only as retired source-lineage.",
+          "line_end": 9458,
+          "line_start": 9458,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents a retired provider from resurfacing in auth pools, fallback, or setup.",
+      "item_id": "A005M15-CV-133",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-133",
+        "SEMANTIC:PLANUNIT:CV-133"
+      ],
+      "statement": "gemini_cli remains source-lineage only; Gemini Direct remains API-key based and active Google-owned CLI routing uses Antigravity CLI without silent fallback to the retired provider.",
+      "title": "Retired Gemini CLI cannot re-enter active routing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "states_transitions",
+        "operations",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Policy precedence remains provider default, account override, role-by-provider override, role-by-account override, run snapshot, then attempt/message resolution.",
+          "line_end": 9515,
+          "line_start": 9515,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Makes resolution provenance recoverable and prevents opportunistic credential selection.",
+      "item_id": "A005M15-CV-134",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-134",
+        "SEMANTIC:PLANUNIT:CV-134"
+      ],
+      "statement": "Auto auth follows a fixed provider/account/role/run/attempt precedence and manual active-account controls remain recorded operator overrides rather than the default model.",
+      "title": "Auto auth precedence preserves requested versus effective state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "concurrency_races",
+        "security_privacy",
+        "failures_recovery",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Token writes are serialized so successful browser callbacks are not overwritten by later registration attempts.",
+          "line_end": 9565,
+          "line_start": 9565,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents successful callbacks from being overwritten and closes major OAuth reliability and privacy hazards.",
+      "item_id": "A005M15-CV-135",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-135",
+        "SEMANTIC:PLANUNIT:CV-135"
+      ],
+      "statement": "OAuth client registration reuses a stable clientId, token writes are serialized, and managed flows require proactive refresh, secret scrubbing, differentiated recovery, and platform tests.",
+      "title": "OAuth callbacks and token writes are protected"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "consumers",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - GitHub example event type strings remain preserved.",
+          "line_end": 9615,
+          "line_start": 9615,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "event_payload_and_transition_gap",
+      "impact": "Event consumers can disagree on progress and failure state despite sharing the same type strings.",
+      "item_id": "A005M15-CV-136",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-136",
+        "SEMANTIC:PLANUNIT:CV-136"
+      ],
+      "statement": "Stable provider-owned GitHub auth event type strings are preserved, but required payload fields, correlation identity, transition ordering, and retry/duplicate semantics are not specified.",
+      "title": "Auth event payload contracts are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Enum values in the source block remain available for exact-text audit.",
+          "line_end": 9660,
+          "line_start": 9660,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_closed_enum_values",
+      "impact": "Consumers can introduce local variants while still claiming to use the named families, defeating validation and migration safety.",
+      "item_id": "A005M15-CV-137",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-137",
+        "SEMANTIC:PLANUNIT:CV-137"
+      ],
+      "statement": "The unit names ten canonical enum families but says their values remain in a source block rather than enumerating the closed values in the assigned contract.",
+      "title": "Setup-health enum values are only indirectly preserved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "compatibility_migration",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - google_adc, service_account_json, and vertex_api_key remain separate validation branches.",
+          "line_end": 9718,
+          "line_start": 9718,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents authenticated-but-blocked providers and credential families from collapsing into misleading setup state.",
+      "item_id": "A005M15-CV-138",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-138",
+        "SEMANTIC:PLANUNIT:CV-138"
+      ],
+      "statement": "Setup exposes auth-job and provider-readiness state separately, retains Antigravity CLI as active, retires Nanobanana and Gemini CLI setup, and preserves distinct Google credential validation branches.",
+      "title": "Setup distinguishes readiness and active Google credential branches"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - availability_state closes to eligible, cooldown, hard_blocked, disabled.",
+          "line_end": 9211,
+          "line_start": 9211,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - When reset_at or cooldown_until passes, availability becomes eligible_pending_recheck and readiness enters validating until validation or a successful run returns an observed state.",
+          "line_end": 9776,
+          "line_start": 9776,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "cross_planunit_enum_conflict",
+      "impact": "The same canonical state field has incompatible closed vocabularies, making valid post-reset state unrepresentable or causing a schema-breaking extra enum value.",
+      "item_id": "A005M15-CV-139",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:CV-139",
+        "SEMANTIC:PLANUNIT:CV-139"
+      ],
+      "statement": "CV-128 closes availability_state to eligible, cooldown, hard_blocked, and disabled, while CV-139 requires availability to become eligible_pending_recheck after reset or cooldown expiry.",
+      "title": "Availability enum conflicts with eligible_pending_recheck"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "states_transitions",
+        "operations",
+        "scale_limits",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Usage warnings expose configurable threshold, dismiss/quiet window, and path to Usage/config.",
+          "line_end": 9829,
+          "line_start": 9829,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "warning_configuration_lifecycle_gap",
+      "impact": "Warnings can reappear unexpectedly, remain hidden too long, or disagree across devices and accounts.",
+      "item_id": "A005M15-CV-140",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-140",
+        "SEMANTIC:PLANUNIT:CV-140"
+      ],
+      "statement": "Usage warnings expose configurable thresholds and dismiss or quiet windows, but the contract does not define units, defaults, scope, persistence, expiry behavior, or interaction with multiple simultaneous pressure signals.",
+      "title": "Usage warning persistence and threshold units are open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "security_privacy",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Claude Code auth import may seed only auth-bearing credentials.json / .credentials.json material before validation.",
+          "line_end": 9883,
+          "line_start": 9883,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "credential_import_recovery_gap",
+      "impact": "Partial or failed imports can leave credential material exposed or create inconsistent account state.",
+      "item_id": "A005M15-CV-141",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-141",
+        "SEMANTIC:PLANUNIT:CV-141"
+      ],
+      "statement": "The import boundary limits seeding to auth-bearing credential files before validation, but file-permission requirements, atomic staging, rollback on failed validation, and duplicate-account reconciliation are unspecified.",
+      "title": "Claude credential import lacks transactional recovery rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "cross_document_seams",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"The provider state mapping table preserves unknown, discovered, configuring, ready, active, degraded, suspended, expired, and removed.\"",
+          "line_end": 9931,
+          "line_start": 9931,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Provider-profile state remains a reconciliation input across provider profile, Executor Protocol node state, and PM runtime/contract state.\"",
+          "line_end": 9932,
+          "line_start": 9932,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_state_mapping_table",
+      "impact": "Reconciliation implementations can project different runtime meanings for the same provider profile, especially configuring, removed, or unknown.",
+      "item_id": "A005M15-CV-142",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-142",
+        "SEMANTIC:PLANUNIT:CV-142"
+      ],
+      "statement": "The unit lists provider states and says state remains a reconciliation input, but it does not enumerate the mapping to Executor Protocol node state and PM runtime state for each source state.",
+      "title": "Provider lifecycle mapping is not explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "gui_misleading_states",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"active and degraded correspond to active execution.\"",
+          "line_end": 9981,
+          "line_start": 9981,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents setup lifecycle from masquerading as in-flight child execution.",
+      "item_id": "A005M15-CV-143",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-143",
+        "SEMANTIC:PLANUNIT:CV-143"
+      ],
+      "statement": "Active and degraded provider states project to active execution, suspended to blocked, expired to failure, while discovery/configuration remain provider-profile-only.",
+      "title": "Only execution-relevant provider states project to child execution"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "authority_boundaries",
+        "compatibility_migration",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"sunset and removed models are ineligible for new dispatch unless explicit compatibility policy permits them.\"",
+          "line_end": 10030,
+          "line_start": 10030,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "undefined_dispatch_exception_authority",
+      "impact": "An implementation can silently dispatch retired models under an unbounded compatibility exception.",
+      "item_id": "A005M15-CV-144",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-144",
+        "SEMANTIC:PLANUNIT:CV-144"
+      ],
+      "statement": "Sunset and removed models are ineligible for new dispatch unless an explicit compatibility policy permits them, but the policy owner, scope, approval, audit record, and expiry are not defined.",
+      "title": "Sunset compatibility exception has no authority contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "observability_support",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Requested fields preserve requested_account_id, requested_account_binding, and requested_account_policy.\"",
+          "line_end": 10079,
+          "line_start": 10079,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Preserves audit lineage and prevents provider-native IDs from replacing internal identity.",
+      "item_id": "A005M15-CV-145",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-145",
+        "SEMANTIC:PLANUNIT:CV-145"
+      ],
+      "statement": "Requested account policy and binding fields remain historically recoverable, while effective stable account, provider, role, and operational identity are recorded separately from provider-native metadata.",
+      "title": "Requested and effective execution identities remain distinct"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "ownership",
+        "contracts",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"accepted non-persona fields land in shared runtime contracts first.\"",
+          "line_end": 10135,
+          "line_start": 10135,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents shadow field names and cross-feature schema drift.",
+      "item_id": "A005M15-CV-146",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-146",
+        "SEMANTIC:PLANUNIT:CV-146"
+      ],
+      "statement": "Accepted non-persona fields enter shared runtime contracts before question, TODO, web, tool/chat, or other feature packets depend on them; feature packets reuse canonical names additively.",
+      "title": "Shared runtime fields must land before feature adoption"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "privacy_data_lifecycle",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"provider_account_state stores provider/account current-state snapshot facts.\"",
+          "line_end": 10185,
+          "line_start": 10185,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "record_schema_and_lifecycle_gap",
+      "impact": "Storage builders can create incompatible records and cannot safely migrate or reconcile requested/effective runtime history.",
+      "item_id": "A005M15-CV-147",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-147",
+        "SEMANTIC:PLANUNIT:CV-147"
+      ],
+      "statement": "Four canonical record families are named with semantic roles, but field schemas, keys, schema versions, update authority, retention, and deletion behavior are not specified.",
+      "title": "Provider runtime record families lack schemas and lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "concurrency_races",
+        "authority_boundaries",
+        "states_transitions",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"effective-account-scoped permission resolution reads requested_account_binding.\"",
+          "line_end": 10235,
+          "line_start": 10235,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"effective_account_id remains available to approval and permission snapshots.\"",
+          "line_end": 10236,
+          "line_start": 10236,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "approval_identity_race_gap",
+      "impact": "An approval scoped to one effective account could be replayed or applied after resolution switches to another account.",
+      "item_id": "A005M15-CV-148",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-148",
+        "SEMANTIC:PLANUNIT:CV-148"
+      ],
+      "statement": "Permission resolution reads requested_account_binding and retains effective_account_id, but no rule defines what happens when effective account selection changes after approval or while a tool action is pending.",
+      "title": "Permission snapshots lack account-change invalidation semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "missing_callers_consumers",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Runtime identity remains explicit across prompt assembly.\"",
+          "line_end": 10280,
+          "line_start": 10280,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "abstract_cross_seam_requirement",
+      "impact": "Each consumer can preserve a different subset, breaking attribution and historical reconstruction.",
+      "item_id": "A005M15-CV-149",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-149",
+        "SEMANTIC:PLANUNIT:CV-149"
+      ],
+      "statement": "The unit states that runtime identity remains explicit across prompt assembly, execution, approval, and history but does not define the required fields, envelope, join keys, redaction, or failure behavior at any seam.",
+      "title": "Context runtime identity scope is not a concrete contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "propagation",
+        "ownership"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Investigation attachments remain additive.\"",
+          "line_end": 10322,
+          "line_start": 10322,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents investigation-specific payloads from forking runtime identity.",
+      "item_id": "A005M15-CV-150",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-150",
+        "SEMANTIC:PLANUNIT:CV-150"
+      ],
+      "statement": "InvestigationContextAttachment remains additive and reuses shared runtime snapshot names without renaming or shadowing them.",
+      "title": "Investigation attachments are additive"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "contracts",
+        "inputs_outputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"requested_persona and effective_persona remain canonical Persona identity fields.\"",
+          "line_end": 10367,
+          "line_start": 10367,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Closes a live-schema alias fork while retaining migration lineage.",
+      "item_id": "A005M15-CV-151",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-151",
+        "SEMANTIC:PLANUNIT:CV-151"
+      ],
+      "statement": "requested_persona and effective_persona remain canonical while requested_persona_id and effective_persona_id are migration-only and cannot return in live payloads.",
+      "title": "Canonical Persona fields replace migration aliases"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "contracts",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"PersonaSnapshot does not become a separate schema family.\"",
+          "line_end": 10417,
+          "line_start": 10417,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Embedded EventRecord.payload runtime snapshots preserve runtime_mode, mode_family?, and mode_policy_ref?.\"",
+          "line_end": 10418,
+          "line_start": 10418,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents compatibility naming from creating a duplicate runtime snapshot schema.",
+      "item_id": "A005M15-CV-152",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-152",
+        "SEMANTIC:PLANUNIT:CV-152"
+      ],
+      "statement": "PersonaSnapshot is only a migration label; embedded runtime snapshots retain runtime_mode, mode_family, and mode_policy_ref within EventRecord payload.",
+      "title": "PersonaSnapshot is not a second schema family"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "contracts",
+        "consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Legacy persona snapshot labels remain source-lineage aliases only.\"",
+          "line_end": 10464,
+          "line_start": 10464,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Live payloads use requested/effective Persona fields and canonical runtime mode names.\"",
+          "line_end": 10465,
+          "line_start": 10465,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents retired labels from re-entering tool, chat, or storage payloads.",
+      "item_id": "A005M15-CV-153",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-153",
+        "SEMANTIC:PLANUNIT:CV-153"
+      ],
+      "statement": "Legacy persona and mode-overlay labels remain source-lineage aliases; live payloads use requested/effective Persona and canonical runtime-mode fields.",
+      "title": "Legacy persona snapshot vocabulary is lineage-only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"execution_unit_context remains owned by Executor_Protocol.\"",
+          "line_end": 10515,
+          "line_start": 10515,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Required and optional context fields are read from Plans/execution_unit_context.schema.json.\"",
+          "line_end": 10516,
+          "line_start": 10516,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Establishes a clear ownership seam and blocks consumer-side schema forks or secret persistence.",
+      "item_id": "A005M15-CV-154",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-154",
+        "SEMANTIC:PLANUNIT:CV-154"
+      ],
+      "statement": "Contracts_V0 consumes the Executor-owned execution_unit_context and its schema without redefining fields, enums, nullability, schema version, redaction, or lifecycle.",
+      "title": "Executor owns execution-unit context schema"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "recovery_rollback",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"blocked_sequence is the canonical approval anchor.\"",
+          "line_end": 10579,
+          "line_start": 10579,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "blocked_identity_concurrency_gap",
+      "impact": "Two blocked episodes can collide or be reminted across restart, misbinding approval and recovery actions.",
+      "item_id": "A005M15-CV-155",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-155",
+        "SEMANTIC:PLANUNIT:CV-155"
+      ],
+      "statement": "blocked_sequence is the canonical approval anchor, but allocation scope, monotonicity, persistence transaction, duplicate handling, and concurrent blocker rules are not defined.",
+      "title": "Blocked sequence uniqueness and allocation are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "authority",
+        "accessibility",
+        "localization"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Chat and GUI action buttons derive from ordered allowed_action_ids[].\"",
+          "line_end": 10628,
+          "line_start": 10628,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Ordered allowed_action_ids[] survive into approval UI.\"",
+          "line_end": 10629,
+          "line_start": 10629,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents the GUI from inventing local unordered approval actions.",
+      "item_id": "A005M15-CV-156",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-156",
+        "SEMANTIC:PLANUNIT:CV-156"
+      ],
+      "statement": "Visible HITL labels are stable and chat/GUI buttons derive from ordered allowed_action_ids that survive into approval UI.",
+      "title": "HITL actions derive from ordered authority data"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority_boundaries",
+        "offline_network_loss",
+        "recovery_rollback",
+        "partial_failure",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"A blocked-episode approval does not imply broader policy approval unless approval_scope_key says so explicitly.\"",
+          "line_end": 10675,
+          "line_start": 10675,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Unresolved blocked episodes survive restart and are rehydrated rather than reminted opportunistically.\"",
+          "line_end": 10676,
+          "line_start": 10676,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Failed approval attempts or failed recovery-action switches persist in records/history.\"",
+          "line_end": 10677,
+          "line_start": 10677,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents session-global approval escalation and preserves partial-failure evidence.",
+      "item_id": "A005M15-CV-157",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-157",
+        "SEMANTIC:PLANUNIT:CV-157"
+      ],
+      "statement": "Approval remains blocked-episode scoped, unresolved episodes rehydrate rather than remint after restart, and failed approvals or recovery switches remain historical records.",
+      "title": "HITL scope, restart recovery, and failed history are preserved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "authority",
+        "states_transitions",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"request_id may continue only for lineage and migration.\"",
+          "line_end": 10723,
+          "line_start": 10723,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Runtime-state mutation resolves through blocked-episode identity.\"",
+          "line_end": 10724,
+          "line_start": 10724,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents compatibility IDs from regaining mutation authority.",
+      "item_id": "A005M15-CV-158",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-158",
+        "SEMANTIC:PLANUNIT:CV-158"
+      ],
+      "statement": "Legacy request_id may persist for migration lineage, but every runtime mutation resolves through blocked-episode identity.",
+      "title": "request_id is lineage-only for mutation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "gui_truth",
+        "authority_boundaries",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"The six assistant worktree command IDs are preserved.\"",
+          "line_end": 10771,
+          "line_start": 10771,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Command labels, icons, category, and extra when clauses are preserved.\"",
+          "line_end": 10772,
+          "line_start": 10772,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_command_registration_matrix",
+      "impact": "GUI registrations cannot be reproduced or tested exactly and may expose destructive commands under incorrect conditions.",
+      "item_id": "A005M15-CV-159",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-159",
+        "SEMANTIC:PLANUNIT:CV-159"
+      ],
+      "statement": "The unit lists six command IDs and says labels, icons, category, and extra when clauses are preserved, but it does not provide the per-command label, icon, or extra-guard mapping.",
+      "title": "Six worktree command registrations are not fully enumerated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "contracts",
+        "destructive_actions",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"cmd.chat.worktree.bind_existing, cmd.chat.worktree.open_files, and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands.\"",
+          "line_end": 10821,
+          "line_start": 10821,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_alias_target_mapping",
+      "impact": "An alias can invoke the wrong operation, including destructive remove or merge behavior, while still nominally routing to a canonical ID.",
+      "item_id": "A005M15-CV-160",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-160",
+        "SEMANTIC:PLANUNIT:CV-160"
+      ],
+      "statement": "Three aliases may route to canonical worktree commands, but the contract does not say which canonical command each alias targets or whether argument normalization is required.",
+      "title": "Compatibility aliases have no target mapping"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "untrusted_inputs",
+        "authority_boundaries",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"UICommand preserves command_id, command_kind, args, context?, and normalization?.\"",
+          "line_end": 10868,
+          "line_start": 10868,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "command_payload_schema_gap",
+      "impact": "Untrusted or malformed command payloads can cross authority boundaries with implementation-specific interpretation.",
+      "item_id": "A005M15-CV-161",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-161",
+        "SEMANTIC:PLANUNIT:CV-161"
+      ],
+      "statement": "The envelope preserves command_id, command_kind, args, context, and normalization, but schemas for args and context, per-command validation, unknown-field handling, and versioning are absent.",
+      "title": "UICommand args and context remain unconstrained"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Deprecated aliases point at alias_of_command_id.\"",
+          "line_end": 10922,
+          "line_start": 10922,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Stable wrapper commands point at normalizes_to_contract.\"",
+          "line_end": 10923,
+          "line_start": 10923,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Route payload structure is not restated inside command metadata.\"",
+          "line_end": 10925,
+          "line_start": 10925,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Prevents commands from owning a second route model.",
+      "item_id": "A005M15-CV-162",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-162",
+        "SEMANTIC:PLANUNIT:CV-162"
+      ],
+      "statement": "Deprecated aliases use alias_of_command_id, stable wrappers use normalizes_to_contract, and wrapper metadata cannot restate route payload structure.",
+      "title": "Wrappers point to canonical primitives without restating routes"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"target_kind and project_id are required.\"",
+          "line_end": 10974,
+          "line_start": 10974,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab.\"",
+          "line_end": 10975,
+          "line_start": 10975,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"target_kind is destination class only.\"",
+          "line_end": 10976,
+          "line_start": 10976,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Creates a stable navigation envelope distinct from object selection.",
+      "item_id": "A005M15-CV-163",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-163",
+        "SEMANTIC:PLANUNIT:CV-163"
+      ],
+      "statement": "route_target requires target_kind and project_id; target_kind is closed to destination classes and cannot replace selector identity.",
+      "title": "RouteTarget closes required scope and destination class"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Exactly one canonical primary selector is permitted.\"",
+          "line_end": 11025,
+          "line_start": 11025,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"object_kind list from the source span is preserved.\"",
+          "line_end": 11027,
+          "line_start": 11027,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "missing_closed_selector_enum",
+      "impact": "Producers and consumers can disagree on valid route objects or silently accept feature-local selector kinds.",
+      "item_id": "A005M15-CV-164",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-164",
+        "SEMANTIC:PLANUNIT:CV-164"
+      ],
+      "statement": "Exactly one primary selector is required, but object_kind is only said to preserve a list from the source span rather than declaring the authoritative closed list in the contract.",
+      "title": "Primary selector object-kind closure is indirect"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "gui_misleading_states",
+        "security_privacy",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Terminal routes prefer exact same-session reveal when terminal_session_id is supplied and still resolvable.\"",
+          "line_end": 11080,
+          "line_start": 11080,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Historical terminal routes may reveal a historical pane or receipt view.\"",
+          "line_end": 11081,
+          "line_start": 11081,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "route_resolution_failure_gap",
+      "impact": "Navigation can fail silently, reveal the wrong session, or misleadingly imply live PTY continuity.",
+      "item_id": "A005M15-CV-165",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-165",
+        "SEMANTIC:PLANUNIT:CV-165"
+      ],
+      "statement": "Routes prefer exact same-session reveal when resolvable and historical routes may reveal history, but behavior is unspecified when a supplied terminal_session_id is stale, deleted, unauthorized, or ambiguous.",
+      "title": "Unresolvable terminal-session fallback is incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "invalid_states_transitions",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Route activation overrides remembered shell state when needed to reveal the requested object, scope, and destination surface.\"",
+          "line_end": 11133,
+          "line_start": 11133,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Route activation may reuse remembered shell state only when that state still reveals the requested object cleanly.\"",
+          "line_end": 11134,
+          "line_start": 11134,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "nondeterministic_route_activation",
+      "impact": "Different surfaces can restore conflicting destination, scope, selection, and focus state for the same route.",
+      "item_id": "A005M15-CV-166",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-166",
+        "SEMANTIC:PLANUNIT:CV-166"
+      ],
+      "statement": "Remembered shell state may be reused only when it reveals the requested object cleanly and is overridden when needed, but cleanly and needed have no deterministic precedence or observable failure rule.",
+      "title": "Route activation conflict resolution is subjective"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"inspector_target closed values are preserved.\"",
+          "line_end": 11186,
+          "line_start": 11186,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"Primary selector identity is established before inspector_target refinement.\"",
+          "line_end": 11189,
+          "line_start": 11189,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "refinement_failure_contract_gap",
+      "impact": "A valid primary route can land on blank or misleading detail UI when refinement cannot be satisfied.",
+      "item_id": "A005M15-CV-167",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-167",
+        "SEMANTIC:PLANUNIT:CV-167"
+      ],
+      "statement": "inspector_target has closed values and applies only after primary identity, but the contract does not define invalid-value handling, unavailable-subsection fallback, or how stale refinements are reported.",
+      "title": "Inspector refinement failure behavior is unspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        8314,
+        8670
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-111",
+        "PLANUNIT:CV-112",
+        "PLANUNIT:CV-113",
+        "PLANUNIT:CV-114",
+        "PLANUNIT:CV-115",
+        "PLANUNIT:CV-116",
+        "PLANUNIT:CV-117",
+        "SEMANTIC:PLANUNIT:CV-111",
+        "SEMANTIC:PLANUNIT:CV-112",
+        "SEMANTIC:PLANUNIT:CV-113",
+        "SEMANTIC:PLANUNIT:CV-114",
+        "SEMANTIC:PLANUNIT:CV-115",
+        "SEMANTIC:PLANUNIT:CV-116",
+        "SEMANTIC:PLANUNIT:CV-117"
+      ],
+      "item_ids": [
+        "A005M15-CV-111",
+        "A005M15-CV-112",
+        "A005M15-CV-113",
+        "A005M15-CV-114",
+        "A005M15-CV-115",
+        "A005M15-CV-116",
+        "A005M15-CV-117"
+      ],
+      "reviewed": true,
+      "summary": "Web operation audit envelopes, runtime snapshot lineage, and TODO mutation semantics reviewed; one concurrency/partial-order gap and one payload-schema gap were identified.",
+      "window_id": "WIN-19B62D73B9EF-0025"
+    },
+    {
+      "core_range": [
+        8671,
+        9027
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-118",
+        "PLANUNIT:CV-119",
+        "PLANUNIT:CV-120",
+        "PLANUNIT:CV-121",
+        "PLANUNIT:CV-122",
+        "PLANUNIT:CV-123",
+        "PLANUNIT:CV-124",
+        "SEMANTIC:PLANUNIT:CV-118",
+        "SEMANTIC:PLANUNIT:CV-119",
+        "SEMANTIC:PLANUNIT:CV-120",
+        "SEMANTIC:PLANUNIT:CV-121",
+        "SEMANTIC:PLANUNIT:CV-122",
+        "SEMANTIC:PLANUNIT:CV-123",
+        "SEMANTIC:PLANUNIT:CV-124"
+      ],
+      "item_ids": [
+        "A005M15-CV-118",
+        "A005M15-CV-119",
+        "A005M15-CV-120",
+        "A005M15-CV-121",
+        "A005M15-CV-122",
+        "A005M15-CV-123",
+        "A005M15-CV-124"
+      ],
+      "reviewed": true,
+      "summary": "Reference-first evidence, advisory ownership, web errors, investigation events, and debug redaction reviewed; mapping and event-transition gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0026"
+    },
+    {
+      "core_range": [
+        9028,
+        9390
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-125",
+        "PLANUNIT:CV-126",
+        "PLANUNIT:CV-127",
+        "PLANUNIT:CV-128",
+        "PLANUNIT:CV-129",
+        "PLANUNIT:CV-130",
+        "PLANUNIT:CV-131",
+        "SEMANTIC:PLANUNIT:CV-125",
+        "SEMANTIC:PLANUNIT:CV-126",
+        "SEMANTIC:PLANUNIT:CV-127",
+        "SEMANTIC:PLANUNIT:CV-128",
+        "SEMANTIC:PLANUNIT:CV-129",
+        "SEMANTIC:PLANUNIT:CV-130",
+        "SEMANTIC:PLANUNIT:CV-131"
+      ],
+      "item_ids": [
+        "A005M15-CV-125",
+        "A005M15-CV-126",
+        "A005M15-CV-127",
+        "A005M15-CV-128",
+        "A005M15-CV-129",
+        "A005M15-CV-130",
+        "A005M15-CV-131"
+      ],
+      "reviewed": true,
+      "summary": "AuthState, credential refresh, account projections, storage identity, and auth policy reviewed; derivation, timing, remediation, and default-matrix gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0027"
+    },
+    {
+      "core_range": [
+        9391,
+        9754
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-132",
+        "PLANUNIT:CV-133",
+        "PLANUNIT:CV-134",
+        "PLANUNIT:CV-135",
+        "PLANUNIT:CV-136",
+        "PLANUNIT:CV-137",
+        "PLANUNIT:CV-138",
+        "SEMANTIC:PLANUNIT:CV-132",
+        "SEMANTIC:PLANUNIT:CV-133",
+        "SEMANTIC:PLANUNIT:CV-134",
+        "SEMANTIC:PLANUNIT:CV-135",
+        "SEMANTIC:PLANUNIT:CV-136",
+        "SEMANTIC:PLANUNIT:CV-137",
+        "SEMANTIC:PLANUNIT:CV-138"
+      ],
+      "item_ids": [
+        "A005M15-CV-132",
+        "A005M15-CV-133",
+        "A005M15-CV-134",
+        "A005M15-CV-135",
+        "A005M15-CV-136",
+        "A005M15-CV-137",
+        "A005M15-CV-138"
+      ],
+      "reviewed": true,
+      "summary": "Auth copy, retired provider lineage, precedence, OAuth integrity, auth events, and setup-health enums reviewed; event payload and closed-enum gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0028"
+    },
+    {
+      "core_range": [
+        9755,
+        10116
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-139",
+        "PLANUNIT:CV-140",
+        "PLANUNIT:CV-141",
+        "PLANUNIT:CV-142",
+        "PLANUNIT:CV-143",
+        "PLANUNIT:CV-144",
+        "PLANUNIT:CV-145",
+        "SEMANTIC:PLANUNIT:CV-139",
+        "SEMANTIC:PLANUNIT:CV-140",
+        "SEMANTIC:PLANUNIT:CV-141",
+        "SEMANTIC:PLANUNIT:CV-142",
+        "SEMANTIC:PLANUNIT:CV-143",
+        "SEMANTIC:PLANUNIT:CV-144",
+        "SEMANTIC:PLANUNIT:CV-145"
+      ],
+      "item_ids": [
+        "A005M15-CV-139",
+        "A005M15-CV-140",
+        "A005M15-CV-141",
+        "A005M15-CV-142",
+        "A005M15-CV-143",
+        "A005M15-CV-144",
+        "A005M15-CV-145"
+      ],
+      "reviewed": true,
+      "summary": "Usage pressure, warnings, provider lifecycle, model sunset, and requested/effective identities reviewed; a critical availability enum conflict and several lifecycle authority gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0029"
+    },
+    {
+      "core_range": [
+        10117,
+        10495
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-146",
+        "PLANUNIT:CV-147",
+        "PLANUNIT:CV-148",
+        "PLANUNIT:CV-149",
+        "PLANUNIT:CV-150",
+        "PLANUNIT:CV-151",
+        "PLANUNIT:CV-152",
+        "PLANUNIT:CV-153",
+        "SEMANTIC:PLANUNIT:CV-146",
+        "SEMANTIC:PLANUNIT:CV-147",
+        "SEMANTIC:PLANUNIT:CV-148",
+        "SEMANTIC:PLANUNIT:CV-149",
+        "SEMANTIC:PLANUNIT:CV-150",
+        "SEMANTIC:PLANUNIT:CV-151",
+        "SEMANTIC:PLANUNIT:CV-152",
+        "SEMANTIC:PLANUNIT:CV-153"
+      ],
+      "item_ids": [
+        "A005M15-CV-146",
+        "A005M15-CV-147",
+        "A005M15-CV-148",
+        "A005M15-CV-149",
+        "A005M15-CV-150",
+        "A005M15-CV-151",
+        "A005M15-CV-152",
+        "A005M15-CV-153"
+      ],
+      "reviewed": true,
+      "summary": "Shared runtime adoption, provider records, approval identity, context attachments, and Persona compatibility reviewed; record, approval-race, and cross-seam identity gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0030"
+    },
+    {
+      "core_range": [
+        10496,
+        10850
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-154",
+        "PLANUNIT:CV-155",
+        "PLANUNIT:CV-156",
+        "PLANUNIT:CV-157",
+        "PLANUNIT:CV-158",
+        "PLANUNIT:CV-159",
+        "PLANUNIT:CV-160",
+        "SEMANTIC:PLANUNIT:CV-154",
+        "SEMANTIC:PLANUNIT:CV-155",
+        "SEMANTIC:PLANUNIT:CV-156",
+        "SEMANTIC:PLANUNIT:CV-157",
+        "SEMANTIC:PLANUNIT:CV-158",
+        "SEMANTIC:PLANUNIT:CV-159",
+        "SEMANTIC:PLANUNIT:CV-160"
+      ],
+      "item_ids": [
+        "A005M15-CV-154",
+        "A005M15-CV-155",
+        "A005M15-CV-156",
+        "A005M15-CV-157",
+        "A005M15-CV-158",
+        "A005M15-CV-159",
+        "A005M15-CV-160"
+      ],
+      "reviewed": true,
+      "summary": "Execution context ownership, HITL identity/persistence, and worktree commands reviewed; blocked-sequence allocation and command registration/alias mapping gaps remain.",
+      "window_id": "WIN-19B62D73B9EF-0031"
+    },
+    {
+      "core_range": [
+        10851,
+        11221
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-161",
+        "PLANUNIT:CV-162",
+        "PLANUNIT:CV-163",
+        "PLANUNIT:CV-164",
+        "PLANUNIT:CV-165",
+        "PLANUNIT:CV-166",
+        "PLANUNIT:CV-167",
+        "SEMANTIC:PLANUNIT:CV-161",
+        "SEMANTIC:PLANUNIT:CV-162",
+        "SEMANTIC:PLANUNIT:CV-163",
+        "SEMANTIC:PLANUNIT:CV-164",
+        "SEMANTIC:PLANUNIT:CV-165",
+        "SEMANTIC:PLANUNIT:CV-166",
+        "SEMANTIC:PLANUNIT:CV-167"
+      ],
+      "item_ids": [
+        "A005M15-CV-161",
+        "A005M15-CV-162",
+        "A005M15-CV-163",
+        "A005M15-CV-164",
+        "A005M15-CV-165",
+        "A005M15-CV-166",
+        "A005M15-CV-167"
+      ],
+      "reviewed": true,
+      "summary": "UICommand, wrapper, route identity, terminal reveal, activation, and inspector refinement reviewed; command payload, selector closure, and deterministic failure behavior remain underspecified.",
+      "window_id": "WIN-19B62D73B9EF-0032"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-19B62D73B9EF-0005",
+    "document_path": "Plans/Contracts_V0.md",
+    "micro_window_ids": [
+      "WIN-19B62D73B9EF-0025",
+      "WIN-19B62D73B9EF-0026",
+      "WIN-19B62D73B9EF-0027",
+      "WIN-19B62D73B9EF-0028",
+      "WIN-19B62D73B9EF-0029",
+      "WIN-19B62D73B9EF-0030",
+      "WIN-19B62D73B9EF-0031",
+      "WIN-19B62D73B9EF-0032"
+    ],
+    "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner document supplies the exact Firecrawl-to-canonical error mapping and how is that mapping versioned?",
+      "Should eligible_pending_recheck be added to the closed AvailabilityState family or represented by existing availability plus readiness validating?",
+      "Which document owns the exact provider auth default matrix and setup-health enum values?",
+      "What transaction and replay contract governs TODO reorders and HITL blocked_sequence allocation?",
+      "Where are the exact worktree command registration and alias-target matrices canonicalized?",
+      "Which schema closes UICommand args and context per command kind?"
+    ],
+    "feature_family_keys": [
+      "web_operation_events_and_errors",
+      "debug_investigation_evidence",
+      "auth_state_and_policy",
+      "setup_health_and_usage_pressure",
+      "provider_and_model_lifecycle",
+      "requested_effective_runtime_identity",
+      "hitl_blocked_episode",
+      "worktree_uicommands",
+      "route_target_navigation"
+    ],
+    "research_queries": [
+      "OAuth refresh token rotation concurrency and single-flight refresh patterns",
+      "Event-sourced ordered-list mutation atomicity and idempotency",
+      "HITL approval identity replay protection after restart",
+      "Command envelope schema validation for untrusted GUI actions",
+      "Accessible and localizable approval-action ordering patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000019_attempt_0015_terminal"
+}
+

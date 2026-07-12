@@ -1,0 +1,70 @@
+{
+  "bundle_bindings": {
+    "dependency_authority_sha256": "89d86715ed9760a2f9469733bf43cb6099784710b97bccf1b656e9520d0d3afb",
+    "install_receipt_sha256": "f36f64777e31a3d993a3e1fc03ed4d46182b77667d20f81bba6eb5ffc56462f8",
+    "requirements_lock_sha256": "a70d91fb9e7a4efbdded91709cb942d65be08c94f7ea58e473b3f0b1c190996d",
+    "source_registry_sha256": "23ca01e5f0117b8f8637168c883dc99cd459387920629f6ee34be7985b9e9005",
+    "wheel_hashes": {
+      "attrs-26.1.0-py3-none-any.whl": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "jsonschema-4.26.0-py3-none-any.whl": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "jsonschema_specifications-2025.9.1-py3-none-any.whl": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "referencing-0.37.0-py3-none-any.whl": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl": "538949e262e46caa31ac01bdb3c1e8f642622922cacbabbae6a8445d9dc33eaf",
+      "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    },
+    "wheel_manifest_sha256": "c662aa4821ea4980210c248711d76afd25c6e296b9367458467f19f1a7665f40"
+  },
+  "cache_exclusion_contract": "Only regular *.pyc files directly under exactly one __pycache__ directory, named *.cpython-312.pyc, with CPython 3.12 magic and matching existing authoritative source timestamp/size, are excluded from semantic authority.",
+  "errors": [],
+  "immutable_authoritative_semantic_tree": {
+    "expected_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "file_count": 152,
+    "manifest_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/immutable_authoritative_semantic_tree.jsonl",
+    "manifest_sha256": "c4f157475096cdeec98837019dcc341d2c2818ba3d33e21a4123b34b4dc7212d",
+    "sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95"
+  },
+  "observed_cache_tree": {
+    "authoritative": false,
+    "cache_tag": "cpython-312",
+    "caches_remain_on_disk": true,
+    "file_count": 39,
+    "magic_hex": "cb0d0d0a",
+    "manifest_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/observed_cache_tree.jsonl",
+    "manifest_sha256": "b5e7e64523e968b85bf702b7ad94885f8f97242a5dc9562aa1f3ea9653eb184d",
+    "sha256": "b7262c3dd93051aaa7c3278c2a24ae9c1e4ee1c49a050e17554f18fc589e7ba5"
+  },
+  "observed_runtime_tree": {
+    "authoritative": false,
+    "file_count": 191,
+    "manifest_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/observed_runtime_tree.jsonl",
+    "manifest_sha256": "6398a5682c07370deea9f970fb8b7ed42e028911abf4ce1e94d7944f443b5306",
+    "sha256": "37e2762646b7c6c49af370b5ecf35b03b0d70258536fdb9faa953953b6ac4517"
+  },
+  "runtime": {
+    "executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "global_install": false,
+    "jsonschema": "4.26.0",
+    "network_used": false,
+    "offline": true,
+    "platform": "macOS arm64",
+    "python": "CPython 3.12.13",
+    "validator": "jsonschema.Draft202012Validator"
+  },
+  "schema_version": "audit005-jsonschema-cache-reconciliation-authority-v2",
+  "scope": "site-packages only",
+  "status": "PASS",
+  "symlinks": [],
+  "tests": {
+    "counts": {
+      "failed": 0,
+      "passed": 562,
+      "total": 562
+    },
+    "test_digest": "18fc5553f0ca3f29572c0027e0c1e68ac81a4e749486af144a11b197635a4b48"
+  },
+  "tool_hashes": {
+    "preparation": "c1786f4c0b3913af32a155891fd6853ad1e9098d80488f81fd3d6cbd2174f408",
+    "tests": "25fbb99987ef8a63e9f6b0819da7381b1e87c1ffad96fbbf42ef41a1f9d21943",
+    "validator": "49db9865cbbc222a63720eac7316a5e5555bc4f37dd4b887ec90ddd4f3652269"
+  }
+}

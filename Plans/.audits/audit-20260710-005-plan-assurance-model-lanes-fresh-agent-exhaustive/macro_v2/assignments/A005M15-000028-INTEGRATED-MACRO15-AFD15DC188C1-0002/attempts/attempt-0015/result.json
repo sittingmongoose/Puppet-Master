@@ -1,0 +1,598 @@
+{
+  "assignment_id": "A005M15-000028-INTEGRATED-MACRO15-AFD15DC188C1-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Approval and preflight blind-spot defaults are target-bound, not",
+          "line_end": 3016,
+          "line_start": 3016,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - Multi-repo projects do not bind approval by action name alone.",
+          "line_end": 3026,
+          "line_start": 3026,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Approval identity must remain attached to the concrete SCM, GitHub Actions, Docker, or Kubernetes target so identically named actions in different repositories or runtimes cannot share authority.",
+      "item_id": "A005M15-000028-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-058",
+        "SEMANTIC:PLANUNIT:DP-058"
+      ],
+      "statement": "DP-058 requires target-bound approval and preflight identity, preserves domain-specific target fields before mutation, and expressly rejects action-name-only binding for multi-repository projects.",
+      "title": "Approvals bind to concrete target identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Approval identity includes target fields for SCM, GitHub Actions, Docker, and Kubernetes domains.",
+          "line_end": 3025,
+          "line_start": 3025,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "target_identity_validation_underspecified",
+      "impact": "Implementations may disagree about missing, malformed, aliased, renamed, or case-variant target identifiers and may accept approval against a different effective target without a falsifiable rejection oracle.",
+      "item_id": "A005M15-000028-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:DP-058",
+        "SEMANTIC:PLANUNIT:DP-058"
+      ],
+      "statement": "The unit names the required identity fields but does not define field presence by domain, canonicalization, validation, mismatch handling, or exact failure behavior for incomplete and hostile identity payloads.",
+      "title": "Target identity normalization and rejection are open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Approval ordering is static policy check, cheap capability or precondition",
+          "line_end": 3063,
+          "line_start": 3063,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - preflight_revision drift or changed target identity invalidates approval and returns to blocked.",
+          "line_end": 3074,
+          "line_start": 3074,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "An approval is requested only for an actionable operation, and stale preflight or target drift invalidates it before mutation rather than allowing stale authority to propagate.",
+      "item_id": "A005M15-000028-I003",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-059",
+        "SEMANTIC:PLANUNIT:DP-059"
+      ],
+      "statement": "DP-059 fixes the sequence as static policy check, cheap capability or precondition preflight, approval while actionable, and full execution-time revalidation immediately before mutation; drift returns the action to blocked.",
+      "title": "Approval follows preflight and precedes revalidation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "operations",
+        "observability_support",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  execution-time revalidate immediately before mutation; stale-preflight",
+          "line_end": 3065,
+          "line_start": 3065,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "revalidate_mutate_atomicity_and_recovery_underspecified",
+      "impact": "A target can change after revalidation but before mutation, and a blocked return can strand the request without defined approval invalidation, retry ownership, diagnostic evidence, or recovery behavior.",
+      "item_id": "A005M15-000028-I004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:DP-059",
+        "SEMANTIC:PLANUNIT:DP-059"
+      ],
+      "statement": "The ordering contract does not specify an atomic guard between revalidation and mutation, the lifetime of invalidated approval, or transitions and operator-visible evidence after drift or partial failure.",
+      "title": "Revalidation has an unclosed time-of-check race"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Domain-bound approvals include attempted operation or action class, bind",
+          "line_end": 3107,
+          "line_start": 3107,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - policy-vs-approval-vs-preflight outcomes remain distinct blocked families.",
+          "line_end": 3117,
+          "line_start": 3117,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Authority cannot be reused solely by resource identity, and callers must preserve whether policy, approval, or preflight caused a blocked result.",
+      "item_id": "A005M15-000028-I005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-060",
+        "SEMANTIC:PLANUNIT:DP-060"
+      ],
+      "statement": "DP-060 binds approval to both operation or action class and the domain-sensitive resource target, while requiring policy, approval, and preflight blocks to remain distinct families.",
+      "title": "Domain approvals separate operation, target, and block family"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "gui_truth",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - policy-vs-approval-vs-preflight outcomes remain distinct blocked families.",
+          "line_end": 3117,
+          "line_start": 3117,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "blocked_family_representation_and_consumers_underspecified",
+      "impact": "APIs, logs, automation, and user interfaces may collapse distinct causes into a generic blocked state, misleading users and making remediation, localization, support, and tests inconsistent.",
+      "item_id": "A005M15-000028-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:DP-060",
+        "SEMANTIC:PLANUNIT:DP-060"
+      ],
+      "statement": "The unit requires distinct blocked families but does not define their machine-readable identifiers, payloads, precedence when multiple causes apply, required consumers, display semantics, or recovery actions.",
+      "title": "Distinct block families lack a consumer contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Research-safe plan-mode tools and question-driven planning flows may be",
+          "line_end": 3151,
+          "line_start": 3151,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - Research-safe planning tools do not grant mutation authority.",
+          "line_end": 3159,
+          "line_start": 3159,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Planning and research can proceed without implicitly escalating the agent or tool to mutation authority.",
+      "item_id": "A005M15-000028-I007",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-061",
+        "SEMANTIC:PLANUNIT:DP-061"
+      ],
+      "statement": "DP-061 permits research-safe planning tools and question-driven planning flows while explicitly withholding mutation authority.",
+      "title": "Planning allowance does not imply mutation authority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "acceptance_oracles",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"`webfetch`\"",
+          "line_end": 3177,
+          "line_start": 3177,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "research_safe_capability_boundary_underspecified",
+      "impact": "A nominally non-mutating research tool can still disclose data, consume untrusted content, trigger remote side effects, or fail under network and scale limits without violating the narrowly stated mutation rule.",
+      "item_id": "A005M15-000028-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:DP-061",
+        "SEMANTIC:PLANUNIT:DP-061"
+      ],
+      "statement": "The unit does not define the research-safe classification test, allowed inputs and destinations, secret and personal-data handling, untrusted-content controls, remote side-effect policy, offline behavior, quotas, or executable safety oracle.",
+      "title": "Research-safe is narrower than a complete safety contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "propagation",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Durable approval scope and reuse are governed by approval_scope_key,",
+          "line_end": 3194,
+          "line_start": 3194,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - Permission disclosure and permission-snapshot drift rules are preserved.",
+          "line_end": 3204,
+          "line_start": 3204,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Approval reuse depends on stable scope and actor, lane, run, and account context, with requested and effective permission disclosure and snapshot drift preventing silent authority carryover.",
+      "item_id": "A005M15-000028-I009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-062",
+        "SEMANTIC:PLANUNIT:DP-062"
+      ],
+      "statement": "DP-062 delegates durable approval reuse semantics to approval_scope_key plus actor/lane/run/account context and the permission disclosure and snapshot-drift rules in Permissions_System and Contracts_V0.",
+      "title": "Durable reuse is contextual and drift-sensitive"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  permission-snapshot drift rules in Permissions_System and Contracts_V0.",
+          "line_end": 3196,
+          "line_start": 3196,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "durable_reuse_lifecycle_locally_underspecified",
+      "impact": "Without a closed seam, reuse implementations can diverge on expiry, revocation, snapshot comparison, account or lane collisions, concurrent permission changes, and behavior when a dependent permission service is unavailable.",
+      "item_id": "A005M15-000028-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:DP-062",
+        "SEMANTIC:PLANUNIT:DP-062"
+      ],
+      "statement": "This excerpt names cross-document authorities but does not itself close the reuse-key format, lifetime and revocation transitions, drift comparison algorithm, collision handling, downstream consumers, partial-failure policy, or end-to-end acceptance fixtures.",
+      "title": "Durable approval reuse depends on an unverified cross-document seam"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "ownership",
+        "compatibility_migration",
+        "builder_discretion",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The former Decision Policy source-preserving bridge is retired in place after",
+          "line_end": 3242,
+          "line_start": 3242,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.",
+          "line_end": 3255,
+          "line_start": 3255,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none_explicit_retirement_boundary",
+      "impact": "Historical DP-001 references remain auditable without restoring ownership, implementation readiness, or executable-work generation to the retired bridge.",
+      "item_id": "A005M15-000028-I011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-001",
+        "SEMANTIC:PLANUNIT:DP-001"
+      ],
+      "statement": "DP-001 is explicitly migration lineage only: DP-002 through DP-062 and structural dispositions own the atomized coverage, and the bridge must not create WorkNodes or other executable build artifacts.",
+      "title": "Retired bridge cannot regain product or build authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  DRY Method decision policy allows exploratory chat to proceed with a visible unresolved-owner caveat when source/owner",
+          "line_end": 3319,
+          "line_start": 3319,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        },
+        {
+          "exact_quote": "  - Canonical or implementation-changing mutations do not proceed silently with unresolved owner/source routes.",
+          "line_end": 3330,
+          "line_start": 3330,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Exploration remains available under an explicit trust caveat, while canonical and implementation mutations remain blocked until authority is clarified or bounded as an open item; disabling DRY does not bypass higher-order controls.",
+      "item_id": "A005M15-000028-I012",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:DP-063",
+        "SEMANTIC:PLANUNIT:DP-063"
+      ],
+      "statement": "DP-063 allows exploratory chat with a visible unresolved-owner caveat, but requires mutation to block, ask, or record a bounded open item and denies disabled DRY any broad bypass effect.",
+      "title": "Unresolved ownership permits exploration but gates mutation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "accessibility",
+        "localization",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  routing is unclear, but canonical or implementation-changing mutation must block, ask for clarification, or record a",
+          "line_end": 3320,
+          "line_start": 3320,
+          "path": "Plans/Decision_Policy.md",
+          "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+        }
+      ],
+      "gap_kind": "clarification_gate_state_and_presentation_underspecified",
+      "impact": "Different callers can choose incompatible branches, hide or mistranslate the caveat, lose the open item, or leave a mutation indefinitely blocked without an owner, lifecycle, resolution oracle, or accessible user-visible state.",
+      "item_id": "A005M15-000028-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:DP-063",
+        "SEMANTIC:PLANUNIT:DP-063"
+      ],
+      "statement": "The policy does not define selection and precedence among block, ask, and bounded-open-item branches; the open-item schema and lifecycle; caveat consumers and presentation; escalation and timeout; or testable completion and recovery states.",
+      "title": "Clarification gate branches lack lifecycle and presentation contracts"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        3008,
+        3374
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:DP-001",
+        "PLANUNIT:DP-058",
+        "PLANUNIT:DP-059",
+        "PLANUNIT:DP-060",
+        "PLANUNIT:DP-061",
+        "PLANUNIT:DP-062",
+        "PLANUNIT:DP-063",
+        "SEMANTIC:PLANUNIT:DP-058",
+        "SEMANTIC:PLANUNIT:DP-059",
+        "SEMANTIC:PLANUNIT:DP-060",
+        "SEMANTIC:PLANUNIT:DP-061",
+        "SEMANTIC:PLANUNIT:DP-062",
+        "SEMANTIC:PLANUNIT:DP-001",
+        "SEMANTIC:PLANUNIT:DP-063"
+      ],
+      "item_ids": [
+        "A005M15-000028-I001",
+        "A005M15-000028-I002",
+        "A005M15-000028-I003",
+        "A005M15-000028-I004",
+        "A005M15-000028-I005",
+        "A005M15-000028-I006",
+        "A005M15-000028-I007",
+        "A005M15-000028-I008",
+        "A005M15-000028-I009",
+        "A005M15-000028-I010",
+        "A005M15-000028-I011",
+        "A005M15-000028-I012",
+        "A005M15-000028-I013"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line across DP-058 through DP-062, retired DP-001, DP-063, migration coverage, the ledger compile addendum, and the trailing concrete repair addendum. Exact policy strengths include target-bound approval identity, ordered revalidation, domain-specific approval scope, non-mutating planning authority, contextual durable reuse, explicit bridge retirement, and a mutation clarification gate. Adversarial review found open identity-validation, race, outcome-consumer, research-safety, cross-document reuse, and clarification-lifecycle contracts.",
+      "window_id": "WIN-AFD15DC188C1-0009"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-AFD15DC188C1-0002",
+    "document_path": "Plans/Decision_Policy.md",
+    "micro_window_ids": [
+      "WIN-AFD15DC188C1-0009"
+    ],
+    "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do Plans/Permissions_System.md and Plans/Contracts_V0.md jointly define approval_scope_key construction, expiry, revocation, permission-snapshot comparison, collision handling, unavailable-dependency behavior, and end-to-end fixtures without contradictory authority?",
+      "Do Plans/DRY_Rules.md and Plans/Permissions_System.md define one precedence rule and durable lifecycle for DP-063 block, ask, and bounded-open-item branches, including the visible caveat and disabled_by_user boundary?",
+      "Which API, automation, logging, support, and GUI consumers must preserve policy-vs-approval-vs-preflight blocked-family identity end to end?"
+    ],
+    "feature_family_keys": [
+      "approval_identity_and_scope",
+      "approval_preflight_revalidation",
+      "research_safe_planning_authority",
+      "durable_approval_reuse",
+      "decision_policy_migration_lineage",
+      "dry_clarification_mutation_gate"
+    ],
+    "research_queries": [
+      "authorization revalidation atomicity target drift time of check time of use patterns",
+      "capability security non-mutating web research tools untrusted content privacy side effects",
+      "durable approval reuse revocation scope key permission snapshot design",
+      "accessible localized blocked-state reason and clarification workflow design"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000028_attempt_0015_terminal"
+}

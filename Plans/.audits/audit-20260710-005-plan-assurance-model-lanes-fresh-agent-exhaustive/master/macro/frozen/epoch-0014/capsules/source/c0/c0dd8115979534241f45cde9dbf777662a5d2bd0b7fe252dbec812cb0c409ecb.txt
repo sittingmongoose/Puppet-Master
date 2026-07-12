@@ -1,0 +1,486 @@
+L00000001	{
+L00000002	  "schema_id": "pm.web_research_run_fixtures.v1",
+L00000003	  "owner_schema": "Plans/web_operation_contracts.schema.json#/$defs/ResearchRun",
+L00000004	  "valid_runs": [
+L00000005	    {
+L00000006	      "case_id": "standard_prd_research_source_evidence",
+L00000007	      "schema": "ResearchRun",
+L00000008	      "run": {
+L00000009	        "research_run_id": "research:prd-source-evidence-001",
+L00000010	        "mode": "standard",
+L00000011	        "task": "Verify current platform support before preserving a PRD option.",
+L00000012	        "invocation": {
+L00000013	          "invocation_source": "prd",
+L00000014	          "agent_reason": "PRD option depends on current external platform support."
+L00000015	        },
+L00000016	        "provider_mode": "pm_composed",
+L00000017	        "sources": [
+L00000018	          {
+L00000019	            "source_id": "source:official-docs",
+L00000020	            "url": "https://example.com/docs/platform",
+L00000021	            "selection_reason": "Official documentation is the highest-authority source for platform support.",
+L00000022	            "read_state": "read",
+L00000023	            "read_receipt_ref": "receipt:official-docs"
+L00000024	          }
+L00000025	        ],
+L00000026	        "read_receipts": [
+L00000027	          {
+L00000028	            "receipt_id": "receipt:official-docs",
+L00000029	            "url": "https://example.com/docs/platform",
+L00000030	            "web_operation": "read",
+L00000031	            "tool_id": "webfetch",
+L00000032	            "content_ref": "content:official-docs",
+L00000033	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000034	          }
+L00000035	        ],
+L00000036	        "citations": [
+L00000037	          {
+L00000038	            "citation_id": "citation:official-docs",
+L00000039	            "url": "https://example.com/docs/platform",
+L00000040	            "source_ref": "source:official-docs",
+L00000041	            "read_receipt_ref": "receipt:official-docs",
+L00000042	            "evidence_kind": "read",
+L00000043	            "snippet_only": false
+L00000044	          }
+L00000045	        ],
+L00000046	        "synthesis_steps": [
+L00000047	          {
+L00000048	            "step_id": "synthesis:prd-source-selection",
+L00000049	            "step_kind": "source_selection",
+L00000050	            "input_source_refs": ["source:official-docs"],
+L00000051	            "read_receipt_refs": ["receipt:official-docs"],
+L00000052	            "citation_refs": ["citation:official-docs"],
+L00000053	            "output_ref": "research-output:prd-source-selection",
+L00000054	            "created_at_utc": "2026-07-09T00:00:05Z"
+L00000055	          },
+L00000056	          {
+L00000057	            "step_id": "synthesis:prd-closure",
+L00000058	            "step_kind": "closure_check",
+L00000059	            "input_source_refs": ["source:official-docs"],
+L00000060	            "citation_refs": ["citation:official-docs"],
+L00000061	            "output_ref": "research-output:prd-closure",
+L00000062	            "created_at_utc": "2026-07-09T00:00:10Z"
+L00000063	          }
+L00000064	        ],
+L00000065	        "subagent_records": [
+L00000066	          {
+L00000067	            "subagent_record_id": "research-subagent:prd-docs",
+L00000068	            "source_subagent_id": "agent:read-only-research",
+L00000069	            "assignment": "Read the official docs and return source-backed evidence refs only.",
+L00000070	            "source_scope_refs": ["source:official-docs"],
+L00000071	            "status": "completed",
+L00000072	            "result_ref": "research-output:prd-docs-subagent",
+L00000073	            "created_at_utc": "2026-07-09T00:00:00Z",
+L00000074	            "finished_at_utc": "2026-07-09T00:00:09Z"
+L00000075	          }
+L00000076	        ],
+L00000077	        "coverage_report_ref": "research-coverage:prd-platform",
+L00000078	        "closure_state": "sufficient",
+L00000079	        "ledger_source_evidence_ref": "ledger-source:prd-platform-support"
+L00000080	      }
+L00000081	    },
+L00000082	    {
+L00000083	      "case_id": "goal_deep_research_closure",
+L00000084	      "schema": "DeepResearchRun",
+L00000085	      "run": {
+L00000086	        "research_run_id": "research:goal-deep-001",
+L00000087	        "mode": "deep",
+L00000088	        "task": "Compare current browser evidence models across official docs and release notes.",
+L00000089	        "invocation": {
+L00000090	          "invocation_source": "goal",
+L00000091	          "agent_reason": "Goal success depends on broad current source coverage."
+L00000092	        },
+L00000093	        "provider_mode": "provider_autonomous",
+L00000094	        "sources": [
+L00000095	          {
+L00000096	            "source_id": "source:official-docs",
+L00000097	            "url": "https://example.com/docs/browser",
+L00000098	            "selection_reason": "Official browser evidence documentation.",
+L00000099	            "read_state": "read",
+L00000100	            "read_receipt_ref": "receipt:browser-docs"
+L00000101	          },
+L00000102	          {
+L00000103	            "source_id": "source:release-notes",
+L00000104	            "url": "https://example.com/releases/browser",
+L00000105	            "selection_reason": "Release notes show current behavior and version caveats.",
+L00000106	            "read_state": "read",
+L00000107	            "read_receipt_ref": "receipt:release-notes"
+L00000108	          }
+L00000109	        ],
+L00000110	        "read_receipts": [
+L00000111	          {
+L00000112	            "receipt_id": "receipt:browser-docs",
+L00000113	            "url": "https://example.com/docs/browser",
+L00000114	            "web_operation": "read",
+L00000115	            "tool_id": "webfetch",
+L00000116	            "content_ref": "content:browser-docs",
+L00000117	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000118	          },
+L00000119	          {
+L00000120	            "receipt_id": "receipt:release-notes",
+L00000121	            "url": "https://example.com/releases/browser",
+L00000122	            "web_operation": "read",
+L00000123	            "tool_id": "webfetch",
+L00000124	            "content_ref": "content:release-notes",
+L00000125	            "read_at_utc": "2026-07-09T00:00:15Z"
+L00000126	          }
+L00000127	        ],
+L00000128	        "citations": [
+L00000129	          {
+L00000130	            "citation_id": "citation:browser-docs",
+L00000131	            "url": "https://example.com/docs/browser",
+L00000132	            "source_ref": "source:official-docs",
+L00000133	            "read_receipt_ref": "receipt:browser-docs",
+L00000134	            "evidence_kind": "read",
+L00000135	            "snippet_only": false
+L00000136	          },
+L00000137	          {
+L00000138	            "citation_id": "citation:release-notes",
+L00000139	            "url": "https://example.com/releases/browser",
+L00000140	            "source_ref": "source:release-notes",
+L00000141	            "read_receipt_ref": "receipt:release-notes",
+L00000142	            "evidence_kind": "read",
+L00000143	            "snippet_only": false
+L00000144	          }
+L00000145	        ],
+L00000146	        "synthesis_steps": [
+L00000147	          {
+L00000148	            "step_id": "synthesis:deep-subquestion",
+L00000149	            "step_kind": "subquestion",
+L00000150	            "input_source_refs": ["source:official-docs", "source:release-notes"],
+L00000151	            "read_receipt_refs": ["receipt:browser-docs", "receipt:release-notes"],
+L00000152	            "citation_refs": ["citation:browser-docs", "citation:release-notes"],
+L00000153	            "output_ref": "research-output:deep-subquestions",
+L00000154	            "created_at_utc": "2026-07-09T00:00:20Z"
+L00000155	          },
+L00000156	          {
+L00000157	            "step_id": "synthesis:deep-compare",
+L00000158	            "step_kind": "compare",
+L00000159	            "input_source_refs": ["source:official-docs", "source:release-notes"],
+L00000160	            "citation_refs": ["citation:browser-docs", "citation:release-notes"],
+L00000161	            "output_ref": "research-output:deep-compare",
+L00000162	            "created_at_utc": "2026-07-09T00:00:30Z"
+L00000163	          },
+L00000164	          {
+L00000165	            "step_id": "synthesis:deep-closure",
+L00000166	            "step_kind": "closure_check",
+L00000167	            "input_source_refs": ["source:official-docs", "source:release-notes"],
+L00000168	            "citation_refs": ["citation:browser-docs", "citation:release-notes"],
+L00000169	            "output_ref": "research-output:deep-closure",
+L00000170	            "created_at_utc": "2026-07-09T00:00:35Z"
+L00000171	          }
+L00000172	        ],
+L00000173	        "subagent_records": [
+L00000174	          {
+L00000175	            "subagent_record_id": "research-subagent:browser-docs",
+L00000176	            "source_subagent_id": "agent:read-only-research-a",
+L00000177	            "assignment": "Read official browser documentation and return citations only.",
+L00000178	            "source_scope_refs": ["source:official-docs"],
+L00000179	            "status": "completed",
+L00000180	            "result_ref": "research-output:browser-docs-subagent",
+L00000181	            "created_at_utc": "2026-07-09T00:00:00Z",
+L00000182	            "finished_at_utc": "2026-07-09T00:00:18Z"
+L00000183	          },
+L00000184	          {
+L00000185	            "subagent_record_id": "research-subagent:release-notes",
+L00000186	            "source_subagent_id": "agent:read-only-research-b",
+L00000187	            "assignment": "Read release notes and return current-version caveats only.",
+L00000188	            "source_scope_refs": ["source:release-notes"],
+L00000189	            "status": "completed",
+L00000190	            "result_ref": "research-output:release-notes-subagent",
+L00000191	            "created_at_utc": "2026-07-09T00:00:00Z",
+L00000192	            "finished_at_utc": "2026-07-09T00:00:19Z"
+L00000193	          }
+L00000194	        ],
+L00000195	        "subquestion_refs": ["subquestion:browser-runtime", "subquestion:evidence-artifacts"],
+L00000196	        "coverage_report_ref": "research-coverage:deep-browser-models",
+L00000197	        "closure_state": "sufficient"
+L00000198	      }
+L00000199	    }
+L00000200	  ],
+L00000201	  "invalid_runs": [
+L00000202	    {
+L00000203	      "case_id": "planning_research_missing_source_evidence",
+L00000204	      "schema": "ResearchRun",
+L00000205	      "run": {
+L00000206	        "research_run_id": "research:bad-planning-no-source",
+L00000207	        "mode": "standard",
+L00000208	        "task": "Verify current platform support.",
+L00000209	        "invocation": {
+L00000210	          "invocation_source": "planning_wizard",
+L00000211	          "agent_reason": "Planning question depends on current support."
+L00000212	        },
+L00000213	        "sources": [
+L00000214	          {
+L00000215	            "source_id": "source:one",
+L00000216	            "url": "https://example.com/docs",
+L00000217	            "selection_reason": "fixture",
+L00000218	            "read_state": "read",
+L00000219	            "read_receipt_ref": "receipt:one"
+L00000220	          }
+L00000221	        ],
+L00000222	        "read_receipts": [
+L00000223	          {
+L00000224	            "receipt_id": "receipt:one",
+L00000225	            "url": "https://example.com/docs",
+L00000226	            "web_operation": "read",
+L00000227	            "tool_id": "webfetch",
+L00000228	            "content_ref": "content:one",
+L00000229	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000230	          }
+L00000231	        ],
+L00000232	        "citations": [
+L00000233	          {
+L00000234	            "citation_id": "citation:one",
+L00000235	            "url": "https://example.com/docs",
+L00000236	            "source_ref": "source:one",
+L00000237	            "read_receipt_ref": "receipt:one",
+L00000238	            "evidence_kind": "read",
+L00000239	            "snippet_only": false
+L00000240	          }
+L00000241	        ],
+L00000242	        "closure_state": "sufficient"
+L00000243	      },
+L00000244	      "expected_error": "missing_planning_source_evidence_ref"
+L00000245	    },
+L00000246	    {
+L00000247	      "case_id": "snippet_only_citation_rejected",
+L00000248	      "schema": "ResearchRun",
+L00000249	      "run": {
+L00000250	        "research_run_id": "research:bad-snippet-only",
+L00000251	        "mode": "standard",
+L00000252	        "task": "Compare current docs.",
+L00000253	        "invocation": {
+L00000254	          "invocation_source": "goal",
+L00000255	          "agent_reason": "Goal requires read-backed citations."
+L00000256	        },
+L00000257	        "sources": [
+L00000258	          {
+L00000259	            "source_id": "source:snippet",
+L00000260	            "url": "https://example.com/docs",
+L00000261	            "selection_reason": "fixture",
+L00000262	            "read_state": "read",
+L00000263	            "read_receipt_ref": "receipt:snippet"
+L00000264	          }
+L00000265	        ],
+L00000266	        "read_receipts": [
+L00000267	          {
+L00000268	            "receipt_id": "receipt:snippet",
+L00000269	            "url": "https://example.com/docs",
+L00000270	            "web_operation": "read",
+L00000271	            "tool_id": "webfetch",
+L00000272	            "content_ref": "content:snippet",
+L00000273	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000274	          }
+L00000275	        ],
+L00000276	        "citations": [
+L00000277	          {
+L00000278	            "citation_id": "citation:snippet",
+L00000279	            "url": "https://example.com/docs",
+L00000280	            "source_ref": "source:snippet",
+L00000281	            "read_receipt_ref": "receipt:snippet",
+L00000282	            "evidence_kind": "read",
+L00000283	            "snippet_only": true
+L00000284	          }
+L00000285	        ],
+L00000286	        "closure_state": "sufficient"
+L00000287	      },
+L00000288	      "expected_error": "citation_not_read_backed"
+L00000289	    },
+L00000290	    {
+L00000291	      "case_id": "research_runtime_target_leakage",
+L00000292	      "schema": "ResearchRun",
+L00000293	      "run": {
+L00000294	        "research_run_id": "research:bad-runtime-leakage",
+L00000295	        "mode": "standard",
+L00000296	        "task": "Verify current platform support.",
+L00000297	        "invocation": {
+L00000298	          "invocation_source": "prd",
+L00000299	          "agent_reason": "PRD option depends on current support."
+L00000300	        },
+L00000301	        "sources": [
+L00000302	          {
+L00000303	            "source_id": "source:one",
+L00000304	            "url": "https://example.com/docs",
+L00000305	            "selection_reason": "fixture",
+L00000306	            "read_state": "read",
+L00000307	            "read_receipt_ref": "receipt:one"
+L00000308	          }
+L00000309	        ],
+L00000310	        "read_receipts": [
+L00000311	          {
+L00000312	            "receipt_id": "receipt:one",
+L00000313	            "url": "https://example.com/docs",
+L00000314	            "web_operation": "read",
+L00000315	            "tool_id": "webfetch",
+L00000316	            "content_ref": "content:one",
+L00000317	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000318	          }
+L00000319	        ],
+L00000320	        "citations": [
+L00000321	          {
+L00000322	            "citation_id": "citation:one",
+L00000323	            "url": "https://example.com/docs",
+L00000324	            "source_ref": "source:one",
+L00000325	            "read_receipt_ref": "receipt:one",
+L00000326	            "evidence_kind": "read",
+L00000327	            "snippet_only": false
+L00000328	          }
+L00000329	        ],
+L00000330	        "ledger_source_evidence_ref": "ledger-source:one",
+L00000331	        "closure_state": "sufficient",
+L00000332	        "WorkNode": "forbidden"
+L00000333	      },
+L00000334	      "expected_error": "runtime_target_leakage"
+L00000335	    },
+L00000336	    {
+L00000337	      "case_id": "deep_research_mode_mismatch",
+L00000338	      "schema": "DeepResearchRun",
+L00000339	      "run": {
+L00000340	        "research_run_id": "research:bad-deep-mode",
+L00000341	        "mode": "standard",
+L00000342	        "task": "Deeply compare sources.",
+L00000343	        "invocation": {
+L00000344	          "invocation_source": "goal",
+L00000345	          "agent_reason": "Deep research must carry deep mode."
+L00000346	        },
+L00000347	        "sources": [
+L00000348	          {
+L00000349	            "source_id": "source:one",
+L00000350	            "url": "https://example.com/docs",
+L00000351	            "selection_reason": "fixture",
+L00000352	            "read_state": "read",
+L00000353	            "read_receipt_ref": "receipt:one"
+L00000354	          }
+L00000355	        ],
+L00000356	        "read_receipts": [
+L00000357	          {
+L00000358	            "receipt_id": "receipt:one",
+L00000359	            "url": "https://example.com/docs",
+L00000360	            "web_operation": "read",
+L00000361	            "tool_id": "webfetch",
+L00000362	            "content_ref": "content:one",
+L00000363	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000364	          }
+L00000365	        ],
+L00000366	        "citations": [
+L00000367	          {
+L00000368	            "citation_id": "citation:one",
+L00000369	            "url": "https://example.com/docs",
+L00000370	            "source_ref": "source:one",
+L00000371	            "read_receipt_ref": "receipt:one",
+L00000372	            "evidence_kind": "read",
+L00000373	            "snippet_only": false
+L00000374	          }
+L00000375	        ],
+L00000376	        "closure_state": "sufficient"
+L00000377	      },
+L00000378	      "expected_error": "deep_research_mode_mismatch"
+L00000379	    },
+L00000380	    {
+L00000381	      "case_id": "research_dangling_refs_rejected",
+L00000382	      "schema": "ResearchRun",
+L00000383	      "run": {
+L00000384	        "research_run_id": "research:bad-dangling-refs",
+L00000385	        "mode": "standard",
+L00000386	        "task": "Reject dangling research evidence refs.",
+L00000387	        "invocation": {
+L00000388	          "invocation_source": "agent_initiated",
+L00000389	          "agent_reason": "Fixture proves research refs must resolve inside the run."
+L00000390	        },
+L00000391	        "sources": [
+L00000392	          {
+L00000393	            "source_id": "source:known",
+L00000394	            "url": "https://example.com/docs",
+L00000395	            "selection_reason": "fixture",
+L00000396	            "read_state": "read",
+L00000397	            "read_receipt_ref": "receipt:missing"
+L00000398	          }
+L00000399	        ],
+L00000400	        "read_receipts": [
+L00000401	          {
+L00000402	            "receipt_id": "receipt:known",
+L00000403	            "url": "https://example.com/docs",
+L00000404	            "web_operation": "read",
+L00000405	            "tool_id": "webfetch",
+L00000406	            "content_ref": "content:known",
+L00000407	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000408	          }
+L00000409	        ],
+L00000410	        "citations": [
+L00000411	          {
+L00000412	            "citation_id": "citation:known",
+L00000413	            "url": "https://example.com/docs",
+L00000414	            "source_ref": "source:missing",
+L00000415	            "read_receipt_ref": "receipt:missing",
+L00000416	            "evidence_kind": "read",
+L00000417	            "snippet_only": false
+L00000418	          }
+L00000419	        ],
+L00000420	        "synthesis_steps": [
+L00000421	          {
+L00000422	            "step_id": "synthesis:bad-dangling",
+L00000423	            "step_kind": "synthesize",
+L00000424	            "input_source_refs": ["source:missing"],
+L00000425	            "read_receipt_refs": ["receipt:missing"],
+L00000426	            "citation_refs": ["citation:missing"],
+L00000427	            "output_ref": "research-output:bad-dangling",
+L00000428	            "created_at_utc": "2026-07-09T00:00:00Z"
+L00000429	          }
+L00000430	        ],
+L00000431	        "closure_state": "sufficient"
+L00000432	      },
+L00000433	      "expected_error": "dangling_research_ref"
+L00000434	    },
+L00000435	    {
+L00000436	      "case_id": "research_mismatched_citation_url_rejected",
+L00000437	      "schema": "ResearchRun",
+L00000438	      "run": {
+L00000439	        "research_run_id": "research:bad-citation-url",
+L00000440	        "mode": "standard",
+L00000441	        "task": "Reject citation URLs that do not match source/read receipt identity.",
+L00000442	        "invocation": {
+L00000443	          "invocation_source": "agent_initiated",
+L00000444	          "agent_reason": "Fixture proves citation refs must preserve URL identity."
+L00000445	        },
+L00000446	        "sources": [
+L00000447	          {
+L00000448	            "source_id": "source:known",
+L00000449	            "url": "https://example.com/docs",
+L00000450	            "selection_reason": "fixture",
+L00000451	            "read_state": "read",
+L00000452	            "read_receipt_ref": "receipt:known"
+L00000453	          }
+L00000454	        ],
+L00000455	        "read_receipts": [
+L00000456	          {
+L00000457	            "receipt_id": "receipt:known",
+L00000458	            "url": "https://example.com/docs",
+L00000459	            "web_operation": "read",
+L00000460	            "tool_id": "webfetch",
+L00000461	            "content_ref": "content:known",
+L00000462	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000463	          }
+L00000464	        ],
+L00000465	        "citations": [
+L00000466	          {
+L00000467	            "citation_id": "citation:mismatch",
+L00000468	            "url": "https://example.com/other",
+L00000469	            "source_ref": "source:known",
+L00000470	            "read_receipt_ref": "receipt:known",
+L00000471	            "evidence_kind": "read",
+L00000472	            "snippet_only": false
+L00000473	          }
+L00000474	        ],
+L00000475	        "closure_state": "sufficient"
+L00000476	      },
+L00000477	      "expected_error": "citation_url_identity_mismatch"
+L00000478	    }
+L00000479	  ],
+L00000480	  "negative_constraints": [
+L00000481	    "Research and deep-research citations must come from read or extract receipts, not search snippets alone.",
+L00000482	    "PRD Builder and Planning Wizard research writes ledger or plan source evidence only until explicit compile/build approval.",
+L00000483	    "ResearchRun and DeepResearchRun records must not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks.",
+L00000484	    "DeepResearchRun must carry mode=deep."
+L00000485	  ]
+L00000486	}

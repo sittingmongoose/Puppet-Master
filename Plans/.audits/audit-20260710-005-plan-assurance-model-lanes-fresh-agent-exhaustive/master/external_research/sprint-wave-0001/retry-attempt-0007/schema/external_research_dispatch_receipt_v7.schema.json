@@ -1,0 +1,280 @@
+{
+  "$id": "urn:a005:external-research-dispatch-receipt-v7",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activation_core_canonical_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "activation_core_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "activation_envelope_canonical_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "activation_envelope_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "activation_transaction_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "agent_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "assignment_id": {
+      "enum": [
+        "ER-0003",
+        "ER-0008"
+      ]
+    },
+    "attempt_id": {
+      "const": "attempt-0007"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "authorization_transaction_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "canonicalization_algorithm_id": {
+      "const": "a005-canonical-json-decimal-v1"
+    },
+    "controller_thread_id": {
+      "const": "019f5078-6501-7223-b52f-2251010bdc41"
+    },
+    "coverage_credit": {
+      "const": 0
+    },
+    "descendants_forbidden": {
+      "const": true
+    },
+    "dispatch_intent_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dispatch_intent_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "followup_messages_forbidden": {
+      "const": true
+    },
+    "fork_turns": {
+      "const": "none"
+    },
+    "fresh_child": {
+      "const": true
+    },
+    "leaf_dispatch_authorization_canonical_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "leaf_dispatch_authorization_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "merge_credit": {
+      "const": 0
+    },
+    "model": {
+      "const": "gpt-5.6-luna"
+    },
+    "native_capture_binding_deferred": {
+      "const": true
+    },
+    "native_child_thread_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "native_child_turn_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "output_directory": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "output_tree_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "packet_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "packet_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "packet_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "parent_spawn_call_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "parent_spawn_result_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "promotion_credit": {
+      "const": 0
+    },
+    "reasoning_effort": {
+      "const": "max"
+    },
+    "receipt_writer_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipt_writer_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "receipt_writer_transaction_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipt_written_after_spawn_and_terminal": {
+      "const": true
+    },
+    "research_credit": {
+      "const": 0
+    },
+    "result_buffer_byte_count": {
+      "minimum": 2,
+      "type": "integer"
+    },
+    "result_canonical_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "result_contains_task_thread_id": {
+      "const": false
+    },
+    "result_file_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "result_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "result_present_before_pmr1": {
+      "const": true
+    },
+    "result_required_before_pmr1": {
+      "const": true
+    },
+    "retries_forbidden": {
+      "const": true
+    },
+    "retry_namespace": {
+      "const": "retry-attempt-0007"
+    },
+    "schema_version": {
+      "const": "external-research-dispatch-receipt-v7"
+    },
+    "single_result_buffer_used": {
+      "const": true
+    },
+    "spec_credit": {
+      "const": 0
+    },
+    "sprint_id": {
+      "const": "sprint-wave-0001"
+    },
+    "task_thread_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "terminal_proof_file_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "terminal_proof_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "terminal_response_exact": {
+      "const": "PMR1"
+    },
+    "terminal_turn_status": {
+      "const": "completed"
+    },
+    "toctou_recheck_passed_before_write": {
+      "const": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "audit_id",
+    "sprint_id",
+    "retry_namespace",
+    "assignment_id",
+    "attempt_id",
+    "controller_thread_id",
+    "agent_path",
+    "task_thread_id",
+    "native_child_thread_id",
+    "native_child_turn_id",
+    "model",
+    "reasoning_effort",
+    "fresh_child",
+    "fork_turns",
+    "descendants_forbidden",
+    "followup_messages_forbidden",
+    "retries_forbidden",
+    "packet_id",
+    "packet_path",
+    "packet_sha256",
+    "dispatch_intent_path",
+    "dispatch_intent_sha256",
+    "activation_transaction_id",
+    "authorization_transaction_id",
+    "activation_core_path",
+    "activation_core_canonical_sha256",
+    "leaf_dispatch_authorization_path",
+    "leaf_dispatch_authorization_canonical_sha256",
+    "activation_envelope_path",
+    "activation_envelope_canonical_sha256",
+    "terminal_proof_path",
+    "terminal_proof_file_sha256",
+    "parent_spawn_call_sha256",
+    "parent_spawn_result_sha256",
+    "output_directory",
+    "result_path",
+    "result_file_sha256",
+    "result_canonical_sha256",
+    "result_buffer_byte_count",
+    "output_tree_sha256",
+    "canonicalization_algorithm_id",
+    "receipt_writer_path",
+    "receipt_writer_sha256",
+    "receipt_writer_transaction_id",
+    "single_result_buffer_used",
+    "toctou_recheck_passed_before_write",
+    "result_present_before_pmr1",
+    "result_required_before_pmr1",
+    "terminal_turn_status",
+    "terminal_response_exact",
+    "receipt_written_after_spawn_and_terminal",
+    "result_contains_task_thread_id",
+    "native_capture_binding_deferred",
+    "coverage_credit",
+    "research_credit",
+    "promotion_credit",
+    "spec_credit",
+    "merge_credit"
+  ],
+  "title": "Audit005 External Research Positive Dispatch Receipt v7",
+  "type": "object"
+}

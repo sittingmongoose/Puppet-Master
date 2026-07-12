@@ -1,0 +1,2513 @@
+L00000001	# Assistant-Only Memory Subsystem (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## Change Summary
+L00000007	- 2026-02-26: Revised canonical Assistant-only memory SSOT to use **Evidence-Backed Gists** (MemoryGist + EvidenceRef), deterministic verification, AutoRunBoundary/AutoMilestone triggers, Tantivy/USearch indexing contracts, and GUI Gist Review panel.
+L00000008	
+L00000009	**Date:** 2026-02-26  
+L00000010	**Status:** Canonical plan/spec  
+L00000011	**Cross-references:** `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/agent-rules-context.md`, `Plans/rewrite-tie-in-memo.md`, `Plans/Decision_Policy.md`, `Plans/auto_decisions.jsonl`, `Plans/evidence.schema.json`
+L00000012	
+L00000013	---
+L00000014	
+L00000015	## 0. Scope and boundary
+L00000016	
+L00000017	This document is the canonical SSOT for **Assistant-only** memory continuity in Puppet Master.
+L00000018	It defines the data model, verification gates, triggers, indexing, and GUI interactions for Assistant memory.
+L00000019	It does not replace or redefine system event storage (`seglog` SSOT), system KV/search projections (`redb` + Tantivy), or the shared rules pipeline.
+L00000020	
+L00000021	Rule: Assistant memory MUST be implemented as a continuity/project-state subsystem that is separate from rules assembly and separate from non-Assistant agent execution paths.
+L00000022	ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts
+L00000023	
+L00000024	Rule: Assistant memory MUST run fully in-process and local-only; it MUST NOT require external servers and MUST NOT use SQLite.
+L00000025	ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, ContractName:Plans/rewrite-tie-in-memo.md
+L00000026	
+L00000027	---
+L00000028	
+L00000029	<a id="1-capability-boundary"></a>
+L00000030	## 1. Capability boundary (Assistant-only)
+L00000031	
+L00000032	### 1.1 Memory provider contract
+L00000033	
+L00000034	Canonical interface names:
+L00000035	- `MemoryProvider` (trait/interface)
+L00000036	- `RealMemoryProvider` (Assistant-enabled implementation)
+L00000037	- `NullMemoryProvider` (returns empty results; no-op writes)
+L00000038	
+L00000039	Required interface surface (logical contract; naming may vary in code):
+L00000040	- `build_capsule(project_id, now) -> WorkingSetCapsule`
+L00000041	- `search(project_id, query, now, k) -> Vec<MemoryGistHit>`
+L00000042	- `record_access(project_id, gist_id, now) -> Result`
+L00000043	- `upsert_gist(project_id, gist) -> Result`
+L00000044	- `delete_gist(project_id, gist_id) -> Result`
+L00000045	- `set_verification_state(project_id, gist_id, verification_state, now) -> Result`
+L00000046	
+L00000047	Rule: Compile-time wiring MUST route Assistant prompt assembly to `RealMemoryProvider`.
+L00000048	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000049	
+L00000050	Rule: Orchestrator, Interviewer, requirements builder, and all subagents MUST be wired to `NullMemoryProvider` and MUST receive no Assistant memory payload.
+L00000051	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/agent-rules-context.md
+L00000052	
+L00000053	Rule: Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata.
+L00000054	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, PolicyRule:Decision_Policy.md§2
+L00000055	
+L00000056	### 1.2 Assistant-only evidence boundary
+L00000057	
+L00000058	Assistant memory uses lightweight **EvidenceRefs** to point at verification evidence stored elsewhere (seglog refs, artifacts, commits). It does not become an evidence store.
+L00000059	
+L00000060	Rule: MemoryGist records MUST NOT persist large diffs, full logs, or large artifacts; they MUST persist only compact claims/details plus EvidenceRefs to canonical sources.
+L00000061	ContractRef: SchemaID:pm.evidence.schema.v1, ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+L00000062	
+L00000063	---
+L00000064	
+L00000065	<a id="2-physical-storage-layout"></a>
+L00000066	## 2. Physical storage layout (per project)
+L00000067	
+L00000068	Per-project memory stores (deterministic default):
+L00000069	- System DB (project-state reference): `.puppet-master/project/state/system.redb`
+L00000070	- Assistant Memory DB (canonical): `.puppet-master/project/state/assistant_memory.redb`
+L00000071	- Assistant Memory Tantivy index: `.puppet-master/project/state/assistant_memory_index/`
+L00000072	- Assistant Memory USearch index: `.puppet-master/project/state/assistant_memory_vectors.usearch`
+L00000073	
+L00000074	Note: This document does not change the canonical system-storage default in `Plans/storage-plan.md` (app-global redb layout). The `system.redb` path above is the project-state reference path for memory-local packaging/project-scoped state mode.
+L00000075	
+L00000076	Rule: Assistant memory MUST use separate physical stores from system state stores to avoid writer contention and coupling.
+L00000077	ContractRef: ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+L00000078	
+L00000079	Rule: Shared crates/libraries MAY be reused across subsystems, but file-level physical separation MUST remain in place.
+L00000080	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
+L00000081	
+L00000082	Rule: Memory data MUST be project-scoped and project switching MUST swap active memory stores atomically at the project boundary.
+L00000083	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-chat-design.md#11-threads-and-chat-management
+L00000084	
+L00000085	---
+L00000086	
+L00000087	<a id="3-data-model"></a>
+L00000088	## 3. Data model (Evidence-Backed Gists; GUI-first)
+L00000089	
+L00000090	Canonical record: `MemoryGist`.
+L00000091	
+L00000092	### 3.1 `MemoryGist` fields (required)
+L00000093	
+L00000094	Required fields (conceptual contract):
+L00000095	- Identity/scope:
+L00000096	  - `id` (stable ID)
+L00000097	  - `project_id` (optional if DB is physically per-project)
+L00000098	- Classification:
+L00000099	  - `kind` (see §9.2)
+L00000100	  - `status` (e.g., `Active` | `Done` | `Archived`)
+L00000101	  - `pinned` (bool)
+L00000102	- Verification:
+L00000103	  - `verification_state` (see §5.3)
+L00000104	- Time/access:
+L00000105	  - `created_at`, `updated_at`
+L00000106	  - `last_access_at`, `access_count`
+L00000107	- Decay:
+L00000108	  - `half_life_days` (kind-defaulted; user-adjustable)
+L00000109	- Labels:
+L00000110	  - `tags[]`
+L00000111	- Claims-first content:
+L00000112	  - `claims[]` (each claim is a compact, atomic statement; see §3.2)
+L00000113	  - `summary` (derived; cached field allowed)
+L00000114	  - `details` (optional; never auto-injected)
+L00000115	- Evidence:
+L00000116	  - `evidence_refs[]` (see §3.3)
+L00000117	- Provenance:
+L00000118	  - `source` (`AutoRunBoundary` | `AutoMilestone` | `UserManual` | `Import`)
+L00000119	  - `run_id` / `thread_id` (optional, for traceability)
+L00000120	- Embedding/index versioning:
+L00000121	  - `embedding_version`
+L00000122	  - `embed_text_hash`
+L00000123	  - `text_hash`
+L00000124	
+L00000125	Rule: Automatic prompt injection MUST use only Verified gists’ derived `summary` text and MUST NOT auto-inject `details`.
+L00000126	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000127	
+L00000128	Rule: `summary` MUST be derivable deterministically from `kind + claims[] (+ minimal tags)` so that re-derivation yields stable injection text.
+L00000129	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+L00000130	
+L00000131	Rule: When `kind`, `tags[]`, or `claims[]` change, any cached derived fields (`summary`, `embed_text_hash`, `text_hash`) MUST be invalidated and re-derived before the next capsule assembly or retrieval injection.
+L00000132	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexes, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+L00000133	
+L00000134	Rule: GUI memory operations (list/edit/verify/pin/delete/half-life edits) MUST read and write `MemoryGist` records in `assistant_memory.redb` as the canonical source.
+L00000135	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/storage-plan.md
+L00000136	
+L00000137	### 3.2 `claims[]` model (atomic statements)
+L00000138	
+L00000139	A `claim` is a compact statement intended to be independently verifiable and independently deduplicated.
+L00000140	
+L00000141	Recommended minimal shape:
+L00000142	- `claim_id` (stable within gist)
+L00000143	- `text` (single sentence)
+L00000144	- `created_at`
+L00000145	
+L00000146	Rule: Claims MUST be short, single-purpose statements; multi-claim gists MUST keep each claim independently meaningful for verification and dedup.
+L00000147	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000148	
+L00000149	### 3.3 `EvidenceRef` model (structured, pointers only)
+L00000150	
+L00000151	`EvidenceRef` is a structured pointer to verification evidence; it is not the evidence payload itself.
+L00000152	
+L00000153	Supported variants (canonical contract):
+L00000154	- `Commit { hash, repo_id }`
+L00000155	- `Diff { run_id, repo_id, paths[], stats }`
+L00000156	- `TestRun { run_id, command, exit_code, summary_hash }`
+L00000157	- `BuildRun { run_id, command, exit_code, summary_hash }`
+L00000158	- `LintRun { run_id, command, exit_code, summary_hash }`
+L00000159	- `Artifact { path, change_type, content_hash? }`
+L00000160	- `PlanRef { file_path, anchor_id? }`
+L00000161	- Optional workflow refs:
+L00000162	  - `Issue { provider, id }`
+L00000163	  - `PR { provider, id }`
+L00000164	
+L00000165	Rule: EvidenceRefs MUST be small pointers (IDs, hashes, paths) and MUST NOT embed large diffs/logs/artifact bodies.
+L00000166	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000167	
+L00000168	Rule: `Artifact` EvidenceRefs MUST point to system-captured run artifacts (including evidence bundles) and SHOULD include `content_hash` when available to make verification reproducible.
+L00000169	ContractRef: SchemaID:pm.evidence.schema.v1, ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+L00000170	
+L00000171	---
+L00000172	
+L00000173	<a id="4-retrieval-indexes"></a>
+L00000174	## 4. Retrieval + indexing contracts
+L00000175	
+L00000176	Assistant memory retrieval is implemented as:
+L00000177	- **Tantivy** lexical search over gist text fields
+L00000178	- **USearch** semantic ANN over deterministic embed text
+L00000179	
+L00000180	### 4.1 Tantivy (lexical)
+L00000181	
+L00000182	Canonical indexed fields (minimum):
+L00000183	- `id` (keyword)
+L00000184	- `kind` (keyword)
+L00000185	- `status` (keyword)
+L00000186	- `verification_state` (keyword)
+L00000187	- `pinned` (bool/keyword)
+L00000188	- `tags` (keyword/text)
+L00000189	- `claims_text` (text; concatenated)
+L00000190	- `summary` (text)
+L00000191	- `details` (text; optional)
+L00000192	- `updated_at` (date/numeric)
+L00000193	
+L00000194	Rule: Lexical index updates MUST be delete+add by `id`, and full lexical rebuild MUST be supported from `assistant_memory.redb`.
+L00000195	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance
+L00000196	
+L00000197	### 4.2 USearch (semantic ANN)
+L00000198	
+L00000199	Canonical mapping:
+L00000200	- Vector entry -> `MemoryGist.id`
+L00000201	- Persist ANN state in `assistant_memory_vectors.usearch` via serialize/deserialize
+L00000202	- Persist `gist_id -> vector_slot` mapping (and tombstone state) in `assistant_memory.redb`
+L00000203	
+L00000204	Deterministic embed text:
+L00000205	- `embed_text = kind + "\n" + join(tags) + "\n" + join(claims[].text)` (exclude `details`)
+L00000206	- `embed_text_hash = sha256_utf8(embed_text)` as lowercase hex SHA-256 over the exact UTF-8 bytes
+L00000207	- `text_hash = sha256_utf8(kind + "\n" + join(tags) + "\n" + join(claims[].text) + "\n" + summary + "\n" + details_or_empty)` as lowercase hex SHA-256 over the exact UTF-8 bytes
+L00000208	
+L00000209	Rule: USearch embeddings MUST be computed from deterministic `embed_text` and MUST use `embed_text_hash` to detect no-op updates and deduplicate repeated Auto triggers.
+L00000210	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
+L00000211	
+L00000212	Rule: Deletes/updates MUST use tombstones and MUST support deterministic periodic full rebuild (re-embed + repack) from canonical `assistant_memory.redb`.
+L00000213	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, PolicyRule:Decision_Policy.md§2
+L00000214	
+L00000215	### 4.3 Canonical write + index update order
+L00000216	
+L00000217	Canonical write order:
+L00000218	1. Write canonical `MemoryGist` change to `assistant_memory.redb`
+L00000219	2. Enqueue Tantivy + USearch index updates
+L00000220	3. Apply index updates asynchronously
+L00000221	4. Expose deterministic rebuild operations for recovery
+L00000222	
+L00000223	Rule: Canonical writes to `assistant_memory.redb` MUST succeed independently of indexing, and index failures MUST be recoverable without data loss.
+L00000224	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/storage-plan.md
+L00000225	
+L00000226	---
+L00000227	
+L00000228	<a id="5-verification-and-triggers"></a>
+L00000229	## 5. Verification + triggers (Evidence-Backed Gists)
+L00000230	
+L00000231	### 5.1 Verification intent
+L00000232	
+L00000233	Verification exists to prevent prompt injection of incorrect or stale continuity.
+L00000234	
+L00000235	Rule: By default, only `verification_state = Verified` gists are eligible for capsule assembly and per-turn retrieval injection.
+L00000236	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, PolicyRule:Decision_Policy.md§2
+L00000237	
+L00000238	### 5.2 Trigger contracts
+L00000239	
+L00000240	#### 5.2.1 AutoRunBoundary (end of each Assistant run)
+L00000241	
+L00000242	AutoRunBoundary is invoked exactly once at the end of each Assistant run (after the Assistant produces its final response).
+L00000243	It builds **one** candidate gist from run artifacts (changed paths, tool results, commits/PR refs when present) so that memory gists can be generated even when no Plans/SSOT files were touched.
+L00000244	
+L00000245	Rule: AutoRunBoundary MUST run at the end of each Assistant run and MUST create/update at most **one** `MemoryGist` per run with `source = AutoRunBoundary`.
+L00000246	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000247	
+L00000248	Rule: AutoRunBoundary MUST deduplicate candidates across runs using `embed_text_hash` and normalized EvidenceRefs (no duplicate persisted gist for identical claim/evidence sets).
+L00000249	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexes, PolicyRule:Decision_Policy.md§2
+L00000250	
+L00000251	Rule: AutoRunBoundary MUST evaluate deterministic verification rules (§5.3) before persisting and MUST set `verification_state` to `Verified` when the rules are satisfied; otherwise it persists as `Unverified`.
+L00000252	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000253	
+L00000254	Rule: AutoRunBoundary MUST respect `assistant.memory.auto_save_unverified`; when disabled, it MUST drop newly-proposed gists that remain `Unverified` at the end of the run.
+L00000255	ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
+L00000256	
+L00000257	#### 5.2.2 AutoMilestone (promotion event; less frequent)
+L00000258	
+L00000259	AutoMilestone is a promotion event that runs when verification-relevant evidence becomes available (commit created, PR opened, tests/build/lint completed, artifact produced, or user confirms “done” via GUI action).
+L00000260	It MAY create/promote an `Outcome` gist and MAY refresh verification_state.
+L00000261	
+L00000262	Rule: AutoMilestone MUST be idempotent, MUST be deduplicated per `(gist_id, evidence_ref)` pair, and MUST be rate-limited to at most **once per run**.
+L00000263	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000264	
+L00000265	Rule: AutoMilestone MUST create/promote at most one `Outcome` gist per run when any milestone occurs: tests transition failing→passing, a commit is created, a PR is opened, or the user confirms “done” via a GUI action.
+L00000266	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000267	
+L00000268	Rule: If AutoMilestone is triggered in a run, it MUST execute before AutoRunBoundary persistence so the run-end candidate reflects any within-run promotions.
+L00000269	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000270	
+L00000271	### 5.3 Deterministic verification rules
+L00000272	
+L00000273	`verification_state` enum:
+L00000274	- `Unverified` (default)
+L00000275	- `Verified`
+L00000276	- `Discarded`
+L00000277	
+L00000278	Rule: Auto-generated gists MUST be saved as `Unverified` unless they satisfy a deterministic verification rule below.
+L00000279	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
+L00000280	
+L00000281	Rule: A gist MUST transition to `Verified` if and only if ANY holds:
+L00000282	1) It has a `Commit { hash, repo_id }` EvidenceRef.
+L00000283	2) It has a successful `TestRun` or `BuildRun` EvidenceRef (`exit_code == 0`) AND it has a `Diff` or `Artifact` EvidenceRef.
+L00000284	3) It has a `PlanRef` EvidenceRef AND `kind` is `Decision` / `Constraint` / `Preference` / `Landmine`.
+L00000285	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000286	
+L00000287	Rule: A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty.
+L00000288	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000289	
+L00000290	Rule: Manual “Verify” MUST re-run deterministic validation; if validation fails, the gist MUST remain `Unverified` unless `assistant.memory.allow_manual_verify_without_evidence = true` (default `false`).
+L00000291	ContractRef: ConfigKey:assistant.memory.allow_manual_verify_without_evidence, PolicyRule:Decision_Policy.md§2
+L00000292	
+L00000293	Rule: “Discard” MUST set `verification_state = Discarded` and discarded gists MUST be excluded from automatic injection and default search results.
+L00000294	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, PolicyRule:Decision_Policy.md§2
+L00000295	
+L00000296	---
+L00000297	
+L00000298	<a id="6-prompt-injection-contract"></a>
+L00000299	## 6. Prompt injection contract (token protection)
+L00000300	
+L00000301	Memory is continuity and project state. Memory is not rules.
+L00000302	
+L00000303	Rule: Prompt assembly MUST treat memory as a distinct context source that is separate from application/project rules pipeline output.
+L00000304	ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000305	
+L00000306	### 6.1 Always-loaded capsule (Verified-only by default)
+L00000307	
+L00000308	Always inject a tiny **Working Set capsule** for the active project:
+L00000309	- Budget default: `350` tokens
+L00000310	- Sections (fixed order): Project Capsule bullets, Current Thread paragraph, Recent decisions, Recent blockers
+L00000311	- Source: eligible gists selected by pins + activation scoring (eligibility defaults to `verification_state = Verified`)
+L00000312	
+L00000313	Rule: Capsule assembly MUST enforce the configured hard token cap before sending any Assistant prompt.
+L00000314	ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000315	
+L00000316	Rule: Capsule assembly MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+L00000317	ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000318	
+L00000319	### 6.2 Per-turn retrieval injection (Verified-only)
+L00000320	
+L00000321	Per user turn:
+L00000322	1. Execute lexical search (Tantivy) + semantic search (USearch)
+L00000323	2. Merge/rerank with activation scoring
+L00000324	3. Inject up to `N` gists (`N` default `5`)
+L00000325	4. Inject only derived `summary` text (1–2 sentences each)
+L00000326	
+L00000327	Rule: Retrieval injection MUST NOT exceed max item count and MUST remain summary-only.
+L00000328	ContractRef: ConfigKey:assistant.memory.max_injected_items_per_turn, ContractName:Plans/assistant-memory-subsystem.md#3-data-model
+L00000329	
+L00000330	Rule: Retrieval injection MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+L00000331	ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000332	
+L00000333	### 6.3 Activation scoring (required components)
+L00000334	
+L00000335	Activation scoring must include:
+L00000336	- `pinned` boost
+L00000337	- kind/status weighting
+L00000338	- recency decay (`half_life_days`)
+L00000339	- access signals (`access_count`, `last_access_at`)
+L00000340	- retrieval blend (BM25 + ANN scores)
+L00000341	
+L00000342	Deterministic activation score:
+L00000343	
+L00000344	`score = (0.50 * normalized_bm25 + 0.50 * normalized_ann + pinned_boost + kind_status_weight + access_weight) * recency_multiplier`
+L00000345	
+L00000346	Defaults: `pinned_boost = 0.20` when pinned else `0`; `kind_status_weight = 0.10` for Verified active project gists, `0` for other eligible Verified gists; `access_weight = min(0.15, ln(1 + access_count) * 0.03)`; `recency_multiplier = 0.5 ^ (age_days / effective_half_life_days)`; `effective_half_life_days = half_life_days` unless overridden by the Done rule below. Missing BM25 or ANN scores normalize to `0`; ties sort by newer `updated_at`, then lexical `id`.
+L00000347	
+L00000348	Rule: Done-status gists MUST decay faster using `effective_half_life_days = half_life_days * 0.5`.
+L00000349	ContractRef: ConfigKey:assistant.memory.done_decay_multiplier, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
+L00000350	
+L00000351	---
+L00000352	
+L00000353	<a id="7-gui-and-maintenance"></a>
+L00000354	## 7. GUI + maintenance operations
+L00000355	
+L00000356	### 7.1 GUI: Gist Review panel
+L00000357	
+L00000358	The GUI must expose a **Gist Review** panel adjacent to (and visually consistent with) Memory + Rules panels.
+L00000359	
+L00000360	Required UI elements:
+L00000361	- List of gists with filters: kind/status/tags/pinned/verification_state
+L00000362	- Default review filter on panel open: `verification_state = Unverified`
+L00000363	- Toggle: `assistant.memory.auto_save_unverified` (default `true`)
+L00000364	- Actions per gist: `Verify`, `Edit`, `Pin/Unpin`, `Discard`
+L00000365	- Half-life controls: per-gist half-life override and per-kind default editor
+L00000366	- “What’s in capsule now” preview with token estimate and hard-cap indicator
+L00000367	- Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists
+L00000368	
+L00000369	Rule: The Gist Review panel MUST surface verification_state prominently and MUST make “Verify” and “Discard” first-class actions.
+L00000370	ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.discard
+L00000371	
+L00000372	Rule: On panel open, Gist Review MUST default to `verification_state = Unverified`; any non-default filter state MUST be the result of explicit user action.
+L00000373	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.edit, UICommand:cmd.chat.memory.pin, UICommand:cmd.chat.memory.discard, UICommand:cmd.chat.memory.toggle_auto_save_unverified
+L00000374	
+L00000375	Rule: Capsule preview MUST report an estimated token count and MUST indicate when truncation occurred due to the configured cap.
+L00000376	ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000377	
+L00000378	### 7.2 Maintenance operations (deterministic)
+L00000379	
+L00000380	Required operations:
+L00000381	1. Rebuild Tantivy index from `assistant_memory.redb`
+L00000382	2. Rebuild USearch index from `assistant_memory.redb` (re-embed + rebuild)
+L00000383	3. Verification sweep: re-evaluate verification_state for all gists
+L00000384	4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
+L00000385	5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
+L00000386	6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
+L00000387	
+L00000388	Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
+L00000389	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-in-memo.md
+L00000390	
+L00000391	Rule: Maintenance operations MUST be user-invokable in GUI and callable by internal maintenance jobs with explicit success/failure status.
+L00000392	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+L00000393	
+L00000394	---
+L00000395	
+L00000396	<a id="8-integration-points"></a>
+L00000397	## 8. Integration points
+L00000398	
+L00000399	Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+L00000400	
+L00000401	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+L00000402	
+L00000403	### 8.1 Assistant prompt builder
+L00000404	
+L00000405	Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+L00000406	
+L00000407	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000408	
+L00000409	### 8.2 Child-run continuity
+L00000410	
+L00000411	Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
+L00000412	
+L00000413	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+L00000414	
+L00000415	Child continuity comes from:
+L00000416	- canonical child records
+L00000417	- reconstructed handoff bundles
+L00000418	- current effective shaping state
+L00000419	- crew shared state when crew mode is active
+L00000420	
+L00000421	It does not come from hidden child-local long-term memory.
+L00000422	
+L00000423	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000424	
+L00000425	### 8.3 Crew shared state
+L00000426	
+L00000427	Crew shared state may persist longer than an individual child, but under the disposable-child default it remains explicit coordination state rather than personal memory for disposable subagents.
+L00000428	
+L00000429	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000430	## 9. Deterministic defaults
+L00000431	
+L00000432	### 9.1 Core defaults
+L00000433	
+L00000434	- Physical stores: separate Assistant memory redb + Tantivy + USearch files (per project)
+L00000435	- Capsule budget: `350` tokens
+L00000436	- Retrieval injection: max `5` gists/turn, summary-only, Verified-only
+L00000437	- Subagent access: disabled (always `NullMemoryProvider`)
+L00000438	- Auto-save unverified gists: enabled
+L00000439	
+L00000440	Rule: These defaults MUST apply without user prompts unless explicitly overridden by a persisted config value.
+L00000441	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary
+L00000442	
+L00000443	### 9.2 Half-life defaults by `kind` (days)
+L00000444	
+L00000445	| kind | default_half_life_days |
+L00000446	|------|-------------------------|
+L00000447	| `CurrentThread` | 14 |
+L00000448	| `Blocker` | 21 |
+L00000449	| `Constraint` | 180 |
+L00000450	| `Outcome` | 180 |
+L00000451	| `Handoff` | 60 |
+L00000452	| `Note` | 45 |
+L00000453	| `Decision` | 180 |
+L00000454	| `Preference` | 365 |
+L00000455	| `Landmine` | 365 |
+L00000456	
+L00000457	Status decay rule:
+L00000458	- `status = Done` -> apply multiplier `0.5` to half-life for activation scoring
+L00000459	
+L00000460	Rule: Any unset `half_life_days` value MUST resolve to the table default for that `kind`.
+L00000461	ContractRef: ConfigKey:assistant.memory.default_half_life_days, ConfigKey:assistant.memory.done_decay_multiplier
+L00000462	
+L00000463	### 9.3 Verification defaults
+L00000464	
+L00000465	- Default `verification_state` on newly created gists: `Unverified`
+L00000466	- Default injection eligibility: Verified-only
+L00000467	- Default pinned Unverified auto-injection: disabled (`assistant.memory.allow_pinned_unverified_injection = false`)
+L00000468	- Default auto-save behavior: store Unverified gists (`assistant.memory.auto_save_unverified = true`)
+L00000469	- Default manual-verify override: disabled (`assistant.memory.allow_manual_verify_without_evidence = false`)
+L00000470	
+L00000471	Rule: Verified-only auto-injection MUST be the default behavior even when unverified auto-save is enabled.
+L00000472	ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+L00000473	
+L00000474	### 9.4 Config keys
+L00000475	
+L00000476	- `assistant.memory.enabled` (default `true`)
+L00000477	- `assistant.memory.capsule_budget_tokens` (default `350`)
+L00000478	- `assistant.memory.max_injected_items_per_turn` (default `5`)
+L00000479	- `assistant.memory.done_decay_multiplier` (default `0.5`)
+L00000480	- `assistant.memory.default_half_life_days.<kind>` (defaults per table above)
+L00000481	- `assistant.memory.retrieval.blend.bm25_weight` (default `0.5`)
+L00000482	- `assistant.memory.retrieval.blend.ann_weight` (default `0.5`)
+L00000483	- `assistant.memory.auto_save_unverified` (default `true`)
+L00000484	- `assistant.memory.allow_manual_verify_without_evidence` (default `false`)
+L00000485	- `assistant.memory.allow_pinned_unverified_injection` (default `false`)
+L00000486	
+L00000487	Rule: Config resolution MUST be deterministic and project-scoped for memory behavior.
+L00000488	Gemini CLI provider-native settings set `model.compressionThreshold` default to `0.5`; if PM exposes or stores a `90%` compression threshold for assistant memory behavior, that value is an intentional PM override rather than alignment with provider-native defaults.
+L00000489	ContractRef: ContractName:Plans/Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
+L00000490	
+L00000491	---
+L00000492	
+L00000493	<a id="10-acceptance-criteria"></a>
+L00000494	## 10. Acceptance criteria (testable)
+L00000495	
+L00000496	1. **Assistant-only enforcement:** Assistant calls `RealMemoryProvider`; Orchestrator/Interviewer/requirements/subagents call `NullMemoryProvider`; no memory payload is observable in subagent prompts.
+L00000497	2. **Verified-only gating:** Capsule and per-turn retrieval inject only `verification_state = Verified` gists by default.
+L00000498	3. **Unverified save toggle effect:** With `assistant.memory.auto_save_unverified = false`, AutoRunBoundary produces no newly-persisted gists unless they satisfy a `Verified` rule at run end; with it enabled, Unverified gists can be persisted but are not auto-injected.
+L00000499	4. **Trigger correctness (no plan edits):** AutoRunBoundary runs once per Assistant run and AutoMilestone runs at most once per run; both operate from run artifacts/evidence refs without requiring any edits to Plans/SSOT documents.
+L00000500	5. **Trigger dedup:** Re-running AutoRunBoundary with identical candidate claim/evidence does not create duplicates (dedup by `embed_text_hash` + normalized EvidenceRefs).
+L00000501	6. **AutoMilestone idempotence:** AutoMilestone does not reprocess the same `(gist_id, evidence_ref)` more than once.
+L00000502	7. **GUI Verify enforcement:** Attempting to mark a gist Verified without satisfiable EvidenceRefs is rejected unless `assistant.memory.allow_manual_verify_without_evidence = true`.
+L00000503	8. **Storage layout:** For a project with memory enabled, the three Assistant-memory paths in §2 are created or loadable (`assistant_memory.redb`, `assistant_memory_index/`, `assistant_memory_vectors.usearch`); no SQLite file is introduced.
+L00000504	9. **Canonical data model:** Creating/editing/verifying/pinning/discarding a gist updates `assistant_memory.redb` and survives restart.
+L00000505	10. **Capsule cap enforcement:** Capsule assembly enforces the configured token cap and emits deterministic truncation behavior when over budget; GUI capsule preview shows token estimate and truncation indicator.
+L00000506	11. **Summary cache coherence:** Editing `claims[]` cannot cause stale cached `summary` text to be injected (cache invalidation required before injection).
+L00000507	12. **Decay behavior:** Done gists decay faster (`*0.5` half-life) and fall out of activation sooner than equivalent active gists.
+L00000508	13. **Project isolation:** Switching projects writes handoff to old project and loads capsule for new project without cross-project leakage.
+L00000509	14. **Index rebuild equivalence:** Full rebuild of Tantivy and USearch indexes from `assistant_memory.redb` yields retrieval results equivalent (within deterministic tie-break rules) to incremental updates under the same data.
+L00000510	15. **Rules separation:** Rules pipeline output remains unchanged when gists are added/edited; memory appears only in memory injection path.
+L00000511	16. **Default review filter behavior:** Opening the Gist Review panel defaults to `verification_state = Unverified` until the user explicitly changes filters.
+L00000512	
+L00000513	Rule: A change is complete only when all acceptance criteria above are met and verified by deterministic checks.
+L00000514	ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/assistant-memory-subsystem.md#10-acceptance-criteria
+L00000515	
+L00000516	---
+L00000517	
+L00000518	## 11. Non-goals
+L00000519	
+L00000520	- No memory exposure to non-Assistant agents.
+L00000521	- No replacement of seglog/redb/Tantivy system storage contracts.
+L00000522	- No external vector DB service.
+L00000523	- No file-bank style requirement that memory must be markdown-file based.
+L00000524	
+L00000525	Rule: Implementations MUST keep these non-goals intact.
+L00000526	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/agent-rules-context.md
+L00000527	
+L00000528	---
+L00000529	## 12. Runtime Owner Reference Map
+L00000530	
+L00000531	Assistant memory remains Assistant-only, but its design must stay aligned with runtime owner docs through explicit evidence_refs rather than hidden orchestration memory. The memory subsystem reference set includes `Plans/Models_System.md:58-80`, `Plans/Executor_Protocol.md:134-178`, `/Models_System.md:58-80`, `/Executor_Protocol.md:134-178`, `Plans/Crosswalk.md:88-94`, `Plans/storage-plan.md:294`, `Plans/Contracts_V0.md:649`, `Plans/Orchestrator_Page.md:12-13`, `Plans/WorktreeGitImprovement.md:62-66`, `Plans/WorktreeGitImprovement.md:78-80`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31`, `Plans/orchestrator-subagent-integration.md:28-41`, `/Orchestrator_Page.md:12-13`, `/WorktreeGitImprovement.md:62-66`, `/WorktreeGitImprovement.md:78-80`, `/GUI_Rebuild_Requirements_Checklist.md:31`, `/Crosswalk.md:88-94`, `/Contracts_V0.md:649`, `/orchestrator-subagent-integration.md:28-41`, `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Orchestrator_Page.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md`.
+L00000532	
+L00000533	Runtime traceability also depends on `Plans/Tools.md:866-920`, `Plans/Tools.md:1262-1288`, `Plans/Contracts_V0.md:778-806`, `Plans/storage-plan.md:1330-1391`, `Plans/storage-plan.md:1548-1568`, `Plans/Orchestrator_Page.md:1-44`, `Plans/FinalGUISpec.md:2737-2739`, `Plans/human-in-the-loop.md:22-49`, `Plans/UI_Command_Catalog.md:29-90`, `Plans/Executor_Protocol.md:110-175`, `Plans/Orchestrator_Page.md:428-475`, `Plans/UI_Command_Catalog.md:617-622`, `Plans/assistant-chat-design.md:1784`, `Plans/Glossary.md:30-127`, `Plans/FinalGUISpec.md:2092`, `Plans/usage-feature.md:104-127`, `Plans/usage-feature.md:228-242`, `Plans/usage-feature.md:714-720`, `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, `Plans/human-in-the-loop.md`, `Plans/UI_Command_Catalog.md`, `Plans/GitHub_Integration.md`, and `Plans/assistant-chat-design.md`.
+L00000534	
+L00000535	Blocked notice, route, and usage joins use the broader anchor set `Plans/storage-plan.md:1289-1300`, `Plans/GitHub_Integration.md:251-258`, `Plans/assistant-chat-design.md:2213-2240`, `Plans/usage-feature.md:233-245`, `Plans/usage-feature.md:346-389`, `Plans/Runtime_Artifacts_Panel.md:63-93`, `Plans/Project_Output_Artifacts.md:16-24`, `Plans/interview-subagent-integration.md:1686-1698`, `Plans/Tools.md:1131-1135`, `Plans/Contracts_V0.md:461-465`, `Plans/storage-plan.md:1322-1391`, `Plans/UI_Command_Catalog.md:29-95`, `Plans/Executor_Protocol.md:134-160`, `Plans/assistant-chat-design.md:808-818`, `Plans/Glossary.md:30-70`, `Plans/usage-feature.md:690-705`, `Plans/Runtime_Artifacts_Panel.md:61-93`, `Plans/Project_Output_Artifacts.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000536	
+L00000537	Route/open and worktree-adjacent memory evidence uses `Plans/Contracts_V0.md:557-624`, `Plans/storage-plan.md:1650-1654`, `Plans/Orchestrator_Page.md:1-150`, `Plans/UI_Command_Catalog.md:214-223`, `Plans/assistant-chat-design.md:2218-2242`, `/Contracts_V0.md:557-624`, `/FinalGUISpec.md:2737-2739`, `Plans/Glossary.md:34-85`, `Plans/usage-feature.md:233-249`, `/FinalGUISpec.md:2092`, `Plans/Contracts_V0.md:50-58`, `Plans/Contracts_V0.md:800-806`, `Plans/storage-plan.md:323-337`, `Plans/storage-plan.md:941-954`, `Plans/storage-plan.md:1389-1396`, `Plans/Orchestrator_Page.md:209-230`, `Plans/Orchestrator_Page.md:270-270`, `Plans/GitHub_Integration.md:258-258`, `Plans/WorktreeGitImprovement.md:142-144`, `Plans/WorktreeGitImprovement.md:704-708`, `Plans/assistant-chat-design.md:814-818`, `Plans/assistant-chat-design.md:1784-1784`, `/Contracts_V0.md:50-58`, `/Contracts_V0.md:800-806`, `/Orchestrator_Page.md:209-230`, `Plans/Glossary.md:30-90`, `Plans/usage-feature.md:346-382`, and `Plans/Runtime_Artifacts_Panel.md:57-65`.
+L00000538	
+L00000539	Memory injection and storage references must preserve `Plans/Tools.md:866-916`, `Plans/Tools.md:1262-1284`, `Plans/storage-plan.md:330-337`, `Plans/storage-plan.md:468-590`, `Plans/storage-plan.md:788-817`, `Plans/FinalGUISpec.md:1842-1845`, `Plans/FinalGUISpec.md:2924-2925`, `Plans/Orchestrator_Page.md:258-266`, `Plans/Orchestrator_Page.md:358-377`, `Plans/Glossary.md:30-67`, `Plans/Glossary.md:34-67`, `Plans/Glossary.md:102-126`, `Plans/usage-feature.md:234-239`, `Plans/usage-feature.md:715-717`, `/Contracts_V0.md:778-806`, `/Executor_Protocol.md:110-175`, `/UI_Command_Catalog.md:617-622`, `/storage-plan.md:330-337`, `/storage-plan.md:468-590`, `/usage-feature.md:104-127`, `Plans/usage-feature.md:714-717`, `Plans/Tools.md:1131-1135`, `Plans/storage-plan.md:324-337`, `Plans/storage-plan.md:541-590`, `Plans/storage-plan.md:1289-1391`, `Plans/UI_Command_Catalog.md:29-92`, `Plans/Orchestrator_Page.md:200-209`, `Plans/Project_Output_Artifacts.md:485-530`, `Plans/orchestrator-subagent-integration.md:374-391`, and `Plans/interview-subagent-integration.md`.
+L00000540	
+L00000541	The export/open path and HITL reference set includes `Plans/Contracts_V0.md:55-60`, `Plans/Contracts_V0.md:800-807`, `Plans/storage-plan.md:1616-1625`, `Plans/FinalGUISpec.md:2092-2092`, `Plans/FinalGUISpec.md:2736-2739`, `Plans/Orchestrator_Page.md:171-171`, `Plans/Orchestrator_Page.md:209-209`, `Plans/Orchestrator_Page.md:230-230`, `Plans/UI_Command_Catalog.md:617-623`, `Plans/WorktreeGitImprovement.md:134-150`, `/Contracts_V0.md:55-60`, `/Contracts_V0.md:800-807`, `/FinalGUISpec.md:2092-2092`, `Plans/storage-plan.md:325`, `Plans/storage-plan.md:894-897`, `Plans/human-in-the-loop.md:96`, `Plans/storage-plan.md:1335-1383`, `Plans/human-in-the-loop.md:29-33`, `Plans/Orchestrator_Page.md:16-43`, `Plans/UI_Command_Catalog.md:67-91`, `Plans/Executor_Protocol.md:110-130`, `Plans/Orchestrator_Page.md:451-474`, `Plans/UI_Command_Catalog.md:224-246`, `Plans/orchestrator-subagent-integration.md:209-235`, `Plans/orchestrator-subagent-integration.md:380-402`, `Plans/Contracts_V0.md:684-692`, `Plans/Contracts_V0.md:1218-1229`, `Plans/Executor_Protocol.md:548-557`, `Plans/Orchestrator_Page.md:439-446`, `/Contracts_V0.md:684-692`, `/Contracts_V0.md:1218-1229`, `/Executor_Protocol.md:548-557`, `/Orchestrator_Page.md:439-446`, `/Tools.md:866-920`, `/assistant-chat-design.md:2213-2240`, `/usage-feature.md:233-245`, and `Plans/Tools.md`.
+L00000542	
+L00000543	Assistant memory must also preserve post-reconciliation anchors `Plans/FinalGUISpec.md:2924-2928`, `Plans/Orchestrator_Page.md:437-437`, `Plans/assistant-chat-design.md:2233-2240`, `/FinalGUISpec.md:2924-2928`, `/Orchestrator_Page.md:171-171`, `/Orchestrator_Page.md:209-209`, `/Orchestrator_Page.md:230-230`, `/Orchestrator_Page.md:270-270`, `Plans/Glossary.md:30-85`, `Plans/usage-feature.md:694-701`, `Plans/FinalGUISpec.md:728-735`, `/FinalGUISpec.md:728-735`, `/human-in-the-loop.md:22-49`, `Plans/storage-plan.md:322-337`, `Plans/storage-plan.md:941-956`, `/storage-plan.md:322-337`, `/storage-plan.md:941-956`, `/orchestrator-subagent-integration.md:374-391`, `/usage-feature.md:346-389`, `/interview-subagent-integration.md:1686-1698`, `Plans/assistant-chat-design.md:1112-1120`, `/assistant-chat-design.md:1112-1120`, `Plans/Project_Output_Artifacts.md:1-24`, `/Project_Output_Artifacts.md:1-24`, `/Runtime_Artifacts_Panel.md:63-93`, `/interview-subagent-integration.md:1686-1698`, `Plans/orchestrator-subagent-integration.md:379-391`, `/orchestrator-subagent-integration.md:379-391`, `Plans/interview-subagent-integration.md:1692-1698`, `/interview-subagent-integration.md:1692-1698`, `Plans/agent-rules-context.md`, `Plans/LSPSupport.md`, `/LSPSupport.md`, and `/agent-rules-context.md`.
+L00000544	
+L00000545	Plan-local obligations in memory are narrow: `plan-local` `/event/command` items belong in canonical state/event/command owners before memory consumes them. `assistant-memory-subsystem`, `assistant-memory-subsystem.md`, `system-prompt`, `newfeatures.md`, and `NullMemoryProvider` remain the durable boundary for memory prohibition versus stateful orchestration. Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in `/checklists/policies` and subsystem plans.
+L00000546	
+L00000547	## Owner / Consumer Map
+L00000548	
+L00000549	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/assistant-memory-subsystem.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000550	
+L00000551	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000552	
+L00000553	## PlanUnits
+L00000554	
+L00000555	### AMS-001 - Assistant-Only Memory Subsystem (Canonical SSOT) Source-Preserving PlanUnit
+L00000556	
+L00000557	```yaml
+L00000558	plan_unit_id: AMS-001
+L00000559	unit_type: compatibility_disposition
+L00000560	status: accepted
+L00000561	owner_doc: Plans/assistant-memory-subsystem.md
+L00000562	canonical_text: >-
+L00000563	  The former doc-level source-preserving bridge is retired in place after
+L00000564	  Phase 2B atomized assistant-memory-subsystem-S0001 through
+L00000565	  assistant-memory-subsystem-S0042 into AMS-002 through AMS-041. AMS-001
+L00000566	  remains only as migration lineage for the retired bridge span and must not
+L00000567	  re-own atomized source coverage.
+L00000568	gui_related: false
+L00000569	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+L00000570	split_recommended: false
+L00000571	depends_on: []
+L00000572	unblocks: []
+L00000573	acceptance_criteria:
+L00000574	  - AMS-001 no longer uses the source-preserving PlanUnit compile hint.
+L00000575	  - Prior source coverage remains carried by AMS-002 through AMS-041.
+L00000576	  - The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000577	  - Coverage for the retired bridge is recorded in the Phase 2B batch 012 coverage map.
+L00000578	validation_surfaces:
+L00000579	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000580	  - python3 scripts/pm-plan-index.py validate
+L00000581	risk_class: migration_lineage
+L00000582	reasoning_tier: standard
+L00000583	context_scope: plan_standardization
+L00000584	implementation_surfaces:
+L00000585	  - Plans/assistant-memory-subsystem.md
+L00000586	node_compile_hint:
+L00000587	  mode: source_preserving_bridge_retired
+L00000588	  create_worknodes: false
+L00000589	source_lineage:
+L00000590	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0043
+L00000591	preserved_exact_tokens:
+L00000592	  - "AMS-001"
+L00000593	  - "source_preserving_planunit"
+L00000594	  - "AMS-002"
+L00000595	  - "AMS-041"
+L00000596	negative_constraints:
+L00000597	  - "Do not remap atomized assistant-memory-subsystem spans back to AMS-001."
+L00000598	  - "Do not treat the retired bridge as implementation-ready product coverage."
+L00000599	  - "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+L00000600	compatibility_only_notes:
+L00000601	  - "The old source-preserving bridge is retained only so migration lineage and historical references to AMS-001 remain auditable."
+L00000602	owner_hints:
+L00000603	  - Plans/assistant-memory-subsystem.md
+L00000604	```
+L00000605	
+L00000606	### AMS-002 - Assistant Memory SSOT Authority
+L00000607	
+L00000608	```yaml
+L00000609	plan_unit_id: AMS-002
+L00000610	unit_type: requirement
+L00000611	status: accepted
+L00000612	owner_doc: Plans/assistant-memory-subsystem.md
+L00000613	canonical_text: >-
+L00000614	  Assistant Memory remains the canonical Assistant-only memory subsystem SSOT,
+L00000615	  preserving the document title, compliance posture, status, cross-references,
+L00000616	  and 2026-02-26 revision packet for Evidence-Backed Gists, MemoryGist plus
+L00000617	  EvidenceRef, AutoRunBoundary/AutoMilestone, Tantivy/USearch, and the GUI Gist
+L00000618	  Review panel.
+L00000619	gui_related: true
+L00000620	gui_classification_reason: The authority packet names the GUI Gist Review panel and user-visible memory subsystem scope.
+L00000621	depends_on: []
+L00000622	unblocks: [AMS-003, AMS-005, AMS-021]
+L00000623	acceptance_criteria:
+L00000624	  - The document remains the canonical SSOT for Assistant-only memory behavior.
+L00000625	  - The 2026-02-26 revision packet is preserved with its named model, trigger, index, and GUI concepts.
+L00000626	  - Compliance, status, and cross-reference authority remain visible in the source body.
+L00000627	validation_surfaces:
+L00000628	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000629	  - python3 scripts/pm-plan-index.py validate
+L00000630	risk_class: memory_authority
+L00000631	reasoning_tier: standard
+L00000632	context_scope: plan_authority
+L00000633	implementation_surfaces:
+L00000634	  - Plans/assistant-memory-subsystem.md
+L00000635	node_compile_hint:
+L00000636	  mode: assistant_memory_ssot_authority
+L00000637	  create_worknodes: false
+L00000638	source_lineage:
+L00000639	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0001
+L00000640	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0002
+L00000641	preserved_exact_tokens:
+L00000642	  - "Assistant-Only Memory Subsystem (Canonical SSOT)"
+L00000643	  - "Evidence-Backed Gists"
+L00000644	  - "MemoryGist + EvidenceRef"
+L00000645	  - "AutoRunBoundary/AutoMilestone"
+L00000646	  - "Tantivy/USearch"
+L00000647	  - "GUI Gist Review panel"
+L00000648	negative_constraints: []
+L00000649	owner_hints:
+L00000650	  - Plans/assistant-memory-subsystem.md
+L00000651	```
+L00000652	
+L00000653	### AMS-003 - Assistant Memory Scope Separation
+L00000654	
+L00000655	```yaml
+L00000656	plan_unit_id: AMS-003
+L00000657	unit_type: constraint
+L00000658	status: accepted
+L00000659	owner_doc: Plans/assistant-memory-subsystem.md
+L00000660	canonical_text: Assistant memory is Assistant-only continuity and project state, separate from rules assembly, non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules pipeline.
+L00000661	gui_related: false
+L00000662	gui_classification_reason: Scope separation is backend architecture and owner-boundary behavior.
+L00000663	depends_on: [AMS-002]
+L00000664	unblocks: [AMS-005, AMS-018, AMS-024]
+L00000665	acceptance_criteria:
+L00000666	  - Assistant memory is separate from rules assembly and non-Assistant execution paths.
+L00000667	  - Assistant memory does not replace or redefine seglog, system redb/Tantivy projections, or the shared rules pipeline.
+L00000668	  - The storage, DRY, and agent-rules ContractRefs remain preserved.
+L00000669	validation_surfaces:
+L00000670	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000671	  - python3 scripts/pm-plan-index.py validate
+L00000672	risk_class: memory_boundary
+L00000673	reasoning_tier: high
+L00000674	context_scope: architecture
+L00000675	implementation_surfaces:
+L00000676	  - Plans/assistant-memory-subsystem.md
+L00000677	  - Plans/agent-rules-context.md
+L00000678	  - Plans/storage-plan.md
+L00000679	node_compile_hint:
+L00000680	  mode: assistant_memory_scope_separation
+L00000681	  create_worknodes: false
+L00000682	source_lineage:
+L00000683	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+L00000684	preserved_exact_tokens:
+L00000685	  - "Assistant-only"
+L00000686	  - "continuity/project-state subsystem"
+L00000687	  - "seglog"
+L00000688	  - "redb"
+L00000689	  - "Tantivy"
+L00000690	  - "ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts"
+L00000691	negative_constraints:
+L00000692	  - "Assistant memory must not replace or redefine system event storage, system KV/search projections, or the shared rules pipeline."
+L00000693	owner_hints:
+L00000694	  - Plans/assistant-memory-subsystem.md
+L00000695	  - Plans/storage-plan.md
+L00000696	```
+L00000697	
+L00000698	### AMS-004 - Assistant Memory Local Storage Boundary
+L00000699	
+L00000700	```yaml
+L00000701	plan_unit_id: AMS-004
+L00000702	unit_type: constraint
+L00000703	status: accepted
+L00000704	owner_doc: Plans/assistant-memory-subsystem.md
+L00000705	canonical_text: Assistant memory must run fully in-process and local-only; it must not require external servers and must not use SQLite.
+L00000706	gui_related: false
+L00000707	gui_classification_reason: Local-only and no-SQLite rules are storage/runtime constraints.
+L00000708	depends_on: [AMS-003]
+L00000709	unblocks: [AMS-007, AMS-022]
+L00000710	acceptance_criteria:
+L00000711	  - Assistant memory runs fully in-process.
+L00000712	  - Assistant memory is local-only.
+L00000713	  - Assistant memory does not require external servers and does not use SQLite.
+L00000714	validation_surfaces:
+L00000715	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000716	  - python3 scripts/pm-plan-index.py validate
+L00000717	risk_class: storage_boundary
+L00000718	reasoning_tier: high
+L00000719	context_scope: storage
+L00000720	implementation_surfaces:
+L00000721	  - Plans/assistant-memory-subsystem.md
+L00000722	  - Plans/rewrite-tie-in-memo.md
+L00000723	node_compile_hint:
+L00000724	  mode: assistant_memory_local_storage_boundary
+L00000725	  create_worknodes: false
+L00000726	source_lineage:
+L00000727	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+L00000728	preserved_exact_tokens:
+L00000729	  - "fully in-process"
+L00000730	  - "local-only"
+L00000731	  - "MUST NOT require external servers"
+L00000732	  - "MUST NOT use SQLite"
+L00000733	  - "SchemaID:Spec_Lock.json#locked_decisions.storage"
+L00000734	negative_constraints:
+L00000735	  - "Assistant memory must not require external servers."
+L00000736	  - "Assistant memory must not use SQLite."
+L00000737	owner_hints:
+L00000738	  - Plans/assistant-memory-subsystem.md
+L00000739	  - Plans/rewrite-tie-in-memo.md
+L00000740	```
+L00000741	
+L00000742	### AMS-005 - Memory Provider Capability Boundary
+L00000743	
+L00000744	```yaml
+L00000745	plan_unit_id: AMS-005
+L00000746	unit_type: requirement
+L00000747	status: accepted
+L00000748	owner_doc: Plans/assistant-memory-subsystem.md
+L00000749	canonical_text: >-
+L00000750	  The memory provider contract defines MemoryProvider, RealMemoryProvider, and
+L00000751	  NullMemoryProvider, with Assistant prompt assembly routed to real memory and
+L00000752	  Orchestrator, Interviewer, requirements builder, and subagents routed to null
+L00000753	  memory with no Assistant memory forwarding.
+L00000754	gui_related: false
+L00000755	gui_classification_reason: Provider routing and no-forwarding rules are runtime wiring behavior.
+L00000756	depends_on: [AMS-003]
+L00000757	unblocks: [AMS-018, AMS-024]
+L00000758	acceptance_criteria:
+L00000759	  - MemoryProvider, RealMemoryProvider, and NullMemoryProvider remain named interface concepts.
+L00000760	  - The required logical method surface is preserved.
+L00000761	  - Assistant prompt assembly routes to RealMemoryProvider.
+L00000762	  - Orchestrator, Interviewer, requirements builder, and all subagents route to NullMemoryProvider.
+L00000763	  - Assistant memory is not forwarded through prompts, tools, handoffs, or hidden metadata.
+L00000764	validation_surfaces:
+L00000765	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000766	  - python3 scripts/pm-plan-index.py validate
+L00000767	risk_class: memory_boundary
+L00000768	reasoning_tier: high
+L00000769	context_scope: runtime
+L00000770	implementation_surfaces:
+L00000771	  - Plans/assistant-memory-subsystem.md
+L00000772	  - Plans/assistant-chat-design.md
+L00000773	  - Plans/orchestrator-subagent-integration.md
+L00000774	  - Plans/interview-subagent-integration.md
+L00000775	node_compile_hint:
+L00000776	  mode: memory_provider_capability_boundary
+L00000777	  create_worknodes: false
+L00000778	source_lineage:
+L00000779	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0004
+L00000780	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0005
+L00000781	preserved_exact_tokens:
+L00000782	  - "MemoryProvider"
+L00000783	  - "RealMemoryProvider"
+L00000784	  - "NullMemoryProvider"
+L00000785	  - "build_capsule(project_id, now) -> WorkingSetCapsule"
+L00000786	  - "search(project_id, query, now, k) -> Vec<MemoryGistHit>"
+L00000787	  - "set_verification_state(project_id, gist_id, verification_state, now) -> Result"
+L00000788	negative_constraints:
+L00000789	  - "Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata."
+L00000790	owner_hints:
+L00000791	  - Plans/assistant-memory-subsystem.md
+L00000792	```
+L00000793	
+L00000794	### AMS-006 - EvidenceRef Pointer Only Model
+L00000795	
+L00000796	```yaml
+L00000797	plan_unit_id: AMS-006
+L00000798	unit_type: constraint
+L00000799	status: accepted
+L00000800	owner_doc: Plans/assistant-memory-subsystem.md
+L00000801	canonical_text: EvidenceRef is a structured pointer to verification evidence, not an evidence store, and must not embed large diffs, logs, or artifact bodies.
+L00000802	gui_related: false
+L00000803	gui_classification_reason: EvidenceRef shape and payload limits are backend data-model constraints.
+L00000804	depends_on: [AMS-003]
+L00000805	unblocks: [AMS-014, AMS-015, AMS-016]
+L00000806	acceptance_criteria:
+L00000807	  - EvidenceRefs point to canonical evidence stored elsewhere.
+L00000808	  - Supported variants include Commit, Diff, TestRun, BuildRun, LintRun, Artifact, PlanRef, Issue, and PR.
+L00000809	  - EvidenceRefs remain compact pointers and do not embed large payloads.
+L00000810	validation_surfaces:
+L00000811	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000812	  - python3 scripts/pm-plan-index.py validate
+L00000813	risk_class: evidence_pointer
+L00000814	reasoning_tier: high
+L00000815	context_scope: data_model
+L00000816	implementation_surfaces:
+L00000817	  - Plans/assistant-memory-subsystem.md
+L00000818	  - Plans/Contracts_V0.md
+L00000819	node_compile_hint:
+L00000820	  mode: evidenceref_pointer_only_model
+L00000821	  create_worknodes: false
+L00000822	source_lineage:
+L00000823	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0006
+L00000824	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0011
+L00000825	preserved_exact_tokens:
+L00000826	  - "EvidenceRefs"
+L00000827	  - "Commit { hash, repo_id }"
+L00000828	  - "Diff { run_id, repo_id, paths[], stats }"
+L00000829	  - "TestRun { run_id, command, exit_code, summary_hash }"
+L00000830	  - "BuildRun { run_id, command, exit_code, summary_hash }"
+L00000831	  - "LintRun { run_id, command, exit_code, summary_hash }"
+L00000832	  - "Artifact { path, change_type, content_hash? }"
+L00000833	  - "PlanRef { file_path, anchor_id? }"
+L00000834	  - "Issue { provider, id }"
+L00000835	  - "PR { provider, id }"
+L00000836	negative_constraints:
+L00000837	  - "EvidenceRefs MUST be small pointers and MUST NOT embed large diffs/logs/artifact bodies."
+L00000838	  - "MemoryGist records MUST NOT persist large diffs, full logs, or large artifacts."
+L00000839	owner_hints:
+L00000840	  - Plans/assistant-memory-subsystem.md
+L00000841	```
+L00000842	
+L00000843	### AMS-007 - Assistant Memory Physical Stores
+L00000844	
+L00000845	```yaml
+L00000846	plan_unit_id: AMS-007
+L00000847	unit_type: requirement
+L00000848	status: accepted
+L00000849	owner_doc: Plans/assistant-memory-subsystem.md
+L00000850	canonical_text: >-
+L00000851	  Assistant memory uses separate per-project physical stores for
+L00000852	  assistant_memory.redb, assistant_memory_index, and
+L00000853	  assistant_memory_vectors.usearch, preserving the system.redb project-state
+L00000854	  note, file-level separation, and atomic project switching.
+L00000855	gui_related: false
+L00000856	gui_classification_reason: Physical storage paths and project switching are backend storage behavior.
+L00000857	depends_on: [AMS-004]
+L00000858	unblocks: [AMS-008, AMS-012, AMS-013]
+L00000859	acceptance_criteria:
+L00000860	  - Assistant memory DB, Tantivy index, and USearch index paths are preserved.
+L00000861	  - Assistant memory stores remain separate from system state stores.
+L00000862	  - Project switching swaps active memory stores atomically at the project boundary.
+L00000863	validation_surfaces:
+L00000864	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000865	  - python3 scripts/pm-plan-index.py validate
+L00000866	risk_class: storage_layout
+L00000867	reasoning_tier: high
+L00000868	context_scope: storage
+L00000869	implementation_surfaces:
+L00000870	  - Plans/assistant-memory-subsystem.md
+L00000871	  - Plans/storage-plan.md
+L00000872	node_compile_hint:
+L00000873	  mode: assistant_memory_physical_stores
+L00000874	  create_worknodes: false
+L00000875	source_lineage:
+L00000876	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+L00000877	preserved_exact_tokens:
+L00000878	  - ".puppet-master/project/state/assistant_memory.redb"
+L00000879	  - ".puppet-master/project/state/assistant_memory_index/"
+L00000880	  - ".puppet-master/project/state/assistant_memory_vectors.usearch"
+L00000881	  - "system.redb"
+L00000882	  - "file-level physical separation"
+L00000883	  - "project switching"
+L00000884	negative_constraints:
+L00000885	  - "Assistant memory must not couple its physical store to system state stores."
+L00000886	owner_hints:
+L00000887	  - Plans/assistant-memory-subsystem.md
+L00000888	  - Plans/storage-plan.md
+L00000889	```
+L00000890	
+L00000891	### AMS-008 - MemoryGist Canonical Record
+L00000892	
+L00000893	```yaml
+L00000894	plan_unit_id: AMS-008
+L00000895	unit_type: requirement
+L00000896	status: accepted
+L00000897	owner_doc: Plans/assistant-memory-subsystem.md
+L00000898	canonical_text: >-
+L00000899	  MemoryGist is the canonical Assistant memory record, with required identity,
+L00000900	  classification, verification, time/access, decay, tags, claims,
+L00000901	  summary/details, evidence, provenance, and embedding/index version fields.
+L00000902	gui_related: false
+L00000903	gui_classification_reason: MemoryGist field shape is backend data-model behavior.
+L00000904	depends_on: [AMS-007]
+L00000905	unblocks: [AMS-009, AMS-010, AMS-011, AMS-012, AMS-014]
+L00000906	acceptance_criteria:
+L00000907	  - MemoryGist remains the canonical record.
+L00000908	  - Required field groups from the source span are preserved.
+L00000909	  - Provenance and embedding/index versioning fields remain part of the contract.
+L00000910	validation_surfaces:
+L00000911	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000912	  - python3 scripts/pm-plan-index.py validate
+L00000913	risk_class: memory_data_model
+L00000914	reasoning_tier: high
+L00000915	context_scope: data_model
+L00000916	implementation_surfaces:
+L00000917	  - Plans/assistant-memory-subsystem.md
+L00000918	node_compile_hint:
+L00000919	  mode: memorygist_canonical_record
+L00000920	  create_worknodes: false
+L00000921	source_lineage:
+L00000922	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0008
+L00000923	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+L00000924	preserved_exact_tokens:
+L00000925	  - "MemoryGist"
+L00000926	  - "verification_state"
+L00000927	  - "half_life_days"
+L00000928	  - "claims[]"
+L00000929	  - "summary"
+L00000930	  - "details"
+L00000931	  - "evidence_refs[]"
+L00000932	  - "AutoRunBoundary"
+L00000933	  - "AutoMilestone"
+L00000934	  - "embedding_version"
+L00000935	  - "embed_text_hash"
+L00000936	  - "text_hash"
+L00000937	negative_constraints: []
+L00000938	owner_hints:
+L00000939	  - Plans/assistant-memory-subsystem.md
+L00000940	```
+L00000941	
+L00000942	### AMS-009 - Memory Prompt Injection Summary Boundary
+L00000943	
+L00000944	```yaml
+L00000945	plan_unit_id: AMS-009
+L00000946	unit_type: constraint
+L00000947	status: accepted
+L00000948	owner_doc: Plans/assistant-memory-subsystem.md
+L00000949	canonical_text: Prompt injection uses only Verified gists' derived summary text; details are never auto-injected, and summary/hash caches are deterministic and invalidated when their source fields change.
+L00000950	gui_related: false
+L00000951	gui_classification_reason: Prompt injection and cache invalidation are backend prompt/data behavior.
+L00000952	depends_on: [AMS-008]
+L00000953	unblocks: [AMS-018, AMS-019]
+L00000954	acceptance_criteria:
+L00000955	  - Automatic prompt injection uses only Verified gists' derived summary text.
+L00000956	  - Details are never auto-injected.
+L00000957	  - Summary, embed_text_hash, and text_hash are deterministic and invalidated when kind, tags, or claims change.
+L00000958	validation_surfaces:
+L00000959	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000960	  - python3 scripts/pm-plan-index.py validate
+L00000961	risk_class: prompt_injection
+L00000962	reasoning_tier: high
+L00000963	context_scope: prompt
+L00000964	implementation_surfaces:
+L00000965	  - Plans/assistant-memory-subsystem.md
+L00000966	  - Plans/assistant-chat-design.md
+L00000967	node_compile_hint:
+L00000968	  mode: memory_prompt_injection_summary_boundary
+L00000969	  create_worknodes: false
+L00000970	source_lineage:
+L00000971	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+L00000972	preserved_exact_tokens:
+L00000973	  - "Verified"
+L00000974	  - "summary"
+L00000975	  - "details"
+L00000976	  - "MUST NOT auto-inject `details`"
+L00000977	  - "embed_text_hash"
+L00000978	  - "text_hash"
+L00000979	negative_constraints:
+L00000980	  - "Automatic prompt injection MUST use only Verified gists' derived `summary` text and MUST NOT auto-inject `details`."
+L00000981	owner_hints:
+L00000982	  - Plans/assistant-memory-subsystem.md
+L00000983	```
+L00000984	
+L00000985	### AMS-010 - MemoryGist GUI Operations Canonical Writes
+L00000986	
+L00000987	```yaml
+L00000988	plan_unit_id: AMS-010
+L00000989	unit_type: requirement
+L00000990	status: accepted
+L00000991	owner_doc: Plans/assistant-memory-subsystem.md
+L00000992	canonical_text: GUI memory operations for listing, editing, verifying, pinning, deleting, and half-life edits must read and write MemoryGist records in assistant_memory.redb as the canonical source.
+L00000993	gui_related: true
+L00000994	gui_classification_reason: List, edit, verify, pin, delete, and half-life edits are user-visible GUI operations.
+L00000995	depends_on: [AMS-008]
+L00000996	unblocks: [AMS-021]
+L00000997	acceptance_criteria:
+L00000998	  - GUI memory operations read MemoryGist records from assistant_memory.redb.
+L00000999	  - GUI memory operations write MemoryGist records back to assistant_memory.redb.
+L00001000	  - The listed operations include list, edit, verify, pin, delete, and half-life edits.
+L00001001	validation_surfaces:
+L00001002	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001003	  - python3 scripts/pm-plan-index.py validate
+L00001004	risk_class: memory_gui
+L00001005	reasoning_tier: standard
+L00001006	context_scope: gui
+L00001007	implementation_surfaces:
+L00001008	  - Plans/assistant-memory-subsystem.md
+L00001009	  - Plans/storage-plan.md
+L00001010	node_compile_hint:
+L00001011	  mode: memorygist_gui_operations_canonical_writes
+L00001012	  create_worknodes: false
+L00001013	source_lineage:
+L00001014	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+L00001015	preserved_exact_tokens:
+L00001016	  - "list/edit/verify/pin/delete/half-life edits"
+L00001017	  - "MemoryGist"
+L00001018	  - "assistant_memory.redb"
+L00001019	negative_constraints: []
+L00001020	owner_hints:
+L00001021	  - Plans/assistant-memory-subsystem.md
+L00001022	```
+L00001023	
+L00001024	### AMS-011 - Memory Claims Atomic Model
+L00001025	
+L00001026	```yaml
+L00001027	plan_unit_id: AMS-011
+L00001028	unit_type: requirement
+L00001029	status: accepted
+L00001030	owner_doc: Plans/assistant-memory-subsystem.md
+L00001031	canonical_text: Memory claims are short, single-purpose, independently verifiable and deduplicable statements with stable claim_id, text, and created_at fields.
+L00001032	gui_related: false
+L00001033	gui_classification_reason: Claims shape is backend data-model behavior.
+L00001034	depends_on: [AMS-008]
+L00001035	unblocks: [AMS-012, AMS-014]
+L00001036	acceptance_criteria:
+L00001037	  - Each claim remains compact and single-purpose.
+L00001038	  - Multi-claim gists keep each claim independently meaningful for verification and deduplication.
+L00001039	  - Minimal claim shape preserves claim_id, text, and created_at.
+L00001040	validation_surfaces:
+L00001041	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001042	  - python3 scripts/pm-plan-index.py validate
+L00001043	risk_class: memory_data_model
+L00001044	reasoning_tier: standard
+L00001045	context_scope: data_model
+L00001046	implementation_surfaces:
+L00001047	  - Plans/assistant-memory-subsystem.md
+L00001048	node_compile_hint:
+L00001049	  mode: memory_claims_atomic_model
+L00001050	  create_worknodes: false
+L00001051	source_lineage:
+L00001052	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0010
+L00001053	preserved_exact_tokens:
+L00001054	  - "claims[]"
+L00001055	  - "claim_id"
+L00001056	  - "text"
+L00001057	  - "created_at"
+L00001058	negative_constraints:
+L00001059	  - "Claims must not collapse multi-claim gists into non-atomic statements."
+L00001060	owner_hints:
+L00001061	  - Plans/assistant-memory-subsystem.md
+L00001062	```
+L00001063	
+L00001064	### AMS-012 - Memory Retrieval Indexes
+L00001065	
+L00001066	```yaml
+L00001067	plan_unit_id: AMS-012
+L00001068	unit_type: requirement
+L00001069	status: accepted
+L00001070	owner_doc: Plans/assistant-memory-subsystem.md
+L00001071	canonical_text: Retrieval uses Tantivy lexical fields and USearch semantic ANN mapping, with deterministic embed_text, embed_text_hash, text_hash, tombstones, and deterministic full rebuild support.
+L00001072	gui_related: false
+L00001073	gui_classification_reason: Retrieval index schemas and rebuild behavior are backend search/index behavior.
+L00001074	depends_on: [AMS-007, AMS-008, AMS-011]
+L00001075	unblocks: [AMS-013, AMS-019, AMS-020]
+L00001076	acceptance_criteria:
+L00001077	  - Tantivy lexical indexed fields are preserved.
+L00001078	  - USearch maps vector entries to MemoryGist IDs and persists mapping/tombstone state.
+L00001079	  - Deterministic embed_text, embed_text_hash, and text_hash formulas are preserved.
+L00001080	  - Full lexical and semantic rebuilds are supported from assistant_memory.redb.
+L00001081	validation_surfaces:
+L00001082	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001083	  - python3 scripts/pm-plan-index.py validate
+L00001084	risk_class: memory_indexing
+L00001085	reasoning_tier: high
+L00001086	context_scope: search
+L00001087	implementation_surfaces:
+L00001088	  - Plans/assistant-memory-subsystem.md
+L00001089	  - Plans/storage-plan.md
+L00001090	node_compile_hint:
+L00001091	  mode: memory_retrieval_indexes
+L00001092	  create_worknodes: false
+L00001093	source_lineage:
+L00001094	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0012
+L00001095	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0013
+L00001096	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0014
+L00001097	preserved_exact_tokens:
+L00001098	  - "Tantivy"
+L00001099	  - "USearch"
+L00001100	  - "embed_text = kind + \"\\n\" + join(tags) + \"\\n\" + join(claims[].text)"
+L00001101	  - "embed_text_hash"
+L00001102	  - "text_hash"
+L00001103	  - "tombstones"
+L00001104	  - "deterministic periodic full rebuild"
+L00001105	negative_constraints:
+L00001106	  - "Index updates must not become canonical writes that can lose memory data."
+L00001107	owner_hints:
+L00001108	  - Plans/assistant-memory-subsystem.md
+L00001109	  - Plans/storage-plan.md
+L00001110	```
+L00001111	
+L00001112	### AMS-013 - Memory Write Then Index Order
+L00001113	
+L00001114	```yaml
+L00001115	plan_unit_id: AMS-013
+L00001116	unit_type: requirement
+L00001117	status: accepted
+L00001118	owner_doc: Plans/assistant-memory-subsystem.md
+L00001119	canonical_text: Canonical writes must succeed to assistant_memory.redb before Tantivy and USearch index updates are enqueued and applied asynchronously, with recoverable index failures.
+L00001120	gui_related: false
+L00001121	gui_classification_reason: Write/index ordering is backend persistence behavior.
+L00001122	depends_on: [AMS-007, AMS-012]
+L00001123	unblocks: [AMS-022]
+L00001124	acceptance_criteria:
+L00001125	  - Canonical MemoryGist changes write to assistant_memory.redb first.
+L00001126	  - Tantivy and USearch index updates are enqueued after the canonical write.
+L00001127	  - Index failures are recoverable without data loss.
+L00001128	validation_surfaces:
+L00001129	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001130	  - python3 scripts/pm-plan-index.py validate
+L00001131	risk_class: memory_persistence
+L00001132	reasoning_tier: high
+L00001133	context_scope: storage
+L00001134	implementation_surfaces:
+L00001135	  - Plans/assistant-memory-subsystem.md
+L00001136	  - Plans/storage-plan.md
+L00001137	node_compile_hint:
+L00001138	  mode: memory_write_then_index_order
+L00001139	  create_worknodes: false
+L00001140	source_lineage:
+L00001141	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0015
+L00001142	preserved_exact_tokens:
+L00001143	  - "assistant_memory.redb"
+L00001144	  - "Enqueue Tantivy + USearch index updates"
+L00001145	  - "asynchronously"
+L00001146	negative_constraints:
+L00001147	  - "Index failures must be recoverable without data loss."
+L00001148	owner_hints:
+L00001149	  - Plans/assistant-memory-subsystem.md
+L00001150	  - Plans/storage-plan.md
+L00001151	```
+L00001152	
+L00001153	### AMS-014 - Memory Verification Rules
+L00001154	
+L00001155	```yaml
+L00001156	plan_unit_id: AMS-014
+L00001157	unit_type: validation_rule
+L00001158	status: accepted
+L00001159	owner_doc: Plans/assistant-memory-subsystem.md
+L00001160	canonical_text: Memory injection eligibility is Verified by default; verification_state is Unverified, Verified, or Discarded, and a gist transitions to Verified only when deterministic evidence rules pass.
+L00001161	gui_related: false
+L00001162	gui_classification_reason: Verification rules are backend validation and prompt-eligibility behavior.
+L00001163	depends_on: [AMS-006, AMS-008, AMS-011]
+L00001164	unblocks: [AMS-015, AMS-016, AMS-018, AMS-019]
+L00001165	acceptance_criteria:
+L00001166	  - Only verification_state = Verified gists are eligible for capsule and retrieval injection by default.
+L00001167	  - Verification states remain Unverified, Verified, and Discarded.
+L00001168	  - A gist transitions to Verified only when one of the deterministic evidence rules holds.
+L00001169	  - A gist never transitions to Verified when evidence_refs is empty.
+L00001170	  - Discarded gists are excluded from automatic injection and default search results.
+L00001171	validation_surfaces:
+L00001172	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001173	  - python3 scripts/pm-plan-index.py validate
+L00001174	risk_class: memory_verification
+L00001175	reasoning_tier: high
+L00001176	context_scope: validation
+L00001177	implementation_surfaces:
+L00001178	  - Plans/assistant-memory-subsystem.md
+L00001179	  - Plans/Decision_Policy.md
+L00001180	node_compile_hint:
+L00001181	  mode: memory_verification_rules
+L00001182	  create_worknodes: false
+L00001183	source_lineage:
+L00001184	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0016
+L00001185	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0017
+L00001186	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0021
+L00001187	preserved_exact_tokens:
+L00001188	  - "verification_state"
+L00001189	  - "Unverified"
+L00001190	  - "Verified"
+L00001191	  - "Discarded"
+L00001192	  - "Commit { hash, repo_id }"
+L00001193	  - "exit_code == 0"
+L00001194	  - "assistant.memory.allow_manual_verify_without_evidence"
+L00001195	negative_constraints:
+L00001196	  - "A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty."
+L00001197	  - "Discarded gists MUST be excluded from automatic injection and default search results."
+L00001198	owner_hints:
+L00001199	  - Plans/assistant-memory-subsystem.md
+L00001200	```
+L00001201	
+L00001202	### AMS-015 - AutoRunBoundary Memory Trigger
+L00001203	
+L00001204	```yaml
+L00001205	plan_unit_id: AMS-015
+L00001206	unit_type: requirement
+L00001207	status: accepted
+L00001208	owner_doc: Plans/assistant-memory-subsystem.md
+L00001209	canonical_text: AutoRunBoundary runs exactly once at Assistant run end, creates or updates at most one gist, deduplicates by embed_text_hash plus normalized EvidenceRefs, verifies deterministically, and respects assistant.memory.auto_save_unverified.
+L00001210	gui_related: false
+L00001211	gui_classification_reason: AutoRunBoundary is an Assistant run-end backend trigger.
+L00001212	depends_on: [AMS-014]
+L00001213	unblocks: [AMS-016]
+L00001214	acceptance_criteria:
+L00001215	  - AutoRunBoundary runs once at the end of each Assistant run.
+L00001216	  - AutoRunBoundary creates or updates at most one MemoryGist per run.
+L00001217	  - Candidate deduplication uses embed_text_hash plus normalized EvidenceRefs.
+L00001218	  - Unverified persistence respects assistant.memory.auto_save_unverified.
+L00001219	validation_surfaces:
+L00001220	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001221	  - python3 scripts/pm-plan-index.py validate
+L00001222	risk_class: memory_trigger
+L00001223	reasoning_tier: high
+L00001224	context_scope: runtime
+L00001225	implementation_surfaces:
+L00001226	  - Plans/assistant-memory-subsystem.md
+L00001227	node_compile_hint:
+L00001228	  mode: autorunboundary_memory_trigger
+L00001229	  create_worknodes: false
+L00001230	source_lineage:
+L00001231	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0018
+L00001232	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0019
+L00001233	preserved_exact_tokens:
+L00001234	  - "AutoRunBoundary"
+L00001235	  - "exactly once"
+L00001236	  - "at most one"
+L00001237	  - "embed_text_hash"
+L00001238	  - "normalized EvidenceRefs"
+L00001239	  - "assistant.memory.auto_save_unverified"
+L00001240	negative_constraints:
+L00001241	  - "AutoRunBoundary must not create multiple gists for a single Assistant run."
+L00001242	owner_hints:
+L00001243	  - Plans/assistant-memory-subsystem.md
+L00001244	```
+L00001245	
+L00001246	### AMS-016 - AutoMilestone Memory Trigger
+L00001247	
+L00001248	```yaml
+L00001249	plan_unit_id: AMS-016
+L00001250	unit_type: requirement
+L00001251	status: accepted
+L00001252	owner_doc: Plans/assistant-memory-subsystem.md
+L00001253	canonical_text: AutoMilestone is an idempotent promotion trigger rate-limited to once per run, deduplicated per gist/evidence pair, able to create or promote one Outcome gist, and ordered before AutoRunBoundary persistence.
+L00001254	gui_related: false
+L00001255	gui_classification_reason: AutoMilestone trigger ordering and idempotence are backend runtime behavior.
+L00001256	depends_on: [AMS-014, AMS-015]
+L00001257	unblocks: [AMS-017]
+L00001258	acceptance_criteria:
+L00001259	  - AutoMilestone is idempotent per gist_id and evidence_ref pair.
+L00001260	  - AutoMilestone is rate-limited to at most once per run.
+L00001261	  - AutoMilestone may create or promote one Outcome gist per run.
+L00001262	  - AutoMilestone executes before AutoRunBoundary persistence when triggered in a run.
+L00001263	validation_surfaces:
+L00001264	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001265	  - python3 scripts/pm-plan-index.py validate
+L00001266	risk_class: memory_trigger
+L00001267	reasoning_tier: high
+L00001268	context_scope: runtime
+L00001269	implementation_surfaces:
+L00001270	  - Plans/assistant-memory-subsystem.md
+L00001271	node_compile_hint:
+L00001272	  mode: automilestone_memory_trigger
+L00001273	  create_worknodes: false
+L00001274	source_lineage:
+L00001275	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+L00001276	preserved_exact_tokens:
+L00001277	  - "AutoMilestone"
+L00001278	  - "(gist_id, evidence_ref)"
+L00001279	  - "at most **once per run**"
+L00001280	  - "Outcome"
+L00001281	  - "before AutoRunBoundary persistence"
+L00001282	negative_constraints:
+L00001283	  - "AutoMilestone must not reprocess the same gist/evidence pair more than once."
+L00001284	owner_hints:
+L00001285	  - Plans/assistant-memory-subsystem.md
+L00001286	```
+L00001287	
+L00001288	### AMS-017 - AutoMilestone GUI Done Source
+L00001289	
+L00001290	```yaml
+L00001291	plan_unit_id: AMS-017
+L00001292	unit_type: requirement
+L00001293	status: accepted
+L00001294	owner_doc: Plans/assistant-memory-subsystem.md
+L00001295	canonical_text: User confirmation of done through a GUI action is a valid AutoMilestone milestone source alongside tests, commits, PRs, and artifacts.
+L00001296	gui_related: true
+L00001297	gui_classification_reason: User confirms done via GUI action is a user-visible trigger source.
+L00001298	depends_on: [AMS-016]
+L00001299	unblocks: []
+L00001300	acceptance_criteria:
+L00001301	  - User confirms done via GUI action remains a valid AutoMilestone milestone source.
+L00001302	  - The GUI source does not replace other milestone sources such as tests, commits, PRs, or artifacts.
+L00001303	validation_surfaces:
+L00001304	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001305	  - python3 scripts/pm-plan-index.py validate
+L00001306	risk_class: memory_gui
+L00001307	reasoning_tier: standard
+L00001308	context_scope: gui
+L00001309	implementation_surfaces:
+L00001310	  - Plans/assistant-memory-subsystem.md
+L00001311	  - Plans/assistant-chat-design.md
+L00001312	node_compile_hint:
+L00001313	  mode: automilestone_gui_done_source
+L00001314	  create_worknodes: false
+L00001315	source_lineage:
+L00001316	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+L00001317	preserved_exact_tokens:
+L00001318	  - "user confirms “done” via GUI action"
+L00001319	negative_constraints: []
+L00001320	owner_hints:
+L00001321	  - Plans/assistant-memory-subsystem.md
+L00001322	```
+L00001323	
+L00001324	### AMS-018 - Memory Capsule Injection Boundary
+L00001325	
+L00001326	```yaml
+L00001327	plan_unit_id: AMS-018
+L00001328	unit_type: constraint
+L00001329	status: accepted
+L00001330	owner_doc: Plans/assistant-memory-subsystem.md
+L00001331	canonical_text: Memory is continuity and project state, not rules; the always-loaded capsule uses a default 350-token hard cap, fixed section order, and Verified-only eligibility by default.
+L00001332	gui_related: false
+L00001333	gui_classification_reason: Capsule assembly and prompt boundaries are backend prompt behavior.
+L00001334	depends_on: [AMS-003, AMS-005, AMS-009, AMS-014]
+L00001335	unblocks: [AMS-019, AMS-021]
+L00001336	acceptance_criteria:
+L00001337	  - Memory remains a distinct context source separate from rules pipeline output.
+L00001338	  - Capsule budget default remains 350 tokens.
+L00001339	  - Capsule sections preserve fixed order.
+L00001340	  - Capsule assembly enforces the hard token cap before sending any Assistant prompt.
+L00001341	  - Capsule assembly excludes non-Verified gists by default.
+L00001342	validation_surfaces:
+L00001343	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001344	  - python3 scripts/pm-plan-index.py validate
+L00001345	risk_class: prompt_injection
+L00001346	reasoning_tier: high
+L00001347	context_scope: prompt
+L00001348	implementation_surfaces:
+L00001349	  - Plans/assistant-memory-subsystem.md
+L00001350	  - Plans/assistant-chat-design.md
+L00001351	  - Plans/agent-rules-context.md
+L00001352	node_compile_hint:
+L00001353	  mode: memory_capsule_injection_boundary
+L00001354	  create_worknodes: false
+L00001355	source_lineage:
+L00001356	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
+L00001357	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
+L00001358	preserved_exact_tokens:
+L00001359	  - "Memory is continuity and project state. Memory is not rules."
+L00001360	  - "350"
+L00001361	  - "Project Capsule bullets"
+L00001362	  - "Current Thread paragraph"
+L00001363	  - "Recent decisions"
+L00001364	  - "Recent blockers"
+L00001365	  - "Verified-only"
+L00001366	negative_constraints:
+L00001367	  - "Unverified gists may be included only by explicit user action."
+L00001368	  - "Pinned Unverified gists must not be auto-included unless assistant.memory.allow_pinned_unverified_injection = true."
+L00001369	owner_hints:
+L00001370	  - Plans/assistant-memory-subsystem.md
+L00001371	```
+L00001372	
+L00001373	### AMS-019 - Per Turn Memory Retrieval Injection
+L00001374	
+L00001375	```yaml
+L00001376	plan_unit_id: AMS-019
+L00001377	unit_type: constraint
+L00001378	status: accepted
+L00001379	owner_doc: Plans/assistant-memory-subsystem.md
+L00001380	canonical_text: Per-turn retrieval injection runs lexical and semantic search, merges and reranks results, injects up to the default five gists, and remains summary-only and Verified-only unless explicitly allowed by configuration or user action.
+L00001381	gui_related: false
+L00001382	gui_classification_reason: Retrieval injection is backend prompt assembly behavior.
+L00001383	depends_on: [AMS-012, AMS-014, AMS-018]
+L00001384	unblocks: [AMS-020]
+L00001385	acceptance_criteria:
+L00001386	  - Per-turn retrieval executes Tantivy lexical search plus USearch semantic search.
+L00001387	  - Retrieval results are merged and reranked.
+L00001388	  - Default max injected gists per turn remains five.
+L00001389	  - Retrieval injection is summary-only.
+L00001390	  - Retrieval injection excludes non-Verified gists by default.
+L00001391	validation_surfaces:
+L00001392	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001393	  - python3 scripts/pm-plan-index.py validate
+L00001394	risk_class: prompt_injection
+L00001395	reasoning_tier: high
+L00001396	context_scope: prompt
+L00001397	implementation_surfaces:
+L00001398	  - Plans/assistant-memory-subsystem.md
+L00001399	node_compile_hint:
+L00001400	  mode: per_turn_memory_retrieval_injection
+L00001401	  create_worknodes: false
+L00001402	source_lineage:
+L00001403	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0024
+L00001404	preserved_exact_tokens:
+L00001405	  - "Tantivy"
+L00001406	  - "USearch"
+L00001407	  - "N default `5`"
+L00001408	  - "summary-only"
+L00001409	  - "Verified-only"
+L00001410	negative_constraints:
+L00001411	  - "Retrieval injection MUST NOT exceed max item count and MUST remain summary-only."
+L00001412	owner_hints:
+L00001413	  - Plans/assistant-memory-subsystem.md
+L00001414	```
+L00001415	
+L00001416	### AMS-020 - Memory Activation Scoring
+L00001417	
+L00001418	```yaml
+L00001419	plan_unit_id: AMS-020
+L00001420	unit_type: requirement
+L00001421	status: accepted
+L00001422	owner_doc: Plans/assistant-memory-subsystem.md
+L00001423	canonical_text: Activation scoring includes pinned boost, kind/status weighting, recency decay, access signals, and BM25 plus ANN retrieval blend; Done status applies a 0.5 half-life multiplier.
+L00001424	gui_related: false
+L00001425	gui_classification_reason: Activation scoring is backend retrieval/ranking behavior.
+L00001426	depends_on: [AMS-012, AMS-019]
+L00001427	unblocks: []
+L00001428	acceptance_criteria:
+L00001429	  - Activation scoring includes pinned, kind/status, recency, access, and retrieval blend components.
+L00001430	  - Retrieval blend includes BM25 and ANN scores.
+L00001431	  - Done-status gists apply effective_half_life_days = half_life_days * 0.5.
+L00001432	validation_surfaces:
+L00001433	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001434	  - python3 scripts/pm-plan-index.py validate
+L00001435	risk_class: memory_retrieval
+L00001436	reasoning_tier: standard
+L00001437	context_scope: search
+L00001438	implementation_surfaces:
+L00001439	  - Plans/assistant-memory-subsystem.md
+L00001440	node_compile_hint:
+L00001441	  mode: memory_activation_scoring
+L00001442	  create_worknodes: false
+L00001443	source_lineage:
+L00001444	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0025
+L00001445	preserved_exact_tokens:
+L00001446	  - "pinned"
+L00001447	  - "kind/status weighting"
+L00001448	  - "recency decay"
+L00001449	  - "access_count"
+L00001450	  - "last_access_at"
+L00001451	  - "BM25 + ANN scores"
+L00001452	  - "effective_half_life_days = half_life_days * 0.5"
+L00001453	negative_constraints: []
+L00001454	owner_hints:
+L00001455	  - Plans/assistant-memory-subsystem.md
+L00001456	```
+L00001457	
+L00001458	### AMS-021 - Gist Review Panel
+L00001459	
+L00001460	```yaml
+L00001461	plan_unit_id: AMS-021
+L00001462	unit_type: requirement
+L00001463	status: accepted
+L00001464	owner_doc: Plans/assistant-memory-subsystem.md
+L00001465	canonical_text: The GUI exposes a Gist Review panel adjacent to Memory and Rules panels, with filters, default Unverified review filter, auto-save toggle, gist actions, half-life controls, capsule preview, and maintenance actions.
+L00001466	gui_related: true
+L00001467	gui_classification_reason: Gist Review panel, filters, actions, toggles, and previews are user-visible GUI requirements.
+L00001468	depends_on: [AMS-010, AMS-014, AMS-018]
+L00001469	unblocks: [AMS-023]
+L00001470	acceptance_criteria:
+L00001471	  - Gist Review appears adjacent to Memory and Rules panels.
+L00001472	  - Panel filters include kind, status, tags, pinned, and verification_state.
+L00001473	  - Opening the panel defaults to verification_state = Unverified until explicit user action changes filters.
+L00001474	  - Verify, Edit, Pin/Unpin, Discard, half-life controls, capsule preview, and maintenance actions are exposed.
+L00001475	validation_surfaces:
+L00001476	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001477	  - python3 scripts/pm-plan-index.py validate
+L00001478	risk_class: memory_gui
+L00001479	reasoning_tier: standard
+L00001480	context_scope: gui
+L00001481	implementation_surfaces:
+L00001482	  - Plans/assistant-memory-subsystem.md
+L00001483	  - Plans/UI_Command_Catalog.md
+L00001484	  - Plans/assistant-chat-design.md
+L00001485	node_compile_hint:
+L00001486	  mode: gist_review_panel
+L00001487	  create_worknodes: false
+L00001488	source_lineage:
+L00001489	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+L00001490	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0026
+L00001491	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0027
+L00001492	preserved_exact_tokens:
+L00001493	  - "Gist Review"
+L00001494	  - "Memory + Rules panels"
+L00001495	  - "verification_state = Unverified"
+L00001496	  - "assistant.memory.auto_save_unverified"
+L00001497	  - "Verify"
+L00001498	  - "Edit"
+L00001499	  - "Pin/Unpin"
+L00001500	  - "Discard"
+L00001501	  - "What's in capsule now"
+L00001502	negative_constraints:
+L00001503	  - "Any non-default filter state must be the result of explicit user action."
+L00001504	owner_hints:
+L00001505	  - Plans/assistant-memory-subsystem.md
+L00001506	```
+L00001507	
+L00001508	### AMS-022 - Memory Maintenance Operations
+L00001509	
+L00001510	```yaml
+L00001511	plan_unit_id: AMS-022
+L00001512	unit_type: requirement
+L00001513	status: accepted
+L00001514	owner_doc: Plans/assistant-memory-subsystem.md
+L00001515	canonical_text: Memory maintenance operations include Tantivy rebuild, USearch rebuild, verification sweep, dedup sweep, monthly summarize/compress, and prune/archive, all in-process with no external services and pinned gists protected from deletion.
+L00001516	gui_related: false
+L00001517	gui_classification_reason: Maintenance operation semantics are backend storage/index behavior.
+L00001518	depends_on: [AMS-004, AMS-013]
+L00001519	unblocks: [AMS-023]
+L00001520	acceptance_criteria:
+L00001521	  - Required maintenance operations are preserved.
+L00001522	  - Maintenance operations run in-process and do not depend on external services.
+L00001523	  - Prune/archive never deletes pinned gists.
+L00001524	validation_surfaces:
+L00001525	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001526	  - python3 scripts/pm-plan-index.py validate
+L00001527	risk_class: memory_maintenance
+L00001528	reasoning_tier: standard
+L00001529	context_scope: storage
+L00001530	implementation_surfaces:
+L00001531	  - Plans/assistant-memory-subsystem.md
+L00001532	  - Plans/storage-plan.md
+L00001533	node_compile_hint:
+L00001534	  mode: memory_maintenance_operations
+L00001535	  create_worknodes: false
+L00001536	source_lineage:
+L00001537	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+L00001538	preserved_exact_tokens:
+L00001539	  - "Rebuild Tantivy index"
+L00001540	  - "Rebuild USearch index"
+L00001541	  - "Verification sweep"
+L00001542	  - "Dedup sweep"
+L00001543	  - "Monthly summarize/compress"
+L00001544	  - "Prune/archive"
+L00001545	negative_constraints:
+L00001546	  - "All maintenance operations MUST run in-process and MUST NOT depend on external services."
+L00001547	  - "Prune/archive must never delete pinned gists."
+L00001548	owner_hints:
+L00001549	  - Plans/assistant-memory-subsystem.md
+L00001550	```
+L00001551	
+L00001552	### AMS-023 - Memory Maintenance GUI Invocation
+L00001553	
+L00001554	```yaml
+L00001555	plan_unit_id: AMS-023
+L00001556	unit_type: requirement
+L00001557	status: accepted
+L00001558	owner_doc: Plans/assistant-memory-subsystem.md
+L00001559	canonical_text: Memory maintenance operations are user-invokable in the GUI and callable by internal maintenance jobs with explicit success and failure status.
+L00001560	gui_related: true
+L00001561	gui_classification_reason: User-invokable GUI maintenance actions and success/failure status are visible UI behavior.
+L00001562	depends_on: [AMS-021, AMS-022]
+L00001563	unblocks: []
+L00001564	acceptance_criteria:
+L00001565	  - Maintenance operations are user-invokable in GUI.
+L00001566	  - Internal maintenance jobs can call maintenance operations.
+L00001567	  - Both GUI and internal invocations expose explicit success/failure status.
+L00001568	validation_surfaces:
+L00001569	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001570	  - python3 scripts/pm-plan-index.py validate
+L00001571	risk_class: memory_gui
+L00001572	reasoning_tier: standard
+L00001573	context_scope: gui
+L00001574	implementation_surfaces:
+L00001575	  - Plans/assistant-memory-subsystem.md
+L00001576	  - Plans/UI_Command_Catalog.md
+L00001577	node_compile_hint:
+L00001578	  mode: memory_maintenance_gui_invocation
+L00001579	  create_worknodes: false
+L00001580	source_lineage:
+L00001581	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+L00001582	preserved_exact_tokens:
+L00001583	  - "user-invokable in GUI"
+L00001584	  - "internal maintenance jobs"
+L00001585	  - "explicit success/failure status"
+L00001586	negative_constraints: []
+L00001587	owner_hints:
+L00001588	  - Plans/assistant-memory-subsystem.md
+L00001589	```
+L00001590	
+L00001591	### AMS-024 - Memory Integration Boundary Intro
+L00001592	
+L00001593	```yaml
+L00001594	plan_unit_id: AMS-024
+L00001595	unit_type: constraint
+L00001596	status: accepted
+L00001597	owner_doc: Plans/assistant-memory-subsystem.md
+L00001598	canonical_text: Assistant memory remains separate from child-run continuity, crew shared state, and context-shaping systems; detailed integration behavior starts in the next batch.
+L00001599	gui_related: false
+L00001600	gui_classification_reason: Integration boundary is backend owner/consumer scope.
+L00001601	depends_on: [AMS-003, AMS-005]
+L00001602	unblocks: []
+L00001603	acceptance_criteria:
+L00001604	  - Assistant memory remains separate from child-run continuity.
+L00001605	  - Assistant memory remains separate from crew shared state.
+L00001606	  - Assistant memory remains separate from context-shaping systems.
+L00001607	  - This unit does not absorb the S0030 Assistant prompt builder details.
+L00001608	validation_surfaces:
+L00001609	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001610	  - python3 scripts/pm-plan-index.py validate
+L00001611	risk_class: memory_boundary
+L00001612	reasoning_tier: standard
+L00001613	context_scope: integration
+L00001614	implementation_surfaces:
+L00001615	  - Plans/assistant-memory-subsystem.md
+L00001616	  - Plans/Prompt_Pipeline.md
+L00001617	  - Plans/orchestrator-subagent-integration.md
+L00001618	  - Plans/interview-subagent-integration.md
+L00001619	node_compile_hint:
+L00001620	  mode: memory_integration_boundary_intro
+L00001621	  create_worknodes: false
+L00001622	source_lineage:
+L00001623	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0029
+L00001624	preserved_exact_tokens:
+L00001625	  - "Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems."
+L00001626	negative_constraints:
+L00001627	  - "S0030 Assistant prompt builder details are not imported into this batch."
+L00001628	owner_hints:
+L00001629	  - Plans/assistant-memory-subsystem.md
+L00001630	```
+L00001631	
+L00001632	### AMS-025 - Assistant Prompt Builder Memory Routing
+L00001633	
+L00001634	```yaml
+L00001635	plan_unit_id: AMS-025
+L00001636	unit_type: requirement
+L00001637	status: accepted
+L00001638	owner_doc: Plans/assistant-memory-subsystem.md
+L00001639	canonical_text: Assistant prompt builder uses the real memory subsystem while Assistant memory remains Assistant-only.
+L00001640	gui_related: false
+L00001641	gui_classification_reason: Prompt builder routing is backend prompt assembly behavior.
+L00001642	depends_on: [AMS-024]
+L00001643	unblocks: [AMS-026]
+L00001644	acceptance_criteria:
+L00001645	  - Assistant uses the real memory subsystem.
+L00001646	  - Assistant memory remains Assistant-only.
+L00001647	  - Prompt Pipeline, Assistant Chat, and storage ContractRefs are preserved.
+L00001648	validation_surfaces:
+L00001649	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001650	  - python3 scripts/pm-plan-index.py validate
+L00001651	risk_class: memory_integration
+L00001652	reasoning_tier: standard
+L00001653	context_scope: prompt
+L00001654	implementation_surfaces:
+L00001655	  - Plans/assistant-memory-subsystem.md
+L00001656	  - Plans/Prompt_Pipeline.md
+L00001657	  - Plans/assistant-chat-design.md
+L00001658	  - Plans/storage-plan.md
+L00001659	node_compile_hint:
+L00001660	  mode: assistant_prompt_builder_memory_routing
+L00001661	  create_worknodes: false
+L00001662	source_lineage:
+L00001663	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0030
+L00001664	preserved_exact_tokens:
+L00001665	  - "Assistant uses the real memory subsystem."
+L00001666	  - "Assistant memory remains Assistant-only."
+L00001667	negative_constraints: []
+L00001668	owner_hints:
+L00001669	  - Plans/assistant-memory-subsystem.md
+L00001670	```
+L00001671	
+L00001672	### AMS-026 - Non Assistant NullMemoryProvider Enforcement
+L00001673	
+L00001674	```yaml
+L00001675	plan_unit_id: AMS-026
+L00001676	unit_type: constraint
+L00001677	status: accepted
+L00001678	owner_doc: Plans/assistant-memory-subsystem.md
+L00001679	canonical_text: Subagents, Interview, Orchestrator, requirements builder, and crew members use NullMemoryProvider and receive no Assistant memory payload.
+L00001680	gui_related: false
+L00001681	gui_classification_reason: NullMemoryProvider routing is backend runtime wiring behavior.
+L00001682	depends_on: [AMS-005, AMS-025]
+L00001683	unblocks: [AMS-027]
+L00001684	acceptance_criteria:
+L00001685	  - Subagents use NullMemoryProvider.
+L00001686	  - Interview, Orchestrator, requirements builder, and crew members receive no Assistant memory payload.
+L00001687	  - Tools, Personas, and Prompt Pipeline ContractRefs are preserved.
+L00001688	validation_surfaces:
+L00001689	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001690	  - python3 scripts/pm-plan-index.py validate
+L00001691	risk_class: memory_boundary
+L00001692	reasoning_tier: high
+L00001693	context_scope: runtime
+L00001694	implementation_surfaces:
+L00001695	  - Plans/assistant-memory-subsystem.md
+L00001696	  - Plans/Tools.md
+L00001697	  - Plans/Personas.md
+L00001698	  - Plans/Prompt_Pipeline.md
+L00001699	node_compile_hint:
+L00001700	  mode: non_assistant_nullmemoryprovider_enforcement
+L00001701	  create_worknodes: false
+L00001702	source_lineage:
+L00001703	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0031
+L00001704	preserved_exact_tokens:
+L00001705	  - "NullMemoryProvider"
+L00001706	  - "receive no Assistant memory payload"
+L00001707	negative_constraints:
+L00001708	  - "Non-Assistant actors must not receive Assistant memory payload."
+L00001709	owner_hints:
+L00001710	  - Plans/assistant-memory-subsystem.md
+L00001711	```
+L00001712	
+L00001713	### AMS-027 - Child Continuity Canonical Sources
+L00001714	
+L00001715	```yaml
+L00001716	plan_unit_id: AMS-027
+L00001717	unit_type: constraint
+L00001718	status: accepted
+L00001719	owner_doc: Plans/assistant-memory-subsystem.md
+L00001720	canonical_text: Child continuity comes from canonical child records, reconstructed handoff bundles, current effective shaping state, and crew shared state, not hidden child-local long-term memory.
+L00001721	gui_related: false
+L00001722	gui_classification_reason: Child continuity source rules are backend runtime state behavior.
+L00001723	depends_on: [AMS-026]
+L00001724	unblocks: [AMS-028]
+L00001725	acceptance_criteria:
+L00001726	  - Child continuity source list remains canonical.
+L00001727	  - Hidden child-local long-term memory is excluded.
+L00001728	  - Storage, Contracts_V0, and orchestrator ContractRefs are preserved.
+L00001729	validation_surfaces:
+L00001730	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001731	  - python3 scripts/pm-plan-index.py validate
+L00001732	risk_class: memory_boundary
+L00001733	reasoning_tier: high
+L00001734	context_scope: runtime
+L00001735	implementation_surfaces:
+L00001736	  - Plans/assistant-memory-subsystem.md
+L00001737	  - Plans/storage-plan.md
+L00001738	  - Plans/Contracts_V0.md
+L00001739	  - Plans/orchestrator-subagent-integration.md
+L00001740	node_compile_hint:
+L00001741	  mode: child_continuity_canonical_sources
+L00001742	  create_worknodes: false
+L00001743	source_lineage:
+L00001744	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0031
+L00001745	preserved_exact_tokens:
+L00001746	  - "canonical child records"
+L00001747	  - "reconstructed handoff bundles"
+L00001748	  - "current effective shaping state"
+L00001749	  - "crew shared state"
+L00001750	  - "hidden child-local long-term memory"
+L00001751	negative_constraints:
+L00001752	  - "Child continuity does not come from hidden child-local long-term memory."
+L00001753	owner_hints:
+L00001754	  - Plans/assistant-memory-subsystem.md
+L00001755	```
+L00001756	
+L00001757	### AMS-028 - Crew Shared State Coordination Boundary
+L00001758	
+L00001759	```yaml
+L00001760	plan_unit_id: AMS-028
+L00001761	unit_type: constraint
+L00001762	status: accepted
+L00001763	owner_doc: Plans/assistant-memory-subsystem.md
+L00001764	canonical_text: Crew shared state may persist longer than an individual child, but it remains explicit coordination state rather than personal memory for disposable subagents.
+L00001765	gui_related: false
+L00001766	gui_classification_reason: Crew shared state boundary is backend runtime coordination behavior.
+L00001767	depends_on: [AMS-027]
+L00001768	unblocks: []
+L00001769	acceptance_criteria:
+L00001770	  - Crew shared state may persist longer than an individual child.
+L00001771	  - Crew shared state remains explicit coordination state.
+L00001772	  - Disposable subagents do not gain personal memory from crew shared state.
+L00001773	validation_surfaces:
+L00001774	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001775	  - python3 scripts/pm-plan-index.py validate
+L00001776	risk_class: memory_boundary
+L00001777	reasoning_tier: standard
+L00001778	context_scope: runtime
+L00001779	implementation_surfaces:
+L00001780	  - Plans/assistant-memory-subsystem.md
+L00001781	  - Plans/orchestrator-subagent-integration.md
+L00001782	node_compile_hint:
+L00001783	  mode: crew_shared_state_coordination_boundary
+L00001784	  create_worknodes: false
+L00001785	source_lineage:
+L00001786	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0032
+L00001787	preserved_exact_tokens:
+L00001788	  - "Crew shared state"
+L00001789	  - "explicit coordination state"
+L00001790	  - "personal memory for disposable subagents"
+L00001791	negative_constraints:
+L00001792	  - "Crew shared state must not become personal memory for disposable subagents."
+L00001793	owner_hints:
+L00001794	  - Plans/assistant-memory-subsystem.md
+L00001795	```
+L00001796	
+L00001797	### AMS-029 - Deterministic Defaults Section Anchor
+L00001798	
+L00001799	```yaml
+L00001800	plan_unit_id: AMS-029
+L00001801	unit_type: constraint
+L00001802	status: accepted
+L00001803	owner_doc: Plans/assistant-memory-subsystem.md
+L00001804	canonical_text: The Deterministic defaults section anchor is preserved as structural coverage; behavior is carried by the child default units in this batch.
+L00001805	gui_related: false
+L00001806	gui_classification_reason: Section-anchor preservation is plan structure, not UI behavior.
+L00001807	depends_on: []
+L00001808	unblocks: [AMS-030, AMS-031, AMS-032, AMS-033]
+L00001809	acceptance_criteria:
+L00001810	  - The Deterministic defaults heading remains covered.
+L00001811	  - No additional behavior is introduced by this structural unit beyond child default units.
+L00001812	validation_surfaces:
+L00001813	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001814	  - python3 scripts/pm-plan-index.py validate
+L00001815	risk_class: plan_structure
+L00001816	reasoning_tier: standard
+L00001817	context_scope: governance
+L00001818	implementation_surfaces:
+L00001819	  - Plans/assistant-memory-subsystem.md
+L00001820	node_compile_hint:
+L00001821	  mode: deterministic_defaults_section_anchor
+L00001822	  create_worknodes: false
+L00001823	source_lineage:
+L00001824	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0033
+L00001825	preserved_exact_tokens:
+L00001826	  - "9. Deterministic defaults"
+L00001827	negative_constraints: []
+L00001828	owner_hints:
+L00001829	  - Plans/assistant-memory-subsystem.md
+L00001830	```
+L00001831	
+L00001832	### AMS-030 - Core Memory Defaults
+L00001833	
+L00001834	```yaml
+L00001835	plan_unit_id: AMS-030
+L00001836	unit_type: requirement
+L00001837	status: accepted
+L00001838	owner_doc: Plans/assistant-memory-subsystem.md
+L00001839	canonical_text: Core memory defaults preserve separate Assistant memory redb, Tantivy, and USearch stores, 350-token capsule budget, max five retrieved gists, summary-only Verified-only injection, disabled subagent access through NullMemoryProvider, and enabled auto-save for unverified gists.
+L00001840	gui_related: false
+L00001841	gui_classification_reason: Core defaults are backend configuration defaults.
+L00001842	depends_on: [AMS-029]
+L00001843	unblocks: [AMS-031, AMS-032, AMS-033]
+L00001844	acceptance_criteria:
+L00001845	  - Core defaults apply without user prompts unless overridden by persisted config.
+L00001846	  - Physical store, capsule budget, retrieval injection, subagent access, and auto-save defaults are preserved.
+L00001847	validation_surfaces:
+L00001848	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001849	  - python3 scripts/pm-plan-index.py validate
+L00001850	risk_class: memory_defaults
+L00001851	reasoning_tier: standard
+L00001852	context_scope: config
+L00001853	implementation_surfaces:
+L00001854	  - Plans/assistant-memory-subsystem.md
+L00001855	node_compile_hint:
+L00001856	  mode: core_memory_defaults
+L00001857	  create_worknodes: false
+L00001858	source_lineage:
+L00001859	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0034
+L00001860	preserved_exact_tokens:
+L00001861	  - "350"
+L00001862	  - "max `5` gists/turn"
+L00001863	  - "summary-only"
+L00001864	  - "Verified-only"
+L00001865	  - "NullMemoryProvider"
+L00001866	  - "Auto-save unverified gists: enabled"
+L00001867	negative_constraints:
+L00001868	  - "Defaults must not prompt the user unless explicitly overridden by persisted config."
+L00001869	owner_hints:
+L00001870	  - Plans/assistant-memory-subsystem.md
+L00001871	```
+L00001872	
+L00001873	### AMS-031 - Kind Half Life Defaults
+L00001874	
+L00001875	```yaml
+L00001876	plan_unit_id: AMS-031
+L00001877	unit_type: requirement
+L00001878	status: accepted
+L00001879	owner_doc: Plans/assistant-memory-subsystem.md
+L00001880	canonical_text: Half-life defaults by kind preserve the complete kind table, require unset half_life_days to resolve to the kind default, and apply the Done status multiplier of 0.5 for activation scoring.
+L00001881	gui_related: false
+L00001882	gui_classification_reason: Half-life defaults and decay multipliers are backend scoring configuration.
+L00001883	depends_on: [AMS-029, AMS-030]
+L00001884	unblocks: []
+L00001885	acceptance_criteria:
+L00001886	  - All kind/default_half_life_days rows remain preserved.
+L00001887	  - Unset half_life_days resolves to the table default for the kind.
+L00001888	  - Done status applies multiplier 0.5 to half-life for activation scoring.
+L00001889	validation_surfaces:
+L00001890	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001891	  - python3 scripts/pm-plan-index.py validate
+L00001892	risk_class: memory_defaults
+L00001893	reasoning_tier: standard
+L00001894	context_scope: config
+L00001895	implementation_surfaces:
+L00001896	  - Plans/assistant-memory-subsystem.md
+L00001897	node_compile_hint:
+L00001898	  mode: kind_half_life_defaults
+L00001899	  create_worknodes: false
+L00001900	source_lineage:
+L00001901	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0035
+L00001902	preserved_exact_tokens:
+L00001903	  - "CurrentThread"
+L00001904	  - "Blocker"
+L00001905	  - "Constraint"
+L00001906	  - "Outcome"
+L00001907	  - "Handoff"
+L00001908	  - "Note"
+L00001909	  - "Decision"
+L00001910	  - "Preference"
+L00001911	  - "Landmine"
+L00001912	  - "status = Done"
+L00001913	  - "0.5"
+L00001914	negative_constraints: []
+L00001915	owner_hints:
+L00001916	  - Plans/assistant-memory-subsystem.md
+L00001917	```
+L00001918	
+L00001919	### AMS-032 - Verification Default Configuration
+L00001920	
+L00001921	```yaml
+L00001922	plan_unit_id: AMS-032
+L00001923	unit_type: constraint
+L00001924	status: accepted
+L00001925	owner_doc: Plans/assistant-memory-subsystem.md
+L00001926	canonical_text: Verification defaults set new gists to Unverified, default injection eligibility to Verified-only, pinned-Unverified auto-injection to false, auto-save unverified to true, and manual verify without evidence to false.
+L00001927	gui_related: false
+L00001928	gui_classification_reason: Verification defaults are backend configuration and prompt eligibility rules.
+L00001929	depends_on: [AMS-014, AMS-029, AMS-030]
+L00001930	unblocks: []
+L00001931	acceptance_criteria:
+L00001932	  - New gists default to Unverified.
+L00001933	  - Verified-only auto-injection remains default even when unverified auto-save is enabled.
+L00001934	  - Pinned Unverified auto-injection and manual verify without evidence default to false.
+L00001935	validation_surfaces:
+L00001936	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001937	  - python3 scripts/pm-plan-index.py validate
+L00001938	risk_class: memory_defaults
+L00001939	reasoning_tier: high
+L00001940	context_scope: config
+L00001941	implementation_surfaces:
+L00001942	  - Plans/assistant-memory-subsystem.md
+L00001943	node_compile_hint:
+L00001944	  mode: verification_default_configuration
+L00001945	  create_worknodes: false
+L00001946	source_lineage:
+L00001947	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0036
+L00001948	preserved_exact_tokens:
+L00001949	  - "Unverified"
+L00001950	  - "Verified-only"
+L00001951	  - "assistant.memory.allow_pinned_unverified_injection = false"
+L00001952	  - "assistant.memory.auto_save_unverified = true"
+L00001953	  - "assistant.memory.allow_manual_verify_without_evidence = false"
+L00001954	negative_constraints:
+L00001955	  - "Verified-only auto-injection must remain the default behavior even when unverified auto-save is enabled."
+L00001956	owner_hints:
+L00001957	  - Plans/assistant-memory-subsystem.md
+L00001958	```
+L00001959	
+L00001960	### AMS-033 - Project Scoped Memory Config Keys
+L00001961	
+L00001962	```yaml
+L00001963	plan_unit_id: AMS-033
+L00001964	unit_type: requirement
+L00001965	status: accepted
+L00001966	owner_doc: Plans/assistant-memory-subsystem.md
+L00001967	canonical_text: Assistant memory configuration preserves all assistant.memory keys and deterministic project-scoped resolution for memory behavior.
+L00001968	gui_related: false
+L00001969	gui_classification_reason: Memory config keys and project-scoped resolution are backend configuration behavior.
+L00001970	depends_on: [AMS-029, AMS-030]
+L00001971	unblocks: [AMS-034]
+L00001972	acceptance_criteria:
+L00001973	  - All assistant.memory config keys in the source span remain preserved.
+L00001974	  - Config resolution is deterministic.
+L00001975	  - Config resolution is project-scoped for memory behavior.
+L00001976	validation_surfaces:
+L00001977	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001978	  - python3 scripts/pm-plan-index.py validate
+L00001979	risk_class: memory_defaults
+L00001980	reasoning_tier: standard
+L00001981	context_scope: config
+L00001982	implementation_surfaces:
+L00001983	  - Plans/assistant-memory-subsystem.md
+L00001984	  - Plans/Decision_Policy.md
+L00001985	node_compile_hint:
+L00001986	  mode: project_scoped_memory_config_keys
+L00001987	  create_worknodes: false
+L00001988	source_lineage:
+L00001989	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+L00001990	preserved_exact_tokens:
+L00001991	  - "assistant.memory.enabled"
+L00001992	  - "assistant.memory.capsule_budget_tokens"
+L00001993	  - "assistant.memory.max_injected_items_per_turn"
+L00001994	  - "assistant.memory.done_decay_multiplier"
+L00001995	  - "assistant.memory.default_half_life_days.<kind>"
+L00001996	  - "assistant.memory.retrieval.blend.bm25_weight"
+L00001997	  - "assistant.memory.retrieval.blend.ann_weight"
+L00001998	  - "assistant.memory.auto_save_unverified"
+L00001999	  - "assistant.memory.allow_manual_verify_without_evidence"
+L00002000	  - "assistant.memory.allow_pinned_unverified_injection"
+L00002001	negative_constraints: []
+L00002002	owner_hints:
+L00002003	  - Plans/assistant-memory-subsystem.md
+L00002004	```
+L00002005	
+L00002006	### AMS-034 - Memory Compression Threshold Override Note
+L00002007	
+L00002008	```yaml
+L00002009	plan_unit_id: AMS-034
+L00002010	unit_type: constraint
+L00002011	status: accepted
+L00002012	owner_doc: Plans/assistant-memory-subsystem.md
+L00002013	canonical_text: Gemini CLI provider-native model.compressionThreshold default 0.5 is distinct from any PM-exposed or stored 90 percent assistant memory compression threshold, which is an intentional PM override.
+L00002014	gui_related: false
+L00002015	gui_classification_reason: Compression threshold distinction is provider/config policy, not UI behavior.
+L00002016	depends_on: [AMS-033]
+L00002017	unblocks: []
+L00002018	acceptance_criteria:
+L00002019	  - Gemini CLI provider-native model.compressionThreshold default 0.5 is preserved.
+L00002020	  - PM 90 percent assistant memory compression threshold is treated as intentional override if exposed or stored.
+L00002021	  - The override note does not imply alignment with provider-native defaults.
+L00002022	validation_surfaces:
+L00002023	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002024	  - python3 scripts/pm-plan-index.py validate
+L00002025	risk_class: provider_config
+L00002026	reasoning_tier: standard
+L00002027	context_scope: config
+L00002028	implementation_surfaces:
+L00002029	  - Plans/assistant-memory-subsystem.md
+L00002030	node_compile_hint:
+L00002031	  mode: memory_compression_threshold_override_note
+L00002032	  create_worknodes: false
+L00002033	source_lineage:
+L00002034	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+L00002035	preserved_exact_tokens:
+L00002036	  - "model.compressionThreshold"
+L00002037	  - "0.5"
+L00002038	  - "90%"
+L00002039	  - "intentional PM override"
+L00002040	negative_constraints:
+L00002041	  - "PM override must not be treated as alignment with provider-native defaults."
+L00002042	owner_hints:
+L00002043	  - Plans/assistant-memory-subsystem.md
+L00002044	```
+L00002045	
+L00002046	### AMS-035 - Backend Memory Acceptance Criteria
+L00002047	
+L00002048	```yaml
+L00002049	plan_unit_id: AMS-035
+L00002050	unit_type: validation_rule
+L00002051	status: accepted
+L00002052	owner_doc: Plans/assistant-memory-subsystem.md
+L00002053	canonical_text: Backend acceptance criteria cover provider routing, Verified-only gating, unverified-save behavior, trigger correctness and deduplication, storage layout, canonical data model persistence, summary cache coherence, decay, project isolation, index rebuild equivalence, rules separation, and deterministic completion.
+L00002054	gui_related: false
+L00002055	gui_classification_reason: These acceptance criteria validate backend memory behavior and persistence.
+L00002056	depends_on: [AMS-014, AMS-015, AMS-016, AMS-030, AMS-031, AMS-032, AMS-033]
+L00002057	unblocks: []
+L00002058	acceptance_criteria:
+L00002059	  - Acceptance criteria 1 through 6 are preserved for provider routing, gating, triggers, and deduplication.
+L00002060	  - Acceptance criteria 8 through 9 are preserved for storage layout and canonical data model persistence.
+L00002061	  - Acceptance criteria 11 through 15 are preserved for cache coherence, decay, project isolation, rebuild equivalence, and rules separation.
+L00002062	  - The completion rule requires deterministic verification of all acceptance criteria.
+L00002063	validation_surfaces:
+L00002064	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002065	  - python3 scripts/pm-plan-index.py validate
+L00002066	risk_class: memory_acceptance
+L00002067	reasoning_tier: high
+L00002068	context_scope: validation
+L00002069	implementation_surfaces:
+L00002070	  - Plans/assistant-memory-subsystem.md
+L00002071	  - Plans/Progression_Gates.md
+L00002072	node_compile_hint:
+L00002073	  mode: backend_memory_acceptance_criteria
+L00002074	  create_worknodes: false
+L00002075	source_lineage:
+L00002076	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+L00002077	preserved_exact_tokens:
+L00002078	  - "Assistant-only enforcement"
+L00002079	  - "Verified-only gating"
+L00002080	  - "Trigger correctness (no plan edits)"
+L00002081	  - "Trigger dedup"
+L00002082	  - "Storage layout"
+L00002083	  - "Canonical data model"
+L00002084	  - "Summary cache coherence"
+L00002085	  - "Project isolation"
+L00002086	  - "Index rebuild equivalence"
+L00002087	  - "Rules separation"
+L00002088	negative_constraints:
+L00002089	  - "AutoRunBoundary and AutoMilestone operate from run artifacts/evidence refs without requiring edits to Plans/SSOT documents."
+L00002090	owner_hints:
+L00002091	  - Plans/assistant-memory-subsystem.md
+L00002092	```
+L00002093	
+L00002094	### AMS-036 - GUI Memory Acceptance Criteria
+L00002095	
+L00002096	```yaml
+L00002097	plan_unit_id: AMS-036
+L00002098	unit_type: validation_rule
+L00002099	status: accepted
+L00002100	owner_doc: Plans/assistant-memory-subsystem.md
+L00002101	canonical_text: GUI acceptance criteria cover Verify enforcement, capsule preview token/truncation display, and default Gist Review Unverified filtering.
+L00002102	gui_related: true
+L00002103	gui_classification_reason: Verify enforcement, capsule preview, and Gist Review filtering are user-visible GUI behavior.
+L00002104	depends_on: [AMS-021, AMS-023, AMS-035]
+L00002105	unblocks: []
+L00002106	acceptance_criteria:
+L00002107	  - Attempting to mark a gist Verified without satisfiable EvidenceRefs is rejected unless the manual override config is true.
+L00002108	  - GUI capsule preview shows token estimate and truncation indicator.
+L00002109	  - Opening Gist Review defaults to verification_state = Unverified until explicit user filter changes.
+L00002110	validation_surfaces:
+L00002111	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002112	  - python3 scripts/pm-plan-index.py validate
+L00002113	risk_class: memory_acceptance
+L00002114	reasoning_tier: standard
+L00002115	context_scope: gui
+L00002116	implementation_surfaces:
+L00002117	  - Plans/assistant-memory-subsystem.md
+L00002118	  - Plans/Progression_Gates.md
+L00002119	node_compile_hint:
+L00002120	  mode: gui_memory_acceptance_criteria
+L00002121	  create_worknodes: false
+L00002122	source_lineage:
+L00002123	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+L00002124	preserved_exact_tokens:
+L00002125	  - "GUI Verify enforcement"
+L00002126	  - "Capsule cap enforcement"
+L00002127	  - "Default review filter behavior"
+L00002128	  - "verification_state = Unverified"
+L00002129	negative_constraints: []
+L00002130	owner_hints:
+L00002131	  - Plans/assistant-memory-subsystem.md
+L00002132	```
+L00002133	
+L00002134	### AMS-037 - Assistant Memory Non Goals
+L00002135	
+L00002136	```yaml
+L00002137	plan_unit_id: AMS-037
+L00002138	unit_type: constraint
+L00002139	status: accepted
+L00002140	owner_doc: Plans/assistant-memory-subsystem.md
+L00002141	canonical_text: Assistant memory non-goals prohibit memory exposure to non-Assistant agents, replacement of seglog/redb/Tantivy storage contracts, external vector DB services, and markdown-file-bank requirements.
+L00002142	gui_related: false
+L00002143	gui_classification_reason: Non-goals are backend architecture and storage boundaries.
+L00002144	depends_on: [AMS-003, AMS-004, AMS-026]
+L00002145	unblocks: []
+L00002146	acceptance_criteria:
+L00002147	  - Non-Assistant agents receive no Assistant memory exposure.
+L00002148	  - Storage contracts are not replaced.
+L00002149	  - External vector DB service is out of scope.
+L00002150	  - Memory is not required to be markdown-file based.
+L00002151	validation_surfaces:
+L00002152	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002153	  - python3 scripts/pm-plan-index.py validate
+L00002154	risk_class: memory_boundary
+L00002155	reasoning_tier: high
+L00002156	context_scope: architecture
+L00002157	implementation_surfaces:
+L00002158	  - Plans/assistant-memory-subsystem.md
+L00002159	  - Plans/rewrite-tie-in-memo.md
+L00002160	  - Plans/storage-plan.md
+L00002161	  - Plans/agent-rules-context.md
+L00002162	node_compile_hint:
+L00002163	  mode: assistant_memory_non_goals
+L00002164	  create_worknodes: false
+L00002165	source_lineage:
+L00002166	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0039
+L00002167	preserved_exact_tokens:
+L00002168	  - "No memory exposure to non-Assistant agents."
+L00002169	  - "No replacement of seglog/redb/Tantivy system storage contracts."
+L00002170	  - "No external vector DB service."
+L00002171	  - "No file-bank style requirement that memory must be markdown-file based."
+L00002172	negative_constraints:
+L00002173	  - "Implementations MUST keep these non-goals intact."
+L00002174	owner_hints:
+L00002175	  - Plans/assistant-memory-subsystem.md
+L00002176	```
+L00002177	
+L00002178	### AMS-038 - Runtime Owner Reference Map
+L00002179	
+L00002180	```yaml
+L00002181	plan_unit_id: AMS-038
+L00002182	unit_type: requirement
+L00002183	status: accepted
+L00002184	owner_doc: Plans/assistant-memory-subsystem.md
+L00002185	canonical_text: Assistant memory runtime alignment is maintained through explicit evidence_refs and preserved owner-document reference sets, not hidden orchestration memory.
+L00002186	gui_related: false
+L00002187	gui_classification_reason: Runtime owner reference mapping is source-lineage and owner-boundary behavior.
+L00002188	depends_on: [AMS-024]
+L00002189	unblocks: [AMS-039]
+L00002190	acceptance_criteria:
+L00002191	  - Runtime alignment uses explicit evidence_refs.
+L00002192	  - Owner-document reference sets in the Runtime Owner Reference Map remain preserved for audit lineage.
+L00002193	  - Hidden orchestration memory is not introduced.
+L00002194	validation_surfaces:
+L00002195	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002196	  - python3 scripts/pm-plan-index.py validate
+L00002197	risk_class: owner_boundary
+L00002198	reasoning_tier: high
+L00002199	context_scope: governance
+L00002200	implementation_surfaces:
+L00002201	  - Plans/assistant-memory-subsystem.md
+L00002202	node_compile_hint:
+L00002203	  mode: runtime_owner_reference_map
+L00002204	  create_worknodes: false
+L00002205	source_lineage:
+L00002206	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+L00002207	preserved_exact_tokens:
+L00002208	  - "evidence_refs"
+L00002209	  - "hidden orchestration memory"
+L00002210	  - "Runtime Owner Reference Map"
+L00002211	  - "Plans/Models_System.md:58-80"
+L00002212	  - "Plans/Executor_Protocol.md:134-178"
+L00002213	  - "Plans/Contracts_V0.md:649"
+L00002214	negative_constraints:
+L00002215	  - "Assistant memory must not use hidden orchestration memory for runtime alignment."
+L00002216	owner_hints:
+L00002217	  - Plans/assistant-memory-subsystem.md
+L00002218	```
+L00002219	
+L00002220	### AMS-039 - Plan Local Obligation Boundary
+L00002221	
+L00002222	```yaml
+L00002223	plan_unit_id: AMS-039
+L00002224	unit_type: constraint
+L00002225	status: accepted
+L00002226	owner_doc: Plans/assistant-memory-subsystem.md
+L00002227	canonical_text: Plan-local event and command obligations belong in canonical state, event, and command owners before memory consumes them; NullMemoryProvider remains the durable boundary for memory prohibition versus stateful orchestration, and Gemini-only docs may still contain active owner gaps.
+L00002228	gui_related: false
+L00002229	gui_classification_reason: Plan-local obligation routing is owner-boundary and governance behavior.
+L00002230	depends_on: [AMS-038]
+L00002231	unblocks: []
+L00002232	acceptance_criteria:
+L00002233	  - plan-local event and command obligations route to canonical owner docs before memory consumption.
+L00002234	  - NullMemoryProvider remains the durable memory-prohibition boundary.
+L00002235	  - Gemini-only docs warning remains preserved as active owner-gap caution.
+L00002236	validation_surfaces:
+L00002237	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002238	  - python3 scripts/pm-plan-index.py validate
+L00002239	risk_class: owner_boundary
+L00002240	reasoning_tier: high
+L00002241	context_scope: governance
+L00002242	implementation_surfaces:
+L00002243	  - Plans/assistant-memory-subsystem.md
+L00002244	node_compile_hint:
+L00002245	  mode: plan_local_obligation_boundary
+L00002246	  create_worknodes: false
+L00002247	source_lineage:
+L00002248	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+L00002249	preserved_exact_tokens:
+L00002250	  - "plan-local"
+L00002251	  - "/event/command"
+L00002252	  - "NullMemoryProvider"
+L00002253	  - "Remaining Gemini-only docs are not low-value leftovers"
+L00002254	negative_constraints:
+L00002255	  - "Plan-local obligations in memory are narrow and must not bypass canonical state/event/command owners."
+L00002256	owner_hints:
+L00002257	  - Plans/assistant-memory-subsystem.md
+L00002258	```
+L00002259	
+L00002260	### AMS-040 - Assistant Memory Owner Consumer Map
+L00002261	
+L00002262	```yaml
+L00002263	plan_unit_id: AMS-040
+L00002264	unit_type: constraint
+L00002265	status: accepted
+L00002266	owner_doc: Plans/assistant-memory-subsystem.md
+L00002267	canonical_text: Assistant-memory-subsystem remains owner for behavior described by its preserved sections, while cross-doc ownership follows preserved ContractRefs and owner/consumer boundary notes.
+L00002268	gui_related: false
+L00002269	gui_classification_reason: Owner/consumer preservation is plan governance behavior.
+L00002270	depends_on: []
+L00002271	unblocks: []
+L00002272	acceptance_criteria:
+L00002273	  - Assistant Memory remains owner for behavior described by preserved sections.
+L00002274	  - Cross-doc ownership follows preserved ContractRefs and boundary notes.
+L00002275	  - ContractRefs to Plan_Document_System and Bootstrap_Planning_Migration remain preserved.
+L00002276	validation_surfaces:
+L00002277	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002278	  - python3 scripts/pm-plan-index.py validate
+L00002279	risk_class: owner_boundary
+L00002280	reasoning_tier: standard
+L00002281	context_scope: governance
+L00002282	implementation_surfaces:
+L00002283	  - Plans/assistant-memory-subsystem.md
+L00002284	  - Plans/Plan_Document_System.md
+L00002285	  - Plans/Bootstrap_Planning_Migration.md
+L00002286	node_compile_hint:
+L00002287	  mode: assistant_memory_owner_consumer_map
+L00002288	  create_worknodes: false
+L00002289	source_lineage:
+L00002290	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0041
+L00002291	preserved_exact_tokens:
+L00002292	  - "Owner / Consumer Map"
+L00002293	  - "Plans/assistant-memory-subsystem.md"
+L00002294	  - "ContractName:Plans/Plan_Document_System.md"
+L00002295	  - "ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00002296	negative_constraints: []
+L00002297	owner_hints:
+L00002298	  - Plans/assistant-memory-subsystem.md
+L00002299	```
+L00002300	
+L00002301	### AMS-041 - Assistant Memory PlanUnits Section Anchor
+L00002302	
+L00002303	```yaml
+L00002304	plan_unit_id: AMS-041
+L00002305	unit_type: constraint
+L00002306	status: accepted
+L00002307	owner_doc: Plans/assistant-memory-subsystem.md
+L00002308	canonical_text: The PlanUnits section heading is preserved as structural coverage for the standardized Assistant Memory PlanUnits section and introduces no product behavior.
+L00002309	gui_related: false
+L00002310	gui_classification_reason: PlanUnits heading coverage is structural plan formatting, not UI behavior.
+L00002311	depends_on: []
+L00002312	unblocks: []
+L00002313	acceptance_criteria:
+L00002314	  - The PlanUnits section heading is covered in the migration map.
+L00002315	  - The heading unit introduces no product behavior.
+L00002316	validation_surfaces:
+L00002317	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002318	  - python3 scripts/pm-plan-index.py validate
+L00002319	risk_class: plan_structure
+L00002320	reasoning_tier: standard
+L00002321	context_scope: governance
+L00002322	implementation_surfaces:
+L00002323	  - Plans/assistant-memory-subsystem.md
+L00002324	node_compile_hint:
+L00002325	  mode: assistant_memory_planunits_section_anchor
+L00002326	  create_worknodes: false
+L00002327	source_lineage:
+L00002328	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0042
+L00002329	preserved_exact_tokens:
+L00002330	  - "PlanUnits"
+L00002331	negative_constraints: []
+L00002332	owner_hints:
+L00002333	  - Plans/assistant-memory-subsystem.md
+L00002334	```
+L00002335	
+L00002336	## Migration Coverage
+L00002337	
+L00002338	Original hash: `61465efe03b13f2ab959ffcf85b46ea4766377211f1f45ea6e501f6ef3ecaeda`.
+L00002339	
+L00002340	Run-scoped proof artifacts:
+L00002341	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00002342	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00002343	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00002344	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00002345	
+L00002346	All original spans from `assistant-memory-subsystem-S0001` through `assistant-memory-subsystem-S0040` are preserved in place and mapped in `coverage_map.jsonl` to `AMS-001`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00002347	
+L00002348	Phase 2B atomization run `pds-20260611-002-atomize-planunits` mapped the first bounded window, `assistant-memory-subsystem-S0001` through `assistant-memory-subsystem-S0029` (source lines 1-396), to fine-grained PlanUnits `AMS-002` through `AMS-024`.
+L00002349	
+L00002350	The second bounded window, `assistant-memory-subsystem-S0030` through `assistant-memory-subsystem-S0044` (source lines 397-704), is mapped to fine-grained PlanUnits `AMS-025` through `AMS-041`; `assistant-memory-subsystem-S0044` is a structural Migration Coverage section covered as section-only. `AMS-001` is retired in place as a migration-lineage bridge in Phase 2B batch 012 and no longer counts as source-preserving implementation coverage. Assistant Memory's next safe cursor leaves this document and moves to `BinaryLocator_Spec-S0001` at source line 1.
+L00002351	
+L00002352	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00002353	
+L00002354	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00002355	
+L00002356	### AMS-042 - P1-MEMORY-TIERING-CONTRACT
+L00002357	
+L00002358	```yaml
+L00002359	plan_unit_id: AMS-042
+L00002360	unit_type: requirement
+L00002361	status: accepted
+L00002362	owner_doc: Plans/assistant-memory-subsystem.md
+L00002363	canonical_text: >-
+L00002364	  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL, compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger, assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models; Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task history/session handling into shared runtime.
+L00002365	gui_related: true
+L00002366	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00002367	depends_on:
+L00002368	- PDS-003
+L00002369	- PNC-001
+L00002370	unblocks: []
+L00002371	acceptance_criteria:
+L00002372	- A giant chat/session file is compacted or paged before app crash.
+L00002373	- Memory search timeout returns degraded result, not hung turn.
+L00002374	- Project ledger facts are not injected as personal memory.
+L00002375	- Superseded/stale memory cannot silently override current Plan canon.
+L00002376	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00002377	validation_surfaces:
+L00002378	- python3 scripts/pm-plan-index.py validate
+L00002379	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00002380	- A giant chat/session file is compacted or paged before app crash.
+L00002381	- Memory search timeout returns degraded result, not hung turn.
+L00002382	- Project ledger facts are not injected as personal memory.
+L00002383	- Superseded/stale memory cannot silently override current Plan canon.
+L00002384	risk_class: p1_agent_control_subagents_hardening
+L00002385	reasoning_tier: standard
+L00002386	context_scope: agent_control_subagents
+L00002387	implementation_surfaces:
+L00002388	- Plans/assistant-memory-subsystem.md
+L00002389	- Plans/Goal_Runtime_System.md
+L00002390	- Plans/storage-plan.md
+L00002391	- Plans/Planning_Ledger_System.md
+L00002392	node_compile_hint:
+L00002393	  mode: p1_memory_tiering_contract
+L00002394	  create_worknodes: false
+L00002395	  create_nodeseeds: false
+L00002396	source_lineage:
+L00002397	- pldg-20260703-001-feature-intake:atom-0070
+L00002398	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0070
+L00002399	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0066/P1-MEMORY-TIERING-CONTRACT@line=66
+L00002400	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0066/P1-MEMORY-TIERING-CONTRACT
+L00002401	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00002402	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00002403	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:12
+L00002404	source_atom_ids:
+L00002405	- atom-0070
+L00002406	external_atom_id: extrepo-20260703-0066
+L00002407	source_row_id: P1-MEMORY-TIERING-CONTRACT
+L00002408	priority: P1
+L00002409	finding_family: Agent memory, goal memory, project memory, conversation history
+L00002410	source_repos:
+L00002411	- Agent Zero
+L00002412	- Pi
+L00002413	- Codex
+L00002414	- Cline
+L00002415	target_docs:
+L00002416	- Plans/assistant-memory-subsystem.md
+L00002417	- Plans/Goal_Runtime_System.md
+L00002418	- Plans/storage-plan.md
+L00002419	- Plans/Planning_Ledger_System.md
+L00002420	owner_hints:
+L00002421	- Plans/assistant-memory-subsystem.md
+L00002422	- Plans/Goal_Runtime_System.md
+L00002423	- Plans/storage-plan.md
+L00002424	- Plans/Planning_Ledger_System.md
+L00002425	preserved_exact_tokens:
+L00002426	- extrepo-20260703-0066
+L00002427	- P1-MEMORY-TIERING-CONTRACT
+L00002428	- P1
+L00002429	- Agent memory, goal memory, project memory, conversation history
+L00002430	- Agent Zero
+L00002431	- Pi
+L00002432	- Codex
+L00002433	- Cline
+L00002434	negative_constraints: []
+L00002435	observed_signal: Agent Zero reports chat history bloat and memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models; Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task history/session handling into shared runtime.
+L00002436	pm_current_coverage: assistant-memory-subsystem is strong on assistant-only memory, scopes, gists, prompt injection, retrieval, scoring, and maintenance. PM bootstrap ledgers also capture durable design memory.
+L00002437	pm_gap_or_delta: 'PM should explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger, assistant preference memory, tool/artifact memory, and ephemeral context working set.'
+L00002438	proposal_or_recommendation: 'Add MemoryTierContract: scope, writer authority, TTL, compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired status, consolidation timeout, and failure semantics.'
+L00002439	compile_disposition: create_new_planunit
+L00002440	```
+L00002441	
+L00002442	### AMS-043 - P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
+L00002443	
+L00002444	```yaml
+L00002445	plan_unit_id: AMS-043
+L00002446	unit_type: requirement
+L00002447	status: accepted
+L00002448	owner_doc: Plans/assistant-memory-subsystem.md
+L00002449	canonical_text: >-
+L00002450	  P1-MEMORY-STORE-CRUD-VERSION-CITATIONS (P1) is compiled as canonical Puppet Master intent for Agent memory store management, version history, and citation surfacing: Imported external-repo finding extrepo-20260703-0083 / P1-MEMORY-STORE-CRUD-VERSION-CITATIONS (P1). The preserved PM gap/delta is: MemoryTierContract covered layers and budgets, but not enough about memory CRUD/versioning/citations as user-visible objects. The observed external-repo signal remains source-lineage evidence: Warp Oz updates add memory store management commands and memory citations. | Codex changelog moved memory state to a dedicated SQLite DB and gated dedicated memory tools in config. | Agent Zero shows memory/history bloat and silent memory consolidation failure risks.
+L00002451	gui_related: true
+L00002452	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00002453	depends_on:
+L00002454	- PDS-003
+L00002455	- PNC-001
+L00002456	unblocks: []
+L00002457	acceptance_criteria:
+L00002458	- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.
+L00002459	- Model responses that use memories can surface citations or evidence receipts.
+L00002460	- Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.
+L00002461	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00002462	validation_surfaces:
+L00002463	- python3 scripts/pm-plan-index.py validate
+L00002464	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00002465	- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.
+L00002466	- Model responses that use memories can surface citations or evidence receipts.
+L00002467	- Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.
+L00002468	risk_class: p1_agent_control_subagents_hardening
+L00002469	reasoning_tier: standard
+L00002470	context_scope: agent_control_subagents
+L00002471	implementation_surfaces:
+L00002472	- Plans/assistant-memory-subsystem.md
+L00002473	node_compile_hint:
+L00002474	  mode: p1_memory_store_crud_version_citations
+L00002475	  create_worknodes: false
+L00002476	  create_nodeseeds: false
+L00002477	source_lineage:
+L00002478	- pldg-20260703-001-feature-intake:atom-0087
+L00002479	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0087
+L00002480	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0083/P1-MEMORY-STORE-CRUD-VERSION-CITATIONS@line=83
+L00002481	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0083/P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
+L00002482	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00002483	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00002484	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:10
+L00002485	source_atom_ids:
+L00002486	- atom-0087
+L00002487	external_atom_id: extrepo-20260703-0083
+L00002488	source_row_id: P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
+L00002489	priority: P1
+L00002490	finding_family: Agent memory store management, version history, and citation surfacing
+L00002491	target_docs:
+L00002492	- assistant-memory-subsystem.md
+L00002493	- Goal_Runtime_System.md
+L00002494	- FinalGUISpec.md
+L00002495	- storage-plan.md
+L00002496	- Contracts_V0.md
+L00002497	owner_hints:
+L00002498	- assistant-memory-subsystem.md
+L00002499	- Goal_Runtime_System.md
+L00002500	- FinalGUISpec.md
+L00002501	- storage-plan.md
+L00002502	- Contracts_V0.md
+L00002503	preserved_exact_tokens:
+L00002504	- extrepo-20260703-0083
+L00002505	- P1-MEMORY-STORE-CRUD-VERSION-CITATIONS
+L00002506	- P1
+L00002507	- Agent memory store management, version history, and citation surfacing
+L00002508	negative_constraints: []
+L00002509	observed_signal: Warp Oz updates add memory store management commands and memory citations. | Codex changelog moved memory state to a dedicated SQLite DB and gated dedicated memory tools in config. | Agent Zero shows memory/history bloat and silent memory consolidation failure risks.
+L00002510	pm_gap_or_delta: MemoryTierContract covered layers and budgets, but not enough about memory CRUD/versioning/citations as user-visible objects.
+L00002511	relationship_to_prior_reports: Extends memory budget/governance into user-visible store operations.
+L00002512	compile_disposition: create_new_planunit
+L00002513	```

@@ -1,0 +1,443 @@
+{
+  "schema_version": "cross-domain-seam-repair-primary-postrun-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "cross-domain-seam-window-sharding-v2-repair",
+  "repair_attempt": "attempt-0002",
+  "status": "candidate_pass_exact_3_of_3",
+  "audit_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "report_path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/primary-repair-postrun.json",
+  "reviewer": {
+    "canonical_path": "/root/a005_cross_domain_seam_repair_attempt_0002_primary_postrun_terminal",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "role": "primary_repair_postrun_only",
+    "fork_turns": "none",
+    "descendants": 0,
+    "followups": 0,
+    "retries": 0
+  },
+  "scope": {
+    "assignment_ids": [
+      "A005CDSV2-0002",
+      "A005CDSV2-0006",
+      "A005CDSV2-0039"
+    ],
+    "assignment_count": 3,
+    "canonical_plans_read": false,
+    "canonical_plans_written": false,
+    "peer_outputs_read": false,
+    "unrelated_seam_result_bodies_semantically_read": false,
+    "prior_results_mutated": false,
+    "prior_receipts_mutated": false,
+    "activation_artifacts_mutated": false,
+    "native_capture_mutated": false,
+    "checkpoint_created": false,
+    "decisions_promoted": false,
+    "report_write_count": 1,
+    "only_new_file": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/primary-repair-postrun.json"
+  },
+  "common_inputs": {
+    "policy_v26": {
+      "path": "master/coordination/CONCURRENCY_POLICY_V26.json",
+      "sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68"
+    },
+    "repair_authority": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/authority.json",
+      "sha256": "fbecf983ae58ba1b54a8da26ce78eca48d89162ef64561a083e7a02b118fcc71"
+    },
+    "repair_manifest": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/manifest.jsonl",
+      "sha256": "59241d14d7e350e5561ffa814d33d467f0c3107547b2ef690953e13d965620d1"
+    },
+    "terminal_preparation_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/terminal-preparation-report.json",
+      "sha256": "385cc8d1423859087f047e9ea1b25f4b5f927142f3af0c8fd1528be8b8a9b901"
+    },
+    "terminal_preparation_report_v2": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/terminal-preparation-report-v2.json",
+      "sha256": "e4f2e7a6d83601fcf3a80301eaf097b213d9614a6288c523fcb6da247b6591ca"
+    },
+    "packet_size_bound_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/packet-size-bound-report.json",
+      "sha256": "1a02d543b654f2bc936344b55531573cb018e0fbb46b280ac521ec6cd9cfbbac"
+    },
+    "luna_independent_prelaunch": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/luna-independent-prelaunch-v2.json",
+      "sha256": "02e940ededd60054f0e654159cabf21fe3e04a57c5d2601a3da09cd17fd6220e"
+    },
+    "repair_result_schema": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/repair_result.schema.json",
+      "sha256": "d3952e5598e2105d8ef7674eac58d255163e7bfde7e28c00279f6bbc52b8c604",
+      "draft": "2020-12"
+    },
+    "leaf_prompt": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/leaf_prompt.json",
+      "sha256": "24a4ed59fad8d28a42b574d9b9c0b171ef0d3ed1c78ceb3c86474118295cef29"
+    },
+    "activation_core": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/activation-core.json",
+      "sha256": "971d9066145c851226fd521026b5be2863814a331acd88c52040f2bbf4513c29"
+    },
+    "activation_envelope": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/activation-envelope.json",
+      "sha256": "df9b8c54e0916cadb797eeab0dc66d1b77634bd0a450c061c7a413b0832745e8"
+    },
+    "native_capture": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/runtime/native_capture.json",
+      "sha256": "8df02c1ddb1f27a9221aa37d2b78846c8fe8c4cea949b703f6f55a6f21558f6c"
+    },
+    "cohort_0001_primary_error_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/cohort-reports/cohort-0001-primary.json",
+      "sha256": "38841334cb748ca759a961285e64bc92a48c405565594675ab79da15db35f876"
+    },
+    "cohort_0001_independent_error_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/independent-cohort-reports/cohort-0001-luna.json",
+      "sha256": "5025a50fa41acd7d85cd159f9ef57e2ffdd955331c402ee060e87ed0b922be95"
+    },
+    "cohort_0003_primary_error_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/cohort-reports/cohort-0003-primary.json",
+      "sha256": "653a3fe011388fb67047c893679fbd31c4f297115e52aa70996de36137ef2c96"
+    },
+    "cohort_0003_independent_error_report": {
+      "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/independent-cohort-reports/cohort-0003-luna.json",
+      "sha256": "4428c39d13cc0165c86f81e1ab64064b1cf382a1876fa97cbd8d8cfa1573258b"
+    }
+  },
+  "activation": {
+    "activation_transaction_id": "A005-CDS-REPAIR-V26-ATOMIC3-02e940ededd60054",
+    "authorized_assignment_count": 3,
+    "authorized_model": "gpt-5.6-sol",
+    "authorized_reasoning_effort": "xhigh",
+    "policy_prelaunch_core_envelope_authorization_hash_closure": true,
+    "no_additional_activation_performed_by_this_report": true
+  },
+  "assignments": {
+    "A005CDSV2-0002": {
+      "status": "eligible",
+      "eligible": true,
+      "rejected": false,
+      "unresolved": false,
+      "errors": [],
+      "authorization": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/authorizations/A005CDSV2-0002.json",
+        "sha256": "3769af58317a00a35eebf17d469c8ceac5146d0012f28eff2a4e92a6e21ed239"
+      },
+      "dispatch_intent": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0002/attempt-0002/dispatch_intent.json",
+        "sha256": "79bb3a0edeb94e3d152e3fe0ea2fd7c1843ed7b452efa14d988f357214b65c82"
+      },
+      "packet": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/packets/A005CDSV2-0002-repair-packet.json",
+        "sha256": "81f073e1bb3963d4547f36db6244609f9a40a2eb0a66d1da8bddf7eaf7eeffb2"
+      },
+      "source_result": {
+        "path": "cross_domain_seams_window_v2/A005CDSV2-0002/attempts/attempt-0001/result.json",
+        "sha256": "cf02909080b547b70feca8f22d25f65973272a47f95a4150d665ce144a6f90af",
+        "packet_embedded_body_exact": true
+      },
+      "result": {
+        "path": "cross_domain_seams_window_v2_repair/A005CDSV2-0002/attempts/attempt-0002/result.json",
+        "sha256": "fbde63c7312b5ad7e67ce458ba7a2df0e39f32ef72af8099c421ac7c8574a963"
+      },
+      "dispatch_receipt": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0002/attempt-0002/dispatch_receipt.json",
+        "sha256": "4b0be1218ebb67f9cb53948fbf16fe62d36da9c7962fe6eae159f94e4818e58b"
+      },
+      "native_identity": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_repair_0002_attempt_0002_terminal",
+        "native_child_thread_id": "019f54db-8e33-77d0-b974-1ed85fb40dba",
+        "native_turn_id": "019f54db-8ed4-7c31-9315-171991d8d0df",
+        "native_session_record_sha256": "45c09564f24e01917d748f1f85a34e871deacade5fe04e2114fd11e01a6fb790",
+        "terminal_status": "completed",
+        "terminal_response": "PMR1",
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "xhigh"
+      },
+      "original_errors": [
+        "resolved_has_unresolved:A005CDS-EDGE-07011",
+        "resolved_has_unresolved:A005CDS-EDGE-07228"
+      ],
+      "affected_edge_ids": [
+        "A005CDS-EDGE-07011",
+        "A005CDS-EDGE-07228"
+      ],
+      "changed_edge_ids": [
+        "A005CDS-EDGE-07011",
+        "A005CDS-EDGE-07228"
+      ],
+      "changed_fields": {
+        "A005CDS-EDGE-07011": [
+          "unresolved_reason"
+        ],
+        "A005CDS-EDGE-07228": [
+          "unresolved_reason"
+        ]
+      },
+      "repair_effect": "both sufficient_for_judgment decisions retain all decision and evidence content and set unresolved_reason from non-null to null",
+      "decision_count": 143,
+      "membership_and_order_exact": true,
+      "nonpermitted_change_count": 0,
+      "draft_2020_12_schema_valid": true,
+      "registered_source_rows_checked": 286,
+      "claim_source_url_references_checked": 286,
+      "citation_closure_errors": 0,
+      "sufficient_decisions_with_unresolved_reason": 0,
+      "promotion_performed_count": 0,
+      "all_hash_and_identity_joins_pass": true
+    },
+    "A005CDSV2-0006": {
+      "status": "eligible",
+      "eligible": true,
+      "rejected": false,
+      "unresolved": false,
+      "errors": [],
+      "authorization": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/authorizations/A005CDSV2-0006.json",
+        "sha256": "a136f0a79a223398ddd1eb9347e0ceed0081db093f2071566a797b1450588621"
+      },
+      "dispatch_intent": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0006/attempt-0002/dispatch_intent.json",
+        "sha256": "771ef41d998c15f1bd8b60e48666a3c661d11562869ae830d4778bdb83caf61e"
+      },
+      "packet": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/packets/A005CDSV2-0006-repair-packet.json",
+        "sha256": "ec480852081fb93c7f6ad02bfb1f3f27fc7402df11b124f6d68c07ebd9756354"
+      },
+      "source_result": {
+        "path": "cross_domain_seams_window_v2/A005CDSV2-0006/attempts/attempt-0001/result.json",
+        "sha256": "3c1a6c4b3e06327dfbedbeb3743d3daa6557524bf38aa6190f129b302512d9dc",
+        "packet_embedded_body_exact": true
+      },
+      "result": {
+        "path": "cross_domain_seams_window_v2_repair/A005CDSV2-0006/attempts/attempt-0002/result.json",
+        "sha256": "a370449a2654fe03c0cf4d8109e493ffa95209fac5ce454ccd172456cf883f88"
+      },
+      "dispatch_receipt": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0006/attempt-0002/dispatch_receipt.json",
+        "sha256": "e18a7d17e1d34787893cffac891e5fcbd647cbc51445aea3b9bd9b1b71549bac"
+      },
+      "native_identity": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_repair_0006_attempt_0002_terminal",
+        "native_child_thread_id": "019f54db-c66e-7690-99dc-a03b50b20a5c",
+        "native_turn_id": "019f54db-c6de-7731-9eb3-882bc60e479e",
+        "native_session_record_sha256": "0241a8a009af08a53fc2b0a2435ff1760e86dbb4267272e7b17a761c108d6fd5",
+        "terminal_status": "completed",
+        "terminal_response": "PMR1",
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "xhigh"
+      },
+      "original_errors": [
+        "unregistered_claim_source:A005CDS-EDGE-04448",
+        "unregistered_claim_source:A005CDS-EDGE-04449",
+        "unregistered_claim_source:A005CDS-EDGE-04452",
+        "unregistered_claim_source:A005CDS-EDGE-04455",
+        "unregistered_claim_source:A005CDS-EDGE-05273",
+        "unregistered_claim_source:A005CDS-EDGE-05697",
+        "unregistered_claim_source:A005CDS-EDGE-06633",
+        "unregistered_claim_source:A005CDS-EDGE-06634",
+        "unregistered_claim_source:A005CDS-EDGE-06762",
+        "unregistered_claim_source:A005CDS-EDGE-06763",
+        "unregistered_claim_source:A005CDS-EDGE-06765",
+        "unregistered_claim_source:A005CDS-EDGE-06801",
+        "unregistered_claim_source:A005CDS-EDGE-06803",
+        "unregistered_claim_source:A005CDS-EDGE-06804",
+        "unregistered_claim_source:A005CDS-EDGE-06806",
+        "unregistered_claim_source:A005CDS-EDGE-06807",
+        "unregistered_claim_source:A005CDS-EDGE-06808",
+        "unregistered_claim_source:A005CDS-EDGE-06809"
+      ],
+      "affected_edge_ids": [
+        "A005CDS-EDGE-04448",
+        "A005CDS-EDGE-04449",
+        "A005CDS-EDGE-04452",
+        "A005CDS-EDGE-04455",
+        "A005CDS-EDGE-05273",
+        "A005CDS-EDGE-05697",
+        "A005CDS-EDGE-06633",
+        "A005CDS-EDGE-06634",
+        "A005CDS-EDGE-06762",
+        "A005CDS-EDGE-06763",
+        "A005CDS-EDGE-06765",
+        "A005CDS-EDGE-06801",
+        "A005CDS-EDGE-06803",
+        "A005CDS-EDGE-06804",
+        "A005CDS-EDGE-06806",
+        "A005CDS-EDGE-06807",
+        "A005CDS-EDGE-06808",
+        "A005CDS-EDGE-06809"
+      ],
+      "changed_edge_ids": [
+        "A005CDS-EDGE-04448",
+        "A005CDS-EDGE-04449",
+        "A005CDS-EDGE-04452",
+        "A005CDS-EDGE-04455",
+        "A005CDS-EDGE-05273",
+        "A005CDS-EDGE-05697",
+        "A005CDS-EDGE-06633",
+        "A005CDS-EDGE-06634",
+        "A005CDS-EDGE-06762",
+        "A005CDS-EDGE-06763",
+        "A005CDS-EDGE-06765",
+        "A005CDS-EDGE-06801",
+        "A005CDS-EDGE-06803",
+        "A005CDS-EDGE-06804",
+        "A005CDS-EDGE-06806",
+        "A005CDS-EDGE-06807",
+        "A005CDS-EDGE-06808",
+        "A005CDS-EDGE-06809"
+      ],
+      "changed_fields_for_every_changed_edge": [
+        "external_research.sources"
+      ],
+      "repair_effect": "each affected decision retains its claim text and source_urls and adds the one missing formal source registration, increasing registered sources from 3 to 4 while preserving sufficient_for_judgment and null unresolved_reason",
+      "decision_count": 141,
+      "membership_and_order_exact": true,
+      "nonpermitted_change_count": 0,
+      "draft_2020_12_schema_valid": true,
+      "registered_source_rows_checked": 393,
+      "claim_source_url_references_checked": 516,
+      "citation_closure_errors": 0,
+      "sufficient_decisions_with_unresolved_reason": 0,
+      "promotion_performed_count": 0,
+      "all_hash_and_identity_joins_pass": true
+    },
+    "A005CDSV2-0039": {
+      "status": "eligible",
+      "eligible": true,
+      "rejected": false,
+      "unresolved": false,
+      "errors": [],
+      "authorization": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/authorizations/A005CDSV2-0039.json",
+        "sha256": "0e759664593340193bb15df901f6f8f8832e0a44ae572102636ec11effde4247"
+      },
+      "dispatch_intent": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0039/attempt-0002/dispatch_intent.json",
+        "sha256": "4db49e1120aa66ce544a8c5fdd64bbca5544c7ddf1196f485802171c1e0e9b35"
+      },
+      "packet": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/packets/A005CDSV2-0039-repair-packet.json",
+        "sha256": "37ecc1c3d9ad7aab4cab48cfe8dcc13e8f0207ec26e0cde0f289c301d0b03f2b"
+      },
+      "source_result": {
+        "path": "cross_domain_seams_window_v2/A005CDSV2-0039/attempts/attempt-0001/result.json",
+        "sha256": "50c72f8999faa613dfb8130a5da006fe6e85bf2aeaf61b7b0fbd09a2507cf1f1",
+        "packet_embedded_body_exact": true
+      },
+      "result": {
+        "path": "cross_domain_seams_window_v2_repair/A005CDSV2-0039/attempts/attempt-0002/result.json",
+        "sha256": "a89743d78796f13222b10a98e3128607cdfcf3a6b89e7a7e6984bdf0269466b2"
+      },
+      "dispatch_receipt": {
+        "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/dispatch/A005CDSV2-0039/attempt-0002/dispatch_receipt.json",
+        "sha256": "a2d0f3d03f25080549a7603e57fb31cefb2569e3a95cb324f9452415a19a7cf9"
+      },
+      "native_identity": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_repair_0039_attempt_0002_terminal",
+        "native_child_thread_id": "019f54db-fd4f-7430-9acb-ca62a32e19ae",
+        "native_turn_id": "019f54db-fdb8-7172-95ad-00bf10898674",
+        "native_session_record_sha256": "abaa6a327cfa7c43d749a1eda310e54889e2054afa1afc62c34413b6247062c9",
+        "terminal_status": "completed",
+        "terminal_response": "PMR1",
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "xhigh"
+      },
+      "original_errors": [
+        "resolved_has_unresolved:A005CDS-EDGE-08874"
+      ],
+      "affected_edge_ids": [
+        "A005CDS-EDGE-08874"
+      ],
+      "changed_edge_ids": [
+        "A005CDS-EDGE-08874"
+      ],
+      "changed_fields": {
+        "A005CDS-EDGE-08874": [
+          "unresolved_reason"
+        ]
+      },
+      "repair_effect": "the sufficient_for_judgment decision retains all decision and evidence content and sets unresolved_reason from non-null to null",
+      "decision_count": 142,
+      "membership_and_order_exact": true,
+      "nonpermitted_change_count": 0,
+      "draft_2020_12_schema_valid": true,
+      "registered_source_rows_checked": 600,
+      "claim_source_url_references_checked": 614,
+      "citation_closure_errors": 0,
+      "sufficient_decisions_with_unresolved_reason": 0,
+      "promotion_performed_count": 0,
+      "all_hash_and_identity_joins_pass": true
+    }
+  },
+  "validation_summary": {
+    "eligible_assignment_ids": [
+      "A005CDSV2-0002",
+      "A005CDSV2-0006",
+      "A005CDSV2-0039"
+    ],
+    "rejected_assignment_ids": [],
+    "unresolved_assignment_ids": [],
+    "eligible_count": 3,
+    "rejected_count": 0,
+    "unresolved_count": 0,
+    "draft_2020_12_results_valid": 3,
+    "draft_2020_12_results_invalid": 0,
+    "decision_membership_and_order_exact": 3,
+    "affected_edges_expected": 21,
+    "affected_edges_changed_exactly": 21,
+    "changed_edges_outside_permission": 0,
+    "nonpermitted_field_changes": 0,
+    "new_decisions": 0,
+    "removed_decisions": 0,
+    "reordered_decisions": 0,
+    "citation_closure_errors": 0,
+    "sufficient_decisions_with_unresolved_reason": 0,
+    "promotion_performed_count": 0,
+    "unique_agent_paths": 3,
+    "unique_native_child_thread_ids": 3,
+    "unique_native_turn_ids": 3,
+    "pmr1_completed_receipt_native_joins": 3,
+    "result_receipt_packet_intent_activation_source_hash_join_errors": 0
+  },
+  "original64_preservation": {
+    "prelaunch_source_results_root_sha256": "509ae8f22426100bacc48e0240d06ea9c621c68aa83ed530aa6c928d4db3aa",
+    "source_result_files_observed": 64,
+    "immutable_dispatch_receipt_result_hash_pins_checked": 64,
+    "current_source_results_matching_pins": 64,
+    "source_results_missing": 0,
+    "source_results_mutated": 0,
+    "packet_bound_source_results_body_checked": 3,
+    "packet_bound_source_results_body_exact": 3,
+    "preserved": true
+  },
+  "credit_state": {
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0,
+    "credit_granted_by_this_report": 0
+  },
+  "governance_effect": {
+    "candidate_only": true,
+    "checkpoint_created": false,
+    "promotion_performed": false,
+    "activation_performed": false,
+    "coverage_credit_granted": false,
+    "merge_credit_granted": false,
+    "promotion_credit_granted": false,
+    "research_credit_granted": false,
+    "spec_credit_granted": false,
+    "decisions_promoted": false
+  },
+  "independent_postrun_requirement": {
+    "required": true,
+    "status": "pending",
+    "required_lane": "luna_validation",
+    "required_model": "gpt-5.6-luna",
+    "must_use_different_fresh_identity": true,
+    "must_independently_revalidate_exact_three": true,
+    "primary_report_is_not_a_substitute": true,
+    "downstream_gate": "BLOCKED_AWAITING_DIFFERENT_FRESH_LUNA_INDEPENDENT_REPAIR_POSTRUN"
+  }
+}

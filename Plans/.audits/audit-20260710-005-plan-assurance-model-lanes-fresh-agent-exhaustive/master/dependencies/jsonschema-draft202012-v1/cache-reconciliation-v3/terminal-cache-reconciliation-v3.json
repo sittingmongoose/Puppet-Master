@@ -1,0 +1,21 @@
+{
+  "schema_version": "jsonschema-cache-reconciliation-v3-terminal-report",
+  "status": "PASS",
+  "semantic_file_count": 152,
+  "semantic_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+  "cpython312_cache_count": 39,
+  "cpython314_cache_count": 25,
+  "runtime_file_count": 216,
+  "runtime_caches_authoritative": false,
+  "cache_imported_into_semantic_root": false,
+  "authority_sha256": "f82c8796be8802ac3735c4e24c74b48b54efe2752e0a294c2844d7f98b2a03bc",
+  "verifier_sha256": "a223567d6c8dfb9e975fa3704a8890845a7e10e2be7a11baae45cde61a454b30",
+  "tests_sha256": "bb247f3efa82edd5b93ded59b97760badfee5ffce4677ff8904e4ea4d59b64b4",
+  "tests_passed": 1042,
+  "tests_total": 1042,
+  "test_digest": "e0577d98788eddb401f3851e2516233248f90acbddbcba9b6ca5423027c65c38",
+  "pinned_runtime": "CPython 3.12.13 -S -B",
+  "jsonschema_version": "4.26.0",
+  "cache_file_count_before": 216,
+  "cache_file_count_after": 216
+}

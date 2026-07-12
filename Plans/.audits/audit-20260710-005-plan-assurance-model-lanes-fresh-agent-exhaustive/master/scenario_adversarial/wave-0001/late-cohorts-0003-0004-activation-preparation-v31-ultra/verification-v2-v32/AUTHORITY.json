@@ -1,0 +1,27 @@
+{
+  "schema_version": "scenario-late-cohorts-v32-verifier-supersession-authority-v2",
+  "status": "APPEND_ONLY_VERIFIER_SUPERSESSION_ZERO_LAUNCH",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "v31_authority_sha256": "31c68001f8a88e957d5a7bb4e8a06ce9dee7f94aee7eb5146f4d805870b7e114",
+  "v31_readiness_sha256": "2e5860141643dabf1483bfa0d6b02c7b4ac03ece09896b2731ce5a8d31ef7c5c",
+  "v31_terminal_sha256": "53178021fd4bef9d134fc660cfdc6ebbcd7f514e751679d62c263ccae92cdf42",
+  "v31_verifier_sha256": "437edd4bd579a9806c9f6766769ae6956914cd9316bb2ca926ce301127bcca17",
+  "v31_test_sha256": "2f4bfa2ffe149d41d574ed0ed8ecdb685df8d6cd2de8ef3fef37278b1b28f40a",
+  "policy_v32_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V32.json",
+  "policy_v32_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+  "verifier_sha256": "a9755ffa2ceafb6b77cef01396eebd168ed8814f35643aabeab6c957680a97ea",
+  "test_sha256": "1b2025a8db6c583f7f7b4fa8b40034b002da48c1bea0982e0da901cc40dc1584",
+  "hardened_checks": [
+    "exact-pinned-runtime",
+    "exact-v31-tool-hash-key-set",
+    "exact-future-result-and-receipt-paths",
+    "live-sibling-activation-census",
+    "live-result-receipt-native-capture-census"
+  ],
+  "activation": false,
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "spawn": "none",
+  "credit": 0,
+  "future_activation_policy_v32_required": true
+}

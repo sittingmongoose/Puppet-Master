@@ -1,0 +1,1152 @@
+{
+  "activation": false,
+  "activation_authorized": false,
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blocking_reasons": [
+    "required_check_failed"
+  ],
+  "cohort_id": "cohort-0002",
+  "controller_identity": {
+    "controller_identity_authority": false,
+    "failed_old_controller_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+    "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1751",
+    "thread_id": "019f5674-dfc2-75f1-8262-df491c2cf245",
+    "turn_id": "019f5674-e11e-71e2-aad2-a34827ba03f7"
+  },
+  "credit": 0,
+  "dedup": {
+    "controller_capture_target": {
+      "lexists_before_write": false,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/controller-parent-native-identity-capture-v32.json"
+    },
+    "equivalent_atomic6_transaction_count": 0,
+    "equivalent_atomic6_transaction_matches": [],
+    "equivalent_reviewer_report_count": 0,
+    "equivalent_reviewer_report_matches": [],
+    "future_transaction_target": {
+      "lexists_before_write": false,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6"
+    },
+    "metadata_bytes_scanned": 29694887,
+    "metadata_files_scanned": 123,
+    "metadata_scope": "cohort-0002 audit metadata only; inert preparation namespace excluded",
+    "report_target": {
+      "lexists_before_write": false,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/luna-independent-prelaunch-v32.json"
+    },
+    "result": "no_equivalent_reviewer_report_or_atomic6_transaction",
+    "scan_errors": [],
+    "verifier_live_recheck": {
+      "equivalent_terminal_or_activation_prep_namespace_count": 0,
+      "exact_target_namespace_count": 0,
+      "matches": []
+    }
+  },
+  "errors": [
+    "attempt3_namespace_lstat_inventory_stable: 4e095af37396b0a365056c846227b7e944b8a277591ba3fb762b8a615ecfa7ee",
+    "preparation_namespace_lstat_inventory_stable: 9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914"
+  ],
+  "exact_counts": {
+    "assignment_ids": [
+      "A005SA-0009",
+      "A005SA-0010",
+      "A005SA-0012",
+      "A005SA-0013",
+      "A005SA-0014",
+      "A005SA-0016"
+    ],
+    "assignments": 6,
+    "empty_output_directories": 6,
+    "features": 687,
+    "per_assignment": {
+      "A005SA-0009": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 129,
+        "fixture_feature_refs_len": 129,
+        "fixture_features_len": 129,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 129,
+        "question_obligation_count": 145,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "A005SA-0010": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 127,
+        "fixture_feature_refs_len": 127,
+        "fixture_features_len": 127,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 127,
+        "question_obligation_count": 133,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "A005SA-0012": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 92,
+        "fixture_feature_refs_len": 92,
+        "fixture_features_len": 92,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 92,
+        "question_obligation_count": 92,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "A005SA-0013": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 92,
+        "fixture_feature_refs_len": 92,
+        "fixture_features_len": 92,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 92,
+        "question_obligation_count": 92,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "A005SA-0014": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 147,
+        "fixture_feature_refs_len": 147,
+        "fixture_features_len": 147,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 147,
+        "question_obligation_count": 147,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "A005SA-0016": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 100,
+        "fixture_feature_refs_len": 100,
+        "fixture_features_len": 100,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 100,
+        "question_obligation_count": 104,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      }
+    },
+    "question_obligations": 713
+  },
+  "exclusive_create": {
+    "create_flags": [
+      "O_CREAT",
+      "O_EXCL",
+      "O_NOFOLLOW",
+      "O_CLOEXEC"
+    ],
+    "overwriting": false,
+    "requested_mode": "0444",
+    "target": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/luna-independent-prelaunch-v32.json"
+  },
+  "gate_id": "SCENARIO-COHORT-0002-SEMANTIC-REPAIR-ATTEMPT-0003-V32",
+  "input_hashes": {
+    "attempt3/IMMUTABLE_AUTHORITY.json": "1e189816fd44c7a56331e8921743d724a58727abb1b67116c6385a7bda4398e0",
+    "attempt3/attempt3_common.py": "add0e2cf14f9d8149df7dcf51ba92b4150c87942feac84c8157be06948fb4c43",
+    "attempt3/attempt3_manifest.jsonl": "84b44a319c2e9b230cba62beeace7d00be5935bc35dae060b8970468a46014f3",
+    "attempt3/fixtures/fixture_manifest.json": "ebc151bf3289db0306297028ba3f6c28236155fdd312529adc802d75dbae37c1",
+    "attempt3/fixtures/validator-clean/A005SA-0009.json": "ff9a29b07106866007de578d193604899f69f30bdeab21be6baa007ad830b822",
+    "attempt3/fixtures/validator-clean/A005SA-0010.json": "464e283751f59d8ffe9cea1cd9e4ddb94125b7ad15796b2b306c2cb0c4ab7e5d",
+    "attempt3/fixtures/validator-clean/A005SA-0012.json": "9bbdc5f5ce336feda8f8ab7f87a2c102df103eb51e67fa064074a8d28d710213",
+    "attempt3/fixtures/validator-clean/A005SA-0013.json": "dcba1287c9b710b2177001988e48a1c518b316723f18f20c8e86223dd047fe26",
+    "attempt3/fixtures/validator-clean/A005SA-0014.json": "c68eb8f2296310958da9fb70486e12827bc0f6929bde32720929bd0488cfd8e2",
+    "attempt3/fixtures/validator-clean/A005SA-0016.json": "cc0c9df98fdd186e00ff26f991c240625adbe70aa5472a0b2b6880b4d34de22d",
+    "attempt3/intents/A005SA-0009.json": "2e263b0fa93eb1bb3121711f763ee2a3a89126a7a2b451bb0e48476d52af3a7a",
+    "attempt3/intents/A005SA-0010.json": "72da5916b219c41aa0cafa1c5ccd8283c5274185b5f060b390017a19700354d9",
+    "attempt3/intents/A005SA-0012.json": "8dafc6a5cd5368727d448859c8a17b5fe2d4ca43741c3b12687bcfaf7224819e",
+    "attempt3/intents/A005SA-0013.json": "1039d70871e799b5bab380fe24856cc404306ee3c8062f4a8657f669247ef798",
+    "attempt3/intents/A005SA-0014.json": "fe3963d74504aa5a6af0c74d57161253d81b6c418582a3629d5983d9ab60223c",
+    "attempt3/intents/A005SA-0016.json": "c0179eaa0da477800c322185c98b5f738b23663d38436dd0d7e16fa5418315f2",
+    "attempt3/leaf_prompt.json": "dc73507aed26493bf6581ef71d5cde8253080590e4e6716611eb47f8d58a4dd0",
+    "attempt3/observed_error_families.json": "bf2f926c0089029156da63aab01bc4a99a50c187d3b55c89f1b624483ab2b358",
+    "attempt3/observed_error_localization.jsonl": "6a21da89f0375762a2559da8969bf39251485846b67d657f66d91699562ac586",
+    "attempt3/packets/A005SA-0009.json": "611c83d223fbbd421ac010f01759448bdc4a36c799ed5a0356729bfed77c8975",
+    "attempt3/packets/A005SA-0010.json": "a2d8939383e763b7e0eaf9287cc017f7f5004c2bb504cb52f53cd4da1e706e0c",
+    "attempt3/packets/A005SA-0012.json": "ee4d01052d3516433424d4325120bf74114e34bc28c3369e69e1c6179c794bb9",
+    "attempt3/packets/A005SA-0013.json": "af67c2fb48e57e2754135367f418243df0a771ad0bc01776916e1dc4226bbaae",
+    "attempt3/packets/A005SA-0014.json": "88dbf3d498bb4285df2bf889887c33f170175104379e043950fe3ee6ed4ea8be",
+    "attempt3/packets/A005SA-0016.json": "c2bb5e3a394f537087a396c5c584290b203a59a47f004c4c765f6196fec313ba",
+    "attempt3/preflight_attempt3_v32.py": "882568bba4f626a9589d4526b18458508d6fe8f6251399fa42a8ec79ba6ab340",
+    "attempt3/prepare_attempt3_v32.py": "499a22a4dbb9896d116f631633baf26ce780eea5bd20cc7c478fd0fd0475289c",
+    "attempt3/readiness.json": "33b0a8cca0068d08e9b8731a9ae1ec8bd6449315582f7627903b7550c5963351",
+    "attempt3/schema/result.schema.json": "4404c3c7096da354b569c933ef6f77be7ecff184106b3bcad5b04a8bb900172f",
+    "attempt3/templates/feature-certification.template.json": "4d37e8a0d1cff5172844da4c4bf6a310f0862c1469f53d101f51cd3c0a753b30",
+    "attempt3/test_attempt3_v32.py": "2a8aa007f1f76dd1a1840eaefcc43ec4a38f293bde6e62cd6bdcab20f187adfb",
+    "attempt3/test_matrix.json": "3f0e515d01bfcc289689bb66cac6eecdca511789aabb249e484568eb7e6e5d6e",
+    "attempt3/validation/test-report.json": "f22168e35381f720eb45266e015f1be48fab949bdcfe22a565b6684fd86092ef",
+    "attempt3/validator_rows.jsonl": "af91090664d6294de155a456d7a7775a69eefae8b16c2e75f1b19b35c48c0820",
+    "attempt3/verify_attempt3_v32.py": "b94d02993e64b17b98a27327a3ff15b168a1b52ca5d2a14c280cc601be87f177",
+    "inventory/attempt3-content": "e56ecbb4c1105af98d191418af44cbeea89df5cf646953febe18c87c9717acb3",
+    "inventory/attempt3-lstat": "4e095af37396b0a365056c846227b7e944b8a277591ba3fb762b8a615ecfa7ee",
+    "inventory/preparation-content": "cd7db31a4cbbbcce01361ba1a25a30ca51ba7a94cbd2f0a24ce4451b0ec0aa18",
+    "inventory/preparation-lstat": "9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914",
+    "inventory/upstream-full-inventory": "ad42d5077e6125accd83aecfa9e670f81702de79eddfaa92b37d0a2f4ecdc850",
+    "preparation/FUTURE_ATOMIC6_AUTHORITY.json": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41",
+    "preparation/FUTURE_TOOL_SEAL.json": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35",
+    "preparation/readiness.json": "f289864d2cbbfc76c7df8b35f20cf7a02cb854807a2357b3fa066261c9894511",
+    "preparation/test_branch_b_preparation.py": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551",
+    "preparation/test_matrix.json": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e",
+    "preparation/validation/terminal-evidence.json": "662ba73489df792dbe88a1a8dd91d7fa8475e0870194836d3f83a071078eadca",
+    "preparation/validation/test-report.json": "d5751e7b3d9076471a539bef82480c114f7dd5b031d4332d38153055fd5a7396",
+    "preparation/verify_branch_b_preparation.py": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0"
+  },
+  "inventory_hashes": {
+    "attempt3_content_inventory_sha256": "e56ecbb4c1105af98d191418af44cbeea89df5cf646953febe18c87c9717acb3",
+    "attempt3_lstat_inventory_sha256": "4e095af37396b0a365056c846227b7e944b8a277591ba3fb762b8a615ecfa7ee",
+    "preparation_content_inventory_sha256": "cd7db31a4cbbbcce01361ba1a25a30ca51ba7a94cbd2f0a24ce4451b0ec0aa18",
+    "preparation_lstat_inventory_sha256": "9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914",
+    "upstream_full_inventory_sha256": "ad42d5077e6125accd83aecfa9e670f81702de79eddfaa92b37d0a2f4ecdc850"
+  },
+  "launch": false,
+  "launch_authorized": false,
+  "prospective_atomic6_contract": {
+    "activation": false,
+    "actual_six_sol_native_ids_deferred_to_later_activation_runtime_capture": true,
+    "all_or_nothing": true,
+    "assignment_ids": [
+      "A005SA-0009",
+      "A005SA-0010",
+      "A005SA-0012",
+      "A005SA-0013",
+      "A005SA-0014",
+      "A005SA-0016"
+    ],
+    "atomic_commit_required": true,
+    "created_activation_files": 0,
+    "created_authorizations": 0,
+    "created_capture_artifacts": 0,
+    "created_checkpoints": 0,
+    "created_children": 0,
+    "created_receipts": 0,
+    "created_results": 0,
+    "credit": 0,
+    "exact_assignment_count": 6,
+    "feature_count": 687,
+    "future_preconditions": [
+      "fresh_luna_max_prelaunch_valid",
+      "controller_parent_prelaunch_capture_of_fresh_luna_and_reserved_unallocated_sol_slots_valid",
+      "attempt3_inventory_still_exact",
+      "six_outputs_still_empty",
+      "separate_future_atomic6_transaction"
+    ],
+    "future_sol_identities": [
+      {
+        "assignment_id": "A005SA-0009",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0009_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      },
+      {
+        "assignment_id": "A005SA-0010",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0010_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      },
+      {
+        "assignment_id": "A005SA-0012",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0012_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      },
+      {
+        "assignment_id": "A005SA-0013",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0013_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      },
+      {
+        "assignment_id": "A005SA-0014",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0014_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      },
+      {
+        "assignment_id": "A005SA-0016",
+        "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0016_semantic_repair_attempt_0003_ultra_v32",
+        "fork_turns": "none",
+        "fresh_direct_required": true,
+        "model": "gpt-5.6-sol",
+        "native_child_thread_id": null,
+        "reasoning_effort": "ultra",
+        "state": "future_unallocated"
+      }
+    ],
+    "future_transaction": {
+      "all_or_nothing": true,
+      "assignment_ids": [
+        "A005SA-0009",
+        "A005SA-0010",
+        "A005SA-0012",
+        "A005SA-0013",
+        "A005SA-0014",
+        "A005SA-0016"
+      ],
+      "atomic_commit_required": true,
+      "exact_assignment_count": 6,
+      "feature_count": 687,
+      "kind": "separate_future_atomic6_transaction",
+      "larger_cohort_forbidden": true,
+      "partial_cohort_forbidden": true,
+      "question_obligation_count": 713,
+      "target_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6",
+      "target_namespace_state": "required_absent",
+      "tool_execution_authorized": false,
+      "transaction_authorized": false
+    },
+    "generator_execution_count": 0,
+    "generator_invoked": false,
+    "generator_present": false,
+    "larger_cohort_forbidden": true,
+    "launch": false,
+    "partial_cohort_forbidden": true,
+    "pre_creation_dedup_result": {
+      "checkpoint": "parent_precreation_deduplicate_first",
+      "equivalent_terminal_or_activation_prep_namespace_count": 0,
+      "exact_target_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6",
+      "exact_target_namespace_count": 0,
+      "live_recheck_required": true,
+      "matches": [],
+      "metadata_extensions": [
+        ".json",
+        ".jsonl"
+      ],
+      "own_preparation_namespace_excluded": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6",
+      "result": "no_foreign_equivalent_terminal_or_activation_prep_namespace",
+      "scope_kind": "audit_metadata_only",
+      "search_scope": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002"
+    },
+    "question_obligation_count": 713,
+    "target_namespace": "semantic-repair-attempt-0003-v32-activation-transaction-atomic6",
+    "target_namespace_state": "required_absent",
+    "tool_execution_authorized": false,
+    "tool_execution_count": 0,
+    "transaction_authorized": false
+  },
+  "recommendation": "blocked",
+  "review_kind": "luna_independent_prelaunch_v32",
+  "reviewer_identity": {
+    "control_plane_ids_observable": true,
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "independent": true,
+    "model": "gpt-5.6-luna",
+    "name": "a005_scenario_c2_attempt3_prelaunch_v32_luna_max",
+    "native_thread_id": "019f567b-76e7-7060-93e8-2b98344318d0",
+    "native_turn_id": "019f567b-7752-7ca3-a32c-927ddb2fee95",
+    "reasoning_effort": "max",
+    "retries": 0,
+    "temporal_separation_from_failed_old_controller": {
+      "contacted_failed_old_controller": false,
+      "controller_parent_thread_id": "019f5674-dfc2-75f1-8262-df491c2cf245",
+      "distinct_native_thread": true,
+      "failed_old_controller_immutable_lineage": true,
+      "failed_old_controller_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+      "reviewer_thread_id": "019f567b-76e7-7060-93e8-2b98344318d0"
+    }
+  },
+  "runtime_identity": {
+    "dont_write_bytecode": true,
+    "jsonschema_version": "4.26.0",
+    "no_site": true,
+    "no_user_site": true,
+    "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "validator_class": "jsonschema.validators.Draft202012Validator"
+  },
+  "schema_version": "audit005-luna-independent-prelaunch-v32-v1",
+  "status": "fail_closed",
+  "test_reruns": {
+    "attempt3": {
+      "complete_test_suite": {
+        "case_id_digest": "cdc4f913993857653d21b1a6cfc21a5ecd29b1bcaebee09c6cfabda4d6d11a84",
+        "category_counts": {
+          "observed_and_contract_family_mutations": {
+            "negative": 131,
+            "positive": 0,
+            "total": 131
+          },
+          "per_feature_required_dimension_fail_closed": {
+            "negative": 687,
+            "positive": 0,
+            "total": 687
+          },
+          "question_scenario_coverage_fail_closed": {
+            "negative": 200,
+            "positive": 0,
+            "total": 200
+          },
+          "validator_clean_packet_shapes": {
+            "negative": 0,
+            "positive": 6,
+            "total": 6
+          }
+        },
+        "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/test_attempt3_v32.py",
+        "errors": [],
+        "exit_status": 0,
+        "failed": 0,
+        "minimum_required": 900,
+        "negative": 1018,
+        "observed_family_coverage": {
+          "covered": 51,
+          "missing": [],
+          "required": 51
+        },
+        "passed": 1024,
+        "positive": 6,
+        "runtime": {
+          "dont_write_bytecode": true,
+          "jsonschema_version": "4.26.0",
+          "no_site": true,
+          "no_user_site": true,
+          "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "python_version": "3.12.13",
+          "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+          "validator_class": "jsonschema.validators.Draft202012Validator"
+        },
+        "schema_version": "scenario-adversarial-attempt3-tests-v32-v1",
+        "source_hashes": {
+          "common_source_sha256": "add0e2cf14f9d8149df7dcf51ba92b4150c87942feac84c8157be06948fb4c43",
+          "frozen_validator_sha256": "8f5ada680fb86dbd96e3d5e12ca84f59d7ab58d528b640891a1975e01cbd723a",
+          "preflight_source_sha256": "882568bba4f626a9589d4526b18458508d6fe8f6251399fa42a8ec79ba6ab340",
+          "test_matrix_sha256": "3f0e515d01bfcc289689bb66cac6eecdca511789aabb249e484568eb7e6e5d6e",
+          "test_source_sha256": "2a8aa007f1f76dd1a1840eaefcc43ec4a38f293bde6e62cd6bdcab20f187adfb"
+        },
+        "status": "pass",
+        "total": 1024
+      },
+      "verifier": {
+        "activation": false,
+        "activation_authorized": false,
+        "attempt3_inventory": {
+          "byte_count": 19834332,
+          "file_count": 35,
+          "inventory_sha256": "ad42d5077e6125accd83aecfa9e670f81702de79eddfaa92b37d0a2f4ecdc850",
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32"
+        },
+        "blocking_reasons": [
+          "future_fresh_luna_max_prelaunch_absent",
+          "controller_parent_native_capture_absent",
+          "separate_activation_transaction_absent",
+          "activation_false",
+          "launch_false"
+        ],
+        "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/verify_attempt3_v32.py",
+        "counts": {
+          "assignments": 6,
+          "capture_rows": 0,
+          "credit": 0,
+          "empty_output_directories": 6,
+          "features": 687,
+          "questions": 713,
+          "receipts": 0,
+          "results": 0,
+          "semantic_children": 0,
+          "spawned_children": 0,
+          "tests": 1024,
+          "tool_executions": 0
+        },
+        "errors": [],
+        "exit_status": 0,
+        "launch": false,
+        "launch_authorized": false,
+        "observed_error_partition": {
+          "aggregate_digest_sha256": "6707a06175c83330fadc64f1505b0b26805ab20f20863bc5eac34fca0d16bac3",
+          "families": 51,
+          "rows": 15831
+        },
+        "runtime": {
+          "dont_write_bytecode": true,
+          "jsonschema_version": "4.26.0",
+          "no_site": true,
+          "no_user_site": true,
+          "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "python_version": "3.12.13",
+          "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+          "validator_class": "jsonschema.validators.Draft202012Validator"
+        },
+        "schema_version": "scenario-adversarial-attempt3-terminal-verification-v32-v1",
+        "status": "pass_blocked"
+      }
+    },
+    "preparation_atomic6": {
+      "complete_test_suite": {
+        "case_id_digest": "86ba5165ab7797198293438801665a1503c40a0dc3afc93a9bbf747f8f8f6db7",
+        "category_counts": {
+          "atomic6_set_mutations": {
+            "negative": 150,
+            "positive": 0,
+            "total": 150
+          },
+          "authority_credit_leakage": {
+            "negative": 50,
+            "positive": 0,
+            "total": 50
+          },
+          "feature_obligation_count_mutations": {
+            "negative": 100,
+            "positive": 0,
+            "total": 100
+          },
+          "filesystem_symlink_toctou": {
+            "negative": 40,
+            "positive": 0,
+            "total": 40
+          },
+          "foreign_equivalent_dedup": {
+            "negative": 30,
+            "positive": 0,
+            "total": 30
+          },
+          "live_positive": {
+            "negative": 0,
+            "positive": 20,
+            "total": 20
+          },
+          "prerequisite_identity_mutations": {
+            "negative": 110,
+            "positive": 0,
+            "total": 110
+          },
+          "runtime_drift_mutations": {
+            "negative": 80,
+            "positive": 0,
+            "total": 80
+          },
+          "upstream_pin_mutations": {
+            "negative": 320,
+            "positive": 0,
+            "total": 320
+          }
+        },
+        "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/test_branch_b_preparation.py",
+        "errors": [],
+        "exit_status": 0,
+        "failed": 0,
+        "negative": 880,
+        "passed": 900,
+        "positive": 20,
+        "runtime": {
+          "dont_write_bytecode": true,
+          "jsonschema_version": "4.26.0",
+          "no_site": true,
+          "no_user_site": true,
+          "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "python_version": "3.12.13",
+          "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+          "validator_class": "jsonschema.validators.Draft202012Validator"
+        },
+        "schema_version": "scenario-adversarial-branch-b-preparation-test-run-v1",
+        "source_hashes": {
+          "test_matrix_sha256": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e",
+          "test_source_sha256": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551",
+          "tool_seal_sha256": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35",
+          "verifier_source_sha256": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0"
+        },
+        "status": "pass",
+        "total": 900
+      },
+      "verifier": {
+        "activation": false,
+        "activation_authorized": false,
+        "attempt3_inventory": {
+          "byte_count": 19834332,
+          "file_count": 35,
+          "inventory_sha256": "ad42d5077e6125accd83aecfa9e670f81702de79eddfaa92b37d0a2f4ecdc850",
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32"
+        },
+        "blocking_reasons": [
+          "fresh_luna_max_prelaunch_absent",
+          "controller_parent_native_capture_absent",
+          "separate_future_atomic6_transaction_absent",
+          "activation_false",
+          "launch_false"
+        ],
+        "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/verify_branch_b_preparation.py",
+        "counts": {
+          "assignments": 6,
+          "capture_rows": 0,
+          "children": 0,
+          "credit": 0,
+          "empty_outputs": 6,
+          "features": 687,
+          "question_obligations": 713,
+          "receipts": 0,
+          "results": 0,
+          "semantic_children": 0,
+          "tests": 900,
+          "tool_executions": 0
+        },
+        "dedup_recheck": {
+          "equivalent_terminal_or_activation_prep_namespace_count": 0,
+          "exact_target_namespace_count": 0,
+          "matches": [],
+          "metadata_bytes_scanned": 29694887,
+          "metadata_files_scanned": 123
+        },
+        "errors": [],
+        "exit_status": 0,
+        "launch": false,
+        "launch_authorized": false,
+        "runtime": {
+          "dont_write_bytecode": true,
+          "jsonschema_version": "4.26.0",
+          "no_site": true,
+          "no_user_site": true,
+          "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "python_version": "3.12.13",
+          "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+          "validator_class": "jsonschema.validators.Draft202012Validator"
+        },
+        "schema_version": "scenario-adversarial-branch-b-preparation-terminal-verification-v1",
+        "status": "pass_blocked"
+      }
+    }
+  },
+  "verification_checks": {
+    "assignment_A005SA-0009_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 129,
+        "fixture_feature_refs_len": 129,
+        "fixture_features_len": 129,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 129,
+        "question_obligation_count": 145,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "assignment_A005SA-0010_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 127,
+        "fixture_feature_refs_len": 127,
+        "fixture_features_len": 127,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 127,
+        "question_obligation_count": 133,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "assignment_A005SA-0012_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 92,
+        "fixture_feature_refs_len": 92,
+        "fixture_features_len": 92,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 92,
+        "question_obligation_count": 92,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "assignment_A005SA-0013_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 92,
+        "fixture_feature_refs_len": 92,
+        "fixture_features_len": 92,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 92,
+        "question_obligation_count": 92,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "assignment_A005SA-0014_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 147,
+        "fixture_feature_refs_len": 147,
+        "fixture_features_len": 147,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 147,
+        "question_obligation_count": 147,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "assignment_A005SA-0016_identity_and_shape": {
+      "detail": {
+        "activation": false,
+        "credit": 0,
+        "descendants": 0,
+        "feature_count": 100,
+        "fixture_feature_refs_len": 100,
+        "fixture_features_len": 100,
+        "followups": 0,
+        "fork_turns": "none",
+        "launch": false,
+        "native_child_thread_id": null,
+        "packet_features_len": 100,
+        "question_obligation_count": 104,
+        "retries": 0,
+        "state": "reserved_unallocated"
+      },
+      "ok": true
+    },
+    "attempt3_full_inventory_shape": {
+      "detail": {
+        "byte_count": 19834332,
+        "file_count": 35
+      },
+      "ok": true
+    },
+    "attempt3_namespace_content_inventory_stable": {
+      "detail": "e56ecbb4c1105af98d191418af44cbeea89df5cf646953febe18c87c9717acb3",
+      "ok": true
+    },
+    "attempt3_namespace_lstat_inventory_stable": {
+      "detail": "4e095af37396b0a365056c846227b7e944b8a277591ba3fb762b8a615ecfa7ee",
+      "ok": false
+    },
+    "attempt3_no_symlinks_irregulars_duplicate_hardlinks": {
+      "detail": "{}",
+      "ok": true
+    },
+    "attempt_pinned_test_report_summary": {
+      "detail": {
+        "case_id_digest": "cdc4f913993857653d21b1a6cfc21a5ecd29b1bcaebee09c6cfabda4d6d11a84",
+        "failed": 0,
+        "negative": 1018,
+        "passed": 1024,
+        "positive": 6,
+        "status": "pass",
+        "total": 1024
+      },
+      "ok": true
+    },
+    "controller_capture_target_absent_before_write": {
+      "detail": {
+        "lexists": false,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/controller-parent-native-identity-capture-v32.json"
+      },
+      "ok": true
+    },
+    "exact_assignment_ids_authority": {
+      "detail": [
+        "A005SA-0009",
+        "A005SA-0010",
+        "A005SA-0012",
+        "A005SA-0013",
+        "A005SA-0014",
+        "A005SA-0016"
+      ],
+      "ok": true
+    },
+    "exact_assignment_ids_manifest": {
+      "detail": [
+        "A005SA-0009",
+        "A005SA-0010",
+        "A005SA-0012",
+        "A005SA-0013",
+        "A005SA-0014",
+        "A005SA-0016"
+      ],
+      "ok": true
+    },
+    "exact_feature_count_687": {
+      "detail": 687,
+      "ok": true
+    },
+    "exact_question_obligation_count_713": {
+      "detail": 713,
+      "ok": true
+    },
+    "exact_report_target_absent_before_write": {
+      "detail": {
+        "lexists": false,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/luna-independent-prelaunch-v32.json"
+      },
+      "ok": true
+    },
+    "final_controller_capture_absent_immediately_before_create": {
+      "detail": {
+        "lexists": false,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/controller-parent-native-identity-capture-v32.json"
+      },
+      "ok": true
+    },
+    "final_report_target_absent_immediately_before_create": {
+      "detail": {
+        "lexists": false,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/luna-independent-prelaunch-v32.json"
+      },
+      "ok": true
+    },
+    "hash_attempt3_IMMUTABLE_AUTHORITY.json": {
+      "detail": {
+        "actual": "1e189816fd44c7a56331e8921743d724a58727abb1b67116c6385a7bda4398e0",
+        "expected": "1e189816fd44c7a56331e8921743d724a58727abb1b67116c6385a7bda4398e0"
+      },
+      "ok": true
+    },
+    "hash_attempt3_readiness.json": {
+      "detail": {
+        "actual": "33b0a8cca0068d08e9b8731a9ae1ec8bd6449315582f7627903b7550c5963351",
+        "expected": "33b0a8cca0068d08e9b8731a9ae1ec8bd6449315582f7627903b7550c5963351"
+      },
+      "ok": true
+    },
+    "hash_attempt3_validation_test-report.json": {
+      "detail": {
+        "actual": "f22168e35381f720eb45266e015f1be48fab949bdcfe22a565b6684fd86092ef",
+        "expected": "f22168e35381f720eb45266e015f1be48fab949bdcfe22a565b6684fd86092ef"
+      },
+      "ok": true
+    },
+    "hash_attempt3_verify_attempt3_v32.py": {
+      "detail": {
+        "actual": "b94d02993e64b17b98a27327a3ff15b168a1b52ca5d2a14c280cc601be87f177",
+        "expected": "b94d02993e64b17b98a27327a3ff15b168a1b52ca5d2a14c280cc601be87f177"
+      },
+      "ok": true
+    },
+    "hash_preparation_FUTURE_ATOMIC6_AUTHORITY.json": {
+      "detail": {
+        "actual": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41",
+        "expected": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41"
+      },
+      "ok": true
+    },
+    "hash_preparation_FUTURE_TOOL_SEAL.json": {
+      "detail": {
+        "actual": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35",
+        "expected": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35"
+      },
+      "ok": true
+    },
+    "hash_preparation_readiness.json": {
+      "detail": {
+        "actual": "f289864d2cbbfc76c7df8b35f20cf7a02cb854807a2357b3fa066261c9894511",
+        "expected": "f289864d2cbbfc76c7df8b35f20cf7a02cb854807a2357b3fa066261c9894511"
+      },
+      "ok": true
+    },
+    "hash_preparation_test_branch_b_preparation.py": {
+      "detail": {
+        "actual": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551",
+        "expected": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551"
+      },
+      "ok": true
+    },
+    "hash_preparation_test_matrix.json": {
+      "detail": {
+        "actual": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e",
+        "expected": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e"
+      },
+      "ok": true
+    },
+    "hash_preparation_validation_terminal-evidence.json": {
+      "detail": {
+        "actual": "662ba73489df792dbe88a1a8dd91d7fa8475e0870194836d3f83a071078eadca",
+        "expected": "662ba73489df792dbe88a1a8dd91d7fa8475e0870194836d3f83a071078eadca"
+      },
+      "ok": true
+    },
+    "hash_preparation_validation_test-report.json": {
+      "detail": {
+        "actual": "d5751e7b3d9076471a539bef82480c114f7dd5b031d4332d38153055fd5a7396",
+        "expected": "d5751e7b3d9076471a539bef82480c114f7dd5b031d4332d38153055fd5a7396"
+      },
+      "ok": true
+    },
+    "hash_preparation_verify_branch_b_preparation.py": {
+      "detail": {
+        "actual": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0",
+        "expected": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0"
+      },
+      "ok": true
+    },
+    "metadata_dedup_scan_no_errors": {
+      "detail": [],
+      "ok": true
+    },
+    "no_equivalent_atomic6_transaction": {
+      "detail": {
+        "exact_target_namespace": {
+          "lexists": false,
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6"
+        },
+        "matches": []
+      },
+      "ok": true
+    },
+    "no_equivalent_reviewer_report": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0009_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0009_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823566,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739444397,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0009/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "output_dir_A005SA-0010_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0010_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823568,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739559106,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0010/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "output_dir_A005SA-0012_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0012_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823570,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739665273,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0012/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "output_dir_A005SA-0013_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0013_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823572,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739774024,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0013/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "output_dir_A005SA-0014_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0014_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823574,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739892733,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0014/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "output_dir_A005SA-0016_empty": {
+      "detail": [],
+      "ok": true
+    },
+    "output_dir_A005SA-0016_is_real_directory": {
+      "detail": {
+        "dev": 16777230,
+        "ino": 179823576,
+        "kind": "directory",
+        "lexists": true,
+        "mode": "0o755",
+        "mtime_ns": 1783853723739999983,
+        "nlink": 2,
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0016/attempt-0003",
+        "size": 64
+      },
+      "ok": true
+    },
+    "preparation_namespace_content_inventory_stable": {
+      "detail": "cd7db31a4cbbbcce01361ba1a25a30ca51ba7a94cbd2f0a24ce4451b0ec0aa18",
+      "ok": true
+    },
+    "preparation_namespace_lstat_inventory_stable": {
+      "detail": "9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914",
+      "ok": false
+    },
+    "preparation_no_symlinks_irregulars_duplicate_hardlinks": {
+      "detail": "{}",
+      "ok": true
+    },
+    "preparation_pinned_test_report_summary": {
+      "detail": {
+        "case_id_digest": "86ba5165ab7797198293438801665a1503c40a0dc3afc93a9bbf747f8f8f6db7",
+        "failed": 0,
+        "negative": 880,
+        "passed": 900,
+        "positive": 20,
+        "status": "pass",
+        "total": 900
+      },
+      "ok": true
+    },
+    "preparation_zero_state": {
+      "detail": {
+        "activation": false,
+        "capture_rows": 0,
+        "credit": 0,
+        "launch": false,
+        "receipts": 0,
+        "results": 0,
+        "spawned_children": 0,
+        "tool_executions": 0
+      },
+      "ok": true
+    },
+    "six_empty_output_directories": {
+      "detail": {
+        "A005SA-0009": [],
+        "A005SA-0010": [],
+        "A005SA-0012": [],
+        "A005SA-0013": [],
+        "A005SA-0014": [],
+        "A005SA-0016": []
+      },
+      "ok": true
+    },
+    "source_zero_state": {
+      "detail": {
+        "activation": false,
+        "capture_rows": 0,
+        "credit": 0,
+        "launch": false,
+        "receipts": 0,
+        "results": 0,
+        "semantic_children": 0,
+        "spawned_children": 0,
+        "tool_executions": 0
+      },
+      "ok": true
+    }
+  },
+  "wave_id": "wave-0001",
+  "zero_state": {
+    "activation": false,
+    "activation_authorized": false,
+    "capture_rows": 0,
+    "credit": 0,
+    "generator_invoked": false,
+    "generator_present": false,
+    "launch": false,
+    "launch_authorized": false,
+    "receipts": 0,
+    "results": 0,
+    "semantic_children": 0,
+    "spawned_children": 0,
+    "tool_executions": 0
+  }
+}

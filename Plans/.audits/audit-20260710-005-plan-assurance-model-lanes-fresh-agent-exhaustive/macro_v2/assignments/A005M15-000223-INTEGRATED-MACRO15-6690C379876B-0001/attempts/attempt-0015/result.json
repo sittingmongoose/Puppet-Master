@@ -1,0 +1,1220 @@
+{
+  "assignment_id": "A005M15-000223-INTEGRATED-MACRO15-6690C379876B-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Usage must unify around one canonical write path and one UsageRecord schema so Ledger, rollups, and UI projections read the same attribution model rather than parsing ad hoc JSON or duplicate tracker types.",
+          "line_end": 3025,
+          "line_start": 3025,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: Usage must show Last updated and Refresh for stale values, may refresh on focus/run start with rate limiting, and must distinguish current-project Usage from future all-project aggregation through explicit scope labels/selectors.",
+          "line_end": 3189,
+          "line_start": 3189,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Provides a coherent accounting and presentation backbone and prevents independent Ledger, rollup, and UI attribution models.",
+      "item_id": "A005M15-I001",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-040",
+        "PLANUNIT:UF-041",
+        "PLANUNIT:UF-042",
+        "PLANUNIT:UF-043",
+        "SEMANTIC:PLANUNIT:UF-040",
+        "SEMANTIC:PLANUNIT:UF-041",
+        "SEMANTIC:PLANUNIT:UF-042",
+        "SEMANTIC:PLANUNIT:UF-043"
+      ],
+      "statement": "Usage is explicitly normalized through one UsageRecord write path, platform-specific window semantics, retained/rolled-up storage, and visible freshness and project-scope disclosure.",
+      "title": "Canonical usage data, windows, retention, and freshness"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Usage may show reset countdowns such as Resets in 2h 15m from QuotaInfo.resets_at or parsed error/API responses; phase label is v1 if already parsed, low effort.",
+          "line_end": 3293,
+          "line_start": 3293,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: Execution settings may show per-run, node, package, or execution-scope usage aggregated from usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id; phase label is Post-v1.",
+          "line_end": 3341,
+          "line_start": 3341,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "underspecified_state_failure_and_concurrency_contract",
+      "impact": "Implementations can show a confident countdown from stale evidence, race window changes against refresh, or aggregate the same attempt differently across run, node, and package views.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-044",
+        "PLANUNIT:UF-045",
+        "PLANUNIT:UF-046",
+        "SEMANTIC:PLANUNIT:UF-044",
+        "SEMANTIC:PLANUNIT:UF-045",
+        "SEMANTIC:PLANUNIT:UF-046"
+      ],
+      "statement": "The deferred selector, reset countdown, and per-run aggregation requirements name data and display inputs but do not define malformed/reset-in-the-past handling, refresh races, persistence conflicts, offline behavior, or reconciliation when attribution fields disagree.",
+      "title": "Deferred usage controls lack failure and consistency semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Usage page export may export the current ledger filter, date range, or analytics table as CSV/JSON, unifying Ledger export under Usage; phase label is v1 for Ledger export and later analytics extension.",
+          "line_end": 3392,
+          "line_start": 3392,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: Usage may log approaching-limit or quota-exhausted alerts in a small log such as alerts.jsonl and display them in Usage or Settings; phase label is Post-v1.",
+          "line_end": 3587,
+          "line_start": 3587,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_privacy_permissions_retention_and_partial_failure_contract",
+      "impact": "CSV/JSON or alerts.jsonl can leak account or provider details, preserve data beyond policy, duplicate alerts, or show stale cost and triage state without a defined recovery path.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-047",
+        "PLANUNIT:UF-048",
+        "PLANUNIT:UF-049",
+        "PLANUNIT:UF-050",
+        "PLANUNIT:UF-051",
+        "SEMANTIC:PLANUNIT:UF-047",
+        "SEMANTIC:PLANUNIT:UF-048",
+        "SEMANTIC:PLANUNIT:UF-049",
+        "SEMANTIC:PLANUNIT:UF-050",
+        "SEMANTIC:PLANUNIT:UF-051"
+      ],
+      "statement": "Export, compact-header, Doctor, cost-column, and alert-history requirements identify surfaces but leave export redaction, permission checks, retention/deletion, duplicate alert suppression, stale-link behavior, and partial-write recovery unspecified.",
+      "title": "Deferred export and alert surfaces omit security and lifecycle contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries",
+        "accessibility",
+        "localization",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Peer/benchmark comparison requires anonymized opt-in telemetry and a backend and is future work, not in current scope.",
+          "line_end": 3636,
+          "line_start": 3636,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: Usage success requires 5h/7d usage and plan visibility without a manual usage command, a dedicated Usage view or equivalent ledger/analytics access, clear warnings with path to Usage or tier config, current usage in tier/config flows, and always-visible limits plus optional analytics/cost views.",
+          "line_end": 3736,
+          "line_start": 3736,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Constrains product scope while retaining a falsifiable high-level outcome for always-visible usage, warning recovery, and dedicated access.",
+      "item_id": "A005M15-I004",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UF-052",
+        "PLANUNIT:UF-053",
+        "PLANUNIT:UF-054",
+        "SEMANTIC:PLANUNIT:UF-052",
+        "SEMANTIC:PLANUNIT:UF-053",
+        "SEMANTIC:PLANUNIT:UF-054"
+      ],
+      "statement": "Peer benchmarks are explicitly future opt-in work, legacy Rust/Iced authority is retired, and the user-facing Usage success outcomes are enumerated.",
+      "title": "Scope exclusions and success outcomes are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The Usage page is a required dedicated top-level page composed entirely of widgets from Widget_System, with no static/fixed content area and user support for move, resize, configure, add, and remove widget operations.",
+          "line_end": 3787,
+          "line_start": 3787,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: 'The non-empty default Usage layout preserves the source Col/Row/Size table for `widget.quota_summary`, `widget.alert_thresholds`, `widget.analytics_chart`, `widget.budget_donuts`, `widget.tool_usage`, `widget.multi_account`, and `widget.ledger_table`.'",
+          "line_end": 3944,
+          "line_start": 3944,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Creates a reusable and customizable Usage surface with a deterministic initial state and a defined indexed-versus-unindexed analytics input.",
+      "item_id": "A005M15-I005",
+      "item_type": "feature",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-055",
+        "PLANUNIT:UF-056",
+        "PLANUNIT:UF-057",
+        "PLANUNIT:UF-058",
+        "SEMANTIC:PLANUNIT:UF-055",
+        "SEMANTIC:PLANUNIT:UF-056",
+        "SEMANTIC:PLANUNIT:UF-057",
+        "SEMANTIC:PLANUNIT:UF-058"
+      ],
+      "statement": "The Usage page is required to be fully widget-composed, non-empty on first load, seeded with a concrete default widget catalog/layout, and supplied with an explicit search-acceleration analytics signal.",
+      "title": "Widget-composed Usage page and analytics seed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Each Usage widget has a gear icon for per-widget configuration of windows, filters, chart type, sort, columns, page size, and cooldown timers, and that configuration persists alongside the widget layout.'",
+          "line_end": 4063,
+          "line_start": 4063,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: '`widget.multi_account` is a first-class catalog entry for status and observability, not the canonical setup surface; it shows provider or server-profile rows, active/effective status, Working or concrete reason text, pressure/cooldown, stale/source-confidence labels, and Agent-Config repair links.'",
+          "line_end": 4119,
+          "line_start": 4119,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_responsive_accessibility_persistence_conflict_and_recovery_contract",
+      "impact": "Layout can become unrecoverable or misleading across windows/devices, and accessibility or permission failures can strand users without a defined reset or conflict-resolution path.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-059",
+        "PLANUNIT:UF-060",
+        "PLANUNIT:UF-061",
+        "SEMANTIC:PLANUNIT:UF-059",
+        "SEMANTIC:PLANUNIT:UF-060",
+        "SEMANTIC:PLANUNIT:UF-061"
+      ],
+      "statement": "Responsive breakpoints, per-widget persistence, and multi-account observability are specified, but no merge/version rule covers concurrent layout edits, invalid persisted dimensions, removed widget versions, narrow/mobile overflow, keyboard-only manipulation, localization expansion, or permission-gated account repair links.",
+      "title": "Widget persistence and responsive behavior lack edge-state rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Usage rollups keep runtime recovery observability queryable with blocked attempts by `blocked_reason_code`, retries by `failure_class`, remediation child activity, queue-analysis passes, safe-point creates/restores, `escalation_level`, `action_available`, and blocked outcomes distinct from failures.'",
+          "line_end": 4239,
+          "line_start": 4239,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: 'Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator receipts do not create feature-local cost views; `usage_event_ref` or equivalent canonical usage identity routes `Show in Ledger` and `Show in Usage` to canonical Usage surfaces, with feature-local summaries only secondary.'",
+          "line_end": 4300,
+          "line_start": 4300,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents duplicated cost truth while making recovery and usage evidence reusable across operational surfaces.",
+      "item_id": "A005M15-I007",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-062",
+        "PLANUNIT:UF-063",
+        "PLANUNIT:UF-064",
+        "SEMANTIC:PLANUNIT:UF-062",
+        "SEMANTIC:PLANUNIT:UF-063",
+        "SEMANTIC:PLANUNIT:UF-064"
+      ],
+      "statement": "All Usage widgets are Dashboard-hostable, runtime recovery dimensions remain queryable with blocked distinct from failed, and cross-surface receipts route to canonical Ledger/Usage rather than feature-local cost views.",
+      "title": "Dashboard reuse, recovery observability, and canonical Usage routing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Cost-bearing actions disclose reversibility and undo/accounting before execution, including undo-window duration, `local-only` versus `remote-compensating`, invalidators, and high-cost warning semantics for repeated or long-lived remote actions when platform/provider data allows it.'",
+          "line_end": 4360,
+          "line_start": 4360,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: 'Bulk-operation receipts preserve parent aggregate `/failed/blocked/skipped` counts and child `per-target` result, `usage_event_ref`, rollback or `/undo` expectation, and blocked reason; owner precedence keeps `usage-feature.md` on cost_usage routing while legacy `allowed_actions[]` remains compatibility-only and ordered `allowed_action_ids[]` stays live.'",
+          "line_end": 4426,
+          "line_start": 4426,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_atomicity_idempotency_concurrency_and_rollback_contract",
+      "impact": "Interrupted bulk or account-switch operations can double-charge, misstate blocked/failed counts, offer an expired undo, or route subsequent work under an attribution state that differs from the durable receipt.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:UF-065",
+        "PLANUNIT:UF-066",
+        "PLANUNIT:UF-067",
+        "SEMANTIC:PLANUNIT:UF-065",
+        "SEMANTIC:PLANUNIT:UF-066",
+        "SEMANTIC:PLANUNIT:UF-067"
+      ],
+      "statement": "Undo disclosure, bulk parent/child receipts, and append-only account switch/pressure records are detailed, but the contract does not define atomic commit order, idempotency across partial remote compensation, undo-window clock authority, concurrent account switches, or repair when parent aggregates disagree with child outcomes.",
+      "title": "Cost-bearing action and account-pressure records lack atomic transition rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Runtime artifacts and receipts preserve canonical usage identity plus run `/thread/attempt/worktree` linkage, and `inspector_target = history` changes chronological or detail-history focus inside the already-selected object rather than the selected subject identity.'",
+          "line_end": 4608,
+          "line_start": 4608,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: 'Usage export labels distinguish exact record payload, filtered table dump, and convenience summary; filtered ledger CSV, filtered concern `/table` CSV, and analytics chart/table export are view exports unless they carry the exact record envelope required for canonical record export.'",
+          "line_end": 4667,
+          "line_start": 4667,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_identity_conflict_schema_skew_and_export_security_contract",
+      "impact": "A valid-looking export or drill-through can expose restricted fields, target the wrong attempt/worktree, or silently degrade when producer and consumer schema versions differ.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-068",
+        "PLANUNIT:UF-069",
+        "PLANUNIT:UF-070",
+        "SEMANTIC:PLANUNIT:UF-068",
+        "SEMANTIC:PLANUNIT:UF-069",
+        "SEMANTIC:PLANUNIT:UF-070"
+      ],
+      "statement": "Schema evidence, object-preserving history focus, and export-class distinctions are explicit, but no precedence resolves conflicting shared-subject identities, missing route targets, schema-version skew, or redaction/authorization requirements for exact-record versus view exports.",
+      "title": "Evidence-gated routing and exports omit conflict and redaction behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The `effective-resolution` record carries blocked and `/degraded` reason fields plus confidence and `/source` hooks so Usage can display why resolution changed without owning provider or runtime truth.'",
+          "line_end": 4787,
+          "line_start": 4787,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "canonical_text: 'OpenCode bridge limits, DAE enforcement, promoted-feature shell ownership, and runtime identity provenance remain explicit architectural edges before Usage presents those events as fully resolved provider/account facts.'",
+          "line_end": 4842,
+          "line_start": 4842,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_authority_precedence_confidence_decay_and_invalid_transition_contract",
+      "impact": "Usage can present an apparently resolved provider/account fact or non-problem historical state after its evidence has expired, been revoked, or become contradictory.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-071",
+        "PLANUNIT:UF-072",
+        "PLANUNIT:UF-073",
+        "SEMANTIC:PLANUNIT:UF-071",
+        "SEMANTIC:PLANUNIT:UF-072",
+        "SEMANTIC:PLANUNIT:UF-073"
+      ],
+      "statement": "Historical state, effective-resolution display, and provider provenance boundaries are named, but the contract does not define authority precedence when sources disagree, confidence decay, transition legality, stale/removed subject routing, or recovery when provenance is unavailable.",
+      "title": "Historical and provider-resolution truth lacks precedence and recovery rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'UF-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 197 because usage-feature-S0104 through S0107 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated UF-001 bridge, and Migration Coverage. usage-feature-S0001 through S0103 are covered by UF-002 through UF-073 or explicit structural/reference dispositions. UF-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.'",
+          "line_end": 4895,
+          "line_start": 4895,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  - Missing or unavailable provider usage is not displayed as zero.",
+          "line_end": 5045,
+          "line_start": 5045,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  - Usage view distinguishes entitlement gaps, plan-not-included, balance/resource gating, regional profile mismatch, overload, and unsupported routes.",
+          "line_end": 5088,
+          "line_start": 5088,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents a retired coarse bridge from owning product coverage and prevents unverified or missing provider usage from being shown as successful zero or generic failure.",
+      "item_id": "A005M15-I011",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-001",
+        "PLANUNIT:UF-074",
+        "PLANUNIT:UF-075",
+        "SEMANTIC:PLANUNIT:UF-001",
+        "SEMANTIC:PLANUNIT:UF-074",
+        "SEMANTIC:PLANUNIT:UF-075"
+      ],
+      "statement": "UF-001 is explicitly migration-only, while provider rows distinguish source confidence, missing versus zero, and provider-specific entitlement, region, balance, overload, and capability-gated states.",
+      "title": "Retired bridge and provider missing-versus-zero support-state contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When the vision bridge uses a separate provider/model/account, PM records usage/cost refs when available",
+          "line_end": 5129,
+          "line_start": 5129,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  Paid-overage, metered, credit-consuming, API-billed, entitlement-bound, org-policy-bound, and other non-free entries in the PM-wide top-10 may route only after PM resolves budget ceilings/thresholds, billing entity, entitlement class, org policy, account identity, and Usage attribution before dispatch. Optional budget controls and notifications coexist with always-on Usage visibility. The default budget preset levels are exactly `50, 80, 90, 95, 100`.",
+          "line_end": 5224,
+          "line_start": 5224,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_atomic_policy_snapshot_and_time_of_check_time_of_use_contract",
+      "impact": "A reroute can be authorized under one policy and settled under another, causing surprise spend, privacy-boundary violations, or irreconcilable charged-attempt attribution.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:UF-076",
+        "PLANUNIT:UF-077",
+        "SEMANTIC:PLANUNIT:UF-076",
+        "SEMANTIC:PLANUNIT:UF-077"
+      ],
+      "statement": "Vision attribution and paid fallback require requested/effective route identity plus budget, billing, entitlement, org policy, account, and usage resolution, but the PlanUnits do not define snapshot versioning, evaluation precedence, TOCTOU handling, or behavior when policy changes after dispatch but before settlement.",
+      "title": "Vision and paid fallback gates lack a single atomic policy snapshot"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Usage and fallback receipts for Free Models include every actually attempted model with outcome, skipped entries with reasons, and the final selected/stopped result, collapsed by default and expandable for detail. Partial streaming failures show partial/failure state and retry/switch action instead of silently retrying or splicing a different model. In-flight requests record the exact model/provider/account/source snapshot they started with; Auto Apply and model refresh changes affect only new routing decisions and never rewrite prior attribution.",
+          "line_end": 5279,
+          "line_start": 5279,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- GUI shows budget by source family",
+          "line_end": 5350,
+          "line_start": 5350,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Supports forensic attribution without rewriting history and makes context pressure observable by source family.",
+      "item_id": "A005M15-I013",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-078",
+        "PLANUNIT:UF-079",
+        "SEMANTIC:PLANUNIT:UF-078",
+        "SEMANTIC:PLANUNIT:UF-079"
+      ],
+      "statement": "Receipts preserve every attempted and skipped fallback with immutable in-flight route provenance, while context-budget receipts account separately for tool, MCP, skill, document, terminal, and provider replay sources.",
+      "title": "Immutable fallback receipts and source-family context budgets"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Usage implementation is not GUI-complete until cross-surface fixtures prove that normalized UsageRecord values render correctly in Usage, Ledger, Context Detail Pane, Runtime Artifacts, Run Graph, Orchestrator, provider/settings rows, model rows, and Dashboard-hosted Usage widgets. The fixture suite is closed at minimum over GUI-USG-001 missing usage, GUI-USG-002 provider-reported zero, GUI-USG-003 unknown cost, GUI-USG-004 BYOK/subscription hidden cost, GUI-USG-005 disabled quota bucket, GUI-USG-006 cache zero versus unsupported, GUI-USG-007 inclusive/exclusive no-double-count, GUI-USG-008 partial/aborted stream, GUI-CBP-001 Antigravity missing commands, GUI-CBP-002 Antigravity G1 credits, GUI-ROUTE-001 object-first usage route, GUI-RAW-001 Raw/Curated redaction, and GUI-RAP-001 envelope plus per-type validation.",
+          "line_end": 5519,
+          "line_start": 5519,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_accessibility_localization_and_offline_gui_acceptance_oracles",
+      "impact": "Accounting can be numerically correct yet unusable or misleading for assistive-technology, localized, narrow, or offline users, and object-first navigation can fail without a falsifiable degraded-state oracle.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-087",
+        "PLANUNIT:UF-088",
+        "SEMANTIC:PLANUNIT:UF-087",
+        "SEMANTIC:PLANUNIT:UF-088"
+      ],
+      "statement": "The projection and fixture contracts strongly cover accounting states, redaction, and dedupe, but do not require keyboard/screen-reader semantics, focus preservation on route/open, locale-safe number/currency/date formatting, long translated reason text, reduced motion, high contrast, or recovery when drill-through targets are unavailable offline.",
+      "title": "Cross-surface GUI matrix omits accessibility, localization, and degraded-navigation fixtures"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  UsageRecord is the single normalized accounting record for provider, CLI, local, estimated, and unknown usage signals. Every record carries idempotent correlation through usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, run_id, thread_id?, node_id?, tool_call_id?, parent_usage_record_id?, and dedupe_key so retries, escalations, resumed streams, and receipt/artifact drill-through cannot double-count or fork attribution. Provider identity is normalized through provider_id, provider_route_kind, provider_account_ref?, model_id, model_variant?, reasoning_tier?, and context_window_tokens?. Authority is explicit through source_class = provider_reported | provider_header | cli_reported | local_estimated | pricing_estimated | unknown, source_confidence, source_authority, raw_payload_ref, redaction_status, and provider_payload_hash. Settlement is explicit through settlement_status = observed | streaming_partial | settled | adjusted | failed | unknown plus observed_at_utc, settled_at_utc?, adjusted_at_utc?, failure_class?, and partial_reason?. Token buckets are first-class and present even when unknown: input_total, input_non_cached, cache_read, cache_write, cache_write_1h, cache_write_ttl?, output_total, output_visible, reasoning/thoughts, provider_total, and context_estimate. Provider mappers state counting_semantics for whether cache is a subset of input and whether reasoning/thoughts are a subset of output; PM never adds subset fields back onto inclusive provider totals. Costs use cost_microdollars and/or provider minor units, currency, cost_status, pricing_snapshot_id, pricing_source, pricing_effective_at, pricing_version, per-bucket costs, and unknown-cost fail-closed behavior. BYOK and subscription/provider-plan routes preserve accounting refs while suppressing misleading per-token cost display when provider policy requires it. Usage windows and quotas are normalized as rolling, fixed, billing, session, or unknown with reset/cooldown evidence; missing reset signals, disabled buckets, missing cost, and missing quota render unknown/not exposed/disabled rather than guessed countdowns or zeroes. Raw provider payloads are retained by reference with redaction before persistence, while normalized fields remain queryable.",
+          "line_end": 5617,
+          "line_start": 5617,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  Usage implementation is not complete until provider parser fixtures prove normalized UsageRecord behavior for OpenAI Chat/Responses, Anthropic Messages, Gemini, Bedrock, OpenRouter, LiteLLM/OpenAI-compatible routes, local/llama routes, custom providers, and Antigravity CLI. Fixtures must include raw provider payload refs plus normalized fields for token buckets, inclusive/exclusive counting semantics, settlement lifecycle, cost status, quota/window evidence, BYOK/subscription cost-display policy, retry/escalation de-duplication, and partial/aborted stream preservation. Each parser fixture states whether cache is a subset of input, reasoning/thoughts are a subset of output, provider_total is authoritative or derived, and context_estimate is local-only. The fixture suite must include negative tests for missing usage, null usage, unknown cost, disabled quotas, missing reset, missing /stats, provider-reported zero, malformed negative/subset-overflow values, and custom-provider price rows.",
+          "line_end": 5727,
+          "line_start": 5727,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_transactional_idempotency_settlement_order_and_authority_arbitration",
+      "impact": "Retries, late provider usage, resumed streams, and concurrent adjustments can each pass field-level validation while still double-counting, losing a correction, or selecting a lower-authority total.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:UF-085",
+        "PLANUNIT:UF-086",
+        "SEMANTIC:PLANUNIT:UF-085",
+        "SEMANTIC:PLANUNIT:UF-086"
+      ],
+      "statement": "The accounting and parser contracts enumerate correlation, lifecycle, fixtures, and no-double-count behavior, but do not define uniqueness scope for dedupe_key, atomic claim/settlement, ordering between settled and adjusted records, replay horizon, or deterministic arbitration when concurrent provider header, body, CLI, and local estimates disagree.",
+      "title": "UsageRecord defines dedupe fields but not concurrent settlement arbitration"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  P0-CACHE-USAGE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Normalize cache usage/read/write metrics: Usage records expose UF-085 cache buckets (`cache_read`, `cache_write`, and `cache_write_1h` / provider TTL-specific `cache_write_ttl` where exposed) plus cache_reporting_state and cache_miss_reason; the legacy cached_input_tokens source token is preserved only as source-lineage/import alias. UI does not show zero cache as unsupported or vice versa.",
+          "line_end": 5820,
+          "line_start": 5820,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  P2-CACHE-OBSERVABILITY-DASHBOARD (P2) is compiled as canonical Puppet Master intent for Add cache observability dashboard and rollups: Per-provider/model/account cache hit/miss/cost savings views expose measured vs estimated vs unsupported states.",
+          "line_end": 5885,
+          "line_start": 5885,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "  P2-CACHE-PRIVACY-POLICY (P2) is compiled as canonical Puppet Master intent for Expose provider cache retention/privacy boundaries: Cache retention policy and org/account boundary shown when available; no unsupported manual cache clearing is promised.",
+          "line_end": 5947,
+          "line_start": 5947,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_cache_metric_semantics_policy_freshness_and_cross_account_privacy_contract",
+      "impact": "Dashboard savings and hit/miss values can be incomparable or privacy-misleading across providers/accounts, and stale policy text can outlive the authority that supplied it.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-080",
+        "PLANUNIT:UF-081",
+        "PLANUNIT:UF-082",
+        "SEMANTIC:PLANUNIT:UF-080",
+        "SEMANTIC:PLANUNIT:UF-081",
+        "SEMANTIC:PLANUNIT:UF-082"
+      ],
+      "statement": "Cache buckets, dashboard states, and provider retention/privacy boundaries are explicit, but the contract does not define hit-rate denominators, savings-price snapshot authority, retention-policy freshness, unavailable-policy copy, cross-account aggregation permission, or what happens when cache metadata is revoked or corrected.",
+      "title": "Cache reporting lacks lifecycle, aggregation, and privacy fallback detail"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        3018,
+        3384
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-040",
+        "PLANUNIT:UF-041",
+        "PLANUNIT:UF-042",
+        "PLANUNIT:UF-043",
+        "PLANUNIT:UF-044",
+        "PLANUNIT:UF-045",
+        "PLANUNIT:UF-046",
+        "SEMANTIC:PLANUNIT:UF-040",
+        "SEMANTIC:PLANUNIT:UF-041",
+        "SEMANTIC:PLANUNIT:UF-042",
+        "SEMANTIC:PLANUNIT:UF-043",
+        "SEMANTIC:PLANUNIT:UF-044",
+        "SEMANTIC:PLANUNIT:UF-045",
+        "SEMANTIC:PLANUNIT:UF-046"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002"
+      ],
+      "reviewed": true,
+      "summary": "Canonical write, window, retention, freshness, and deferred usage controls reviewed; the main residual risk is undefined failure and concurrency behavior for deferred controls.",
+      "window_id": "WIN-6690C379876B-0009"
+    },
+    {
+      "core_range": [
+        3385,
+        3779
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-047",
+        "PLANUNIT:UF-048",
+        "PLANUNIT:UF-049",
+        "PLANUNIT:UF-050",
+        "PLANUNIT:UF-051",
+        "PLANUNIT:UF-052",
+        "PLANUNIT:UF-053",
+        "PLANUNIT:UF-054",
+        "SEMANTIC:PLANUNIT:UF-047",
+        "SEMANTIC:PLANUNIT:UF-048",
+        "SEMANTIC:PLANUNIT:UF-049",
+        "SEMANTIC:PLANUNIT:UF-050",
+        "SEMANTIC:PLANUNIT:UF-051",
+        "SEMANTIC:PLANUNIT:UF-052",
+        "SEMANTIC:PLANUNIT:UF-053",
+        "SEMANTIC:PLANUNIT:UF-054"
+      ],
+      "item_ids": [
+        "A005M15-I003",
+        "A005M15-I004"
+      ],
+      "reviewed": true,
+      "summary": "Deferred export, header, Doctor, cost, and alert surfaces plus scope and success criteria reviewed; privacy and lifecycle semantics remain underdefined.",
+      "window_id": "WIN-6690C379876B-0010"
+    },
+    {
+      "core_range": [
+        3780,
+        4177
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-055",
+        "PLANUNIT:UF-056",
+        "PLANUNIT:UF-057",
+        "PLANUNIT:UF-058",
+        "PLANUNIT:UF-059",
+        "PLANUNIT:UF-060",
+        "PLANUNIT:UF-061",
+        "SEMANTIC:PLANUNIT:UF-055",
+        "SEMANTIC:PLANUNIT:UF-056",
+        "SEMANTIC:PLANUNIT:UF-057",
+        "SEMANTIC:PLANUNIT:UF-058",
+        "SEMANTIC:PLANUNIT:UF-059",
+        "SEMANTIC:PLANUNIT:UF-060",
+        "SEMANTIC:PLANUNIT:UF-061"
+      ],
+      "item_ids": [
+        "A005M15-I005",
+        "A005M15-I006"
+      ],
+      "reviewed": true,
+      "summary": "Widget-composed page, default layout, analytics signal, responsive configuration, and multi-account widget reviewed; persistence conflict and accessibility recovery rules are missing.",
+      "window_id": "WIN-6690C379876B-0011"
+    },
+    {
+      "core_range": [
+        4178,
+        4543
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-062",
+        "PLANUNIT:UF-063",
+        "PLANUNIT:UF-064",
+        "PLANUNIT:UF-065",
+        "PLANUNIT:UF-066",
+        "PLANUNIT:UF-067",
+        "SEMANTIC:PLANUNIT:UF-062",
+        "SEMANTIC:PLANUNIT:UF-063",
+        "SEMANTIC:PLANUNIT:UF-064",
+        "SEMANTIC:PLANUNIT:UF-065",
+        "SEMANTIC:PLANUNIT:UF-066",
+        "SEMANTIC:PLANUNIT:UF-067"
+      ],
+      "item_ids": [
+        "A005M15-I007",
+        "A005M15-I008"
+      ],
+      "reviewed": true,
+      "summary": "Dashboard reuse, recovery metrics, canonical routing, reversibility, bulk receipts, and account pressure reviewed; atomic transition and rollback semantics are the critical seam.",
+      "window_id": "WIN-6690C379876B-0012"
+    },
+    {
+      "core_range": [
+        4544,
+        4887
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-068",
+        "PLANUNIT:UF-069",
+        "PLANUNIT:UF-070",
+        "PLANUNIT:UF-071",
+        "PLANUNIT:UF-072",
+        "PLANUNIT:UF-073",
+        "SEMANTIC:PLANUNIT:UF-068",
+        "SEMANTIC:PLANUNIT:UF-069",
+        "SEMANTIC:PLANUNIT:UF-070",
+        "SEMANTIC:PLANUNIT:UF-071",
+        "SEMANTIC:PLANUNIT:UF-072",
+        "SEMANTIC:PLANUNIT:UF-073"
+      ],
+      "item_ids": [
+        "A005M15-I009",
+        "A005M15-I010"
+      ],
+      "reviewed": true,
+      "summary": "Evidence gates, subject routing, export classes, historical state, effective resolution, and provenance reviewed; identity conflicts, redaction, and authority precedence need closure.",
+      "window_id": "WIN-6690C379876B-0013"
+    },
+    {
+      "core_range": [
+        4888,
+        5270
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-001",
+        "PLANUNIT:UF-074",
+        "PLANUNIT:UF-075",
+        "PLANUNIT:UF-076",
+        "PLANUNIT:UF-077",
+        "SEMANTIC:PLANUNIT:UF-001",
+        "SEMANTIC:PLANUNIT:UF-074",
+        "SEMANTIC:PLANUNIT:UF-075",
+        "SEMANTIC:PLANUNIT:UF-076",
+        "SEMANTIC:PLANUNIT:UF-077"
+      ],
+      "item_ids": [
+        "A005M15-I011",
+        "A005M15-I012"
+      ],
+      "reviewed": true,
+      "summary": "Retired bridge, provider confidence/gates, vision attribution, and paid fallback budget requirements reviewed; an atomic policy snapshot is missing across dispatch and settlement.",
+      "window_id": "WIN-6690C379876B-0014"
+    },
+    {
+      "core_range": [
+        5271,
+        5608
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-078",
+        "PLANUNIT:UF-079",
+        "PLANUNIT:UF-087",
+        "PLANUNIT:UF-088",
+        "SEMANTIC:PLANUNIT:UF-078",
+        "SEMANTIC:PLANUNIT:UF-079",
+        "SEMANTIC:PLANUNIT:UF-087",
+        "SEMANTIC:PLANUNIT:UF-088"
+      ],
+      "item_ids": [
+        "A005M15-I013",
+        "A005M15-I014"
+      ],
+      "reviewed": true,
+      "summary": "Immutable fallback receipts, source-family context budgets, GUI projection, and GUI fixture matrix reviewed; accessibility, localization, and degraded-navigation oracles remain absent.",
+      "window_id": "WIN-6690C379876B-0015"
+    },
+    {
+      "core_range": [
+        5609,
+        6005
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-080",
+        "PLANUNIT:UF-081",
+        "PLANUNIT:UF-082",
+        "PLANUNIT:UF-085",
+        "PLANUNIT:UF-086",
+        "SEMANTIC:PLANUNIT:UF-085",
+        "SEMANTIC:PLANUNIT:UF-086",
+        "SEMANTIC:PLANUNIT:UF-080",
+        "SEMANTIC:PLANUNIT:UF-081",
+        "SEMANTIC:PLANUNIT:UF-082"
+      ],
+      "item_ids": [
+        "A005M15-I015",
+        "A005M15-I016"
+      ],
+      "reviewed": true,
+      "summary": "UsageRecord, provider parser acceptance, cache envelopes, dashboard, and privacy policy reviewed; settlement arbitration and cache metric/policy lifecycle semantics remain underdefined.",
+      "window_id": "WIN-6690C379876B-0016"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-6690C379876B-0001",
+    "document_path": "Plans/usage-feature.md",
+    "micro_window_ids": [
+      "WIN-6690C379876B-0009",
+      "WIN-6690C379876B-0010",
+      "WIN-6690C379876B-0011",
+      "WIN-6690C379876B-0012",
+      "WIN-6690C379876B-0013",
+      "WIN-6690C379876B-0014",
+      "WIN-6690C379876B-0015",
+      "WIN-6690C379876B-0016"
+    ],
+    "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which shared contract owns atomic dedupe-key claims, settlement ordering, and authority arbitration across UsageRecord producers?",
+      "Which permission and redaction contract governs exact-record export versus filtered view export across Usage, Ledger, and Runtime Artifacts?",
+      "Which GUI contract supplies keyboard, screen-reader, localization, narrow-layout, and offline drill-through acceptance fixtures for Usage surfaces?",
+      "Which policy artifact is the immutable dispatch-time snapshot for budget, entitlement, org policy, provider/account permission, and later settlement?"
+    ],
+    "feature_family_keys": [
+      "usage-accounting",
+      "provider-quota-and-cost",
+      "usage-gui-projection",
+      "widget-composed-usage",
+      "fallback-and-budget-receipts",
+      "cache-observability",
+      "cross-surface-routing",
+      "usage-export"
+    ],
+    "research_queries": [
+      "Transactional idempotency and settlement arbitration patterns for append-only usage accounting records",
+      "Accessible responsive dashboard widget rearrangement and persistence conflict recovery",
+      "Privacy-preserving usage export and provider cache policy disclosure patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_000223_attempt_0015_terminal"
+}

@@ -1,0 +1,254 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "macro-native-capture-v1",
+  "epoch_id": "epoch-0015",
+  "batch_id": "macro-batch-0009",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "controller_turn_id": "019f4ff7-ad85-7a23-a3fd-9eb3b6b2bd66",
+  "controller_thread_state": "idle",
+  "controller_turn_status": "completed",
+  "controller_turn_error": null,
+  "capture_basis": "codex_app_read_thread_after_controller_and_all_24_direct_children_terminal",
+  "leaves": [
+    {
+      "assignment_id": "A005M15-000165-INTEGRATED-MACRO15-6C0E66503AB2-0001",
+      "native_child_thread_id": "019f4ff9-7036-70a2-a64e-c46075605f8a",
+      "native_child_turn_id": "019f4ff9-70d9-78a1-8202-6ab984ba2d1c",
+      "agent_path": "/root/a005m15_b9_000165_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000166-INTEGRATED-MACRO15-ABE5BFCF4781-0001",
+      "native_child_thread_id": "019f4ff9-bddf-7840-8a37-3a8333035e33",
+      "native_child_turn_id": "019f4ff9-be6d-72c3-b043-b3841defc962",
+      "agent_path": "/root/a005m15_b9_000166_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000167-INTEGRATED-MACRO15-9C773F6116D6-0001",
+      "native_child_thread_id": "019f4ffa-0616-71e1-84a1-46e96b9187a1",
+      "native_child_turn_id": "019f4ffa-069a-7ff3-ad61-155d1ce83f3c",
+      "agent_path": "/root/a005m15_b9_000167_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000168-INTEGRATED-MACRO15-9C773F6116D6-0002",
+      "native_child_thread_id": "019f4ffa-5105-7f70-92a4-9c7281b7a020",
+      "native_child_turn_id": "019f4ffa-518b-79a1-a062-c0edf965bc2e",
+      "agent_path": "/root/a005m15_b9_000168_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000169-INTEGRATED-MACRO15-9C773F6116D6-0003",
+      "native_child_thread_id": "019f4ffa-8507-79a0-b95b-8cec9f261cb1",
+      "native_child_turn_id": "019f4ffa-857c-7052-bbee-ab4d799a963e",
+      "agent_path": "/root/a005m15_b9_000169_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000170-INTEGRATED-MACRO15-1BF0967E88A5-0001",
+      "native_child_thread_id": "019f4ffa-cc4b-7253-b024-36b58f2ef223",
+      "native_child_turn_id": "019f4ffa-ccc5-7a33-a532-e223d1e9edca",
+      "agent_path": "/root/a005m15_b9_000170_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000172-INTEGRATED-MACRO15-1BF0967E88A5-0003",
+      "native_child_thread_id": "019f4ffb-24e8-7ce3-8e74-cc74381ccee9",
+      "native_child_turn_id": "019f4ffb-255f-7352-8439-0c762049261a",
+      "agent_path": "/root/a005m15_b9_000172_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000173-INTEGRATED-MACRO15-1BF0967E88A5-0004",
+      "native_child_thread_id": "019f4ffb-5c21-7e63-bc61-fbe2300bebeb",
+      "native_child_turn_id": "019f4ffb-5c92-7302-8941-3a98459e0373",
+      "agent_path": "/root/a005m15_b9_000173_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000174-INTEGRATED-MACRO15-1BF0967E88A5-0005",
+      "native_child_thread_id": "019f4ffb-9491-7a92-a0cb-996aa29bbe51",
+      "native_child_turn_id": "019f4ffb-950d-79e1-9719-f68a11ef96c2",
+      "agent_path": "/root/a005m15_b9_000174_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000175-INTEGRATED-MACRO15-1BF0967E88A5-0006",
+      "native_child_thread_id": "019f4ffb-d155-7b52-8eea-2831cda2f62f",
+      "native_child_turn_id": "019f4ffb-d1d1-7731-a4ef-8effae0173df",
+      "agent_path": "/root/a005m15_b9_000175_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000176-INTEGRATED-MACRO15-1BF0967E88A5-0007",
+      "native_child_thread_id": "019f4ffc-13f5-7270-8ffa-b802d49199ee",
+      "native_child_turn_id": "019f4ffc-1476-7ff1-aa08-0733e8dd4e2c",
+      "agent_path": "/root/a005m15_b9_000176_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000177-INTEGRATED-MACRO15-1BF0967E88A5-0008",
+      "native_child_thread_id": "019f4ffc-5016-7d81-ae7b-630d7813b6ef",
+      "native_child_turn_id": "019f4ffc-50a9-7222-8591-d2323c90c667",
+      "agent_path": "/root/a005m15_b9_000177_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000178-INTEGRATED-MACRO15-1BF0967E88A5-0009",
+      "native_child_thread_id": "019f4ffc-93ff-7be2-9169-103d126c7b4c",
+      "native_child_turn_id": "019f4ffc-947c-76f1-a389-9f0075355fd8",
+      "agent_path": "/root/a005m15_b9_000178_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000179-INTEGRATED-MACRO15-1BF0967E88A5-0010",
+      "native_child_thread_id": "019f4ffc-dadb-70d2-b7a7-11619ac07bc3",
+      "native_child_turn_id": "019f4ffc-db61-7b30-bf22-e33013a9e62f",
+      "agent_path": "/root/a005m15_b9_000179_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000180-INTEGRATED-MACRO15-1BF0967E88A5-0011",
+      "native_child_thread_id": "019f4ffd-12a2-7811-adc2-22882a1bca79",
+      "native_child_turn_id": "019f4ffd-1317-7762-800a-97971280c1e1",
+      "agent_path": "/root/a005m15_b9_000180_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000181-INTEGRATED-MACRO15-6A40BC7A2022-0001",
+      "native_child_thread_id": "019f4ffd-5348-7bc2-b8ea-f74267b5d030",
+      "native_child_turn_id": "019f4ffd-53d1-71c0-b02d-e6b6a2993e89",
+      "agent_path": "/root/a005m15_b9_000181_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000182-INTEGRATED-MACRO15-666EDF3B7D73-0001",
+      "native_child_thread_id": "019f4ffd-ac4a-7c10-9ed7-c803e7f37b9f",
+      "native_child_turn_id": "019f4ffd-accb-7650-afb0-9f4cb095adf7",
+      "agent_path": "/root/a005m15_b9_000182_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000183-INTEGRATED-MACRO15-E1BF579AB17C-0001",
+      "native_child_thread_id": "019f4ffe-00ac-7450-b20d-1d42fec0c634",
+      "native_child_turn_id": "019f4ffe-013c-79b1-a03c-d67f86d502eb",
+      "agent_path": "/root/a005m15_b9_000183_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000184-INTEGRATED-MACRO15-F2A6E3B37B3B-0001",
+      "native_child_thread_id": "019f4ffe-3a74-7811-8fbc-e2633b4c5785",
+      "native_child_turn_id": "019f4ffe-3af0-7622-899d-9a81feea39bb",
+      "agent_path": "/root/a005m15_b9_000184_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000185-INTEGRATED-MACRO15-F2A6E3B37B3B-0002",
+      "native_child_thread_id": "019f4ffe-8ac0-7790-8b0e-678bef742a4f",
+      "native_child_turn_id": "019f4ffe-8b42-7343-8266-96fbe3dde166",
+      "agent_path": "/root/a005m15_b9_000185_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000186-INTEGRATED-MACRO15-AF7ED3DB4476-0001",
+      "native_child_thread_id": "019f4ffe-dc42-7420-9eb1-e59651d0a100",
+      "native_child_turn_id": "019f4ffe-dcc2-74f2-a6c0-f3cd4a333ebb",
+      "agent_path": "/root/a005m15_b9_000186_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000187-INTEGRATED-MACRO15-8967FF3B4147-0001",
+      "native_child_thread_id": "019f4fff-1643-77e2-993b-c65341f29e04",
+      "native_child_turn_id": "019f4fff-1712-7f92-947a-2191e271d9a2",
+      "agent_path": "/root/a005m15_b9_000187_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000188-INTEGRATED-MACRO15-ED3F3B9AAC35-0001",
+      "native_child_thread_id": "019f4fff-5367-7191-9ba5-b7cc9e45f4d1",
+      "native_child_turn_id": "019f4fff-53e5-76d0-b61e-741a052b3c24",
+      "agent_path": "/root/a005m15_b9_000188_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005M15-000189-INTEGRATED-MACRO15-F3484705ACB2-0001",
+      "native_child_thread_id": "019f4fff-918c-77d1-bead-0c44a4765147",
+      "native_child_turn_id": "019f4fff-9210-70a2-b79d-f77f90271c67",
+      "agent_path": "/root/a005m15_b9_000189_attempt_0015_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ]
+}

@@ -1,0 +1,656 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v2",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0001",
+  "attempt_id": "attempt-0002",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "task_thread_id": "/root/a005_external_research_sprint_0001_attempt_0002_terminal",
+  "agent_path": "/root/a005_external_research_sprint_0001_attempt_0002_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "topic": "Undo/revert/rewind separation and safe recovery UX",
+  "owner_domains": [
+    "recovery_state_and_concurrency"
+  ],
+  "feature_refs": [
+    "OPF::A005OM-0006::PF-0169",
+    "OPF::A005OM-0007::PF-0001",
+    "OPF::A005OM-0007::PF-0002"
+  ],
+  "research_questions": [
+    "How do mature version-control, IDE, chat, and agent products distinguish undo, revert, rewind, checkpoint restore, and destructive recovery?",
+    "Which user-visible confirmations, previews, scopes, and recovery guarantees prevent accidental loss or ambiguous rollback?",
+    "How should Puppet Master represent operation identity, affected artifacts, provenance, reversibility, and partial failure across these recovery modes?",
+    "Which failure modes and accessibility or trust signals are documented by official or primary sources?"
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [],
+  "sources": [
+    {
+      "url": "https://git-scm.com/docs/git-reset",
+      "title": "Git - git-reset Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-04-20",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines reset as moving HEAD and optionally changing the index and worktree, with soft, mixed, hard, merge, keep, path-limited, and ORIG_HEAD recovery semantics."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-revert",
+      "title": "Git - git-revert Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-04-20",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines revert as recording new commits that reverse existing commits and documents clean-worktree, conflict, continue, skip, and abort behavior."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-reflog",
+      "title": "Git - git-reflog Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents local reference logs, prior ref values, recovery breadcrumbs, and expiry or deletion limits on those breadcrumbs."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/editing/userinterface",
+      "title": "User interface",
+      "publisher": "Microsoft / Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents Timeline and local file history with revision comparison, restore, deleted-file recovery, and configurable size, entry, exclusion, and merge-window limits."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+      "title": "Revert changes with checkpoints and editing requests",
+      "publisher": "Microsoft / Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Separates editing a prior chat request from restoring a checkpoint, and documents confirmation, redo, file-change previews, and conversation forking."
+    },
+    {
+      "url": "https://www.jetbrains.com/help/webstorm/local-history.html",
+      "title": "Local History",
+      "publisher": "JetBrains",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents diff-driven full or selective restoration, deleted-file recovery, project or folder scope, labels, and explicit retention and size limits."
+    },
+    {
+      "url": "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request",
+      "title": "Reverting a pull request",
+      "publisher": "GitHub",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Shows shared-history recovery as a new revert pull request with permissions, conflict handling, and a subsequent merge gate."
+    },
+    {
+      "url": "https://code.claude.com/docs/en/checkpointing",
+      "title": "Checkpointing",
+      "publisher": "Anthropic / Claude Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Separates restore code, restore conversation, restore both, summarize, and fork; documents per-prompt checkpoints, persistence, retention, and coverage limits."
+    },
+    {
+      "url": "https://code.claude.com/docs/en/agent-sdk/file-checkpointing",
+      "title": "Rewind file changes with checkpointing",
+      "publisher": "Anthropic / Claude Agent SDK",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines checkpoint UUIDs, tracked edit tools, created and modified file restoration, code-only rewind, and non-capture of Bash changes."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints",
+      "title": "Microsoft Agent Framework Workflows - Checkpoints",
+      "publisher": "Microsoft",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Provides checkpoint lifecycle and restore APIs, memory/file/distributed storage choices, durability implications, and trusted-storage security guidance."
+    },
+    {
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "publisher": "World Wide Web Consortium",
+      "published_date": "2024-12-12",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines error-prevention alternatives for data modification or deletion: reversible, checked, or confirmed, plus text identification of detected errors."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "claim": "Git's public command model distinguishes additive revert from local reset: revert records new commits that reverse earlier commits, while reset moves HEAD and can alter the index and working tree according to mode.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "confidence": 0.99,
+      "notes": "The distinction is explicit in both manuals and is tied to different state scopes and history consequences."
+    },
+    {
+      "finding_id": "F-002",
+      "claim": "Git reset exposes materially different safety scopes: soft leaves files and index, mixed updates the index, hard overwrites the worktree and may overwrite untracked files, while merge and keep can abort when local changes would be overwritten.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset"
+      ],
+      "confidence": 0.99,
+      "notes": "A generic reset button would hide meaningful loss and concurrency semantics that Git makes explicit through modes and pathspecs."
+    },
+    {
+      "finding_id": "F-003",
+      "claim": "Git reflog provides local breadcrumbs for prior reference tips, but those entries can expire, be deleted, or be dropped and therefore are bounded recovery aids rather than permanent shared history.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog"
+      ],
+      "confidence": 0.98,
+      "notes": "The manual documents local ref updates, prior-value notation, and expiration of reachable and unreachable entries."
+    },
+    {
+      "finding_id": "F-004",
+      "claim": "VS Code separates editing a previous chat request from restoring a checkpoint: editing reverts the original request and subsequent changes before resending, while checkpoint restore returns files to a selected conversation point without changing the prompts.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "confidence": 0.99,
+      "notes": "This gives users distinct controls for changing intent and for recovering a known-good workspace state."
+    },
+    {
+      "finding_id": "F-005",
+      "claim": "VS Code checkpoint recovery includes confirmation, redo after an accidental restore, per-request file-change counts, and conversation forking from a checkpoint.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "confidence": 0.98,
+      "notes": "The documented flow makes target, scope, and alternative actions visible before and after recovery."
+    },
+    {
+      "finding_id": "F-006",
+      "claim": "VS Code Timeline and JetBrains Local History make local recovery inspectable through revision lists and diffs, support full or selective restoration, and cover accidentally deleted files.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://www.jetbrains.com/help/webstorm/local-history.html"
+      ],
+      "confidence": 0.97,
+      "notes": "Both IDEs provide a reviewable history surface rather than requiring users to guess a target from a generic undo stack."
+    },
+    {
+      "finding_id": "F-007",
+      "claim": "GitHub implements pull-request rollback as a new revert pull request, requiring write permission and a later merge; conflicts or non-GitHub fast-forward merges can require individual commit reverts.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request",
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "confidence": 0.99,
+      "notes": "The new change object preserves review and merge gates instead of silently rewriting a shared branch."
+    },
+    {
+      "finding_id": "F-008",
+      "claim": "Claude Code exposes independent restore scopes for code, conversation, or both, while its summarize actions change context without changing files.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "confidence": 0.99,
+      "notes": "The product explicitly distinguishes artifact state from conversation state and offers a no-file-change summarization path."
+    },
+    {
+      "finding_id": "F-009",
+      "claim": "Agent checkpoint coverage is tool- and session-bound: Claude tracks direct file-edit tools but not Bash or ordinary external concurrent edits; its SDK rewinds file state without rewinding conversation state, and checkpoint lifetime is limited or configurable.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing"
+      ],
+      "confidence": 0.99,
+      "notes": "Coverage and retention are part of the recovery contract and must not be implied to include every workspace side effect."
+    },
+    {
+      "finding_id": "F-010",
+      "claim": "Microsoft Agent Framework models checkpoint durability through pluggable in-memory, file, and distributed storage and treats checkpoint storage as a trusted security boundary.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "confidence": 0.98,
+      "notes": "Storage choice changes restart and cross-process durability; authorization and tamper resistance are explicitly part of safe restore."
+    },
+    {
+      "finding_id": "F-011",
+      "claim": "WCAG 2.2 frames safety for data modification or deletion as at least one of reversible, checked, or confirmed, and requires detected input errors to be identified and described in text.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.w3.org/TR/WCAG22/"
+      ],
+      "confidence": 0.98,
+      "notes": "The standard provides a useful confirmation and accessibility baseline for destructive recovery controls."
+    },
+    {
+      "finding_id": "F-012",
+      "claim": "The reviewed systems imply that recovery scope is safer when encoded in a user-visible operation record than when inferred from a generic undo label.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "confidence": 0.9,
+      "notes": "This is a design inference from the documented differences among reset modes, chat checkpoints, and code-versus-conversation restore."
+    },
+    {
+      "finding_id": "F-013",
+      "claim": "No reviewed source defines a universal transaction or atomicity guarantee for rewinding arbitrary shell commands, external systems, and concurrent actors together.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "confidence": 0.88,
+      "notes": "The reviewed documentation is explicit about file or workflow scope and non-captured changes, but does not provide a general cross-system rollback contract."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-001",
+      "pattern": "Layered recovery separates immediate edit undo or local history, session-level agent checkpoints, and durable shared-history version-control or pull-request reverts.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "implication": "Use different recovery surfaces and guarantees for local edits, agent sessions, and shared history instead of one overloaded rollback action."
+    },
+    {
+      "pattern_id": "P-002",
+      "pattern": "Recovery targets are anchored to user-visible history entries such as chat requests, prompt or checkpoint identifiers, local-history revisions, timestamps, commits, or refs, with diff or file-scope inspection available.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing",
+        "https://git-scm.com/docs/git-reflog"
+      ],
+      "implication": "A recovery target should be selectable and inspectable, not inferred from an opaque stack position."
+    },
+    {
+      "pattern_id": "P-003",
+      "pattern": "Agent products distinguish artifact state from conversation state and offer code-only, conversation-only, both, or forked alternatives.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "implication": "A user can recover files without losing reasoning context, or branch an alternative without destroying the original session."
+    },
+    {
+      "pattern_id": "P-004",
+      "pattern": "Shared-history rollback is additive: create an inverse commit or revert pull request, then apply normal review, permission, conflict, and merge gates.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "implication": "Preserve provenance and collaboration controls for recovery that affects shared history."
+    },
+    {
+      "pattern_id": "P-005",
+      "pattern": "Recovery workflows model partial failure with explicit continue, skip, abort, conflict, or retry paths rather than reporting a binary success only.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "implication": "Recovery state should remain inspectable and resumable when the target cannot be applied cleanly."
+    },
+    {
+      "pattern_id": "P-006",
+      "pattern": "Checkpoint boundaries align with meaningful user or workflow units: a chat request, a prompt, or a workflow superstep, with storage selected for intended durability.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "implication": "Checkpoint granularity should follow meaningful operation boundaries and advertise whether it survives restart or distribution."
+    },
+    {
+      "pattern_id": "P-007",
+      "pattern": "Puppet Master should expose a common recovery envelope over these layers while preserving their different semantics and guarantees.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://git-scm.com/docs/git-revert",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "implication": "Unify metadata and previews, not the underlying meaning of undo, restore, rewind, revert, or reset."
+    },
+    {
+      "pattern_id": "P-008",
+      "pattern": "No reviewed source provides a cross-vendor standard vocabulary that guarantees users will interpret undo, revert, rewind, restore, and reset identically.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "implication": "Treat labels as typed operation contracts with explanatory scope and consequence text rather than assuming synonymy."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-001",
+      "failure_mode": "A user selects destructive reset when they intended additive revert, causing uncommitted work to be overwritten or removed.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "mitigation_or_gap": "Use explicit operation names, scope previews, warnings for uncommitted or untracked loss, and a separate shared-history revert path."
+    },
+    {
+      "failure_id": "FM-002",
+      "failure_mode": "Checkpoint restore appears complete while shell-command edits or concurrent manual edits remain outside the checkpoint coverage.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing"
+      ],
+      "mitigation_or_gap": "Show capture coverage per artifact and disclose non-captured commands, external edits, and concurrent session changes before confirmation."
+    },
+    {
+      "failure_id": "FM-003",
+      "failure_mode": "The requested recovery target is unavailable because local-history, checkpoint, or reflog retention and size limits expired or pruned it.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://git-scm.com/docs/git-reflog"
+      ],
+      "mitigation_or_gap": "Display retention and durability alongside each target, distinguish unavailable from empty, and offer durable version-control checkpoints for important states."
+    },
+    {
+      "failure_id": "FM-004",
+      "failure_mode": "A shared-history revert encounters merge conflicts or cannot map to one merge commit, forcing manual commit-level recovery.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request",
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "mitigation_or_gap": "Expose conflict state and affected commits, keep the original change visible, and provide continue, abort, or smaller-scope recovery actions."
+    },
+    {
+      "failure_id": "FM-005",
+      "failure_mode": "A user restores files but not the conversation, or rewinds conversation but keeps current files, and misinterprets what state was changed.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "mitigation_or_gap": "Use separate code and conversation scope controls and state the resulting state for each before and after recovery."
+    },
+    {
+      "failure_id": "FM-006",
+      "failure_mode": "Checkpoint storage is tampered with, loaded from an untrusted source, or accessible to unauthorized actors.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "mitigation_or_gap": "Treat checkpoint storage as a trust boundary with authorization, integrity checks, provenance, and safe deserialization policy."
+    },
+    {
+      "failure_id": "FM-007",
+      "failure_mode": "A broad rewind without an artifact-level preview erases unrelated changes made after the selected target.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "mitigation_or_gap": "Show the complete affected-artifact manifest, including additions, deletions, line changes, and non-captured edits, before applying the restore."
+    },
+    {
+      "failure_id": "FM-008",
+      "failure_mode": "No reviewed source quantifies how often users choose the wrong recovery mode or target in real products.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "mitigation_or_gap": "Instrument mode and target selection, cancellation, conflict, and recovery-of-recovery outcomes; do not use an assumed error rate."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-001",
+      "implication": "Puppet Master should treat shared-history reversion as a separate lifecycle from local checkpoint or artifact restoration because the former creates an inverse record and passes collaboration gates.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "rationale": "The Git and GitHub patterns preserve provenance, review, and merge semantics instead of silently moving a shared pointer."
+    },
+    {
+      "implication_id": "I-002",
+      "implication": "Represent every recovery operation with an operation_id, operation_kind, target_state_id, parent_state_id, actor or request identity, artifact manifest, provenance, reversibility, coverage, and retention metadata.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "rationale": "The reviewed products expose different target identifiers and durability boundaries; a common envelope makes those differences explicit and auditable."
+    },
+    {
+      "implication_id": "I-003",
+      "implication": "Require a preflight preview for multi-artifact or shared-history recovery showing target identity, before and after state, added or modified or deleted artifacts, diff or line counts, and current-state freshness.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://www.w3.org/TR/WCAG22/"
+      ],
+      "rationale": "Diff-driven inspection and confirmation are documented patterns, and freshness is needed to avoid applying a stale target over newer work."
+    },
+    {
+      "implication_id": "I-004",
+      "implication": "Make destructive reset or rewind confirmation proportional to risk: state the exact verb, scope, non-captured changes, reversibility guarantee, and available escape path, with accessible text and a cancel action.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://www.w3.org/TR/WCAG22/"
+      ],
+      "rationale": "Git documents destructive modes and agent products document coverage limits; WCAG supplies reversible, checked, or confirmed error-prevention alternatives."
+    },
+    {
+      "implication_id": "I-005",
+      "implication": "Separate artifact restore from conversation or plan restore and offer code-only, conversation-only, both, and forked alternate recovery where the product state supports it.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Independent state scopes prevent users from losing reasoning context when they only meant to restore artifacts, or vice versa."
+    },
+    {
+      "implication_id": "I-006",
+      "implication": "Model partial failure and concurrency as first-class recovery states with conflict artifacts, continue or skip or abort actions, safe retry boundaries, and post-recovery verification.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "rationale": "Git exposes continuation and abort states, while checkpoint storage and concurrent edits make an unconditional binary success unsafe."
+    },
+    {
+      "implication_id": "I-007",
+      "implication": "Emit an auditable recovery event for local restores and preserve the original source and target provenance; shared reverts should remain visible as new changes.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "rationale": "Recovery is itself a state transition and should be reversible or explainable even when the underlying file restore is local."
+    },
+    {
+      "implication_id": "I-008",
+      "implication": "No current research evidence establishes which Puppet Master artifact classes or external side effects are transactionally recoverable; the product contract must decide this before promising full rewind.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "rationale": "The reviewed sources do not define a general inverse for arbitrary external effects, so unsupported recovery scope must remain explicit."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "NI-001",
+      "idea": "Adopt a recovery preview card that combines target checkpoint, request or commit identity, operation semantics, affected-artifact counts and diff, retention or durability, and the exact post-action state before confirmation.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request"
+      ],
+      "rationale": "The components are documented independently in mature tools; combining them into one operation preview reduces ambiguity at the decision point."
+    },
+    {
+      "idea_id": "NI-002",
+      "idea": "Add a per-artifact recovery coverage badge with captured, partially captured, or not captured states and reasons such as Bash, external, concurrent, or retention boundaries.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "rationale": "Coverage is a documented limitation and storage is a documented trust and durability choice; surfacing both per artifact turns hidden gaps into actionable UX."
+    },
+    {
+      "idea_id": "NI-003",
+      "idea": "Use a dual-axis rewind control: independently select artifact state and conversation or plan state, then choose restore, fork, or keep current for each axis.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "The separate code and conversation choices documented by VS Code and Claude can be made more legible as independent state axes rather than hidden menu branches."
+    },
+    {
+      "idea_id": "NI-004",
+      "idea": "Before a destructive reset, create a named short-lived escape checkpoint with a visible operation ID, expiry, and reflog or ORIG_HEAD-style recovery route.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reset",
+        "https://git-scm.com/docs/git-reflog",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Git already records ORIG_HEAD and reflog breadcrumbs for some local operations, while agent tools use checkpoints; a deliberately named escape state can make destructive recovery less opaque."
+    },
+    {
+      "idea_id": "NI-005",
+      "idea": "Use an optimistic concurrency guard: apply a recovery only when the current workspace fingerprint still matches the preview, otherwise block and show the changed artifacts before recomputing the target.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ],
+      "rationale": "The sources expose checkpoint scope and non-captured concurrent changes but do not define a universal guard; a freshness check directly addresses that gap."
+    },
+    {
+      "idea_id": "NI-006",
+      "idea": "Treat portable semantic rollback of arbitrary external side effects such as network calls, deployments, or database mutations as an explicitly unproven recovery mode rather than a default rewind capability.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "rationale": "No reviewed source establishes a safe generic inverse for those effects; the idea is a boundary for future research, not a feature claim."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-001",
+      "question": "The reviewed products expose commit or ref IDs, local-history revisions, timestamps, prompt IDs, and checkpoint UUIDs; what canonical recovery ID should Puppet Master use to link the operation, artifact snapshot, and later inverse?",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://code.claude.com/docs/en/agent-sdk/file-checkpointing",
+        "https://www.jetbrains.com/help/webstorm/local-history.html"
+      ]
+    },
+    {
+      "question_id": "UQ-002",
+      "question": "When a recovery preview becomes stale because of concurrent edits, should Puppet Master block, merge, create a conflict branch, or require the user to select a newly recomputed target?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://git-scm.com/docs/git-reset"
+      ]
+    },
+    {
+      "question_id": "UQ-003",
+      "question": "What retention and durability guarantee is required for recovery records after session expiration, workspace deletion, repository garbage collection, or migration between machines?",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://www.jetbrains.com/help/webstorm/local-history.html",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://git-scm.com/docs/git-reflog",
+        "https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints"
+      ]
+    },
+    {
+      "question_id": "UQ-004",
+      "question": "Which operations may be retried after partial failure, and which commands or external side effects must be marked non-retryable or compensating-only?",
+      "evidence_class": "no_evidence",
+      "source_urls": []
+    },
+    {
+      "question_id": "UQ-005",
+      "question": "Should every restore create a new audit event and optional inverse checkpoint so that the recovery itself can be undone without relying on an opaque local undo stack?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/enterprise-cloud@latest/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/reverting-a-pull-request",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ]
+    },
+    {
+      "question_id": "UQ-006",
+      "question": "Which accessibility requirements beyond reversible, checked, or confirmed apply to the desktop or native presentation of recovery diffs, status announcements, focus order, and destructive confirmations?",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://www.w3.org/TR/WCAG22/"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true
+  }
+}

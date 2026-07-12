@@ -1,0 +1,859 @@
+{
+  "assignment_id": "A005M15-000127-INTEGRATED-MACRO15-8C88D9F4CA2B-0006",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "gui_truth",
+        "acceptance_oracles",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Production wiring contract for cmd.docker.create_repository.cancel; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+          "line_end": 9581,
+          "line_start": 9581,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.",
+          "line_end": 9837,
+          "line_start": 9837,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_uniform_production_wiring_contract",
+      "impact": "The segment makes dispatcher reachability, projected availability, effect evidence, accessibility, and regression evidence independently testable for each visible Docker control.",
+      "item_id": "M15-000127-26-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-026",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Window 26 applies a production wiring envelope to cancel, confirm, drift compare, exec, host-access, and host-restart controls: dispatcher typing, state and disabled projections, a receipt or event effect, accessibility behavior, and named test evidence are required.",
+      "title": "Window 26 defines a uniform production wiring envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "consumers",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.docker.host.instance.restart emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target.",
+          "line_end": 9907,
+          "line_start": 9907,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "lifecycle_operation_and_transition_shape_not_exposed",
+      "impact": "A consumer can assert event type and dispatch correlation but cannot derive from this unit the operation discriminator, legal pre-state, resulting state, or rejected transition for restart.",
+      "item_id": "M15-000127-26-02",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-026",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The restart oracle names the shared lifecycle event and correlation metadata, but the assigned unit does not expose an event payload field that identifies restart or a state-machine oracle for its precondition and completion transition.",
+      "title": "Restart lifecycle semantics stop at event identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.exec must be registered in the UICommand dispatcher with typed args and result contract",
+          "line_end": 9740,
+          "line_start": 9740,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.docker.host.instance.restart must emit the declared event types and record dispatch correlation evidence.",
+          "line_end": 9868,
+          "line_start": 9868,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "privileged_command_safety_contract_missing",
+      "impact": "Exec and restart can cross host authority boundaries or race concurrent lifecycle work; dispatcher typing and correlation alone do not falsify unauthorized targets, duplicate requests, partial completion, or recovery failure.",
+      "item_id": "M15-000127-26-03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-026",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The complete window supplies generic typed args/results and dispatch evidence but does not specify authorization scope, target validation, idempotency or concurrency policy, partial-failure states, or rollback/recovery behavior for Docker exec and restart.",
+      "title": "Privileged exec and restart lack safety semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "propagation",
+        "acceptance_oracles",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.docker.host.instance.retain emits expected event type docker.host.instance_retention_recorded with command_id, origin, correlation_id, and handler target.",
+          "line_end": 9968,
+          "line_start": 9968,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Assert cmd.docker.host.profile.save emits expected event type docker.host.profile_saved with command_id, origin, correlation_id, and handler target.",
+          "line_end": 10212,
+          "line_start": 10212,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_event_backed_host_action_oracles",
+      "impact": "Host retention, lifecycle, preflight, profile-save, and receipt-open actions have explicit event identities and correlation assertions for downstream observation.",
+      "item_id": "M15-000127-27-01",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-027",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Window 27 binds each host action to a handler, state projections, a declared event effect, and an event test carrying command, origin, correlation, and handler-target evidence.",
+      "title": "Host actions have explicit event-backed dispatch behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.docker.host.instance.start emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target.",
+          "line_end": 10029,
+          "line_start": 10029,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Assert cmd.docker.host.instance.stop emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target.",
+          "line_end": 10090,
+          "line_start": 10090,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "lifecycle_state_machine_and_race_oracles_missing",
+      "impact": "The shared request event can prove dispatch but not whether start or stop was legal, superseded, duplicated, partially executed, rolled back, or reconciled after a race.",
+      "item_id": "M15-000127-27-02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-027",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Start and stop deliberately share docker.host.instance_lifecycle_requested, while the unit provides no legal-state table, operation discriminator, mutual-exclusion rule, completion/failure events, or race-resolution oracle.",
+      "title": "Start and stop lack lifecycle race and completion oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.host.instance.retain must emit the declared event types and record dispatch correlation evidence.",
+          "line_end": 9929,
+          "line_start": 9929,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.docker.host.profile.save must emit the declared event types and record dispatch correlation evidence.",
+          "line_end": 10173,
+          "line_start": 10173,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "retention_and_profile_data_policy_not_bound",
+      "impact": "Implementers and auditors cannot determine retained object scope or duration, deletion and migration behavior, profile secret handling, or the authority needed to persist these changes from this unit.",
+      "item_id": "M15-000127-27-03",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-027",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The retention and profile-save entries prove event emission and correlation, but their complete assigned definitions do not bind retention duration/deletion semantics, profile data classification, secret treatment, migration behavior, or caller authority.",
+      "title": "Retention and profile data lifecycle remains cross-document"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "gui_truth",
+        "acceptance_oracles",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+          "line_end": 10290,
+          "line_start": 10290,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.",
+          "line_end": 10386,
+          "line_start": 10386,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_certification_oracle_is_explicit",
+      "impact": "Certification cannot be claimed from handler existence alone; visible-state, disabled-copy, effect, accessibility, and regression evidence are all required.",
+      "item_id": "M15-000127-28-01",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-028",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Window 28 explicitly defines a multi-part production-certification oracle for host refresh/session/route and image controls, including render, dispatch, typed contract, projected state, disabled reason, effect, accessibility, and regression proof.",
+      "title": "Window 28 certification requires executable UI and dispatch evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "failures_recovery",
+        "operations",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.image.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 10532,
+          "line_start": 10532,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Assert cmd.docker.image.delete records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 10566,
+          "line_start": 10566,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "destructive_receipt_without_safety_or_recovery_oracle",
+      "impact": "A destructive delete can satisfy this wiring oracle without proving confirmation, authorization, in-use protection, idempotency, partial-failure handling, restoration, or reconciliation of the externally deleted image.",
+      "item_id": "M15-000127-28-02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-028",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Image delete is explicitly receipt-only and must emit no unexpected persisted event, yet its assigned definition contains no destructive confirmation, authority, dependency check, rollback, recovery, or external-state reconciliation contract.",
+      "title": "Image delete is receipt-only without destructive-action safeguards"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "security_privacy",
+        "failures_recovery",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.docker.host.session.launch emits expected event type docker.host.session_launch_requested with command_id, origin, correlation_id, and handler target.",
+          "line_end": 10395,
+          "line_start": 10395,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "remote_session_authority_and_lifecycle_not_exposed",
+      "impact": "The launch request is observable, but the unit cannot falsify unauthorized host access, unsafe session parameters, failed handoff, network loss, orphaned sessions, or absent closure/audit evidence.",
+      "item_id": "M15-000127-28-03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-028",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Host session launch declares a request event and dispatch metadata but no authorization boundary, session-parameter validation, success/failure transition, disconnect cleanup, offline behavior, or session-closure evidence in the assigned unit.",
+      "title": "Host session launch lacks authority and terminal lifecycle contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.docker.image.push records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 10676,
+          "line_start": 10676,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Assert cmd.docker.k8s.apply records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 10896,
+          "line_start": 10896,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_no_persist_effect_contract",
+      "impact": "The empty expected-event arrays are not accidental omissions: certification must prove a receipt or explicit disposition and the absence of unexpected persisted domain events.",
+      "item_id": "M15-000127-29-01",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-029",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Window 29 intentionally classifies image push/tag/inspect and Kubernetes apply/diff/exec as receipt-or-disposition effects with a negative oracle forbidding unexpected persisted domain events.",
+      "title": "Receipt-only effects are explicit rather than missing wiring"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.image.push has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 10642,
+          "line_start": 10642,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.docker.k8s.apply has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 10862,
+          "line_start": 10862,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "external_mutation_completion_and_recovery_missing",
+      "impact": "Push or apply may mutate a remote registry or cluster and still leave only dispatch evidence; the unit does not define progress, retry identity, partial success, network-loss reconciliation, rollback, or authoritative final-state proof.",
+      "item_id": "M15-000127-29-02",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-029",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The explicit receipt-only classification for image push and Kubernetes apply is not paired with an oracle for the lifecycle of their external side effects, including partial completion, retries, rollback, and eventual reconciliation.",
+      "title": "External mutations have dispatch receipts but no completion recovery model"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.k8s.apply must be registered in the UICommand dispatcher with typed args and result contract",
+          "line_end": 10851,
+          "line_start": 10851,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Dispatching cmd.docker.k8s.exec reaches handlers::docker::k8s_exec with typed args/result contract.",
+          "line_end": 10987,
+          "line_start": 10987,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "typed_payload_security_constraints_not_exposed",
+      "impact": "Type existence alone does not prove manifest or command-content validation, cluster/namespace authorization, credential isolation, output redaction, or denial of privilege escalation.",
+      "item_id": "M15-000127-29-03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-029",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Kubernetes apply and exec require typed args/results, but the assigned definitions do not expose payload fields or constraints for untrusted manifests/commands, target authorization, credentials, privilege boundaries, or sensitive output.",
+      "title": "Kubernetes apply and exec omit payload security boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "acceptance_oracles",
+        "gui_misleading_states",
+        "accessibility",
+        "localization"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "catalog.docker_k8s_helm_install preserves visible focus and returns focus deterministically after dispatch or error.",
+          "line_end": 11035,
+          "line_start": 11035,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "catalog.docker_k8s_select_namespace surfaces state.commands.docker_k8s_select_namespace.disabled_reason to assistive technology when unavailable.",
+          "line_end": 11311,
+          "line_start": 11311,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_accessibility_and_disabled_truth_explicit",
+      "impact": "Visible controls cannot be certified solely by appearance; stable semantics, keyboard access, deterministic focus, and assistive disabled-state exposure are required throughout the window.",
+      "item_id": "M15-000127-30-01",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Window 30 consistently binds its visible Helm, logs, port-forward, context, namespace, and Docker-log controls to keyboard, focus, semantic naming, and disabled-announcement evidence.",
+      "title": "Window 30 makes accessibility and disabled truth certifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.k8s.helm_install has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 11027,
+          "line_start": 11027,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Assert cmd.docker.k8s.helm_install records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 11061,
+          "line_start": 11061,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "helm_install_transaction_and_rollback_missing",
+      "impact": "A multi-resource cluster mutation can pass the wiring test with a receipt even if it partially installs, times out, races another release operation, or lacks rollback and reconciliation evidence.",
+      "item_id": "M15-000127-30-02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Helm install is explicitly receipt-only, while its assigned entry contains no release transaction state, idempotency key, atomicity boundary, partial-failure result, rollback operation, timeout behavior, or final cluster-state oracle.",
+      "title": "Helm install lacks transactional and rollback semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "security_privacy",
+        "failures_recovery",
+        "operations",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.k8s.port_forward has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 11192,
+          "line_start": 11192,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Dispatching cmd.docker.k8s.port_forward reaches handlers::docker::k8s_port_forward with typed args/result contract.",
+          "line_end": 11207,
+          "line_start": 11207,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "port_forward_security_and_terminal_lifecycle_missing",
+      "impact": "A long-lived local-to-cluster exposure can be opened without this unit proving bind-address safety, port collision handling, caller/target authority, disconnect cleanup, network-loss behavior, or a terminal closure receipt.",
+      "item_id": "M15-000127-30-03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Port forward has typed dispatch and an opening receipt but no exposed bind/interface rule, target authorization, lifecycle state, cancellation command, offline transition, cleanup guarantee, or closure evidence.",
+      "title": "Port forward lacks exposure controls and terminal cleanup"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "propagation",
+        "compatibility_migration",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Availability reads state.commands.docker_k8s_select_context.availability and disabled copy reads state.commands.docker_k8s_select_context.disabled_reason.",
+          "line_end": 11267,
+          "line_start": 11267,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Availability reads state.commands.docker_k8s_select_namespace.availability and disabled copy reads state.commands.docker_k8s_select_namespace.disabled_reason.",
+          "line_end": 11322,
+          "line_start": 11322,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "selection_state_propagation_and_invalid_state_rules_missing",
+      "impact": "The UI can prove that a selection command was available and dispatched while remaining unable to prove the selected context/namespace became authoritative, propagated to consumers, survived migration, or was invalidated safely.",
+      "item_id": "M15-000127-30-04",
+      "item_type": "state_transition",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Context and namespace selection define availability and disabled projections plus receipt effects, but not the selected-value state owner, success transition, downstream propagation, stale-target invalidation, persistence/migration rule, or UI truth after failure.",
+      "title": "Context and namespace selection lack authoritative state propagation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "scale_limits",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.docker.k8s.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 11137,
+          "line_start": 11137,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.docker.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 11357,
+          "line_start": 11357,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "log_stream_data_and_scale_contract_missing",
+      "impact": "Log surfaces can expose secrets or untrusted control text and can grow without bound; a dispatch receipt does not prove redaction, output encoding, retention, pagination/backpressure, cancellation, truncation signaling, or locale/time rendering.",
+      "item_id": "M15-000127-30-05",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Kubernetes logs and Docker logs define receipt-only dispatch wiring but no data classification/redaction, untrusted-output rendering, retention, stream termination, scale limits, pagination/backpressure, truncation, or localized timestamp contract.",
+      "title": "Log commands omit privacy, untrusted-output, and scale semantics"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        9568,
+        9909
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-026",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-000127-26-01",
+        "M15-000127-26-02",
+        "M15-000127-26-03"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all cancel/confirm/drift/exec/host-access/restart lines. Exact wiring and accessibility coverage is strong; lifecycle payload/state discrimination and privileged-operation authority, race, partial-failure, and recovery semantics are not exposed.",
+      "window_id": "WIN-8C88D9F4CA2B-0026"
+    },
+    {
+      "core_range": [
+        9910,
+        10275
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-027",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-000127-27-01",
+        "M15-000127-27-02",
+        "M15-000127-27-03"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all retain/start/stop/preflight/profile-save/receipt-open lines. Event and correlation oracles are explicit; lifecycle race/completion semantics and retention/profile data-policy boundaries remain unresolved in this unit.",
+      "window_id": "WIN-8C88D9F4CA2B-0027"
+    },
+    {
+      "core_range": [
+        10276,
+        10623
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-028",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-000127-28-01",
+        "M15-000127-28-02",
+        "M15-000127-28-03"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all host refresh/session/route and image/view/delete/inspect lines. The production-certification oracle is explicit, but image deletion and remote session launch lack destructive, authority, recovery, and terminal-lifecycle semantics.",
+      "window_id": "WIN-8C88D9F4CA2B-0028"
+    },
+    {
+      "core_range": [
+        10624,
+        11008
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-029",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-000127-29-01",
+        "M15-000127-29-02",
+        "M15-000127-29-03"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all image push/tag/inspect and Kubernetes apply/diff/exec lines. Receipt-only classification is explicit, while external-mutation completion/recovery and payload authorization/security boundaries are not defined here.",
+      "window_id": "WIN-8C88D9F4CA2B-0029"
+    },
+    {
+      "core_range": [
+        11009,
+        11393
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-030",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-000127-30-01",
+        "M15-000127-30-02",
+        "M15-000127-30-03",
+        "M15-000127-30-04",
+        "M15-000127-30-05"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all Helm install/preview, Kubernetes logs/port-forward/context/namespace, and Docker logs lines. Accessibility truth is explicit; transactional recovery, tunnel security/cleanup, selection propagation, and log privacy/scale semantics are absent from the unit.",
+      "window_id": "WIN-8C88D9F4CA2B-0030"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0006",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": [
+      "WIN-8C88D9F4CA2B-0026",
+      "WIN-8C88D9F4CA2B-0027",
+      "WIN-8C88D9F4CA2B-0028",
+      "WIN-8C88D9F4CA2B-0029",
+      "WIN-8C88D9F4CA2B-0030"
+    ],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Where are typed payload field schemas, authorization rules, and target-validation constraints owned for Docker exec, Kubernetes apply/exec, host sessions, and port forwarding?",
+      "Which canonical contract defines Docker host lifecycle operation discriminators, legal pre-states, completion/failure events, concurrency resolution, and reconciliation?",
+      "What document owns destructive-action confirmation, idempotency, rollback, and external-state reconciliation for image delete, image push, Kubernetes apply, and Helm install?",
+      "Where are context/namespace selected-state ownership, propagation, persistence, stale-target invalidation, and migration semantics specified?",
+      "Which contract defines log redaction, untrusted-output rendering, retention, stream cancellation, backpressure, truncation, scale, and localized time presentation?"
+    ],
+    "feature_family_keys": [
+      "docker_command_production_wiring",
+      "docker_host_lifecycle_and_sessions",
+      "docker_image_operations",
+      "docker_kubernetes_operations",
+      "receipt_only_external_side_effects"
+    ],
+    "research_queries": [
+      "Kubernetes port-forward secure bind address authorization cancellation cleanup network loss best practices",
+      "Helm install atomic rollback timeout idempotency partial failure observability best practices",
+      "Container image delete and push idempotency recovery reconciliation audit event design",
+      "Terminal and Kubernetes log viewer secret redaction untrusted ANSI control sequences backpressure truncation accessibility",
+      "Event-driven host lifecycle start stop restart concurrency state machine operation discriminator patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000127_attempt_0015_terminal"
+}

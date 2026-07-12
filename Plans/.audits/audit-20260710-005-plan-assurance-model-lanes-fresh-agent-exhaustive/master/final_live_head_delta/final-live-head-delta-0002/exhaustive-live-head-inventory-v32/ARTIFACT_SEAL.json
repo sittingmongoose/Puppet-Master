@@ -1,0 +1,80 @@
+{
+  "authorizations": {
+    "activation": false,
+    "canonical_writes": false,
+    "capture": false,
+    "credit": false,
+    "launch": false,
+    "packet_generation": false,
+    "receipt_acceptance": false,
+    "result_acceptance": false,
+    "semantic_prose_review": false
+  },
+  "files": {
+    "AUTHORITY_V32.json": {
+      "bytes": 7210,
+      "sha256": "1dddad6cd4ec8836834416c0ba930fffd0b82d11b7775df73678b327ee0d1149"
+    },
+    "classification_rules.json": {
+      "bytes": 3016,
+      "sha256": "b1c01b459f594f238061d212fe84d0a3103e2327df7fc7cb5028d5e9c8b26980"
+    },
+    "inventory.jsonl": {
+      "bytes": 174069,
+      "sha256": "1dda90bcda254840520525b2c614e1f8c9df3f2faa2b037bf4e84f075ead0a3f"
+    },
+    "inventory_entry.schema.json": {
+      "bytes": 3713,
+      "sha256": "081f4759996d5bcfc9138c12c85b3cc044b5c9c7032c87d0b8aa0947e5ba6d40"
+    },
+    "observations/observation-0001.json": {
+      "bytes": 1966,
+      "sha256": "17420e3dfe90c081283d86b39b680fb07ce4cf8c141fd52208b2a18e9c9a3d40"
+    },
+    "observations/observation-0002.json": {
+      "bytes": 2234,
+      "sha256": "b4797b74bc95fc067f8dcee94f85f384f2b531d89ce440dfdd837ead2a2cde8c"
+    },
+    "observations/observation-0003.json": {
+      "bytes": 2234,
+      "sha256": "da28b6f13926218dac9b385dac1e4608eb50b2b0a3cc706c7807bb902bb31f62"
+    },
+    "prepare_exhaustive_live_head_inventory_v32.py": {
+      "bytes": 26096,
+      "sha256": "21a970fdd9c9390e55c46a7cf41aa6c28aaf3c801c82021b02a1898cfb708841"
+    },
+    "readiness.json": {
+      "bytes": 4570,
+      "sha256": "402ff4f5b864bd737fed60d05e9570e7a9aac481541a9086901a2c64a253e7ca"
+    },
+    "terminal-preparation-report.json": {
+      "bytes": 5219,
+      "sha256": "d00b00921d684a88537b10213e89acb220352ec7f03a57833b54f4c6ca15efff"
+    },
+    "test_exhaustive_live_head_inventory_v32.py": {
+      "bytes": 9076,
+      "sha256": "e551a9a86982aecf77ee3f0df96378f4fe86a74c037ea26ad6728e659d80c791"
+    },
+    "verify_exhaustive_live_head_inventory_v32.py": {
+      "bytes": 16561,
+      "sha256": "7f624eff0bf787166140f385087644b0c68942d556d4e126dd3e58cebc676a65"
+    }
+  },
+  "future_luna_gate_present": false,
+  "namespace": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0002/exhaustive-live-head-inventory-v32",
+  "schema_version": "audit005-exhaustive-live-head-inventory-artifact-seal-v32",
+  "sealed_at_utc": "2026-07-12T09:29:08.919612Z",
+  "sealed_file_count_excluding_seal": 12,
+  "status": "PASS_SEALED_EXHAUSTIVE_299_PREPARATION_ONLY_BLOCKED_FRESH_LUNA_INVENTORY_PRELAUNCH",
+  "zero_state": {
+    "activation": 0,
+    "capture": 0,
+    "credit": 0,
+    "launches": 0,
+    "native_capture": 0,
+    "packets": 0,
+    "receipts": 0,
+    "results": 0,
+    "semantic_packets": 0
+  }
+}

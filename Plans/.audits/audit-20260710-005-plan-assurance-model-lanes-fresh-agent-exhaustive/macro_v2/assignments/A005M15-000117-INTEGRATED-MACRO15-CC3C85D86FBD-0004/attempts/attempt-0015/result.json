@@ -1,0 +1,639 @@
+{
+  "assignment_id": "A005M15-000117-INTEGRATED-MACRO15-CC3C85D86FBD-0004",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  UI command catalog compatibility preserves existing GUI command names and shortcuts while path/context discovery routes through DiscoveryService. Quick Open, command palette fuzzy file search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker do not require a parallel cmd.discovery.* GUI command family. cmd.search.* remains Search/content command canon, and DiscoveryService is the path/context routing substrate for compatible surfaces. Discovery/frecency reset controls require storage/search settings owner reconciliation before adding new command IDs.",
+          "line_end": 7032,
+          "line_start": 7032,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "unresolved_owner_reconciliation",
+      "impact": "Frecency or discovery-reset controls cannot be registered deterministically until storage/search ownership and the canonical command namespace are adjudicated.",
+      "item_id": "A005M15-000117-I001",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-099",
+        "SEMANTIC:PLANUNIT:UCC-099"
+      ],
+      "statement": "UCC-099 closes compatibility for existing search and picker surfaces, but explicitly leaves discovery/frecency reset command ownership unresolved and therefore leaves new reset IDs to builder discretion.",
+      "title": "Discovery reset command ownership remains unresolved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "failures_recovery",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: History command wrappers cover focus Orchestrator History, switch Documents/Runs subviews, open",
+          "line_end": 7079,
+          "line_start": 7079,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "- Do not allow compare/export/reopen/send-forward from stale projection state.",
+          "line_end": 7212,
+          "line_start": 7212,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "prose_only_command_family",
+      "impact": "Implementers can invent incompatible IDs, payloads, terminal results, and stale-state recovery behavior for the many History actions, making wiring and negative-path fixtures non-falsifiable.",
+      "item_id": "A005M15-000117-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-100",
+        "SEMANTIC:PLANUNIT:UCC-100"
+      ],
+      "statement": "UCC-100 enumerates a large History action surface and strong stale/currentness prohibitions, but it does not assign action-level cmd.* IDs or closed payload, result, error, and recovery contracts within the unit.",
+      "title": "History wrappers lack action-level command contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.",
+          "line_end": 7319,
+          "line_start": 7319,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "- Do not create a hidden permission rule that cannot be inspected or revoked.",
+          "line_end": 7327,
+          "line_start": 7327,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The GUI is forbidden from overstating model perception and remembered permission state must remain inspectable and revocable.",
+      "item_id": "A005M15-000117-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-101",
+        "SEMANTIC:PLANUNIT:UCC-101"
+      ],
+      "statement": "UCC-101 explicitly closes two high-risk trust boundaries: bridge-derived answers cannot masquerade as direct image perception, and remembered always-accept rules cannot be hidden or irrevocable.",
+      "title": "Vision bridge provenance and revocation are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Teach guided GUI commands include help-icon launch, /teach launch, natural-language summon handoff,",
+          "line_end": 7348,
+          "line_start": 7348,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "- Do not let Teacher perform raw uncontrolled GUI mutation outside stable UI command/route contracts.",
+          "line_end": 7477,
+          "line_start": 7477,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "missing_concrete_command_ids",
+      "impact": "Teacher launch, navigation, overlay, inspection, and Do it flows cannot be wired or fixture-tested without inventing the stable contracts that the unit itself requires.",
+      "item_id": "A005M15-000117-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-102",
+        "SEMANTIC:PLANUNIT:UCC-102"
+      ],
+      "statement": "UCC-102 defines rich guided behaviors and forbids raw GUI mutation, yet supplies no concrete cmd.* IDs or command-specific payload/result/error contracts for the Teach actions.",
+      "title": "Teach taxonomy has no dispatchable command map"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"cmd.notifications.destination.delete\"",
+          "line_end": 7560,
+          "line_start": 7560,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "  - \"cmd.sound.asset.delete\"",
+          "line_end": 7568,
+          "line_start": 7568,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "destructive_action_contract_missing",
+      "impact": "Destination or sound-asset deletion can diverge on confirmation, stale-write denial, partial failure, restore eligibility, and receipt semantics.",
+      "item_id": "A005M15-000117-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-103",
+        "SEMANTIC:PLANUNIT:UCC-103"
+      ],
+      "statement": "UCC-103 names destructive destination and sound-asset delete commands but does not define confirmation tokens, expected revisions, atomicity, rollback, or delete-versus-restore state transitions for them.",
+      "title": "Notification and sound deletion recovery is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "propagation",
+        "acceptance_oracles",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  `{ scope: \"application\", value: \"enabled\" | \"disabled_by_user\" }`, emitted event",
+          "line_end": 7592,
+          "line_start": 7592,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "missing_cas_and_idempotency_contract",
+      "impact": "Concurrent settings writers and retries can overwrite a newer value or duplicate receipts without a falsifiable stale-write rule.",
+      "item_id": "A005M15-000117-I006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-104",
+        "SEMANTIC:PLANUNIT:UCC-104"
+      ],
+      "statement": "The DRY settings command fixes scope and value but omits an expected revision, idempotency requirement, and result/currentness contract for racing or retried writes.",
+      "title": "DRY toggle lacks stale-write protection"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "authority_boundaries",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  secret_access_policy, destructive_command_policy, preflight_required, allowed_action_ids, and expected receipt refs when",
+          "line_end": 7755,
+          "line_start": 7755,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "  relevant. HostOperationRequest remains a dispatch/request payload shape below the command envelope when needed. Docker",
+          "line_end": 7756,
+          "line_start": 7756,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "conditional_field_applicability_undefined",
+      "impact": "High-risk host mutations can disagree about mandatory authority snapshots, receipt expectations, and lower-level request binding, weakening denial tests and auditability.",
+      "item_id": "A005M15-000117-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-105",
+        "SEMANTIC:PLANUNIT:UCC-105"
+      ],
+      "statement": "The HostCapabilityCommand field list qualifies security and receipt fields with 'when relevant' but supplies no per-command applicability matrix, leaving mandatory authority and evidence inputs to builder judgment.",
+      "title": "Host command security fields are conditionally undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Skip routing writes or references limited `onboarding_setup_state` and opens Planning Wizard without marking Health Ready.",
+          "line_end": 7672,
+          "line_start": 7672,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        },
+        {
+          "exact_quote": "  - Free Models review/defer commands are reachable only after the paid-provider prompt has occurred.",
+          "line_end": 7674,
+          "line_start": 7674,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "state_machine_not_closed",
+      "impact": "Out-of-order clicks, retries, provider setup failures, and return-route loss can produce inconsistent Health, setup, or Planning Wizard state without a closed transition and recovery table.",
+      "item_id": "A005M15-000117-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-106",
+        "SEMANTIC:PLANUNIT:UCC-106"
+      ],
+      "statement": "UCC-106 states important ordering and skip invariants but does not close the onboarding state machine, invalid transitions, retry semantics, or recovery outcomes for provider and network failure.",
+      "title": "Onboarding command transitions are not fully specified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "authority",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  are compiled out or disabled in production unless explicitly configured, and must not be reused as production",
+          "line_end": 7846,
+          "line_start": 7846,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "production_enablement_authority_undefined",
+      "impact": "A production build could expose dev-preview controls under an ad hoc flag with no auditable authority, scope, or denial behavior.",
+      "item_id": "A005M15-000117-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-107",
+        "SEMANTIC:PLANUNIT:UCC-107"
+      ],
+      "statement": "UCC-107 strongly limits dev-preview authority, but 'unless explicitly configured' does not identify the configuration owner, build-time versus runtime mechanism, permission gate, receipt, or production acceptance oracle.",
+      "title": "Dev-preview production enablement is under-specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "partial_failure",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Every command in this addendum returns the `UICommandResponse` envelope from `Plans/Contracts_V0.md`. The field-level response minimum is `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`. Error codes are closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`. Commands that intentionally emit no persisted domain event still record a dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events.",
+          "line_end": 7960,
+          "line_start": 7960,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Command success, error, and no-domain-event dispositions have a shared falsifiable envelope and cannot be represented by fabricated generic success events.",
+      "item_id": "A005M15-000117-I010",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-108",
+        "SEMANTIC:PLANUNIT:UCC-108"
+      ],
+      "statement": "UCC-108 closes the shared response and receipt baseline with exact fields, a closed error set, explicit receipts for no-event commands, and a categorical ban on fabricated command_applied events.",
+      "title": "FABLE response and receipt baseline is closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Timestamp, run-only, thread-only, or tier-only payloads may narrow filters but cannot satisfy the primary Usage route identity when usage_event_ref is available.",
+          "line_end": 8143,
+          "line_start": 8143,
+          "path": "Plans/UI_Command_Catalog.md",
+          "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+        }
+      ],
+      "gap_kind": "fallback_identity_precedence_undefined",
+      "impact": "Legacy or partial callers without usage_event_ref can resolve the same payload to different Usage subjects, or display a narrowed filter as if it were canonical object identity.",
+      "item_id": "A005M15-000117-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UCC-109",
+        "SEMANTIC:PLANUNIT:UCC-109"
+      ],
+      "statement": "UCC-109 precisely defines object-first identity when usage_event_ref exists, but does not define precedence, conflict handling, or terminal failure when it is absent and multiple alternative refs disagree.",
+      "title": "Usage fallback identity resolution remains ambiguous"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        7024,
+        7340
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UCC-099",
+        "PLANUNIT:UCC-100",
+        "PLANUNIT:UCC-101",
+        "SEMANTIC:PLANUNIT:UCC-099",
+        "SEMANTIC:PLANUNIT:UCC-100",
+        "SEMANTIC:PLANUNIT:UCC-101"
+      ],
+      "item_ids": [
+        "A005M15-000117-I001",
+        "A005M15-000117-I002",
+        "A005M15-000117-I003"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed UCC-099 through UCC-101 across compatibility routing, History actions, vision provenance, permissions, stale-state behavior, consumers, failure paths, and negative constraints; found unresolved discovery-reset ownership and prose-only History dispatch contracts while confirming explicit vision trust boundaries.",
+      "window_id": "WIN-CC3C85D86FBD-0021"
+    },
+    {
+      "core_range": [
+        7341,
+        7647
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UCC-102",
+        "PLANUNIT:UCC-103",
+        "PLANUNIT:UCC-104",
+        "SEMANTIC:PLANUNIT:UCC-102",
+        "SEMANTIC:PLANUNIT:UCC-103",
+        "SEMANTIC:PLANUNIT:UCC-104"
+      ],
+      "item_ids": [
+        "A005M15-000117-I004",
+        "A005M15-000117-I005",
+        "A005M15-000117-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed Teach, Notifications and Sounds, and DRY settings command units including GUI states, mutation authority, accessibility, destructive behavior, concurrency, recovery, and fixtures; concrete dispatch closure is missing for Teach, delete recovery, and stale DRY writes.",
+      "window_id": "WIN-CC3C85D86FBD-0022"
+    },
+    {
+      "core_range": [
+        7648,
+        8011
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UCC-105",
+        "PLANUNIT:UCC-106",
+        "PLANUNIT:UCC-107",
+        "SEMANTIC:PLANUNIT:UCC-106",
+        "SEMANTIC:PLANUNIT:UCC-105",
+        "SEMANTIC:PLANUNIT:UCC-107"
+      ],
+      "item_ids": [
+        "A005M15-000117-I007",
+        "A005M15-000117-I008",
+        "A005M15-000117-I009"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed onboarding, container-host, dev-preview, planning/build, testing, alias, and FABLE command rows across authority, transitions, payloads, receipts, compatibility, failures, destructive operations, and production boundaries; found unresolved conditional host fields, onboarding transitions, and dev-preview enablement authority.",
+      "window_id": "WIN-CC3C85D86FBD-0023"
+    },
+    {
+      "core_range": [
+        8012,
+        8189
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UCC-108",
+        "PLANUNIT:UCC-109",
+        "SEMANTIC:PLANUNIT:UCC-108",
+        "SEMANTIC:PLANUNIT:UCC-109"
+      ],
+      "item_ids": [
+        "A005M15-000117-I010",
+        "A005M15-000117-I011"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed UCC-108 response closure, strict schema overlay, compatibility treatment, and UCC-109 Usage routing identity across exact fields, errors, receipts, legacy aliases, and adversarial partial-identity cases; the shared response baseline is closed but Usage fallback precedence is not.",
+      "window_id": "WIN-CC3C85D86FBD-0024"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-CC3C85D86FBD-0004",
+    "document_path": "Plans/UI_Command_Catalog.md",
+    "micro_window_ids": [
+      "WIN-CC3C85D86FBD-0021",
+      "WIN-CC3C85D86FBD-0022",
+      "WIN-CC3C85D86FBD-0023",
+      "WIN-CC3C85D86FBD-0024"
+    ],
+    "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner document adjudicates DiscoveryService frecency reset command IDs and storage authority?",
+      "Which concrete cmd.* rows and response contracts own History and Teach actions?",
+      "What owner defines production enablement authority for GUI dev-preview commands?",
+      "What Usage identity precedence applies when usage_event_ref is absent or conflicts with alternate refs?"
+    ],
+    "feature_family_keys": [
+      "discovery-command-compatibility",
+      "history-command-wrappers",
+      "vision-bridge-commands",
+      "teach-guided-commands",
+      "notifications-sounds-commands",
+      "dry-settings-command",
+      "container-host-commands",
+      "first-run-onboarding-commands",
+      "gui-dev-preview-commands",
+      "fable-ui-command-contracts",
+      "usage-route-identity"
+    ],
+    "research_queries": [
+      "command bus idempotency and optimistic concurrency patterns for settings and destructive actions",
+      "accessible guided overlay state machine keyboard screen reader and stale target recovery",
+      "secure production gating for development-only UI commands",
+      "object-first deep-link identity fallback and conflict resolution"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000117_attempt_0015_terminal"
+}

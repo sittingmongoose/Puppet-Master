@@ -1,0 +1,45 @@
+{
+  "attempt_0005": {
+    "failures": [
+      "positive receipt schema label copied from contract document instead of dispatch receipt label",
+      "ER-0008 unresolved_questions[1] no_evidence row cited sources"
+    ],
+    "native_capture_ref": "master/external_research/sprint-wave-0001/retry-attempt-0005/runtime/native_capture.json",
+    "native_capture_sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+    "primary_cumulative_report_ref": "master/external_research/sprint-wave-0001/retry-attempt-0005/validation/primary-cumulative-postrun.json",
+    "primary_cumulative_report_sha256": "3e5de5018a3e419fe3e3c85d0bf4598c2af92a8479c926dd0778bdf058a8a20d",
+    "rejected_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "result_bodies_forbidden_to_attempt_0006_leaves": true
+  },
+  "attempt_0006_fresh_agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal"
+  ],
+  "attempt_id": "attempt-0006",
+  "attempts_0001_through_0005_zero_credit_lineage": true,
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage_credit": 0,
+  "cumulative_research_credit": 0,
+  "identity_reuse_forbidden_across_attempts_0001_through_0006": true,
+  "merge_credit": 0,
+  "preserved_cumulative_floor_count": 6,
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "prior_attempts_immutable": true,
+  "promotion_credit": 0,
+  "retry_namespace": "retry-attempt-0006",
+  "schema_version": "external-research-recovery-lineage-v6",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH"
+}

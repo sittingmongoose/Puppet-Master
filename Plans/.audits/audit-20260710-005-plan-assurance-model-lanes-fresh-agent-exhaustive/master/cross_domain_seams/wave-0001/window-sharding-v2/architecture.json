@@ -1,0 +1,33 @@
+{
+  "all_64_atomic_activation_forbidden": true,
+  "cohort_count": 4,
+  "cohort_size": 16,
+  "conflict_count": 178,
+  "disposition_counts": {
+    "merge_candidate": 45,
+    "related_but_distinct": 9138,
+    "uncertain": 177,
+    "unsupported": 5
+  },
+  "edge_count": 9365,
+  "edge_indivisibility": true,
+  "feature_count": 2495,
+  "hard_packet_ceiling": 900000,
+  "independent_cohort_activation": true,
+  "pair_count": 11,
+  "quarantine_count": 10,
+  "schema_version": "cross-domain-seam-window-sharding-v2-architecture-v1",
+  "supersedes_v1_launchability_only": true,
+  "target_packet_ceiling": 750000,
+  "v10": {
+    "atomic_cap": 16,
+    "preferred_max": 40,
+    "preferred_min": 32,
+    "rolling_max": 40,
+    "sha256": "0fbaad08800f3f5e8e122e7638e2537382d9c6f6be5fc93afcd307a3a42098f1"
+  },
+  "v1_semantic_union_immutable": true,
+  "wave_id": "cross-domain-seam-window-sharding-v2",
+  "window_count": 64,
+  "windowing": "anchor-local atomic groups, deterministic descending complexity, placed by least projected serialized bytes including new feature evidence, provenance, conflicts, quarantines, and external-source burden"
+}

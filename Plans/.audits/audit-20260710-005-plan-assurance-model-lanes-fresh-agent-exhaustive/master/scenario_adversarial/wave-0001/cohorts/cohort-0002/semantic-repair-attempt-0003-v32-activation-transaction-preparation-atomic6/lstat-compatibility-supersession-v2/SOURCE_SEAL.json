@@ -1,0 +1,73 @@
+{
+  "schema_version": "scenario-c2-lstat-supersession-v2-source-seal-v1",
+  "status": "sealed_inert_sources",
+  "code_frozen_before_hash_capture": true,
+  "bindings": {
+    "authority": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/IMMUTABLE_AUTHORITY.json",
+      "byte_count": 9825,
+      "raw_sha256": "2baafb68d16b1f9f22b64892a401317405c2008edc82ba4ff7be702f1a5497ae"
+    },
+    "matrix": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/test_matrix.json",
+      "byte_count": 2200,
+      "raw_sha256": "fc801f6768883413b1b2578915a3315c7c796d087994053d301a0bdb4d8f5a8e"
+    },
+    "verifier": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/verify_lstat_supersession_v2.py",
+      "byte_count": 34819,
+      "raw_sha256": "f7a7b765dc99bd0195d58e6c748a6adc06647b59b473683133c0dc0d395ca189"
+    },
+    "tests": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/test_lstat_supersession_v2.py",
+      "byte_count": 15520,
+      "raw_sha256": "4270367525e4c15ff4d8c9cc5153180090bcff828e0a7b5decbb2b8f2361a351"
+    }
+  },
+  "legacy_reproduction": {
+    "rich_sha256": "371b46caa15f0cde09b2136a821f4317053399382939fa3eae736fcebb34a8d5",
+    "lean_sha256": "9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914",
+    "changing_stat_fields": [],
+    "changing_paths": []
+  },
+  "test_contract": {
+    "total": 512,
+    "positive": 32,
+    "negative": 480,
+    "case_id_digest": "490fe7f960396b40d33f96e4027a44b035228c802fe4198d2a525098b3056a99",
+    "category_counts": {
+      "live_positive": {"positive": 16, "negative": 0, "total": 16},
+      "legacy_schema_asymmetry": {"positive": 0, "negative": 32, "total": 32},
+      "regular_required_field_mutations": {"positive": 0, "negative": 160, "total": 160},
+      "atime_policy": {"positive": 16, "negative": 16, "total": 32},
+      "directory_required_field_mutations": {"positive": 0, "negative": 96, "total": 96},
+      "membership_nonregular_hardlink": {"positive": 0, "negative": 64, "total": 64},
+      "lineage_dedup_output_zero": {"positive": 0, "negative": 64, "total": 64},
+      "runtime_authority_seal": {"positive": 0, "negative": 48, "total": 48}
+    }
+  },
+  "runtime": {
+    "python": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "jsonschema_version": "4.26.0",
+    "validator_class": "jsonschema.validators.Draft202012Validator",
+    "no_site": true,
+    "no_user_site": true,
+    "dont_write_bytecode": true
+  },
+  "zero_state": {
+    "production": 0,
+    "activation": false,
+    "launch": false,
+    "generator_present": false,
+    "generator_invoked": false,
+    "reviewer_children": 0,
+    "semantic_children": 0,
+    "results": 0,
+    "receipts": 0,
+    "capture_rows": 0,
+    "credit": 0,
+    "tool_executions": 0
+  }
+}

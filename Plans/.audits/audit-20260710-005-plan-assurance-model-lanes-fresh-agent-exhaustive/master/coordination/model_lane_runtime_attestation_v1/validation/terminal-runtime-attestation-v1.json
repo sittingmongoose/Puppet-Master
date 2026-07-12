@@ -1,0 +1,51 @@
+{
+  "authority_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/MODEL_LANE_RUNTIME_ATTESTATION_V1.json",
+  "authority_sha256": "a384855adef36643d0b3521c8253e337ad37a01f59993687710822c11bfb63e3",
+  "capture_manifest_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/model_lane_runtime_attestation_v1/evidence/capture_manifest.json",
+  "capture_manifest_sha256": "e0f8256eaacff2e986b5757ffef6103689f0a4e41f78b8b34287716b1f949180",
+  "checkpoint_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/model_lane_runtime_attestation_v1/evidence/parent_spawn_checkpoint.jsonl",
+  "checkpoint_sha256": "e039486fa323094a943f0e5b02f1523ee3db33b29cc5e6b7fcb87a994c727f3c",
+  "conditional_phase_c": {
+    "authorized": false,
+    "cohort_activations_created": 0,
+    "cohorts_0003_0004_unchanged_zero_state": true,
+    "fresh_delta_reviewer_spawned": 0,
+    "reason": "runtime attestation B failed; C is forbidden",
+    "receipts_created": 0,
+    "results_created": 0,
+    "seam_leaves_spawned": 0
+  },
+  "credits": {
+    "coverage": 0,
+    "promotion": 0,
+    "semantic": 0
+  },
+  "decision": "GATE_FAILED_RUNTIME_ATTESTATION_LAUNCH_ZERO",
+  "dependency_cache_reconciliation": {
+    "authority_sha256": "e04b1d8e2b903e1a03b48f2b7cdecf740a4d0687fb29400ee16b1d712d52e855",
+    "cache_file_count": 39,
+    "observed_runtime_file_count": 191,
+    "report_sha256": "bfb3a7fc8a3723994f23930085f5989848c1aac85b4a6b39ed4dc0d15e0b3782",
+    "semantic_file_count": 152,
+    "semantic_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "status": "pass"
+  },
+  "evidence_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/model_lane_runtime_attestation_v1/evidence/runtime_spawn_evidence.json",
+  "evidence_sha256": "feb7b206d0c73dd679402ad2923beaac6c16b90f2b8030b49ae2a70c563f6155",
+  "schema_version": "audit005-model-lane-runtime-attestation-terminal-report-v1",
+  "status": "fail",
+  "tests": {
+    "failed": 0,
+    "negative_test_count": 243,
+    "passed": 244,
+    "status": "pass",
+    "test_name_digest": "def8a645be29ebd3981eaa5e4b6476d61194c05c142086b9b9c7053900d9a265",
+    "total": 244
+  },
+  "validation_errors": [
+    "child_runtime_model",
+    "child_runtime_reasoning_effort",
+    "spawn_argument_model_missing",
+    "spawn_argument_reasoning_effort_missing"
+  ]
+}

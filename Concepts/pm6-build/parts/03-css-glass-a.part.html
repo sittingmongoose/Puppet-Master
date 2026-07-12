@@ -40,6 +40,7 @@
       --pm6-glass-pane-shadow2: rgba(10, 5, 25, .40);
       --pm6-glass-pane-sheen: rgba(255, 255, 255, .16);
       --pm6-glass-pane-sheen2: rgba(255, 255, 255, .08);
+      --pm6-glass-inset: 5px;   /* sky ring around the pane */
       /* transparency steps (all slider-driven) */
       --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .10));
       --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .16));
@@ -58,8 +59,8 @@
     [data-theme^="glass"] .app-shell {
       position: relative;
       z-index: 1;
-      height: calc(100vh - 24px);
-      margin: 12px;
+      height: calc(100vh - (2 * var(--pm6-glass-inset)));
+      margin: var(--pm6-glass-inset);
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid var(--pm6-glass-pane-edge);
@@ -324,6 +325,47 @@
       background: var(--accent-blue);
       box-shadow: none;
     }
+    /* activity-bar symbols: sized pills (mirrors the friendly skin geometry)
+       so the active state reads as the same frosted step-3 selection pill */
+    [data-theme^="glass"] .activity-bar .icon .symbol {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [data-theme^="glass"] .activity-bar.collapsed .icon .symbol {
+      width: 26px;
+      height: 26px;
+    }
+    [data-theme^="glass"] .activity-bar .icon.active .symbol {
+      background: var(--pm6-glass-step-3);
+      border-radius: 10px;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+    }
+    /* De-glow sweep (shell polish): every nav selection reads as the same
+       frosted step-3 pill on the sheet — no accent glow rings on glass.
+       Token-only; steps are precomputed calc-alpha rgba (Slint-safe). */
+    [data-theme^="glass"] .s4-row.s4-active {
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .pm6-fm-file.file-active {
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .sc-subview-tabs .sc-tab.active {
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .cdp-tab.active {
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      color: var(--text-primary);
+    }
     [data-theme^="glass"] .wizard-btn {
       background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
@@ -580,6 +622,8 @@
     [data-theme^="glass"] .orch-tab.active {
       border-bottom-color: var(--accent-blue);
       color: var(--text-primary);
+      background: var(--pm6-glass-step-3);   /* de-glow sweep: frosted step-3 selection */
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     /* (W3 prune: dead .orch-rungraph-node / .orch-lane-* glass overrides removed —
        orchestrator rebuilt on pm6-orch-*; zero markup/JS references.) */

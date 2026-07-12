@@ -1,0 +1,103 @@
+{
+  "current_class_digests": {
+    "generated_bytes": 43728997,
+    "generated_content_state_sha256": "39720352e131ac2d867caa7d504b3c66c004511fd4d2702e85c47c271d752cc1",
+    "generated_count": 296,
+    "generated_path_set_sha256": "5601cfcb8abc481da3b30ed65b64094d6f2bea9e34f90cf0d98b7475fa5ea480",
+    "semantic_bytes": 1447239,
+    "semantic_content_state_sha256": "cebccebf8fa5def5a1137e09653f495ec52c7a8bd3d8757e3eb6393817437001",
+    "semantic_count": 3,
+    "semantic_path_set_sha256": "a013d03428f32da59aa5a835576601e78a67077da931275d4925fedff73866f2"
+  },
+  "current_exact_counts": {
+    "generated_governance": 296,
+    "semantic_canonical": 3,
+    "semantic_new_candidate": 0,
+    "source_lineage": 0,
+    "unknown_fail_closed": 0
+  },
+  "prohibitions": {
+    "extension_only_classification": true,
+    "mtime_authority": false,
+    "semantic_packetization_before_fresh_luna_inventory_gate": false
+  },
+  "rules": [
+    {
+      "class": "excluded_audit_control",
+      "match": "Plans/.audits/**",
+      "priority": 1,
+      "rule_id": "X0_AUDIT_EXCLUSION"
+    },
+    {
+      "class": "source_lineage",
+      "match": "Plans/ledgers/**",
+      "priority": 2,
+      "rule_id": "L1_LEDGER_SOURCE_LINEAGE"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/.evidence/**",
+      "priority": 3,
+      "rule_id": "G1_EVIDENCE"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/_shards/**",
+      "priority": 4,
+      "rule_id": "G2_SHARDS"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/.plan_index/**",
+      "priority": 5,
+      "rule_id": "G3_PLAN_INDEX"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/.plan_migration/**",
+      "priority": 6,
+      "rule_id": "G4_PLAN_MIGRATION"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/Spec_Lock.json",
+      "priority": 7,
+      "rule_id": "G5_SPEC_LOCK"
+    },
+    {
+      "class": "generated_governance",
+      "match": "Plans/auto_decisions.jsonl",
+      "priority": 8,
+      "rule_id": "G6_AUTO_DECISIONS"
+    },
+    {
+      "class": "generated_governance",
+      "match": [
+        "Plans/.implementation_readiness/buildability_gate_report.json",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json"
+      ],
+      "priority": 9,
+      "rule_id": "G7_READINESS_OUTPUT"
+    },
+    {
+      "class": "semantic_canonical",
+      "match": "path in frozen 135-row source scope",
+      "priority": 10,
+      "rule_id": "S1_FROZEN_SOURCE_SCOPE_MEMBER"
+    },
+    {
+      "class": "semantic_new_candidate",
+      "match": "remaining non-pipeline Plans path",
+      "priority": 11,
+      "rule_id": "S2_NEW_SEMANTIC_CANDIDATE_REQUIRES_LUNA"
+    },
+    {
+      "class": "unknown_fail_closed",
+      "match": "otherwise or overlap",
+      "priority": 12,
+      "rule_id": "U0_UNCLASSIFIED_FAIL_CLOSED"
+    }
+  ],
+  "schema_version": "audit005-live-head-classification-rules-v32",
+  "status": "FAIL_CLOSED_ORDERED_RULES"
+}

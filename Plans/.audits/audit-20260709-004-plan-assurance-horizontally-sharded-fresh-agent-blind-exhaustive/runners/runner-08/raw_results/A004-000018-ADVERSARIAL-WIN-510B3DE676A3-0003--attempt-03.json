@@ -1,1 +1,9 @@
-I’m applying the supplied reviewer protocol to the single assigned excerpt and will return only the required JSON object.
+{
+ "record_type": "bad_capture_preserved",
+ "assignment_id": "A004-000018-ADVERSARIAL-WIN-510B3DE676A3-0003",
+ "attempt_no": 3,
+ "note": "Original capture was intermediate agent commentary (non-JSON). Preserved verbatim in original_text during the 2026-07-11 json_syntax repair; the protocol result for this attempt lives in the sibling --attempt-03--final.json. See ingest_errors.jsonl bad-capture record.",
+ "original_text": "I’m applying the supplied reviewer protocol to the single assigned excerpt and will return only the required JSON object.\n",
+ "original_sha256": "2eff4640ef6673a37e021e9b5545544403338d4cdf80aa22c8276ebf6bf824fa",
+ "original_bytes": 124
+}

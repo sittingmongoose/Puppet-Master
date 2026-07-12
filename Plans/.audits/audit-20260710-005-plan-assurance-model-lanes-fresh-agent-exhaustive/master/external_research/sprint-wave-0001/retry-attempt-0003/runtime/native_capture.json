@@ -1,0 +1,92 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-recovery-native-capture-v3",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0003",
+  "attempt_id": "attempt-0003",
+  "capture_basis": "codex_app_read_thread_after_all_children_and_controller_terminal",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "controller_thread_state": "idle",
+  "controller_turn_id": "019f528f-99d8-7ce2-b6f4-dea57e0f4799",
+  "controller_turn_status": "completed",
+  "controller_turn_error": null,
+  "leaves": [
+    {
+      "assignment_id": "ER-0001",
+      "native_child_thread_id": "019f5292-790e-73d1-84f9-133727002819",
+      "native_child_turn_id": "019f5292-79b6-74f2-886b-419e4def2f5d",
+      "agent_path": "/root/a005_external_research_recovery_er_0001_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0003",
+      "native_child_thread_id": "019f5292-79cf-7b12-981f-4fff72848314",
+      "native_child_turn_id": "019f5292-7b15-75a0-a179-71c0cfe73742",
+      "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0003_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0004",
+      "native_child_thread_id": "019f5292-7b52-7ec1-a1ab-603a45be2585",
+      "native_child_turn_id": "019f5292-7dbd-7ae3-bbb9-70c2665717b4",
+      "agent_path": "/root/a005_external_research_recovery_er_0004_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0005",
+      "native_child_thread_id": "019f5292-7e35-76e0-a270-726fdb7dbba8",
+      "native_child_turn_id": "019f5292-813a-7940-9448-9adc124fc9f0",
+      "agent_path": "/root/a005_external_research_recovery_er_0005_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0006",
+      "native_child_thread_id": "019f5292-81c8-7810-99c1-74ac900752a5",
+      "native_child_turn_id": "019f5292-84f4-7b13-a378-140785adfecb",
+      "agent_path": "/root/a005_external_research_recovery_er_0006_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0007",
+      "native_child_thread_id": "019f5292-8586-7ad1-9c34-5a0d68f2b0da",
+      "native_child_turn_id": "019f5292-878e-7493-b7a4-f44190217cea",
+      "agent_path": "/root/a005_external_research_recovery_er_0007_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0008",
+      "native_child_thread_id": "019f5299-e80a-7163-945e-c97a00638aab",
+      "native_child_turn_id": "019f5299-e8b9-7252-80bc-d2e7a33e6b95",
+      "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0003_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ],
+  "counts": {
+    "leaves": 7,
+    "unique_native_child_threads": 7,
+    "unique_native_child_turns": 7,
+    "completed_turns": 7,
+    "pmr1_terminals": 7
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-09T16:46:04Z",
+  "generated_at_utc": "2026-07-12T03:23:44Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1154,6 +1154,57 @@
       "reported_status_family": "pass",
       "scope_key": "audit-20260704-001-external-repo-import-metadata-hygiene",
       "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260709-001-plan-assurance-blind-exhaustive",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260709-001-plan-assurance-blind-exhaustive/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260709-001-plan-assurance-blind-exhaustive",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260709-002-plan-assurance-windowed-blind-exhaustive/FINAL_REPORT.md",
+      "reported_status": "not_available",
+      "reported_status_family": "other",
+      "scope_key": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive/FINAL_REPORT.md",
+      "reported_status": "in_progress",
+      "reported_status_family": "other",
+      "scope_key": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+      "superseded_by": null
     }
   ],
   "schema_id": "pm.audit_status_index.v1",
@@ -1165,11 +1216,12 @@
     "closure_registry_row_count": 735,
     "current_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 24,
-    "report_count": 63,
+    "report_count": 66,
     "reported_status_family_counts": {
       "blocked_or_fail": 24,
+      "other": 2,
       "pass": 26,
-      "unknown": 13
+      "unknown": 14
     }
   }
 }

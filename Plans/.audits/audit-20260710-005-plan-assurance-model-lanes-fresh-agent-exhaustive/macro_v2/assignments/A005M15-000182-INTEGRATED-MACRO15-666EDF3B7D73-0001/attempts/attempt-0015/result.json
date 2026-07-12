@@ -1,0 +1,605 @@
+{
+  "assignment_id": "A005M15-000182-INTEGRATED-MACRO15-666EDF3B7D73-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can apply one declared JSON Schema dialect and reject unknown root keys deterministically.",
+      "item_id": "A005M15-000182-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/path_reference_registry.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:additionalProperties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties"
+      ],
+      "statement": "The registry is a Draft 2020-12 JSON Schema with a closed root object surface.",
+      "title": "Closed Draft 2020-12 root contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"classifications\": {",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "    \"generated_at_utc\": {",
+          "line_end": 92,
+          "line_start": 92,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "    \"schema_id\": {",
+          "line_end": 95,
+          "line_start": 95,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A registry instance has a compact, machine-validated envelope containing its identity, generation marker, and classification records.",
+      "item_id": "A005M15-000182-I002",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The root property model consists of classifications, generated_at_utc, and schema_id.",
+      "title": "Three-field registry envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "builder_discretion",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"additionalProperties\": false,",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "        \"required\": [",
+          "line_end": 78,
+          "line_start": 78,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every classification record must carry the routing and validation fields needed by a consumer while allowing only the declared optional metadata fields.",
+      "item_id": "A005M15-000182-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Classification entries are closed objects requiring raw_ref, classification, surface_type, match_kind, canonical_route, evidence_refs, allowed_contexts, and validator_policy; materialization_pattern, notes, and replacement_ref remain optional.",
+      "title": "Closed classification-record contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"enum\": [",
+          "line_end": 20,
+          "line_start": 20,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "            \"enum\": [",
+          "line_end": 31,
+          "line_start": 31,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "            \"enum\": [",
+          "line_end": 59,
+          "line_start": 59,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "            \"enum\": [",
+          "line_end": 69,
+          "line_start": 69,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Classification, matching, surface, and validator-policy values are bounded to stable vocabularies instead of arbitrary strings.",
+      "item_id": "A005M15-000182-I004",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema defines closed enums for classification, match_kind, surface_type, and validator_policy.",
+      "title": "Controlled path-governance vocabularies"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"required\": [",
+          "line_end": 100,
+          "line_start": 100,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "    \"schema_id\",",
+          "line_end": 101,
+          "line_start": 101,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "    \"generated_at_utc\",",
+          "line_end": 102,
+          "line_start": 102,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "    \"classifications\"",
+          "line_end": 103,
+          "line_start": 103,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A schema validator supplies a direct falsifiable oracle for missing registry-envelope fields.",
+      "item_id": "A005M15-000182-I005",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:required",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "schema_id, generated_at_utc, and classifications are all mandatory at the root.",
+      "title": "Required-envelope acceptance oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"type\": \"object\"",
+          "line_end": 105,
+          "line_start": 105,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "}",
+          "line_end": 106,
+          "line_start": 106,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Scalar, array, and null registry roots are unambiguously invalid.",
+      "item_id": "A005M15-000182-I006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:type",
+        "SEMANTIC:JSON_SUFFIX:Plans/path_reference_registry.schema.json",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The root is explicitly constrained to an object and the schema closes without an alternate root branch.",
+      "title": "Object-only registry root"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "scale_performance",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"type\": \"array\"",
+          "line_end": 90,
+          "line_start": 90,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "underconstrained_collection",
+      "impact": "An empty registry is schema-valid, so validation can succeed while the registry provides no classification coverage; the array is also unbounded.",
+      "item_id": "A005M15-000182-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The classifications array has neither minItems nor maxItems.",
+      "title": "Classification collection permits empty and unbounded registries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"type\": \"string\"",
+          "line_end": 53,
+          "line_start": 53,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "      \"type\": \"string\"",
+          "line_end": 93,
+          "line_start": 93,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "underconstrained_scalar",
+      "impact": "Empty or malformed references, routes, contexts, evidence values, and timestamps can pass schema validation, weakening downstream routing, audit provenance, and diagnostics.",
+      "item_id": "A005M15-000182-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "String-valued fields have no minLength, pattern, URI/path shape, or date-time format constraints; generated_at_utc is only a string.",
+      "title": "Reference and timestamp strings lack semantic validation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "              \"schema_to_materialize\",",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "              \"allow_until_materialized\"",
+          "line_end": 73,
+          "line_start": 73,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "          \"materialization_pattern\": {",
+          "line_end": 46,
+          "line_start": 46,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "missing_conditional_contract",
+      "impact": "Semantically contradictory records can validate, including materialization states without materialization metadata and replacement or route combinations that do not match their classification or policy.",
+      "item_id": "A005M15-000182-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema does not condition required or forbidden fields on classification, surface_type, match_kind, or validator_policy values.",
+      "title": "Cross-field classification invariants are unenforced"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"raw_ref\": {",
+          "line_end": 52,
+          "line_start": 52,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "      \"type\": \"array\"",
+          "line_end": 90,
+          "line_start": 90,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "missing_uniqueness_and_precedence",
+      "impact": "Duplicate or overlapping exact, glob, prefix, and anchor entries can validate without a declared winner, leaving consumers free to disagree and making concurrent registry edits harder to reconcile deterministically.",
+      "item_id": "A005M15-000182-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The classifications array has no uniqueItems constraint, uniqueness key, overlap prohibition, ordering rule, or match-precedence contract.",
+      "title": "Duplicate and overlapping matches have no deterministic precedence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"validator_policy\": {",
+          "line_end": 68,
+          "line_start": 68,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        },
+        {
+          "exact_quote": "              \"fail\",",
+          "line_end": 70,
+          "line_start": 70,
+          "path": "Plans/path_reference_registry.schema.json",
+          "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+        }
+      ],
+      "gap_kind": "missing_operational_binding",
+      "impact": "The schema alone cannot establish which validator enforces policy, how failures propagate, what fallback or rollback occurs, or which operator-facing diagnostics prove enforcement.",
+      "item_id": "A005M15-000182-I011",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "validator_policy names outcomes but this source does not identify enforcement authority, owners, callers, precedence, failure propagation, recovery behavior, or observability requirements.",
+      "title": "Validator-policy operational authority is unspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        106
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/path_reference_registry.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/path_reference_registry.schema.json:type",
+        "SEMANTIC:JSON_SUFFIX:Plans/path_reference_registry.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-000182-I001",
+        "A005M15-000182-I002",
+        "A005M15-000182-I003",
+        "A005M15-000182-I004",
+        "A005M15-000182-I005",
+        "A005M15-000182-I006",
+        "A005M15-000182-I007",
+        "A005M15-000182-I008",
+        "A005M15-000182-I009",
+        "A005M15-000182-I010",
+        "A005M15-000182-I011"
+      ],
+      "reviewed": true,
+      "summary": "The window defines a closed registry schema with controlled classification vocabularies and strong required-field shape checks, but it permits empty or unbounded registries, weak scalar values, contradictory cross-field combinations, duplicate or overlapping matches, and operationally unbound validator policies.",
+      "window_id": "WIN-666EDF3B7D73-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-666EDF3B7D73-0001",
+    "document_path": "Plans/path_reference_registry.schema.json",
+    "micro_window_ids": [
+      "WIN-666EDF3B7D73-0001"
+    ],
+    "source_sha256": "0ebe36122189f74ac0edd09e3895c3052367796e7ae2b25244f548354b9c7300"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical consumer owns match precedence when exact, glob, prefix, or doc_anchor entries overlap?",
+      "Which validator and operator-facing receipt prove that fail, warn, allow, and allow_until_materialized policies were enforced?"
+    ],
+    "feature_family_keys": [
+      "path-reference-governance",
+      "registry-schema-validation"
+    ],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m15_b9_000182_attempt_0015_terminal"
+}

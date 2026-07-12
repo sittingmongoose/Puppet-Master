@@ -1,0 +1,2509 @@
+L00000001	# Media Generation and Capabilities (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	<!--
+L00000007	PUPPET MASTER -- MEDIA GENERATION AND CAPABILITIES SSOT
+L00000008	
+L00000009	Purpose:
+L00000010	- Single source of truth for the capability system, media generation contract,
+L00000011	  natural-language slot extraction grammar, and media UI/UX behavior.
+L00000012	- All other plan documents must reference this document rather than restating
+L00000013	  media or capability rules.
+L00000014	
+L00000015	ABSOLUTE NAMING RULE:
+L00000016	- Platform name is "Puppet Master" only.
+L00000017	- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+L00000018	-->
+L00000019	
+L00000020	## 0. Scope and SSOT status
+L00000021	
+L00000022	This document is the **single canonical source of truth** for:
+L00000023	- The Puppet Master **capability system** (internal tool `capabilities.get`).
+L00000024	- The **media generation contract** (internal tool `media.generate`).
+L00000025	- The **natural-language slot extraction grammar** (deterministic parsing of user prompts into structured media-generation parameters).
+L00000026	- The **UI/UX behavior** for the capability picker dropdown in the composer.
+L00000027	
+L00000028	All other plan documents MUST reference this document by anchor (e.g., `Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM`) rather than restating capability or media-generation rules.
+L00000029	
+L00000030	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000031	
+L00000032	### SSOT references (DRY)
+L00000033	
+L00000034	- Locked decisions: `Plans/Spec_Lock.json`
+L00000035	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000036	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000037	- Canonical terms: `Plans/Glossary.md`
+L00000038	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000039	- Built-in tools, permissions: `Plans/Tools.md`
+L00000040	- Model system: `Plans/Models_System.md`
+L00000041	- GUI specification: `Plans/FinalGUISpec.md`
+L00000042	- Provider facade: `Plans/CLI_Bridged_Providers.md`
+L00000043	- Assistant chat design: `Plans/assistant-chat-design.md`
+L00000044	- Interview subagent integration: `Plans/interview-subagent-integration.md`
+L00000045	- Provider OpenCode: `Plans/Provider_OpenCode.md`
+L00000046	- Architecture invariants: `Plans/Architecture_Invariants.md`
+L00000047	
+L00000048	---
+L00000049	
+L00000050	<a id="1"></a>
+L00000051	<a id="CAPABILITY-SYSTEM"></a>
+L00000052	## 1. Capability system
+L00000053	
+L00000054	### 1.1 Internal tool: `capabilities.get`
+L00000055	
+L00000056	`capabilities.get` is an internal tool that returns the full set of capabilities currently available to the running Puppet Master instance. The response includes **all** capabilities — both media capabilities and provider/tool capabilities — each annotated with enablement status, a machine-readable disabled reason (when disabled), and setup hints.
+L00000057	
+L00000058	ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
+L00000059	
+L00000060	### 1.2 Response shape
+L00000061	
+L00000062	```json
+L00000063	{
+L00000064	  "capabilities": [
+L00000065	    {
+L00000066	      "id": "media.image",
+L00000067	      "category": "media",
+L00000068	      "enabled": true,
+L00000069	      "disabled_reason": null,
+L00000070	      "setup_hint": null
+L00000071	    },
+L00000072	    {
+L00000073	      "id": "media.video",
+L00000074	      "category": "media",
+L00000075	      "enabled": false,
+L00000076	      "disabled_reason": "NOT_CONFIGURED",
+L00000077	      "setup_hint": "Configure an eligible media provider route in Settings -> Providers."
+L00000078	    }
+L00000079	  ]
+L00000080	}
+L00000081	```
+L00000082	
+L00000083	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00000084	
+L00000085	This addendum compiles accepted provider-update ledger atoms into canonical media capability requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00000086	
+L00000087	### MGAC-094 - Provider Media Route Taxonomy
+L00000088	
+L00000089	```yaml
+L00000090	plan_unit_id: MGAC-094
+L00000091	unit_type: requirement
+L00000092	status: accepted
+L00000093	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00000094	canonical_text: >-
+L00000095	  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. The media/capability matrix includes every public `agy models` row under Antigravity with explicit modality truth, even when generated image, generated video, generated audio/TTS, music, or artifact output are false. Selectable generated-media engines are a narrower subset: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax global `image-01`, Gemini Direct generated-image routes where verified, and the separate capability-gated Antigravity OAuth/internal `gemini-3.1-flash-image` route where locally proven. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
+L00000096	gui_related: false
+L00000097	gui_classification_reason: Canonical media capability schema and support-state semantics rather than visual presentation.
+L00000098	depends_on: [MS-113, CV-094]
+L00000099	unblocks: [F3-401, RAP-032, POA-050]
+L00000100	acceptance_criteria:
+L00000101	  - Media input, media output, and generated-media routes are not collapsed into one generic supports-media flag.
+L00000102	  - Support-state labels distinguish unsupported, unverified, disabled, capability-gated, separate-profile, and source-lineage-only rows.
+L00000103	  - Gemini CLI is not used as the default media setup path; Gemini Direct API may remain active.
+L00000104	  - Provider-family grouping does not erase account, billing, region, or route differences.
+L00000105	  - Public `agy` text/coding rows remain present in media/capability metadata with generated-media flags false unless row-specific artifact proof exists.
+L00000106	  - GUI/Settings image-generation selectors consume only actual generated-media routes rather than every broader media/capability row.
+L00000107	validation_surfaces:
+L00000108	  - python3 scripts/pm-plan-index.py validate
+L00000109	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000110	risk_class: media_capability_drift
+L00000111	reasoning_tier: high
+L00000112	context_scope: provider_media_capability_taxonomy
+L00000113	implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+L00000114	node_compile_hint: {mode: provider_media_route_taxonomy, create_worknodes: false, create_nodeseeds: false}
+L00000115	source_lineage:
+L00000116	  - pldg-20260624-001-provider-updates:atom-0026
+L00000117	  - pldg-20260624-001-provider-updates:atom-0027
+L00000118	  - pldg-20260624-001-provider-updates:atom-0046
+L00000119	  - pldg-20260624-001-provider-updates:atom-0130
+L00000120	  - pldg-20260624-001-provider-updates:atom-0142
+L00000121	  - pldg-20260624-001-provider-updates:atom-0143
+L00000122	  - pldg-20260624-001-provider-updates:atom-0144
+L00000123	source_atom_ids: [atom-0026, atom-0027, atom-0028, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0130, atom-0138, atom-0142, atom-0143, atom-0144]
+L00000124	preserved_exact_tokens: ["media_input", "media_output", "generated_media_routes[]", "Gemini Direct", "Gemini CLI", "disabled", "capability-gated", "unverified", "unsupported", "separate-profile", "source-lineage", "agy models", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "gemini-3.1-flash-image", "image-01"]
+L00000125	negative_constraints:
+L00000126	  - Do not use Gemini CLI or Gemini-default copy as the active media setup path.
+L00000127	  - Do not mark image input as image generation.
+L00000128	  - Do not flatten route-specific media state into a single provider-level boolean.
+L00000129	  - Do not omit public `agy` models from media/capability metadata just because they are not generated-image models.
+L00000130	  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+L00000131	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+L00000132	```
+L00000133	
+L00000134	### MGAC-095 - OpenAI/Codex Images 2 Route Families
+L00000135	
+L00000136	```yaml
+L00000137	plan_unit_id: MGAC-095
+L00000138	unit_type: requirement
+L00000139	status: accepted
+L00000140	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00000141	canonical_text: >-
+L00000142	  OpenAI/Codex Images 2 support is mandatory and split into separate route families: official OpenAI API-key `gpt-image-2` generation/edit, Responses API hosted `image_generation`, and OpenAI/Codex subscription-backed image generation. The subscription-backed route must be modeled as required product support with explicit auth model, credential custody, support-state, terms-risk, artifact handling, rate-limit/plan disclosure, and local end-to-end verification before runtime green status. `opencode-gpt-imagegen` is source-lineage for UX, artifact, and subscription-route lessons only, not backend canon or auth storage canon.
+L00000143	gui_related: false
+L00000144	gui_classification_reason: Media route capability and backend/auth contract; GUI consumes controls and disclosures.
+L00000145	depends_on: [MGAC-094, MS-113, CV-292]
+L00000146	unblocks: [F3-401, RAP-032, POA-050, UF-074]
+L00000147	acceptance_criteria:
+L00000148	  - OpenAI API-key image routes and OpenAI/Codex subscription-backed image routes remain separate.
+L00000149	  - "`gpt-image-2` endpoint-specific parameters are preserved where supported: image refs, size/custom size, quality, output format, compression, input fidelity, partial/streaming images, background, moderation, and `n`."
+L00000150	  - Subscription-backed support is mandatory, not optional, but cannot be marked runtime-green without E2E verification.
+L00000151	  - C2PA/SynthID provenance is represented as a caveat, not a complete durable guarantee.
+L00000152	validation_surfaces:
+L00000153	  - python3 scripts/pm-plan-index.py validate
+L00000154	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000155	risk_class: openai_codex_image_route_drift
+L00000156	reasoning_tier: high
+L00000157	context_scope: openai_codex_image_generation
+L00000158	implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+L00000159	node_compile_hint: {mode: openai_codex_images2_route_contract, create_worknodes: false, create_nodeseeds: false}
+L00000160	source_lineage:
+L00000161	  - pldg-20260624-001-provider-updates:atom-0029
+L00000162	  - pldg-20260624-001-provider-updates:atom-0030
+L00000163	  - pldg-20260624-001-provider-updates:atom-0031
+L00000164	  - pldg-20260624-001-provider-updates:atom-0137
+L00000165	source_atom_ids: [atom-0029, atom-0030, atom-0031, atom-0032, atom-0033, atom-0034, atom-0038, atom-0136, atom-0137]
+L00000166	preserved_exact_tokens: ["OpenAI", "ChatGPT", "Codex", "ChatGPT Images 2.0", "GPT Image 2", "gpt-image-2", "image_generation", "$imagegen", "C2PA", "SynthID", "opencode-gpt-imagegen", "mandatory", "not optional"]
+L00000167	negative_constraints:
+L00000168	  - Do not treat Codex built-in image generation, ChatGPT UI image generation, OpenAI API image generation, and MCP image generation as one interchangeable backend.
+L00000169	  - Do not import `opencode-gpt-imagegen` backend/auth behavior as canonical PM backend support.
+L00000170	  - Do not overpromise transparent background, partial images, streaming, batch, or provenance behavior across endpoints that do not support it.
+L00000171	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md]
+L00000172	```
+L00000173	
+L00000174	### MGAC-096 - MiniMax Image-01 Generated-Media Route
+L00000175	
+L00000176	```yaml
+L00000177	plan_unit_id: MGAC-096
+L00000178	unit_type: requirement
+L00000179	status: accepted
+L00000180	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00000181	canonical_text: >-
+L00000182	  MiniMax global `Image-01` is an implementation-ready generated-media provider route under the MiniMax global account/profile, separate from MiniMax CN. PM must target `https://api.minimax.io` `POST /v1/image_generation` with `model: image-01`, prompt max 1500, `aspect_ratio` or width/height, `response_format: url|base64`, seed, `n` 1-9, `prompt_optimizer`, partial success/failure counts, trace id/base response status, and 24-hour URL expiry handling. `aspect_ratio` takes precedence over width/height; width and height are 512-2048 and divisible by 8 when both are used.
+L00000183	gui_related: false
+L00000184	gui_classification_reason: Provider generated-media route contract and artifact semantics rather than visual presentation.
+L00000185	depends_on: [MGAC-094, MS-114]
+L00000186	unblocks: [F3-401, RAP-032, POA-050]
+L00000187	acceptance_criteria:
+L00000188	  - MiniMax global Image-01 appears in the generated-media provider list.
+L00000189	  - MiniMax CN is kept as a separate unverified credential/profile route when only a global key is tested.
+L00000190	  - URL outputs carry 24-hour expiry warnings and artifact capture requirements.
+L00000191	  - Partial success and provider status metadata are not flattened into binary success/failure.
+L00000192	validation_surfaces:
+L00000193	  - python3 scripts/pm-plan-index.py validate
+L00000194	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000195	risk_class: minimax_image_route_drift
+L00000196	reasoning_tier: high
+L00000197	context_scope: minimax_generated_media
+L00000198	implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+L00000199	node_compile_hint: {mode: minimax_image01_route_contract, create_worknodes: false, create_nodeseeds: false}
+L00000200	source_lineage:
+L00000201	  - pldg-20260624-001-provider-updates:atom-0127
+L00000202	  - pldg-20260624-001-provider-updates:atom-0133
+L00000203	  - pldg-20260624-001-provider-updates:atom-0134
+L00000204	source_atom_ids: [atom-0127, atom-0130, atom-0133, atom-0134, atom-0138]
+L00000205	preserved_exact_tokens: ["MiniMax", "Image-01", "image-01", "https://api.minimax.io", "/v1/image_generation", "aspect_ratio", "1:1", "16:9", "4:3", "3:2", "2:3", "3:4", "9:16", "21:9", "response_format", "url", "base64", "seed", "n", "prompt_optimizer", "24h", "24-hour URL expiry"]
+L00000206	negative_constraints:
+L00000207	  - Do not merge MiniMax global and MiniMax CN credential/profile routes.
+L00000208	  - Do not drop partial-success metadata, trace id, or base response status.
+L00000209	  - Do not treat URL output as durable storage without PM artifact capture or expiry disclosure.
+L00000210	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+L00000211	```
+L00000212	
+L00000213	### MGAC-097 - Tested Direct-Provider Media Support Matrix
+L00000214	
+L00000215	```yaml
+L00000216	plan_unit_id: MGAC-097
+L00000217	unit_type: requirement
+L00000218	status: accepted
+L00000219	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00000220	canonical_text: >-
+L00000221	  Tested direct-provider media support must stay scoped to observed route behavior. Kimi For Coding supports tested text/thinking/image-input and not image creation. GitHub Copilot direct hosted API supports tested chat routes and image input on supported models such as `gpt-5-mini`, but `/images/generations` is 404 and no native image generation is green. Z.AI/Zhipu supports route-specific multimodal and image APIs in documentation, but tested image-generation states include balance/resource, plan, and overload gates and must be exposed as gated where not green. Cursor API-key/SDK and composer-api-style routes have image-input proof and compatibility caveats; product-native Cursor image generation is separate. OpenCode server catalogs are source-lineage metadata, not direct-provider closure evidence.
+L00000222	gui_related: false
+L00000223	gui_classification_reason: Capability and verification matrix; GUI consumes the statuses but does not own them.
+L00000224	depends_on: [MGAC-094, MS-114]
+L00000225	unblocks: [F3-401, UF-074]
+L00000226	acceptance_criteria:
+L00000227	  - Kimi and GitHub Copilot are not advertised as native image-generation providers.
+L00000228	  - Z.AI/Zhipu image/media rows expose plan, balance, overload, and resource-package gates.
+L00000229	  - Cursor image-input proof and Worker/proxy caveats remain route-specific.
+L00000230	  - Direct-provider closure evidence excludes OpenCode-server-routed provider results.
+L00000231	validation_surfaces:
+L00000232	  - python3 scripts/pm-plan-index.py validate
+L00000233	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000234	risk_class: media_support_overclaim
+L00000235	reasoning_tier: high
+L00000236	context_scope: tested_provider_media_matrix
+L00000237	implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/usage-feature.md, Plans/FinalGUISpec.md]
+L00000238	node_compile_hint: {mode: tested_direct_provider_media_matrix, create_worknodes: false, create_nodeseeds: false}
+L00000239	source_lineage:
+L00000240	  - pldg-20260624-001-provider-updates:atom-0126
+L00000241	  - pldg-20260624-001-provider-updates:atom-0128
+L00000242	  - pldg-20260624-001-provider-updates:atom-0129
+L00000243	  - pldg-20260624-001-provider-updates:atom-0131
+L00000244	source_atom_ids: [atom-0037, atom-0041, atom-0042, atom-0044, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0126, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138]
+L00000245	preserved_exact_tokens: ["Kimi", "image creation", "GitHub Copilot", "/images/generations", "404", "gpt-5-mini", "Z.AI", "Zhipu", "balance/resource", "glm-5v-turbo", "Cursor", "composer-api", "OpenCode server"]
+L00000246	negative_constraints:
+L00000247	  - Do not claim native image generation for Kimi or GitHub Copilot from image-input support.
+L00000248	  - Do not hide Z.AI plan, balance, overload, or resource-package gates behind generic provider failure.
+L00000249	  - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
+L00000250	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+L00000251	```
+L00000252	
+L00000253	### MGAC-098 - Antigravity Public Catalog And OAuth/Internal Image Route Split
+L00000254	
+L00000255	```yaml
+L00000256	plan_unit_id: MGAC-098
+L00000257	unit_type: requirement
+L00000258	status: accepted
+L00000259	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00000260	canonical_text: >-
+L00000261	  Antigravity media capability planning splits public `agy` CLI catalog rows from the separate Antigravity OAuth/internal generated-image route. Current public `agy models` rows are `Gemini 3.5 Flash (Medium)`, `Gemini 3.5 Flash (High)`, `Gemini 3.5 Flash (Low)`, `Gemini 3.1 Pro (Low)`, `Gemini 3.1 Pro (High)`, `Claude Sonnet 4.6 (Thinking)`, `Claude Opus 4.6 (Thinking)`, and `GPT-OSS 120B (Medium)`; these rows must appear in media/capability metadata with text output, image input, PDF input, generated image, generated video, generated audio/TTS, music, artifact output, thinking/effort label, route, support state, verification state, and source provenance fields, with generated-media flags false until the exact row has artifact proof. Antigravity generated-image support is a distinct capability-gated OAuth/internal route proven locally only for `gemini-3.1-flash-image` through `v1internal:generateContent` using `responseModalities: ["IMAGE"]`, `imageConfig`, and `candidateCount`, producing a `1024x1024` `image/jpeg` artifact with SHA-256 `a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d`. `jkalasas/opencode-antigravity-image`, `opencode-antigravity-image`, and `opencode-antigravity-auth` are source-lineage for this unofficial/private endpoint shape, not proof that public `agy` CLI media is green.
+L00000262	gui_related: false
+L00000263	gui_classification_reason: Defines provider/media route capability truth and proof states; GUI consumes these rows but does not own them.
+L00000264	depends_on: [MGAC-094, MS-113, MA-062, CV-292]
+L00000265	unblocks: [F3-401, RAP-032, POA-050, UF-074]
+L00000266	acceptance_criteria:
+L00000267	  - Every current public `agy models` row is represented under Antigravity media/capability metadata with explicit modality fields.
+L00000268	  - Public `agy` rows do not appear as selectable image-generation engines unless that exact public route later has generated-artifact proof.
+L00000269	  - The Antigravity OAuth/internal `gemini-3.1-flash-image` route is distinct from Gemini Direct and from public `agy` CLI catalog rows.
+L00000270	  - "`gemini-3-pro-image`, `gemini-2.5-flash-image`, Nano Banana, Nanobanana, Imagen, and Veo remain unverified for the tested Antigravity account/project unless fresh catalog and artifact proof supersede this state."
+L00000271	  - Private/internal endpoint support carries capability-gated support-state, terms/risk labeling, fallback/error handling, and secret-redaction requirements.
+L00000272	validation_surfaces:
+L00000273	  - python3 scripts/pm-plan-index.py validate
+L00000274	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000275	risk_class: antigravity_media_route_overclaim
+L00000276	reasoning_tier: high
+L00000277	context_scope: antigravity_public_catalog_and_internal_image_route
+L00000278	implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+L00000279	node_compile_hint: {mode: antigravity_public_catalog_internal_image_split, create_worknodes: false, create_nodeseeds: false}
+L00000280	source_lineage:
+L00000281	  - pldg-20260624-001-provider-updates:atom-0142
+L00000282	  - pldg-20260624-001-provider-updates:atom-0143
+L00000283	  - pldg-20260624-001-provider-updates:atom-0144
+L00000284	  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_image_generation_probe_20260626.md
+L00000285	  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_agy_media_capability_rows_20260626.md
+L00000286	  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/gui_settings_image_generation_model_rows_20260626.md
+L00000287	source_atom_ids: [atom-0142, atom-0143, atom-0144]
+L00000288	preserved_exact_tokens: ["jkalasas/opencode-antigravity-image", "opencode-antigravity-image", "opencode-antigravity-auth", "UNOFFICIAL TOOL", "v1internal:generateContent", "v1internal:fetchAvailableModels", "responseModalities: [\"IMAGE\"]", "imageConfig", "candidateCount", "gemini-3.1-flash-image", "gemini-3-pro-image", "gemini-2.5-flash-image", "Nano Banana", "Nanobanana", "Imagen", "Veo", "PLATFORM_UNSPECIFIED", "MACOS", "INVALID_ARGUMENT", "1024x1024", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d", "Gemini 3.5 Flash (Medium)", "Gemini 3.5 Flash (High)", "Gemini 3.5 Flash (Low)", "Gemini 3.1 Pro (Low)", "Gemini 3.1 Pro (High)", "Claude Sonnet 4.6 (Thinking)", "Claude Opus 4.6 (Thinking)", "GPT-OSS 120B (Medium)", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "verification state", "source provenance"]
+L00000289	negative_constraints:
+L00000290	  - Do not mark Antigravity CLI generated-media support green from `agy --model` prompt output or from a plugin repo alone.
+L00000291	  - Do not present `gemini-3-pro-image` as currently verified unless a fresh catalog/proof shows it works for the account/project.
+L00000292	  - Do not alias Nano Banana, Nanobanana, or `gemini-2.5-flash-image` to Antigravity support without catalog presence plus generated-artifact proof.
+L00000293	  - Do not store OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in Plans, ledgers, logs, or artifacts.
+L00000294	  - Do not treat unofficial/private internal endpoint behavior as stable without explicit support-state, terms/risk labeling, and fallback/error handling.
+L00000295	  - Do not merge Antigravity OAuth/internal generated-media support into Gemini Direct API support; keep execution/auth/billing routes distinct.
+L00000296	  - Do not treat the current point-in-time `agy` catalog as static; refresh catalog-backed capability rows at setup/runtime and preserve snapshot provenance.
+L00000297	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/usage-feature.md]
+L00000298	```
+L00000299	
+L00000300	Each entry:
+L00000301	- `id` (string, required): stable capability identifier.
+L00000302	- `category` (string, required): `"media"` or `"provider_tool"`.
+L00000303	- `enabled` (bool, required): whether the capability is currently usable.
+L00000304	- `disabled_reason` (string | null, required): one of the canonical disabled-reason values (§1.3) when `enabled` is `false`; `null` when `enabled` is `true`.
+L00000305	- `setup_hint` (string | null, optional): human-readable guidance for resolving the disabled state.
+L00000306	
+L00000307	ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
+L00000308	
+L00000309	### 1.3 Canonical disabled-reason values
+L00000310	
+L00000311	| Value | Meaning |
+L00000312	|-------|---------|
+L00000313	| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved provider media route (for example, no eligible provider account, profile, credential, or API key). |
+L00000314	| `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current provider account, profile, auth mode, API key, or provider setup. |
+L00000315	| `ADMIN_DISABLED` | The feature is explicitly disabled in Settings (Media settings). |
+L00000316	| `BACKEND_UNSUPPORTED` | The current backend does not support this media kind (e.g., Cursor backend for video/tts/music). |
+L00000317	| `RATE_LIMITED` | The capability is temporarily unavailable due to rate limiting. |
+L00000318	| `QUOTA_EXCEEDED` | The API quota for this capability has been exhausted. |
+L00000319	
+L00000320	These values are the canonical enum; implementations MUST use exactly these strings.
+L00000321	
+L00000322	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00000323	
+L00000324	### 1.4 Disabled-reason evaluation precedence
+L00000325	
+L00000326	When multiple disabled causes apply to the same capability at the same time, `capabilities.get` MUST return exactly one `disabled_reason` using this deterministic precedence (highest to lowest): `BACKEND_UNSUPPORTED` → `NOT_CONFIGURED` → `RATE_LIMITED` → `QUOTA_EXCEEDED` → `ADMIN_DISABLED` → `MODEL_UNAVAILABLE`.
+L00000327	
+L00000328	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00000329	
+L00000330	### 1.5 Capability categories
+L00000331	
+L00000332	**Media capabilities:**
+L00000333	
+L00000334	| Capability ID | Description |
+L00000335	|---------------|-------------|
+L00000336	| `media.image` | Image generation (photos, logos, illustrations, etc.) |
+L00000337	| `media.video` | Video generation (clips, animations, b-roll, etc.) |
+L00000338	| `media.tts` | Text-to-speech synthesis |
+L00000339	| `media.music` | Music/audio generation (songs, instrumentals, beats, etc.) |
+L00000340	
+L00000341	**Provider tool capabilities:**
+L00000342	
+L00000343	The `provider_tool` capability category is the umbrella bucket for all non-media tool capabilities exposed by Puppet Master, including registered provider-exposed tools (e.g., OpenCode tools) and existing internal tools (e.g., read/grep/write/task). Each is reported with the same `enabled` / `disabled_reason` / `setup_hint` shape. Tool IDs follow existing tool-registry conventions (`Plans/Tools.md`).
+L00000344	
+L00000345	ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
+L00000346	
+L00000347	### 1.6 Agent invocation rule
+L00000348	
+L00000349	The **Assistant** and **Interviewer** personas MUST call `capabilities.get` when the user asks about available capabilities, features, or what Puppet Master can do. When Assistant is operating in the **PRD Builder** workflow, the same requirement applies. The response is used to give the user an accurate, real-time answer about what is enabled and what is not (with reasons and setup guidance).
+L00000350	
+L00000351	ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
+L00000352	
+L00000353	### 1.7 Registry snapshot and refresh semantics
+L00000354	
+L00000355	`capabilities.get` is computed from the **current runtime registry snapshot** at call time. That snapshot MUST merge:
+L00000356	- built-in internal tools from the canonical tool registry,
+L00000357	- currently enabled MCP-discovered tools whose server/provider bridge is healthy for the active provider,
+L00000358	- provider-exposed tools surfaced through the active backend,
+L00000359	- media capabilities evaluated through the rules in §§1.3–1.5 and §2.4.
+L00000360	
+L00000361	Capability state is therefore **runtime-derived**, not a separately persisted capability database. A Settings save, provider switch, MCP adapter refresh, or Doctor/preflight remediation invalidates the previous snapshot; the next `capabilities.get` call MUST recompute from live state and MUST NOT rely on stale cached enablement.
+L00000362	
+L00000363	ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+L00000364	
+L00000365	### 1.8 Eventing and audit behavior
+L00000366	
+L00000367	`capabilities.get` uses the standard tool event pipeline from `Plans/Contracts_V0.md` / `Plans/Tools.md`; it does **not** define a separate persistent capability-state event stream. Each invocation emits the canonical tool telemetry (`tool_name = "capabilities.get"`, latency, success/failure). If settings or provider state changes alter capability availability, the change becomes visible on the **next** invocation or UI refresh rather than through a dedicated durable "capability changed" event.
+L00000368	
+L00000369	ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+L00000370	
+L00000371	---
+L00000372	
+L00000373	<a id="2"></a>
+L00000374	<a id="MEDIA-GENERATE"></a>
+L00000375	## 2. Media generation contract
+L00000376	
+L00000377	### 2.1 Internal tool: `media.generate`
+L00000378	
+L00000379	`media.generate` is the uniform internal tool for all media generation. It accepts a structured request envelope and returns media output or an error.
+L00000380	
+L00000381	ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
+L00000382	
+L00000383	### 2.2 Request envelope
+L00000384	
+L00000385	
+L00000386	```json
+L00000387	{
+L00000388	  "kind": "image",
+L00000389	  "prompt": "A cyberpunk cat wearing a monocle",
+L00000390	  "model_override": null,
+L00000391	  "count": 2,
+L00000392	  "aspect_ratio": "16:9",
+L00000393	  "size": 1024,
+L00000394	  "resolution": null,
+L00000395	  "duration": null,
+L00000396	  "format": "png",
+L00000397	  "voice": null,
+L00000398	  "bpm": null,
+L00000399	  "seed": null,
+L00000400	  "negative_prompt": null,
+L00000401	  "quality": "standard"
+L00000402	}
+L00000403	```
+L00000404	
+L00000405	| Field | Type | Required | Description |
+L00000406	|-------|------|----------|-------------|
+L00000407	| `kind` | `string` | **Required** | One of: `image`, `video`, `tts`, `music`. |
+L00000408	| `prompt` | `string` | **Required** | The creative/content prompt after slot extraction and cleaning. |
+L00000409	| `model_override` | `string \| null` | Optional | Per-request model override. Does **not** change Settings. Resolved via alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. See §3.4. |
+L00000410	| `count` | `integer \| null` | Optional | Number of variations (default 1; clamped to safe max, default 8). |
+L00000411	| `aspect_ratio` | `string \| null` | Optional | e.g., `"1:1"`, `"16:9"`, `"9:16"`. |
+L00000412	| `size` | `integer \| null` | Optional | Image pixel size (e.g., 512, 1024, 2048). |
+L00000413	| `resolution` | `string \| null` | Optional | Canonical resolution token when provided (e.g., `720p`, `1080p`, `1440p`, `2160p`, `4k`, `2k`, `8k`). |
+L00000414	| `duration` | `float \| null` | Optional | Duration in seconds (video/music only). |
+L00000415	| `format` | `string \| null` | Optional | Output format (e.g., `png`, `jpg`, `mp4`, `wav`, `mp3`). |
+L00000416	| `voice` | `string \| null` | Optional | Voice ID or style descriptor (TTS only). |
+L00000417	| `bpm` | `integer \| null` | Optional | Beats per minute (music only). |
+L00000418	| `seed` | `integer \| null` | Optional | Deterministic seed for reproducibility. |
+L00000419	| `negative_prompt` | `string \| null` | Optional | Content to avoid in generation. |
+L00000420	| `quality` | `string \| null` | Optional | One of: `draft`, `standard`, `high`. |
+L00000421	
+L00000422	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000423	
+L00000424	Deterministic `size` / `resolution` normalization for the request envelope:
+L00000425	- If `kind=image` and `size_px` is matched, set `size` to the parsed integer and set `resolution` to `null` unless an explicit symbolic resolution token is also provided.
+L00000426	- If `size_k` is matched, map `2k -> 2048`, `4k -> 4096`, `8k -> 8192` into `size`; also set `resolution` to the symbolic token (`2k`, `4k`, or `8k`).
+L00000427	- If `kind=video` and `vres` is matched, set `resolution` to the parsed token (`720p`, `1080p`, `1440p`, `2160p`, or `4k`) and keep `size` as `null`.
+L00000428	- Conflict rule: for `kind=image`, `size_k`/`size_px` controls are authoritative over `vres`; for `kind=video`, `vres` is authoritative for `resolution`. Within the same keyed family, last match wins.
+L00000429	
+L00000430	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000431	
+L00000432	### 2.3 Per-request model override (`model_override`)
+L00000433	
+L00000434	The `model_override` field allows a user to specify a model for a single generation request without changing the persistent model configured in Settings. This is ephemeral — it applies only to the current `media.generate` invocation.
+L00000435	
+L00000436	Resolution order for `model_override`:
+L00000437	1. **Alias mapping** — check registered model aliases.
+L00000438	2. **Exact model ID** — match against known model IDs.
+L00000439	3. **Exact displayName** — match against model display names (case-insensitive).
+L00000440	4. **Else** — return `MODEL_UNAVAILABLE` disabled reason.
+L00000441	
+L00000442	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+L00000443	
+L00000444	### 2.4 Backend routing
+L00000445	Media routing resolves through concrete provider/model rows and their `generated_media_routes[]`, `media_input`, and `media_output` capability fields.
+L00000446	
+L00000447	ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+L00000448	
+L00000449	Cursor rules:
+L00000450	- Cursor API-key/SDK proof is media-input/tooling evidence only unless a later owner contract proves product-native Cursor image generation.
+L00000451	- When a Cursor route lacks a verified generated-media route for `kind=image`, image generation is disabled or capability-gated rather than routed to a fictional Cursor-native generator.
+L00000452	- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED` unless a verified Cursor route later declares that generated-media kind.
+L00000453	
+L00000454	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
+L00000455	
+L00000456	All backends, including Gemini Direct, OpenAI/Codex, MiniMax, Z.AI/Zhipu, Cursor, Kimi, GitHub Copilot, Antigravity, and future provider rows, follow the provider/media route taxonomy. Gemini Direct is one verified media-capable route where applicable; it is not the default non-Cursor media model. Gemini CLI (`gemini_cli`), Gemini CLI media routing, and Nanobanana helper paths are retired/source-lineage only. Public Antigravity `agy` currently verifies Gemini 3.5 Flash, Gemini 3.1 Pro, Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS 120B text/coding model routes with generated-media flags false, while a separate capability-gated Antigravity OAuth/internal route verifies `gemini-3.1-flash-image` generated image output. Public `agy` still does not verify Nano Banana/Nanobanana, `gemini-2.5-flash-image`, `gemini-3-pro-image`, Imagen, Veo, TTS, music, video, or other generated-media routes because `agy models` does not list them and unrecognized `--model` labels fall back.
+L00000457	
+L00000458	Quota/usage tools and account/plan UI are route-specific rather than Gemini-default. The capability picker imports account/plan and usage labels from `Plans/Multi-Account.md` and `Plans/usage-feature.md` instead of inventing a parallel bucket.
+L00000459	
+L00000460	Required routing order:
+L00000461	1. resolve the requested provider/runtime surface for media
+L00000462	2. resolve the requested/effective auth family and eligible account or profile set
+L00000463	3. choose the concrete runtime surface that actually supports the requested media kind
+L00000464	4. record the resulting requested/effective runtime snapshot
+L00000465	
+L00000466	Media generation consumes the product-wide shared runtime identity model instead of defining feature-local runtime-state fields. The requested/effective runtime snapshot remains that shared model's one canonical truth for requested/effective runtime state across the product, and media routing reads it to produce less schema drift, better audit/history/debugging (`/history/debugging`), more consistent UI across chat, tools, logs, subagents, and providers, safer routing/retry/account-switch (`/retry/account-switch`) behavior, and fewer feature-local special-case fields. Media-specific records may attach media request/output details, but they must not own or create shadow fields for account, provider, retry, switch, or audit identity.
+L00000467	
+L00000468	Media routing rules:
+L00000469	- Gemini Direct media follows the direct Gemini provider path only and is key-only/API-key-backed where verified.
+L00000470	- OpenAI API-key image generation uses the official OpenAI `gpt-image-2` / Responses `image_generation` routes.
+L00000471	- OpenAI/Codex subscription-backed image generation is mandatory as a separate first-class route with explicit auth, support-state, terms-risk, artifact, and E2E verification requirements.
+L00000472	- MiniMax global image generation uses the separate `https://api.minimax.io/v1/image_generation` route with `model: image-01`; MiniMax chat/coding text models do not become image-output models.
+L00000473	- Public Antigravity `agy` generated-media support requires `agy models` or equivalent public CLI metadata to list the media model plus an E2E generated artifact proof. Current public `agy` proof does not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, music, video, or other generated-media models green through Antigravity.
+L00000474	- Antigravity OAuth/internal generated-image support is a separate capability-gated route currently proven only for `gemini-3.1-flash-image`; it must not be collapsed into public `agy` CLI media support or Gemini Direct API support.
+L00000475	- Kimi and GitHub Copilot rows may support text, media input, or reasoning effort without native generated-image support; absence of `/images/generations` proof means no image-output route is advertised.
+L00000476	- Z.AI/Zhipu media output is gated by route/model/account/resource state and must surface overload, plan-not-included, balance/resource, or unverified states rather than becoming a Gemini fallback.
+L00000477	- Gemini CLI media, Nanobanana installation, `NANOBANANA_API_KEY`, extension version disclosure, and Gemini CLI family-pooling switches are retired/source-lineage only and must not be implemented as active media routes.
+L00000478	- Media profile overlay policy keeps auth `/session/account` state isolated per account. Settings `/plugins/MCP/extensions` may be isolated or PM-managed shared assets only when provider capability and risk review support sharing; the default is conservative isolation.
+L00000479	- Media-impact reconciliation follows the final three-bucket `CHANGE` register: this document owns media-capability changes while consuming account, runtime, usage, model, and GUI owner changes from the provider/account specs.
+L00000480	- Provider-side model routing for active media providers must be constrained or surfaced through requested/effective model disclosure; Gemini CLI `general.plan.modelRouting` wording is retired/source-lineage only.
+L00000481	- Media usage accounting consumes `Plans/usage-feature.md` / `/usage-feature.md`, `usage_event_ref`, and a single scope-precedence envelope rather than inventing media-local usage scope rules.
+L00000482	- Media audit links must not treat `.puppet-master/state/active-git-operations.json`, `/state/active-git-operations.json`, or `puppet-master/state/active-git-operations.json` as canonical audit; `storage-plan`, `puppet-master`, seglog, and `/receipts` remain the source-of-truth path for durable audit evidence.
+L00000483	- Media consumers of execution state follow event-sourced storage: `active-agents.json` and active-agents flat files are compatibility inputs only, while `/redb`, redb projections, and event-sourced stores own durable execution state.
+L00000484	- `resume_url` is a derived serialized field from the canonical route contract, not a stronger source of truth for media generation recovery or continuation.
+L00000485	- spot-checks against `Plans/storage-plan.md` / `/storage-plan.md` must preserve storage as the owner for receipt, usage, and runtime persistence fields consumed by media records.
+L00000486	- `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` consumers must not keep tier_id-centric media usage or identity pivots; `tier_id` is compatibility context, while `/runtime` and attempt/receipt-based `/receipt-based` truth own media usage joins.
+L00000487	- `orchestrator-subagent-integration` / `orchestrator-subagent-integration.md` selector and hook APIs consume canonical execution-unit refs for truth and smaller derived selection `/decomposition` objects for heuristics.
+L00000488	- Provider/account identity remains shared-runtime truth; media operational identity remains side-effect and `/target` truth. Media records may reference `/account`, but side-effect target identity must stay separate.
+L00000489	- Execution-core docs must retire tier-rooted structs and enum sets before downstream media, usage, and runtime consumers compensate locally instead of inheriting stable runtime truth.
+L00000490	- multi-project, lane-based orchestration means media records cannot assume one active `/worktree/thread` context; generated artifacts and usage joins must carry enough project, lane, worktree, thread, and request identity to disambiguate concurrent media work.
+L00000491	- The common envelope contract is not optional: media generation records must name request, runtime, usage, route, artifact, and recovery fields explicitly instead of relying on underspecified shared envelope prose.
+L00000492	
+L00000493	ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000494	### 2.5 Response shape
+L00000495	
+L00000496	```json
+L00000497	{
+L00000498	  "success": true,
+L00000499	  "request_id": "req_20260301_a1b2c3d4",
+L00000500	  "kind": "image",
+L00000501	  "engine": {
+L00000502	    "provider_entry_id": "resolved_provider_entry_id",
+L00000503	    "media_route_id": "resolved_media_route_id",
+L00000504	    "generated_media_route_id": "resolved_generated_media_route_id"
+L00000505	  },
+L00000506	  "artifacts": [
+L00000507	    {
+L00000508	      "artifact_id": "art_0001",
+L00000509	      "kind": "image",
+L00000510	      "mime": "image/png",
+L00000511	      "uri": "artifact://media/req_20260301_a1b2c3d4/output_000.png",
+L00000512	      "sha256": "e3b0c44298fc1c149afbf4c8996fb924...",
+L00000513	      "bytes": 204800,
+L00000514	      "meta": {
+L00000515	        "w": 1024,
+L00000516	        "h": 1024,
+L00000517	        "model_used": "gemini-3-pro-image-preview",
+L00000518	        "seed": 42,
+L00000519	        "generation_time_ms": 3200
+L00000520	      }
+L00000521	    }
+L00000522	  ],
+L00000523	  "usage": {
+L00000524	    "usage_record_id": "usr_media_req_20260301_a1b2c3d4",
+L00000525	    "usage_event_ref": "usage_event://project/current/run/run_20260301/attempt/attempt_media_0001",
+L00000526	    "source_class": "provider_reported",
+L00000527	    "source_confidence": "high",
+L00000528	    "source_authority": "provider_receipt",
+L00000529	    "settlement_status": "observed",
+L00000530	    "cost_status": "estimated",
+L00000531	    "cost_microdollars": 3000,
+L00000532	    "currency": "USD",
+L00000533	    "token_buckets": {
+L00000534	      "input_total": 42,
+L00000535	      "input_non_cached": 42,
+L00000536	      "cache_read": 0,
+L00000537	      "cache_write": 0,
+L00000538	      "cache_write_1h": 0,
+L00000539	      "cache_write_ttl": null,
+L00000540	      "output_total": 0,
+L00000541	      "output_visible": 0,
+L00000542	      "reasoning": 0,
+L00000543	      "thoughts": 0,
+L00000544	      "provider_total": 42,
+L00000545	      "context_estimate": null
+L00000546	    },
+L00000547	    "counting_semantics": {
+L00000548	      "input_total_includes_cache": true,
+L00000549	      "output_total_includes_reasoning": true,
+L00000550	      "provider_total_authority": "provider_reported"
+L00000551	    },
+L00000552	    "media_units": [
+L00000553	      {
+L00000554	        "unit_kind": "image_generation",
+L00000555	        "quantity": 1,
+L00000556	        "provider_unit_ref": "generated_image"
+L00000557	      }
+L00000558	    ]
+L00000559	  },
+L00000560	  "error": null
+L00000561	}
+L00000562	```
+L00000563	
+L00000564	Response fields:
+L00000565	- `request_id` (string, required): unique opaque ID for this generation request.
+L00000566	- `engine` (object, required): media route identity for the effective provider/model route. It includes `provider_entry_id`, `media_route_id`, and, on generated output, the matched `generated_media_route_id`; values are validated against the provider/model row's `generated_media_routes[]` and the shared requested/effective runtime snapshot rather than a fixed `gemini_api`/`cursor_native` enum.
+L00000567	- `artifacts[]` (array, required on success): each item contains:
+L00000568	  - `artifact_id` (string): unique artifact identifier.
+L00000569	  - `kind` (string): media kind that was generated.
+L00000570	  - `mime` (string): MIME type (e.g., `image/png`, `video/mp4`, `audio/wav`).
+L00000571	  - `uri` (string): `artifact://` path relative to `.puppet-master/artifacts/media/<request_id>/`.
+L00000572	  - `sha256` (string): hex-encoded SHA-256 of the artifact bytes.
+L00000573	  - `bytes` (integer): artifact file size in bytes.
+L00000574	  - `meta` (object): kind-specific metadata — `w`/`h` for images/video, `duration` for video/audio, `sample_rate` for audio, plus `model_used`, `seed`, `generation_time_ms`.
+L00000575	- `usage` (object, required when usage is available): canonical UsageRecord bridge data from `Plans/usage-feature.md` UF-085 rather than a media-local accounting schema. It carries `usage_record_id`, `usage_event_ref`, `source_class`, `source_confidence`, `source_authority`, `settlement_status`, `cost_status`, `cost_microdollars` or provider minor-unit cost fields, `currency`, `token_buckets`, `counting_semantics`, and `media_units`.
+L00000576	  - `token_buckets` carries the canonical buckets `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` or provider TTL-specific `cache_write_ttl`, `output_total`, `output_visible`, JSON-safe `reasoning` / `thoughts`, `provider_total`, and `context_estimate`, with unknown/not-exposed values represented explicitly instead of collapsed.
+L00000577	  - `counting_semantics` states whether cache buckets are subsets of input totals, whether reasoning/thoughts are subsets of output totals, and whether `provider_total` is provider authoritative or derived; media rollups must not double-count inclusive provider totals.
+L00000578	  - `media_units` is a media-specific quantity list such as generated image count, seconds of audio/video, frames, or provider media credits; it is not a token total, cost total, usage authority, or replacement for UF-085 buckets.
+L00000579	  - Legacy import names such as `cost_is_estimate`, `input_tokens`, and `output_tokens` may appear only at provider/import boundaries or in source-lineage fixtures. They normalize to `cost_status`, `input_total`, `output_total`, canonical source/settlement fields, and UsageRecord identity before manifest persistence, GUI display, rollups, or accounting checks.
+L00000580	- `error` (object | null): present on failure (see §2.6).
+L00000581	
+L00000582	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
+L00000583	
+L00000584	**Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
+L00000585	
+L00000586	**Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and the canonical UsageRecord bridge `usage` (when available). Implementations MUST write artifact files first, compute hashes/bytes from the final bytes on disk, normalize any legacy provider usage aliases to UF-085 fields, and only then write `manifest.json`. If the provider returns partial output and final artifact persistence fails, the call returns failure and MUST NOT leave a manifest claiming success for missing artifacts.
+L00000587	
+L00000588	**Generation supersession record:** When remediation or graph generation supersedes a media attempt, the result carries old generation, new generation, invalidated path refs, new path refs, surviving `/rejoined` path refs, and resulting concern, `/promotion/recovery`, or recovery implications so overlays and blocked actions disclose the final state without diffing addenda.
+L00000589	
+L00000590	ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primitive:ArtifactStore
+L00000591	
+L00000592	**Concurrent requests:** Multiple `media.generate` calls may execute concurrently as long as each uses its own `request_id` directory. No request may append into another request's directory. Retry behavior MUST allocate a new `request_id` rather than mutating a previous manifest in place.
+L00000593	
+L00000594	ContractRef: ToolID:media.generate, Primitive:ArtifactStore
+L00000595	
+L00000596	**Route-specific backend behavior:** When the response `engine` identity resolves through the shared requested/effective runtime snapshot to a concrete `provider_entry_id` and `media_route_id`, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route. For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
+L00000597	
+L00000598	On failure:
+L00000599	```json
+L00000600	{
+L00000601	  "success": false,
+L00000602	  "request_id": "req_20260301_a1b2c3d4",
+L00000603	  "kind": "image",
+L00000604	  "engine": {
+L00000605	    "provider_entry_id": "resolved_provider_entry_id",
+L00000606	    "media_route_id": "resolved_media_route_id",
+L00000607	    "generated_media_route_id": null
+L00000608	  },
+L00000609	  "artifacts": [],
+L00000610	  "usage": null,
+L00000611	  "error": {
+L00000612	    "code": "NOT_CONFIGURED",
+L00000613	    "message": "This feature requires an eligible media generation provider route. Configure a supported provider in Settings -> Providers, then try again."
+L00000614	  }
+L00000615	}
+L00000616	```
+L00000617	
+L00000618	### 2.6 Stable error codes
+L00000619	
+L00000620	The `error.code` field MUST be exactly one of the following canonical values:
+L00000621	
+L00000622	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md
+L00000623	
+L00000624	| Code | When |
+L00000625	|------|------|
+L00000626	| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved provider media route (for example, no eligible provider account, profile, credential, or API key). |
+L00000627	| `MODEL_UNAVAILABLE` | Requested `model_override` could not be resolved or model is offline. |
+L00000628	| `RATE_LIMITED` | Provider returned a rate-limit / 429. |
+L00000629	| `QUOTA_EXCEEDED` | Provider quota exhausted. |
+L00000630	| `BACKEND_UNSUPPORTED` | Active backend does not support the requested `kind`. |
+L00000631	| `ADMIN_DISABLED` | Capability disabled in Settings > Media. |
+L00000632	| `INVALID_REQUEST` | Request envelope failed local validation (missing `kind`, bad `count`, etc.). |
+L00000633	| `PROVIDER_ERROR` | Provider accepted the request but generation failed (safety filter, timeout, upstream error). |
+L00000634	| `INTERNAL_ERROR` | Unexpected internal failure not attributable to provider or configuration. |
+L00000635	
+L00000636	These nine codes are stable across versions. Implementations MUST NOT invent ad-hoc code strings.
+L00000637	
+L00000638	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000639	
+L00000640	---
+L00000641	
+L00000642	<a id="3"></a>
+L00000643	<a id="SLOT-EXTRACTION"></a>
+L00000644	## 3. Natural-language slot extraction grammar
+L00000645	
+L00000646	This section defines the deterministic, regex-based mini grammar for extracting structured parameters from user natural-language prompts. The extraction pipeline runs before `media.generate` is called and produces the request envelope fields (§2.2).
+L00000647	
+L00000648	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000649	
+L00000650	### 3.1 Pre-processing
+L00000651	
+L00000652	- Keep `raw` (original user text) and `s_lower` (normalized lowercased copy).
+L00000653	- If a trailing controls block exists (the prompt ends with `(...)` or `[...]` and the block contains at least one control token), split `body` + `controls` and parse controls first; remove the block from the prompt before creative-prompt cleaning.
+L00000654	- If the trailing block contains unmatched delimiters, control keys with empty values, or unsupported control names, ignore the malformed control token rather than failing the full request. The cleaned creative prompt still proceeds through deterministic extraction.
+L00000655	
+L00000656	Controls-block regex:
+L00000657	```
+L00000658	(?is)^(?P<body>.*?)(?:\s*(?P<bracket>\(|\[)\s*(?P<controls>[^)\]]{1,400})\s*(?:\)|\])\s*)$
+L00000659	```
+L00000660	
+L00000661	Control token gate (at least one must match inside the captured controls):
+L00000662	```
+L00000663	\b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative|quality)\b
+L00000664	```
+L00000665	
+L00000666	### 3.2 Kind detection
+L00000667	
+L00000668	- **Prefix form** (highest priority):
+L00000669	  ```
+L00000670	  (?is)^\s*(?P<prefix>image|video|tts|music)\s*:\s*
+L00000671	  ```
+L00000672	- **Keyword-based** (if no prefix match):
+L00000673	  - `image`: `\b(image|picture|photo|logo|poster|thumbnail|cover)\b`
+L00000674	  - `video`: `\b(video|clip|animation|broll|b-roll)\b`
+L00000675	  - `tts`: `\b(tts|text to speech|read aloud|say this|voiceover|voice-over)\b`
+L00000676	  - `music`: `\b(music|song|beat|instrumental|soundtrack)\b`
+L00000677	- **Verb fallback** — only if the above are unambiguous (single kind match).
+L00000678	
+L00000679	### 3.3 Deterministic precedence
+L00000680	
+L00000681	Controls-block key/values override everything. Then, in order:
+L00000682	
+L00000683	1. `model_override`
+L00000684	2. `count`
+L00000685	3. `aspect_ratio`
+L00000686	4. `size` / `resolution`
+L00000687	5. `duration`
+L00000688	6. `format`
+L00000689	7. `voice` / `style`
+L00000690	8. `quality`
+L00000691	9. `seed`
+L00000692	10. `bpm`
+L00000693	11. `negative_prompt`
+L00000694	
+L00000695	### 3.4 `model_override` extraction
+L00000696	
+L00000697	Keyword form:
+L00000698	```
+L00000699	(?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\-\s]{0,80}?)(?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
+L00000700	```
+L00000701	(?i)(?<!\w)@(?P<model2>[a-z0-9][a-z0-9._/\-]{1,64})(?!\w)
+L00000702	```
+L00000703	
+L00000704	**Normalize model key:** lowercase; collapse spaces, underscores, and hyphens.
+L00000705	
+L00000706	**Resolution order:** alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`.
+L00000707	
+L00000708	**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.
+L00000709	
+L00000710	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID, ContractName:Plans/Models_System.md#MEDIA-ALIASES
+L00000711	
+L00000712	### 3.5 `count` extraction
+L00000713	
+L00000714	Digits form:
+L00000715	```
+L00000716	(?i)\b(?:(?:make|generate|create|give me|output|render)\s+)?(?P<count>\d{1,2})\s*(?:x\s*)?(?:variations?|versions?|options?|images?|pics?|pictures?|clips?|frames?)\b
+L00000717	```
+L00000718	
+L00000719	Optional word forms (one through ten) follow the same pattern. Clamp to safe max (default 8). Last match wins.
+L00000720	
+L00000721	### 3.6 `aspect_ratio` extraction
+L00000722	
+L00000723	Numeric:
+L00000724	```
+L00000725	(?i)\b(?P<ar_w>\d{1,2})\s*:\s*(?P<ar_h>\d{1,2})\b
+L00000726	```
+L00000727	
+L00000728	Named:
+L00000729	```
+L00000730	(?i)\b(?P<ar_named>square|portrait|landscape|vertical|horizontal|widescreen)\b
+L00000731	```
+L00000732	
+L00000733	Mapping: `square` = `1:1`; `portrait` / `vertical` = `9:16`; `landscape` / `horizontal` / `widescreen` = `16:9`.
+L00000734	
+L00000735	### 3.7 `size` / `resolution` extraction
+L00000736	
+L00000737	Image keyworded:
+L00000738	```
+L00000739	(?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_px>512|768|1024|1152|1280|1536|2048|3072|4096)\s*(?:px|pixels)?\b
+L00000740	```
+L00000741	
+L00000742	Image keyworded (k-form):
+L00000743	```
+L00000744	(?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_k>2k|4k|8k)\b
+L00000745	```
+L00000746	
+L00000747	Video resolution:
+L00000748	```
+L00000749	(?i)\b(?P<vres>720p|1080p|1440p|2160p|4k)\b
+L00000750	```
+L00000751	
+L00000752	Bare numbers are **not** treated as size unless they appear in a controls block or trailing comma controls.
+L00000753	
+L00000754	Deterministic assignment to envelope fields:
+L00000755	- `size_px` populates `size`.
+L00000756	- `size_k` populates `size` using `2k -> 2048`, `4k -> 4096`, `8k -> 8192`, and also populates `resolution` with the symbolic token.
+L00000757	- `vres` populates `resolution` for `kind=video`; for `kind=image`, bare `vres` matches in creative prose are ignored unless provided in a keyed controls context.
+L00000758	- If both `size_k` and `vres` are present in an image request, `size_k` is authoritative and `resolution` remains the symbolic `size_k` token.
+L00000759	
+L00000760	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000761	
+L00000762	### 3.8 `duration` extraction (video/music only)
+L00000763	
+L00000764	Keyworded:
+L00000765	```
+L00000766	(?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b
+L00000767	```
+L00000768	
+L00000769	Bare (only in controls block or trailing controls):
+L00000770	```
+L00000771	(?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b
+L00000772	```
+L00000773	
+L00000774	### 3.9 `format` extraction
+L00000775	
+L00000776	```
+L00000777	(?i)\b(?:format|output|export|as)\s*[:=]?\s*(?P<fmt>png|jpg|jpeg|webp|gif|mp4|mov|wav|mp3|flac|pcm16)\b
+L00000778	```
+L00000779	
+L00000780	### 3.10 `voice` extraction (TTS)
+L00000781	
+L00000782	Voice ID:
+L00000783	```
+L00000784	(?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b
+L00000785	```
+L00000786	
+L00000787	Voice style:
+L00000788	```
+L00000789	(?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b
+L00000790	```
+L00000791	
+L00000792	### 3.11 `quality` extraction
+L00000793	
+L00000794	```
+L00000795	(?i)\b(?P<qual>draft|standard|high)\b
+L00000796	```
+L00000797	
+L00000798	Optional phrase mapping (e.g., "quick draft" → `draft`, "high quality" → `high`).
+L00000799	
+L00000800	Deterministic guard: bare lexical matches from the regex above are candidate tokens only. `quality` MUST be set only when the match is in a controls block or a quality-keyword phrase (`quality: high`, `quality=standard`, `high quality`, `draft quality`); plain descriptive adjectives in the creative prompt MUST NOT set `quality`.
+L00000801	
+L00000802	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000803	
+L00000804	### 3.12 `seed` extraction
+L00000805	
+L00000806	```
+L00000807	(?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b
+L00000808	```
+L00000809	
+L00000810	### 3.13 `bpm` extraction
+L00000811	
+L00000812	```
+L00000813	(?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b
+L00000814	```
+L00000815	
+L00000816	### 3.14 `negative_prompt` extraction
+L00000817	
+L00000818	Explicit:
+L00000819	```
+L00000820	(?is)\bnegative\s+prompt\s*[:=]\s*(?P<neg>"[^"]{1,200}"|'[^']{1,200}'|[^,;\n]{1,200})
+L00000821	```
+L00000822	
+L00000823	Avoid-clauses (collect all):
+L00000824	```
+L00000825	(?is)\b(?:without|no|avoid)\s+(?P<avoid>[^,.;\n]{1,80})
+L00000826	```
+L00000827	
+L00000828	Combine explicit + avoid list (dedupe, preserve order).
+L00000829	
+L00000830	### 3.15 Prompt cleaning
+L00000831	
+L00000832	- If a controls block is present: remove it from the creative prompt.
+L00000833	- Remove only matched spans introduced by control keywords (`using`, `model`, `size`, `aspect`, `ratio`, `resolution`, `format`, `voice`, `duration`, `negative`, `quality`, `seed`, `bpm`).
+L00000834	- Preserve remaining text as the creative prompt.
+L00000835	
+L00000836	---
+L00000837	
+L00000838	<a id="4"></a>
+L00000839	<a id="CAPABILITY-PICKER"></a>
+L00000840	## 4. UI/UX behavior: capability picker dropdown
+L00000841	
+L00000842	### 4.1 Composer dropdown
+L00000843	
+L00000844	The composer area includes a capability picker dropdown showing the four media capabilities:
+L00000845	
+L00000846	| Item | Capability ID |
+L00000847	|------|---------------|
+L00000848	| Image | `media.image` |
+L00000849	| Video | `media.video` |
+L00000850	| TTS | `media.tts` |
+L00000851	| Music | `media.music` |
+L00000852	
+L00000853	ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md
+L00000854	
+L00000855	### 4.2 Disabled item presentation
+L00000856	
+L00000857	Disabled capabilities are **visible** in the dropdown but rendered **greyed out**. A tooltip on hover shows the human-readable reason for the disabled state (using the copy strings from §5).
+L00000858	
+L00000859	Disabled rows remain keyboard-focusable so the same reason text is available on hover **and** focus. The dropdown uses standard listbox semantics (`role=listbox` / `role=option` or framework equivalent), and the disabled reason must be exposed to assistive technologies via the tooltip/description channel rather than color alone.
+L00000860	
+L00000861	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000862	
+L00000863	### 4.3 Banner/footnote
+L00000864	When visible media capabilities are disabled because no eligible media generation provider route is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+L00000865	
+L00000866	> **"Configure a media generation provider in Settings -> Providers."** Add a supported route such as OpenAI/Codex, OpenAI API key, MiniMax Image-01, Antigravity internal image generation where available, or Gemini Direct where available.
+L00000867	
+L00000868	Provider-specific helper links may point to the relevant dashboard or API-key page, but the surrounding copy MUST NOT imply Gemini is the default or only valid media source.
+L00000869	
+L00000870	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
+L00000871	
+L00000872	When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+L00000873	
+L00000874	ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+L00000875	### 4.4 Cursor backend behavior
+L00000876	When the active backend is Cursor:
+L00000877	- image generation is enabled only if the Cursor route declares a verified generated-media route for image output
+L00000878	- image input/tooling evidence alone does not prove generated-image support
+L00000879	- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED` unless Cursor later declares verified generated-media routes
+L00000880	- Cursor does not create a separate Gemini account model
+L00000881	- non-Cursor media follows the provider/model `generated_media_routes[]` taxonomy described in `### 2.4 Backend routing`
+L00000882	
+L00000883	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+L00000884	### 4.5 Click behavior
+L00000885	
+L00000886	Clicking an **enabled** capability item inserts a pre-authored assistant prompt into the chat composer. The prompt guides the user to describe their generation request with relevant parameters. See §5 for the exact prompt strings per capability.
+L00000887	
+L00000888	### 4.6 Per-message model override example
+L00000889	
+L00000890	A user may specify a per-message model override inline in their prompt. For example:
+L00000891	
+L00000892	> "Generate an image of a sunset over mountains using Nano Banana Pro"
+L00000893	
+L00000894	This triggers the `model_override` slot extraction (§3.4). The model `Nano Banana Pro` is resolved via alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. The override applies only to this single generation request and does not change the model configured in Settings.
+L00000895	
+L00000896	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+L00000897	
+L00000898	### 4.7 Runtime refresh behavior
+L00000899	
+L00000900	The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, adding an OpenAI/Codex subscription-backed route, saving an OpenAI API key, enabling MiniMax Image-01, enabling Antigravity OAuth/internal `gemini-3.1-flash-image`, saving a Gemini Direct API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+L00000901	
+L00000902	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
+L00000903	
+L00000904	---
+L00000905	
+L00000906	<a id="5"></a>
+L00000907	<a id="UI-COPY"></a>
+L00000908	## 5. UI copy strings
+L00000909	The following strings are the canonical verbatim copy for media UI surfaces.
+L00000910	
+L00000911	### 5.1 Capability click prompts
+L00000912	
+L00000913	**Image click prompt:**
+L00000914	> "What image are we generating? Describe the subject, style, and optionally aspect ratio (1:1, 16:9), size (1024, 2048), and how many variations you want."
+L00000915	
+L00000916	**Video click prompt:**
+L00000917	> "What video are we generating? Describe the scene, camera/style, duration, and aspect ratio/resolution if you have a preference."
+L00000918	
+L00000919	**TTS click prompt:**
+L00000920	> "What text should I speak, and what voice/style should it use? You can also choose output format (WAV/MP3) if available."
+L00000921	
+L00000922	**Music click prompt:**
+L00000923	> "What music are we generating? Share genre, mood, tempo (BPM), and duration. If you want, mention instruments or references."
+L00000924	
+L00000925	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000926	
+L00000927	### 5.2 Disabled-reason messages
+L00000928	
+L00000929	**Not configured reason (`NOT_CONFIGURED`):**
+L00000930	> "This feature requires an eligible media generation provider route. Configure a supported provider account, profile, credential, or API key in Settings -> Providers, then try again."
+L00000931	
+L00000932	ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
+L00000933	
+L00000934	**Model unavailable reason (`MODEL_UNAVAILABLE`):**
+L00000935	> "That model isn't available with the current provider account, profile, auth mode, API key, or media route (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+L00000936	
+L00000937	ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
+L00000938	
+L00000939	**Admin disabled reason (`ADMIN_DISABLED`):**
+L00000940	> "This feature is disabled in Settings. Enable it under Media settings, then try again."
+L00000941	
+L00000942	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000943	
+L00000944	**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+L00000945	> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account, auth mode, or API key for media generation."
+L00000946	
+L00000947	ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+L00000948	
+L00000949	**Rate limited reason (`RATE_LIMITED`):**
+L00000950	> "This feature is temporarily rate-limited. Wait a moment and try again."
+L00000951	
+L00000952	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000953	
+L00000954	**Quota exceeded reason (`QUOTA_EXCEEDED`):**
+L00000955	> "API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset."
+L00000956	
+L00000957	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000958	## 6. Acceptance criteria
+L00000959	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000960	
+L00000961	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
+L00000962	
+L00000963	<a id="AC-MED01"></a>
+L00000964	**AC-MED01:** `capabilities.get` MUST return all media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and all registered provider-tool capabilities, each with `enabled`, `disabled_reason`, and `setup_hint` fields.
+L00000965	
+L00000966	ContractRef: ToolID:capabilities.get
+L00000967	
+L00000968	<a id="AC-MED02"></a>
+L00000969	**AC-MED02:** `disabled_reason` values MUST be exactly one of the six canonical values defined in §1.3. No ad-hoc reason strings are permitted.
+L00000970	
+L00000971	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00000972	
+L00000973	<a id="AC-MED03"></a>
+L00000974	**AC-MED03:** When the active backend is Cursor and no verified Cursor generated-media route is configured, `media.image`, `media.video`, `media.tts`, and `media.music` MUST be disabled with `BACKEND_UNSUPPORTED` or a route-specific unavailable state. Cursor image-input/API-key proof alone MUST NOT enable generated-image output.
+L00000975	
+L00000976	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+L00000977	
+L00000978	<a id="AC-MED03A"></a>
+L00000979	**AC-MED03A:** When the active backend is Cursor and another provider such as Gemini Direct is configured, Cursor media capabilities still depend on Cursor's own verified generated-media route. Other providers do not turn Cursor into a generated-media backend; requested/effective routing must show any switch to the provider that actually generated media.
+L00000980	
+L00000981	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+L00000982	
+L00000983	<a id="AC-MED04"></a>
+L00000984	**AC-MED04:** When the active backend is non-Cursor and at least one eligible provider/model `generated_media_routes[]` entry exists for the resolved request/policy, only the media kinds declared by that route are eligible for enablement, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model/route being available for that kind (if unavailable -> `MODEL_UNAVAILABLE` or the provider-specific disabled state). An eligible account alone does NOT guarantee all media kinds are enabled.
+L00000985	
+L00000986	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+L00000987	
+L00000988	<a id="AC-MED05"></a>
+L00000989	**AC-MED05:** When the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy, generated-media capabilities MUST be disabled with `NOT_CONFIGURED`, `UNSUPPORTED`, `CAPABILITY_GATED`, or the more specific route/account state.
+L00000990	
+L00000991	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00000992	
+L00000993	<a id="AC-MED06"></a>
+L00000994	**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+L00000995	
+L00000996	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+L00000997	
+L00000998	<a id="AC-MED07"></a>
+L00000999	**AC-MED07:** The capability picker dropdown MUST display disabled capabilities as greyed-out items with a tooltip showing the appropriate disabled-reason message from §5.2.
+L00001000	
+L00001001	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001002	
+L00001003	<a id="AC-MED08"></a>
+L00001004	**AC-MED08:** Clicking an enabled capability in the picker MUST insert the corresponding verbatim prompt from §5.1 into the chat composer.
+L00001005	
+L00001006	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001007	
+L00001008	<a id="AC-MED09"></a>
+L00001009	**AC-MED09:** The Assistant and Interviewer MUST call `capabilities.get` when the user asks about capabilities or features. When Assistant is operating in the PRD Builder workflow, the same requirement applies.
+L00001010	
+L00001011	ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
+L00001012	
+L00001013	<a id="AC-MED10"></a>
+L00001014	**AC-MED10:** All media-generation and capability references across plan documents MUST reference `Plans/Media_Generation_and_Capabilities.md` anchors rather than restating rules (DRY).
+L00001015	
+L00001016	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00001017	
+L00001018	<a id="AC-MED11"></a>
+L00001019	**AC-MED11:** When a capability is otherwise available but its Settings > Media toggle is OFF, `capabilities.get` MUST return that capability as disabled with `ADMIN_DISABLED`.
+L00001020	
+L00001021	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001022	
+L00001023	<a id="AC-MED12"></a>
+L00001024	**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `NOT_CONFIGURED`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin-toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
+L00001025	
+L00001026	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00001027	
+L00001028	<a id="AC-MED13"></a>
+L00001029	**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use standard requested/effective provider/account/route auth resolution. Explicit `oauth`, explicit `api_key`, and explicit provider-route requests MUST NOT silently cross-fallback to another auth surface or provider route.
+L00001030	
+L00001031	**AC-MED13A:** Media availability, usage/quota disclosure, and account/plan UI are route-dependent. Gemini Direct is key-only/API-key-backed where verified; Gemini CLI OAuth, API-key, Google/Vertex rows, and Nanobanana are retired/source-lineage only. UI MUST NOT collapse provider/media routes into one stale-canon mixed-account bucket.
+L00001032	
+L00001033	ContractRef: ToolID:media.generate, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00001034	
+L00001035	<a id="AC-MED14"></a>
+L00001036	**AC-MED14:** `media.generate` MUST write generated artifacts to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` and co-locate a `manifest.json` in the same directory. Each artifact entry MUST include `artifact_id`, `kind`, `mime`, `artifact://` URI, `sha256`, `bytes`, and `meta`. No inline `data_uri` field is permitted in the response.
+L00001037	
+L00001038	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001039	
+L00001040	<a id="AC-MED15"></a>
+L00001041	**AC-MED15:** `error.code` values in `media.generate` failure responses MUST be exactly one of the nine canonical stable error codes defined in §2.6. No ad-hoc error code strings are permitted.
+L00001042	
+L00001043	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001044	
+L00001045	<a id="AC-MED16"></a>
+L00001046	**AC-MED16:** `capabilities.get` MUST evaluate provider-tool capabilities from the current runtime registry snapshot at call time, including built-ins, enabled MCP-discovered tools, and provider-exposed tools for the active backend. Tools hidden because an MCP server/provider bridge is unhealthy MUST be omitted or marked disabled based on the current snapshot; stale cached enablement MUST NOT be returned after Settings/provider changes.
+L00001047	
+L00001048	ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
+L00001049	
+L00001050	<a id="AC-MED17"></a>
+L00001051	**AC-MED17:** Successful `media.generate` calls MUST write artifact files before `manifest.json`, and `manifest.json` MUST include at least `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). A failed or partial request MUST NOT leave behind a manifest that claims artifacts that were not durably written.
+L00001052	
+L00001053	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001054	
+L00001055	<a id="AC-MED18"></a>
+L00001056	**AC-MED18:** The capability picker MUST support keyboard navigation for disabled items, expose disabled-reason text to assistive technology, keep the missing-configuration footer pinned when applicable, and refresh after capability-affecting Settings/provider changes without clearing existing composer text.
+L00001057	
+L00001058	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
+L00001059	## Appendix A. Slot extraction rules (regex-ish, deterministic)
+L00001060	
+L00001061	1) Pre-processing:
+L00001062	- Keep raw (original) and s_lower (normalized lowercased).
+L00001063	- If trailing controls block exists (ends with (...) or [...] and contains control tokens), split body + controls and parse controls first; remove block from prompt.
+L00001064	Controls-block regex: (?is)^(?P<body>.*?)(?:\s*(?P<bracket>\(|\[)\s*(?P<controls>[^)\]]{1,400})\s*(?:\)|\])\s*)$
+L00001065	Control token gate: \b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative|quality)\b
+L00001066	2) kind detection:
+L00001067	- Prefix form: (?is)^\s*(?P<prefix>image|video|tts|music)\s*:\s*
+L00001068	- Else keyword-based:
+L00001069	image: \b(image|picture|photo|logo|poster|thumbnail|cover)\b
+L00001070	video: \b(video|clip|animation|broll|b-roll)\b
+L00001071	tts: \b(tts|text to speech|read aloud|say this|voiceover|voice-over)\b
+L00001072	music: \b(music|song|beat|instrumental|soundtrack)\b
+L00001073	- Else verb fallback only if unambiguous.
+L00001074	3) Precedence: controls block key/values override everything then: model_override, count, aspect_ratio, size/resolution, duration, format, voice/style, quality, seed, bpm, negative_prompt
+L00001075	4) model_override:
+L00001076	Keyword form: (?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\-\s]{0,80}?)(?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
+L00001077	@ shorthand: (?i)(?<!\w)@(?P<model2>[a-z0-9][a-z0-9._/\-]{1,64})(?!\w)
+L00001078	Normalize model key: lowercase; collapse spaces/underscores/hyphens.
+L00001079	Resolve: alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE.
+L00001080	5) count:
+L00001081	digits: (?i)\b(?:(?:make|generate|create|give me|output|render)\s+)?(?P<count>\d{1,2})\s*(?:x\s*)?(?:variations?|versions?|options?|images?|pics?|pictures?|clips?|frames?)\b
+L00001082	optional words one-ten similar.
+L00001083	Clamp to safe max (default 8). Last match wins.
+L00001084	6) aspect_ratio:
+L00001085	numeric: (?i)\b(?P<ar_w>\d{1,2})\s*:\s*(?P<ar_h>\d{1,2})\b
+L00001086	named: (?i)\b(?P<ar_named>square|portrait|landscape|vertical|horizontal|widescreen)\b
+L00001087	Mapping: square=1:1; portrait/vertical=9:16; landscape/horizontal/widescreen=16:9.
+L00001088	7) size/resolution:
+L00001089	Image keyworded: (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_px>512|768|1024|1152|1280|1536|2048|3072|4096)\s*(?:px|pixels)?\b
+L00001090	Image keyworded k: (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_k>2k|4k|8k)\b
+L00001091	Video: (?i)\b(?P<vres>720p|1080p|1440p|2160p|4k)\b
+L00001092	Do not treat bare numbers as size unless they are in controls block or trailing comma controls.
+L00001093	Envelope mapping: size_px -> size; size_k -> size (2k=2048,4k=4096,8k=8192) plus resolution token; vres -> resolution for video and MUST NOT override size_k-derived resolution for image prompts.
+L00001094	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001095	8) duration (video/music only):
+L00001096	keyworded: (?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b
+L00001097	bare (only in controls block or trailing controls): (?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b
+L00001098	9) format: (?i)\b(?:format|output|export|as)\s*[:=]?\s*(?P<fmt>png|jpg|jpeg|webp|gif|mp4|mov|wav|mp3|flac|pcm16)\b
+L00001099	10) voice (tts):
+L00001100	voice id: (?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b
+L00001101	voice style: (?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b
+L00001102	11) quality: (?i)\b(?P<qual>draft|standard|high)\b optional phrase mapping. Guard: set only when in controls block or quality-keyword phrase; bare descriptive adjectives in creative prompt MUST NOT set quality.
+L00001103	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001104	12) seed: (?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b
+L00001105	13) bpm: (?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b
+L00001106	14) negative_prompt:
+L00001107	explicit: (?is)\bnegative\s+prompt\s*[:=]\s*(?P<neg>"[^"]{1,200}"|'[^']{1,200}'|[^,;\n]{1,200})
+L00001108	avoid-clauses (collect all): (?is)\b(?:without|no|avoid)\s+(?P<avoid>[^,.;\n]{1,80})
+L00001109	Combine explicit + avoid list (dedupe preserve order).
+L00001110	15) prompt cleaning:
+L00001111	- If controls block present: remove it.
+L00001112	- Remove only matched spans introduced by control keywords (using/model/size/aspect/etc).
+L00001113	- Preserve remaining text as the creative prompt.
+L00001114	
+L00001115	---
+L00001116	
+L00001117	## References
+L00001118	
+L00001119	- `Plans/DRY_Rules.md` — DRY + ContractRef governance
+L00001120	- `Plans/Contracts_V0.md` — canonical contracts (events, tools, UICommand, auth)
+L00001121	- `Plans/Tools.md` — built-in tools, permissions
+L00001122	- `Plans/Models_System.md` — model selection and override
+L00001123	- `Plans/CLI_Bridged_Providers.md` — provider facade and backend routing
+L00001124	- `Plans/FinalGUISpec.md` — GUI specification
+L00001125	- `Plans/Personas.md` — persona system
+L00001126	- `Plans/assistant-chat-design.md` — assistant chat UX
+L00001127	- `Plans/Decision_Policy.md` — deterministic defaults
+L00001128	- `Plans/Architecture_Invariants.md` — architecture invariants
+L00001129	- `Plans/Progression_Gates.md` — verification gates
+L00001130	
+L00001131	*Document created for planning only; no code changes.*
+L00001132	
+L00001133	## Owner / Consumer Map
+L00001134	
+L00001135	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Media_Generation_and_Capabilities.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001136	
+L00001137	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001138	
+L00001139	## PlanUnits
+L00001140	
+L00001141	### MGAC-002 - Media SSOT Purpose And Naming
+L00001142	
+L00001143	```yaml
+L00001144	plan_unit_id: MGAC-002
+L00001145	unit_type: requirement
+L00001146	status: accepted
+L00001147	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001148	canonical_text: The media-generation and capabilities document is the canonical SSOT for capability behavior, media generation, natural-language slot extraction, and media UI/UX, with the platform name fixed as Puppet Master and older naming referred to only as legacy naming without quoting it.
+L00001149	gui_related: true
+L00001150	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001151	split_recommended: false
+L00001152	depends_on: []
+L00001153	unblocks: []
+L00001154	acceptance_criteria:
+L00001155	- The covered source span remains losslessly available for exact-text audit.
+L00001156	- This behavior is addressable through MGAC-002 instead of broad MGAC-001 source-preserving coverage.
+L00001157	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001158	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001159	validation_surfaces:
+L00001160	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001161	- python3 scripts/pm-plan-index.py validate
+L00001162	risk_class: media_generation_contract_drift
+L00001163	reasoning_tier: standard
+L00001164	context_scope: media_generation_capabilities_standardization
+L00001165	implementation_surfaces:
+L00001166	- Plans/Media_Generation_and_Capabilities.md
+L00001167	node_compile_hint:
+L00001168	  mode: media_ssot_purpose_and_naming
+L00001169	  create_worknodes: false
+L00001170	source_lineage:
+L00001171	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0001
+L00001172	preserved_exact_tokens:
+L00001173	- Media Generation and Capabilities (Canonical SSOT)
+L00001174	- PUPPET MASTER -- MEDIA GENERATION AND CAPABILITIES SSOT
+L00001175	- Purpose
+L00001176	- Single source of truth
+L00001177	- natural-language slot extraction grammar
+L00001178	- media UI/UX behavior
+L00001179	- ABSOLUTE NAMING RULE
+L00001180	- Puppet Master
+L00001181	- legacy naming
+L00001182	- do not quote it
+L00001183	negative_constraints:
+L00001184	- Older naming may be referred to only as legacy naming and must not be quoted.
+L00001185	compatibility_only_notes: []
+L00001186	stale_retired_dispositions: []
+L00001187	owner_boundary_notes:
+L00001188	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001189	owner_hints:
+L00001190	- Plans/Media_Generation_and_Capabilities.md
+L00001191	preserved_contractrefs: []
+L00001192	```
+L00001193	
+L00001194	### MGAC-003 - Media Owner Scope And DRY Anchoring
+L00001195	
+L00001196	```yaml
+L00001197	plan_unit_id: MGAC-003
+L00001198	unit_type: requirement
+L00001199	status: accepted
+L00001200	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001201	canonical_text: This document is the single canonical source for the Puppet Master capability system, media.generate contract, deterministic slot grammar, and capability picker UI/UX; other plan docs must reference anchors instead of restating rules.
+L00001202	gui_related: true
+L00001203	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001204	split_recommended: false
+L00001205	depends_on: []
+L00001206	unblocks: []
+L00001207	acceptance_criteria:
+L00001208	- The covered source span remains losslessly available for exact-text audit.
+L00001209	- This behavior is addressable through MGAC-003 instead of broad MGAC-001 source-preserving coverage.
+L00001210	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001211	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001212	validation_surfaces:
+L00001213	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001214	- python3 scripts/pm-plan-index.py validate
+L00001215	risk_class: media_generation_contract_drift
+L00001216	reasoning_tier: standard
+L00001217	context_scope: media_generation_capabilities_standardization
+L00001218	implementation_surfaces:
+L00001219	- Plans/Media_Generation_and_Capabilities.md
+L00001220	node_compile_hint:
+L00001221	  mode: media_owner_scope_and_dry_anchoring
+L00001222	  create_worknodes: false
+L00001223	source_lineage:
+L00001224	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0002
+L00001225	preserved_exact_tokens:
+L00001226	- single canonical source of truth
+L00001227	- capability system
+L00001228	- capabilities.get
+L00001229	- media generation contract
+L00001230	- media.generate
+L00001231	- natural-language slot extraction grammar
+L00001232	- UI/UX behavior
+L00001233	- capability picker dropdown
+L00001234	- MUST reference this document by anchor
+L00001235	- Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+L00001236	negative_constraints:
+L00001237	- Other plan documents must reference this document by anchor rather than restating capability or media-generation rules.
+L00001238	compatibility_only_notes: []
+L00001239	stale_retired_dispositions: []
+L00001240	owner_boundary_notes:
+L00001241	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001242	owner_hints:
+L00001243	- Plans/Media_Generation_and_Capabilities.md
+L00001244	preserved_contractrefs:
+L00001245	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+L00001246	```
+L00001247	
+L00001248	### MGAC-004 - Capabilities Get Internal Tool
+L00001249	
+L00001250	```yaml
+L00001251	plan_unit_id: MGAC-004
+L00001252	unit_type: requirement
+L00001253	status: accepted
+L00001254	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001255	canonical_text: capabilities.get returns all currently available Puppet Master capabilities, including media and provider/tool capabilities, with enablement status, machine-readable disabled reasons, and setup hints.
+L00001256	gui_related: false
+L00001257	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001258	split_recommended: false
+L00001259	depends_on: []
+L00001260	unblocks: []
+L00001261	acceptance_criteria:
+L00001262	- The covered source span remains losslessly available for exact-text audit.
+L00001263	- This behavior is addressable through MGAC-004 instead of broad MGAC-001 source-preserving coverage.
+L00001264	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001265	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001266	validation_surfaces:
+L00001267	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001268	- python3 scripts/pm-plan-index.py validate
+L00001269	risk_class: media_generation_contract_drift
+L00001270	reasoning_tier: standard
+L00001271	context_scope: media_generation_capabilities_standardization
+L00001272	implementation_surfaces:
+L00001273	- Plans/Media_Generation_and_Capabilities.md
+L00001274	node_compile_hint:
+L00001275	  mode: capabilities_get_internal_tool
+L00001276	  create_worknodes: false
+L00001277	source_lineage:
+L00001278	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0005
+L00001279	preserved_exact_tokens:
+L00001280	- capabilities.get
+L00001281	- internal tool
+L00001282	- full set of capabilities
+L00001283	- currently available
+L00001284	- all capabilities
+L00001285	- media capabilities
+L00001286	- provider/tool capabilities
+L00001287	- enablement status
+L00001288	- machine-readable disabled reason
+L00001289	- setup hints
+L00001290	negative_constraints: []
+L00001291	compatibility_only_notes: []
+L00001292	stale_retired_dispositions: []
+L00001293	owner_boundary_notes:
+L00001294	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001295	owner_hints:
+L00001296	- Plans/Media_Generation_and_Capabilities.md
+L00001297	preserved_contractrefs:
+L00001298	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+L00001299	```
+L00001300	
+L00001301	### MGAC-005 - Capabilities Get Response Shape
+L00001302	
+L00001303	```yaml
+L00001304	plan_unit_id: MGAC-005
+L00001305	unit_type: requirement
+L00001306	status: accepted
+L00001307	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001308	canonical_text: The capabilities.get response is a capabilities array whose entries carry id, category, enabled, disabled_reason, and setup_hint fields, including media.image/media.video examples and route-specific NOT_CONFIGURED setup guidance.
+L00001309	gui_related: true
+L00001310	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001311	split_recommended: false
+L00001312	depends_on: []
+L00001313	unblocks: []
+L00001314	acceptance_criteria:
+L00001315	- The covered source span remains losslessly available for exact-text audit.
+L00001316	- This behavior is addressable through MGAC-005 instead of broad MGAC-001 source-preserving coverage.
+L00001317	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001318	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001319	validation_surfaces:
+L00001320	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001321	- python3 scripts/pm-plan-index.py validate
+L00001322	risk_class: media_generation_contract_drift
+L00001323	reasoning_tier: standard
+L00001324	context_scope: media_generation_capabilities_standardization
+L00001325	implementation_surfaces:
+L00001326	- Plans/Media_Generation_and_Capabilities.md
+L00001327	node_compile_hint:
+L00001328	  mode: capabilities_get_response_shape
+L00001329	  create_worknodes: false
+L00001330	source_lineage:
+L00001331	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0006
+L00001332	preserved_exact_tokens:
+L00001333	- capabilities
+L00001334	- media.image
+L00001335	- media.video
+L00001336	- category
+L00001337	- media
+L00001338	- provider_tool
+L00001339	- enabled
+L00001340	- disabled_reason
+L00001341	- setup_hint
+L00001342	- NOT_CONFIGURED
+L00001343	- Configure Gemini access in Settings -> Authentication.
+L00001344	- id (string, required)
+L00001345	- enabled (bool, required)
+L00001346	- disabled_reason (string | null, required)
+L00001347	negative_constraints: []
+L00001348	compatibility_only_notes:
+L00001349	- The exact phrase "Configure Gemini access in Settings -> Authentication." is retained only as an old example token; active setup hints are route/provider specific.
+L00001350	stale_retired_dispositions:
+L00001351	- Gemini-default setup copy is retired by MGAC-094 through MGAC-097.
+L00001352	owner_boundary_notes:
+L00001353	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001354	owner_hints:
+L00001355	- Plans/Media_Generation_and_Capabilities.md
+L00001356	preserved_contractrefs:
+L00001357	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md'
+L00001358	```
+L00001359	
+L00001360	### MGAC-006 - Capability Disabled Reason Enum
+L00001361	
+L00001362	```yaml
+L00001363	plan_unit_id: MGAC-006
+L00001364	unit_type: requirement
+L00001365	status: accepted
+L00001366	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001367	canonical_text: Capability disabled_reason values are exactly NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED, and implementations must use exactly those strings.
+L00001368	gui_related: false
+L00001369	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001370	split_recommended: false
+L00001371	depends_on: []
+L00001372	unblocks: []
+L00001373	acceptance_criteria:
+L00001374	- The covered source span remains losslessly available for exact-text audit.
+L00001375	- This behavior is addressable through MGAC-006 instead of broad MGAC-001 source-preserving coverage.
+L00001376	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001377	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001378	validation_surfaces:
+L00001379	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001380	- python3 scripts/pm-plan-index.py validate
+L00001381	risk_class: media_generation_contract_drift
+L00001382	reasoning_tier: standard
+L00001383	context_scope: media_generation_capabilities_standardization
+L00001384	implementation_surfaces:
+L00001385	- Plans/Media_Generation_and_Capabilities.md
+L00001386	node_compile_hint:
+L00001387	  mode: capability_disabled_reason_enum
+L00001388	  create_worknodes: false
+L00001389	source_lineage:
+L00001390	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0007
+L00001391	preserved_exact_tokens:
+L00001392	- NOT_CONFIGURED
+L00001393	- MODEL_UNAVAILABLE
+L00001394	- ADMIN_DISABLED
+L00001395	- BACKEND_UNSUPPORTED
+L00001396	- RATE_LIMITED
+L00001397	- QUOTA_EXCEEDED
+L00001398	- canonical enum
+L00001399	- Implementations MUST use exactly these strings
+L00001400	negative_constraints:
+L00001401	- Implementations MUST use exactly the canonical disabled-reason strings.
+L00001402	compatibility_only_notes: []
+L00001403	stale_retired_dispositions: []
+L00001404	owner_boundary_notes:
+L00001405	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001406	owner_hints:
+L00001407	- Plans/Media_Generation_and_Capabilities.md
+L00001408	preserved_contractrefs:
+L00001409	- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+L00001410	```
+L00001411	
+L00001412	### MGAC-007 - Disabled Reason Precedence
+L00001413	
+L00001414	```yaml
+L00001415	plan_unit_id: MGAC-007
+L00001416	unit_type: requirement
+L00001417	status: accepted
+L00001418	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001419	canonical_text: When multiple disabled causes apply, capabilities.get returns exactly one disabled_reason using the deterministic precedence BACKEND_UNSUPPORTED, NOT_CONFIGURED, RATE_LIMITED, QUOTA_EXCEEDED, ADMIN_DISABLED, then MODEL_UNAVAILABLE.
+L00001420	gui_related: false
+L00001421	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001422	split_recommended: false
+L00001423	depends_on: []
+L00001424	unblocks: []
+L00001425	acceptance_criteria:
+L00001426	- The covered source span remains losslessly available for exact-text audit.
+L00001427	- This behavior is addressable through MGAC-007 instead of broad MGAC-001 source-preserving coverage.
+L00001428	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001429	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001430	validation_surfaces:
+L00001431	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001432	- python3 scripts/pm-plan-index.py validate
+L00001433	risk_class: media_generation_contract_drift
+L00001434	reasoning_tier: standard
+L00001435	context_scope: media_generation_capabilities_standardization
+L00001436	implementation_surfaces:
+L00001437	- Plans/Media_Generation_and_Capabilities.md
+L00001438	node_compile_hint:
+L00001439	  mode: disabled_reason_precedence
+L00001440	  create_worknodes: false
+L00001441	source_lineage:
+L00001442	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0008
+L00001443	preserved_exact_tokens:
+L00001444	- Disabled-reason evaluation precedence
+L00001445	- exactly one `disabled_reason`
+L00001446	- highest to lowest
+L00001447	- BACKEND_UNSUPPORTED
+L00001448	- NOT_CONFIGURED
+L00001449	- RATE_LIMITED
+L00001450	- QUOTA_EXCEEDED
+L00001451	- ADMIN_DISABLED
+L00001452	- MODEL_UNAVAILABLE
+L00001453	negative_constraints: []
+L00001454	compatibility_only_notes: []
+L00001455	stale_retired_dispositions: []
+L00001456	owner_boundary_notes:
+L00001457	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001458	owner_hints:
+L00001459	- Plans/Media_Generation_and_Capabilities.md
+L00001460	preserved_contractrefs:
+L00001461	- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+L00001462	```
+L00001463	
+L00001464	### MGAC-008 - Media Capability IDs
+L00001465	
+L00001466	```yaml
+L00001467	plan_unit_id: MGAC-008
+L00001468	unit_type: requirement
+L00001469	status: accepted
+L00001470	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001471	canonical_text: Media capabilities include media.image, media.video, media.tts, and media.music with descriptions for image generation, video generation, text-to-speech, and music/audio generation.
+L00001472	gui_related: true
+L00001473	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001474	split_recommended: true
+L00001475	depends_on: []
+L00001476	unblocks: []
+L00001477	acceptance_criteria:
+L00001478	- The covered source span remains losslessly available for exact-text audit.
+L00001479	- This behavior is addressable through MGAC-008 instead of broad MGAC-001 source-preserving coverage.
+L00001480	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001481	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001482	validation_surfaces:
+L00001483	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001484	- python3 scripts/pm-plan-index.py validate
+L00001485	risk_class: media_generation_contract_drift
+L00001486	reasoning_tier: standard
+L00001487	context_scope: media_generation_capabilities_standardization
+L00001488	implementation_surfaces:
+L00001489	- Plans/Media_Generation_and_Capabilities.md
+L00001490	node_compile_hint:
+L00001491	  mode: media_capability_ids
+L00001492	  create_worknodes: false
+L00001493	source_lineage:
+L00001494	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0009
+L00001495	preserved_exact_tokens:
+L00001496	- Media capabilities
+L00001497	- media.image
+L00001498	- Image generation
+L00001499	- media.video
+L00001500	- Video generation
+L00001501	- media.tts
+L00001502	- Text-to-speech synthesis
+L00001503	- media.music
+L00001504	- Music/audio generation
+L00001505	negative_constraints: []
+L00001506	compatibility_only_notes: []
+L00001507	stale_retired_dispositions: []
+L00001508	owner_boundary_notes:
+L00001509	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001510	owner_hints:
+L00001511	- Plans/Media_Generation_and_Capabilities.md
+L00001512	preserved_contractrefs:
+L00001513	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+L00001514	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001515	```
+L00001516	
+L00001517	### MGAC-009 - Provider Tool Capability Category
+L00001518	
+L00001519	```yaml
+L00001520	plan_unit_id: MGAC-009
+L00001521	unit_type: requirement
+L00001522	status: accepted
+L00001523	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001524	canonical_text: The provider_tool category is the umbrella for all non-media Puppet Master tool capabilities, including registered provider-exposed tools and internal tools, reported with the same enabled, disabled_reason, and setup_hint shape using tool-registry conventions.
+L00001525	gui_related: false
+L00001526	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001527	split_recommended: true
+L00001528	depends_on: []
+L00001529	unblocks: []
+L00001530	acceptance_criteria:
+L00001531	- The covered source span remains losslessly available for exact-text audit.
+L00001532	- This behavior is addressable through MGAC-009 instead of broad MGAC-001 source-preserving coverage.
+L00001533	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001534	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001535	validation_surfaces:
+L00001536	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001537	- python3 scripts/pm-plan-index.py validate
+L00001538	risk_class: media_generation_contract_drift
+L00001539	reasoning_tier: standard
+L00001540	context_scope: media_generation_capabilities_standardization
+L00001541	implementation_surfaces:
+L00001542	- Plans/Media_Generation_and_Capabilities.md
+L00001543	node_compile_hint:
+L00001544	  mode: provider_tool_capability_category
+L00001545	  create_worknodes: false
+L00001546	source_lineage:
+L00001547	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0009
+L00001548	preserved_exact_tokens:
+L00001549	- Provider tool capabilities
+L00001550	- provider_tool
+L00001551	- umbrella bucket
+L00001552	- non-media tool capabilities
+L00001553	- registered provider-exposed tools
+L00001554	- OpenCode tools
+L00001555	- existing internal tools
+L00001556	- read/grep/write/task
+L00001557	- enabled
+L00001558	- disabled_reason
+L00001559	- setup_hint
+L00001560	- Tool IDs follow existing tool-registry conventions
+L00001561	negative_constraints: []
+L00001562	compatibility_only_notes: []
+L00001563	stale_retired_dispositions: []
+L00001564	owner_boundary_notes:
+L00001565	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001566	owner_hints:
+L00001567	- Plans/Media_Generation_and_Capabilities.md
+L00001568	preserved_contractrefs:
+L00001569	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+L00001570	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001571	```
+L00001572	
+L00001573	### MGAC-010 - Persona Capability Inquiry Rule
+L00001574	
+L00001575	```yaml
+L00001576	plan_unit_id: MGAC-010
+L00001577	unit_type: requirement
+L00001578	status: accepted
+L00001579	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001580	canonical_text: Assistant, Interviewer, and PRD Builder workflows must call capabilities.get when users ask about available capabilities, features, or what Puppet Master can do, so answers reflect real-time enabled state, reasons, and setup guidance.
+L00001581	gui_related: false
+L00001582	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001583	split_recommended: false
+L00001584	depends_on: []
+L00001585	unblocks: []
+L00001586	acceptance_criteria:
+L00001587	- The covered source span remains losslessly available for exact-text audit.
+L00001588	- This behavior is addressable through MGAC-010 instead of broad MGAC-001 source-preserving coverage.
+L00001589	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001590	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001591	validation_surfaces:
+L00001592	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001593	- python3 scripts/pm-plan-index.py validate
+L00001594	risk_class: media_generation_contract_drift
+L00001595	reasoning_tier: standard
+L00001596	context_scope: media_generation_capabilities_standardization
+L00001597	implementation_surfaces:
+L00001598	- Plans/Media_Generation_and_Capabilities.md
+L00001599	node_compile_hint:
+L00001600	  mode: persona_capability_inquiry_rule
+L00001601	  create_worknodes: false
+L00001602	source_lineage:
+L00001603	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0010
+L00001604	preserved_exact_tokens:
+L00001605	- Assistant
+L00001606	- Interviewer
+L00001607	- MUST call `capabilities.get`
+L00001608	- available capabilities
+L00001609	- features
+L00001610	- what Puppet Master can do
+L00001611	- Requirements Doc Builder
+L00001612	- accurate, real-time answer
+L00001613	- what is enabled and what is not
+L00001614	- reasons and setup guidance
+L00001615	negative_constraints: []
+L00001616	compatibility_only_notes: []
+L00001617	stale_retired_dispositions:
+L00001618	- Requirements Doc Builder is retained here only as a legacy source token for the former workflow; current product prose uses PRD Builder.
+L00001619	owner_boundary_notes:
+L00001620	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001621	owner_hints:
+L00001622	- Plans/Media_Generation_and_Capabilities.md
+L00001623	preserved_contractrefs:
+L00001624	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md'
+L00001625	```
+L00001626	
+L00001627	### MGAC-011 - Runtime Registry Snapshot Merge
+L00001628	
+L00001629	```yaml
+L00001630	plan_unit_id: MGAC-011
+L00001631	unit_type: requirement
+L00001632	status: accepted
+L00001633	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001634	canonical_text: capabilities.get is computed from the current runtime registry snapshot by merging built-in internal tools, enabled healthy MCP-discovered tools, provider-exposed active-backend tools, and media capabilities evaluated through the disabled-reason and media routing rules.
+L00001635	gui_related: false
+L00001636	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001637	split_recommended: true
+L00001638	depends_on: []
+L00001639	unblocks: []
+L00001640	acceptance_criteria:
+L00001641	- The covered source span remains losslessly available for exact-text audit.
+L00001642	- This behavior is addressable through MGAC-011 instead of broad MGAC-001 source-preserving coverage.
+L00001643	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001644	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001645	validation_surfaces:
+L00001646	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001647	- python3 scripts/pm-plan-index.py validate
+L00001648	risk_class: media_generation_contract_drift
+L00001649	reasoning_tier: standard
+L00001650	context_scope: media_generation_capabilities_standardization
+L00001651	implementation_surfaces:
+L00001652	- Plans/Media_Generation_and_Capabilities.md
+L00001653	node_compile_hint:
+L00001654	  mode: runtime_registry_snapshot_merge
+L00001655	  create_worknodes: false
+L00001656	source_lineage:
+L00001657	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0011
+L00001658	preserved_exact_tokens:
+L00001659	- current runtime registry snapshot
+L00001660	- built-in internal tools
+L00001661	- canonical tool registry
+L00001662	- currently enabled MCP-discovered tools
+L00001663	- server/provider bridge is healthy
+L00001664	- provider-exposed tools
+L00001665	- active backend
+L00001666	- media capabilities
+L00001667	- §§1.3–1.5
+L00001668	- §2.4
+L00001669	negative_constraints: []
+L00001670	compatibility_only_notes: []
+L00001671	stale_retired_dispositions: []
+L00001672	owner_boundary_notes:
+L00001673	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001674	owner_hints:
+L00001675	- Plans/Media_Generation_and_Capabilities.md
+L00001676	preserved_contractrefs:
+L00001677	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+L00001678	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001679	```
+L00001680	
+L00001681	### MGAC-012 - Runtime Derived No Stale Capability Cache
+L00001682	
+L00001683	```yaml
+L00001684	plan_unit_id: MGAC-012
+L00001685	unit_type: requirement
+L00001686	status: accepted
+L00001687	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001688	canonical_text: Capability state is runtime-derived rather than a separately persisted database; Settings saves, provider switches, MCP adapter refreshes, and Doctor or preflight remediation invalidate the previous snapshot and force recomputation on the next call.
+L00001689	gui_related: false
+L00001690	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001691	split_recommended: true
+L00001692	depends_on: []
+L00001693	unblocks: []
+L00001694	acceptance_criteria:
+L00001695	- The covered source span remains losslessly available for exact-text audit.
+L00001696	- This behavior is addressable through MGAC-012 instead of broad MGAC-001 source-preserving coverage.
+L00001697	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001698	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001699	validation_surfaces:
+L00001700	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001701	- python3 scripts/pm-plan-index.py validate
+L00001702	risk_class: media_generation_contract_drift
+L00001703	reasoning_tier: standard
+L00001704	context_scope: media_generation_capabilities_standardization
+L00001705	implementation_surfaces:
+L00001706	- Plans/Media_Generation_and_Capabilities.md
+L00001707	node_compile_hint:
+L00001708	  mode: runtime_derived_no_stale_capability_cache
+L00001709	  create_worknodes: false
+L00001710	source_lineage:
+L00001711	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0011
+L00001712	preserved_exact_tokens:
+L00001713	- runtime-derived
+L00001714	- not a separately persisted capability database
+L00001715	- Settings save
+L00001716	- provider switch
+L00001717	- MCP adapter refresh
+L00001718	- Doctor/preflight remediation
+L00001719	- invalidates the previous snapshot
+L00001720	- next `capabilities.get` call MUST recompute
+L00001721	- MUST NOT rely on stale cached enablement
+L00001722	negative_constraints:
+L00001723	- Capability state must not become a separately persisted capability database.
+L00001724	- The next capabilities.get call MUST recompute from live state and MUST NOT rely on stale cached enablement.
+L00001725	compatibility_only_notes: []
+L00001726	stale_retired_dispositions: []
+L00001727	owner_boundary_notes:
+L00001728	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001729	owner_hints:
+L00001730	- Plans/Media_Generation_and_Capabilities.md
+L00001731	preserved_contractrefs:
+L00001732	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+L00001733	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001734	```
+L00001735	
+L00001736	### MGAC-013 - Capability Tool Telemetry
+L00001737	
+L00001738	```yaml
+L00001739	plan_unit_id: MGAC-013
+L00001740	unit_type: requirement
+L00001741	status: accepted
+L00001742	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001743	canonical_text: capabilities.get uses the standard tool event pipeline and emits canonical tool telemetry with tool_name capabilities.get, latency, and success/failure rather than defining a separate persistent capability-state event stream.
+L00001744	gui_related: false
+L00001745	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001746	split_recommended: true
+L00001747	depends_on: []
+L00001748	unblocks: []
+L00001749	acceptance_criteria:
+L00001750	- The covered source span remains losslessly available for exact-text audit.
+L00001751	- This behavior is addressable through MGAC-013 instead of broad MGAC-001 source-preserving coverage.
+L00001752	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001753	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001754	validation_surfaces:
+L00001755	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001756	- python3 scripts/pm-plan-index.py validate
+L00001757	risk_class: media_generation_contract_drift
+L00001758	reasoning_tier: standard
+L00001759	context_scope: media_generation_capabilities_standardization
+L00001760	implementation_surfaces:
+L00001761	- Plans/Media_Generation_and_Capabilities.md
+L00001762	node_compile_hint:
+L00001763	  mode: capability_tool_telemetry
+L00001764	  create_worknodes: false
+L00001765	source_lineage:
+L00001766	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0012
+L00001767	preserved_exact_tokens:
+L00001768	- standard tool event pipeline
+L00001769	- Plans/Contracts_V0.md
+L00001770	- Plans/Tools.md
+L00001771	- does **not** define a separate persistent capability-state event stream
+L00001772	- canonical tool telemetry
+L00001773	- tool_name = "capabilities.get"
+L00001774	- latency
+L00001775	- success/failure
+L00001776	negative_constraints:
+L00001777	- capabilities.get must not define a separate persistent capability-state event stream.
+L00001778	compatibility_only_notes: []
+L00001779	stale_retired_dispositions: []
+L00001780	owner_boundary_notes:
+L00001781	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001782	owner_hints:
+L00001783	- Plans/Media_Generation_and_Capabilities.md
+L00001784	preserved_contractrefs:
+L00001785	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md'
+L00001786	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001787	```
+L00001788	
+L00001789	### MGAC-014 - Capability Availability Refresh Visibility
+L00001790	
+L00001791	```yaml
+L00001792	plan_unit_id: MGAC-014
+L00001793	unit_type: requirement
+L00001794	status: accepted
+L00001795	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001796	canonical_text: Settings or provider state changes become visible on the next capabilities.get invocation or UI refresh instead of through a dedicated durable capability changed event.
+L00001797	gui_related: true
+L00001798	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001799	split_recommended: true
+L00001800	depends_on: []
+L00001801	unblocks: []
+L00001802	acceptance_criteria:
+L00001803	- The covered source span remains losslessly available for exact-text audit.
+L00001804	- This behavior is addressable through MGAC-014 instead of broad MGAC-001 source-preserving coverage.
+L00001805	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001806	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001807	validation_surfaces:
+L00001808	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001809	- python3 scripts/pm-plan-index.py validate
+L00001810	risk_class: media_generation_contract_drift
+L00001811	reasoning_tier: standard
+L00001812	context_scope: media_generation_capabilities_standardization
+L00001813	implementation_surfaces:
+L00001814	- Plans/Media_Generation_and_Capabilities.md
+L00001815	node_compile_hint:
+L00001816	  mode: capability_availability_refresh_visibility
+L00001817	  create_worknodes: false
+L00001818	source_lineage:
+L00001819	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0012
+L00001820	preserved_exact_tokens:
+L00001821	- settings or provider state changes
+L00001822	- alter capability availability
+L00001823	- visible on the **next** invocation
+L00001824	- UI refresh
+L00001825	- rather than through a dedicated durable "capability changed" event
+L00001826	negative_constraints:
+L00001827	- Capability availability changes are not reported through a dedicated durable capability-changed event.
+L00001828	compatibility_only_notes: []
+L00001829	stale_retired_dispositions: []
+L00001830	owner_boundary_notes:
+L00001831	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001832	owner_hints:
+L00001833	- Plans/Media_Generation_and_Capabilities.md
+L00001834	preserved_contractrefs:
+L00001835	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md'
+L00001836	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001837	```
+L00001838	
+L00001839	### MGAC-015 - Media Generate Internal Tool
+L00001840	
+L00001841	```yaml
+L00001842	plan_unit_id: MGAC-015
+L00001843	unit_type: requirement
+L00001844	status: accepted
+L00001845	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001846	canonical_text: media.generate is the uniform internal tool for all media generation and accepts a structured request envelope that returns generated media output or an error.
+L00001847	gui_related: false
+L00001848	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001849	split_recommended: false
+L00001850	depends_on: []
+L00001851	unblocks: []
+L00001852	acceptance_criteria:
+L00001853	- The covered source span remains losslessly available for exact-text audit.
+L00001854	- This behavior is addressable through MGAC-015 instead of broad MGAC-001 source-preserving coverage.
+L00001855	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001856	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001857	validation_surfaces:
+L00001858	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001859	- python3 scripts/pm-plan-index.py validate
+L00001860	risk_class: media_generation_contract_drift
+L00001861	reasoning_tier: standard
+L00001862	context_scope: media_generation_capabilities_standardization
+L00001863	implementation_surfaces:
+L00001864	- Plans/Media_Generation_and_Capabilities.md
+L00001865	node_compile_hint:
+L00001866	  mode: media_generate_internal_tool
+L00001867	  create_worknodes: false
+L00001868	source_lineage:
+L00001869	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0014
+L00001870	preserved_exact_tokens:
+L00001871	- media.generate
+L00001872	- uniform internal tool
+L00001873	- all media generation
+L00001874	- structured request envelope
+L00001875	- returns media output or an error
+L00001876	negative_constraints: []
+L00001877	compatibility_only_notes: []
+L00001878	stale_retired_dispositions: []
+L00001879	owner_boundary_notes:
+L00001880	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001881	owner_hints:
+L00001882	- Plans/Media_Generation_and_Capabilities.md
+L00001883	preserved_contractrefs:
+L00001884	- 'ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md'
+L00001885	```
+L00001886	
+L00001887	### MGAC-016 - Media Generate Request Envelope
+L00001888	
+L00001889	```yaml
+L00001890	plan_unit_id: MGAC-016
+L00001891	unit_type: requirement
+L00001892	status: accepted
+L00001893	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001894	canonical_text: The media.generate request envelope includes kind, prompt, model_override, count, aspect_ratio, size, resolution, duration, format, voice, bpm, seed, negative_prompt, and quality with required fields, media kind values, and safe defaults.
+L00001895	gui_related: true
+L00001896	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00001897	split_recommended: true
+L00001898	depends_on: []
+L00001899	unblocks: []
+L00001900	acceptance_criteria:
+L00001901	- The covered source span remains losslessly available for exact-text audit.
+L00001902	- This behavior is addressable through MGAC-016 instead of broad MGAC-001 source-preserving coverage.
+L00001903	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001904	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001905	validation_surfaces:
+L00001906	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001907	- python3 scripts/pm-plan-index.py validate
+L00001908	risk_class: media_generation_contract_drift
+L00001909	reasoning_tier: standard
+L00001910	context_scope: media_generation_capabilities_standardization
+L00001911	implementation_surfaces:
+L00001912	- Plans/Media_Generation_and_Capabilities.md
+L00001913	node_compile_hint:
+L00001914	  mode: media_generate_request_envelope
+L00001915	  create_worknodes: false
+L00001916	source_lineage:
+L00001917	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0015
+L00001918	preserved_exact_tokens:
+L00001919	- kind
+L00001920	- prompt
+L00001921	- model_override
+L00001922	- count
+L00001923	- aspect_ratio
+L00001924	- size
+L00001925	- resolution
+L00001926	- duration
+L00001927	- format
+L00001928	- voice
+L00001929	- bpm
+L00001930	- seed
+L00001931	- negative_prompt
+L00001932	- quality
+L00001933	- image
+L00001934	- video
+L00001935	- tts
+L00001936	- music
+L00001937	- draft
+L00001938	- standard
+L00001939	- high
+L00001940	- default 1
+L00001941	- safe max, default 8
+L00001942	negative_constraints: []
+L00001943	compatibility_only_notes: []
+L00001944	stale_retired_dispositions: []
+L00001945	owner_boundary_notes:
+L00001946	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00001947	owner_hints:
+L00001948	- Plans/Media_Generation_and_Capabilities.md
+L00001949	preserved_contractrefs:
+L00001950	- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+L00001951	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001952	```
+L00001953	
+L00001954	### MGAC-017 - Size Resolution Normalization
+L00001955	
+L00001956	```yaml
+L00001957	plan_unit_id: MGAC-017
+L00001958	unit_type: requirement
+L00001959	status: accepted
+L00001960	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00001961	canonical_text: Deterministic size and resolution normalization maps size_px, size_k, and vres by media kind, keeps image size_k/size_px authoritative over vres, keeps video vres authoritative for resolution, and uses last-match-wins within the same keyed family.
+L00001962	gui_related: false
+L00001963	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00001964	split_recommended: true
+L00001965	depends_on: []
+L00001966	unblocks: []
+L00001967	acceptance_criteria:
+L00001968	- The covered source span remains losslessly available for exact-text audit.
+L00001969	- This behavior is addressable through MGAC-017 instead of broad MGAC-001 source-preserving coverage.
+L00001970	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001971	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001972	validation_surfaces:
+L00001973	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001974	- python3 scripts/pm-plan-index.py validate
+L00001975	risk_class: media_generation_contract_drift
+L00001976	reasoning_tier: standard
+L00001977	context_scope: media_generation_capabilities_standardization
+L00001978	implementation_surfaces:
+L00001979	- Plans/Media_Generation_and_Capabilities.md
+L00001980	node_compile_hint:
+L00001981	  mode: size_resolution_normalization
+L00001982	  create_worknodes: false
+L00001983	source_lineage:
+L00001984	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0015
+L00001985	preserved_exact_tokens:
+L00001986	- Deterministic `size` / `resolution` normalization
+L00001987	- kind=image
+L00001988	- size_px
+L00001989	- size
+L00001990	- resolution
+L00001991	- size_k
+L00001992	- 2k -> 2048
+L00001993	- 4k -> 4096
+L00001994	- 8k -> 8192
+L00001995	- kind=video
+L00001996	- vres
+L00001997	- 720p
+L00001998	- 1080p
+L00001999	- 1440p
+L00002000	- 2160p
+L00002001	- 4k
+L00002002	- Conflict rule
+L00002003	- last match wins
+L00002004	negative_constraints:
+L00002005	- For image prompts, size_k/size_px controls are authoritative over vres; for video prompts, vres is authoritative for resolution.
+L00002006	compatibility_only_notes: []
+L00002007	stale_retired_dispositions: []
+L00002008	owner_boundary_notes:
+L00002009	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002010	owner_hints:
+L00002011	- Plans/Media_Generation_and_Capabilities.md
+L00002012	preserved_contractrefs:
+L00002013	- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+L00002014	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002015	```
+L00002016	
+L00002017	### MGAC-018 - Ephemeral Model Override Resolution
+L00002018	
+L00002019	```yaml
+L00002020	plan_unit_id: MGAC-018
+L00002021	unit_type: requirement
+L00002022	status: accepted
+L00002023	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002024	canonical_text: model_override applies only to the current media.generate invocation, does not change persistent Settings, and resolves by alias mapping, exact model ID, exact displayName case-insensitively, or MODEL_UNAVAILABLE.
+L00002025	gui_related: false
+L00002026	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002027	split_recommended: false
+L00002028	depends_on: []
+L00002029	unblocks: []
+L00002030	acceptance_criteria:
+L00002031	- The covered source span remains losslessly available for exact-text audit.
+L00002032	- This behavior is addressable through MGAC-018 instead of broad MGAC-001 source-preserving coverage.
+L00002033	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002034	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002035	validation_surfaces:
+L00002036	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002037	- python3 scripts/pm-plan-index.py validate
+L00002038	risk_class: media_generation_contract_drift
+L00002039	reasoning_tier: standard
+L00002040	context_scope: media_generation_capabilities_standardization
+L00002041	implementation_surfaces:
+L00002042	- Plans/Media_Generation_and_Capabilities.md
+L00002043	node_compile_hint:
+L00002044	  mode: ephemeral_model_override_resolution
+L00002045	  create_worknodes: false
+L00002046	source_lineage:
+L00002047	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0016
+L00002048	preserved_exact_tokens:
+L00002049	- model_override
+L00002050	- single generation request
+L00002051	- without changing the persistent model configured in Settings
+L00002052	- ephemeral
+L00002053	- current `media.generate` invocation
+L00002054	- Alias mapping
+L00002055	- Exact model ID
+L00002056	- Exact displayName
+L00002057	- case-insensitive
+L00002058	- MODEL_UNAVAILABLE
+L00002059	negative_constraints:
+L00002060	- model_override MUST NOT change the persistent model in Settings.
+L00002061	compatibility_only_notes: []
+L00002062	stale_retired_dispositions: []
+L00002063	owner_boundary_notes:
+L00002064	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002065	owner_hints:
+L00002066	- Plans/Media_Generation_and_Capabilities.md
+L00002067	preserved_contractrefs:
+L00002068	- 'ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID'
+L00002069	```
+L00002070	
+L00002071	### MGAC-019 - Cursor Backend Routing
+L00002072	
+L00002073	```yaml
+L00002074	plan_unit_id: MGAC-019
+L00002075	unit_type: requirement
+L00002076	status: accepted
+L00002077	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002078	canonical_text: Cursor image generation is route-specific. Cursor image-input/API-key proof does not by itself prove product-native image generation; Cursor image output requires a verified generated-media route, while unsupported Cursor media kinds are disabled with BACKEND_UNSUPPORTED or route-specific unavailable state.
+L00002079	gui_related: true
+L00002080	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00002081	split_recommended: true
+L00002082	depends_on: []
+L00002083	unblocks: []
+L00002084	acceptance_criteria:
+L00002085	- The covered source span remains losslessly available for exact-text audit.
+L00002086	- This behavior is addressable through MGAC-019 instead of broad MGAC-001 source-preserving coverage.
+L00002087	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002088	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002089	validation_surfaces:
+L00002090	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002091	- python3 scripts/pm-plan-index.py validate
+L00002092	risk_class: cursor_media_route_contract_drift
+L00002093	reasoning_tier: standard
+L00002094	context_scope: media_generation_capabilities_standardization
+L00002095	implementation_surfaces:
+L00002096	- Plans/Media_Generation_and_Capabilities.md
+L00002097	node_compile_hint:
+L00002098	  mode: cursor_backend_route_specific_media
+L00002099	  create_worknodes: false
+L00002100	source_lineage:
+L00002101	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002102	preserved_exact_tokens:
+L00002103	- Cursor
+L00002104	- special-case backend
+L00002105	- Cursor-native image generation
+L00002106	- kind=image
+L00002107	- video
+L00002108	- tts
+L00002109	- music
+L00002110	- 'disabled_reason: BACKEND_UNSUPPORTED'
+L00002111	- ToolID:capabilities.get
+L00002112	- ToolID:media.generate
+L00002113	negative_constraints: []
+L00002114	compatibility_only_notes:
+L00002115	- The exact phrase "Cursor-native image generation" is retained only as retired/source-lineage until a later owner contract proves product-native Cursor generation.
+L00002116	stale_retired_dispositions:
+L00002117	- Cursor image-input support must not be treated as generated-image output support.
+L00002118	owner_boundary_notes:
+L00002119	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002120	owner_hints:
+L00002121	- Plans/Media_Generation_and_Capabilities.md
+L00002122	preserved_contractrefs:
+L00002123	- 'ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2'
+L00002124	- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md'
+L00002125	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002126	```
+L00002127	
+L00002128	### MGAC-020 - Gemini Media Mode Cleanup
+L00002129	
+L00002130	```yaml
+L00002131	plan_unit_id: MGAC-020
+L00002132	unit_type: requirement
+L00002133	status: accepted
+L00002134	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002135	canonical_text: Media routing follows concrete provider/model route capability fields, not a Gemini-default non-Cursor model. Legacy shorthand for key-backed Gemini, mixed-account Gemini, key-exception-only media, and non-Cursor Gemini-default routing is obsolete; each request evaluates concrete provider entry, auth family, billing/quota plane, account/profile, generated_media_routes[], and capability path.
+L00002136	gui_related: false
+L00002137	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002138	split_recommended: true
+L00002139	depends_on: []
+L00002140	unblocks: []
+L00002141	acceptance_criteria:
+L00002142	- The covered source span remains losslessly available for exact-text audit.
+L00002143	- This behavior is addressable through MGAC-020 instead of broad MGAC-001 source-preserving coverage.
+L00002144	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002145	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002146	validation_surfaces:
+L00002147	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002148	- python3 scripts/pm-plan-index.py validate
+L00002149	risk_class: media_route_taxonomy_drift
+L00002150	reasoning_tier: standard
+L00002151	context_scope: media_generation_capabilities_standardization
+L00002152	implementation_surfaces:
+L00002153	- Plans/Media_Generation_and_Capabilities.md
+L00002154	node_compile_hint:
+L00002155	  mode: media_route_taxonomy_cleanup
+L00002156	  create_worknodes: false
+L00002157	source_lineage:
+L00002158	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002159	- pldg-20260624-001-provider-updates:atom-0141
+L00002160	preserved_exact_tokens:
+L00002161	- Stale-canon cleanup
+L00002162	- key-backed
+L00002163	- mixed-account
+L00002164	- key-exception
+L00002165	- obsolete
+L00002166	- Gemini Direct (`gemini`)
+L00002167	- direct, key-only, API-key-backed provider entry
+L00002168	- Gemini CLI (`gemini_cli`)
+L00002169	- OAuth
+L00002170	- API-key
+L00002171	- Google/Vertex credential account rows
+L00002172	- requested/effective provider entry
+L00002173	- auth family
+L00002174	- billing/quota plane
+L00002175	- account/profile
+L00002176	- capability path
+L00002177	negative_constraints:
+L00002178	- Gemini media routing must not collapse into stale key-backed, mixed-account, or key-exception-only shorthand.
+L00002179	compatibility_only_notes:
+L00002180	- Legacy shorthand for non-Cursor Gemini media is obsolete; current routing is provider/model generated_media_routes[].
+L00002181	stale_retired_dispositions:
+L00002182	- Stale-canon cleanup retires key-backed, mixed-account, key-exception-only, and Gemini-default media wording.
+L00002183	owner_boundary_notes:
+L00002184	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002185	owner_hints:
+L00002186	- Plans/Media_Generation_and_Capabilities.md
+L00002187	preserved_contractrefs:
+L00002188	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002189	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002190	```
+L00002191	
+L00002192	### MGAC-021 - Gemini Usage Account Plan Labels
+L00002193	
+L00002194	```yaml
+L00002195	plan_unit_id: MGAC-021
+L00002196	unit_type: requirement
+L00002197	status: accepted
+L00002198	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002199	canonical_text: Gemini quota, usage, and account/plan UI labels are mode-dependent and imported from Multi-Account and usage-feature instead of inventing a parallel media bucket.
+L00002200	gui_related: true
+L00002201	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00002202	split_recommended: true
+L00002203	depends_on: []
+L00002204	unblocks: []
+L00002205	acceptance_criteria:
+L00002206	- The covered source span remains losslessly available for exact-text audit.
+L00002207	- This behavior is addressable through MGAC-021 instead of broad MGAC-001 source-preserving coverage.
+L00002208	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002209	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002210	validation_surfaces:
+L00002211	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002212	- python3 scripts/pm-plan-index.py validate
+L00002213	risk_class: media_generation_contract_drift
+L00002214	reasoning_tier: standard
+L00002215	context_scope: media_generation_capabilities_standardization
+L00002216	implementation_surfaces:
+L00002217	- Plans/Media_Generation_and_Capabilities.md
+L00002218	node_compile_hint:
+L00002219	  mode: gemini_usage_account_plan_labels
+L00002220	  create_worknodes: false
+L00002221	source_lineage:
+L00002222	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002223	preserved_exact_tokens:
+L00002224	- Quota/usage tools
+L00002225	- account/plan UI
+L00002226	- mode-dependent
+L00002227	- API-key-derived or estimated usage
+L00002228	- project attribution
+L00002229	- Gemini quota
+L00002230	- authoritative quota semantics
+L00002231	- CLI API-key
+L00002232	- Google/Vertex rows
+L00002233	- source-qualified labels
+L00002234	- capability picker
+L00002235	- Plans/Multi-Account.md
+L00002236	- Plans/usage-feature.md
+L00002237	negative_constraints:
+L00002238	- UI must not invent a parallel media-local account/plan or usage bucket.
+L00002239	compatibility_only_notes: []
+L00002240	stale_retired_dispositions: []
+L00002241	owner_boundary_notes:
+L00002242	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002243	owner_hints:
+L00002244	- Plans/Media_Generation_and_Capabilities.md
+L00002245	preserved_contractrefs:
+L00002246	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002247	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002248	```
+L00002249	
+L00002250	### MGAC-022 - Media Shared Runtime Routing Snapshot
+L00002251	
+L00002252	```yaml
+L00002253	plan_unit_id: MGAC-022
+L00002254	unit_type: requirement
+L00002255	status: accepted
+L00002256	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002257	canonical_text: Media routing resolves provider/runtime, auth family, concrete media-capable runtime surface, and requested/effective runtime snapshot through the product-wide shared runtime identity model, not feature-local runtime-state fields.
+L00002258	gui_related: false
+L00002259	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002260	split_recommended: true
+L00002261	depends_on: []
+L00002262	unblocks: []
+L00002263	acceptance_criteria:
+L00002264	- The covered source span remains losslessly available for exact-text audit.
+L00002265	- This behavior is addressable through MGAC-022 instead of broad MGAC-001 source-preserving coverage.
+L00002266	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002267	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002268	validation_surfaces:
+L00002269	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002270	- python3 scripts/pm-plan-index.py validate
+L00002271	risk_class: media_generation_contract_drift
+L00002272	reasoning_tier: standard
+L00002273	context_scope: media_generation_capabilities_standardization
+L00002274	implementation_surfaces:
+L00002275	- Plans/Media_Generation_and_Capabilities.md
+L00002276	node_compile_hint:
+L00002277	  mode: media_shared_runtime_routing_snapshot
+L00002278	  create_worknodes: false
+L00002279	source_lineage:
+L00002280	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002281	preserved_exact_tokens:
+L00002282	- Required routing order
+L00002283	- requested provider/runtime surface
+L00002284	- requested/effective auth family
+L00002285	- eligible account or profile set
+L00002286	- concrete runtime surface
+L00002287	- requested/effective runtime snapshot
+L00002288	- product-wide shared runtime identity model
+L00002289	- one canonical truth
+L00002290	- /history/debugging
+L00002291	- /retry/account-switch
+L00002292	negative_constraints:
+L00002293	- Media generation must not define feature-local shadow fields for account, provider, retry, switch, or audit identity.
+L00002294	compatibility_only_notes: []
+L00002295	stale_retired_dispositions: []
+L00002296	owner_boundary_notes:
+L00002297	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002298	owner_hints:
+L00002299	- Plans/Media_Generation_and_Capabilities.md
+L00002300	preserved_contractrefs:
+L00002301	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002302	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002303	```
+L00002304	
+L00002305	### MGAC-023 - Retired Gemini CLI Nanobanana Media Route Lineage
+L00002306	
+L00002307	```yaml
+L00002308	plan_unit_id: MGAC-023
+L00002309	unit_type: compatibility_disposition
+L00002310	status: accepted
+L00002311	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002312	canonical_text: Gemini CLI Nanobanana media route vocabulary is retired and retained only as source-lineage. Active media
+L00002313	  routing must use concrete provider/model generated_media_routes[] such as Gemini Direct where verified, OpenAI/Codex,
+L00002314	  OpenAI API-key routes, and MiniMax Image-01. PM must not install Nanobanana or create PM-managed Gemini CLI media roots.
+L00002315	gui_related: false
+L00002316	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002317	split_recommended: true
+L00002318	depends_on: []
+L00002319	unblocks: []
+L00002320	acceptance_criteria:
+L00002321	- The covered source span remains losslessly available for exact-text audit.
+L00002322	- This behavior is addressable through MGAC-023 instead of broad MGAC-001 source-preserving coverage.
+L00002323	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002324	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002325	validation_surfaces:
+L00002326	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002327	- python3 scripts/pm-plan-index.py validate
+L00002328	risk_class: retired_gemini_cli_nanobanana_resurrection
+L00002329	reasoning_tier: standard
+L00002330	context_scope: media_generation_capabilities_standardization
+L00002331	implementation_surfaces:
+L00002332	- Plans/Media_Generation_and_Capabilities.md
+L00002333	node_compile_hint:
+L00002334	  mode: retired_gemini_cli_nanobanana_media_route
+L00002335	  create_worknodes: false
+L00002336	source_lineage:
+L00002337	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002338	- pldg-20260624-001-provider-updates:atom-0141
+L00002339	preserved_exact_tokens:
+L00002340	- Gemini Direct media
+L00002341	- key-only/API-key-backed
+L00002342	- Gemini CLI media
+L00002343	- required helper path
+L00002344	- nanobanana
+L00002345	- PM-managed Gemini CLI account root
+L00002346	- image-preview models
+L00002347	- NANOBANANA_API_KEY
+L00002348	- OAuth- or Vertex-backed
+L00002349	- media_partial
+L00002350	- media_unavailable
+L00002351	- /version
+L00002352	- restart-required state
+L00002353	- /disclosure
+L00002354	- /capability
+L00002355	- family pooling
+L00002356	- requested/effective runtime disclosure
+L00002357	negative_constraints:
+L00002358	- Do not implement Gemini CLI media as an active generated-media route.
+L00002359	- Do not install or update Nanobanana as an active PM installable.
+L00002360	- Do not inject NANOBANANA_API_KEY for active media routing.
+L00002361	- Do not silently fall back from retired Gemini CLI media to Gemini Direct without requested/effective route disclosure.
+L00002362	compatibility_only_notes:
+L00002363	- OAuth-only or Vertex-backed Gemini CLI media states are retained only as retired source-lineage.
+L00002364	stale_retired_dispositions:
+L00002365	- Gemini CLI Nanobanana media route is retired by provider-update ledger pldg-20260624-001-provider-updates.
+L00002366	owner_boundary_notes:
+L00002367	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002368	owner_hints:
+L00002369	- Plans/Media_Generation_and_Capabilities.md
+L00002370	preserved_contractrefs:
+L00002371	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002372	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002373	```
+L00002374	
+L00002375	### MGAC-024 - Media Storage Usage Audit Boundaries
+L00002376	
+L00002377	```yaml
+L00002378	plan_unit_id: MGAC-024
+L00002379	unit_type: requirement
+L00002380	status: accepted
+L00002381	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002382	canonical_text: Media records consume usage, storage, seglog, receipt, redb, event-sourced, route, runtime, attempt, and receipt-based owners without treating active-git-operations files, active-agents flat files, resume_url, or tier_id as stronger canonical truth.
+L00002383	gui_related: false
+L00002384	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002385	split_recommended: true
+L00002386	depends_on: []
+L00002387	unblocks: []
+L00002388	acceptance_criteria:
+L00002389	- The covered source span remains losslessly available for exact-text audit.
+L00002390	- This behavior is addressable through MGAC-024 instead of broad MGAC-001 source-preserving coverage.
+L00002391	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002392	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002393	validation_surfaces:
+L00002394	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002395	- python3 scripts/pm-plan-index.py validate
+L00002396	risk_class: media_generation_contract_drift
+L00002397	reasoning_tier: standard
+L00002398	context_scope: media_generation_capabilities_standardization
+L00002399	implementation_surfaces:
+L00002400	- Plans/Media_Generation_and_Capabilities.md
+L00002401	node_compile_hint:
+L00002402	  mode: media_storage_usage_audit_boundaries
+L00002403	  create_worknodes: false
+L00002404	source_lineage:
+L00002405	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002406	preserved_exact_tokens:
+L00002407	- usage_event_ref
+L00002408	- single scope-precedence envelope
+L00002409	- .puppet-master/state/active-git-operations.json
+L00002410	- storage-plan
+L00002411	- seglog
+L00002412	- /receipts
+L00002413	- active-agents.json
+L00002414	- active-agents flat files
+L00002415	- /redb
+L00002416	- event-sourced stores
+L00002417	- resume_url
+L00002418	- Run_Graph_View.md
+L00002419	- Orchestrator_Page.md
+L00002420	- tier_id
+L00002421	- /runtime
+L00002422	- /receipt-based
+L00002423	negative_constraints:
+L00002424	- Media audit links must not treat active-git-operations files as canonical audit.
+L00002425	- Active-agents flat files are compatibility inputs only, not durable execution state truth.
+L00002426	- tier_id is compatibility context rather than media usage or identity truth.
+L00002427	compatibility_only_notes:
+L00002428	- active-agents flat files and tier_id are compatibility inputs/context only.
+L00002429	stale_retired_dispositions: []
+L00002430	owner_boundary_notes:
+L00002431	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002432	owner_hints:
+L00002433	- Plans/Media_Generation_and_Capabilities.md
+L00002434	preserved_contractrefs:
+L00002435	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002436	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002437	```
+L00002438	
+L00002439	### MGAC-025 - Media Side Effect Target And Envelope
+L00002440	
+L00002441	```yaml
+L00002442	plan_unit_id: MGAC-025
+L00002443	unit_type: requirement
+L00002444	status: accepted
+L00002445	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002446	canonical_text: Media operational identity remains side-effect and target truth, project/lane/worktree/thread/request identity must disambiguate concurrent media work, and media generation records explicitly name request, runtime, usage, route, artifact, and recovery fields rather than relying on underspecified shared envelope prose.
+L00002447	gui_related: false
+L00002448	gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+L00002449	split_recommended: true
+L00002450	depends_on: []
+L00002451	unblocks: []
+L00002452	acceptance_criteria:
+L00002453	- The covered source span remains losslessly available for exact-text audit.
+L00002454	- This behavior is addressable through MGAC-025 instead of broad MGAC-001 source-preserving coverage.
+L00002455	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002456	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002457	validation_surfaces:
+L00002458	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002459	- python3 scripts/pm-plan-index.py validate
+L00002460	risk_class: media_generation_contract_drift
+L00002461	reasoning_tier: standard
+L00002462	context_scope: media_generation_capabilities_standardization
+L00002463	implementation_surfaces:
+L00002464	- Plans/Media_Generation_and_Capabilities.md
+L00002465	node_compile_hint:
+L00002466	  mode: media_side_effect_target_and_envelope
+L00002467	  create_worknodes: false
+L00002468	source_lineage:
+L00002469	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+L00002470	preserved_exact_tokens:
+L00002471	- orchestrator-subagent-integration
+L00002472	- canonical execution-unit refs
+L00002473	- /decomposition
+L00002474	- Provider/account identity
+L00002475	- shared-runtime truth
+L00002476	- side-effect and `/target` truth
+L00002477	- Execution-core docs
+L00002478	- multi-project
+L00002479	- lane-based orchestration
+L00002480	- /worktree/thread
+L00002481	- project, lane, worktree, thread, and request identity
+L00002482	- common envelope contract
+L00002483	- request, runtime, usage, route, artifact, and recovery fields
+L00002484	negative_constraints:
+L00002485	- Media records cannot assume one active worktree/thread context.
+L00002486	- The common envelope contract is not optional.
+L00002487	compatibility_only_notes: []
+L00002488	stale_retired_dispositions: []
+L00002489	owner_boundary_notes:
+L00002490	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+L00002491	owner_hints:
+L00002492	- Plans/Media_Generation_and_Capabilities.md
+L00002493	preserved_contractrefs:
+L00002494	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002495	split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00002496	```
+L00002497	
+L00002498	### MGAC-026 - Media Generate Success Response
+L00002499	
+L00002500	```yaml
+L00002501	plan_unit_id: MGAC-026
+L00002502	unit_type: requirement
+L00002503	status: accepted
+L00002504	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00002505	canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, canonical UsageRecord bridge usage, and error fields with artifact metadata, usage_event_ref, UsageRecord identity, source_class/source_confidence/source_authority, settlement and cost status, UF-085 token buckets, counting_semantics, cost_microdollars or provider minor-unit costs, and media-specific media_units that are not token totals.
+L00002506	gui_related: true
+L00002507	gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+L00002508	split_recommended: true
+L00002509	depends_on: []

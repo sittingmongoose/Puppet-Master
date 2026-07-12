@@ -1,0 +1,446 @@
+{
+  "assignment_id": "A005M15-000092-INTEGRATED-MACRO15-A039AB3A76BD-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "scale_performance", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability", "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "failures_recovery", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "The Verifier MUST run gates exactly as written here (no discretionary skipping).", "line_end": 130, "line_start": 130, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "For the Verifier's top-level progression decision, any gate state other than `PASS` MUST be treated as a blocking non-pass outcome.", "line_end": 176, "line_start": 176, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "The core defines a conservative, machine-evidence-only progression boundary and preserves gate-specific states even when normalizing every non-PASS result to a blocking top-level outcome.",
+      "item_id": "A005M15-000092-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Progression_Gates.md:CONT-001"],
+      "statement": "Verifier authority, blocking behavior, and top-level state normalization are explicit and internally consistent: no gate may be skipped, failures block, and raw gate state remains evidence-visible.",
+      "title": "Deterministic verifier boundary is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "acceptance_oracles", "ambiguity_unknowns", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "**Pass condition:** Every operational requirement line contains at least one `ContractRef:`.", "line_end": 337, "line_start": 337, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Operational requirement line contains: `MUST`, `MUST NOT`, `SHALL`, `REQUIRED`, `NEVER`.", "line_end": 340, "line_start": 340, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "case_sensitive_requirement_detection",
+      "impact": "Normative lowercase 'must' or equivalent imperative requirements can evade GATE-009, yielding a false PASS for missing ContractRefs and weakening the claimed deterministic anti-drift oracle.",
+      "item_id": "A005M15-000092-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Progression_Gates.md:CONT-001"],
+      "statement": "GATE-009 defines operational requirements solely through uppercase trigger tokens, but this same canonical core repeatedly uses lowercase normative 'must'; the detector therefore does not cover the stated pass-condition domain.",
+      "title": "GATE-009 can miss lowercase normative requirements"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "failures_recovery", "invalid_states_transitions", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "- a recovery-plan leaves active blockers unresolved by choosing `append` or `verify_only` when `replace_section` is required to repair or retire stale owner canon", "line_end": 632, "line_start": 632, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "The gate should fail when any of the above are contradicted by packetized docs.", "line_end": 638, "line_start": 638, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "polarity_inversion",
+      "impact": "Taken literally, the gate is told to confirm a known-bad recovery plan and to fail when that bad condition is contradicted, reversing the intended safety outcome and allowing unresolved blockers to be treated as conformant.",
+      "item_id": "A005M15-000092-I003",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Progression_Gates.md:CONT-002"],
+      "statement": "The Runtime Packet Verification addendum includes an adverse condition in its positive 'must confirm' list, then declares contradiction of that list to be failure; this is a direct normative polarity inversion.",
+      "title": "Runtime packet recovery check is inverted"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "authority", "ownership", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "Progression_Gates.md is the canonical owner text for deterministic progression gates and preserves product, runtime, storage, UI, and governance requirements.", "line_end": 703, "line_start": 703, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Progression_Gates.md follows DRY, Contracts, and Decision Policy references and uses only the Puppet Master name, with older names referenced only as legacy naming.", "line_end": 745, "line_start": 745, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "These PlanUnits make owner authority and naming constraints directly addressable without creating execution artifacts.",
+      "item_id": "A005M15-000092-I004",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-002", "PLANUNIT:PG-003", "SEMANTIC:PLANUNIT:PG-002", "SEMANTIC:PLANUNIT:PG-003"],
+      "statement": "PG-002 and PG-003 accurately expose the document's owner boundary and its naming/compliance constraints, with explicit lineage and no WorkNode creation authority.",
+      "title": "Owner and naming PlanUnits preserve their source intent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  - \"allowed_actions\"", "line_end": 1048, "line_start": 1048, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "  - \"allowed_actions in canonical-looking HITL storage shapes remains a gate risk until reflected in owner docs.\"", "line_end": 1054, "line_start": 1054, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "The sole canonical name is `allowed_action_ids[]`.", "line_end": 666, "line_start": 666, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "deprecated_token_preserved_without_context",
+      "impact": "A builder or index consumer can treat `allowed_actions` as a required runtime token despite the same owner document declaring only `allowed_action_ids[]` canonical, propagating a blocked-payload schema split.",
+      "item_id": "A005M15-000092-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PG-009", "SEMANTIC:PLANUNIT:PG-009"],
+      "statement": "PG-009 preserves the deprecated token `allowed_actions` without marking that token itself as deprecation-only; its negative constraint says it remains a risk 'until reflected' even though the same source later establishes `allowed_action_ids[]` as the sole canonical field.",
+      "title": "PG-009 can re-propagate a deprecated blocked-payload field"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "capabilities", "contracts", "ownership", "consumers", "gui_truth", "propagation", "compatibility_migration"],
+      "evidence": [
+        {"exact_quote": "Progression_Gates.md defines deterministic gates for validating plan quality and implementation evidence.", "line_end": 789, "line_start": 789, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Command and wiring gates verify wrappers, aliases, command IDs, route primitives, normalization metadata, and evidence targets without inventing broad schema expansion.", "line_end": 924, "line_start": 924, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Orchestrator-facing gate expectations must keep run graph, widget, package, seam, lane, contamination, promotion, and projection-trust visibility in scope.", "line_end": 971, "line_start": 971, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Progression gates own promotion evidence, route/open packet verification, and compatibility checks before run sealing and archival.", "line_end": 1115, "line_start": 1115, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "The remaining scope, seam, GUI visibility, stale-addenda risk, and route-owner PlanUnits preserve their core roles and keep implementation generation explicitly disabled.",
+      "item_id": "A005M15-000092-I006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-004", "PLANUNIT:PG-005", "PLANUNIT:PG-006", "PLANUNIT:PG-007", "PLANUNIT:PG-008", "PLANUNIT:PG-010", "PLANUNIT:PG-011", "SEMANTIC:PLANUNIT:PG-004", "SEMANTIC:PLANUNIT:PG-005", "SEMANTIC:PLANUNIT:PG-006", "SEMANTIC:PLANUNIT:PG-007", "SEMANTIC:PLANUNIT:PG-008", "SEMANTIC:PLANUNIT:PG-010", "SEMANTIC:PLANUNIT:PG-011"],
+      "statement": "PG-004 through PG-008 and PG-010 through PG-011 provide addressable scope, evidence, seam, command, GUI, risk, and ownership requirements; their dependency directions and GUI flags are coherent with their canonical text.",
+      "title": "Scope and owner-seam PlanUnits are coherent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["contracts", "states_transitions", "authority", "failures_recovery", "concurrency_races", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "Route awareness requires target reachability, valid OpenSubject resolution, run-command reflection, and linked route side effects.", "line_end": 1203, "line_start": 1203, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Unreachable route targets enter HELD state, contradictory subject state emits REJECTION, and waivers require durable project config.", "line_end": 1286, "line_start": 1286, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "waiver_and_reachability_atomicity_unspecified",
+      "impact": "Concurrent route changes can invalidate evidence after the check, and project admins receive broad waiver authority without an explicit approval quorum, reason schema, expiry, scope, or audit oracle.",
+      "item_id": "A005M15-000092-I007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:PG-012", "PLANUNIT:PG-013", "PLANUNIT:PG-014", "PLANUNIT:PG-015", "SEMANTIC:PLANUNIT:PG-012", "SEMANTIC:PLANUNIT:PG-013", "SEMANTIC:PLANUNIT:PG-014", "SEMANTIC:PLANUNIT:PG-015"],
+      "statement": "The promotion and route PlanUnits define classes, evidence, cross-run sealing, and fallback states, but they do not define an atomic observation boundary for reachability or the lifecycle and authorization details of `gate_waiver_rule`.",
+      "title": "Route evidence and waiver authority lack race-safe boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "propagation", "compatibility_migration", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-003, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-007, Gate:GATE-008, Gate:GATE-009, Gate:GATE-010, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014", "line_end": 157, "line_start": 157, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "  - \"ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014\"", "line_end": 1369, "line_start": 1369, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "source_fidelity_omission",
+      "impact": "PG-016 claims exact ContractRef preservation while dropping GATE-003, GATE-007, GATE-008, and GATE-010 from the consolidated registry reference, so downstream indexes can under-enumerate gate ownership and tombstones.",
+      "item_id": "A005M15-000092-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PG-016", "SEMANTIC:PLANUNIT:PG-016"],
+      "statement": "The PlanUnit's preserved ContractRef list is not faithful to the source registry: four gate references present in the canonical line are omitted.",
+      "title": "PG-016 drops four gate ContractRefs"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "authority", "ownership", "consumers", "states_transitions", "gui_truth"],
+      "evidence": [
+        {"exact_quote": "Repo-local run-gates governs build-governing Puppet Master repository artifacts; generated user-project artifacts must satisfy relevant contracts but need explicit validator coverage.", "line_end": 1381, "line_start": 1381, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Top-level progression treats any non-PASS as blocking while preserving gate-specific states, raw model IDs, recovery pointers, and review outcomes.", "line_end": 1425, "line_start": 1425, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Route evidence owns normalized route identity; FileManager UI may consume open/copy behavior but must not re-own route identity.", "line_end": 1474, "line_start": 1474, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "These units prevent repo-verifier PASS from laundering unvalidated project artifacts, preserve non-PASS state identity, and keep FileManager a route consumer rather than an authority owner.",
+      "item_id": "A005M15-000092-I009",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-017", "PLANUNIT:PG-018", "PLANUNIT:PG-019", "SEMANTIC:PLANUNIT:PG-017", "SEMANTIC:PLANUNIT:PG-018", "SEMANTIC:PLANUNIT:PG-019"],
+      "statement": "PG-017 through PG-019 accurately separate validator scope, normalized state, and route-identity ownership, including the GUI consumer boundary.",
+      "title": "Verifier scope and route identity remain well bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["states_transitions", "failures_recovery", "partial_failure", "recovery_rollback", "scale_limits", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "A package cannot report completion until all constituent nodes are resolved to completed, skipped, or failed with remediation recorded.", "line_end": 1563, "line_start": 1563, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "A lane cannot report done until every assigned package satisfies package_complete_gate.", "line_end": 1653, "line_start": 1653, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "failed_state_counts_as_completion_without_remediation_oracle",
+      "impact": "A package and then an entire lane may report completion after a failed node merely records an arbitrary remediation note, with no requirement that remediation execute, succeed, be risk-bounded, or be accepted by an authority.",
+      "item_id": "A005M15-000092-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PG-020", "PLANUNIT:PG-021", "PLANUNIT:PG-022", "PLANUNIT:PG-023", "SEMANTIC:PLANUNIT:PG-020", "SEMANTIC:PLANUNIT:PG-021", "SEMANTIC:PLANUNIT:PG-022", "SEMANTIC:PLANUNIT:PG-023"],
+      "statement": "The node-model replacement is explicit, but `failed with remediation recorded` is treated as terminal resolution without a deterministic remediation-quality or success oracle.",
+      "title": "Failure can satisfy package and lane completion too cheaply"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "propagation", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "  - \"GATE-001\"", "line_end": 1682, "line_start": 1682, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "  - \"GATE-002\"", "line_end": 1728, "line_start": 1728, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "  - \"GATE-003\"", "line_end": 1774, "line_start": 1774, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "adjacent_heading_token_contamination",
+      "impact": "Semantic consumers of preserved tokens can infer false ownership or dependency edges from PG-023 to GATE-001, PG-024 to GATE-002, and PG-025 to GATE-003.",
+      "item_id": "A005M15-000092-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:PG-024", "PLANUNIT:PG-025", "SEMANTIC:PLANUNIT:PG-024", "SEMANTIC:PLANUNIT:PG-025"],
+      "statement": "The preserved token lists show systematic next-heading bleed: each unit captures the following gate identifier even when that identifier is not part of its canonical behavior.",
+      "title": "PlanUnit token preservation bleeds across gate boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "security_privacy", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "GATE-003 requires invariant evidence for no secrets and naming compliance, currently via dedicated implementation verifiers rather than run-gates.", "line_end": 1791, "line_start": 1791, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-004 blocks forbidden dependencies and drift phrases; current run-gates enforces the drift-phrase half.", "line_end": 1839, "line_start": 1839, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "The units accurately disclose that these gates are only partly or externally enforced, preventing a generic run-gates PASS from being overstated.",
+      "item_id": "A005M15-000092-I012",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-026", "PLANUNIT:PG-027", "SEMANTIC:PLANUNIT:PG-026", "SEMANTIC:PLANUNIT:PG-027"],
+      "statement": "PG-026 and PG-027 faithfully expose their invariant and drift checks together with current enforcement limits.",
+      "title": "Architecture and drift gates disclose enforcement limits"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "operations", "acceptance_oracles", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "`run-gates` enforces this gate for non-example nodes in `Plans/plan_graph.json`.", "line_end": 287, "line_start": 287, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-005 prevents node completion unless its evidence bundle exists and validates.", "line_end": 1886, "line_start": 1886, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "Operational requirement line contains: `MUST`, `MUST NOT`, `SHALL`, `REQUIRED`, `NEVER`.", "line_end": 340, "line_start": 340, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "planunit_overstates_enforcement_and_preserves_weak_detector",
+      "impact": "Index-level consumers can mistake a universal policy statement for universal live enforcement, while the GATE-009 detector can still omit lowercase normative lines.",
+      "item_id": "A005M15-000092-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PG-028", "PLANUNIT:PG-029", "PLANUNIT:PG-030", "SEMANTIC:PLANUNIT:PG-028", "SEMANTIC:PLANUNIT:PG-029", "SEMANTIC:PLANUNIT:PG-030"],
+      "statement": "PG-028 and PG-029 state universal completion and budget constraints without putting their non-example-node script boundary in canonical_text, and PG-030 carries forward GATE-009's uppercase-only operational-line detector.",
+      "title": "Core enforcement PlanUnits blur policy and implemented coverage"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "gui_truth", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "GATE-010 fails invalid wrapper, alias, routed-command, owner-defect, layout/runtime mismatch, stale identity, and reserved namespace cases.", "line_end": 2028, "line_start": 2028, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-010 evidence captures command identity, kind, metadata, binding, emitted contract or action family, and invalid-row reason.", "line_end": 2080, "line_start": 2080, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "The failure conditions are paired with concrete evidence fields, making command normalization and route wiring falsifiable.",
+      "item_id": "A005M15-000092-I014",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-031", "PLANUNIT:PG-032", "SEMANTIC:PLANUNIT:PG-031", "SEMANTIC:PLANUNIT:PG-032"],
+      "statement": "PG-031 and PG-032 preserve both GATE-010's negative cases and the machine-readable evidence payload needed to diagnose them.",
+      "title": "GATE-010 failure and evidence contracts align"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "security_privacy", "acceptance_oracles", "observability_support"],
+      "evidence": [
+        {"exact_quote": "GATE-011 requires requirements coverage JSON/Markdown sync, schema validity, zero uncovered or orphaned coverage, and per-requirement node plus acceptance mappings.", "line_end": 2125, "line_start": 2125, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement is manual_pending_traceability_tooling with named owner docs until a validator checks live requirements coverage artifacts.", "line_end": 2174, "line_start": 2174, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-012 evaluates the latest requirements quality report and blocks executable plan-node progression unless the report exists, validates, passes, and has no clarification items.", "line_end": 2222, "line_start": 2222, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "These units require complete coverage mappings, diagnostic failure arrays, explicit manual-pending status, and a hard requirements-quality progression boundary.",
+      "item_id": "A005M15-000092-I015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-033", "PLANUNIT:PG-034", "PLANUNIT:PG-035", "SEMANTIC:PLANUNIT:PG-033", "SEMANTIC:PLANUNIT:PG-034", "SEMANTIC:PLANUNIT:PG-035"],
+      "statement": "PG-033 through PG-035 preserve deterministic traceability and quality-gate contracts while clearly refusing to equate current run-gates success with live GATE-011 or GATE-012 PASS.",
+      "title": "Requirements gates retain strong evidence and progression boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "authority", "gui_truth", "failures_recovery", "security_privacy", "acceptance_oracles", "observability_support"],
+      "evidence": [
+        {"exact_quote": "Non-empty needs_user_clarification[] puts GATE-012 in BLOCKED and must surface every clarification item through the UI escalation path until explicit user input resolves it.", "line_end": 2274, "line_start": 2274, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-012 evidence must classify state from verdict plus needs_user_clarification[], include blocked escalation and redaction evidence, require a later PASS report before progression resumes, and remain manual_pending_requirements_quality_tooling with named owner docs until live requirements quality tooling is integrated.", "line_end": 2324, "line_start": 2324, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "Clarifications cannot be auto-resolved or hidden, all questions must be surfaced, secret-bearing fields must be checked, and resumption requires a subsequent PASS artifact.",
+      "item_id": "A005M15-000092-I016",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-036", "PLANUNIT:PG-037", "SEMANTIC:PLANUNIT:PG-036", "SEMANTIC:PLANUNIT:PG-037"],
+      "statement": "PG-036 and PG-037 provide a complete user-authority, GUI escalation, redaction, evidence, and re-run boundary for blocked requirements clarification.",
+      "title": "Clarification escalation and re-run contracts are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "Historical auto-decision rows MAY remain in `.puppet-master/project/auto_decisions.jsonl` after the corresponding marker is removed from current artifacts.", "line_end": 499, "line_start": 499, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "If the scan returns zero matches AND `auto_decisions.jsonl` contains no entries with marker IDs in `applied_to[]`: PASS (no ambiguities exist).", "line_end": 509, "line_start": 509, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-013 detection scans project artifacts, extracts marker IDs, validates matching decisions, records grep plus decision evidence, and remains manual_pending_ambiguity_marker_tooling with named owner docs until live generated artifact scanning is integrated.", "line_end": 2429, "line_start": 2429, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "unclassified_zero_marker_historical_decision_state",
+      "impact": "An allowed state—no active markers but retained historical marker decisions—has no deterministic PASS/FAIL outcome, so independent validators can diverge.",
+      "item_id": "A005M15-000092-I017",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:PG-038", "PLANUNIT:PG-039", "SEMANTIC:PLANUNIT:PG-038", "SEMANTIC:PLANUNIT:PG-039"],
+      "statement": "GATE-013 explicitly permits historical decision rows after markers disappear, but its zero-marker PASS rule only covers the case where no marker IDs remain in `applied_to[]`; the permitted historical-row case is left unclassified.",
+      "title": "GATE-013 omits an allowed historical-decision state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "ownership", "operations", "compatibility_migration", "destructive_actions", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "GATE-014 fails packets that omit required docs, use append-only placement where replacement is required, target containers indirectly, or preserve stale gate models as peers.", "line_end": 2476, "line_start": 2476, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "GATE-014 packet scope is MUST CHANGE plus MUST RECONCILE; MUST VERIFY docs are pre-emit checks and derived-only regen outputs stay out of packet intent.", "line_end": 2527, "line_start": 2527, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "none",
+      "impact": "Packet contents, verification-only references, generated outputs, replacement requirements, and stale peer models receive clear inclusion/exclusion rules.",
+      "item_id": "A005M15-000092-I018",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PG-040", "PLANUNIT:PG-041", "SEMANTIC:PLANUNIT:PG-040", "SEMANTIC:PLANUNIT:PG-041"],
+      "statement": "PG-040 and PG-041 accurately preserve GATE-014 packet failure conditions and the exact packet-document-set boundary.",
+      "title": "Document packet scope is deterministic"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "propagation", "invalid_states_transitions", "gui_misleading_states", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "The runtime integrity addendum introduces additional gate expectations for graph integrity, safe points, blocked semantics, wakeups, wizard blocked state, and acceptance criteria.", "line_end": 2574, "line_start": 2574, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "gui_related: false", "line_end": 2575, "line_start": 2575, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, Gate:GATE-014", "line_end": 570, "line_start": 570, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"},
+        {"exact_quote": "  - \"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, Gate:GATE-014\"", "line_end": 2647, "line_start": 2647, "path": "Plans/Progression_Gates.md", "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"}
+      ],
+      "gap_kind": "gui_misclassification_and_gate_identity_overload",
+      "impact": "GUI-related indexing can omit the runtime blocked-state UI work, while implementers can disagree whether graph integrity is a subcondition of document packaging GATE-014 or an independently identified runtime gate.",
+      "item_id": "A005M15-000092-I019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PG-042", "PLANUNIT:PG-043", "SEMANTIC:PLANUNIT:PG-042", "SEMANTIC:PLANUNIT:PG-043"],
+      "statement": "PG-042 is marked `gui_related: false` despite explicitly owning wizard blocked-state and UI/projection expectations, and PG-043 binds canonical graph-integrity failure to GATE-014 even though GATE-014 is already the Document Set packaging gate.",
+      "title": "Runtime integrity PlanUnits misclassify GUI scope and overload GATE-014"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 385],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Progression_Gates.md:CONT-001"],
+      "item_ids": ["A005M15-000092-I001", "A005M15-000092-I002"],
+      "reviewed": true,
+      "summary": "The prologue establishes conservative verifier authority and non-PASS normalization, but GATE-009's uppercase-only operational-line detector leaves a deterministic ContractRef false-negative path.",
+      "window_id": "WIN-A039AB3A76BD-0001"
+    },
+    {
+      "core_range": [386, 780],
+      "covered_source_unit_refs": ["PLANUNIT:PG-002", "PLANUNIT:PG-003", "SEMANTIC:PROLOGUE:Plans/Progression_Gates.md:CONT-002", "SEMANTIC:PLANUNIT:PG-002", "SEMANTIC:PLANUNIT:PG-003"],
+      "item_ids": ["A005M15-000092-I003", "A005M15-000092-I004"],
+      "reviewed": true,
+      "summary": "Owner and naming PlanUnits are faithful, while the runtime packet addendum contains a critical polarity inversion that can bless unresolved recovery blockers.",
+      "window_id": "WIN-A039AB3A76BD-0002"
+    },
+    {
+      "core_range": [781, 1149],
+      "covered_source_unit_refs": ["PLANUNIT:PG-004", "PLANUNIT:PG-005", "PLANUNIT:PG-006", "PLANUNIT:PG-007", "PLANUNIT:PG-008", "PLANUNIT:PG-009", "PLANUNIT:PG-010", "PLANUNIT:PG-011", "SEMANTIC:PLANUNIT:PG-004", "SEMANTIC:PLANUNIT:PG-005", "SEMANTIC:PLANUNIT:PG-006", "SEMANTIC:PLANUNIT:PG-007", "SEMANTIC:PLANUNIT:PG-008", "SEMANTIC:PLANUNIT:PG-009", "SEMANTIC:PLANUNIT:PG-010", "SEMANTIC:PLANUNIT:PG-011"],
+      "item_ids": ["A005M15-000092-I005", "A005M15-000092-I006"],
+      "reviewed": true,
+      "summary": "Scope, command, GUI, seam, risk, and route ownership are coherently atomized; PG-009 nevertheless preserves deprecated `allowed_actions` in a way that can conflict with sole-canonical `allowed_action_ids[]`.",
+      "window_id": "WIN-A039AB3A76BD-0003"
+    },
+    {
+      "core_range": [1150, 1510],
+      "covered_source_unit_refs": ["PLANUNIT:PG-012", "PLANUNIT:PG-013", "PLANUNIT:PG-014", "PLANUNIT:PG-015", "PLANUNIT:PG-016", "PLANUNIT:PG-017", "PLANUNIT:PG-018", "PLANUNIT:PG-019", "SEMANTIC:PLANUNIT:PG-012", "SEMANTIC:PLANUNIT:PG-013", "SEMANTIC:PLANUNIT:PG-014", "SEMANTIC:PLANUNIT:PG-015", "SEMANTIC:PLANUNIT:PG-016", "SEMANTIC:PLANUNIT:PG-017", "SEMANTIC:PLANUNIT:PG-018", "SEMANTIC:PLANUNIT:PG-019"],
+      "item_ids": ["A005M15-000092-I007", "A005M15-000092-I008", "A005M15-000092-I009"],
+      "reviewed": true,
+      "summary": "Promotion and routing behavior is mostly explicit, but waiver lifecycle and reachability atomicity remain open and PG-016 drops four canonical gate references; verifier scope and FileManager ownership are well bounded.",
+      "window_id": "WIN-A039AB3A76BD-0004"
+    },
+    {
+      "core_range": [1511, 1877],
+      "covered_source_unit_refs": ["PLANUNIT:PG-020", "PLANUNIT:PG-021", "PLANUNIT:PG-022", "PLANUNIT:PG-023", "PLANUNIT:PG-024", "PLANUNIT:PG-025", "PLANUNIT:PG-026", "PLANUNIT:PG-027", "SEMANTIC:PLANUNIT:PG-020", "SEMANTIC:PLANUNIT:PG-021", "SEMANTIC:PLANUNIT:PG-022", "SEMANTIC:PLANUNIT:PG-023", "SEMANTIC:PLANUNIT:PG-024", "SEMANTIC:PLANUNIT:PG-025", "SEMANTIC:PLANUNIT:PG-026", "SEMANTIC:PLANUNIT:PG-027"],
+      "item_ids": ["A005M15-000092-I010", "A005M15-000092-I011", "A005M15-000092-I012"],
+      "reviewed": true,
+      "summary": "Node-model gates replace tiers and enforcement limits are disclosed, but failure-with-recorded-remediation can prematurely satisfy lane completion and preserved-token lists show adjacent gate-heading contamination.",
+      "window_id": "WIN-A039AB3A76BD-0005"
+    },
+    {
+      "core_range": [1878, 2265],
+      "covered_source_unit_refs": ["PLANUNIT:PG-028", "PLANUNIT:PG-029", "PLANUNIT:PG-030", "PLANUNIT:PG-031", "PLANUNIT:PG-032", "PLANUNIT:PG-033", "PLANUNIT:PG-034", "PLANUNIT:PG-035", "SEMANTIC:PLANUNIT:PG-028", "SEMANTIC:PLANUNIT:PG-029", "SEMANTIC:PLANUNIT:PG-030", "SEMANTIC:PLANUNIT:PG-031", "SEMANTIC:PLANUNIT:PG-032", "SEMANTIC:PLANUNIT:PG-033", "SEMANTIC:PLANUNIT:PG-034", "SEMANTIC:PLANUNIT:PG-035"],
+      "item_ids": ["A005M15-000092-I013", "A005M15-000092-I014", "A005M15-000092-I015"],
+      "reviewed": true,
+      "summary": "GATE-010 through GATE-012 have strong evidence contracts and manual-pending boundaries; PG-028 through PG-030 blur universal policy with partial implementation coverage and retain the weak GATE-009 detector.",
+      "window_id": "WIN-A039AB3A76BD-0006"
+    },
+    {
+      "core_range": [2266, 2650],
+      "covered_source_unit_refs": ["PLANUNIT:PG-036", "PLANUNIT:PG-037", "PLANUNIT:PG-038", "PLANUNIT:PG-039", "PLANUNIT:PG-040", "PLANUNIT:PG-041", "PLANUNIT:PG-042", "PLANUNIT:PG-043", "SEMANTIC:PLANUNIT:PG-036", "SEMANTIC:PLANUNIT:PG-037", "SEMANTIC:PLANUNIT:PG-038", "SEMANTIC:PLANUNIT:PG-039", "SEMANTIC:PLANUNIT:PG-040", "SEMANTIC:PLANUNIT:PG-041", "SEMANTIC:PLANUNIT:PG-042", "SEMANTIC:PLANUNIT:PG-043"],
+      "item_ids": ["A005M15-000092-I016", "A005M15-000092-I017", "A005M15-000092-I018", "A005M15-000092-I019"],
+      "reviewed": true,
+      "summary": "Clarification and document-packet contracts are strong; GATE-013 leaves the permitted historical-decision/no-active-marker state unclassified, and runtime-integrity PlanUnits misclassify GUI scope while overloading GATE-014 identity.",
+      "window_id": "WIN-A039AB3A76BD-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A039AB3A76BD-0001",
+    "document_path": "Plans/Progression_Gates.md",
+    "micro_window_ids": ["WIN-A039AB3A76BD-0001", "WIN-A039AB3A76BD-0002", "WIN-A039AB3A76BD-0003", "WIN-A039AB3A76BD-0004", "WIN-A039AB3A76BD-0005", "WIN-A039AB3A76BD-0006", "WIN-A039AB3A76BD-0007"],
+    "source_sha256": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does the canonical `allowed_action_ids[]` migration contract explicitly prohibit PlanUnit preserved-token indexes from emitting bare `allowed_actions` outside deprecation context?",
+      "Which owner defines atomic route reachability evidence and the authorization, expiry, scope, and audit schema for `gate_waiver_rule`?",
+      "Is canonical graph integrity intentionally a GATE-014 subcondition, or should it have a distinct gate identity from Document Set packaging?"
+    ],
+    "feature_family_keys": [
+      "progression-verifier-normalization",
+      "route-aware-promotion-and-waivers",
+      "node-model-package-seam-lane-gates",
+      "requirements-traceability-and-quality-gates",
+      "runtime-integrity-and-recovery-gates"
+    ],
+    "research_queries": [
+      "atomic resource reachability attestation patterns for promotion gates",
+      "machine-readable policy waiver lifecycle schema approval expiry revocation audit",
+      "static analysis of normative requirements without case-sensitive keyword false negatives"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_000092_attempt_0015_terminal"
+}

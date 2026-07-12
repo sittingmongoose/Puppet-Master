@@ -1,0 +1,599 @@
+{
+  "assignment_id": "A005M15-000118-INTEGRATED-MACRO15-17FBA0D73699-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "consumers", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "This document owns UI wiring rules, dispatcher boundary requirements from the UI side, wiring matrix row expectations, and autonomous verification strategy for interactive GUI command coverage. It consumes command identifiers from `Plans/UI_Command_Catalog.md`, command and event envelope contracts from `Plans/Contracts_V0.md`, GUI placement and visible behavior from `Plans/FinalGUISpec.md`, and gate definitions from `Plans/Progression_Gates.md`.",
+          "line_end": 66,
+          "line_start": 66,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Product layout, command catalog membership, runtime event schemas, storage projections, and evidence schemas remain with their owner docs.",
+          "line_end": 89,
+          "line_start": 89,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_owner_boundary_explicit",
+      "impact": "The wiring document has a clear, bounded verification authority and names its upstream contract and GUI owners, reducing accidental ownership drift.",
+      "item_id": "A005M15-001",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-001", "SEMANTIC:PROLOGUE:Plans/UI_Wiring_Rules.md", "SEMANTIC:PLANUNIT:UIW-001"],
+      "statement": "UIW-001 and the prologue make UI wiring the SSOT for dispatch coverage and autonomous verification while explicitly leaving layout, command membership, runtime schemas, route semantics, storage projections, and evidence schemas with their owner documents.",
+      "title": "UI wiring authority is explicitly bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "gui_truth", "failures_recovery", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Production wiring evidence MUST include accessibility and interaction readiness: every retained actionable control has an accessible name, semantic role, keyboard activation contract, focus behavior, state attributes (`aria-selected`, `aria-expanded`, `aria-checked`, or equivalent native state where applicable), disabled reason projection, UICommand binding, handler target, receipt/event effect, and test evidence. Icon-only controls without names, custom clickable elements without keyboard parity, tab/menu/disclosure controls without state semantics, and disabled controls without user-visible reasons are GATE-010 failures.",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_accessibility_gate_explicit",
+      "impact": "Retained controls cannot be counted as production-wired without semantic, keyboard, focus, state, disabled-reason, command, handler, effect, and test evidence.",
+      "item_id": "A005M15-002",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/UI_Wiring_Rules.md"],
+      "statement": "The prologue gives GATE-010 a broad production-readiness oracle that includes accessibility semantics and user-visible disabled-state behavior, not only dispatch linkage.",
+      "title": "Production wiring includes accessibility evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "security_privacy", "authority_boundaries", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The UI layer MUST dispatch only typed UICommand messages with stable command_id values from Plans/UI_Command_Catalog.md. The view layer is a pure function of projected state plus outbound UICommand emissions and MUST NOT call backend services, storage, domain logic, handlers, or services directly.",
+          "line_end": 115,
+          "line_start": 115,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_dispatch_boundary_explicit",
+      "impact": "All user-driven mutations are forced through a typed, cataloged dispatcher boundary and the view cannot acquire direct mutation authority.",
+      "item_id": "A005M15-003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-002", "SEMANTIC:PLANUNIT:UIW-002"],
+      "statement": "UIW-002 requires stable cataloged UICommand IDs and treats the view as projected-state input plus outbound typed-command output only.",
+      "title": "Typed dispatcher is the sole UI mutation boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Every interactive UI element, including buttons, menu items, links, toggles, sliders, and form submits, MUST map to exactly one UICommandID recorded in the Wiring Matrix. Orphan elements and orphan commands are gate failures.",
+          "line_end": 150,
+          "line_start": 150,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Every interactive element has exactly one Wiring Matrix entry.",
+          "line_end": 156,
+          "line_start": 156,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "state_dependent_command_mapping_undefined",
+      "impact": "A builder must decide whether a reused control with state-dependent intent uses one wrapper command, multiple element identities, or multiple rows; inconsistent choices can defeat uniqueness checks or misroute an enabled state.",
+      "item_id": "A005M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:UIW-003", "SEMANTIC:PLANUNIT:UIW-003"],
+      "statement": "The one-element/one-command invariant does not define identity and row behavior for a control whose valid command changes by mode, selected subject, permission, or lifecycle state.",
+      "title": "Dynamic control identity is unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "propagation", "operations", "acceptance_oracles", "invalid_states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: UI command dispatch flows from UI Element to UICommand envelope to Dispatcher to Handler to EventRecord to Projection to UI State. The dispatcher rejects unknown command_id values with structured errors, handlers remain UI-stateless, and UI/view code observes projected state rather than mutating domain state.",
+          "line_end": 184,
+          "line_start": 184,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Unknown command_id values return structured errors and emit no domain events.",
+          "line_end": 192,
+          "line_start": 192,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_primary_flow_explicit",
+      "impact": "The canonical dispatch and projection sequence is testable, and unknown IDs have a fail-fast no-event outcome.",
+      "item_id": "A005M15-005",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-004", "SEMANTIC:PLANUNIT:UIW-004"],
+      "statement": "UIW-004 defines the forward command-to-event-to-projection flow, preserves command arguments and correlation, and specifies structured rejection for unknown commands.",
+      "title": "Dispatcher flow and unknown-command outcome are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["states_transitions", "gui_truth", "failures_recovery", "operations", "builder_discretion", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Handlers MUST be stateless with respect to UI concerns; they receive a command envelope and emit events.",
+          "line_end": 478,
+          "line_start": 478,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "- The dispatcher MUST reject unknown `command_id` values with a structured error (not a silent no-op).",
+          "line_end": 479,
+          "line_start": 479,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "dispatch_failure_recovery_contract_missing",
+      "impact": "Implementations can diverge on duplicate invocation, handler timeout, partial event persistence, projection lag, retry safety, cancellation, and the UI state shown after failure.",
+      "item_id": "A005M15-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:UIW-004", "SEMANTIC:PLANUNIT:UIW-004"],
+      "statement": "Beyond unknown-command rejection, the dispatcher flow does not define idempotency, retry, timeout, cancellation, partial-persistence, projection-lag, rollback, or user-visible recovery behavior.",
+      "title": "Dispatcher negative-path lifecycle is incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "ownership", "consumers", "propagation", "compatibility_migration", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; Usage route/open rows use route_contract to prove route_target/OpenSubject and UsageRecord correlation passthrough.",
+          "line_end": 223,
+          "line_start": 223,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_route_owner_boundary_explicit",
+      "impact": "Route-aware proof can validate navigation and correlation without duplicating route or product ownership inside wiring rows.",
+      "item_id": "A005M15-007",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-005", "SEMANTIC:PLANUNIT:UIW-005"],
+      "statement": "UIW-005 adds route, subject, alias, precondition, argument, and correlation proof metadata while preserving route and product owner boundaries.",
+      "title": "Route-aware proof remains a consumer contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "authority_boundaries", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. For Usage route/open rows, `route_contract` is a validation proof packet: it requires `route_target`, `OpenSubject`, `route_target.object_kind = usage_event` when `usage_event_ref` exists, and passthrough for UsageRecord/runtime/provider refs. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.",
+          "line_end": 36,
+          "line_start": 36,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "conditional_route_metadata_requiredness_undefined",
+      "impact": "A malformed non-Usage route or wrapper can omit preconditions, argument or correlation passthrough, subject kind, or route target kind while still appearing schema-valid unless gate code invents its own applicability rules.",
+      "item_id": "A005M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:UIW-005", "SEMANTIC:PLANUNIT:UIW-005"],
+      "statement": "The route fields are globally described as optional, but only Usage rows receive an explicit conditional requiredness rule; the canonical text does not enumerate required field sets for other route/open, wrapper, overlay, attachment, or deprecated-alias classes.",
+      "title": "Route metadata applicability is under-specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "inputs_outputs", "contracts", "consumers", "propagation", "operations", "acceptance_oracles", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The Wiring Matrix binds every interactive UI element to command handler and expected outcome evidence. Rows include ui_element_id, ui_location, ui_command_id, handler_location, expected_event_types, acceptance_checks, and evidence_required, with machine-readable entries keyed by ui_element_id.",
+          "line_end": 261,
+          "line_start": 261,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_matrix_row_contract_explicit",
+      "impact": "Every interactive element receives a stable, schema-verifiable binding to location, command, handler, expected events, checks, and evidence.",
+      "item_id": "A005M15-009",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-006", "SEMANTIC:PLANUNIT:UIW-006"],
+      "statement": "UIW-006 defines the Wiring Matrix as the machine-readable dispatch and expected-outcome proof artifact keyed by UI element identity.",
+      "title": "Wiring Matrix row contract is concrete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.88,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "consumers", "failures_recovery", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "partial_failure", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "| `expected_event_types` | List of `EventRecord` event types the handler MUST emit |",
+          "line_end": 503,
+          "line_start": 503,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "5. **Event emission test** — Tests that exercise command dispatch verify the `expected_event_types` listed in the wiring matrix are emitted.",
+          "line_end": 536,
+          "line_start": 536,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "zero_event_and_alternative_outcome_semantics_undefined",
+      "impact": "Read-only, navigation-only, validation-rejected, no-op, or partially successful commands may be represented inconsistently, and an emission-only test can miss forbidden extra events or ordering requirements.",
+      "item_id": "A005M15-010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:UIW-006", "SEMANTIC:PLANUNIT:UIW-006"],
+      "statement": "The matrix requires expected event types and verifies their emission, but does not specify empty-event commands, mutually exclusive outcome event sets, event cardinality/order, or prohibition of unexpected additional events.",
+      "title": "Expected-event semantics are not exhaustive"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "operations", "acceptance_oracles", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: UI wiring verification is scriptable and includes schema validation, element uniqueness, command coverage, handler registration, event emission tests, unknown-command rejection tests, handler statelessness lint, UI purity checks, and dead command detection. GATE-010 failures block progression with no manual override.",
+          "line_end": 298,
+          "line_start": 298,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_gate_suite_explicit",
+      "impact": "A deterministic suite covers schema, coverage, registration, dispatch outcomes, architectural purity, and dead commands, with progression blocked on failure.",
+      "item_id": "A005M15-011",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-007", "SEMANTIC:PLANUNIT:UIW-007"],
+      "statement": "UIW-007 defines a scriptable no-manual-override gate suite for core wiring integrity.",
+      "title": "Autonomous verification suite blocks progression"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["gui_truth", "failures_recovery", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "offline_network_loss", "accessibility", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "All wiring verification is scriptable and runs without paid UI tooling or manual inspection.",
+          "line_end": 528,
+          "line_start": 528,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Verification runs without paid UI tooling or manual inspection.",
+          "line_end": 304,
+          "line_start": 304,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "deterministic_visible_behavior_oracles_incomplete",
+      "impact": "Gate implementations must invent pass/fail semantics for focus sequence, live-region announcement timing, disabled-reason visibility, responsive overflow, localization expansion, network loss, and transient projected-state lag, risking false completion.",
+      "item_id": "A005M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:UIW-007", "SEMANTIC:PLANUNIT:UIW-007"],
+      "statement": "The document mandates fully scriptable verification but does not define deterministic fixtures and exact oracles for several user-visible and environmental behaviors required by the prologue.",
+      "title": "Scriptable GUI truth lacks complete oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "consumers", "compatibility_migration", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: UI wiring references Contracts_V0, UI_Command_Catalog, Architecture_Invariants, Progression_Gates, Wiring_Matrix, Wiring_Matrix.schema.json, evidence.schema.json, DRY_Rules, and Decision_Policy while preserving their owner boundaries.",
+          "line_end": 334,
+          "line_start": 334,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_reference_boundary_explicit",
+      "impact": "Contract references remain lintable without converting consumer verification prose into competing canon.",
+      "item_id": "A005M15-013",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-008", "SEMANTIC:PLANUNIT:UIW-008"],
+      "statement": "UIW-008 explicitly preserves the ownership boundary of every referenced contract, gate, schema, and policy document.",
+      "title": "Reference ownership preservation is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "propagation", "acceptance_oracles", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "  from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI",
+          "line_end": 368,
+          "line_start": 368,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Disabled Approve And Build cannot dispatch PlanApproved or create/bind PlanCompileRun.",
+          "line_end": 383,
+          "line_start": 383,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "none_false_enablement_guard_explicit",
+      "impact": "A failed buildability gate must project a disabled control, and the disabled path is barred from approval, compile-run creation/binding, and runtime/build startup.",
+      "item_id": "A005M15-014",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "statement": "UIW-009 binds Approve And Build enablement to the implementation-readiness report and explicitly forbids consequential dispatch while buildability is false.",
+      "title": "Approve And Build fails disabled on an explicit false gate"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state",
+          "line_end": 367,
+          "line_start": 367,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`",
+          "line_end": 369,
+          "line_start": 369,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "readiness_report_failure_state_undefined",
+      "impact": "A missing, unreadable, malformed, partially written, untrusted, or stale report has no canonical UI state, disabled reason, support signal, or recovery path, so a builder could retain a stale enabled state.",
+      "item_id": "A005M15-015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "statement": "UIW-009 specifies behavior only for a parsed report whose buildability_gate_passed value is false; it does not define fail-closed behavior for report absence, parse/schema failure, partial writes, trust failure, or staleness.",
+      "title": "Readiness report failure modes can falsely preserve enablement"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "states_transitions", "authority", "gui_truth", "failures_recovery", "propagation", "operations", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Bootstrap authority for PNC-019 certification does not enable the control while buildability_gate_passed=false.",
+          "line_end": 384,
+          "line_start": 384,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - Do not let a disabled Approve And Build control emit PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces.",
+          "line_end": 413,
+          "line_start": 413,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "enablement_dispatch_toctou_not_closed",
+      "impact": "Buildability can flip after render but before dispatch, allowing a formerly enabled control or queued command to perform destructive approval/build actions against a newly blocked plan.",
+      "item_id": "A005M15-016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "statement": "The unit does not require an atomic snapshot, report generation/version correlation, or authoritative pre-dispatch revalidation that closes the race between projected enablement and command handling.",
+      "title": "Approve And Build has an unclosed time-of-check race"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "gui_truth", "security_privacy", "builder_discretion", "ambiguity_unknowns", "privacy_data_lifecycle", "gui_misleading_states", "scale_limits", "accessibility", "localization", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are",
+          "line_end": 370,
+          "line_start": 370,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "  - The disabled reason projection lists currently open blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason only when present.",
+          "line_end": 382,
+          "line_start": 382,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "disabled_reason_presentation_and_data_lifecycle_undefined",
+      "impact": "Large blocker sets can overflow or become unusable, exact paths or reasons may expose sensitive workspace detail, and assistive or localized presentation can vary unpredictably.",
+      "item_id": "A005M15-017",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "statement": "The disabled-reason projection names required raw content but not ordering, deduplication, truncation, drill-down, refresh semantics, accessible announcement, localization, redaction, or retention of exact owner paths and reasons.",
+      "title": "Disabled-reason projection lacks presentation and privacy rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "ownership", "failures_recovery", "operations", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "recovery_rollback", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "4. **Handler registration check** — Every wiring matrix entry's `handler_location` resolves to a real module and function in the Rust source tree, and failures produce a deterministic report containing `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and candidate source files inspected.",
+          "line_end": 535,
+          "line_start": 535,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "exact_quote": "- Repairs `sfk-58d6d13ed1139428d3f6a692`: `handler_location` grammar is `{crate_root}::{module_path}::{function_name}`. Pre-implementation rows use `handler_status = planned` with `owner_doc_ref`; implementation-ready rows require `handler_status = resolved` and a real module path. Missing handler fallback is `handler_status = missing` and blocks buildability rather than inventing a source path.",
+          "line_end": 595,
+          "line_start": 595,
+          "path": "Plans/UI_Wiring_Rules.md",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "handler_registration_gate_phase_conflict",
+      "impact": "The verifier can either reject all planned rows under the universal resolution check or accept unresolved planned rows under the addendum; without phase precedence, identical data can receive contradictory gate outcomes.",
+      "item_id": "A005M15-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "statement": "The late addendum permits planned handler rows while the earlier verification rule says every wiring entry must resolve to a real Rust module and function; the document does not state phase-aware precedence or the exact gate result for planned rows.",
+      "title": "Planned handler status conflicts with universal resolution check"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 358],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UIW-001",
+        "PLANUNIT:UIW-002",
+        "PLANUNIT:UIW-003",
+        "PLANUNIT:UIW-004",
+        "PLANUNIT:UIW-005",
+        "PLANUNIT:UIW-006",
+        "PLANUNIT:UIW-007",
+        "PLANUNIT:UIW-008",
+        "SEMANTIC:PROLOGUE:Plans/UI_Wiring_Rules.md",
+        "SEMANTIC:PLANUNIT:UIW-001",
+        "SEMANTIC:PLANUNIT:UIW-002",
+        "SEMANTIC:PLANUNIT:UIW-003",
+        "SEMANTIC:PLANUNIT:UIW-004",
+        "SEMANTIC:PLANUNIT:UIW-005",
+        "SEMANTIC:PLANUNIT:UIW-006",
+        "SEMANTIC:PLANUNIT:UIW-007",
+        "SEMANTIC:PLANUNIT:UIW-008"
+      ],
+      "item_ids": ["A005M15-001", "A005M15-002", "A005M15-003", "A005M15-004", "A005M15-005", "A005M15-006", "A005M15-007", "A005M15-008", "A005M15-009", "A005M15-010", "A005M15-011", "A005M15-012", "A005M15-013"],
+      "reviewed": true,
+      "summary": "Reviewed all lines 1-358 and all prologue/UIW-001 through UIW-008 source units under exact and adversarial lenses; captured bounded authority, typed dispatch, element identity, dispatcher lifecycle, route metadata, matrix outcomes, autonomous gates, reference boundaries, and negative-space gaps.",
+      "window_id": "WIN-17FBA0D73699-0001"
+    },
+    {
+      "core_range": [359, 595],
+      "covered_source_unit_refs": ["PLANUNIT:UIW-009", "SEMANTIC:PLANUNIT:UIW-009"],
+      "item_ids": ["A005M15-014", "A005M15-015", "A005M15-016", "A005M15-017", "A005M15-018"],
+      "reviewed": true,
+      "summary": "Reviewed all lines 359-595 and both UIW-009 source refs under exact and adversarial lenses; captured the buildability-driven disabled-state contract plus missing-report, time-of-check, disabled-reason presentation/privacy, and handler-status gate seams.",
+      "window_id": "WIN-17FBA0D73699-0002"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-17FBA0D73699-0001",
+    "document_path": "Plans/UI_Wiring_Rules.md",
+    "micro_window_ids": ["WIN-17FBA0D73699-0001", "WIN-17FBA0D73699-0002"],
+    "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines report generation identity, freshness, trust, and atomic pre-dispatch buildability revalidation for cmd.planning_wizard.approve_and_build?",
+      "Which owner contract defines applicability matrices for route-aware metadata outside Usage route/open rows?",
+      "Does the Wiring Matrix schema explicitly encode planned, resolved, and missing handler phases with phase-specific GATE-010 outcomes?"
+    ],
+    "feature_family_keys": [
+      "ui-command-dispatch-boundary",
+      "wiring-matrix-coverage",
+      "route-aware-cross-surface-wiring",
+      "autonomous-gate-010-verification",
+      "approve-and-build-buildability-projection"
+    ],
+    "research_queries": [
+      "authoritative pre-dispatch revalidation patterns for UI actions backed by generated readiness reports",
+      "deterministic accessibility testing oracles for focus live regions disabled reasons and projected state",
+      "event contract schemas for zero-event alternative-outcome and unexpected-event command verification"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000118_attempt_0015_terminal"
+}

@@ -1,0 +1,25 @@
+{
+  "decision_taxonomy": [
+    "same_feature_merge",
+    "shared_subsystem_distinct",
+    "dependency_or_interface_seam",
+    "conflict_requires_plan_revision",
+    "unsupported_candidate",
+    "uncertain_requires_targeted_research"
+  ],
+  "external_research_required": true,
+  "instructions": [
+    "Read only your dispatch intent, packet, result schema, activation authorization when later supplied, and live public web sources.",
+    "Spawn no descendants and accept no follow-up, retry, or peer output.",
+    "Review every packet seam and preserve every primary/reverse/quarantine observation as candidate evidence, never as authority.",
+    "Apply the exact decision taxonomy. Same-feature merge requires the same product authority, lifecycle, user outcome, state boundary, and failure semantics.",
+    "Never merge by name similarity, umbrella/member relation, adjacency, dependency, shared vocabulary/UI, or related commands.",
+    "Use current external research for every final judgment. If evidence is insufficient, choose uncertain_requires_targeted_research and explain the unresolved state.",
+    "Record exact supporting evidence, counterevidence, direct HTTPS sources, and claim-to-source applicability.",
+    "Do not promote, suppress, merge, repair, or edit any Plans or source artifact.",
+    "Write exactly one result.json in the assigned output directory, validate it, then return exactly PMR1 only after the result exists."
+  ],
+  "result_required_before_pmr1": true,
+  "role": "Fresh independent cross-domain seam adjudicator",
+  "schema_version": "cross-domain-seam-leaf-prompt-v1"
+}

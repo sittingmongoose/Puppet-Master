@@ -1,0 +1,62 @@
+{
+  "agent_path": "/root/a005m15_b6_000100_attempt_0015_terminal",
+  "assignment_id": "A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0006",
+  "coverage_credit": 7,
+  "credited_micro_window_ids": [
+    "WIN-EDC80C197D4C-0001",
+    "WIN-EDC80C197D4C-0002",
+    "WIN-EDC80C197D4C-0003",
+    "WIN-EDC80C197D4C-0004",
+    "WIN-EDC80C197D4C-0005",
+    "WIN-EDC80C197D4C-0006",
+    "WIN-EDC80C197D4C-0007"
+  ],
+  "dispatch_intent": {
+    "bytes": 2129,
+    "exists": true,
+    "path": "master/macro/dispatch/macro-batch-0006/A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001/attempt-0015/dispatch_intent.json",
+    "sha256": "8e9d4e111ae32fe59116d819409423e2f1a13fb02ee09e2197059221236ed1a9"
+  },
+  "dispatch_receipt": {
+    "bytes": 1044,
+    "exists": true,
+    "path": "master/macro/dispatch/macro-batch-0006/A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001/attempt-0015/dispatch_receipt.json",
+    "sha256": "9bc624f4860b89d0953a3a62c15af2a95c414424e575c5dc1e4e77cc81ffbd48"
+  },
+  "dual_mechanical_validation_confirmed": true,
+  "epoch_id": "epoch-0015",
+  "fresh_identity_confirmed": true,
+  "independent_errors": [],
+  "independent_validation_sha256": "7efd325f641194f96c2d233484c6b7216a2888b8c66091df4b05835ed03d79d0",
+  "native_child_thread_id": "019f4fc9-b386-72e1-882c-8275ff868de1",
+  "native_child_thread_state": "idle",
+  "native_child_turn_error": null,
+  "native_child_turn_id": "019f4fc9-b3ff-71f2-8550-d7905935b929",
+  "native_child_turn_status": "completed",
+  "normalization_receipt": {
+    "bytes": null,
+    "exists": false,
+    "path": "master/macro/normalizations/macro-batch-0006/A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001/attempt-0015/normalization_receipt.json",
+    "sha256": null
+  },
+  "primary_errors": [],
+  "primary_validation_sha256": "9ed018012472c6e9d86cf534f20eedb4549c8fe88e64ae63307ebfc765864567",
+  "raw_output_payload": {
+    "bytes": 30517,
+    "exists": true,
+    "path": "macro_v2/assignments/A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001/attempts/attempt-0015/result.json",
+    "sha256": "74b4b6ca3ce19e49eb21b0f56408edd57a7a9b56148306edc43d2838fb429b21"
+  },
+  "result_payload": {
+    "bytes": 30517,
+    "exists": true,
+    "path": "macro_v2/assignments/A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001/attempts/attempt-0015/result.json",
+    "sha256": "74b4b6ca3ce19e49eb21b0f56408edd57a7a9b56148306edc43d2838fb429b21"
+  },
+  "schema_version": "macro-attempt-outcome-v1",
+  "status": "credited",
+  "terminal_response_prefix": "PMR1"
+}

@@ -1,0 +1,308 @@
+{
+  "schema_version": "external-research-manifest-v2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0002",
+  "attempt_id": "attempt-0002",
+  "status": "PREPARED_NOT_LAUNCHED",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "controller_model": "gpt-5.6-luna",
+  "controller_reasoning_effort": "max",
+  "assignment_count": 8,
+  "assignments": [
+    {
+      "assignment_id": "ER-0001",
+      "attempt_id": "attempt-0002",
+      "topic": "Undo/revert/rewind separation and safe recovery UX",
+      "feature_refs": [
+        "OPF::A005OM-0006::PF-0169",
+        "OPF::A005OM-0007::PF-0001",
+        "OPF::A005OM-0007::PF-0002"
+      ],
+      "owner_domains": [
+        "recovery_state_and_concurrency"
+      ],
+      "broad_cross_cutting": false,
+      "research_questions": [
+        "How do mature version-control, IDE, chat, and agent products distinguish undo, revert, rewind, checkpoint restore, and destructive recovery?",
+        "Which confirmations, previews, scopes, and recovery guarantees prevent accidental loss or ambiguous rollback?",
+        "How should Puppet Master represent operation identity, affected artifacts, provenance, reversibility, and partial failure?",
+        "Which failure modes and trust signals are documented by official or primary sources?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0001.json",
+      "packet_sha256": "aaa1c79fe337f7f024d79492b194d23bb8cef7dd6491769bab02d0f2eb37b6f3",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0001/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "2c20a4a511a198fda5fa90dca599a77055d0ace5ea45f8c9ec71bfa889e09534",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0001/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0001/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0001/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0002_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0002",
+      "attempt_id": "attempt-0002",
+      "topic": "Blocked outcome semantics and precedence among policy, approval, preflight, and execution failures",
+      "feature_refs": [
+        "OPF::A005OM-0010::PF-0043",
+        "OPF::A005OM-0011::PF-0055"
+      ],
+      "owner_domains": [
+        "orchestration_runtime_execution"
+      ],
+      "broad_cross_cutting": false,
+      "research_questions": [
+        "How do mature workflow and orchestration systems distinguish policy denial, approval waiting, preflight failure, blocked state, and execution failure?",
+        "What precedence and state-transition rules keep a blocked outcome deterministic when several gates fail or race?",
+        "Which standards or official product state models expose retryability, responsibility, user action, and evidence?",
+        "What implications follow for Puppet Master plan, dispatch, receipt, and recovery semantics?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0002.json",
+      "packet_sha256": "e15984e6b7f3286ca3dc0a75468bbc7b4f00f65f34fd71a36d7602a144c61a0b",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0002/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "33ad812ca20a48d85481ba9a76efc6264e8493baa8096c4878bda7fdcc104a8e",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0002/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0002/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0002/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0003_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0003",
+      "attempt_id": "attempt-0002",
+      "topic": "Versioned file-revert operation contracts versus whole-turn or conversation rewind",
+      "feature_refs": [
+        "OPF::A005OM-0018::PF-0071",
+        "OPF::A005OM-0019::PF-0066"
+      ],
+      "owner_domains": [
+        "source_control_workspace_code",
+        "orchestration_runtime_execution"
+      ],
+      "broad_cross_cutting": false,
+      "research_questions": [
+        "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinct from whole-turn or conversation rewind?",
+        "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+        "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+        "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0003.json",
+      "packet_sha256": "88874ac8593957e9adb768d926365cd8e7f2fa707fa95c59fed7197faca8464c",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0003/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "51cb4ac2ce71c3ce8eccc711411423075379b8f23203a14eaa748d24412ea83b",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0003/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0004_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0004",
+      "attempt_id": "attempt-0002",
+      "topic": "Browser context sharing authority versus capture-chip revoke/send races",
+      "feature_refs": [
+        "OPF::A005OM-0021::PF-0035",
+        "OPF::A005OM-0022::PF-0057"
+      ],
+      "owner_domains": [
+        "permissions_security_privacy"
+      ],
+      "broad_cross_cutting": false,
+      "research_questions": [
+        "How do browser permission and screen/tab capture systems define authority, consent, indicators, revocation, and send-time validation?",
+        "What TOCTOU or revoke/send races are addressed by browser standards and platform security guidance?",
+        "Which UI and protocol patterns make capture scope, current authority, and revocation state legible?",
+        "How should Puppet Master bind browser context sharing, capture chips, revocation, and audit evidence?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0004.json",
+      "packet_sha256": "aba9641286ad3c05a3ec51f295f26996c48e906551abe8f277141aa959fa530f",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0004/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "054b48c5adf0a8bc481a5a6c064a7d2ea9d0f911f263e7993c2a81cf33b15ecc",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0004/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0004/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0004/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0005_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0005",
+      "attempt_id": "attempt-0002",
+      "topic": "Permission, security, and privacy lifecycle: consent, revocation, least privilege, race handling, audit, and recovery",
+      "feature_refs": [],
+      "owner_domains": [
+        "permissions_security_privacy"
+      ],
+      "broad_cross_cutting": true,
+      "research_questions": [
+        "What lifecycle controls do authoritative security and privacy standards require for consent, least privilege, revocation, race handling, auditability, and recovery?",
+        "How should a product model permission state, capability scope, expiry, revocation propagation, and recovery after denial or compromise?",
+        "Which platform patterns expose the evidence needed to prove permission transitions?",
+        "What risks remain when permission state changes concurrently with a tool or data operation?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0005.json",
+      "packet_sha256": "12467ca39122329e5719bb93ec4e0207576dd2e5eed80586baeabd013b8f7a8c",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0005/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "632ee4542b2eb3c9811abcd17c30f9e278c2cc083fdf4bf7681e46e3ec07c892",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0005/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0005/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0005/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0006_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0006",
+      "attempt_id": "attempt-0002",
+      "topic": "Tool and MCP trust: capability discovery, per-call approval, scoped credentials, revocation, provenance, and malicious-tool containment",
+      "feature_refs": [],
+      "owner_domains": [
+        "tools_integrations_mcp"
+      ],
+      "broad_cross_cutting": true,
+      "research_questions": [
+        "How do official MCP, agent-platform, and security standards model capability discovery, trust establishment, per-call approval, and scoped credentials?",
+        "What provenance, revocation, isolation, and malicious-tool containment patterns are recommended by primary sources?",
+        "How should tool identity, capability scope, authorization evidence, and failure recovery be represented per call?",
+        "Which trust-boundary gaps matter most for Puppet Master integrations and MCP orchestration?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0006.json",
+      "packet_sha256": "e4f2ffdff00f01da59f76aed11152461773d654b9451b482db45809b92f0fa23",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0006/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "ad8a09c739160220883f1e455279220fbd4d4651f49d481d1eadfd33ad535fea",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0006/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0006/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0006/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0007_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0007",
+      "attempt_id": "attempt-0002",
+      "topic": "Automated plan/spec completeness assurance: traceability, ambiguity detection, design-by-contract, hazard analysis, scenario coverage, and competitive planning systems",
+      "feature_refs": [],
+      "owner_domains": [
+        "planning_specification_governance"
+      ],
+      "broad_cross_cutting": true,
+      "research_questions": [
+        "How do requirements traceability, design-by-contract, hazard analysis, ambiguity detection, and scenario coverage systems assure plan or specification completeness?",
+        "Which official standards and mature planning or verification systems detect missing acceptance criteria, hidden assumptions, and negative-space gaps?",
+        "How can evidence links distinguish supported completeness claims, analyst inferences, and unresolved no-evidence areas?",
+        "What reusable assurance gates should Puppet Master apply before a plan is implementation-ready?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0007.json",
+      "packet_sha256": "487406a5a5eeff97cd3058c027697815f76530b0ea87ef4dcdc1df7c2c75c2d3",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0007/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "1c8094e5600e2ecddc2657960e48460c52b30b3212709aba67b408ed5b7bacfa",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0007/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0007/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0007/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0008_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    },
+    {
+      "assignment_id": "ER-0008",
+      "attempt_id": "attempt-0002",
+      "topic": "Agentic plan-to-code preflight and adversarial certification: executable acceptance criteria, simulation, negative-space review, evidence gates, human override, and regression traceability",
+      "feature_refs": [],
+      "owner_domains": [
+        "orchestration_runtime_execution",
+        "planning_specification_governance"
+      ],
+      "broad_cross_cutting": true,
+      "research_questions": [
+        "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+        "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+        "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflation?",
+        "What evidence is necessary to claim a plan remains safe and complete as implementation and dependencies change?"
+      ],
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/packets/ER-0008.json",
+      "packet_sha256": "4276e76c57f3028df4f5a71f7d1df6764d6a34f4c74d32b92d6f8830206efc33",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0008/attempt-0002/dispatch_intent.json",
+      "dispatch_intent_sha256": "cae52c087a0081a4729611b20b400c1fdd278b56c1782012c79e3fda6af76757",
+      "leaf_prompt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/leaf_prompt.json",
+      "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/schema/external_research_result_v2.schema.json",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0002",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0002/result.json",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/dispatch/ER-0008/attempt-0002/dispatch_receipt.json",
+      "canonical_agent_path": "/root/a005_external_research_sprint_0001_attempt_0009_terminal",
+      "task_thread_id": null,
+      "native_child_thread_id": null
+    }
+  ],
+  "source_policy": {
+    "current_web_research_required": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "search_result_urls_forbidden": true,
+    "long_quotations_forbidden": true,
+    "access_date": "2026-07-11",
+    "minimum_sources_when_available": 8,
+    "maximum_sources": 12,
+    "explicit_unavailable_evidence_required_below_minimum": true
+  },
+  "identity_policy": {
+    "exactly_eight_direct_children": true,
+    "fresh_child": true,
+    "canonical_agent_paths_unique": true,
+    "old_attempt_id_reuse_forbidden": true,
+    "old_native_identity_reuse_forbidden": true,
+    "task_thread_ids_unassigned_until_dispatch": true,
+    "fork_turns": "none",
+    "descendants_forbidden": true,
+    "followup_messages_forbidden": true,
+    "retries_forbidden": true
+  },
+  "credit_policy": {
+    "activation_granted": false,
+    "coverage_credit": 0,
+    "research_credit": 0,
+    "prevalidation_credit": 0
+  },
+  "old_attempt_0001": {
+    "immutable": true,
+    "zero_credit": true,
+    "failure_lineage_sha256": "adcfd5ac6bb79a6cfbd1f4f57f72c341d83b1373008f80e1f8dc4f43512d76f5",
+    "manifest_sha256": "f96c3f4074c772bb4e74f565465c0ecd5e12e26f8ed9b7fed1dac971c1394816",
+    "leaf_prompt_sha256": "8211ab8640b93312f7fcc10695cecfb607b721032c47450bc318955e4c1d72b8",
+    "result_schema_sha256": "63377ebb7304340375ddcbd896b612e50bfa17382b7f61ce1ca21da773464da5",
+    "native_children_terminated_blocked": 6,
+    "native_children_unlaunched": 2,
+    "reuse_forbidden": true
+  },
+  "coexistence": {
+    "separately_activated_universal_research_assignments": 24,
+    "exact_semantic_cap": 32,
+    "concurrency_policy_v3_sha256": "5d08356b2877734aa4a6e964675fc32abae6f57d83ede5dc11f38e9cea4a7bb3",
+    "no_universal_artifacts_read_or_modified": true
+  },
+  "current_state": {
+    "receipts": 0,
+    "results": 0,
+    "native_capture": 0,
+    "activation": 0,
+    "empty_output_directories": 8,
+    "all_credit": 0
+  }
+}
+

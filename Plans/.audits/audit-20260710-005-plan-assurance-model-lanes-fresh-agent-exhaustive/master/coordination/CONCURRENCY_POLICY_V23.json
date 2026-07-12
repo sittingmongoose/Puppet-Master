@@ -1,0 +1,76 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v23",
+  "status": "PROSPECTIVE_QUOTA_DOWNSHIFT_ONE_ATOMIC8_THEN_REMEASURE",
+  "effective_date": "2026-07-12",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V22.json",
+  "prior_policies_mutated": false,
+  "quota_observation": {
+    "prior_remaining_percent": 65,
+    "latest_remaining_percent": 38,
+    "elapsed_minutes": 82.7333333333,
+    "recent_burn_points_per_hour": 19.5809830782,
+    "safety_floor_percent": 2,
+    "conclusion": "recent burn is above the safe remaining-window target; reduce prospective semantic launch concurrency"
+  },
+  "quota_control": {
+    "maximum_active_semantic_leaves": 8,
+    "preferred_active_range": [
+      1,
+      8
+    ],
+    "atomic_transaction_cap": 8,
+    "maximum_simultaneous_atomic_transactions": 1,
+    "never_interrupt_valid_inflight_work": true,
+    "remeasure_after_next_terminal_atomic8_or_newer_user_snapshot": true
+  },
+  "active_critical_path": {
+    "v21_corrected_reviewer_thread_id": "019f54b0-b2c0-7821-950c-eb15a3de77f9",
+    "allow_current_reviewer_to_finish": true,
+    "conditional_two_receipt_and_one_capture_closure_after_unqualified_pass": true,
+    "allow_one_fresh_sol_primary_reviewer": true,
+    "allow_one_different_fresh_luna_cumulative_reviewer": true,
+    "research_checkpoint_only_on_exact_eligible8_rejected0_unresolved0": true,
+    "no_leaf_reruns": true
+  },
+  "scenario_override": {
+    "v22_scenario_independent_gate_may_finish_after_research_checkpoint": true,
+    "scenario_launch_only_after_unqualified_v22_gate_pass": true,
+    "first_permitted_transaction": "SCENARIO-V16-COHORT-0001-ATOMIC8",
+    "first_permitted_cohort": "cohort-0001",
+    "first_permitted_assignments": [
+      "A005SA-0001",
+      "A005SA-0002",
+      "A005SA-0003",
+      "A005SA-0004",
+      "A005SA-0005",
+      "A005SA-0006",
+      "A005SA-0007",
+      "A005SA-0008"
+    ],
+    "second_transaction": "SCENARIO-V16-COHORT-0002-ATOMIC8",
+    "second_transaction_status": "CAPACITY_DEFERRED_PENDING_FIRST_ATOMIC8_TERMINAL_AND_QUOTA_REMEASUREMENT",
+    "atomic16_forbidden": true,
+    "certification_or_seam_launch_overlap_forbidden": true,
+    "candidate_credit_before_postrun": 0
+  },
+  "durable_artifacts_to_preserve": {
+    "v21_policy_sha256": "1a90ae923d0e3240ac0b926922a81ad1dada0cfbe4e7b2648be57083192df0ba",
+    "v22_policy_sha256": "779f1c65c4ad9c1d3976b32d40ff3d424e2e8f748ae293a3f09a436adfaab324",
+    "scenario_readiness_v16_report_sha256": "131d91ee8679132f8b806cab517350393105b43f86cc87342ac6987c75f12c02",
+    "seam_checkpoint_sha256": "72bfdc5519bb3b25f723a6a107320357a9176c67db8990f444193274cf27c910",
+    "certification_v6_report_sha256": "fb1b1ccfb6ef11f1e99164cc8196d73043a9374cedd0e3f5c293a61bc5d97435"
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "independent_validation_reduced": false,
+    "external_research_requirement_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

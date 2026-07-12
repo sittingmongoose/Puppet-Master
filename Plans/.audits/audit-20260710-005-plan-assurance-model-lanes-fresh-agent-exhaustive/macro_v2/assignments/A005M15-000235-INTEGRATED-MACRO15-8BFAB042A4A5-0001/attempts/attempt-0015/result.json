@@ -1,0 +1,782 @@
+{
+  "assignment_id": "A005M15-000235-INTEGRATED-MACRO15-8BFAB042A4A5-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "}",
+          "line_end": 373,
+          "line_start": 373,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The root is a complete JSON fixture object whose primary payload is provider-facing projection data and associated negative constraints.",
+      "item_id": "A005M15-000235-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_provider_projection_fixtures.json",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_provider_projection_fixtures.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The artifact defines one closed JSON object for web-provider projection fixtures.",
+      "title": "Projection fixture root"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"schema_id\": \"pm.web_provider_projection_fixtures.v1\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "  \"status\": \"canonical_fixture_no_secrets\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can bind to an explicit v1 schema identity and must treat this fixture as canonical data that contains no serialized secrets.",
+      "item_id": "A005M15-000235-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:status",
+        "STRUCTURAL:$.schema_id",
+        "STRUCTURAL:$.status"
+      ],
+      "statement": "The fixture self-identifies as schema version v1 and declares canonical, no-secrets status.",
+      "title": "Schema and status identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"source_registry_ref\": \"Plans/web_provider_adapter_registry.seed.json\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Projection generation is explicitly downstream from the adapter registry, preventing this fixture from silently becoming the registry authority.",
+      "item_id": "A005M15-000235-I003",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:source_registry_ref",
+        "STRUCTURAL:$.source_registry_ref"
+      ],
+      "statement": "The fixture names the web-provider adapter registry seed as its source registry.",
+      "title": "Registry source authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "consumers",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"projection_fixtures\": [",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"projection_id\": \"mcp_projection.firecrawl.claude\",",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"projection_id\": \"directapi_projection.zai_coding_plan.codex\",",
+          "line_end": 341,
+          "line_start": 341,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The array provides generator targets spanning MCP, PM-native, model-native, and direct-API projections for Claude Code, Cursor, and Codex surfaces.",
+      "item_id": "A005M15-000235-I004",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures",
+        "STRUCTURAL:$.projection_fixtures"
+      ],
+      "statement": "Twelve generated projection fixtures map provider capability references into runtime-specific configuration surfaces.",
+      "title": "Runtime projection matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"negative_constraints\": [",
+          "line_end": 368,
+          "line_start": 368,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "    \"Projection fixtures are generator targets and must not serialize raw API keys, OAuth tokens, cookies, bearer headers, local machine paths, or decrypted env values.\",",
+          "line_end": 369,
+          "line_start": 369,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Generators are prohibited from leaking credential material and local-machine state into projected files.",
+      "item_id": "A005M15-000235-I005",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:negative_constraints",
+        "STRUCTURAL:$.negative_constraints"
+      ],
+      "statement": "The fixture states an explicit denylist for raw secrets, bearer material, cookies, decrypted environment values, and local machine paths.",
+      "title": "Secret and local-state serialization prohibition"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"enabled_state\": \"unconfigured_until_secret_available\",",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "          \"enabled_state\": \"enabled_when_runtime_available\",",
+          "line_end": 278,
+          "line_start": 278,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "            \"enabled_state\": \"configured_by_selected_account\",",
+          "line_end": 304,
+          "line_start": 304,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A consumer can distinguish secret-gated, runtime-gated, and account-selected enablement preconditions rather than treating all projections as immediately active.",
+      "item_id": "A005M15-000235-I006",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "Projected configurations encode three distinct enablement states tied to secret, runtime, or selected-account availability.",
+      "title": "Enablement precondition states"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "capabilities",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"credential_binding\": \"no_secrets_required\",",
+          "line_end": 272,
+          "line_start": 272,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "    \"A failed or unconfigured provider-facing projection does not erase PM-native Site Reader capability or direct/model-native registry rows.\"",
+          "line_end": 371,
+          "line_start": 371,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provider projection failure is explicitly isolated from PM-native Site Reader and from authoritative direct/model-native registry rows.",
+      "item_id": "A005M15-000235-I007",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:negative_constraints"
+      ],
+      "statement": "The PM-native Site Reader projection requires no secret, and a provider-facing projection failure must not remove independent PM-native or registry capabilities.",
+      "title": "Failure isolation preserves native capability"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"credential_binding\": \"external_managed\",",
+          "line_end": 296,
+          "line_start": 296,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "            \"account_ref\": \"provider_account:openai.selected\",",
+          "line_end": 305,
+          "line_start": 305,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The model-native projection delegates credential custody externally and serializes only a selected-account reference.",
+      "item_id": "A005M15-000235-I008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "STRUCTURAL:$.projection_fixtures"
+      ],
+      "statement": "OpenAI, Anthropic, and Z.AI-style account projections use external-managed credential binding with empty credential-ref arrays and selected account references.",
+      "title": "External account credential authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "propagation",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"target_config_path\": \".claude/mcp.json\",",
+          "line_end": 9,
+          "line_start": 9,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"target_config_path\": \".cursor/mcp.json\",",
+          "line_end": 137,
+          "line_start": 137,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"target_config_path\": \".codex/config.toml\",",
+          "line_end": 265,
+          "line_start": 265,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"target_config_path\": \".claude/model-native-web.json\",",
+          "line_end": 316,
+          "line_start": 316,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Generators and runtime adapters have explicit workspace-relative destination surfaces for each supported projection family.",
+      "item_id": "A005M15-000235-I009",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "Projection outputs target Claude MCP, Cursor MCP, Codex TOML, and Claude model-native JSON configuration files.",
+      "title": "Explicit runtime output paths"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "contracts",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"capability_refs\": [\"webreg.firecrawl.direct_api.v1\"],",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"health_refs\": [\"health:web.firecrawl\"],",
+          "line_end": 18,
+          "line_start": 18,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_referential_integrity_oracle",
+      "impact": "A misspelled, retired, or multiply-owned capability, health, egress, command, argument, secret, account, or runtime reference could remain syntactically valid while producing an unusable projection.",
+      "item_id": "A005M15-000235-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "The fixture supplies many cross-document references but does not state an oracle for existence, type compatibility, uniqueness, or lifecycle validity of those references.",
+      "title": "Reference integrity is not falsifiable here"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "security_privacy",
+        "acceptance_oracles",
+        "privacy_data_lifecycle",
+        "test_falsifiability",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"no_secret_serialization\": true,",
+          "line_end": 15,
+          "line_start": 15,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "    \"Projection fixtures are generator targets and must not serialize raw API keys, OAuth tokens, cookies, bearer headers, local machine paths, or decrypted env values.\",",
+          "line_end": 369,
+          "line_start": 369,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_secret_leakage_oracle",
+      "impact": "A generator could claim compliance while accidentally materializing secret values or an unlisted credential representation unless another contract supplies an executable rejection check.",
+      "item_id": "A005M15-000235-I011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:negative_constraints",
+        "STRUCTURAL:$.negative_constraints"
+      ],
+      "statement": "The no-secret policy is explicit, but this artifact does not define a validation procedure, forbidden-value detector, redaction test, or failure result that proves generated outputs contain no raw secrets.",
+      "title": "No executable secret-leakage oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"target_config_path\": \".codex/config.toml\",",
+          "line_end": 265,
+          "line_start": 265,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"target_config_path\": \".codex/config.toml\",",
+          "line_end": 289,
+          "line_start": 289,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"target_config_path\": \".codex/config.toml\",",
+          "line_end": 343,
+          "line_start": 343,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_atomic_merge_and_rollback_contract",
+      "impact": "Multiple projections can target one file; without atomic merge, ownership-collision, ordering, rollback, and retry rules, interruption or concurrent generation could lose unrelated configuration or leave a partially applied state.",
+      "item_id": "A005M15-000235-I012",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "Three fixture entries write distinct key paths into `.codex/config.toml`, but the fixture does not define merge order, atomicity, concurrent-writer handling, partial-write recovery, preservation of user-owned keys, or rollback.",
+      "title": "Shared target file lacks safe write semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "untrusted_inputs",
+        "security_privacy",
+        "operations",
+        "authority_boundaries",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"command_ref\": \"provider_mcp.firecrawl.command\",",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "            \"args_ref\": \"provider_mcp.firecrawl.args\",",
+          "line_end": 27,
+          "line_start": 27,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_command_materialization_boundary",
+      "impact": "If referenced command or argument values are compromised, malformed, platform-incompatible, or shell-interpreted, a generated local transport may execute unintended content or fail ambiguously.",
+      "item_id": "A005M15-000235-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "STRUCTURAL:$.projection_fixtures"
+      ],
+      "statement": "Local MCP projections reference commands and arguments, but this artifact does not constrain resolution authority, executable allowlisting, argument encoding, shell avoidance, platform compatibility, or rejection behavior.",
+      "title": "Command and argument references lack trust rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "failures_recovery",
+        "invalid_states_transitions",
+        "offline_network_loss",
+        "observability_support",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"health_refs\": [\"health:web.firecrawl\"],",
+          "line_end": 18,
+          "line_start": 18,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "      \"egress_policy_refs\": [\"egress:web.provider_public_only\"],",
+          "line_end": 19,
+          "line_start": 19,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_health_and_policy_failure_semantics",
+      "impact": "Consumers cannot infer whether unresolved, unhealthy, stale, denied, or offline dependencies disable generation, disable activation, degrade capability, preserve the prior projection, or trigger a retry.",
+      "item_id": "A005M15-000235-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "Health and egress references are present for every projection, but the fixture defines no state or recovery behavior when either reference is unresolved or evaluates negatively.",
+      "title": "Health and egress failures have no state model"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "consumers",
+        "missing_callers_consumers",
+        "gui_truth",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"projection_state\": \"generated_fixture\",",
+          "line_end": 12,
+          "line_start": 12,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        },
+        {
+          "exact_quote": "            \"enabled_state\": \"unconfigured_until_secret_available\",",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_consumer_and_user_state_contract",
+      "impact": "An implementation may conflate fixture generation with installation, activation, readiness, or health and may present inaccessible or non-localizable technical state tokens directly to users.",
+      "item_id": "A005M15-000235-I015",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures"
+      ],
+      "statement": "The artifact does not identify the generator, installer, runtime reconciler, UI, support tooling, or telemetry consumer, and it does not map technical projection or enablement states to user-visible, accessible, localized truth.",
+      "title": "Consumers and GUI truth are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "scale_performance",
+        "scale_limits",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"projection_fixtures\": [",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "missing_collection_invariants_and_scale_limits",
+      "impact": "Duplicate identifiers or key paths, unexpectedly large registries, cyclic reference resolution, or unsupported provider/runtime combinations could yield nondeterministic generation or unbounded work without a defined rejection threshold.",
+      "item_id": "A005M15-000235-I016",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "STRUCTURAL:$.projection_fixtures"
+      ],
+      "statement": "The fixture array does not state uniqueness constraints, deterministic ordering, supported cardinality, timeout or resource ceilings, completeness expectations, or behavior for duplicate provider/runtime/config-key tuples.",
+      "title": "Projection collection invariants are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "authority_boundaries",
+        "destructive_actions",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"Workspace-local .claude, .cursor, and .codex files are projection outputs or profile adapters, not the PM provider registry source of truth.\",",
+          "line_end": 370,
+          "line_start": 370,
+          "path": "Plans/web_provider_projection_fixtures.json",
+          "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Local projected files cannot authoritatively erase, mutate, or supersede provider registry rows merely because a runtime file differs or fails.",
+      "item_id": "A005M15-000235-I017",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:negative_constraints"
+      ],
+      "statement": "The source-of-truth boundary between the provider registry and workspace-local projection outputs is explicit.",
+      "title": "Workspace projections are not registry authority"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        373
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_provider_projection_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:status",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:source_registry_ref",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:projection_fixtures",
+        "SEMANTIC:JSON_FIELD:Plans/web_provider_projection_fixtures.json:negative_constraints",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_provider_projection_fixtures.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.negative_constraints",
+        "STRUCTURAL:$.projection_fixtures",
+        "STRUCTURAL:$.schema_id",
+        "STRUCTURAL:$.source_registry_ref",
+        "STRUCTURAL:$.status"
+      ],
+      "item_ids": [
+        "A005M15-000235-I001",
+        "A005M15-000235-I002",
+        "A005M15-000235-I003",
+        "A005M15-000235-I004",
+        "A005M15-000235-I005",
+        "A005M15-000235-I006",
+        "A005M15-000235-I007",
+        "A005M15-000235-I008",
+        "A005M15-000235-I009",
+        "A005M15-000235-I010",
+        "A005M15-000235-I011",
+        "A005M15-000235-I012",
+        "A005M15-000235-I013",
+        "A005M15-000235-I014",
+        "A005M15-000235-I015",
+        "A005M15-000235-I016",
+        "A005M15-000235-I017"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 373 lines and all 13 assigned semantic and structural source units. Exact behavior establishes a canonical no-secrets projection fixture with registry authority boundaries, runtime-specific destinations, secret/account/runtime gating, health and egress references, and preservation of independent PM-native capability. Adversarial review identifies missing executable reference and secret-leakage oracles, atomic shared-file merge and rollback semantics, command-reference trust rules, health and policy failure states, named consumer and GUI truth, and collection scale invariants.",
+      "window_id": "WIN-8BFAB042A4A5-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8BFAB042A4A5-0001",
+    "document_path": "Plans/web_provider_projection_fixtures.json",
+    "micro_window_ids": [
+      "WIN-8BFAB042A4A5-0001"
+    ],
+    "source_sha256": "924602fcd677fcb50a3e1693d2f208b2cd94714117e131ce177df6cde94ae074"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract owns referential-integrity validation for capability, health, egress, command, argument, secret, account, and runtime references?",
+      "Which canonical contract owns atomic merge, user-key preservation, concurrent-writer control, and rollback for multiple projections targeting one workspace file?",
+      "Which consumer translates projection_state and enabled_state tokens into observable runtime and user-visible states?"
+    ],
+    "feature_family_keys": [
+      "web-provider-projection-fixtures",
+      "provider-registry-projection",
+      "runtime-config-generation",
+      "credential-safe-projection",
+      "projection-failure-isolation"
+    ],
+    "research_queries": [
+      "secure atomic merge patterns for generated MCP and TOML configuration files",
+      "secret scanning acceptance tests for generated configuration fixtures",
+      "reference integrity validation for registry-driven configuration generators"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000235_attempt_0015_terminal"
+}

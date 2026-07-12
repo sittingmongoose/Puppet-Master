@@ -1,0 +1,565 @@
+{
+  "assignment_id": "A005M15-000202-INTEGRATED-MACRO15-10C169040E5A-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type\":\"object\",\"additionalProperties\":false",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "none_closed_world_top_level",
+      "impact": "A conforming artifact cannot introduce undeclared top-level fields, so top-level shape drift is rejected by schema validation.",
+      "item_id": "A005M15-000202-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The evidence artifact is a closed top-level JSON object with undeclared properties forbidden.",
+      "title": "Closed top-level evidence envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "none_required_envelope",
+      "impact": "Every conforming artifact carries schema and artifact identity, project/run/attempt routing context, creation and projection metadata, retention classification, at least one routing reference, and a non-empty payload.",
+      "item_id": "A005M15-000202-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "The schema explicitly requires twelve envelope fields that bind evidence to a project run attempt and provide routing, projection, retention, and payload data.",
+      "title": "Required evidence envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.evidence.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"artifact_type\":{\"type\":\"string\",\"const\":\"evidence\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "none_discriminator_constants",
+      "impact": "Validators can reject artifacts labeled with a different schema generation or artifact kind.",
+      "item_id": "A005M15-000202-I003",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema fixes both the schema discriminator and artifact type through exact constant values.",
+      "title": "Stable schema and artifact discriminators"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "unconstrained_operational_vocabularies",
+      "impact": "Malformed timestamps and contradictory or unknown freshness, health, and retention labels can validate, preventing deterministic state interpretation, alerting, and tests.",
+      "item_id": "A005M15-000202-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "Creation time is only a non-empty string, while projection freshness, projection health, and retention class have neither non-empty constraints nor controlled vocabularies.",
+      "title": "Operational state values are unconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "untyped_evidence_payload",
+      "impact": "Any non-empty object, including structurally meaningless or unsafe content, satisfies the payload contract; producers and consumers must invent undocumented subtype rules.",
+      "item_id": "A005M15-000202-I005",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "STRUCTURAL:$"
+      ],
+      "statement": "The required evidence payload has no discriminator-linked schema, required payload keys, value constraints, or prohibition on additional payload properties.",
+      "title": "Evidence payload semantics are not validated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "partial_failure",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "unverified_optional_provenance",
+      "impact": "Evidence can validate without receipts, producer, or actor and can contain arbitrary unverifiable references, so authorship, authorization, and evidentiary chain-of-custody cannot be established from this contract.",
+      "item_id": "A005M15-000202-I006",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "Provenance fields are optional plain strings or arrays with no required receipt, resolver, ownership, authority, integrity, or consumer-validation rule.",
+      "title": "Provenance and authority are not enforceable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "missing_relational_invariants",
+      "impact": "An artifact can combine identifiers from unrelated projects, runs, attempts, threads, nodes, provider attempts, or usage events while remaining schema-valid.",
+      "item_id": "A005M15-000202-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema validates identifier fields independently and defines no conditional requirements or relational invariants among them.",
+      "title": "Cross-identifier consistency is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"artifact_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "missing_identity_concurrency_contract",
+      "impact": "Duplicate IDs, replayed writes, or competing revisions cannot be rejected by this schema, leaving uniqueness, idempotency, and conflict behavior to external implementations.",
+      "item_id": "A005M15-000202-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "Artifact identity is only a non-empty string and the envelope has no revision, sequence, idempotency key, uniqueness rule, or concurrency token.",
+      "title": "Identity and concurrent-write semantics are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "operations",
+        "scale_performance",
+        "untrusted_inputs",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "unbounded_and_duplicate_input",
+      "impact": "Oversized artifacts and duplicate routing or receipt references can amplify storage, validation, indexing, and fan-out costs and create redundant downstream work.",
+      "item_id": "A005M15-000202-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "STRUCTURAL:$"
+      ],
+      "statement": "Strings, arrays, and payload size are unbounded, and reference arrays do not require unique items.",
+      "title": "Scale limits and deduplication are missing"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "missing_reference_failure_protocol",
+      "impact": "Consumers cannot distinguish absent, offline, unauthorized, stale, corrupted, or permanently deleted referents or determine retry, fallback, rollback, and support behavior.",
+      "item_id": "A005M15-000202-I010",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "External detail and content references have no locator format, integrity binding, availability state, resolution protocol, timeout, retry, fallback, or recovery semantics.",
+      "title": "Reference resolution failures have no recovery contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "security_privacy",
+        "operations",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"content_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "missing_data_lifecycle_policy",
+      "impact": "Sensitive evidence may be retained, exposed, or deleted inconsistently, and destructive lifecycle actions cannot be authorized, audited, or reversed from this contract.",
+      "item_id": "A005M15-000202-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "STRUCTURAL:$"
+      ],
+      "statement": "Retention is an arbitrary label and the schema defines no classification, access boundary, encryption, redaction, expiry, legal hold, deletion authority, deletion receipt, or rollback behavior for evidence and referenced content.",
+      "title": "Privacy and destructive data lifecycle are undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        },
+        {
+          "exact_quote": "\"$id\":\"pm.runtime_artifact.evidence.schema.v1\"",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_evidence.schema.json",
+          "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+        }
+      ],
+      "gap_kind": "missing_consumer_ui_and_migration_contracts",
+      "impact": "Different callers and GUIs can interpret the same artifact differently, show stale or unhealthy evidence as trustworthy, omit accessible or localized communication, and diverge when the v1 contract evolves.",
+      "item_id": "A005M15-000202-I012",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json"
+      ],
+      "statement": "No caller or consumer behavior, GUI presentation state, misleading-state guard, accessibility or localization requirement, or compatibility and migration path is declared by the schema.",
+      "title": "Consumer, GUI, and version-evolution behavior are unknown"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_evidence.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "item_ids": [
+        "A005M15-000202-I001",
+        "A005M15-000202-I002",
+        "A005M15-000202-I003",
+        "A005M15-000202-I004",
+        "A005M15-000202-I005",
+        "A005M15-000202-I006",
+        "A005M15-000202-I007",
+        "A005M15-000202-I008",
+        "A005M15-000202-I009",
+        "A005M15-000202-I010",
+        "A005M15-000202-I011",
+        "A005M15-000202-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete one-line JSON Schema root through exact and adversarial lenses: it provides a closed required evidence envelope with fixed discriminators, but leaves payload semantics, operational vocabularies, provenance, identity relationships, concurrency, scale, recovery, lifecycle, consumers, GUI truth, and migration behavior underspecified.",
+      "window_id": "WIN-10C169040E5A-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-10C169040E5A-0001",
+    "document_path": "Plans/runtime_artifact_evidence.schema.json",
+    "micro_window_ids": [
+      "WIN-10C169040E5A-0001"
+    ],
+    "source_sha256": "43a71c5e5546bead3e33eb2a812c7e629e777a90ead645c35e5087451b715599"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines allowed projection_freshness, projection_health, and retention_class states and their transitions?",
+      "Which artifact-type contract validates type_payload and binds payload variants to the evidence discriminator?",
+      "Which runtime authority and storage contracts enforce producer identity, receipt integrity, artifact uniqueness, reference resolution, and deletion lifecycle?",
+      "Which consumers and GUI surfaces render evidence, and what prevents stale, unhealthy, inaccessible, or untranslated presentation?"
+    ],
+    "feature_family_keys": [
+      "runtime-artifact-evidence",
+      "runtime-artifact-provenance",
+      "runtime-projection-health",
+      "runtime-evidence-retention",
+      "runtime-evidence-consumers"
+    ],
+    "research_queries": [
+      "JSON Schema patterns for discriminator-selected payload validation with oneOf and if then",
+      "Evidence artifact integrity provenance retention and deletion lifecycle contract patterns",
+      "Idempotent immutable event and artifact identifiers under concurrent production",
+      "User interface patterns for stale unhealthy and unavailable evidence with accessible localized states"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000202_attempt_0015_terminal"
+}

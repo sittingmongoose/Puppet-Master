@@ -1,0 +1,42 @@
+{
+  "schema_version": "universal-shadow-certification-payload-root-reconciliation-v3",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "legacy_root_algorithm": "canonical-json(sorted relative path + file sha256 rows), relative to audit root; recursive namespace scope; excludes batch_authority.json, launch_seal.json, local_candidate_report.json and any path containing activation",
+  "legacy_declared_payload_root_sha256": "2a6f490a1901d9650209a10ae3b324f4a04de6068f9c10aae017b6fa103eafb8",
+  "legacy_root_recomputed_over_static_40_files_sha256": "2a6f490a1901d9650209a10ae3b324f4a04de6068f9c10aae017b6fa103eafb8",
+  "legacy_root_recomputed_over_current_53_files_sha256": "c46e6b6ce110c4fec3743380af606f958b622b05be87d13e8e96ae3a5ebd871f",
+  "v3_byte_sorted_algorithm": "sha256(domain-tag || repeated big-endian path-byte-length || relative-path UTF-8 bytes || big-endian raw-byte-length || raw file bytes), sorted by relative-path UTF-8 bytes",
+  "v3_stable_40_file_byte_sorted_root_sha256": "3600ea51fb19caff0c2b218e1c2570f3ebec4b8b064422fc36a7a8bf27973e91",
+  "v3_current_53_file_byte_sorted_root_sha256": "d7fb0f2306d0ba2893f4fd4dc3e849b2d3521d43c39cf9f1075b716e289b9003",
+  "scope_comparison": {
+    "legacy_static_file_count": 40,
+    "current_file_count": 53,
+    "packet_bytes_changed": false,
+    "intent_bytes_changed": false,
+    "result_schema_bytes_changed": false,
+    "old_root_is_reproduced_without_later_validation_files": true,
+    "non_equivalence_of_v1_and_v3_algorithms_explicit": true
+  },
+  "root_cause": {
+    "classification": "scope_temporal_root_mismatch",
+    "explanation": "The legacy root was sealed over the static candidate payload before validation artifacts existed. Its recursive definition later absorbs validation artifacts, so the same algorithm produces a different current root. No packet, intent, or result-schema bytes changed.",
+    "old_controls_resealed": false,
+    "v1_fail_report_suppressed": false
+  },
+  "files_added_after_legacy_static_root": [
+    "validation/luna-fresh-independent-prelaunch-v2/independent-prelaunch.json",
+    "validation/postrun-validator-v2/VALIDATOR_AUTHORITY_V2.json",
+    "validation/postrun-validator-v2/activation-contract-supersession-v2.json",
+    "validation/postrun-validator-v2/activation-generator-v2.py",
+    "validation/postrun-validator-v2/dependency-binding-v1/DEPENDENCY_BINDING_AUTHORITY_V1.json",
+    "validation/postrun-validator-v2/dependency-binding-v1/run_validator_v2_isolated.py",
+    "validation/postrun-validator-v2/dependency-binding-v1/terminal-independent-binding-report.json",
+    "validation/postrun-validator-v2/dependency-binding-v1/test_dependency_binding_v1.py",
+    "validation/postrun-validator-v2/local-v2-candidate-report.json",
+    "validation/postrun-validator-v2/test_universal_shadow_certification_postrun_v2.py",
+    "validation/postrun-validator-v2/validate_universal_shadow_certification_postrun_v2.py",
+    "validation/postrun-validator-v2/verify_universal_shadow_certification_v2.py",
+    "validation/sol-fresh-independent-prelaunch.json"
+  ]
+}

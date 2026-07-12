@@ -62,23 +62,44 @@
         prd: { packId: 'prd-9c2e41', version: 'v1' },
         sampleDocs: [
           { id: 'd1', name: 'media-pipeline-brief.docx', kind: 'docx', size: '184 KB', hash: 'sha 9c11f2…', atoms: 14,
-            warnings: null, finalStatus: 'parsed', fills: ['sec-media'],
+            warnings: null, finalStatus: 'parsed', fills: ['sec-func', 'sec-source'],
             receipt: 'MIME verified · size within intake limits · no active content' },
           { id: 'd2', name: 'import-hardening-notes.md', kind: 'md', size: '12 KB', hash: 'sha 4be07a…', atoms: 9,
-            warnings: null, finalStatus: 'parsed', fills: ['sec-import'],
+            warnings: null, finalStatus: 'parsed', fills: ['sec-func', 'sec-source'],
             receipt: 'MIME verified · size within intake limits · no active content' },
           { id: 'd3', name: 'storage-vendor-quotes.pdf', kind: 'pdf', size: '631 KB', hash: 'sha e2c9d4…', atoms: 6,
-            warnings: '2 pages skipped (scanned images)', finalStatus: 'parsed_warn', fills: ['sec-open'],
+            warnings: '2 pages skipped (scanned images)', finalStatus: 'parsed_warn', fills: ['sec-open', 'sec-risks', 'sec-source'],
             receipt: 'MIME verified · size within intake limits · no active content' }
         ],
         builderTurns: [
-          { id: 'bt1', agent: 'What is the one-line goal for this run?',
+          { id: 'bt1', area: 'goal', agent: 'What is the one-line goal for this run?',
             chips: ['Media pipeline + import hardening', 'Media pipeline only'], freeform: true,
             fills: ['sec-overview', 'sec-goals'], ack: 'Recorded to the PRD ledger.' },
-          { id: 'bt2', agent: 'Where do the boundaries sit — what is explicitly out?',
+          { id: 'bt2', area: 'users', agent: 'Who is this for — whose workflow changes?',
+            chips: ['Home cooks who publish', 'All Tastebook users'], freeform: true,
+            fills: ['sec-users'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt3', area: 'scope', agent: 'Where do the boundaries sit — what is explicitly out?',
             chips: ['No mobile app work', 'No billing changes'], freeform: true,
             fills: ['sec-scope'], ack: 'Recorded to the PRD ledger.' },
-          { id: 'bt3', agent: 'One open question remains from the chat import: where should images and backups live? I can carry it into planning as an open question.',
+          { id: 'bt4', area: 'media', agent: 'When a photo lands in the editor, what should happen?',
+            chips: ['Resize ladder + thumbnails', 'Store original only'], freeform: true,
+            fills: ['sec-func', 'sec-accept'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt5', area: 'media', agent: 'Which formats must the pipeline accept?',
+            chips: ['JPEG, PNG, WebP', 'Anything a browser renders'], freeform: true,
+            fills: ['sec-func'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt6', area: 'import', agent: 'A failed import today dies silently. What should it do instead?',
+            chips: ['Retry, then surface an error card', 'Fail fast, no retries'], freeform: true,
+            fills: ['sec-func', 'sec-accept'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt7', area: 'import', agent: 'Should imported pages get a sandboxed parse?',
+            chips: ['Sandboxed parse + sanitize', 'Trust schema.org data'], freeform: true,
+            fills: ['sec-func'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt8', area: 'non-functional', agent: 'Any hard limits the plan must respect?',
+            chips: ['25 MB uploads, resize under 3 s', 'Defaults are fine'], freeform: true,
+            fills: ['sec-nonfunc'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt9', area: 'risks', agent: 'Biggest risk you already see?',
+            chips: ['Storage cost blow-up', 'Scraper legal posture'], freeform: true,
+            fills: ['sec-risks'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt10', area: 'open questions', agent: 'One open question remains from the chat import: where should images and backups live? I can carry it into planning as an open question.',
             chips: ['Carry it into planning', 'Decide now'], freeform: false,
             fills: ['sec-open'], ack: 'Recorded to the PRD ledger — carried into planning as an open question.',
             ackAlt: 'The storage call needs the deployment topic evidence, so it stays an open question — planning surfaces it in the deployment topic.' }
@@ -86,43 +107,124 @@
         outline: [
           { id: 'sec-overview', label: 'Overview' },
           { id: 'sec-goals', label: 'Goals' },
-          { id: 'sec-scope', label: 'Scope boundaries' },
-          { id: 'sec-media', label: 'Media pipeline behavior' },
-          { id: 'sec-import', label: 'Import hardening' },
-          { id: 'sec-open', label: 'Open questions' }
-        ]
+          { id: 'sec-users', label: 'Users' },
+          { id: 'sec-scope', label: 'Scope Boundaries' },
+          { id: 'sec-func', label: 'Functional Requirements' },
+          { id: 'sec-nonfunc', label: 'Non-Functional Requirements' },
+          { id: 'sec-accept', label: 'Acceptance Criteria' },
+          { id: 'sec-risks', label: 'Risks' },
+          { id: 'sec-open', label: 'Open Questions' },
+          { id: 'sec-source', label: 'Source Notes' }
+        ],
+        /* live PRD projection seed — a block renders once answers[src] exists or the
+           doc src is parsed; {a} substitutes the recorded answer (plain text only) */
+        prdDoc: {
+          title: 'Tastebook v1.2 — PRD (draft)',
+          sections: [
+            { id: 'sec-overview', label: 'Overview', blocks: [
+              { src: 'bt1', text: 'This planning run covers: {a}. One run, one PRD ledger, one approved pack at the end.' } ] },
+            { id: 'sec-goals', label: 'Goals', blocks: [
+              { src: 'bt1', text: 'Goal: {a}.' },
+              { src: 'd1', text: 'Media brief reconciled: resize ladder, thumbnail set, EXIF strategy (14 atoms).' } ] },
+            { id: 'sec-users', label: 'Users', blocks: [
+              { src: 'bt2', text: 'Built for: {a}. Their publish flow is the one this run changes.' } ] },
+            { id: 'sec-scope', label: 'Scope Boundaries', blocks: [
+              { src: 'bt3', text: 'Explicitly out: {a}.' },
+              { src: 'd2', text: 'Import hardening notes bound the worker changes to the existing scraper surface (9 atoms).' } ] },
+            { id: 'sec-func', label: 'Functional Requirements', blocks: [
+              { src: 'bt4', text: 'FR-001 — Photo intake: {a}.' },
+              { src: 'bt5', text: 'FR-002 — Accepted formats: {a}.' },
+              { src: 'bt6', text: 'FR-003 — Failed imports: {a}.' },
+              { src: 'bt7', text: 'FR-004 — Imported pages: {a}.' } ] },
+            { id: 'sec-nonfunc', label: 'Non-Functional Requirements', blocks: [
+              { src: 'bt8', text: 'Hard limits: {a}. The pipeline stays inside these bounds end to end.' } ] },
+            { id: 'sec-accept', label: 'Acceptance Criteria', blocks: [
+              { src: 'bt4', text: 'AC-001 — A photo dropped in the editor produces the full rendition set within the recorded limits.' },
+              { src: 'bt6', text: 'AC-002 — A failing import surfaces a visible error card after the retry budget, never a silent drop.' } ] },
+            { id: 'sec-risks', label: 'Risks', blocks: [
+              { src: 'bt9', text: 'Top risk: {a}. Mitigation tracked in the planning ledger.' },
+              { src: 'd3', text: 'Storage vendor quotes attached — cost exposure bounded by the vendor comparison (6 atoms).' } ] },
+            { id: 'sec-open', label: 'Open Questions', blocks: [
+              { src: 'bt10', text: 'Where should images and backups live? Disposition: {a}.' },
+              { src: 'd3', text: 'Vendor quotes parsed with warnings — 2 scanned pages skipped; the storage call stays open.' } ] },
+            { id: 'sec-source', label: 'Source Notes', blocks: [
+              { src: 'd1', text: 'media-pipeline-brief.docx — parsed · 14 requirement atoms.' },
+              { src: 'd2', text: 'import-hardening-notes.md — parsed · 9 requirement atoms.' },
+              { src: 'd3', text: 'storage-vendor-quotes.pdf — parsed with warnings · 6 requirement atoms.' } ] }
+          ]
+        }
       },
       topics: [
-        { id: 't1', num: 1, title: 'Recipe data model', state: 'ready',
+        { id: 't1', num: 1, title: 'Recipe data model', state: 'ready', depends_on: [],
           summary: 'Recipes, ingredients, steps, tags — Postgres schema + sqlx migrations.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Recipes, ingredients, steps and tags live in Postgres behind sqlx migrations. Revision history is kept as full rows keyed by recipe id.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['A recipe saved twice yields two revision rows; the newest revision is what renders.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['None — evidence closed every open call on this topic.'] } ] },
           questions: [{ id: 'q-rev', text: 'How should recipe revisions be kept?', chips: ['Full history', 'Last 10 only', 'No history'], freeform: 'Something else', answer: 'Full history' }] },
-        { id: 't2', num: 2, title: 'Auth & accounts', state: 'ready',
+        { id: 't2', num: 2, title: 'Auth & accounts', state: 'ready', depends_on: ['t1'],
           summary: 'Email + OAuth sign-in, session cookies, account deletion path.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Email plus GitHub and Google OAuth; sessions ride HttpOnly cookies with a 30-day sliding expiry.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['Sign-in via each provider issues a session cookie; account deletion removes rows and revokes sessions.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['None — the provider set is confirmed from the Approved PRD Pack.'] } ] },
           questions: [{ id: 'q-oauth', text: 'Which OAuth providers at launch?', chips: ['GitHub + Google', 'Google only', 'None yet'], freeform: 'Something else', answer: 'GitHub + Google' }] },
-        { id: 't3', num: 3, title: 'Editor & media upload', state: 'active',
+        { id: 't3', num: 3, title: 'Editor & media upload', state: 'active', depends_on: ['t1'],
           summary: 'Step-by-step recipe editor with drag-in photos; image-processing package resizes uploads on a ladder.',
           intro: 'This topic covers the editor and the media pipeline. Evidence answered the resize path; two product calls are left.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Step-by-step editor with drag-in photos. The image-processing package resizes uploads on a 320/800/1600 ladder.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['A dropped photo yields three renditions and a thumbnail; EXIF handling follows the recorded decision.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['Max upload size and the EXIF policy are open product calls — the interview asks them.'] } ] },
           questions: [
             { id: 'q-size', text: 'Max photo upload size?', chips: ['10 MB', '25 MB', 'Unlimited'], freeform: 'Something else', answer: null },
             { id: 'q-exif', text: 'Keep photo location data (EXIF GPS)?', chips: ['Always strip', 'Keep with consent', 'Keep everything'], freeform: 'Something else', answer: null }
           ] },
-        { id: 't4', num: 4, title: 'Search', state: 'ready',
+        { id: 't4', num: 4, title: 'Search', state: 'ready', depends_on: ['t1'],
           summary: 'Postgres full-text search over titles, ingredients and tags; typo tolerance deferred.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Postgres full-text search over titles, ingredients and tags. Typo tolerance is deferred to a later run.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['Searching an ingredient returns matching recipes ranked by relevance on the demo dataset.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['None — scope auto-resolved from repo evidence.'] } ] },
           questions: [{ id: 'q-scope', text: 'Search scope at launch?', chips: ['Titles + ingredients', 'Everything', 'Titles only'], freeform: 'Something else', answer: 'Titles + ingredients' }] },
-        { id: 't5', num: 5, title: 'Comments & ratings', state: 'not_started',
+        { id: 't5', num: 5, title: 'Comments & ratings', state: 'not_started', depends_on: ['t1', 't2'],
           summary: 'Five-star ratings, threaded comments, one rating per account per recipe.',
           intro: 'Ratings and comments are already scoped by the evidence — the data model and rate limits are settled. One product call is left: the moderation model at launch.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Five-star ratings and threaded comments; one rating per account per recipe, enforced by the primary key.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['A second rating from the same account updates the first instead of inserting a duplicate.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['The moderation model at launch is the one open product call.'] } ] },
           questions: [{ id: 'q-mod', text: 'Comment moderation model?', chips: ['Report + hide', 'Pre-approval', 'Off at launch'], freeform: 'Something else', answer: null }] },
-        { id: 't6', num: 6, title: 'Import from URL', state: 'auditing',
+        { id: 't6', num: 6, title: 'Import from URL', state: 'auditing', depends_on: ['t1'],
           summary: 'Paste a recipe URL, worker scrapes structured data; retries + sanitization under audit.',
           progress: 'audit pass 2 of 3 · 4 findings fixed',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Paste a URL and the worker scrapes schema.org Recipe data with bounded retries and sanitization.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['The fixture set imports cleanly; failures surface an error card after the retry budget.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['None — audit findings are repaired in place as the audit closes.'] } ] },
           questions: [{ id: 'q-sites', text: 'Which sites must import cleanly?', chips: ['Top 20 recipe sites', 'Any schema.org page', 'Manual paste only'], freeform: 'Something else', answer: 'Any schema.org page' }] },
-        { id: 't7', num: 7, title: 'Notifications', state: 'impacted',
+        { id: 't7', num: 7, title: 'Notifications', state: 'impacted', depends_on: ['t6'],
           summary: 'Email + in-app notifications for comments and follows. Impacted by the import-from-URL audit.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['In-app and email notifications for comments and follows, fanning out from worker events.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['A new comment produces one in-app notice and one email per recipient preference.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['Re-sync to the tightened import event contract is verified by the impact review.'] } ] },
           questions: [{ id: 'q-chan', text: 'Notification channels at launch?', chips: ['In-app only', 'In-app + email', 'Email digest weekly'], freeform: 'Something else', answer: 'In-app + email' }] },
-        { id: 't8', num: 8, title: 'Deployment & backups', state: 'blocked',
-          summary: 'Docker on Unraid; nightly Postgres dumps. Blocked: storage location needs a product decision.',
+        { id: 't8', num: 8, title: 'Deployment & backups', state: 'not_started', depends_on: ['t3', 't6'], unlockedState: 'blocked',
+          summary: 'Docker on Unraid; nightly Postgres dumps. Storage location needs a product decision once unlocked.',
           intro: 'Deployment is mapped from repo evidence: Docker on Unraid, nightly Postgres dumps. Storage is a credentials + cost call the wizard will not make for you.',
+          draft: { version: 3, sections: [
+            { id: 'ds-over', h: 'Overview', paras: ['Docker on Unraid with nightly Postgres dumps. The storage backend for images and backups is a product call.'] },
+            { id: 'ds-dec', h: 'Decisions', paras: [] },
+            { id: 'ds-accept', h: 'Acceptance', paras: ['A nightly dump lands in the chosen storage target and restores cleanly in a scratch container.'] },
+            { id: 'ds-open', h: 'Open items', paras: ['Storage location — this topic carries the decision into the Final Plan Pack.'] } ] },
           questions: [{ id: 'q-storage', text: 'Where should images and backups live?', chips: ['AWS S3', 'Cloudflare R2', 'Local volume'], freeform: 'Something else', answer: null }] }
       ]
     },
@@ -630,6 +732,8 @@
     return {
       docs: [], turns: [], answers: {}, turnIdx: 0, filled: {},
       readiness: 'blocked',
+      readinessNote: 'no captures yet — attach a doc or answer the builder',
+      revisions: 0, annotations: [], ledgerNotes: [],
       prd: { approved: false, packId: null, version: null }
     };
   }
@@ -690,9 +794,30 @@
     dash: { widgets: DATA.dash.defaults.slice(), ctas: [] },
     ffwd: false
   };
-  DATA.wizard.topics.forEach(function (t) {
-    S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, intro: t.intro || null, thread: [], questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' };
-  });
+  /* single source for the topic-state seed — used at boot and by wizardFacade.replay */
+  function seedWizardTopics() {
+    S.wizard.topics = {};
+    DATA.wizard.topics.forEach(function (t) {
+      S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state,
+        progress: t.progress || null, summary: t.summary, intro: t.intro || null,
+        thread: [], questions: JSON.parse(JSON.stringify(t.questions)),
+        accepted: t.state === 'ready',
+        depends_on: (t.depends_on || []).slice(),
+        unlockedState: t.unlockedState || null,
+        draft: t.draft ? { version: t.draft.version, freshSec: null, sections: t.draft.sections } : null,
+        annotations: [],
+        _wasLocked: false };
+    });
+    /* second pass: derive initial lock flags once every dependency is seeded */
+    Object.keys(S.wizard.topics).forEach(function (k) {
+      var t = S.wizard.topics[k];
+      t._wasLocked = t.state === 'not_started' && (t.depends_on || []).some(function (id) {
+        var dep = S.wizard.topics[id];
+        return dep && dep.state !== 'ready';
+      });
+    });
+  }
+  seedWizardTopics();
 
   var LOG = [];
   function logBeat(action, args) {
@@ -1047,7 +1172,6 @@
       emit('run.gate', S.run.gates[g.id]);
       pushCta({ id: 'cta-gate', kind: 'hitl_approval', severity: 'attention_required', title: 'Approval needed: ' + g.label,
                 body: g.question, primary: 'run.approve_gate', secondary: 'run.decline_gate' });
-      chatSpawnGateThread(silent);
       /* terminal workgroup beat: lane-b parks visibly */
       if (!silent) { term.feed('ts-sess-alpha', warn('orch: lane-b') + dim(' — workgroup held at ' + g.node + ' · ' + g.label + ' (awaiting approval)')); say('Run #47 needs a decision — publish package: image-processing'); }
     },
@@ -1179,10 +1303,12 @@
   M['wizard.topicState'] = function (a, silent) {
     var t = S.wizard.topics[a.id];
     if (!t || t.state === 'ready') return;
+    if (topicLocked(t)) return; /* derived lock — churn beats never mutate a locked topic */
     t.state = a.state;
     if ('progress' in a) t.progress = a.progress;
     emit('wizard.topic', { topic: t });
     if (!silent && a.state === 'ready') say('Topic ' + t.num + ' "' + t.title + '" is Ready');
+    evalUnlocks(); /* dependents whose last unmet dependency just went Ready unlock here */
   };
 
   /* ================= web operations (addendum_pm173) ================= */
@@ -1589,7 +1715,7 @@
       reqsFill(turn.fills, 'from builder turn ' + (i + 1));
     });
     rq.turnIdx = DATA.wizard.reqs.builderTurns.length;
-    rq.readiness = 'ready_with_warnings';
+    reqsReadiness(); /* recompute the tri-state + driver note; lands on ready_with_warnings (d3 parse warning + carried open question) */
     rq.prd = { approved: true, packId: DATA.wizard.reqs.prd.packId, version: DATA.wizard.reqs.prd.version };
   }
   function backfillWizard() {
@@ -1597,6 +1723,8 @@
     Object.keys(S.wizard.topics).forEach(function (k) {
       var t = S.wizard.topics[k];
       t.state = 'ready'; t.progress = null; t.accepted = true;
+      t._wasLocked = false; /* derived locks vanish once every state is ready */
+      if (t.draft) t.draft.freshSec = null;
       t.questions.forEach(function (q) { if (!q.answer) q.answer = q.chips[1] || q.chips[0]; });
     });
     if (!S.wizard.pack) S.wizard.pack = { planUnits: DATA.run.planUnits, findingsRepaired: 2, hashes: S.wizard.hashes };

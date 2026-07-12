@@ -1,0 +1,81 @@
+{
+  "activation_transaction_authorized": true,
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+  ],
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_0004_credit": 0,
+  "attempt_0004_failure_lineage_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+  "attempt_0004_outputs_empty": true,
+  "attempt_0004_receipts": 0,
+  "attempt_0004_results": 0,
+  "attempt_0005_activation_transaction_files": 0,
+  "attempt_0005_native_capture_rows": 0,
+  "attempt_0005_outputs_empty": true,
+  "attempt_0005_receipts": 0,
+  "attempt_0005_results": 0,
+  "attempt_id": "attempt-0005",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "coverage_credit": 0,
+  "cumulative_floor_count": 6,
+  "descendants_forbidden": true,
+  "errors": [],
+  "followups_forbidden": true,
+  "fork_turns": "none",
+  "fresh_direct_leaves": 2,
+  "gate_passed": true,
+  "independent": true,
+  "merge_credit": 0,
+  "model": "gpt-5.6-luna",
+  "payload_hashes": {
+    "activation_transaction.template.json": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+    "authority.json": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+    "intents": {
+      "ER-0003": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+      "ER-0008": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821"
+    },
+    "launch_seal.json": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+    "leaf_initial_task_contract.json": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+    "leaf_prompt.json": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+    "manifest.json": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+    "native_capture_contract_v5.json": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+    "packets": {
+      "ER-0003": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+      "ER-0008": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f"
+    },
+    "receipt_contract_v5.json": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+    "schema/external_research_result_v5.schema.json": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+    "tools/common.py": "939dd6841200f01f18b26bc9c73cfd8fbff5c5c9f953a1b58607188ee626e578",
+    "tools/generate_activation_transaction.py": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+    "tools/test_attempt_0005.py": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+    "tools/validate_postrun.py": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+    "tools/verify_prelaunch.py": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+    "validation/VALIDATOR_AUTHORITY_V5.json": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+    "validation/local-prelaunch-candidate.json": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+  },
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "promotion_credit": 0,
+  "reasoning_effort": "max",
+  "research_credit": 0,
+  "retries_forbidden": true,
+  "retry_namespace": "retry-attempt-0005",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "pass"
+}
+

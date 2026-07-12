@@ -1,0 +1,36 @@
+{
+  "activation_authorized": false,
+  "assignment_ids": [
+    "A005ERSC-0001",
+    "A005ERSC-0002",
+    "A005ERSC-0003",
+    "A005ERSC-0004",
+    "A005ERSC-0005",
+    "A005ERSC-0006",
+    "A005ERSC-0007",
+    "A005ERSC-0008"
+  ],
+  "atomic_size": 8,
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "authority_sha256": "6aa6449328cc86b7918e90670e16087171d5cc70379d877c247c00e1c756db8c",
+  "cohort_id": "cohort-0001",
+  "credit": 0,
+  "errors": [],
+  "launch_authorized": false,
+  "manifest_sha256": "d44bb664b9610e086f1ff43690dc68f0b533fdb5e0ece63e5f009fb11abb36ee",
+  "primary_postrun_sha256": "45bec51e3bedc80f9ca2af7bb10d0fdecf581021a803eae723bc0d699084f214",
+  "primary_rejected_set_report_sha256": "7fb68216b4c4271864fad7f564d9124f1a992b0069929e2e2a6f7867ed87fc4c",
+  "schema_version": "universal-shadow-certification-atomic8-prelaunch-report-v31-v1",
+  "slot_id": "c1-atomic8-prelaunch",
+  "status": "PASS",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "zero_state": {
+    "activation_transactions": 0,
+    "credit": 0,
+    "empty_output_directories": 8,
+    "receipts": 0,
+    "results": 0,
+    "runtime_native_capture_rows": 0
+  }
+}

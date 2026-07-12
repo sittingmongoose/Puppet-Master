@@ -1,0 +1,1751 @@
+L00000001	# Containers, Registry, and Unraid Integration
+L00000002	
+L00000003	
+L00000004	## Purpose and scope
+L00000005	This document makes Docker support first-class in the Puppet Master rewrite. The scope is broader than the current runtime/build defaults: Puppet Master must be able to build container images, run them for preview/testing, let the user open the running container when the project supports user-facing access, publish images to DockerHub, generate and maintain Unraid template XML, and manage the related Unraid template repository workflow.
+L00000006	
+L00000007	This plan is the canonical SSOT for:
+L00000008	- DockerHub authentication UX and state modeling.
+L00000009	- Requested vs effective Docker auth capability.
+L00000010	- DockerHub namespace and repository discovery/selection/creation behavior.
+L00000011	- Protected repository-creation rules.
+L00000012	- First-class Docker management GUI behavior.
+L00000013	- Unraid template generation defaults and managed template-repository workflow.
+L00000014	- `ca_profile.xml` defaults, scope, editability, and image handling.
+L00000015	
+L00000016	This plan does not replace the existing preview/build/runtime sections in `Plans/newtools.md`, the settings UI in `Plans/FinalGUISpec.md`, or the orchestrator control surface in `Plans/Orchestrator_Page.md`; it supplies the canonical detailed contract those docs must reference.
+L00000017	
+L00000018	## Relationship to existing plans
+L00000019	
+L00000020	
+L00000021	- `Plans/newtools.md` remains canonical for runtime/tool/preflight/evidence behavior, but must reference this plan for DockerHub browser auth, repository management, and Unraid template publishing.
+L00000022	- `Plans/FinalGUISpec.md` remains canonical for settings, controls, dialogs, and layout, but must reference this plan for Docker Manage surface requirements.
+L00000023	- `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions.
+L00000024	- `Plans/feature-list.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` must register the new first-class GUI/runtime scope introduced here.
+L00000025	
+L00000026	## Product goals
+L00000027	- Make Docker support a first-class workflow rather than a small extension of generic Preview/Build.
+L00000028	- Let the user authenticate to DockerHub using either browser-based login or a PAT, with explicit visibility into what capability is actually available.
+L00000029	- Let Puppet Master build and run containers for testing and user inspection from within the app.
+L00000030	- Let Puppet Master publish to DockerHub and safely create the missing repository when necessary.
+L00000031	- Let Puppet Master automatically generate/update Unraid XML after successful image publishing by default.
+L00000032	- Let Puppet Master manage a dedicated Unraid template repository by default, while allowing the user to disable managed template-repo handling.
+L00000033	- Keep secrets out of redb, project files, and evidence logs.
+L00000034	- Keep the GUI contextual so Docker-heavy controls appear when relevant without permanently cluttering non-container projects.
+L00000035	
+L00000036	## User-visible surfaces
+L00000037	
+L00000038	
+L00000039	### 1. Settings > Advanced > Containers & Registry
+L00000040	
+L00000041	
+L00000042	The existing `Containers & Registry` settings area remains the primary configuration home, but it must be expanded to include:
+L00000043	
+L00000044	- **Docker runtime controls**
+L00000045	  - runtime selector (`docker` default)
+L00000046	  - Docker binary path override
+L00000047	  - compose file/path defaults
+L00000048	  - compose project-name strategy (`auto`, `fixed`, `hash-based`)
+L00000049	  - build context path
+L00000050	  - Dockerfile path
+L00000051	  - target stage (optional)
+L00000052	  - target platforms and Buildx readiness status
+L00000053	
+L00000054	- **DockerHub authentication controls**
+L00000055	  - browser-login button that opens the browser/device flow
+L00000056	  - PAT entry field
+L00000057	  - helper text that explicitly says PAT is recommended
+L00000058	  - inline guidance/link telling the user how to obtain a PAT
+L00000059	  - stored-auth status
+L00000060	  - account/namespace summary
+L00000061	  - validation button
+L00000062	  - clear/remove credentials action
+L00000063	  - validate and `/clear` auth actions for DockerHub credentials
+L00000064	  - requested auth mode vs effective capability display
+L00000065	
+L00000066	- **DockerHub repository controls**
+L00000067	  - namespace selector/discovery
+L00000068	  - repository selector/discovery
+L00000069	  - refresh repositories action
+L00000070	  - create repository action
+L00000071	  - create-repository toggle in settings-level configuration, kept distinct from the mandatory confirmation used when creation becomes a remote side effect
+L00000072	  - repository privacy control for creation flow
+L00000073	  - tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)
+L00000074	  - push policy (`manual` default; optional `after_build`)
+L00000075	
+L00000076	- **Unraid publishing controls**
+L00000077	  - `Generate/Update Unraid XML after successful publish` toggle (default: enabled)
+L00000078	  - `Manage Unraid template repository` toggle (default: enabled)
+L00000079	  - template repository path/remote settings
+L00000080	  - template repository setup flow (create-new or select-existing)
+L00000081	  - auto-push toggle (default: disabled)
+L00000082	  - one-click push action surfaced nearby even when auto-push is off
+L00000083	  - template repo status row (configured / missing / dirty / committed / ready-to-push)
+L00000084	
+L00000085	- **Docker Manager visibility controls**
+L00000086	  - setting named exactly `Hide Docker Manager when not used in Project.`
+L00000087	  - legacy setting alias `Hide Docker Manage when not used in Project.` migrates to the canonical Docker Manager label and is not a separate surface
+L00000088	  - default: enabled
+L00000089	  - behavior: when enabled, the contextual Docker Manager surface appears only when a Docker-related project is active; when disabled, the user may keep the Docker Manager surface available more broadly
+L00000090	
+L00000091	- **Maintainer profile / `ca_profile.xml` controls**
+L00000092	  - scope selector: shared cross-project profile (default) vs per-project override
+L00000093	  - full edit form for all `ca_profile.xml` fields
+L00000094	  - profile image handling through upload/select or external URL
+L00000095	  - notice when the file was auto-generated and still needs review/configuration
+L00000096	
+L00000097	### 2. Contextual Docker Manager surface
+L00000098	
+L00000099	The canonical user-facing surface is **Docker Manager**.
+L00000100	
+L00000101	Docker Manager is a first-class operational surface for containerized projects. It replaces `Docker Manage` as the canonical surface name and subsumes Publish / Unraid behavior.
+L00000102	
+L00000103	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/newtools.md
+L00000104	
+L00000105	Required stable subviews:
+L00000106	- `Containers`
+L00000107	- `Images`
+L00000108	- `Compose`
+L00000109	- `Registries`
+L00000110	- `Registries / Docker Hub`
+L00000111	- `Build / Bake`
+L00000112	- `Publish / Unraid`
+L00000113	- `Publishing / Unraid` as a legacy/source-lineage alias normalized to `Publish / Unraid`
+L00000114	- advanced foldouts for `Networks`, `Volumes`, and `Contexts`
+L00000115	- project-focused `Kubernetes`
+L00000116	
+L00000117	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md
+L00000118	
+L00000119	Surface rules:
+L00000120	- Docker is the default visible runtime mode when the project is Docker-related.
+L00000121	- Podman is an alternate runtime inside the same surface, not a separate panel.
+L00000122	- Kubernetes is a Docker Manager subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.
+L00000123	- Unraid is integrated under `Publish / Unraid`; it does not require a separate top-level panel.
+L00000124	- Docker Hub is one registry/provider capability inside Docker Manager, and Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces.
+L00000125	- Docker Manager is a first-class side-panel surface, not only Settings > Advanced. Its canonical surface includes settings-level DockerHub actions such as the create-repository toggle and `/clear` auth recovery, while remote repository creation still requires the separate protected confirmation flow.
+L00000126	
+L00000127	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Permissions_System.md
+L00000128	
+L00000129	Subview behavior minima:
+L00000130	- `Containers`: lifecycle, logs, inspect, attach/shell, stats, open app when an access URL exists
+L00000131	- `Images`: build, pull, push, tag, inspect, remove, prune, digest/tag visibility
+L00000132	- `Compose`: project/group lifecycle, service subsets, logs, restart, down/up, compose-group reopen state
+L00000133	- `Registries`: Docker Hub first, registry inventory/selection, reconnect, browse, pull, inspect
+L00000134	- `Build / Bake`: Dockerfile target selection, Buildx/Bake discovery, build-preview settings
+L00000135	- `Publish / Unraid`: `/auth/Unraid`, requested vs effective auth state, protected repo creation, digest receipts, Unraid generation and template-repo follow-on
+L00000136	- `Kubernetes`: apply, diff, rollout status, logs, exec, port-forward, workload/resource view, Helm basics, image-to-cluster linkage
+L00000137	
+L00000138	Design-reference split: the user-specified `docker/vscode-extension` / `/vscode-extension` repository is Docker DX and is treated as a Dockerfile, Compose, Bake, build-debugging, and image-vulnerability-scanning reference. It is not the day-to-day container/registry management baseline. The richer management baseline is `microsoft/vscode-containers` / `/vscode-containers`: Docker Manager should preserve container list and lifecycle commands, image tag/pull/remove/prune operations, shell/attach/browse/stats/inspect affordances, network/volume/context explorers, compose group lifecycle controls including `/down/restart`, registry `/reconnect/disconnect`, and container `/stop/restart/remove/prune`, while keeping bake-oriented authoring and execution inside `Build / Bake`.
+L00000139	
+L00000140	ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000141	
+L00000142	### 2A. Docker Manager operational cockpit contracts
+L00000143	
+L00000144	Docker Manager is the GUI owner for the unified asset explorer. Its root view keeps stable subviews for `/images/compose/registries/build-bake`, with advanced foldouts for contexts, networks, volumes, and project-focused Kubernetes. The selected runtime, selected context, active subview, explorer grouping, `/sort`, hidden-foldout policy, hidden advanced foldouts, and exact asset row/subview are persisted as per-project panel state so preview, `/build/publish/deploy`, and blocked-card flows reopen the exact relevant row instead of landing in a generic push-only pane. If runtime access is unavailable, Docker Manager still renders cached `/last-known` state with a stale marker and read-only posture; strong default filtering and project awareness are mandatory so the broad surface does not become overloaded, while project-aware ordering pushes `likely-relevant` assets to the top without hiding the rest. Unsupported runtime-specific subviews hide only when truly unavailable; otherwise they stay visible with a disabled reason. The command and event model covers full `cmd.docker.container.*`, `image.*`, `registry.*`, `network.*`, `volume.*`, `context.*`, `compose.*`, and `k8s.*` families, with receipts able to open directly to the affected asset kind. `/events/storage` and `/event/storage` for the explorer record panel state, selected asset identity, and freshness only; transient runtime observations stay in the runtime projection store.
+L00000145	
+L00000146	Project-aware build surfaces infer the likely Dockerfile, build context, compose file, Bake target, `bake-target`, platform, and runtime context for the active project. The `Build / Bake` subview and smart CTA cards in `Containers` or `Publish / Unraid` expose `cmd.docker.build.*`, `cmd.docker.bake`, `cmd.docker.bake.*`, and build/bake preview commands; persist the last successful build target, validation snapshot, preferred build mode, default build mode, target stage/platform, preferred compose file, buildx readiness, runtime override, inferred target overrides, explicit target override, and the `show advanced args toggle`. Bake definitions can come from HCL, YAML, JSON, Compose, or generated metadata, but `build_run` and `/push_image` resolve back to the same selected `/compose/bake` target rather than rebuilding from a guessed default. If inference is ambiguous in a polyglot or monorepo project, Docker Manager prompts for explicit selection instead of guessing. `/event/storage` records build target selection and readiness/preflight events, while Orchestrator build artifacts and preview containers link back to the originating run/tier. `/tradeoffs`: auto-detection heuristics can misidentify monorepo targets, so inferred build defaults must stay reviewable and overrideable.
+L00000147	
+L00000148	Compose scenario runner lets users save and rerun named service subsets, profiles, env file combinations, and port mappings for preview, test, or `/development` workflows. The `Compose` subview owns scenario definitions, selected services, `/profiles/env` files, `/profile/env-file/port` state, detached and `/log-follow` defaults, `/ports`, and validation state. Command coverage includes `cmd.docker.compose.up_subset`, `down_subset`, `save_scenario`, `run_scenario`, and the grouped command family `cmd.docker.compose.scenario.save/run/edit/delete`, with `cmd.docker.compose.scenario.save` as the save command id. Scenario lists live in project state; preview and test tiers record which scenario launched them. If a compose file changes incompatibly, the scenario is marked stale and opens degraded with validation errors plus repair actions instead of silently failing. `/tradeoffs`: scenarios can drift quickly if service names or profiles change, and scenario schema drift as compose files evolve is expected, so stale markers and repair flow are mandatory. The `/run/edit/delete` affordances stay disabled with exact reason codes until validation succeeds.
+L00000149	
+L00000150	Registry promotion flow treats `/tag/push` and `/push/promote` as explicit release actions, not ad hoc retagging. Docker Manager preserves source artifact identity, promotion `/target`, destination registry allowlist, default namespace/repository/tag template, promotion policy, visibility/privacy defaults, `/immutability` expectations, Docker-Hub-first `MVP` behavior, and the abstraction needed for later registry `APIs`. Promotion receipts are `registry-side` remote side effects with digest-first lineage: the moved digest, tag, source namespace/repository, destination namespace/repository, actor, approval source, and result id are captured before any downstream deployment reference is updated. If the destination registry or repository is unavailable, local image actions remain usable and the promotion is blocked with a precise remote blocker.
+L00000151	
+L00000152	Publish chain view shows the path from local build result to pushed tag and `/digest`, Docker Hub repo state, Unraid/template follow-ons, `/publish/events`, and downstream deployment or `/workload` references. Each chain node records `build_result_id`, `publish_result_id`, template repository status, deployment/workload refs, result state, expanded chain nodes, an `include historical publishes` toggle, whether to follow latest publish by default, and whether it is `not-attempted`, blocked, failed, or complete. Publish-capable runs expose this chain from run history and blocked cards. Missing downstream steps render a partial chain with `missing-link` explanations; digest-first identity is mandatory so retags do not corrupt lineage. Chain stitching must survive retries and partial reruns, and follow-ons plus auto-open behavior must open the exact broken chain step rather than a generic `Publish / Unraid` page.
+L00000153	
+L00000154	Container access intelligence detects usable URLs, health, logs, ports, shells, and stats for running previews and containers. `Containers` rows and detail drawers expose `cmd.docker.container.open`, `view_logs`, `attach_shell`, `stats`, and `inspect`; `Open running container` and `/open-container` resolve here only when a real container or preview session exists. URL/URLs discovery uses explicit overrides, preferred browser behavior, preferred port priority, labels, host-port mappings, and health signals; `port-open`, `auto-follow`, and `auto-open` are suggestions rather than silent actions. Shell actions honor the saved shell command preference instead of guessing an entry command. If the heuristic is uncertain, Docker Manager shows candidate actions or logs/inspect first. `/event/storage` records confidence, candidates, and manual override, but does not persist transient port discoveries as canonical state. `/tradeoffs`: false-positive URL inference is annoying and can mislead users, so confidence thresholds and manual override are required.
+L00000155	
+L00000156	Drift detection compares local Dockerfile, `/compose/bake` intent, Kubernetes manifests, last build metadata, `last-published` metadata, and last deployed state. The `Build / Bake`, `Publish / Unraid`, and Kubernetes subviews expose drift warnings, compare actions, `/ignore-files`, `ignore-labels`, sensitivity settings, compare target, and non-secret validation snapshots. Receipts record what was compared, the source metadata refs, the resulting drift class, and whether the result is partial. If prior artifact metadata is missing, the state is `unknown` rather than clean; if image labels and source refs are inconsistent, Docker Manager must avoid `over-warn` behavior by showing the weak evidence behind the warning.
+L00000157	
+L00000158	Cleanup advisor recommends safe `/prune` and remove actions for `/assets`, `Images`, `Containers`, `Volumes`, `Networks`, and maintenance views, including Docker Manager advanced maintenance placement plus Settings/Health hooks. It starts with dry-run analysis, scan/prune estimation commands, projected disk savings, cached reclaim estimates, auto-scan cadence, disk-threshold warning levels, user-protected asset list, prune aggressiveness, whether to hide warnings for ephemeral previews, retention window, protected labels/assets, active previews, and recent receipt references. Long-running projects/runs may surface maintenance warnings without forcing cleanup mid-run. If the reference graph is partial, recommendations default conservative and never suggest deleting assets still tied to active previews or recent receipts. If the runtime cannot estimate reclaim safely, the advisor shows manual cleanup guidance instead of enabling destructive guesses. `/tradeoffs`: aggressive cleanup can destroy forensic context, break active previews, and reduce cached build speed, so Docker Manager stores preference defaults only and keeps destructive actions guarded by shared blocked-state rules.
+L00000159	
+L00000160	Project-focused Kubernetes linkage keeps deploy and troubleshoot work in Docker Manager without turning Puppet Master into a general cluster admin console, cloud-provider console, or cluster-administration UX. The conditional `Kubernetes` subview preserves kubeconfig/context, namespace, `/namespace/workload` focus, log viewer defaults, auto-refresh and `/watch` toggles, Helm visibility, Helm release focus, persisted K8s focus state, and a `cluster-wide` resources toggle defaulted off. Command coverage is `cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace`, `cmd.docker.k8s.apply|diff|logs|exec|port_forward|set_context|set_namespace|helm_preview|helm_install`, `/logs/exec/port-forward/Helm/workload`, including the explicit command `cmd.docker.k8s.apply`; compatibility aliases from older `cmd.k8s.*` rows normalize to this Docker Manager namespace. Deploy, `/rollout/apply`, `/apply/rollout`, log, exec, `port_forward`, Helm, and `/troubleshoot` failures open directly to project-relevant workload status, logs, or diff. If `kubectl`, kubeconfig, or cluster access is missing, the subview remains visible with setup guidance and explicit `/connection` state instead of disappearing. Docker Manager's Kubernetes view defaults to the project-focused subset; full cluster inventory requires the explicit `cluster-wide` toggle and remains visually distinct from project scope. `/attempt/action` receipts are `collapse-by-default`; over-verbose logs stay behind detail expansion. `/tradeoffs`: visibility must stay project-centered, cluster-facing explorer scope must be intentionally constrained to project-relevant resources, and cluster-wide views default off.
+L00000161	
+L00000162	Kubernetes operational sessions are ephemeral owner-surface sessions. `kubectl logs` can target pods, `/resources`, and all containers; rollout status is a first-class troubleshooting primitive; port-forward sessions and rollout monitors are restart/rebind workflows, not durable always-on connections. Browser handoff is reserved for external registry, admin, or `/admin/help` edge cases, not the default fallback for local-runtime or Kubernetes operations.
+L00000163	
+L00000164	Operation receipts are the compact auditable record for important side effects across Orchestrator history/detail, Source Control commit/push, GitHub Actions run panes, Docker publish panes, registry promotion, and Kubernetes apply/rollout. They are compact UI objects derived from canonical run/publish/events, not ad hoc strings. Each receipt records requested action, effective action, actor, targets, result ids, allowed action ids, approval source, executing subsystem, and source event ids. Receipt verbosity and receipt retention preference are user-configurable, while receipts remain compact by default; legacy flows without rich receipts show a minimal evidence marker without inventing feature-local logs. `/events/storage` stores the receipt projection keyed by run, attempt, and action id.
+L00000165	
+L00000166	Docker Manager route/open adoption follows the shared route contract instead of treating object-bearing shell commands as local layout state. `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) may expose `cmd.source_control.select_worktree`, compatibility thread-usage aliases, and `/open` wrappers, but Docker Manager treats those as route-consuming actions only after legacy `cmd.chat.open_thread_usage` / `cmd.chat.focus_thread_usage` callers normalize to `cmd.nav.open_usage_subject` or the Context Detail Pane command family. The canonical `target_kind` enum remains in `Contracts_V0.md` and `Contracts_V0`; destination-local refinements stay outside the enum and outside the base route contract. `cmd.panel.switch` and panel-switch style commands may select the Docker Manager shell only as shell-state; contextual object refs such as `repo_id`, `worktree_id`, `workflow_run_id`, `publish_result_id`, and `k8s_ref` must route through the shared target contract rather than become a hidden panel-switch payload model.
+L00000167	
+L00000168	Blocked-state integration, Requested vs effective state everywhere, and Explain this state use the shared runtime vocabulary. SCM, GitHub Actions, Docker, and Kubernetes panels mirror Orchestrator blocked views, destination-panel banners, inline disabled CTAs, `allowed_action_ids[]`, and blocked projections. Docker Manager `hard_gate` actions, including HITL-governed remote-side-effect publish, repository creation, registry promotion, and cluster mutation paths, enter the canonical approval or `/blocked` flow instead of bypassing it with generic UI confirmation. Disabled Docker, `/Unraid`, and Kubernetes mutation controls expose a short inline reason, a hover/focus tooltip with the exact blocking condition, and the primary recovery CTA when one exists; disabled controls remain keyboard-focusable where needed for explanation or `/accessibility`. Publish/deploy CTAs, auth rows, dispatch forms, worktree actions, and runtime actions show compact badges that expand on demand for the requested mode, effective capability, reason code, and last validation time; if effective state is unknown, the UI shows unknown with the next validation action instead of assuming failure. `Explain this state` appears on status pills, disabled buttons, blocked banners, and receipt rows; it supports ELI5 and expert-vs-expert-only raw detail, including `/provider/runtime` and `/blocked/diverged/degraded` reason chains. The explainer auto-open setting may open on first block, but the explanation text must derive from canonical reason codes and validation fields, not hard-coded panel text. `/tradeoffs`: panels must not add one-off local recovery actions that drift from the shared blocked contract.
+L00000169	
+L00000170	Docker Manager action disclosure uses the shared confirmation taxonomy instead of local modal guesses. Action rows and blocked cards distinguish actions needing no confirmation, light confirmation, strong confirmation, non-bypassable/hard-gated `/hard-gated` approval, and actions that are logically undoable versus only compensatable by later retry or follow-up records.
+L00000171	
+L00000172	Issue and annotation state stay separate from presentation controls. `FinalGUISpec.md` reinforces the asymmetry: durable delete, rollback, repository creation, permission preset replacement, registry publish, and Kubernetes mutation flows use the appropriate confirmation or canonical approval/blocked flow because they are side-effectful; dismissible banners are presentation-noise controls, not durable issue-state transitions. Annotation flow distinguishes runtime-progressed `addressed` state from user-controlled semantic closure such as `resolved`, so Docker, registry, and Kubernetes panels must not flatten these states into a single local status.
+L00000173	
+L00000174	Kubernetes and publish governance outcomes remain exact because the remediation path changes by policy source. Docker Manager distinguishes RBAC denied, namespace disallowed, admission or policy denied, `/Gatekeeper/Kyverno/Pod` Security or image policy denied, quota or `/limit` policy denied, and `remote_mismatch`; each blocked state records the affected object/stage, requested operation, policy source when known, remediation CTA, and whether a review or approval route such as `/review/ruleset` exists. Multi-object flows such as Kubernetes apply, `compose-to-cluster`, and multi-step publish chains can be partial: receipts record which resources were accepted, which later resource was denied, which downstream deployment was blocked, and the exact policy-blocked object/stage instead of flattening the outcome to success or failure. If governance changes while a run is blocked waiting for approval, review, or ruleset change, resume must revalidate and reclassify before mutation; receipts keep original and current policy outcomes when they differ.
+L00000175	
+L00000176	Governance snapshots are durable inputs to blocked-state explanation. Branch protection, GitHub `/ruleset`, protected environment, registry policy, destination-policy, and cluster policy evaluations capture a `policy_snapshot_ref` against the exact target ref/resource before mutation. Receipts and blocked episodes reference that snapshot so Orchestrator can explain the policy in force at attempt time, but retry/resume revalidates current policy instead of assuming the old snapshot remains valid.
+L00000177	
+L00000178	Registry and tag governance use dedicated result classes instead of generic publish failure. Protected tags, registry-side immutable-tag or overwrite denial, `/push/promotion` blockers, `/rulesets`, and forbidden `latest` overwrite are recorded as destination-policy violations with namespace/repository/tag context, allowed namespace `/patterns`, visibility `/privacy` constraints, and recovery pivots such as retag or `/new-version`. `/receipts` record whether direct mutation was transformed into a governance-compliant fallback, left `/blocked`, or handed off to a required hosted flow.
+L00000179	
+L00000180	Protected environments are long-lived gated-governance states, not transient runtime errors. Receipts retain environment name, protection types, pending reviewer set or `/count` when knowable, and wait-timer target timestamp. Orchestrator mirrors these gates with stable blocked cards until the hosted state changes or the user explicitly resumes after revalidation.
+L00000181	
+L00000182	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md
+L00000183	
+L00000184	### 2B. Repo, root, runtime identity, and degraded outcome scope
+L00000185	
+L00000186	Docker/Kubernetes detection is repo-of-origin aware in multi-repo projects. Docker Manager visibility can be project-level when any repo is eligible, but the current subview, state, `/state/receipts`, and receipt payload disclose which repo or root they represent. Panel state is repo-bound with keys such as `{project_id, repo_id}` or `{project_id, workspace_root_id}`; restore validates that the selected repo/root still exists and downgrades to chooser state instead of silently rebinding. Imported, `/forked/nested`, or nested workspace roots create a distinct `workspace_root_id` and, when Git-backed, a distinct `repo_id`.
+L00000187	
+L00000188	Repo-selection precedence is deterministic: direct receipt or `/deep-link` target wins; explicit panel repo selection wins next; active run/tier repo follows; active editor repo follows; otherwise the user sees a chooser. Panels disclose whether a repo is pinned or inferred. Hosted GitHub features use explicit remote binding fields (`owner`, `repo`, `remote_name`, `remote_url`) rather than `origin` assumptions. Docker and Kubernetes receipts distinguish manifest-source repo from image-source repo when they differ, and `k8s_workload_ref` carries `repo_id` or source workspace root alongside project_id.
+L00000189	
+L00000190	Docker Manager deep-link handling must not expose raw local IDs as the routing contract. Commands, receipts, and deep-link descriptions resolve to the shared normalized target object; all supported deep-link forms decode into the same internal routing path instead of treating URL activation as a separate system. Serialized URL and `resume_url` forms obey a narrowed-transport rule: they carry only the stable route-target fields needed for recovery or exact resume, not the entire internal target model, and they must not invent new one-off URL shapes when a route-target family already exists.
+L00000191	
+L00000192	Kubernetes workload history is identity-based across delete/recreate cycles. `k8s_workload_ref` stores context, `/namespace/name`, kind, UID when knowable, and source repo/root; history and deep links classify resolution as `current_match_by_uid`, `name_match_only`, or `historical_missing`. A same-name replacement after `/deletion` or `/recreate` is not treated as the same workload without degraded warning, and a `not-found` workload opens historical detail instead of rebinding silently to a different current object.
+L00000193	
+L00000194	Runtime identity is not preview-centric. `container_id`, `compose_project`, `runtime_context`, and `workload_ref` are durable runtime identity fields with requested-vs-effective state, local-runtime blocked/degraded classification, and receipt joinability. Local-runtime blockers include compose-up failure, unhealthy container, missing Docker context, podman runtime mismatch, cluster unreachable, rollout failure, and port-forward failure. Kubernetes-first and Helm-first projects still surface Docker Manager/Kubernetes when Docker visibility is auto-hidden; `Publish / Unraid` remains the Unraid home and the legacy `Docker Manage` label is only a migration alias, not separate shell-navigation.
+L00000195	
+L00000196	Local-runtime reason codes are canonical and advisory-only until refreshed into requested-vs-effective state. Codes include `runtime_context_missing`, `runtime_context_unreachable`, `compose_invalid`, `compose_service_missing`, `buildx_unavailable`, `bake_unavailable`, `image_missing`, `container_unhealthy`, `access_url_unresolved`, `k8s_context_missing`, `k8s_context_unreachable`, `k8s_namespace_missing`, and `k8s_rollout_blocked`; panels may add port mapping, workload missing, or port-forward variants only as typed extensions, not panel-local prose.
+L00000197	
+L00000198	The Docker Manager state-model applies requested-vs-effective checks to `/runtime/publish`, `/runtime/registry/deploy`, and `/context/compose/build/Kubernetes` actions, not only Docker auth. Runtime, registry, and deploy CTAs disclose requested action, effective capability, repo/root binding, `/receipt` joinability, and recovery route before executing side effects.
+L00000199	
+L00000200	Requested/effective identity is lane-aware and package-aware wherever Docker Manager mirrors runtime work. `Plans/Multi-Account.md`, `/Multi-Account.md`, and `Personas.md` retain provider-level multi-identity, but Docker Manager evidence must expose lane-specific and package-specific effective identity for account/provider/model decisions, not only Persona visibility. Provider/model/variant/effort, `/provider/model`, `/model/variant/effort`, `/model/persona/account`, `/model/variant/auth/account`, `/auth/account`, `/persona/runtime`, auth mode, account policy, worker policy, and operational identity are runtime-facing fields that all record requested value, /effective value, override source, `selection_reason`, and reason; `/switch` history and skipped or `/clamped` controls stay visible when the effective account, Persona, runtime, or worker policy differs. Worker policy includes project/package/node and `/package/node` override source, requested `subagent` or `fresh_worker`, effective agent/subagent/fresh/reused worker, and why it changed. `Media_Generation_and_Capabilities.md` and `Media_Generation_and_Capabilities` live capability re-checks must reconcile with `orchestrator-subagent-integration.md` / `orchestrator-subagent-integration` frozen run snapshots, and the `platform.capability_evaluated` event family must be registered through `Contracts_V0`. `OpenCode_Deep_Extraction.md`, `OpenCode_Deep_Extraction`, and OpenCode source-verified that SSE/auth can be process-global or `/server-global`, so per-session and `/per-run` account binding require explicit PM-side scoping logic; `agent-rules-context.md` and `agent-rules-context` provider-using actors can include non-CLI transports and cannot be reduced to a tiny CLI-only actor set.
+L00000201	
+L00000202	Docker Manager GUI disclosure grammar must expose `Requested account`, `Requested binding`, `Effective account`, and `Switch reason` wherever account/runtime identity can diverge. Requested vs effective identity and runtime display include effective account, fallback reason, lane/worktree identity, lane/worktree scope, overseer class, overseer role, package/seam scope, and package/seam ownership instead of stopping at persona/platform/model or `/platform/model` visibility.
+L00000203	
+L00000204	Docker Manager project state preserves last runtime asset / publish result / template repo / k8s operation refs, compose scenarios, drift baseline refs, and cleanup preferences as durable reopen targets and comparison baselines. The canonical project key is `container_manager.project_state.{project_id}` and includes `requested_runtime`, `effective_runtime`, `requested_context`, `effective_context_state`, `requested_build_mode`, `effective_build_capabilities[]`, `effective_build_capabilities`, `requested_compose_mode`, `effective_compose_capabilities[]`, `effective_compose_capabilities`, `requested_registry_target`, `effective_registry_capabilities[]`, `effective_registry_capabilities`, `requested_k8s_target`, `effective_k8s_capabilities[]`, and `effective_k8s_capabilities`. These references join back to receipts and selected repo/root state rather than storing transient runtime observations as product truth.
+L00000205	
+L00000206	Persisted projection objects include `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`; dashboard, orchestrator, `/orchestrator/source-control`, Docker Manager `/page` and widget presentation, and source-control summaries are projections over those canonical runtime facts, not separate truths. Requested vs effective execution identity, including effective account selection and `/fallback`, is persisted at attempt level so Docker Manager, Orchestrator, and Source Control can recover the same state.
+L00000207	
+L00000208	Orchestrator-linked Docker Manager views consume package/lane state rather than reviving tier-era ownership. `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) may still expose compatibility labels such as `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, `/Task/Subtask`, `requested_persona_id`, and `effective_persona_id`, but Docker Manager treats stale `tier_id` coordination state as migration lineage only and honors package/seam overseers, `/seam`, package/seam/lane visibility, `/lane`, `/account`, and promotion-class state as the runtime pressure to honor. Worktree references stay contextual, actionable, and deep-linkable; they do not make worktree identity the primary package/lane state owner.
+L00000209	
+L00000210	
+L00000211	Runtime and remote identity drift is explicit. If active Docker identity changes and the selected namespace or repository is no longer visible or writable, Docker Manager marks the selection `stale_unowned` and revalidates before publish or promotion; users can trigger `hard-refresh` when cached identity and ownership disagree. Kubernetes state is `subject-aware`: it distinguishes cluster/context identity, authenticated subject identity, namespace/workload focus, and RBAC or policy result; if credentials rotate behind the same context name, the UI treats that as `identity-change` and revalidates RBAC before mutation. SSH remote bindings used by container deploy or source-controlled publish flows include effective remote user `/principal` and `/host-key` context, not only the host alias.
+L00000212	
+L00000213	Remote side-effect outcomes include `indeterminate_remote_outcome` when the server-side action may have succeeded but the client lost confirmation. Such receipts record `requested`, `transport_lost`, later `reconciled`, and a `Refresh remote state` CTA. Hybrid surfaces expose capability-level degradation rather than blanket disabled states: Source Control local Git can remain usable when GitHub is offline; GitHub Actions can be `hosted-degraded` while workflow files remain editable; Docker local runtime can remain usable while registry access is offline; Kubernetes manifest editing can remain usable while cluster access is offline. Active run ownership marks mutable targets as `owned_by_run`; manual mutation of owned worktrees, preview containers, or rollout-associated workloads blocks, requires explicit override, or forks control explicitly, and receipts record that user override.
+L00000214	This active-run safety rule also covers Docker Manager actions launched from Source Control, GitHub /Actions, and orchestrator/dashboard panels so worktree-native UX does not remain under-specified when `dirty_worktree` or `worktree_conflict` blocks a container, registry, or publish action.
+L00000215	
+L00000216	Docker Manager consumes the newly-locked, now-locked remote-first project-mode vocabulary without becoming the remote-owner for file, editor, `/browser/LSP/search`, or `language-detection` behavior. Remote-capable Docker, Kubernetes, registry, and template-repo surfaces preserve `/read-only/offline`, `/degraded/offline`, host-aware identity, `/fallback/index` handoff, one-bounded-auto-retry rather than legacy five-attempt retry assumptions, and `/reveal` links back to the owning file, search, LSP, or Final GUI surface. Container and Kubernetes GUI consumers must not reintroduce bottom-panel-primary browser hosting where the editor-tab-first browser model is the owner; provider/platform differences, requested-vs-effective state, and fallback behavior remain user-disclosable instead of re-decided per cross-seam surface.
+L00000217	
+L00000218	Docker Manager row actions are capability-aware. File-backed or project-root rows distinguish local vs remote host context, writable vs read-only or `/degraded/offline` state, single-select vs multi-select, and exact disabled-state reasons. `Download / Save Local Copy` remains available when source access is readable even if remote/project FS writes are blocked; `Open in Terminal` disables only when no terminal-capable host/session path can be resolved; open/save/export style actions use explicit Docker Manager, file, browser, or terminal commands, and `system_default` is not part of the canonical MVP target enum for this surface.
+L00000219	
+L00000220	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000221	
+L00000222	### 2C. Lifecycle, Detection, And Legacy Navigation Reconciliation
+L00000223	
+L00000224	Docker Manager visibility uses the broad `container-related` definition, not Dockerfile/Compose only. Inputs include `Dockerfile`, `Compose file`, container build/publish settings, managed Unraid template repo, Kubernetes manifests, Helm chart files, persisted Kubernetes context/namespace/workload state, and prior deploy `/apply/port-forward` receipt history. `/Compose`, `/Kubernetes`, and `/Helm/persisted` aliases map to the same detection inputs. `Hide Docker Manager when not used in Project.` evaluates against that full definition. The Kubernetes subview is auto-visible when manifests, Helm artifacts, persisted cluster state, or Kubernetes receipts exist, and is manually unhideable otherwise. Detection state is tri-state: `detected`, `manually_enabled`, and `not_detected`.
+L00000225	
+L00000226	Helm-only and manifest-only projects still surface Docker Manager when hide-when-unused is enabled. There is one shell occupant for container, `/runtime/deploy`, local-runtime, and Kubernetes management; stopped previews reopen durable `/image/compose/workload` records from receipts; missing Bake capability disables Bake only, not the whole panel; and project state restores Kubernetes-focused or Compose-focused state without requiring Docker Hub state. The Kubernetes command coverage token `/diff/logs/exec/port-forward` maps to the canonical `cmd.docker.k8s.*` family.
+L00000227	
+L00000228	`Unraid` is not a separate first-class shell panel in the rewrite. `Publish / Unraid` is a stable subview inside `Docker Manager`; the activity bar exposes one container-management icon/panel, not separate Docker and Unraid occupancy slots. Any future `Open Unraid` convenience action is an alias to `Docker Manager > Publish / Unraid`. Durable runtime identity extends beyond `preview_session_id` with `runtime_asset_ref`, `compose_project_ref`, `publish_result_id`, `template_repo_id`, and `k8s_workload_ref`.
+L00000229	
+L00000230	Registry object lifecycle is not name-based. Registry refs support lifecycle states `active`, `renamed`, `deleted`, `private_inaccessible`, and `historical_only`; publish-chain/history preserve original registry host, namespace, and repository even if current selection changes. Old receipts never silently rewrite to the currently selected repository. Historical image resolution is digest-first: if a digest exists, historical publish/image receipts prefer the immutable digest over a mutable tag; if the tag is retargeted or deleted, history shows the historical digest and marks the tag stale/missing.
+L00000231	
+L00000232	Docker internals split local runtime control through Docker/Compose/Buildx CLI (`/Compose/Buildx`), registry discovery and metadata through provider-specific APIs where useful, and project-aware PM additions on top: requested-vs-effective auth, protected repo creation, publish evidence, Unraid generation, and template repo workflow. Registry promotion flow uses `Registries` and `Publish / Unraid`, preserves `/privacy` defaults, and supports digest/tag copy `/promote/pull/retag` commands with digest-first receipts. Publish chain view exposes chain verbosity, show downstream deployment targets, and include historical publishes controls; `/tradeoffs` remain explicit because mutable tags require digest identity in receipts and lineage.
+L00000233	
+L00000234	Command generalization is broader than Docker-Hub-first. Canonical Docker Manager families cover runtime, container, image, compose, context, registry, build, bake, publish, unraid, and kubernetes. Existing Docker Hub / Unraid commands are specialized members of these broader families, not the whole surface contract. Orchestrator can reopen assets `/workloads` through canonical families without one-off navigation commands. Disabled/degraded Docker/Kubernetes controls bind to canonical reason code, requested capability, effective capability/state, and recommended next action; fallback order is reopen live asset/workload if active, reopen durable ref if the live session is gone, reopen nearest valid parent surface, otherwise show unsupported `/unresolved` explanation.
+L00000235	
+L00000236	Docker Manager and Kubernetes first-open disclosure cards explain the surface boundary before mutation: `Containers` covers local runtime management vs hosted/remote side effects; `Publish / Unraid` covers publish chain, registry mutation, and Unraid follow-through; `Kubernetes` covers project-focused Kubernetes, not full cluster admin. Each card explains requested-vs-effective context/capability, what a receipt is, what it is not, how partial/historical/stale data is labeled, and where to go for full evidence/raw logs.
+L00000237	
+L00000238	Docker Manager GUI help, `/tooltip`, and `/Expert/ELI5` derivations use stable canonical terminology rather than one-line substitutions that erase object/state/action distinctions or why a state exists. Help entries and owner cross-links route through `Plans/Glossary.md`, `Plans/Crosswalk.md`, `Plans/Decision_Policy.md`, `Plans/00-plans-index.md`, and `plans-index` ownership for first-class terms such as Feature Seam, Work Package, Weak Integration, Corroboration, Graph Patch, Promotion, Concern lifecycle, Lane vs Worktree, requested vs effective, safe point vs restore point (`safe-point` vs `restore-point`), historical vs superseded vs revoked, History, Ledger, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity across runtime, `/storage/UI`, policy, and presentation surfaces.
+L00000239	
+L00000240	Legacy naming migration is formal. `Docker Manage` copy, `docker_manage_surface_state`, and any `cmd.panel.switch` or equivalent legacy panel IDs migrate to the canonical Docker Manager surface and do not create another owner. The concept-vs-plan contradiction around a separate `UNRAID` panel/icon is resolved in favor of the accepted `Publish / Unraid` area inside Docker Manager; separate Unraid shell occupancy is retired.
+L00000241	
+L00000242	### 3. Orchestrator and dashboard integration
+L00000243	Docker-related actions must also remain available from orchestrator/dashboard build/preview surfaces when a Docker-related run is active. The contextual Docker Manager surface is not a replacement for orchestrator controls; it is a richer management layer that complements them.
+L00000244	Cross-surface settings-level evidence is owner-split rather than duplicated: Docker Manager owns DockerHub repository/auth/push policy settings and `/auth/push` blocked-state evidence, Source Control owns AI commit-message generation, and GitHub /Actions owns workflow runs plus the `Manage Secrets` action; Docker Manager stores only the links and receipts needed when those surfaces interact with build, publish, or Unraid flows. Source-lineage references such as `PuppetMasterDashComp.html` document where the combined concept appeared, but they do not create a new canonical owner.
+L00000245	
+L00000246	## Docker project detection and visibility rules
+L00000247	A project is treated as Docker-related when Puppet Master detects a container-oriented workflow such as:
+L00000248	- a `Dockerfile`
+L00000249	- compose configuration
+L00000250	- container-based preview/build target
+L00000251	- container publish settings already configured for the project
+L00000252	- an existing managed Unraid template repository associated with the project
+L00000253	
+L00000254	When detection is positive:
+L00000255	- show the contextual Docker Manager surface
+L00000256	- enable DockerHub repository, preview, publish, and Unraid template actions
+L00000257	- retain the user’s last-used Docker surface state for that project
+L00000258	
+L00000259	When detection is negative and `Hide Docker Manager when not used in Project.` is enabled:
+L00000260	- hide the contextual Docker Manager surface from normal project navigation
+L00000261	- retain settings and state, but do not foreground Docker workflows
+L00000262	
+L00000263	## Authentication model
+L00000264	
+L00000265	### Supported authentication inputs
+L00000266	Puppet Master must support both of these DockerHub authentication paths:
+L00000267	1. **Browser/device login**
+L00000268	   - the GUI launches Docker’s browser/device login flow
+L00000269	   - intended for low-friction interactive sign-in
+L00000270	   - preferred when the user wants guided sign-in from the desktop UI
+L00000271	2. **Personal Access Token (PAT)**
+L00000272	   - explicit token entry in the GUI
+L00000273	   - helper text explains that PAT is recommended
+L00000274	   - helper text explains where/how the user can obtain a PAT
+L00000275	   - intended to be the most explicit and durable advanced-user path
+L00000276	
+L00000277	PAT support remains mandatory even though browser login is supported.
+L00000278	
+L00000279	### Browser/device login execution contract
+L00000280	
+L00000281	- `cmd.docker.browser_login` MUST launch the DockerHub browser/device login flow and immediately emit `docker.auth.browser_login.started`.
+L00000282	- When the device/browser flow is initialized, Puppet Master MUST emit `docker.auth.browser_login.device_code_issued` with `verification_uri`, `user_code`, and `expires_in_seconds`.
+L00000283	- While awaiting completion, Puppet Master MUST emit `docker.auth.browser_login.polling` every 5 seconds until a terminal outcome occurs.
+L00000284	- Terminal outcomes are exactly one of:
+L00000285	  - `docker.auth.capability_validated`
+L00000286	  - `docker.auth.browser_login.cancelled`
+L00000287	  - `docker.auth.browser_login.timed_out`
+L00000288	  - `docker.auth.failed`
+L00000289	- PAT entry MUST be written through `cmd.docker.save_pat`; PAT format MAY fail locally before network validation runs.
+L00000290	
+L00000291	### Credential storage precedence and scope
+L00000292	
+L00000293	- Browser-login credentials MUST be read from Docker's credential-helper / `~/.docker/config.json` chain.
+L00000294	- PAT credentials MUST be read from the OS credential store only.
+L00000295	- DockerHub credentials are **global per OS user account**.
+L00000296	- `requested_auth_mode`, selected namespace/repository, and last validation snapshot remain **project-scoped UI state**.
+L00000297	- Clearing credentials MUST declare whether the action clears browser-login credentials, PAT credentials, or both.
+L00000298	
+L00000299	### Auth-expiry failure rule
+L00000300	
+L00000301	
+L00000302	If auth expires during image push, Puppet Master MUST emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
+L00000303	
+L00000304	### Requested vs effective auth state
+L00000305	
+L00000306	
+L00000307	#### Canonical DockerHub effective capability enum
+L00000308	
+L00000309	`effective_capabilities[]` is a closed enum for the first implementation:
+L00000310	
+L00000311	- `namespaces:list`
+L00000312	- `repositories:list`
+L00000313	- `repositories:create`
+L00000314	- `images:push`
+L00000315	- `repositories:read_private`
+L00000316	
+L00000317	Surface gating rules:
+L00000318	- Namespace discovery requires `namespaces:list`.
+L00000319	- Repository discovery / refresh requires `repositories:list`.
+L00000320	- Create Repository requires `repositories:create`.
+L00000321	- Push Image requires `images:push`.
+L00000322	- Validation of a private target repository requires `repositories:read_private` or a successful push-capable validation path.
+L00000323	- If a surface requires a capability the effective set does not contain, the control MUST remain visible but disabled, with inline explanation that cites the missing capability and `degraded_reason` when present.
+L00000324	
+L00000325	Puppet Master must model requested auth mode separately from effective capability.
+L00000326	
+L00000327	Required state concepts:
+L00000328	- `requested_auth_mode`: `browser`, `pat`, or another future explicit auth mode
+L00000329	- `effective_auth_provider_state`: authenticated / unauthenticated / degraded / expired
+L00000330	- `effective_capabilities[]`: a set of effective capabilities such as:
+L00000331	  - browse namespaces
+L00000332	  - browse repositories
+L00000333	  - create repository
+L00000334	  - push image
+L00000335	  - read private repository state
+L00000336	- `effective_account_identity`: visible DockerHub account/namespace identity
+L00000337	- `last_validation_timestamp`
+L00000338	- `last_validation_host`
+L00000339	- `degraded_reason` when requested mode and effective capability do not match
+L00000340	
+L00000341	User-visible rule:
+L00000342	- the UI must never imply that browser login or PAT automatically grants full repository-management capability
+L00000343	- the UI must explicitly show what is actually available after validation
+L00000344	
+L00000345	### Browser login capability rule
+L00000346	If browser-based DockerHub login can support namespace/repository browsing and repository creation, Puppet Master should allow those management actions through browser login as well. PAT remains the recommended explicit fallback, but it is not required when browser login yields equivalent effective capability.
+L00000347	
+L00000348	### Credential storage rule
+L00000349	- store tokens/credentials only in OS credential storage or Docker’s credential-helper path as appropriate
+L00000350	- never persist secrets to redb, YAML, project files, or evidence logs
+L00000351	- Docker Hub auth secret material remains out of redb; only validated identity/capability snapshots persist
+L00000352	- evidence/log capture must redact credentials, auth headers, and token-bearing environment variables
+L00000353	
+L00000354	## DockerHub repository discovery, selection, and creation
+L00000355	
+L00000356	### Repository selection behavior
+L00000357	Puppet Master must let the user:
+L00000358	- view discovered namespaces
+L00000359	- select the target namespace
+L00000360	- view repositories within the selected namespace
+L00000361	- refresh repository lists on demand
+L00000362	- choose an existing repository for push
+L00000363	- create a missing repository if needed for first publish
+L00000364	
+L00000365	DockerHub API behavior must be documented clearly:
+L00000366	- use Docker CLI / Buildx for local build, run, login, and push behavior
+L00000367	- use Docker Hub API for namespace/repository discovery and repository creation when app-managed listing/creation is needed
+L00000368	- do not conflate image registry push with template distribution
+L00000369	
+L00000370	### Missing repository behavior
+L00000371	If the selected DockerHub repository does not exist:
+L00000372	- Puppet Master may offer to create it automatically as part of first-push preparation
+L00000373	- the creation step must be explicit and visible
+L00000374	- the confirmation step must show:
+L00000375	  - namespace
+L00000376	  - repository name
+L00000377	  - privacy
+L00000378	- the confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting
+L00000379	
+L00000380	#### Repository creation confirmation flow
+L00000381	
+L00000382	
+L00000383	Repository creation is a two-step flow:
+L00000384	
+L00000385	1. `cmd.docker.create_repository` validates the proposed namespace/repository/privacy tuple and emits `docker.repository.create.confirmation_requested`.
+L00000386	2. The confirmation modal shows namespace, repository name, privacy, and the private-by-default notice.
+L00000387	3. Confirm dispatches `cmd.docker.create_repository.confirm`.
+L00000388	4. Cancel dispatches `cmd.docker.create_repository.cancel`.
+L00000389	
+L00000390	This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
+L00000391	
+L00000392	### Default repository privacy
+L00000393	
+L00000394	
+L00000395	- default privacy for newly created repositories: private
+L00000396	- the confirmation dialog must make this default explicit
+L00000397	- the user may change privacy in the dialog before creation
+L00000398	
+L00000399	## Build, run, preview, and publish flow
+L00000400	
+L00000401	### Build flow
+L00000402	- use `docker buildx build` as the deterministic image-build path
+L00000403	- perform preflight before build: engine reachability, compose/config validity, buildx availability, required ports, target repo/auth when push is requested
+L00000404	- capture structured build results including artifacts, logs, and image identity
+L00000405	- surface build results in chat, orchestrator, and Docker Manager UI
+L00000406	
+L00000407	### Run/preview flow
+L00000408	Puppet Master must be able to deploy and run project containers from within the app for testing workflows. When the project exposes user-facing access, Puppet Master must also provide a user-visible way to open/check the running container from within the UI.
+L00000409	
+L00000410	Required actions:
+L00000411	- start preview/run
+L00000412	- stop preview/run
+L00000413	- open exposed web UI or endpoint when available
+L00000414	- open logs
+L00000415	- inspect health status
+L00000416	- show resolved access URL/port if one exists
+L00000417	
+L00000418	#### Runtime access URL resolution
+L00000419	
+L00000420	Access URL resolution order is:
+L00000421	
+L00000422	1. explicit user override for this project
+L00000423	2. first published host-port mapping from compose / container inspect, preferring ports `443`, `80`, `3000`, `8080`, then the next published port
+L00000424	3. known web-UI metadata/label if present
+L00000425	4. no access URL
+L00000426	
+L00000427	When no access URL is available, Docker Manager MUST show `No direct access URL detected` and disable the open action rather than guessing.
+L00000428	
+L00000429	#### Runtime stream, port-forward, crash-gap, and network trust continuity
+L00000430	
+L00000431	Persisted stream intent applies to Actions logs, container logs, Kubernetes logs, and Orchestrator activity. Each stream surface MUST distinguish `follow`, `paused_snapshot`, and `historical_view`; after restart, `follow` intent is restored only after source revalidation and creation of a new stream session.
+L00000432	
+L00000433	Port-forward rebinding records local port reuse versus new allocation. If the target pod/workload drifted, the original local port is unavailable, or the target changed, the old session remains historical and a new session id is issued. Previously opened browser tabs are never silently rebound across target changes; they reconnect to the same validated target or show historical/degraded state with an explicit open-new-session action.
+L00000434	
+L00000435	Crash-time log and evidence rendering distinguishes `flushed-and-persisted` lines, locally buffered but unflushed lines, and the `unknown gap interval`. The UI renders the unknown gap explicitly instead of implying complete evidence.
+L00000436	
+L00000437	Docker Manager is the primary owner for runtime/Kubernetes alert ownership, while Dashboard and Orchestrator mirror attention state. The owner/mirror split keeps unhealthy containers, restart loops, failed readiness, failed rollouts, and port-forward failures actionable from Docker Manager even when the originating attention item appears in another surface.
+L00000438	
+L00000439	Runtime and GitHub-hosted surfaces consume the shared host policy when they open Actions, registry, or runtime links: `github_host_policy` distinguishes `github.com_only` and `enterprise_allowed`. If the `MVP` remains `github.com_only`, `GHES` and GitHub Enterprise Server URLs receive deterministic disabled-state UX rather than hidden fallback.
+L00000440	
+L00000441	Shared `/network/trust` policy records proxy mode `system`, `manual`, or `off`; `http_proxy`, `https_proxy`, and `no_proxy`; proxy credential source as the OS credential store only; and `per-domain` plus `/per-surface` opt-out rules. Trust policy is separate from Unraid metadata and starts from the OS trust store, with app custom CA bundle, per-host CA override, and validation and expiry reporting tracked outside registry metadata.
+L00000442	
+L00000443	#### Enterprise registry and Kubernetes host policy
+L00000444	
+L00000445	Private and enterprise registry configuration is represented as `registry_hosts[]`. Each `registry_hosts` entry records the registry host, host policy, trust/proxy inheritance, capability snapshot, and default push target so Docker Manager can decide pull, push, inspect, and browse behavior without conflating policy with transient reachability.
+L00000446	
+L00000447	Kubernetes access is represented as `k8s_host_policy`. The policy defines allowed contexts/clusters/namespaces and allowed verbs, including `apply`, `exec`, `port_forward`, and `logs`; UI command availability and Docker Manager subviews consume this policy rather than redefining it.
+L00000448	
+L00000449	Hosted/runtime registry and Kubernetes surfaces distinguish `offline_cached`, `network_blocked_by_policy`, `host_unreachable`, and `host_untrusted`. When cached evidence exists they render read-only cached state with freshness markers; policy-denied but otherwise valid registry or cluster actions surface canonical blocked/preflight state instead of generic network failure.
+L00000450	
+L00000451	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
+L00000452	
+L00000453	#### Preflight and approval ordering contract
+L00000454	
+L00000455	Docker, registry, Unraid, and Kubernetes mutations run preflight before approval prompts. Preflight resolves target identity, runtime/tool availability, host/trust/proxy policy, repository or cluster capability, and current drift/freshness; if those facts cannot be resolved, Puppet Master emits `blocked_preflight` and does not ask the user to approve an unknowable operation. Approval binds to the preflight snapshot and exact action scope, and retry/resume re-runs preflight when the target, permission snapshot, host policy, or governance state may have changed. Policy-denied outcomes after preflight or approval emit blocked/governance payloads with the policy source and reason-code family rather than `*.failed`.
+L00000456	
+L00000457	#### Kubernetes enablement rules and Kubernetes doctor checks
+L00000458	
+L00000459	Kubernetes is enabled as a project-focused Docker Manager subview when manifests, Helm artifacts, kube-linked receipts, active workload refs, or explicit project settings indicate Kubernetes relevance. Kubernetes doctor checks verify `kubectl` reachability, kubeconfig/context availability, namespace access, project-focused workload scope, Helm availability when Helm actions are selected, and allowed verbs for `apply`, `diff`, `logs`, `exec`, and `port_forward`. Failed checks keep manifest editing and cached inspection available when possible, but block mutation, exec, logs, or port-forward actions with explicit preflight/permission outcomes.
+L00000460	
+L00000461	#### Docker Manager active operation contracts
+L00000462	
+L00000463	Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage are active Docker Manager contract areas. Each one must expose typed operation identity, status/result payloads, preflight and permission outcomes, review/failure fields where applicable, and GUI action derivation from structured payloads. They must not disappear from the Docker Manager contract, be replaced by generic runtime wording, or render as vague planned placeholders.
+L00000464	
+L00000465	#### Event registration contract
+L00000466	
+L00000467	This plan defines Docker, registry, Kubernetes, and Unraid event producers and payload expectations for its owner surface. `Plans/Contracts_V0.md` remains the registration authority for stable cross-product event names, and `Plans/storage-plan.md` owns concrete persisted payload schemas; new Docker/Unraid/Kubernetes event families must be registered there before consumers treat them as durable canonical events.
+L00000468	
+L00000469	### Publish flow
+L00000470	#### Publish execution, approval, and blocked-outcome contract
+L00000471	
+L00000472	The canonical publish path is a **two-step** model:
+L00000473	
+L00000474	1. `cmd.orchestrator.build_run` performs local build / preview preparation only.
+L00000475	2. `cmd.orchestrator.push_image` performs remote DockerHub publication only.
+L00000476	
+L00000477	Normative rules:
+L00000478	- `cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template repos, or push remote template repos.
+L00000479	- `push_policy = after_build` means Puppet Master automatically dispatches `cmd.orchestrator.push_image` **after** a successful local build result exists; it does **not** fold remote publish into `build_run`.
+L00000480	- A direct user click on **Build** approves build only.
+L00000481	- A direct user click on **Push image** approves image push only.
+L00000482	- If the target DockerHub repository is missing, repository creation remains a separate side effect and requires its own confirmation/approval.
+L00000483	- If managed Unraid template-repo push is later requested, that remote push is a separate side effect and requires its own approval.
+L00000484	- `docker.publish.failed` means Puppet Master attempted the publish operation and the operation failed at runtime.
+L00000485	- `docker.publish.blocked` means Puppet Master intentionally did not execute the remote side effect because confirmation or permission approval was missing, rejected, or cancelled.
+L00000486	
+L00000487	#### Missing-repository interruption and resume contract
+L00000488	
+L00000489	If `cmd.orchestrator.push_image` resolves a missing target repository:
+L00000490	
+L00000491	1. Puppet Master MUST preserve the local build result and enter `awaiting_repo_creation_confirmation`.
+L00000492	2. Puppet Master MUST emit `docker.repository.create.confirmation_requested`.
+L00000493	3. Confirming creation dispatches `cmd.docker.create_repository.confirm`.
+L00000494	4. On successful repository creation, Puppet Master resumes the pending `cmd.orchestrator.push_image` attempt without forcing a rebuild.
+L00000495	5. If repository creation is cancelled, rejected, or blocked by policy, Puppet Master MUST emit `docker.publish.blocked` with:
+L00000496	   - `reason_code: repo_creation_not_confirmed`
+L00000497	   - `blocked_step: create_repository`
+L00000498	   - `allowed_action_ids[]`
+L00000499	6. `docker.publish.blocked` MUST preserve the already-built local image/result so the user can retry without rebuilding.
+L00000500	
+L00000501	- publish uses DockerHub-targeted image tags and namespace/repository selection
+L00000502	- push policy remains `manual` by default with optional `after_build`
+L00000503	- after successful push, capture and surface:
+L00000504	  - pushed tags
+L00000505	  - digest(s)
+L00000506	  - registry host
+L00000507	  - target namespace/repository
+L00000508	  - platform list
+L00000509	  - sanitized logs path
+L00000510	
+L00000511	#### Tag template resolution contract
+L00000512	
+L00000513	#### Auto-push approval and canonical publish-reference contract
+L00000514	
+L00000515	Approval rules:
+L00000516	- `push_policy = after_build` does not grant standing approval for remote side effects.
+L00000517	- Clicking **Build** approves only local build execution.
+L00000518	- When a successful build reaches the auto-dispatch point, Puppet Master MUST evaluate `external_publish_side_effect` for `cmd.orchestrator.push_image`.
+L00000519	- If publish approval is not satisfied at that point, Puppet Master MUST emit `docker.publish.blocked` with `blocked_step: push_image`, preserve the local build result, and surface **Push image** as the recovery CTA.
+L00000520	- DockerHub repository creation and managed-template remote repo create/push remain separately approved side effects even when `push_policy = after_build` is enabled.
+L00000521	
+L00000522	Canonical template source image selection:
+L00000523	- If the project sets `primary_publish_tag`, use it.
+L00000524	- Otherwise use the first tag emitted by the resolved tag-template list.
+L00000525	- Otherwise fall back to the lexicographically smallest tag only for legacy results that lack ordering metadata.
+L00000526	- If `docker_publish_result.digests[]` contains a manifest-list digest, that digest is the canonical `image_digest`; otherwise use the single pushed digest.
+L00000527	- The generated application template MUST use `<Repository>` = `<namespace>/<repository>:<primary_publish_tag>`.
+L00000528	
+L00000529	| Variable | Resolution source | Format | Failure behavior |
+L00000530	|---|---|---|---|
+L00000531	| `{commit}` | HEAD commit of the active project repo | first 12 lowercase hex chars | block publish if the template references `{commit}` and no HEAD commit exists |
+L00000532	| `{version}` | detected canonical project version (`Cargo.toml`, `package.json`, then explicit user override) | lowercase value after Docker-tag sanitization | block publish if unresolved and no user override exists |
+L00000533	| `{timestamp}` | UTC publish-start time | `YYYYMMDD-HHMMSSZ` | never fails |
+L00000534	
+L00000535	- Tag templates MAY combine literals and multiple variables.
+L00000536	- After substitution, tags MUST be lowercased.
+L00000537	- Characters outside `[a-z0-9_.-]` MUST be replaced with `-`.
+L00000538	- Consecutive `-` MUST be collapsed.
+L00000539	- An empty post-sanitization tag is invalid and MUST block publish with explicit remediation text.
+L00000540	
+L00000541	### Post-publish follow-on flow
+L00000542	After successful image publishing:
+L00000543	1. if `Generate/Update Unraid XML after successful publish` is enabled, generate or update the Unraid XML
+L00000544	2. if managed template-repo workflow is enabled, update the target template repo
+L00000545	3. auto-commit the template-repo change by default
+L00000546	4. do not auto-push by default
+L00000547	5. present a one-click push action from the UI
+L00000548	
+L00000549	## Unraid XML generation and distribution model
+L00000550	
+L00000551	### Canonical generated-artifact contract
+L00000552	
+L00000553	The managed Unraid flow produces three artifact classes:
+L00000554	
+L00000555	1. **Application template XML** at `<maintainer_slug>/<project_slug>.xml`
+L00000556	2. **Maintainer profile XML** at `ca_profile.xml`
+L00000557	3. **Repo-managed image assets** under `assets/maintainer/` when the user uploads images instead of referencing external URLs
+L00000558	
+L00000559	#### Artifact input provenance
+L00000560	
+L00000561	| Canonical PM field | Primary source | Fallback / user override | Required for auto-commit | Required for auto-push |
+L00000562	|---|---|---|---|---|
+L00000563	| `project_slug` | Project identity | User override in template settings | Yes | Yes |
+L00000564	| `display_name` | Project display name | User override | Yes | Yes |
+L00000565	| `image_ref` | `docker_publish_result` (`namespace/repository:tag`) | None | Yes | Yes |
+L00000566	| `image_digest` | `docker_publish_result.digest[]` | None | No | No |
+L00000567	| `registry_host` | `docker_publish_result.registry_host` | None | Yes | Yes |
+L00000568	| `web_ui_url` | Resolved preview/runtime access URL | User-entered URL override | No | No |
+L00000569	| `support_url` | Project support/docs URL | User-entered maintainer URL | No | Yes |
+L00000570	| `overview_markdown` | Project summary / README excerpt / prior template content | User-edited value | No | Yes |
+L00000571	| `icon_source` | Repo-managed uploaded asset or external URL | User choice | No | Yes |
+L00000572	| `category_labels[]` | Project metadata / prior template content | User-edited value | No | Yes |
+L00000573	| `config_items[]` | Compose/runtime config + prior template content | User-edited value | No | No |
+L00000574	| `maintainer_slug` | DockerHub namespace by default | User override | Yes | Yes |
+L00000575	| `maintainer_profile` | Shared or per-project `ca_profile` state | None | Yes | Yes |
+L00000576	
+L00000577	#### App-template minimum contract
+L00000578	
+L00000579	The first implementation MUST support, at minimum, deterministic generation and round-trip update of these conceptual fields:
+L00000580	
+L00000581	- display name
+L00000582	- image reference
+L00000583	- registry host
+L00000584	- overview/description content
+L00000585	- support URL
+L00000586	- web UI URL when present
+L00000587	- icon/image source
+L00000588	- category labels
+L00000589	- config entries derived from ports / volumes / environment / path mappings
+L00000590	- maintainer slug and owning template path
+L00000591	
+L00000592	Implementation rule:
+L00000593	- Puppet Master MAY use an internal normalized model rather than hard-coding UI logic directly to raw XML tags.
+L00000594	- However, the normalized model MUST map 1:1 to emitted XML content and MUST be documented.
+L00000595	- Unknown fields present in an existing template MUST be preserved on update unless the user explicitly removes them.
+L00000596	
+L00000597	#### `ca_profile.xml` round-trip rule
+L00000598	#### Explicit editability contract for all fields
+L00000599	
+L00000600	
+L00000601	The statement "all `ca_profile.xml` fields are editable" is satisfied by a two-layer editor model:
+L00000602	
+L00000603	1. **Structured editor** for the canonical known fields exposed in the standard UI.
+L00000604	2. **Advanced raw XML editor** for any field, element, attribute, or passthrough content not yet modeled by structured controls.
+L00000605	
+L00000606	Normative rules:
+L00000607	- The structured editor MUST round-trip through the same normalized model used by generation/update.
+L00000608	- Unknown or currently unmodeled content MUST remain editable through the advanced raw XML surface.
+L00000609	- Saving from either surface MUST preserve unmodified passthrough content verbatim.
+L00000610	- Puppet Master MUST NOT claim "all fields editable" unless both layers exist.
+L00000611	
+L00000612	`ca_profile.xml` editing is a **round-trip** contract, not a one-way generator.
+L00000613	
+L00000614	Required behavior:
+L00000615	- Puppet Master MUST parse existing `ca_profile.xml` into a normalized editor model.
+L00000616	- The editor model MUST preserve all existing fields, including fields the current UI does not yet expose individually.
+L00000617	- The first implementation MUST expose editable controls for, at minimum:
+L00000618	  - maintainer display name
+L00000619	  - maintainer slug
+L00000620	  - overview/about text
+L00000621	  - support URL
+L00000622	  - icon/image source
+L00000623	- When the user uploads an image, Puppet Master MUST copy it into the managed template repo by default and rewrite the profile to reference that repo-managed asset.
+L00000624	- When the user selects external URL mode, Puppet Master MUST preserve the external URL exactly as entered.
+L00000625	
+L00000626	#### Validation and review rules
+L00000627	
+L00000628	- A successful Docker publish is required before Puppet Master may treat `image_ref` as final for generated template output.
+L00000629	- Missing `support_url`, `overview_markdown`, or `icon_source` MUST mark the generated result as `needs_review`.
+L00000630	- `needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push and MUST surface a visible warning in Docker Manager.
+L00000631	- If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.
+L00000632	
+L00000633	#### Known-field registry and XML mapping (first implementation)
+L00000634	
+L00000635	
+L00000636	#### XML emission minima for first implementation
+L00000637	
+L00000638	The first implementation emits application templates with one canonical root shape:
+L00000639	
+L00000640	```xml
+L00000641	<Container version="2">
+L00000642	  <Name>Example App</Name>
+L00000643	  <Repository>namespace/repository:tag</Repository>
+L00000644	  <Registry>https://registry-1.docker.io</Registry>
+L00000645	  <Network>bridge</Network>
+L00000646	  <MyIP/>
+L00000647	  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+L00000648	  <Support>https://example.invalid/support</Support>
+L00000649	  <Overview><![CDATA[Markdown or HTML-safe overview text]]></Overview>
+L00000650	  <Category>Tools:Utilities</Category>
+L00000651	  <Icon>assets/maintainer/icon.png</Icon>
+L00000652	  <Config ... />
+L00000653	</Container>
+L00000654	```
+L00000655	
+L00000656	Canonical rules:
+L00000657	- Root element is exactly `<Container version="2">`.
+L00000658	- Known child elements emit in this order: `Name`, `Repository`, `Registry`, `Network`, `MyIP`, `WebUI`, `Support`, `Overview`, `Category`, `Icon`, then repeated `Config`.
+L00000659	- `Overview` emits as CDATA.
+L00000660	- All other known text nodes emit as escaped text.
+L00000661	- Optional known elements are omitted when empty.
+L00000662	- Unknown elements, unknown attributes, and XML comments from an existing template MUST be preserved verbatim and re-emitted after the last known sibling in their original relative order unless the user explicitly removes them.
+L00000663	- Existing unknown root attributes MUST be preserved verbatim on round-trip update.
+L00000664	
+L00000665	`Config` type mapping for first implementation:
+L00000666	
+L00000667	| Normalized field | Emitted `Config` shape | Required attributes |
+L00000668	|---|---|---|
+L00000669	| Port mapping | `<Config Type="Port" ... />` | `Name`, `Target`, `Default`, `Mode`, `Display`, `Required`, `Mask="false"` |
+L00000670	| Path / bind mount | `<Config Type="Path" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+L00000671	| Environment variable | `<Config Type="Variable" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask` |
+L00000672	| Device mapping | `<Config Type="Device" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+L00000673	
+L00000674	Attribute mapping rules:
+L00000675	- `Name` = stable user-visible label; fall back to `Target` when no label exists.
+L00000676	- `Target` = container-side port/path/variable/device identifier.
+L00000677	- `Default` = host-side or default value.
+L00000678	- `Display` = `always` for first implementation unless hidden by explicit user choice.
+L00000679	- `Required` = `true` only when the value is mandatory for a successful container run.
+L00000680	- `Mask` = `true` only for secret environment variables; otherwise `false`.
+L00000681	- `Mode` is required only for `Type="Port"` and is exactly `tcp` or `udp`.
+L00000682	
+L00000683	If Puppet Master cannot map a source item into the required attribute set without inventing values, it MUST preserve the prior XML unchanged for that item and mark the result `needs_review`.
+L00000684	
+L00000685	##### Application template XML
+L00000686	
+L00000687	| Normalized field | XML element / shape | Required for local save | Required for auto-push |
+L00000688	|---|---|---|---|
+L00000689	| `display_name` | `<Name>` text | Yes | Yes |
+L00000690	| `image_ref` | `<Repository>` text | Yes | Yes |
+L00000691	| `registry_host` | `<Registry>` text | No | Yes |
+L00000692	| `web_ui_url` | `<WebUI>` text | No | No |
+L00000693	| `support_url` | `<Support>` text | No | Yes |
+L00000694	| `overview_markdown` | `<Overview>` CDATA | No | Yes |
+L00000695	| `icon_source` | `<Icon>` text | No | Yes |
+L00000696	| `category_labels[]` | `<Category>` text | No | Yes |
+L00000697	| `config_items[]` | repeated `<Config ... />` elements | No | No |
+L00000698	
+L00000699	##### `ca_profile.xml` recognized fields
+L00000700	
+L00000701	| Normalized field | XML element | Required for auto-push |
+L00000702	|---|---|---|
+L00000703	| `display_name` | `<Name>` | Yes |
+L00000704	| `overview_markdown` | `<Overview>` | Yes |
+L00000705	| `support_url` | `<Support>` | Yes |
+L00000706	| `icon_source` | `<Icon>` | Yes |
+L00000707	
+L00000708	### Distribution model
+L00000709	### Unmanaged generation target contract
+L00000710	
+L00000711	If `Generate/Update Unraid XML after successful publish` is enabled but managed template-repo handling is disabled, unconfigured, or invalid, Puppet Master MUST still generate a local artifact set under:
+L00000712	
+L00000713	`.puppet-master/generated/unraid/<project_id>/<publish_result_id>/`
+L00000714	
+L00000715	Required output:
+L00000716	- `template/<maintainer_slug>/<project_slug>.xml`
+L00000717	- `template/ca_profile.xml` when the active profile is projected into the result
+L00000718	- `template/assets/maintainer/**` for repo-managed uploaded assets referenced by the result
+L00000719	
+L00000720	In this mode:
+L00000721	- `unraid.template.generation.completed` still fires
+L00000722	- `template_repo_id` is `null`
+L00000723	- `commit_status` is `not_attempted`
+L00000724	- `push_status` is `not_attempted`
+L00000725	- UI copy MUST describe the result as **generated locally / not attached to a managed repo**
+L00000726	
+L00000727	The default distribution target for generated Unraid XML is a separate Unraid template repository / Community Applications-friendly template location. The main application repository may still be offered as an optional export target, but it is not the primary default.
+L00000728	
+L00000729	Rationale that must be preserved in docs:
+L00000730	- DockerHub stores images, not Unraid XML
+L00000731	- public Unraid template distribution is commonly done through GitHub template repositories / Community Applications workflows
+L00000732	- installed copies are stored locally on the Unraid server under `/boot/config/plugins/dockerMan/templates-user`
+L00000733	
+L00000734	### Generation default
+L00000735	- automatically generate/update Unraid XML after successful image publish by default
+L00000736	- nearby GUI toggle disables this behavior
+L00000737	- generation is part of the first-class Docker publish flow, not a hidden manual afterthought
+L00000738	
+L00000739	### Managed template-repo workflow default
+L00000740	- Puppet Master should manage the Unraid template repository workflow itself by default
+L00000741	- the user can disable managed template-repo handling in settings
+L00000742	
+L00000743	## Unraid template repository setup, layout, and publishing
+L00000744	
+L00000745	### Managed template-repo identity and lifecycle contract
+L00000746	
+L00000747	#### Default identity rules
+L00000748	
+L00000749	
+L00000750	When the user chooses **create new template repo**, Puppet Master defaults to:
+L00000751	
+L00000752	- **repo name:** `<project_slug>-unraid-template`
+L00000753	- **default branch:** `main`
+L00000754	- **local managed working copy:** `.puppet-master/unraid-template-repos/<project_id>/`
+L00000755	- **template path inside repo:** `<maintainer_slug>/<project_slug>.xml`
+L00000756	- **maintainer profile path:** `ca_profile.xml`
+L00000757	
+L00000758	The user may override repo name, branch, local path, and maintainer slug during setup.
+L00000759	
+L00000760	#### Existing-repo selection validation
+L00000761	
+L00000762	When the user chooses **select existing template repo**, Puppet Master MUST validate:
+L00000763	
+L00000764	1. the path/repo is reachable
+L00000765	2. the repo root is writable locally
+L00000766	3. the selected branch exists or can be created explicitly
+L00000767	4. the repo either already matches the required layout or can be migrated with explicit user confirmation
+L00000768	5. the repo does not contain uncommitted unrelated changes unless the user explicitly adopts the repo in its current state
+L00000769	
+L00000770	If validation fails, Puppet Master MUST keep managed publishing disabled for that project and show the exact failing condition.
+L00000771	
+L00000772	#### Template-repo status enum
+L00000773	
+L00000774	The template-repo status row MUST use one canonical state model:
+L00000775	
+L00000776	| State | Meaning | User-visible consequence |
+L00000777	|---|---|---|
+L00000778	| `unconfigured` | Managed publishing enabled but no repo has been set up yet | Show setup CTA |
+L00000779	| `config_invalid` | Repo/path/branch settings exist but validation failed | Block publish follow-on push; show remediation |
+L00000780	| `clean` | Repo is configured and has no pending local changes | Ready for next generation/update |
+L00000781	| `dirty_uncommitted` | Managed files changed locally and are not yet committed | Auto-commit may run if changes are PM-owned and safe |
+L00000782	| `committed_local_only` | Latest managed change is committed locally but not yet pushed | Show one-click push CTA |
+L00000783	| `push_in_progress` | Remote push is running | Disable duplicate push actions |
+L00000784	| `push_failed` | Remote push failed after local commit | Preserve local commit; show retry CTA and error |
+L00000785	| `diverged_remote` | Remote branch changed or local branch is behind/ahead unexpectedly | Block auto-push; require review/reconcile |
+L00000786	| `needs_review` | Generated template/profile content is incomplete or review-blocked | Allow local inspection/editing; block auto-push |
+L00000787	
+L00000788	#### Transition rules
+L00000789	
+L00000790	- After successful image publish, Puppet Master generates or updates the managed XML artifacts.
+L00000791	- If managed publishing is enabled and validation passes, Puppet Master MAY auto-commit the change by default.
+L00000792	- `needs_review` is entered when required review fields are missing (`support_url`, `overview_markdown`, `icon_source`) or when existing XML cannot be mapped safely without preserving passthrough content.
+L00000793	- `needs_review` is cleared only when a regeneration pass or explicit user save produces a template/profile with all review-required fields present and no unmapped-field warning remains.
+L00000794	- When `needs_review` clears, the next state is:
+L00000795	  - `dirty_uncommitted` if managed files changed locally
+L00000796	  - `clean` if no local managed diff remains
+L00000797	- PM-owned paths are exactly:
+L00000798	  - `ca_profile.xml`
+L00000799	  - `<maintainer_slug>/<project_slug>.xml`
+L00000800	  - `assets/maintainer/**` written in the current generation pass
+L00000801	- Auto-commit is allowed only when the working-tree diff is fully contained within the PM-owned path set for the current generation pass.
+L00000802	- Any unrelated tracked or untracked file change blocks auto-commit and surfaces a `Review repo state` CTA.
+L00000803	- Auto-commit MUST stop and surface review instead of committing when:
+L00000804	  - repo status is `config_invalid`, `diverged_remote`, or `needs_review`
+L00000805	  - unrelated uncommitted files exist in the repo
+L00000806	  - required managed paths cannot be updated deterministically
+L00000807	- A successful local auto-commit transitions the repo to `committed_local_only`.
+L00000808	- One-click push transitions `committed_local_only -> push_in_progress -> clean` on success.
+L00000809	- A failed push transitions `push_in_progress -> push_failed` and MUST preserve the local commit for retry.
+L00000810	- `diverged_remote` exits only after the user resolves the branch divergence externally or through a future dedicated reconcile flow and Puppet Master re-validates the repo state.
+L00000811	
+L00000812	`commit_status` enum:
+L00000813	- `not_attempted`
+L00000814	- `committed`
+L00000815	- `skipped_review_required`
+L00000816	- `skipped_unrelated_changes`
+L00000817	- `failed`
+L00000818	
+L00000819	`push_status` enum:
+L00000820	- `not_attempted`
+L00000821	- `skipped_auto_push_disabled`
+L00000822	- `push_in_progress`
+L00000823	- `completed`
+L00000824	- `failed`
+L00000825	
+L00000826	#### Dirty-repo safety rule
+L00000827	
+L00000828	If the selected repo already contains unrelated local modifications, Puppet Master MUST NOT silently fold managed template changes into that worktree state. It MUST require one of:
+L00000829	
+L00000830	- user cleans the repo first
+L00000831	- user explicitly adopts the dirty repo state
+L00000832	- user switches to a different managed repo path
+L00000833	
+L00000834	This prevents the managed workflow from mutating unrelated maintainer work without review.
+L00000835	
+L00000836	### Setup flow
+L00000837	When managed Unraid template-repo publishing is enabled and no template repo is configured yet, Puppet Master must offer both:
+L00000838	- creating a new template repo automatically
+L00000839	- selecting an existing template repo
+L00000840	
+L00000841	### Default repo shape
+L00000842	- default: one template repo per project
+L00000843	
+L00000844	### Default layout
+L00000845	For managed per-project template repos, use:
+L00000846	- root-level `ca_profile.xml`
+L00000847	- maintainer folder
+L00000848	- `project-name.xml` inside that maintainer folder
+L00000849	
+L00000850	### Maintainer folder source
+L00000851	- default the maintainer folder name to the project’s DockerHub namespace
+L00000852	- allow the user to override it with a custom maintainer slug
+L00000853	
+L00000854	### Commit and push behavior
+L00000855	- auto-commit template-repo changes by default
+L00000856	- auto-push remains configurable but default disabled
+L00000857	- expose a one-click push action in the UI after commit
+L00000858	- present template-repo dirty / committed / ready-to-push status in the Docker Manager surface
+L00000859	
+L00000860	## `ca_profile.xml` behavior
+L00000861	
+L00000862	### Generation rule
+L00000863	If `ca_profile.xml` does not exist, Puppet Master must generate it and tell the user it still needs to be configured/reviewed.
+L00000864	
+L00000865	### Scope model
+L00000866	- default scope: shared cross-project maintainer profile
+L00000867	- optional override: per-project maintainer profile
+L00000868	
+L00000869	### Editability rule
+L00000870	All `ca_profile.xml` fields must be editable by the user.
+L00000871	
+L00000872	### Image handling
+L00000873	The `ca_profile.xml` editor must support both:
+L00000874	- uploading/selecting an image that Puppet Master copies into the managed template repository
+L00000875	- referencing an external hosted image URL
+L00000876	
+L00000877	Default for uploaded images:
+L00000878	- if the user uploads a picture through Puppet Master, copy it into the managed template repository by default and point `ca_profile.xml` at that repo-managed asset
+L00000879	
+L00000880	### User-visible messaging
+L00000881	When `ca_profile.xml` was auto-generated, the UI must show a clear reminder that the user should configure public-facing maintainer metadata before treating the repo as final.
+L00000882	
+L00000883	## Data/state model to preserve in implementation docs
+L00000884	
+L00000885	
+L00000886	### Canonical scope split and blocked-outcome state
+L00000887	
+L00000888	To keep GUI, orchestrator, storage, and post-publish behavior aligned, the following scope rules are normative:
+L00000889	
+L00000890	- `Hide Docker Manager when not used in Project.` is a **global** setting; the older `Hide Docker Manage when not used in Project.` key is a migration alias only.
+L00000891	- Docker Manager navigation/dock/panel state is **project-scoped**.
+L00000892	- For project-centric surfaces, widget layouts are project-scoped with a limited global fallback only when no project is open.
+L00000893	- Shared `ca_profile` source state is **global** unless the project explicitly enables per-project override.
+L00000894	- Template-repo configuration and TemplateRepoStatus are **project-scoped**.
+L00000895	- Effective-auth snapshots are advisory cached state only until revalidation.
+L00000896	- Blocked remote side effects are first-class state transitions and MUST remain distinguishable from runtime failures in UI state, event state, and persisted results.
+L00000897	
+L00000898	Implementation-facing docs should preserve the following state concepts so GUI, orchestration, and persistence agree on one model:
+L00000899	- Docker project detection state
+L00000900	- `Hide Docker Manager when not used in Project.` setting, with the legacy `Hide Docker Manage when not used in Project.` alias migrated on read
+L00000901	- requested auth mode
+L00000902	- effective auth capability set
+L00000903	- validated DockerHub account identity
+L00000904	- selected namespace and repository
+L00000905	- selected repository privacy for first-time creation
+L00000906	- push policy
+L00000907	- image/tag template defaults
+L00000908	- auto-generate Unraid XML toggle
+L00000909	- managed template-repo enabled toggle
+L00000910	- template-repo location / remote / branch state
+L00000911	- auto-push toggle
+L00000912	- template-repo dirty/committed/pushed status
+L00000913	- shared vs per-project `ca_profile.xml` scope
+L00000914	- uploaded image asset mode vs external URL mode
+L00000915	
+L00000916	### Orchestrator-linked state vocabulary and help semantics
+L00000917	
+L00000918	Docker Manager is a consumer of shared orchestrator/runtime vocabulary, not a separate owner for those terms. `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, `00-plans-index.md`, and `plans-index` retain first-class ownership for definitions and routing boundaries such as Feature Seam, Work Package, package/seam overseers, promotion class, lane pool, contamination, safe point, restore point, rollback, and effective execution identity. Docker Manager copy and state preserve the boundary between execution truth, projections, and `/page` or widget/page UI-only overlays.
+L00000919	
+L00000920	For orchestrator-linked rows, badges, receipts, disabled controls, and GUI help-entry text:
+L00000921	- `hard_gate` / HITL `/blocked` `remote-side-effect` actions use the canonical approval/blocked flow and cannot be bypassed by generic UI confirmation; Docker Manager may render the blocker, but must not downgrade it into local confirmation copy.
+L00000922	- `action-specific` confirmation rules remain distinct from HITL approval: create repository, push, rollback, cleanup, delete, and cluster mutation flows keep their own reversibility and confirmation evidence while non-bypassable `hard_gate` actions still use allowed action IDs rather than generic modals.
+L00000923	- The requested vs effective execution identity remains runtime-facing and auditable. Runtime facts and visible state preserve `requested`, `effective`, `selection_reason`, `/clamped`, `/switch`, `/switching`, `/auth/account`, `/persona/runtime`, `/provider/model`, `/model/variant/auth/account`, requested Persona, effective Persona, requested platform/model/variant/auth/account policy, effective platform/model/variant/auth/account, provider/auth/account selection flow, selection/switch reason, skipped vs honored/clamped Persona controls, and skipped/clamped controls. `requested_account_policy` is not a substitute for a user-selected `requested_account_id`; concrete account selection and fallback remain visible to provider, chat-thread, `/chat/SCM`, and SCM consumers.
+L00000924	- Runtime/projection events are classified as runtime-internal, operator-visible, or chat-thread resolution events. The multi-project, multi-account, and multi-worktree orchestration model scopes identity, `/projection/storage`, `/seam/package/node`, account selection, and account fallback by project, package, seam, node, account, and worktree instead of collapsing them into a single current context.
+L00000925	- Stale `tier_id` usage is migration-only compatibility state, not a coordination-state key for Docker Manager. Package, seam, lane, node, attempt, receipt, worktree, and runtime asset references remain the owner keys for new navigation and audit joins.
+L00000926	- `cmd.panel.switch` is shell-state only: it may choose Docker Manager as the panel/shell occupant, but object-bearing targeting must route through the shared route/open target contract instead of extending the panel-switch args shape. A `route-activation` request must not reuse destination-local state when doing so would obscure the requested target in `/GUI`.
+L00000927	- PM-owned SCM state is cross-surface state. Managed template repositories, active git operations, live-run artifact roots, and worktree recovery state register with Orchestrator, Source Control, `/Source`, and Docker Manager rather than remaining hidden in one surface; `Orchestrator_Page`, `Orchestrator_Page.md`, `/recovery`, `/worktree`, cross-surface lineage, `allowed_action_ids`, and `allowed_action_ids[]` stay visible where recovery and destination panels consume them.
+L00000928	- Requested/effective display groups use the exact labels `Requested`, `Effective`, `Reason`, `Support`, `Inherited from`, and `Overridden by` when Docker Manager explains inherited policy, project policy, user override, account fallback, or capability degradation.
+L00000929	- Help text must not flatten Feature Seam, Work Package, Weak Integration, Corroboration, Promotion, Graph Patch, Concern lifecycle, Lane vs Worktree, requested vs effective, safe point vs restore point, historical vs superseded vs revoked, or History vs Ledger into a one-line tooltip. Simple/Expert/ELI5, `/Expert/ELI5`, and `/tooltip` variants use stable canonical terminology, distinguish object vs state vs action, and explain why the state exists from canonical reason codes and evidence rather than panel-local prose.
+L00000930	- Dedicated help-entry candidates include Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, and historical vs superseded vs revoked vs reopened.
+L00000931	- Contextual help is limited to local button affordances, simple counts or `/badges`, one-surface-only controls whose meaning is obvious from context, and provider-specific caveats shown near the relevant controls; it must not replace the canonical state vocabulary above.
+L00000932	- Runtime recovery copy keeps `safe-point`, `restore-point`, rollback, and contamination distinct across `/storage/UI`; a safe point is an execution recovery anchor, a restore point is user-facing saved-state/recovery vocabulary only where the owning UI/storage contract declares it, rollback is the explicit mutation outcome, and contamination is a governance/storage condition that affects reuse, retry, and promotion eligibility.
+L00000933	- Blocked payload normalization treats legacy `reason_code` and `recovery_options[]` as compatibility inputs while runtime-facing blocked payloads use canonical `blocked_reason_code`, `allowed_action_ids`, and `allowed_action_ids[]`.
+L00000934	
+L00000935	## Safety and constraints
+L00000936	- repository creation confirmation is mandatory and non-bypassable
+L00000937	- secrets must not be written to redb, project files, YAML, or evidence
+L00000938	- publish/template-repo flows must redact secrets in logs/evidence
+L00000939	- docs must distinguish DockerHub image distribution from Unraid template distribution
+L00000940	- browser login and PAT must be documented as different inputs that may lead to different effective capability
+L00000941	- the UI must not claim full repository-management support when validation shows only partial capability
+L00000942	
+L00000943	## Initial non-goals
+L00000944	The first-class scope above does **not** require initial automation for:
+L00000945	- Community Applications submission-form submission
+L00000946	- forum support-thread creation
+L00000947	- fully automatic remote template-repo push by default
+L00000948	- bypassing manual review for public maintainer metadata correctness
+L00000949	
+L00000950	## Acceptance criteria
+L00000951	- The GUI exposes both browser login and PAT entry, with PAT-recommended helper text and clear guidance.
+L00000952	- The GUI shows requested auth mode and effective capability separately.
+L00000953	- DockerHub namespace and repository discovery works from supported auth inputs.
+L00000954	- Missing DockerHub repo creation is guarded by a mandatory non-bypassable confirmation showing namespace, repo name, and privacy.
+L00000955	- New repository creation defaults to private.
+L00000956	- Puppet Master can build and run project containers for testing and provide user-openable access points when available.
+L00000957	- Docker publish results surface digest/tag/registry info without leaking credentials.
+L00000958	- Unraid XML auto-generation/update is enabled by default after successful publish and can be disabled near DockerHub settings.
+L00000959	- Managed Unraid template-repo workflow is enabled by default and can be disabled.
+L00000960	- The default template-repo layout is root `ca_profile.xml` plus maintainer folder plus `project-name.xml`.
+L00000961	- The default maintainer folder source is the DockerHub namespace, but the user can override it.
+L00000962	- `ca_profile.xml` is generated if missing, all fields are editable, shared cross-project scope is default, and per-project override is available.
+L00000963	- Profile images can be either repo-managed uploaded assets or externally hosted URLs; uploaded images default to repo-managed assets.
+L00000964	- Template-repo changes auto-commit by default, do not auto-push by default, and expose a one-click push action in the UI.
+L00000965	
+L00000966	## Remote Side-Effect Blocked Payload Normalization (2026-03-09)
+L00000967	
+L00000968	The Docker/Unraid remote-side-effect contracts remain the reference pattern for blocked remote mutation and must use canonical runtime payload names.
+L00000969	
+L00000970	Required runtime-facing rules:
+L00000971	- remote side effects blocked by confirmation/policy remain `blocked`, not `failed`
+L00000972	- preserve completed local work whenever remote publish/creation steps are blocked
+L00000973	- auth expiry during publish blocks the publish path without discarding the completed local build result
+L00000974	- remote-side-effect approval requirements remain blocked until explicitly resolved
+L00000975	- auth recovery alone does not auto-resubmit or auto-publish a blocked remote side effect; explicit resume/retry remains required
+L00000976	- UI must explain when a local artifact exists but remote publish remains blocked
+L00000977	- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
+L00000978	- domain-specific `reason_code` values MAY remain internal detail, but MUST map into canonical runtime taxonomy at shared surfaces
+L00000979	
+L00000980	Canonical runtime-facing blocked payload shape:
+L00000981	- `blocked_reason_code`
+L00000982	- ordered `allowed_action_ids[]`
+L00000983	- `preserved_local_work`
+L00000984	- `detail_ref?`
+L00000985	
+L00000986	Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+L00000987	
+L00000988	## Owner / Consumer Map
+L00000989	
+L00000990	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Containers_Registry_and_Unraid.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000991	
+L00000992	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000993	
+L00000994	## PlanUnits
+L00000995	
+L00000996	### CRAU-002 - Document Scope And Owner Boundaries
+L00000997	
+L00000998	```yaml
+L00000999	plan_unit_id: CRAU-002
+L00001000	unit_type: requirement
+L00001001	status: accepted
+L00001002	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001003	canonical_text: >-
+L00001004	  Containers, Registry, and Unraid Integration is the SSOT for DockerHub
+L00001005	  authentication UX and state, requested-vs-effective Docker auth capability,
+L00001006	  namespace/repository discovery and creation, protected repository creation,
+L00001007	  first-class Docker Manager GUI behavior, Unraid template workflows, and
+L00001008	  ca_profile.xml; it supplies detailed contracts to newtools, FinalGUISpec, and
+L00001009	  Orchestrator_Page without replacing those owner docs.
+L00001010	gui_related: true
+L00001011	gui_classification_reason: The scope names DockerHub authentication UX, first-class Docker management GUI behavior, settings, controls, dialogs, and orchestrator surfaces.
+L00001012	split_recommended: true
+L00001013	split_recommendation_reason: Source spans S0002-S0003 mix canonical scope with owner/consumer routing across runtime, settings, and orchestrator docs.
+L00001014	depends_on: []
+L00001015	unblocks: [CRAU-003, CRAU-004, CRAU-007, CRAU-024]
+L00001016	acceptance_criteria:
+L00001017	  - DockerHub auth UX/state, requested-vs-effective Docker auth, repository management, protected creation, Docker Manager GUI behavior, Unraid workflow, and ca_profile.xml remain individually traceable to this owner doc.
+L00001018	  - Plans/newtools.md, Plans/FinalGUISpec.md, and Plans/Orchestrator_Page.md reference this plan for detailed DockerHub, Docker Manager, and Unraid behavior without re-owning those contracts.
+L00001019	  - Plans/feature-list.md and Plans/GUI_Rebuild_Requirements_Checklist.md register the first-class GUI/runtime scope introduced here.
+L00001020	validation_surfaces:
+L00001021	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001022	  - python3 scripts/pm-plan-index.py validate
+L00001023	risk_class: owner_boundary_drift
+L00001024	reasoning_tier: high
+L00001025	context_scope: containers_registry_unraid_owner_boundaries
+L00001026	implementation_surfaces:
+L00001027	  - Plans/Containers_Registry_and_Unraid.md
+L00001028	  - Plans/newtools.md
+L00001029	  - Plans/FinalGUISpec.md
+L00001030	  - Plans/Orchestrator_Page.md
+L00001031	node_compile_hint:
+L00001032	  mode: owner_boundary_contract
+L00001033	  create_worknodes: false
+L00001034	source_lineage:
+L00001035	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0002
+L00001036	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0003
+L00001037	preserved_exact_tokens:
+L00001038	  - "DockerHub authentication UX and state modeling"
+L00001039	  - "Requested vs effective Docker auth capability"
+L00001040	  - "Protected repository-creation rules"
+L00001041	  - "First-class Docker management GUI behavior"
+L00001042	  - "`ca_profile.xml`"
+L00001043	  - "Docker Manage surface requirements"
+L00001044	negative_constraints:
+L00001045	  - "This plan does not replace the existing preview/build/runtime sections in `Plans/newtools.md`, the settings UI in `Plans/FinalGUISpec.md`, or the orchestrator control surface in `Plans/Orchestrator_Page.md`."
+L00001046	owner_hints:
+L00001047	  - Plans/Containers_Registry_and_Unraid.md
+L00001048	  - Plans/newtools.md
+L00001049	  - Plans/FinalGUISpec.md
+L00001050	  - Plans/Orchestrator_Page.md
+L00001051	```
+L00001052	
+L00001053	### CRAU-003 - First-Class Container Workflow Goals
+L00001054	
+L00001055	```yaml
+L00001056	plan_unit_id: CRAU-003
+L00001057	unit_type: requirement
+L00001058	status: accepted
+L00001059	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001060	canonical_text: >-
+L00001061	  Puppet Master treats Docker as a first-class workflow: users can authenticate
+L00001062	  through browser login or PAT, build and run containers, inspect running
+L00001063	  containers in-app, publish to DockerHub, safely create missing repositories,
+L00001064	  generate or update Unraid XML after successful publish by default, manage a
+L00001065	  dedicated Unraid template repository by default, keep secrets out of redb,
+L00001066	  project files, and evidence logs, and keep Docker GUI controls contextual.
+L00001067	gui_related: true
+L00001068	gui_classification_reason: The goals include user authentication paths, in-app inspection, publishing workflow, and contextual GUI visibility.
+L00001069	split_recommended: false
+L00001070	depends_on: [CRAU-002]
+L00001071	unblocks: [CRAU-004, CRAU-007, CRAU-025, CRAU-026]
+L00001072	acceptance_criteria:
+L00001073	  - Docker remains a first-class workflow rather than a small extension of generic Preview/Build.
+L00001074	  - Browser login and PAT authentication remain available, with PAT preserved as an explicit durable path.
+L00001075	  - Build, run, publish, missing-repository creation, Unraid XML generation, and managed template-repository handling remain goals of the same feature area.
+L00001076	  - Secrets are not written to redb, project files, or evidence logs.
+L00001077	  - Docker-heavy controls remain contextual instead of permanently cluttering non-container projects.
+L00001078	validation_surfaces:
+L00001079	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001080	  - python3 scripts/pm-plan-index.py validate
+L00001081	risk_class: scope_regression
+L00001082	reasoning_tier: standard
+L00001083	context_scope: first_class_container_workflow_goals
+L00001084	implementation_surfaces:
+L00001085	  - Plans/Containers_Registry_and_Unraid.md
+L00001086	node_compile_hint:
+L00001087	  mode: product_goal_readiness
+L00001088	  create_worknodes: false
+L00001089	source_lineage:
+L00001090	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0004
+L00001091	preserved_exact_tokens:
+L00001092	  - "browser-based login"
+L00001093	  - "PAT"
+L00001094	  - "build and run containers"
+L00001095	  - "publish to DockerHub"
+L00001096	  - "automatically generate/update Unraid XML"
+L00001097	  - "managed template-repo handling"
+L00001098	  - "redb"
+L00001099	  - "evidence logs"
+L00001100	negative_constraints:
+L00001101	  - "Docker support must not collapse back into generic Preview/Build-only behavior."
+L00001102	owner_hints:
+L00001103	  - Plans/Containers_Registry_and_Unraid.md
+L00001104	```
+L00001105	
+L00001106	### CRAU-004 - Containers And Registry Runtime Settings
+L00001107	
+L00001108	```yaml
+L00001109	plan_unit_id: CRAU-004
+L00001110	unit_type: requirement
+L00001111	status: accepted
+L00001112	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001113	canonical_text: >-
+L00001114	  Settings > Advanced > Containers & Registry exposes Docker runtime controls:
+L00001115	  the runtime selector with docker default, Docker binary path override, compose
+L00001116	  file/path defaults, compose project-name strategy values auto, fixed, and
+L00001117	  hash-based, build context path, Dockerfile path, optional target stage, target
+L00001118	  platforms, and Buildx readiness status.
+L00001119	gui_related: true
+L00001120	gui_classification_reason: This unit defines visible settings controls and status display.
+L00001121	split_recommended: true
+L00001122	split_recommendation_reason: Source span S0006 also contains DockerHub auth, repository, Unraid, visibility, and ca_profile.xml settings split into adjacent units.
+L00001123	depends_on: [CRAU-002, CRAU-003]
+L00001124	unblocks: [CRAU-005, CRAU-006, CRAU-011]
+L00001125	acceptance_criteria:
+L00001126	  - The runtime selector defaults to docker.
+L00001127	  - Docker binary path override, compose defaults, build context path, Dockerfile path, optional target stage, target platforms, and Buildx readiness remain individually addressable.
+L00001128	  - Compose project-name strategy preserves the exact values auto, fixed, and hash-based.
+L00001129	validation_surfaces:
+L00001130	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001131	  - python3 scripts/pm-plan-index.py validate
+L00001132	risk_class: settings_surface_drift
+L00001133	reasoning_tier: standard
+L00001134	context_scope: containers_registry_runtime_settings
+L00001135	implementation_surfaces:
+L00001136	  - Plans/Containers_Registry_and_Unraid.md
+L00001137	  - Plans/FinalGUISpec.md
+L00001138	  - Plans/newtools.md
+L00001139	node_compile_hint:
+L00001140	  mode: gui_settings_contract
+L00001141	  create_worknodes: false
+L00001142	source_lineage:
+L00001143	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+L00001144	preserved_exact_tokens:
+L00001145	  - "Settings > Advanced > Containers & Registry"
+L00001146	  - "`docker` default"
+L00001147	  - "`auto`"
+L00001148	  - "`fixed`"
+L00001149	  - "`hash-based`"
+L00001150	  - "Buildx readiness status"
+L00001151	negative_constraints: []
+L00001152	owner_hints:
+L00001153	  - Plans/Containers_Registry_and_Unraid.md
+L00001154	  - Plans/FinalGUISpec.md
+L00001155	```
+L00001156	
+L00001157	### CRAU-005 - DockerHub Auth And Repository Settings
+L00001158	
+L00001159	```yaml
+L00001160	plan_unit_id: CRAU-005
+L00001161	unit_type: requirement
+L00001162	status: accepted
+L00001163	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001164	canonical_text: >-
+L00001165	  Containers & Registry settings expose DockerHub browser-login, PAT entry with
+L00001166	  PAT-recommended helper/link text, stored-auth status, account/namespace
+L00001167	  summary, validation and clear/remove credential actions, validate and /clear
+L00001168	  auth actions, requested auth mode versus effective capability display,
+L00001169	  namespace/repository discovery, refresh, create repository action, a
+L00001170	  settings-level create-repository toggle distinct from mandatory remote
+L00001171	  confirmation, repository privacy, tag template defaults, and push policy.
+L00001172	gui_related: true
+L00001173	gui_classification_reason: DockerHub auth and repository controls are visible settings and action surfaces.
+L00001174	split_recommended: true
+L00001175	split_recommendation_reason: Source span S0006 combines auth controls, repository controls, runtime controls, and Unraid/template profile settings.
+L00001176	depends_on: [CRAU-004]
+L00001177	unblocks: [CRAU-026, CRAU-029, CRAU-030, CRAU-031]
+L00001178	acceptance_criteria:
+L00001179	  - Browser-login and PAT entry controls both remain present.
+L00001180	  - Helper text explicitly says PAT is recommended and links or explains how to obtain a PAT.
+L00001181	  - Requested auth mode and effective capability are displayed distinctly.
+L00001182	  - The settings-level create-repository toggle remains distinct from mandatory confirmation when repository creation becomes a remote side effect.
+L00001183	  - Tag template defaults preserve {commit}, {version}, {timestamp}, and future canonical tag variables.
+L00001184	  - Push policy preserves manual default and optional after_build.
+L00001185	validation_surfaces:
+L00001186	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001187	  - python3 scripts/pm-plan-index.py validate
+L00001188	risk_class: auth_capability_misrepresentation
+L00001189	reasoning_tier: high
+L00001190	context_scope: dockerhub_auth_repository_settings
+L00001191	implementation_surfaces:
+L00001192	  - Plans/Containers_Registry_and_Unraid.md
+L00001193	  - Plans/Permissions_System.md
+L00001194	node_compile_hint:
+L00001195	  mode: gui_settings_contract
+L00001196	  create_worknodes: false
+L00001197	source_lineage:
+L00001198	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+L00001199	preserved_exact_tokens:
+L00001200	  - "browser-login button"
+L00001201	  - "PAT entry field"
+L00001202	  - "PAT is recommended"
+L00001203	  - "`/clear` auth actions"
+L00001204	  - "requested auth mode vs effective capability display"
+L00001205	  - "create-repository toggle"
+L00001206	  - "`{commit}`"
+L00001207	  - "`{version}`"
+L00001208	  - "`{timestamp}`"
+L00001209	  - "`manual` default"
+L00001210	  - "`after_build`"
+L00001211	negative_constraints:
+L00001212	  - "The settings-level create-repository toggle must not replace protected confirmation for remote repository creation."
+L00001213	owner_hints:
+L00001214	  - Plans/Containers_Registry_and_Unraid.md
+L00001215	  - Plans/Permissions_System.md
+L00001216	```
+L00001217	
+L00001218	### CRAU-006 - Unraid Visibility And Maintainer Profile Settings
+L00001219	
+L00001220	```yaml
+L00001221	plan_unit_id: CRAU-006
+L00001222	unit_type: requirement
+L00001223	status: accepted
+L00001224	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001225	canonical_text: >-
+L00001226	  Containers & Registry settings expose Unraid publishing controls, managed
+L00001227	  template repository controls, Docker Manager visibility controls, and
+L00001228	  maintainer profile ca_profile.xml controls: Generate/Update Unraid XML after
+L00001229	  successful publish is enabled by default, Manage Unraid template repository is
+L00001230	  enabled by default, auto-push is disabled by default, a one-click push action
+L00001231	  remains available, Hide Docker Manager when not used in Project. is the
+L00001232	  canonical visibility setting, the legacy Hide Docker Manage label migrates to
+L00001233	  it, and ca_profile.xml supports shared default scope, per-project overrides,
+L00001234	  full editability, profile image handling, and generated-needs-review notice.
+L00001235	gui_related: true
+L00001236	gui_classification_reason: This unit defines visible settings controls, status rows, labels, toggles, and maintainer profile editing.
+L00001237	split_recommended: true
+L00001238	split_recommendation_reason: Source span S0006 combines multiple settings groups; this unit isolates Unraid, visibility, and ca_profile.xml controls.
+L00001239	depends_on: [CRAU-004, CRAU-005]
+L00001240	unblocks: [CRAU-022, CRAU-031]
+L00001241	acceptance_criteria:
+L00001242	  - Generate/Update Unraid XML after successful publish defaults enabled.
+L00001243	  - Manage Unraid template repository defaults enabled.
+L00001244	  - Auto-push defaults disabled while a one-click push action is surfaced nearby.
+L00001245	  - Template repo status row preserves configured, missing, dirty, committed, and ready-to-push states.
+L00001246	  - The exact setting name Hide Docker Manager when not used in Project. is canonical.
+L00001247	  - The legacy setting alias Hide Docker Manage when not used in Project. migrates to the canonical Docker Manager label and is not a separate surface.
+L00001248	  - ca_profile.xml supports shared cross-project default, per-project override, all fields, upload/select or URL image handling, and generated-needs-review notice.
+L00001249	validation_surfaces:
+L00001250	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001251	  - python3 scripts/pm-plan-index.py validate
+L00001252	risk_class: alias_or_default_drift
+L00001253	reasoning_tier: high
+L00001254	context_scope: unraid_visibility_maintainer_profile_settings
+L00001255	implementation_surfaces:
+L00001256	  - Plans/Containers_Registry_and_Unraid.md
+L00001257	  - Plans/FinalGUISpec.md
+L00001258	node_compile_hint:
+L00001259	  mode: gui_settings_contract
+L00001260	  create_worknodes: false
+L00001261	source_lineage:
+L00001262	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+L00001263	preserved_exact_tokens:
+L00001264	  - "`Generate/Update Unraid XML after successful publish`"
+L00001265	  - "`Manage Unraid template repository`"
+L00001266	  - "auto-push toggle (default: disabled)"
+L00001267	  - "`Hide Docker Manager when not used in Project.`"
+L00001268	  - "`Hide Docker Manage when not used in Project.`"
+L00001269	  - "`ca_profile.xml`"
+L00001270	compatibility_only_notes:
+L00001271	  - "The legacy Hide Docker Manage setting alias migrates to the canonical Docker Manager label and is not a separate surface."
+L00001272	negative_constraints:
+L00001273	  - "The legacy setting alias must not create a second Docker Manage settings surface."
+L00001274	owner_hints:
+L00001275	  - Plans/Containers_Registry_and_Unraid.md
+L00001276	```
+L00001277	
+L00001278	### CRAU-007 - Docker Manager Surface Identity And Subviews
+L00001279	
+L00001280	```yaml
+L00001281	plan_unit_id: CRAU-007
+L00001282	unit_type: requirement
+L00001283	status: accepted
+L00001284	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001285	canonical_text: >-
+L00001286	  The canonical user-facing surface is Docker Manager. It replaces Docker Manage
+L00001287	  as the canonical surface name, subsumes Publish / Unraid behavior, and keeps
+L00001288	  stable subviews for Containers, Images, Compose, Registries, Registries /
+L00001289	  Docker Hub, Build / Bake, Publish / Unraid, Publishing / Unraid as a
+L00001290	  legacy/source-lineage alias, advanced Networks, Volumes, Contexts, and
+L00001291	  project-focused Kubernetes.
+L00001292	gui_related: true
+L00001293	gui_classification_reason: Docker Manager and its subviews are user-facing GUI surfaces and navigation contracts.
+L00001294	split_recommended: true
+L00001295	split_recommendation_reason: Source span S0007 also defines surface rules, minima, and design-reference baseline split into CRAU-008.
+L00001296	depends_on: [CRAU-002, CRAU-003]
+L00001297	unblocks: [CRAU-008, CRAU-009, CRAU-022]
+L00001298	acceptance_criteria:
+L00001299	  - Docker Manager remains the canonical surface name.
+L00001300	  - Docker Manage remains only the replaced legacy/source-lineage name.
+L00001301	  - Publish / Unraid is subsumed inside Docker Manager.
+L00001302	  - All stable subviews and advanced foldouts remain named and routeable.
+L00001303	  - Publishing / Unraid remains a legacy/source-lineage alias normalized to Publish / Unraid.
+L00001304	validation_surfaces:
+L00001305	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001306	  - python3 scripts/pm-plan-index.py validate
+L00001307	risk_class: surface_fragmentation
+L00001308	reasoning_tier: high
+L00001309	context_scope: docker_manager_surface_identity
+L00001310	implementation_surfaces:
+L00001311	  - Plans/Containers_Registry_and_Unraid.md
+L00001312	  - Plans/FinalGUISpec.md
+L00001313	  - Plans/UI_Command_Catalog.md
+L00001314	  - Plans/storage-plan.md
+L00001315	  - Plans/Orchestrator_Page.md
+L00001316	node_compile_hint:
+L00001317	  mode: gui_surface_contract
+L00001318	  create_worknodes: false
+L00001319	source_lineage:
+L00001320	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0007
+L00001321	preserved_exact_tokens:
+L00001322	  - "Docker Manager"
+L00001323	  - "`Docker Manage`"
+L00001324	  - "`Containers`"
+L00001325	  - "`Images`"
+L00001326	  - "`Compose`"
+L00001327	  - "`Registries`"
+L00001328	  - "`Registries / Docker Hub`"
+L00001329	  - "`Build / Bake`"
+L00001330	  - "`Publish / Unraid`"
+L00001331	  - "`Publishing / Unraid`"
+L00001332	  - "`Networks`"
+L00001333	  - "`Volumes`"
+L00001334	  - "`Contexts`"
+L00001335	  - "`Kubernetes`"
+L00001336	compatibility_only_notes:
+L00001337	  - "`Publishing / Unraid` is a legacy/source-lineage alias normalized to `Publish / Unraid`."
+L00001338	negative_constraints:
+L00001339	  - "Docker Manage must not remain a separate canonical surface."
+L00001340	owner_hints:
+L00001341	  - Plans/Containers_Registry_and_Unraid.md
+L00001342	```
+L00001343	
+L00001344	### CRAU-008 - Docker Manager Surface Rules And Management Baseline
+L00001345	
+L00001346	```yaml
+L00001347	plan_unit_id: CRAU-008
+L00001348	unit_type: constraint
+L00001349	status: accepted
+L00001350	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001351	canonical_text: >-
+L00001352	  Docker Manager keeps Docker as the default visible runtime mode for
+L00001353	  Docker-related projects, treats Podman as an alternate runtime in the same
+L00001354	  surface, exposes Kubernetes as a conditional subview, keeps Unraid under
+L00001355	  Publish / Unraid, treats Docker Hub as one registry/provider capability, and
+L00001356	  must not split build, bake, compose, run, inspect, logs, publish, pull,
+L00001357	  Registries / Docker Hub, or Publishing / Unraid into unrelated mini-surfaces;
+L00001358	  its management baseline follows microsoft/vscode-containers, while
+L00001359	  docker/vscode-extension remains a Docker DX/build-debugging reference.
+L00001360	gui_related: true
+L00001361	gui_classification_reason: Surface rules, subview minima, and management baseline govern visible Docker Manager behavior.
+L00001362	split_recommended: true
+L00001363	split_recommendation_reason: Source span S0007 is split between surface identity and detailed surface rule/baseline behavior.
+L00001364	depends_on: [CRAU-007]
+L00001365	unblocks: [CRAU-009, CRAU-011, CRAU-012, CRAU-013, CRAU-014]
+L00001366	acceptance_criteria:
+L00001367	  - Docker is default visible runtime mode when the project is Docker-related.
+L00001368	  - Podman remains inside the same Docker Manager surface.
+L00001369	  - Kubernetes is a subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.
+L00001370	  - Unraid remains under Publish / Unraid and does not require a separate top-level panel.
+L00001371	  - Docker Hub is one registry/provider capability inside Docker Manager.
+L00001372	  - Build, bake, compose, run, inspect, logs, publish, pull, Registries / Docker Hub, and Publishing / Unraid do not split into unrelated mini-surfaces.
+L00001373	  - microsoft/vscode-containers is the richer day-to-day management baseline and docker/vscode-extension is the Docker DX/build-debugging reference.
+L00001374	validation_surfaces:
+L00001375	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001376	  - python3 scripts/pm-plan-index.py validate
+L00001377	risk_class: mini_surface_drift
+L00001378	reasoning_tier: high
+L00001379	context_scope: docker_manager_surface_rules
+L00001380	implementation_surfaces:
+L00001381	  - Plans/Containers_Registry_and_Unraid.md
+L00001382	  - Plans/Crosswalk.md
+L00001383	  - Plans/Permissions_System.md
+L00001384	  - Plans/Runtime_Artifacts_Panel.md
+L00001385	node_compile_hint:
+L00001386	  mode: gui_surface_contract
+L00001387	  create_worknodes: false
+L00001388	source_lineage:
+L00001389	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0007
+L00001390	preserved_exact_tokens:
+L00001391	  - "Podman"
+L00001392	  - "Docker Hub"
+L00001393	  - "mini-surfaces"
+L00001394	  - "`docker/vscode-extension`"
+L00001395	  - "`/vscode-extension`"
+L00001396	  - "`microsoft/vscode-containers`"
+L00001397	  - "`/vscode-containers`"
+L00001398	negative_constraints:
+L00001399	  - "Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces."
+L00001400	owner_hints:
+L00001401	  - Plans/Containers_Registry_and_Unraid.md
+L00001402	```
+L00001403	
+L00001404	### CRAU-009 - Unified Asset Explorer And Panel State
+L00001405	
+L00001406	```yaml
+L00001407	plan_unit_id: CRAU-009
+L00001408	unit_type: requirement
+L00001409	status: accepted
+L00001410	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001411	canonical_text: >-
+L00001412	  Docker Manager owns the unified asset explorer: it keeps stable subviews for
+L00001413	  images, compose, registries, and build-bake, advanced foldouts for contexts,
+L00001414	  networks, volumes, and project-focused Kubernetes, project-aware ordering,
+L00001415	  cached /last-known read-only rendering with stale markers, disabled reasons,
+L00001416	  and per-project persisted selected runtime, context, subview, grouping, /sort,
+L00001417	  foldout policy, hidden foldouts, and exact asset row/subview state.
+L00001418	gui_related: true
+L00001419	gui_classification_reason: The unified asset explorer, subviews, cached stale rendering, disabled reasons, and row reopen behavior are visible GUI behavior.
+L00001420	split_recommended: true
+L00001421	split_recommendation_reason: Source span S0008 combines explorer GUI state, storage/event boundaries, build/compose, registry, publish, Kubernetes, receipts, routes, and blocked-state behavior.
+L00001422	depends_on: [CRAU-007, CRAU-008]
+L00001423	unblocks: [CRAU-010, CRAU-011, CRAU-013, CRAU-014, CRAU-019]
+L00001424	acceptance_criteria:
+L00001425	  - Preview, build, publish, deploy, and blocked-card flows reopen the exact relevant row/subview instead of a generic push-only pane.
+L00001426	  - Runtime-unavailable state renders cached /last-known state with a stale marker and read-only posture.
+L00001427	  - Unsupported runtime-specific subviews hide only when truly unavailable; otherwise they remain visible with disabled reason.
+L00001428	  - Strong default filtering and project awareness keep the broad surface usable while project-aware ordering pushes likely-relevant assets to the top without hiding the rest.
+L00001429	validation_surfaces:
+L00001430	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001431	  - python3 scripts/pm-plan-index.py validate
+L00001432	risk_class: reopen_state_loss
+L00001433	reasoning_tier: high
+L00001434	context_scope: docker_manager_asset_explorer_state
+L00001435	implementation_surfaces:
+L00001436	  - Plans/Containers_Registry_and_Unraid.md
+L00001437	  - Plans/storage-plan.md
+L00001438	  - Plans/UI_Command_Catalog.md
+L00001439	node_compile_hint:
+L00001440	  mode: gui_state_contract
+L00001441	  create_worknodes: false
+L00001442	source_lineage:
+L00001443	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001444	preserved_exact_tokens:
+L00001445	  - "unified asset explorer"
+L00001446	  - "`/images/compose/registries/build-bake`"
+L00001447	  - "`/sort`"
+L00001448	  - "`/last-known`"
+L00001449	  - "`likely-relevant`"
+L00001450	negative_constraints:
+L00001451	  - "Blocked-card flows must not land in a generic push-only pane when a precise asset row/subview is known."
+L00001452	owner_hints:
+L00001453	  - Plans/Containers_Registry_and_Unraid.md
+L00001454	  - Plans/storage-plan.md
+L00001455	```
+L00001456	
+L00001457	### CRAU-010 - Explorer Event And Runtime Observation Boundary
+L00001458	
+L00001459	```yaml
+L00001460	plan_unit_id: CRAU-010
+L00001461	unit_type: constraint
+L00001462	status: accepted
+L00001463	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001464	canonical_text: >-
+L00001465	  Docker Manager explorer events use /events/storage and /event/storage to
+L00001466	  record only panel state, selected asset identity, and freshness; transient
+L00001467	  runtime observations stay in the runtime projection store and do not become
+L00001468	  canonical persisted product truth.
+L00001469	gui_related: false
+L00001470	gui_classification_reason: This unit defines storage/event ownership and runtime projection boundaries rather than visible layout.
+L00001471	split_recommended: true
+L00001472	split_recommendation_reason: Source span S0008 interleaves GUI state with storage/event semantics.
+L00001473	depends_on: [CRAU-009]
+L00001474	unblocks: [CRAU-019]
+L00001475	acceptance_criteria:
+L00001476	  - Explorer storage records panel state, selected asset identity, and freshness only.
+L00001477	  - Transient runtime observations are not persisted as canonical state.
+L00001478	  - Runtime projection store remains the owner for transient runtime observations.
+L00001479	validation_surfaces:
+L00001480	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001481	  - python3 scripts/pm-plan-index.py validate
+L00001482	risk_class: storage_truth_drift
+L00001483	reasoning_tier: high
+L00001484	context_scope: docker_manager_event_storage_boundary
+L00001485	implementation_surfaces:
+L00001486	  - Plans/Containers_Registry_and_Unraid.md
+L00001487	  - Plans/storage-plan.md
+L00001488	  - Plans/Contracts_V0.md
+L00001489	node_compile_hint:
+L00001490	  mode: storage_boundary
+L00001491	  create_worknodes: false
+L00001492	source_lineage:
+L00001493	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001494	preserved_exact_tokens:
+L00001495	  - "`/events/storage`"
+L00001496	  - "`/event/storage`"
+L00001497	  - "runtime projection store"
+L00001498	negative_constraints:
+L00001499	  - "Transient runtime observations must not become canonical stored product truth through explorer event storage."
+L00001500	owner_hints:
+L00001501	  - Plans/Containers_Registry_and_Unraid.md
+L00001502	  - Plans/storage-plan.md
+L00001503	```
+L00001504	
+L00001505	### CRAU-011 - Build Bake And Compose Scenario Contracts
+L00001506	
+L00001507	```yaml
+L00001508	plan_unit_id: CRAU-011
+L00001509	unit_type: requirement
+L00001510	status: accepted
+L00001511	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001512	canonical_text: >-
+L00001513	  Docker Manager build and compose surfaces infer reviewable Dockerfile, build
+L00001514	  context, compose file, Bake target, platform, and runtime context for the
+L00001515	  active project, expose cmd.docker.build.*, cmd.docker.bake, cmd.docker.bake.*,
+L00001516	  and preview commands, persist build target and readiness settings, prompt
+L00001517	  instead of guessing in ambiguous monorepos, and let Compose scenarios save and
+L00001518	  rerun named service subsets, profiles, env files, port mappings, validation
+L00001519	  state, stale repair actions, and cmd.docker.compose.scenario.save/run/edit/delete.
+L00001520	gui_related: true
+L00001521	gui_classification_reason: Build/Bake controls, smart CTA cards, Compose scenario UI, validation errors, and repair actions are visible workflow surfaces.
+L00001522	split_recommended: true
+L00001523	split_recommendation_reason: Source span S0008 combines build/bake and compose behavior with other Docker Manager contracts.
+L00001524	depends_on: [CRAU-009, CRAU-010]
+L00001525	unblocks: [CRAU-012, CRAU-013]
+L00001526	acceptance_criteria:
+L00001527	  - Build/Bake defaults remain reviewable and overrideable.
+L00001528	  - build_run and /push_image resolve to the selected compose or bake target instead of rebuilding from a guessed default.
+L00001529	  - Ambiguous polyglot or monorepo inference prompts explicit selection.
+L00001530	  - Compose scenarios persist named service subsets, profiles, env files, port mappings, detached/log-follow defaults, ports, and validation state.
+L00001531	  - Stale Compose scenarios open degraded with validation errors and repair actions.
+L00001532	  - Run/edit/delete affordances remain disabled with exact reason codes until validation succeeds.
+L00001533	validation_surfaces:
+L00001534	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001535	  - python3 scripts/pm-plan-index.py validate
+L00001536	risk_class: heuristic_misfire
+L00001537	reasoning_tier: high
+L00001538	context_scope: build_bake_compose_scenario_contracts
+L00001539	implementation_surfaces:
+L00001540	  - Plans/Containers_Registry_and_Unraid.md
+L00001541	  - Plans/newtools.md
+L00001542	  - Plans/storage-plan.md
+L00001543	node_compile_hint:
+L00001544	  mode: build_compose_contract
+L00001545	  create_worknodes: false
+L00001546	source_lineage:
+L00001547	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001548	preserved_exact_tokens:
+L00001549	  - "`Build / Bake`"
+L00001550	  - "`cmd.docker.build.*`"
+L00001551	  - "`cmd.docker.bake`"
+L00001552	  - "`cmd.docker.bake.*`"
+L00001553	  - "`build_run`"
+L00001554	  - "`/push_image`"
+L00001555	  - "`cmd.docker.compose.scenario.save/run/edit/delete`"
+L00001556	  - "`cmd.docker.compose.scenario.save`"
+L00001557	  - "`/run/edit/delete`"
+L00001558	negative_constraints:
+L00001559	  - "Docker Manager must prompt for explicit selection instead of guessing when inference is ambiguous in a polyglot or monorepo project."
+L00001560	owner_hints:
+L00001561	  - Plans/Containers_Registry_and_Unraid.md
+L00001562	```
+L00001563	
+L00001564	### CRAU-012 - Registry Promotion And Publish Chain Lineage
+L00001565	
+L00001566	```yaml
+L00001567	plan_unit_id: CRAU-012
+L00001568	unit_type: requirement
+L00001569	status: accepted
+L00001570	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001571	canonical_text: >-
+L00001572	  Registry promotion treats /tag/push and /push/promote as explicit release
+L00001573	  actions with digest-first receipts, source artifact identity, promotion
+L00001574	  target, destination registry allowlist, default namespace/repository/tag
+L00001575	  template, policy, privacy, immutability expectations, Docker-Hub-first MVP
+L00001576	  behavior, and later registry API abstraction; Publish chain view shows local
+L00001577	  build result, pushed tag and /digest, Docker Hub repo state, Unraid/template
+L00001578	  follow-ons, /publish/events, and downstream deployment or workload refs.
+L00001579	gui_related: true
+L00001580	gui_classification_reason: Promotion controls, publish chain view, chain nodes, blocked cards, and receipt links are visible Docker Manager surfaces.
+L00001581	split_recommended: true
+L00001582	split_recommendation_reason: Source span S0008 interleaves promotion, publish chain, and other operational cockpit contracts.
+L00001583	depends_on: [CRAU-009, CRAU-011]
+L00001584	unblocks: [CRAU-015, CRAU-021, CRAU-031]
+L00001585	acceptance_criteria:
+L00001586	  - Tag/push and push/promote are explicit release actions rather than ad hoc retagging.
+L00001587	  - Promotion receipts capture moved digest, tag, source namespace/repository, destination namespace/repository, actor, approval source, and result id before downstream deployment references update.
+L00001588	  - Local image actions remain usable when destination registry or repository is unavailable, while promotion is blocked with a precise remote blocker.
+L00001589	  - Publish chain nodes record build_result_id, publish_result_id, template repository status, deployment/workload refs, result state, expanded nodes, historical toggle, follow-latest default, and not-attempted/blocked/failed/complete state.
+L00001590	  - Digest-first identity prevents retags from corrupting lineage.
+L00001591	validation_surfaces:
+L00001592	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001593	  - python3 scripts/pm-plan-index.py validate
+L00001594	risk_class: side_effect_lineage_loss
+L00001595	reasoning_tier: high
+L00001596	context_scope: registry_promotion_publish_chain_lineage
+L00001597	implementation_surfaces:
+L00001598	  - Plans/Containers_Registry_and_Unraid.md
+L00001599	  - Plans/Permissions_System.md
+L00001600	  - Plans/storage-plan.md
+L00001601	  - Plans/Runtime_Artifacts_Panel.md
+L00001602	node_compile_hint:
+L00001603	  mode: remote_side_effect_readiness
+L00001604	  create_worknodes: false
+L00001605	source_lineage:
+L00001606	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001607	preserved_exact_tokens:
+L00001608	  - "`/tag/push`"
+L00001609	  - "`/push/promote`"
+L00001610	  - "`/target`"
+L00001611	  - "`/immutability`"
+L00001612	  - "`MVP`"
+L00001613	  - "`APIs`"
+L00001614	  - "`/digest`"
+L00001615	  - "`/publish/events`"
+L00001616	  - "`missing-link`"
+L00001617	negative_constraints:
+L00001618	  - "Downstream deployment references must not update before digest-first promotion lineage is captured."
+L00001619	owner_hints:
+L00001620	  - Plans/Containers_Registry_and_Unraid.md
+L00001621	```
+L00001622	
+L00001623	### CRAU-013 - Container Access Drift And Cleanup Safeguards
+L00001624	
+L00001625	```yaml
+L00001626	plan_unit_id: CRAU-013
+L00001627	unit_type: constraint
+L00001628	status: accepted
+L00001629	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001630	canonical_text: >-
+L00001631	  Docker Manager container rows and detail drawers expose
+L00001632	  cmd.docker.container.open, logs, shell attach, stats, inspect, URL candidates,
+L00001633	  manual override, and confidence state; drift detection compares Dockerfile,
+L00001634	  compose/bake intent, Kubernetes manifests, build metadata, last-published
+L00001635	  metadata, and last deployed state with unknown/partial evidence; cleanup
+L00001636	  advisor starts with dry-run estimates and never suggests deleting assets tied
+L00001637	  to active previews or recent receipts when the reference graph is partial.
+L00001638	gui_related: true
+L00001639	gui_classification_reason: Container row actions, URL candidates, warnings, compare actions, and cleanup advisor are user-visible Docker Manager behavior.
+L00001640	split_recommended: true
+L00001641	split_recommendation_reason: Source span S0008 combines container access, drift, cleanup, and other cockpit contracts.
+L00001642	depends_on: [CRAU-009, CRAU-011]
+L00001643	unblocks: [CRAU-021]
+L00001644	acceptance_criteria:
+L00001645	  - Open running container and /open-container resolve only when a real container or preview session exists.
+L00001646	  - port-open, auto-follow, and auto-open are suggestions rather than silent actions.
+L00001647	  - Uncertain access heuristics show candidate actions or logs/inspect first.
+L00001648	  - Prior artifact metadata missing produces unknown rather than clean drift.
+L00001649	  - Weak drift warnings show the weak evidence behind the warning.
+L00001650	  - Cleanup recommendations default conservative when the reference graph is partial.
+L00001651	  - Destructive cleanup remains guarded by shared blocked-state rules.
+L00001652	validation_surfaces:
+L00001653	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001654	  - python3 scripts/pm-plan-index.py validate
+L00001655	risk_class: destructive_or_misleading_runtime_action
+L00001656	reasoning_tier: high
+L00001657	context_scope: container_access_drift_cleanup_safeguards
+L00001658	implementation_surfaces:
+L00001659	  - Plans/Containers_Registry_and_Unraid.md
+L00001660	  - Plans/storage-plan.md
+L00001661	node_compile_hint:
+L00001662	  mode: runtime_gui_guardrail
+L00001663	  create_worknodes: false
+L00001664	source_lineage:
+L00001665	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001666	preserved_exact_tokens:
+L00001667	  - "`cmd.docker.container.open`"
+L00001668	  - "`Open running container`"
+L00001669	  - "`/open-container`"
+L00001670	  - "`port-open`"
+L00001671	  - "`auto-follow`"
+L00001672	  - "`auto-open`"
+L00001673	  - "`/compose/bake`"
+L00001674	  - "`last-published`"
+L00001675	  - "`/ignore-files`"
+L00001676	  - "`ignore-labels`"
+L00001677	  - "`/prune`"
+L00001678	negative_constraints:
+L00001679	  - "Docker Manager must not silently open guessed URLs or recommend deleting assets still tied to active previews or recent receipts."
+L00001680	owner_hints:
+L00001681	  - Plans/Containers_Registry_and_Unraid.md
+L00001682	```
+L00001683	
+L00001684	### CRAU-014 - Project-Focused Kubernetes Operations
+L00001685	
+L00001686	```yaml
+L00001687	plan_unit_id: CRAU-014
+L00001688	unit_type: requirement
+L00001689	status: accepted
+L00001690	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001691	canonical_text: >-
+L00001692	  Docker Manager keeps Kubernetes project-focused rather than acting as a
+L00001693	  general cluster admin console: it preserves kubeconfig/context,
+L00001694	  namespace/workload focus, log viewer defaults, watch toggles, Helm visibility,
+L00001695	  Helm release focus, persisted K8s focus state, cluster-wide default off, and
+L00001696	  command coverage under cmd.docker.k8s.* with older cmd.k8s.* compatibility
+L00001697	  aliases normalized to the Docker Manager namespace.
+L00001698	gui_related: true
+L00001699	gui_classification_reason: Kubernetes subview focus, setup guidance, toggles, command coverage, and troubleshooting surfaces are GUI behavior.
+L00001700	split_recommended: true
+L00001701	split_recommendation_reason: Source span S0008 includes Kubernetes operations with other Docker Manager cockpit contracts.
+L00001702	depends_on: [CRAU-007, CRAU-009]
+L00001703	unblocks: [CRAU-015, CRAU-022]
+L00001704	acceptance_criteria:
+L00001705	  - Docker Manager's Kubernetes view defaults to the project-focused subset.
+L00001706	  - Full cluster inventory requires the explicit cluster-wide toggle and remains visually distinct from project scope.
+L00001707	  - Missing kubectl, kubeconfig, or cluster access leaves the subview visible with setup guidance and explicit connection state.
+L00001708	  - Deploy, rollout/apply, apply/rollout, log, exec, port_forward, Helm, and troubleshoot failures open directly to project-relevant workload status, logs, or diff.
+L00001709	  - Logs, rollout status, port-forward, and rollout monitors are ephemeral owner-surface sessions, not durable always-on connections.
+L00001710	  - Browser handoff is reserved for external registry, admin, or admin/help edge cases, not default local-runtime or Kubernetes operations.
+L00001711	validation_surfaces:
+L00001712	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001713	  - python3 scripts/pm-plan-index.py validate
+L00001714	risk_class: cluster_scope_creep
+L00001715	reasoning_tier: high
+L00001716	context_scope: project_focused_kubernetes_operations
+L00001717	implementation_surfaces:
+L00001718	  - Plans/Containers_Registry_and_Unraid.md
+L00001719	  - Plans/UI_Command_Catalog.md
+L00001720	  - Plans/Permissions_System.md
+L00001721	  - Plans/Orchestrator_Page.md
+L00001722	node_compile_hint:
+L00001723	  mode: k8s_surface_contract
+L00001724	  create_worknodes: false
+L00001725	source_lineage:
+L00001726	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001727	preserved_exact_tokens:
+L00001728	  - "`cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace`"
+L00001729	  - "`cmd.docker.k8s.apply|diff|logs|exec|port_forward|set_context|set_namespace|helm_preview|helm_install`"
+L00001730	  - "`cmd.docker.k8s.apply`"
+L00001731	  - "`cmd.k8s.*`"
+L00001732	  - "`cluster-wide`"
+L00001733	  - "`/attempt/action`"
+L00001734	negative_constraints:
+L00001735	  - "Docker Manager must not become a general cluster admin console or make full cluster inventory default."
+L00001736	owner_hints:
+L00001737	  - Plans/Containers_Registry_and_Unraid.md
+L00001738	```
+L00001739	
+L00001740	### CRAU-015 - Receipts Routes Blocked State And Governance
+L00001741	
+L00001742	```yaml
+L00001743	plan_unit_id: CRAU-015
+L00001744	unit_type: constraint
+L00001745	status: accepted
+L00001746	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001747	canonical_text: >-
+L00001748	  Docker Manager receipts, route/open handling, blocked-state integration,
+L00001749	  confirmation taxonomy, policy-blocked outcomes, registry/tag governance, and
+L00001750	  protected environment flows use shared contracts: receipts are compact UI
+L00001751	  objects derived from canonical run, publish, and event records; object-bearing

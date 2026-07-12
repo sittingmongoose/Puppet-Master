@@ -1,0 +1,59 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v26",
+  "status": "TERMINAL_SEAM_GATE_HASH_CORRECTION_AND_CERTIFICATION_ATOMIC8_HANDOFF",
+  "effective_date": "2026-07-12",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V25.json",
+  "prior_policies_mutated": false,
+  "seam_gate_terminal_correction": {
+    "report_path": "master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/luna-independent-prelaunch-v2.json",
+    "reviewer_thread_id": "019f54c9-76b9-7601-abc0-b86b89158b90",
+    "reviewer_terminal_pmr1": true,
+    "nonterminal_observation_sha256": "510201859be2ce0b474ece569ba31748cfc5f1ea2cfbb89540855e49f01c8a47",
+    "nonterminal_observation_authoritative": false,
+    "terminal_stable_sha256": "02e940ededd60054f0e654159cabf21fe3e04a57c5d2601a3da09cd17fd6220e",
+    "terminal_byte_count": 19735,
+    "terminal_mtime_epoch": 1783834758,
+    "stable_rehash_count": 2,
+    "status": "PASS",
+    "tests": "360_of_360",
+    "toctou_snapshot_checks": "342_of_342",
+    "assignment_ids": [
+      "A005CDSV2-0002",
+      "A005CDSV2-0006",
+      "A005CDSV2-0039"
+    ],
+    "outputs_empty": 3,
+    "activation_results_receipts_capture_credit": 0,
+    "sole_authorized_execution": "one immutable atomic3 Sol/xhigh repair transaction"
+  },
+  "certification_atomic8_preparation": {
+    "report_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v7-atomic8/terminal-preparation-report-v7-atomic8.json",
+    "report_sha256": "6a31474c4e6943e812776739cf87a7efeeba6cda1937bc0a94d645cf145839e1",
+    "status": "BLOCKED_AWAITING_V6_PASS_AND_FRESH_LUNA_ATOMIC8_GATE",
+    "tests": "642_of_642",
+    "test_digest": "f7069d2b7065e17321b6fbb83ce9091a20b723c5147870e754d57116cd529536",
+    "assignments": 16,
+    "features": 3888,
+    "atomic_transactions": 2,
+    "assignments_per_transaction": 8,
+    "features_per_transaction": 1944,
+    "generator_invoked": false,
+    "activation_results_receipts_capture_credit": 0
+  },
+  "v25_controls_preserved": {
+    "v25_sha256": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b",
+    "pre_reset_rolling_semantic_max": 24,
+    "post_reset_rolling_semantic_max": 32,
+    "atomic_transaction_cap": 8,
+    "wrong_parent_model_lane_spawns_zero_credit": true,
+    "candidate_credit_before_independent_postrun": 0
+  },
+  "quality_invariants": {
+    "independent_validation_reduced": false,
+    "external_research_requirement_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_or_result_mutation_authorized": false,
+    "extra_controller_creation_authorized": false
+  }
+}

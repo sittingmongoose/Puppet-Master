@@ -1,0 +1,581 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "wave-0001",
+  "checker": "scenario_adversarial_luna_prelaunch_v1",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "pass",
+  "gate_passed": true,
+  "fail_closed_on_uncertainty": true,
+  "errors": [],
+  "authority_blockers": [],
+  "independent_reconstruction_complete": true,
+  "candidate_report_read": true,
+  "assignment_ids": [
+    "A005SA-0001",
+    "A005SA-0002",
+    "A005SA-0003",
+    "A005SA-0004",
+    "A005SA-0005",
+    "A005SA-0006",
+    "A005SA-0007",
+    "A005SA-0008",
+    "A005SA-0009",
+    "A005SA-0010",
+    "A005SA-0011",
+    "A005SA-0012",
+    "A005SA-0013",
+    "A005SA-0014",
+    "A005SA-0015",
+    "A005SA-0016",
+    "A005SA-0017",
+    "A005SA-0018",
+    "A005SA-0019",
+    "A005SA-0020",
+    "A005SA-0021",
+    "A005SA-0022",
+    "A005SA-0023",
+    "A005SA-0024",
+    "A005SA-0025",
+    "A005SA-0026",
+    "A005SA-0027",
+    "A005SA-0028",
+    "A005SA-0029",
+    "A005SA-0030",
+    "A005SA-0031",
+    "A005SA-0032"
+  ],
+  "counts": {
+    "assignments": 32,
+    "packets": 32,
+    "intents": 32,
+    "provisional_features": 3888,
+    "unique_features": 3888,
+    "owner_domains": 16,
+    "cohorts": 4,
+    "cohort_size": 8,
+    "receipts": 0,
+    "results": 0,
+    "native_captures": 0,
+    "output_directories": 32,
+    "output_files": 0
+  },
+  "feature_coverage": {
+    "expected": 3888,
+    "covered": 3888,
+    "unique": 3888,
+    "missing": 0,
+    "duplicates": 0,
+    "foreign": 0,
+    "owner_domain_leakage": 0,
+    "coverage_digest_sha256": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3"
+  },
+  "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+  "owner_domain_counts": {
+    "agents_models_providers": 221,
+    "automation_scheduling_notifications": 33,
+    "collaboration_chat_communication": 82,
+    "cross_cutting_platform": 90,
+    "data_contracts_interchange": 252,
+    "gui_ux_accessibility": 401,
+    "installation_updates_recovery": 17,
+    "observability_testing_evaluation": 184,
+    "orchestration_runtime_execution": 360,
+    "permissions_security_privacy": 855,
+    "planning_specification_governance": 394,
+    "source_control_workspace_code": 287,
+    "storage_artifacts_history": 255,
+    "tools_integrations_mcp": 326,
+    "usage_costs_quotas": 105,
+    "work_nodes_tasks_goals": 26
+  },
+  "domain_split_counts": {
+    "agents_models_providers": 2,
+    "automation_scheduling_notifications": 1,
+    "collaboration_chat_communication": 1,
+    "cross_cutting_platform": 1,
+    "data_contracts_interchange": 2,
+    "gui_ux_accessibility": 3,
+    "installation_updates_recovery": 1,
+    "observability_testing_evaluation": 2,
+    "orchestration_runtime_execution": 3,
+    "permissions_security_privacy": 4,
+    "planning_specification_governance": 3,
+    "source_control_workspace_code": 2,
+    "storage_artifacts_history": 2,
+    "tools_integrations_mcp": 3,
+    "usage_costs_quotas": 1,
+    "work_nodes_tasks_goals": 1
+  },
+  "packet_accounting": {
+    "domain_local_partition_exact": true,
+    "domain_split_counts": {
+      "agents_models_providers": 2,
+      "automation_scheduling_notifications": 1,
+      "collaboration_chat_communication": 1,
+      "cross_cutting_platform": 1,
+      "data_contracts_interchange": 2,
+      "gui_ux_accessibility": 3,
+      "installation_updates_recovery": 1,
+      "observability_testing_evaluation": 2,
+      "orchestration_runtime_execution": 3,
+      "permissions_security_privacy": 4,
+      "planning_specification_governance": 3,
+      "source_control_workspace_code": 2,
+      "storage_artifacts_history": 2,
+      "tools_integrations_mcp": 3,
+      "usage_costs_quotas": 1,
+      "work_nodes_tasks_goals": 1
+    },
+    "hard_ceiling": 650000,
+    "max_bytes": 639359,
+    "min_bytes": 68274,
+    "over_ceiling": 0,
+    "target_range": [
+      250000,
+      450000
+    ],
+    "total_bytes": 14792823,
+    "expanded_retained_semantic_bytes": 20491595,
+    "dropped_categories": [
+      "repetitive_source_metadata_except_source_id_and_url",
+      "source_evidence_snippets",
+      "unrequested_research_workflow_metadata"
+    ],
+    "dropped_category_bytes": {
+      "research_workflow_metadata_not_requested": 1659244,
+      "source_evidence_snippets": 899916,
+      "source_metadata_without_url_or_id": 3812946
+    }
+  },
+  "compact_fidelity": {
+    "all_required_fields_lossless": true,
+    "direct_source_mapping_records_exact": 3888,
+    "exact_record_matches": 3888,
+    "material_omission": 0,
+    "mismatch_counts": {},
+    "owner_field_match_count": 66096,
+    "records_decoded": 3888,
+    "records_expected": 3888,
+    "research_binding_hash_matches": 3888,
+    "research_field_match_count": 42768,
+    "row_swaps": 0,
+    "silent_truncation": 0,
+    "source_url_count": 8143,
+    "supported_claim_count": 6523,
+    "supported_claim_mapping_records_exact": 3888,
+    "table_index_aliasing": 0,
+    "unknown_refs": 0,
+    "all_required_owner_fields_lossless": true,
+    "all_required_research_fields_lossless": true,
+    "all_source_urls_lossless": true,
+    "all_supported_claim_text_and_source_mappings_lossless": true,
+    "all_provenance_hashes_lossless": true,
+    "scenario_and_adversarial_implications_lossless": true,
+    "conclusion_gap_contradiction_and_spec_delta_lossless": true,
+    "no_material_evidence_omitted": true
+  },
+  "cohorts": [
+    {
+      "cohort_id": "cohort-0001",
+      "cohort_sequence": 1,
+      "assignments": 8,
+      "assignment_ids": [
+        "A005SA-0001",
+        "A005SA-0002",
+        "A005SA-0003",
+        "A005SA-0004",
+        "A005SA-0005",
+        "A005SA-0006",
+        "A005SA-0007",
+        "A005SA-0008"
+      ],
+      "features": 823,
+      "authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+      "manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+      "launch_seal_sha256": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310",
+      "separate_activation_required": true,
+      "separate_terminal_capture_required": true,
+      "separate_postrun_validation_required": true,
+      "errors": []
+    },
+    {
+      "cohort_id": "cohort-0002",
+      "cohort_sequence": 2,
+      "assignments": 8,
+      "assignment_ids": [
+        "A005SA-0009",
+        "A005SA-0010",
+        "A005SA-0011",
+        "A005SA-0012",
+        "A005SA-0013",
+        "A005SA-0014",
+        "A005SA-0015",
+        "A005SA-0016"
+      ],
+      "features": 817,
+      "authority_sha256": "44b0dfd2a61d050f33e95818874a2762695eb653be3f901a93b545a244310bd9",
+      "manifest_sha256": "641d1af2ad7a5238f2c15f787fb046e299eb3480d6cfd18301b472e14e006592",
+      "launch_seal_sha256": "2422de024eb8543bdc8efa121e537e1fe89c069368fde57ba6ca13238080badf",
+      "separate_activation_required": true,
+      "separate_terminal_capture_required": true,
+      "separate_postrun_validation_required": true,
+      "errors": []
+    },
+    {
+      "cohort_id": "cohort-0003",
+      "cohort_sequence": 3,
+      "assignments": 8,
+      "assignment_ids": [
+        "A005SA-0017",
+        "A005SA-0018",
+        "A005SA-0019",
+        "A005SA-0020",
+        "A005SA-0021",
+        "A005SA-0022",
+        "A005SA-0023",
+        "A005SA-0024"
+      ],
+      "features": 1400,
+      "authority_sha256": "c13de0acd1026722fa43c22b68ec423020f50255f2f9a268206f7051356b3570",
+      "manifest_sha256": "e6bd2d8fef65e9efbf2938858b2448f916f1ee45b55c4927f6763be7d39fc0f4",
+      "launch_seal_sha256": "01705699edae38dd794040f253f3c4473db92db2aba6107ab12e2d2d0e55836e",
+      "separate_activation_required": true,
+      "separate_terminal_capture_required": true,
+      "separate_postrun_validation_required": true,
+      "errors": []
+    },
+    {
+      "cohort_id": "cohort-0004",
+      "cohort_sequence": 4,
+      "assignments": 8,
+      "assignment_ids": [
+        "A005SA-0025",
+        "A005SA-0026",
+        "A005SA-0027",
+        "A005SA-0028",
+        "A005SA-0029",
+        "A005SA-0030",
+        "A005SA-0031",
+        "A005SA-0032"
+      ],
+      "features": 848,
+      "authority_sha256": "64e09754f64e73a978848602ed7a492a7ae3c4011248269c07ea8e714225258e",
+      "manifest_sha256": "363d7aa521b6396edaafd166f39cf2dc4093709fa451915463c02fdb4ddbc0bd",
+      "launch_seal_sha256": "195f739f14ea81a8607627cc8a67e4a9c252d8f122a3113cae6a9d51ef71f3d7",
+      "separate_activation_required": true,
+      "separate_terminal_capture_required": true,
+      "separate_postrun_validation_required": true,
+      "errors": []
+    }
+  ],
+  "cohort_safety": {
+    "cohort_count": 4,
+    "cohort_size": 8,
+    "separate_authority_manifest_launch_seal_bindings": true,
+    "separate_receipt_capture_postrun_bindings_required": true,
+    "atomic_all_32_spawn_required": false,
+    "all_cohort_feature_counts_sum_to_3888": true
+  },
+  "dispatch_contract": {
+    "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none",
+    "fresh_direct_children_required": 32,
+    "unique_assignment_id_count": 32,
+    "unique_agent_path_count": 32,
+    "descendants_forbidden": true,
+    "followup_messages_forbidden": true,
+    "retries_forbidden": true,
+    "native_terminal_captures_present": 0,
+    "identity_contract_verified": true
+  },
+  "policy_binding": {
+    "prospective_policy": "CONCURRENCY_POLICY_V4",
+    "concurrency_policy_v4_sha256": "36a4cdcc5b876538c4197096d60febffc5e6ec3ab132e93529755e6daae0ad7f",
+    "prior_policy": "CONCURRENCY_POLICY_V3",
+    "prior_concurrency_policy_v3_sha256": "5d08356b2877734aa4a6e964675fc32abae6f57d83ede5dc11f38e9cea4a7bb3",
+    "prior_policy_immutable": true,
+    "semantic_cap": 32
+  },
+  "result_contract": {
+    "strict_schema": true,
+    "required_dimensions": [
+      "normal_happy_path",
+      "boundary_invalid_input",
+      "failure_partial_failure",
+      "cancellation_retry_idempotency_stale_recovery",
+      "concurrency_race_ordering",
+      "permission_security_privacy_credentials",
+      "persistence_restart_offline_upgrade_migration",
+      "scale_quota_backpressure_observability",
+      "accessibility_i18n_user_comprehension",
+      "cross_component_authority_ownership_integration"
+    ],
+    "allowed_dispositions": [
+      "certified",
+      "gap_confirmed",
+      "contradiction",
+      "blocked_insufficient_evidence",
+      "not_applicable_dimension"
+    ],
+    "not_applicable_requires_explicit_rationale": true,
+    "executable_acceptance_criteria_observables_evidence_required": true,
+    "falsifiable_oracle_required": true,
+    "research_applicability_required": true,
+    "certification_disposition_required": true,
+    "spec_delta_required_for_non_certified_disposition": true,
+    "missing_feature_candidates_required": true
+  },
+  "universal_research_lineage": {
+    "activation_sha256": "c8c8d83e19a8ec82d869bc74528053d887a042b545afe4293f08ccf964758e3e",
+    "feature_count": 3888,
+    "lineage_errors": [],
+    "native_capture_sha256": "70eeaf93092a05ffe36f4b5f17356bba751646b23d65eebcb567b38d051e45ee",
+    "primary_counts": {
+      "assignments": 24,
+      "eligible": 24,
+      "rejected": 0
+    },
+    "primary_postrun_sha256": "1256add17ed50ffc38d2e6dfaf013fb11843e194edba0f9e0bc35b1d2593ee02",
+    "result_count": 24,
+    "result_hashes": [
+      {
+        "assignment_id": "A005ERU-0001",
+        "feature_count": 221,
+        "sha256": "6ddd884b145dfcb06ea1f14bba85b4b1aca0c662f588122f5d1f57bd75de41ac"
+      },
+      {
+        "assignment_id": "A005ERU-0002",
+        "feature_count": 33,
+        "sha256": "ce52e603a8abfdb353e910f789c25d2b47d4c39a8bdf21e1f49a2e63ce5f0b07"
+      },
+      {
+        "assignment_id": "A005ERU-0003",
+        "feature_count": 82,
+        "sha256": "b274b6f76f5233a05ddb79a6e7c649adfccfaa49a5630f0c58a06e6bb0ed76f7"
+      },
+      {
+        "assignment_id": "A005ERU-0004",
+        "feature_count": 90,
+        "sha256": "cad9d940c918fc6ba510fc313c47995e5236688b10bcbe253a7cfe21c11d6ba0"
+      },
+      {
+        "assignment_id": "A005ERU-0005",
+        "feature_count": 252,
+        "sha256": "7390d6db892f7cbef185aaa4ea5ac83eb025609571bde4cc0460c287f30be87f"
+      },
+      {
+        "assignment_id": "A005ERU-0006",
+        "feature_count": 206,
+        "sha256": "b4744ffc488bde4a032436e18d9f87667239a9b65cdcf7346227c701ea68986c"
+      },
+      {
+        "assignment_id": "A005ERU-0007",
+        "feature_count": 195,
+        "sha256": "fd1e77ab5a05fb3a3273a9966787bb204a33bc57929aa82a3de55a4dbc0b4a15"
+      },
+      {
+        "assignment_id": "A005ERU-0008",
+        "feature_count": 17,
+        "sha256": "8ee6500f9c9949335f4acfc4488fa173a9d89b223ffdeed3117d233d75935454"
+      },
+      {
+        "assignment_id": "A005ERU-0009",
+        "feature_count": 184,
+        "sha256": "216be5f06b863431cea33bad713b0d58dd143147fc3006638e5e6ccdd4f87148"
+      },
+      {
+        "assignment_id": "A005ERU-0010",
+        "feature_count": 185,
+        "sha256": "5cb4d50614707b15b22290296fa19494fcd8380d1c121ca1d5b94bcf2768d4a0"
+      },
+      {
+        "assignment_id": "A005ERU-0011",
+        "feature_count": 175,
+        "sha256": "502c85619b3fb323d793fa1a6804d47e045f88dfd83a1c5d6384789aa1f1148e"
+      },
+      {
+        "assignment_id": "A005ERU-0012",
+        "feature_count": 222,
+        "sha256": "1c71963d8f9faf109e3300d39f9be46b8fde38fee9dd94360fb6e034f1a48c2a"
+      },
+      {
+        "assignment_id": "A005ERU-0013",
+        "feature_count": 214,
+        "sha256": "14bf46096dc7d1faa6df1cbc4b68ccde2d9d4d9ff741ed1ca3e4816dec177d69"
+      },
+      {
+        "assignment_id": "A005ERU-0014",
+        "feature_count": 210,
+        "sha256": "25093e224d25d090d9b9e5ab1107cac6f38f02dd91281fbfab6ad666f21d5973"
+      },
+      {
+        "assignment_id": "A005ERU-0015",
+        "feature_count": 209,
+        "sha256": "3e4c8fc70bba2e931d34c4c5b0226d6d7ab2fa8384b2188411dea0e0cccb4122"
+      },
+      {
+        "assignment_id": "A005ERU-0016",
+        "feature_count": 208,
+        "sha256": "843c8724a848520ba2a18bab7f3e06cf3d0baf10c4b119f540b54ee6b6976fe8"
+      },
+      {
+        "assignment_id": "A005ERU-0017",
+        "feature_count": 186,
+        "sha256": "186a1b3ac20f82eec567165220da65b7a8a762077973104b86b171f01a629080"
+      },
+      {
+        "assignment_id": "A005ERU-0018",
+        "feature_count": 137,
+        "sha256": "112b0cacd4be87ca20935d3ac206e1b3b51b9b0bcdb1d7a9982864f9ff7ac493"
+      },
+      {
+        "assignment_id": "A005ERU-0019",
+        "feature_count": 150,
+        "sha256": "f849babf5029df5dc6b712f3e8aa488b1a13b78b6ee02088c6981fd400fac032"
+      },
+      {
+        "assignment_id": "A005ERU-0020",
+        "feature_count": 255,
+        "sha256": "2e36b6ccc3a33ab50531ec59e527f9261317601812e64855aa058ac2ecc4907d"
+      },
+      {
+        "assignment_id": "A005ERU-0021",
+        "feature_count": 161,
+        "sha256": "6c2903b5eae02fea1fd1720ee4bb0dca05d33014b7131ffe2b681efbf5d972da"
+      },
+      {
+        "assignment_id": "A005ERU-0022",
+        "feature_count": 165,
+        "sha256": "3c72f0f3d751cf13d39890eb22e8bb9940e3d90d24bfd3ddd1e2be3a6e0b9e7f"
+      },
+      {
+        "assignment_id": "A005ERU-0023",
+        "feature_count": 105,
+        "sha256": "25d3e66c09b38ce637bfa8d18db28fb83ad35555d622089fb7df86e3511ccec7"
+      },
+      {
+        "assignment_id": "A005ERU-0024",
+        "feature_count": 26,
+        "sha256": "63da3a5ef75d06460b43171c0f0389e4dfeb82012ea5f0ff2658647ca31d3caa"
+      }
+    ]
+  },
+  "control_hashes": {
+    "architecture.json": "8ccb832593c070f9df507513f4b7c4e95a702d617aa2c7978c66fc9a7b0e0373",
+    "batch_authority.json": "1ef11e1e312cc0ba7d863f81d518ce3c9cd284f0f88d417ccd44aace4fed825f",
+    "batch_manifest.jsonl": "0877e754342216bbd6a92e2d0e8fed941c9a478727fb0461775ec7da797f9863",
+    "launch_seal.json": "4742b254ab3b8f4e95d11c2584204985aef541bca5a8876c429f90778f3a2261",
+    "leaf_prompt.json": "104e1f1126e76a3d6f0e01e041e67ac7666ccbfebe7bb84ceccd17fafb5304bf",
+    "lineage.json": "4bbce67a4a8c2b738d963017fa08f0a25195382dbc83dd2286ec485c93137c74",
+    "packet_registry.jsonl": "558533da8cb7244e706f3033e320ae324671ce1ade3a7941ddf3edb54fe4f485",
+    "receipt_contract.json": "9d5059d83f31780ad14958d6526ed54e1fb6402210d6060856afb0b9799c65cf",
+    "schemas/scenario_adversarial_result.schema.json": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "concurrency_policy_v4_sha256": "36a4cdcc5b876538c4197096d60febffc5e6ec3ab132e93529755e6daae0ad7f",
+    "prior_concurrency_policy_v3_sha256": "5d08356b2877734aa4a6e964675fc32abae6f57d83ede5dc11f38e9cea4a7bb3",
+    "owner_provisional_ledger_sha256": "a53e72afb5f52e7e95797f2179c7fd8da14ebf6e148efd544781614784113267",
+    "preparation_script_sha256": "4ad3408c54bde2700ce3cd0d43451ffd34584ffefb835994c3bb5306e26cc89b",
+    "verifier_script_sha256": "ca01676c7e05e16d6aca48a9b01a2f49c537a030a9f116213d292553f160ca37",
+    "validator_script_sha256": "5dc1eb35e98ea8a98b20539e8f8f26a04b56713e34927762c019aa72cb63db8b",
+    "test_script_sha256": "a2f37e2028c076673684010119d3dabe1cf223735d629201c820be0dfce6c221",
+    "research_activation_sha256": "c8c8d83e19a8ec82d869bc74528053d887a042b545afe4293f08ccf964758e3e",
+    "research_native_capture_sha256": "70eeaf93092a05ffe36f4b5f17356bba751646b23d65eebcb567b38d051e45ee",
+    "research_primary_postrun_sha256": "1256add17ed50ffc38d2e6dfaf013fb11843e194edba0f9e0bc35b1d2593ee02"
+  },
+  "strict_tests": {
+    "valid_synthetic_passed": true,
+    "missing_feature_rejected": true,
+    "duplicate_feature_rejected": true,
+    "foreign_feature_rejected": true,
+    "wrong_source_row_hash_rejected": true,
+    "wrong_research_result_hash_rejected": true,
+    "wrong_research_record_hash_rejected": true,
+    "lost_compact_field_rejected": true,
+    "packet_ceiling_rejected": true,
+    "cross_domain_packet_rejected": true,
+    "wrong_model_rejected": true,
+    "wrong_effort_rejected": true,
+    "wrong_identity_rejected": true,
+    "missing_dimension_without_not_applicable_rejected": true,
+    "missing_executable_evidence_rejected": true,
+    "missing_falsifiable_oracle_rejected": true,
+    "unsupported_research_claim_rejected": true,
+    "missing_failure_spec_delta_rejected": true,
+    "extra_output_file_rejected": true,
+    "missing_receipt_rejected": true,
+    "duplicate_receipt_rejected": true,
+    "result_coverage_mismatch_rejected": true,
+    "extra_nested_key_rejected": true
+  },
+  "strict_test_summary": {
+    "total": 23,
+    "passed": 23,
+    "all_true": true,
+    "harness_common_mode_limited": true
+  },
+  "common_mode_gap_findings": [
+    {
+      "finding": "The wave verifier reuses prepare-module projection, allocation, partition, and decode helpers; it is not source-independent.",
+      "mitigation": "Independent reimplementation in this gate.",
+      "severity": "high"
+    },
+    {
+      "finding": "The postrun validator validates against packet-decoded evidence and shares the decode helper rather than rehydrating owner/universal lineage.",
+      "mitigation": "Full 3888-record lineage comparison performed independently.",
+      "severity": "medium"
+    },
+    {
+      "finding": "The 23-test harness uses a tiny two-record synthetic fixture and cannot stand in for full-wave coverage.",
+      "mitigation": "All 3888 records and 24 research payloads were independently checked.",
+      "severity": "medium"
+    },
+    {
+      "finding": "Intentional compact drops are policy-labeled but not independently semantically proven by the verifier.",
+      "mitigation": "Retained fields and exact URL/claim mappings were compared; dropped categories are explicitly named in architecture.",
+      "severity": "low"
+    }
+  ],
+  "zero_state_inventory": {
+    "activation_files": 0,
+    "native_capture_files": 0,
+    "receipt_files": 0,
+    "result_files": 0,
+    "output_directories": 32,
+    "coverage_credit": 0,
+    "certification_credit": 0,
+    "research_credit": 0,
+    "canonical_plan_writes_authorized": false,
+    "canonical_plan_changes": []
+  },
+  "promotion_credit": 0,
+  "activation_authorized": false,
+  "canonical_plan_changes": [],
+  "candidate_comparison": {
+    "candidate_report_sha256": "7ea7c7d974955536244bd594ff07d44576ea632fcc58c301380c99791a3c5193",
+    "candidate_authority": false,
+    "read_only_secondary_comparison": true,
+    "candidate_status": "pass",
+    "candidate_checker": "scenario_adversarial_prelaunch_v1",
+    "independent_checker": "scenario_adversarial_luna_prelaunch_v1",
+    "independently_reconciled": true,
+    "discrepancies": [],
+    "matched": {
+      "status": true,
+      "counts": true,
+      "coverage_digest": true,
+      "domain_split_counts": true,
+      "packet_bytes": true,
+      "cohort_counts": true,
+      "policy_hashes": true,
+      "control_hashes": true,
+      "strict_tests": true,
+      "zero_state": true,
+      "errors": true
+    },
+    "lane_label_difference_nonblocking": true
+  }
+}
+

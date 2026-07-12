@@ -1,0 +1,15 @@
+{
+  "schema_version": "external-research-recovery-leaf-prompt-v5",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0005",
+  "attempt_id": "attempt-0005",
+  "status": "BLOCKED_AWAITING_INDEPENDENT_PRELAUNCH",
+  "activation_granted": false,
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+  "result_required_before_pmr1": true,
+  "prompt": "Execute only the assigned Audit 005 external-research recovery attempt-0005. Your initial task must supply the frozen prompt, your absolute immutable prelaunch dispatch-intent path, your absolute immutable leaf-dispatch-authorization path, and the activation-core path and SHA. Read exactly your intent, its bound packet, the v5 result schema, your authorization, the activation core named by that authorization, and live public-web sources. You MUST verify that the authorization and core hashes match; both state activation_granted=true; both bind attempt-0005, your exact assignment, agent path, Luna Max lane, controller, V6, packet, intent, output, and transaction; and the authorization uniquely binds you. The immutable prelaunch intent intentionally remains activation_granted=false and BLOCKED_AWAITING_INDEPENDENT_PRELAUNCH: it is lineage and binding only, cannot veto a later valid authorization, and cannot authorize work by itself. Stop without research or PMR1 if the authorization/core is absent, false, stale, mismatched, or unhashed. Do not read attempt-0001 through attempt-0004 result bodies, peer outputs, or prior semantic findings. Independently redo current public-web research for the exact original topic and every original question. Prefer official standards, official product documentation, primary research, and mature open-source documentation. The exact self-attestation key fresh_current_public_web_research_redone is mandatory; renamed or additional keys are forbidden. Run a leaf-local exact v5 schema conformance check before the final write. Build the sources registry first: register every cited direct HTTPS URL exactly once before any finding, pattern, failure mode, implication, novel idea, or unresolved question references it; unregistered URLs are forbidden. Use explicit supported_claim, inference, or no_evidence labels. The result contains canonical agent_path only and must not contain task_thread_id or any native thread/turn identity. Write exactly one result.json. result.json MUST exist and pass your local schema check before returning exactly PMR1; PMR1 without result.json is a terminal zero-credit failure. Spawn no descendants, accept no follow-up or retry, and modify nothing after PMR1."
+}

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/audit005/reverse-shadow-five-edge-adjudication-v31.schema.json",
+  "title": "Audit005 postresearch five-edge adjudication candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "schema_version": {"const": "reverse-shadow-five-edge-adjudication-v31-v1"},
+    "phase": {"const": "reverse_shadow_postresearch_five_edge_adjudication"},
+    "reconciliation_id": {"const": "reverse-shadow-five-edge-0001"},
+    "adjudicator_path": {"const": "/root/sol_controller_v29/a005_reverse_shadow_five_edge_adjudication_ultra_v31"},
+    "model": {"const": "gpt-5.6-sol"},
+    "reasoning_effort": {"const": "ultra"},
+    "status": {"const": "candidate_complete_pending_independent_luna"},
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "protected_inputs_sha256": {"$ref": "#/$defs/sha256"},
+        "edge_registry_sha256": {"$ref": "#/$defs/sha256"},
+        "feature_registry_sha256": {"$ref": "#/$defs/sha256"},
+        "research_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "reverse_shadow_primary_sha256": {"const": "c3370ecaeacfdfb2437633f95e343a322e5e6249a057d2a14743b04c2ffc863d"},
+        "reverse_shadow_luna_sha256": {"const": "8956c7a16b39d3c5fe4878dd64aff7b416ef3350c7f75e4fdb2c2fd85ab82c68"},
+        "seam_ledger_sha256": {"const": "6ebfdbd97df06dc4060421f8845d32de4fc3edc81d57a1765144986193a2925b"},
+        "seam_exact64_checkpoint_sha256": {"const": "f6d3fd1087c8dec7e35cfae26374605d31b342df3b945603986194598f9ee809"},
+        "five_edge_digest_sha256": {"const": "4073116b8855d02324e0d471130e36284779d6fa500853372fc3bbe055813796"}
+      },
+      "required": ["protected_inputs_sha256", "edge_registry_sha256", "feature_registry_sha256", "research_manifest_sha256", "reverse_shadow_primary_sha256", "reverse_shadow_luna_sha256", "seam_ledger_sha256", "seam_exact64_checkpoint_sha256", "five_edge_digest_sha256"]
+    },
+    "research_result_bindings": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/researchBinding"}, {"properties": {"assignment_id":{"const":"A005RSR-0001"},"packet_id":{"const":"RSRPKT-0001"},"edge_id":{"const":"RSQ-0003"}}}]},
+        {"allOf": [{"$ref": "#/$defs/researchBinding"}, {"properties": {"assignment_id":{"const":"A005RSR-0002"},"packet_id":{"const":"RSRPKT-0002"},"edge_id":{"const":"RSQ-0005"}}}]}
+      ],
+      "items": false
+    },
+    "adjudications": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {"allOf": [{"$ref":"#/$defs/adjudicationRow"},{"properties":{"sequence":{"const":1},"edge_id":{"const":"RSQ-0001"},"normalized_edge_id":{"const":"A005CDS-EDGE-02944"},"normalized_edge_key":{"const":"OPF::A005OM-0012::PF-0109\u0000OPF::A005OM-0015::PF-0113"},"candidate_seam_decision":{"const":"same_feature_merge"},"targeted_research_assignment_id":{"const":null}}}]},
+        {"allOf": [{"$ref":"#/$defs/adjudicationRow"},{"properties":{"sequence":{"const":2},"edge_id":{"const":"RSQ-0002"},"normalized_edge_id":{"const":"A005CDS-EDGE-02995"},"normalized_edge_key":{"const":"OPF::A005OM-0012::PF-0115\u0000OPF::A005OM-0014::PF-0105"},"candidate_seam_decision":{"const":"dependency_or_interface_seam"},"targeted_research_assignment_id":{"const":null}}}]},
+        {"allOf": [{"$ref":"#/$defs/adjudicationRow"},{"properties":{"sequence":{"const":3},"edge_id":{"const":"RSQ-0003"},"normalized_edge_id":{"const":"A005CDS-EDGE-07514"},"normalized_edge_key":{"const":"OPF::A005OM-0016::PF-0011\u0000OPF::A005OM-0017::PF-0090"},"candidate_seam_decision":{"const":"uncertain_requires_targeted_research"},"targeted_research_assignment_id":{"const":"A005RSR-0001"}}}]},
+        {"allOf": [{"$ref":"#/$defs/adjudicationRow"},{"properties":{"sequence":{"const":4},"edge_id":{"const":"RSQ-0004"},"normalized_edge_id":{"const":"A005CDS-EDGE-08033"},"normalized_edge_key":{"const":"OPF::A005OM-0016::PF-0195\u0000OPF::A005OM-0017::PF-0121"},"candidate_seam_decision":{"const":"same_feature_merge"},"targeted_research_assignment_id":{"const":null}}}]},
+        {"allOf": [{"$ref":"#/$defs/adjudicationRow"},{"properties":{"sequence":{"const":5},"edge_id":{"const":"RSQ-0005"},"normalized_edge_id":{"const":"A005CDS-EDGE-08044"},"normalized_edge_key":{"const":"OPF::A005OM-0016::PF-0199\u0000OPF::A005OM-0017::PF-0117"},"candidate_seam_decision":{"const":"uncertain_requires_targeted_research"},"targeted_research_assignment_id":{"const":"A005RSR-0002"}}}]}
+      ],
+      "items": false
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "edges": {"const": 5},
+        "targeted_research_results": {"const": 2},
+        "shadow_source_assignments": {"const": 3},
+        "target_seam_assignments": {"const": 5},
+        "rerun_shadow_assignments": {"const": 0},
+        "promotions": {"const": 0},
+        "spec_edits": {"const": 0},
+        "merges": {"const": 0}
+      },
+      "required": ["edges", "targeted_research_results", "shadow_source_assignments", "target_seam_assignments", "rerun_shadow_assignments", "promotions", "spec_edits", "merges"]
+    },
+    "independent_luna_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {"const": "required_absent"},
+        "report_ref": {"const": null},
+        "report_sha256": {"const": null},
+        "fresh_direct_luna_max_required": {"const": true},
+        "independent_reconstruction_before_primary_comparison": {"const": true},
+        "sol_substitution_forbidden": {"const": true},
+        "gate_pass_grants_promotion": {"const": false}
+      },
+      "required": ["state", "report_ref", "report_sha256", "fresh_direct_luna_max_required", "independent_reconstruction_before_primary_comparison", "sol_substitution_forbidden", "gate_pass_grants_promotion"]
+    },
+    "credits": {"$ref": "#/$defs/zeroCredits"},
+    "self_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "exact_five_edges_adjudicated_once": {"const": true},
+        "exact_two_targeted_results_consumed": {"const": true},
+        "external_evidence_treated_as_supplemental": {"const": true},
+        "canonical_product_authority_not_overridden": {"const": true},
+        "source_results_and_lineage_not_mutated": {"const": true},
+        "no_rerun40": {"const": true},
+        "no_promotion_spec_merge_or_canonical_write": {"const": true}
+      },
+      "required": ["exact_five_edges_adjudicated_once", "exact_two_targeted_results_consumed", "external_evidence_treated_as_supplemental", "canonical_product_authority_not_overridden", "source_results_and_lineage_not_mutated", "no_rerun40", "no_promotion_spec_merge_or_canonical_write"]
+    }
+  },
+  "required": ["audit_id", "schema_version", "phase", "reconciliation_id", "adjudicator_path", "model", "reasoning_effort", "status", "input_binding", "research_result_bindings", "adjudications", "counts", "independent_luna_gate", "credits", "self_attestation"],
+  "$defs": {
+    "sha256": {"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "zeroCredits": {
+      "type":"object","additionalProperties":false,
+      "properties":{"coverage":{"const":0},"research":{"const":0},"adjudication":{"const":0},"promotion":{"const":0},"spec":{"const":0},"merge":{"const":0}},
+      "required":["coverage","research","adjudication","promotion","spec","merge"]
+    },
+    "researchBinding": {
+      "type":"object","additionalProperties":false,
+      "properties":{"assignment_id":{"type":"string"},"packet_id":{"type":"string"},"edge_id":{"type":"string"},"result_sha256":{"$ref":"#/$defs/sha256"},"verification_sha256":{"$ref":"#/$defs/sha256"},"status":{"enum":["verified_candidate_only","verified_blocked_no_authoritative_evidence"]}},
+      "required":["assignment_id","packet_id","edge_id","result_sha256","verification_sha256","status"]
+    },
+    "axisFinding": {
+      "type":"object","additionalProperties":false,
+      "properties":{"assessment":{"enum":["same","different","insufficient"]},"internal_evidence_refs":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":5}},"external_claim_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^RSRCLM-[0-9]{4}$"}},"rationale":{"type":"string","minLength":30}},
+      "required":["assessment","internal_evidence_refs","external_claim_ids","rationale"]
+    },
+    "adjudicationRow": {
+      "type":"object","additionalProperties":false,
+      "properties": {
+        "sequence":{"type":"integer","minimum":1,"maximum":5},
+        "edge_id":{"type":"string"},
+        "normalized_edge_id":{"type":"string"},
+        "normalized_edge_key":{"type":"string"},
+        "candidate_seam_decision":{"enum":["same_feature_merge","dependency_or_interface_seam","uncertain_requires_targeted_research"]},
+        "targeted_research_assignment_id":{"type":["string","null"]},
+        "axis_findings": {
+          "type":"object","additionalProperties":false,
+          "properties":{"authority_owner":{"$ref":"#/$defs/axisFinding"},"lifecycle_transition":{"$ref":"#/$defs/axisFinding"},"user_outcome":{"$ref":"#/$defs/axisFinding"},"state_boundary":{"$ref":"#/$defs/axisFinding"},"failure_semantics":{"$ref":"#/$defs/axisFinding"}},
+          "required":["authority_owner","lifecycle_transition","user_outcome","state_boundary","failure_semantics"]
+        },
+        "disposition":{"enum":["same_feature_merge_recommended","dependency_or_interface_seam","shared_subsystem_distinct","unsupported_candidate","conflict_requires_plan_revision","remain_quarantined_insufficient_evidence"]},
+        "rationale":{"type":"string","minLength":50},
+        "supporting_internal_refs":{"type":"array","minItems":2,"uniqueItems":true,"items":{"type":"string","minLength":5}},
+        "external_claim_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^RSRCLM-[0-9]{4}$"}},
+        "deviation_from_seam_candidate":{"type":"object","additionalProperties":false,"properties":{"deviates":{"type":"boolean"},"rationale":{"type":["string","null"]}},"required":["deviates","rationale"]},
+        "recommendation_only":{"const":true},
+        "promotion_eligible":{"const":false},
+        "promotion_performed":{"const":false},
+        "spec_write_authorized":{"const":false},
+        "spec_edit_performed":{"const":false},
+        "merge_performed":{"const":false}
+      },
+      "required":["sequence","edge_id","normalized_edge_id","normalized_edge_key","candidate_seam_decision","targeted_research_assignment_id","axis_findings","disposition","rationale","supporting_internal_refs","external_claim_ids","deviation_from_seam_candidate","recommendation_only","promotion_eligible","promotion_performed","spec_write_authorized","spec_edit_performed","merge_performed"]
+    }
+  }
+}

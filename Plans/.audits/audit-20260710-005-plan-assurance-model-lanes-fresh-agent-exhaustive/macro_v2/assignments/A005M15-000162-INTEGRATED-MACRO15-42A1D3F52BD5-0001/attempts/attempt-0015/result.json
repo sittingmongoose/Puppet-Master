@@ -1,0 +1,661 @@
+{
+  "assignment_id": "A005M15-000162-INTEGRATED-MACRO15-42A1D3F52BD5-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "  \"$id\": \"pm.gui_automation_manifest.schema.v1\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "  \"title\": \"Puppet Master GUI Automation Manifest\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "  \"type\": \"object\",",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can bind the root object to a named Draft 2020-12 schema and reject a non-object root.",
+      "item_id": "A005M15-000162-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/gui_automation_manifest.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:type",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The manifest root is explicitly identified, titled, typed as an object, and governed by JSON Schema Draft 2020-12.",
+      "title": "Root schema identity is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "inputs_outputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "  \"required\": [",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "  \"properties\": {",
+          "line_end": 22,
+          "line_start": 22,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Unknown root keys are rejected and the declared required-field set is mechanically testable.",
+      "item_id": "A005M15-000162-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The root vocabulary is closed and explicitly separates required keys from the complete property definitions.",
+      "title": "Root object is closed and required fields are enumerated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["capabilities", "gui_truth", "contracts"],
+      "evidence": [
+        {
+          "exact_quote": "  \"$defs\": {",
+          "line_end": 133,
+          "line_start": 133,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"TestingBrowserManifest\": {",
+          "line_end": 134,
+          "line_start": 134,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Browser-session entries share a reusable closed definition rather than an unconstrained object shape.",
+      "item_id": "A005M15-000162-I003",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The schema defines a reusable TestingBrowserManifest contract for browser-session evidence and availability state.",
+      "title": "Browser session contract is centralized"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "        \"redaction_manifest_ref\": {",
+          "line_end": 230,
+          "line_start": 230,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "          \"minLength\": 1",
+          "line_end": 232,
+          "line_start": 232,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every browser-session object must carry a non-empty pointer to its redaction manifest.",
+      "item_id": "A005M15-000162-I004",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_SUFFIX:Plans/gui_automation_manifest.schema.json"
+      ],
+      "statement": "The browser-session definition terminates with a non-empty redaction_manifest_ref property that is also present in the definition's required list.",
+      "title": "Browser session redaction manifest reference is mandatory"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "acceptance_oracles", "test_falsifiability", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "      \"enum\": [\"PASS\", \"FAIL\", \"WARN\", \"SKIPPED\"]",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"checks_path\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 36,
+          "line_start": 36,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "unbound_summary_status",
+      "impact": "A manifest can validate while reporting PASS even when its referenced checks fail or are unavailable, allowing a misleading GUI or downstream success signal.",
+      "item_id": "A005M15-000162-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The top-level status enum is not constrained by checks_path content, artifact outcomes, browser availability, or any structured check result in this manifest.",
+      "title": "PASS is not derivable from manifest evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "partial_failure", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "                  \"enum\": [\"browser_screenshot\", \"browser_pdf\", \"console\", \"network\"]",
+          "line_end": 54,
+          "line_start": 54,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "            \"then\": {",
+          "line_end": 59,
+          "line_start": 59,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "          \"redaction_status\": {",
+          "line_end": 106,
+          "line_start": 106,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "incomplete_redaction_gate",
+      "impact": "Sensitive recording, screenshot, trace, state, log, or other artifacts can validate without any redaction state; blocked or failed redaction also does not forbid publication or require quarantine/deletion.",
+      "item_id": "A005M15-000162-I006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "Redaction status is required only for four browser-specific kinds, while the broader artifact enum includes other potentially sensitive visual and diagnostic kinds, and no lifecycle rule binds blocked or failed redaction to artifact handling.",
+      "title": "Artifact redaction policy is incomplete and non-enforcing"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["invalid_states_transitions", "gui_truth", "gui_misleading_states", "offline_network_loss"],
+      "evidence": [
+        {
+          "exact_quote": "            \"runtime_unavailable\"",
+          "line_end": 191,
+          "line_start": 191,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "            \"open_available\",",
+          "line_end": 197,
+          "line_start": 197,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "invalid_state_cross_product",
+      "impact": "Consumers can receive logically contradictory availability claims and may expose Open or Watch controls for a runtime that the same record says is unavailable.",
+      "item_id": "A005M15-000162-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "visibility_state and open_watch_state are independently enumerated; the schema does not reject contradictory combinations such as runtime_unavailable with open_available or watch_available.",
+      "title": "Browser visibility and action states admit contradictions"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["states_transitions", "concurrency_races", "partial_failure", "operations"],
+      "evidence": [
+        {
+          "exact_quote": "    \"started_at_utc\": {\"type\": \"string\", \"format\": \"date-time\"},",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"ended_at_utc\": {\"type\": \"string\", \"format\": \"date-time\"},",
+          "line_end": 27,
+          "line_start": 27,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "temporal_and_revision_invariants_missing",
+      "impact": "Negative-duration runs and stale overwrite races cannot be rejected from manifest validation, weakening ordering and duration metrics.",
+      "item_id": "A005M15-000162-I008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "Both timestamps are syntactically validated, but there is no ended-at-after-started-at invariant and no revision, generation, or optimistic-concurrency field for manifest updates.",
+      "title": "Temporal coherence and concurrent update ordering are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["untrusted_inputs", "security_privacy", "authority_boundaries", "operations"],
+      "evidence": [
+        {
+          "exact_quote": "          \"relative_path\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 94,
+          "line_start": 94,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "          \"source_url\": {\"type\": \"string\"},",
+          "line_end": 111,
+          "line_start": 111,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "unsafe_locator_constraints",
+      "impact": "A consumer that trusts the field name may accept traversal, absolute paths, unsupported URL schemes, embedded credentials, or local-network targets.",
+      "item_id": "A005M15-000162-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "relative_path is only a non-empty string and source_url is an arbitrary string; the schema supplies no path-containment, URL-format, scheme, host, credential, or trust-boundary constraints.",
+      "title": "Artifact locators are unconstrained untrusted inputs"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["propagation", "consumers", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"artifact_id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 78,
+          "line_start": 78,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "          \"artifact_id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 125,
+          "line_start": 125,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "        \"evidence_refs\": {",
+          "line_end": 210,
+          "line_start": 210,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "referential_integrity_missing",
+      "impact": "Chat cards and browser sessions can reference nonexistent, duplicated, or ambiguous evidence, so propagation to viewers and reports is not reliably falsifiable.",
+      "item_id": "A005M15-000162-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$defs"
+      ],
+      "statement": "artifact_id and evidence reference fields are string-shaped only; uniqueness within artifacts and existence of all cross-references are not expressed by the schema.",
+      "title": "Evidence and card references lack referential integrity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["failures_recovery", "partial_failure", "recovery_rollback", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"enum\": [\"PASS\", \"FAIL\", \"WARN\", \"SKIPPED\"]",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"recording_disabled_reason\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 37,
+          "line_start": 37,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "unstructured_failure_and_recovery",
+      "impact": "Operators cannot distinguish policy skips, tool failures, network loss, partial evidence, retry exhaustion, or recovered failures without opening external files; safe retry and rollback behavior remains unspecified.",
+      "item_id": "A005M15-000162-I011",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "FAIL, WARN, and SKIPPED have no required reason codes, failed-step references, retry metadata, recovery outcome, or rollback/quarantine state, and recording_disabled_reason is optional without a recording-state condition.",
+      "title": "Failure, partial completion, and recovery are not structured"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["authority", "ownership", "authority_boundaries", "missing_callers_consumers"],
+      "evidence": [
+        {
+          "exact_quote": "    \"run_id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"tool_name\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 32,
+          "line_start": 32,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "producer_and_access_authority_missing",
+      "impact": "The manifest cannot prove who or what was authorized to produce, mutate, publish, view, or delete potentially sensitive automation evidence.",
+      "item_id": "A005M15-000162-I012",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "Tool identity is recorded as free text, but producer principal, tenant or workspace owner, authorization decision, evidence audience, and responsible consumer are absent from the closed root contract.",
+      "title": "Manifest authority and ownership boundaries are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["scale_performance", "scale_limits", "operations", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"type\": \"array\",",
+          "line_end": 39,
+          "line_start": 39,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "      \"type\": \"array\",",
+          "line_end": 45,
+          "line_start": 45,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "      \"type\": \"array\",",
+          "line_end": 118,
+          "line_start": 118,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "collection_bounds_and_uniqueness_missing",
+      "impact": "Unbounded or duplicate-heavy manifests can impose excessive validation, rendering, storage, and support costs, while required browser_sessions and artifacts may still be empty.",
+      "item_id": "A005M15-000162-I013",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "Browser sessions, artifacts, chat cards, streams, evidence references, and remediation actions have no maximum cardinality or uniqueness constraints; required top-level arrays also have no minimum cardinality.",
+      "title": "Manifest collections lack scale and cardinality invariants"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["compatibility_migration", "cross_document_seams", "builder_discretion", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "    \"schema_id\": {\"type\": \"string\", \"const\": \"pm.gui_automation_manifest.schema.v1\"},",
+          "line_end": 23,
+          "line_start": 23,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "    \"tool_version\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 33,
+          "line_start": 33,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "migration_and_capability_negotiation_unspecified",
+      "impact": "A future producer or consumer cannot declare supported schema ranges, downgrade behavior, extension handling, or migration provenance, leaving interoperability decisions to builders.",
+      "item_id": "A005M15-000162-I014",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "The schema and instance identifiers are fixed to v1 and tool_version is opaque, but no compatibility range, feature capability set, migration provenance, or unknown-version failure behavior is specified.",
+      "title": "Version migration and capability negotiation remain undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["accessibility", "localization", "gui_truth", "consumers"],
+      "evidence": [
+        {
+          "exact_quote": "        \"required\": [\"title\", \"artifact_id\", \"reason\", \"priority\"],",
+          "line_end": 122,
+          "line_start": 122,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        },
+        {
+          "exact_quote": "          \"title\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 124,
+          "line_start": 124,
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+        }
+      ],
+      "gap_kind": "user_visible_semantics_unstructured",
+      "impact": "Chat-card consumers cannot reliably localize titles and reasons or expose accessible media alternatives from the manifest alone.",
+      "item_id": "A005M15-000162-I015",
+      "item_type": "gui_truth",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties"
+      ],
+      "statement": "User-visible chat-card title and reason are bare strings with no locale or message key, and artifact metadata has no alternative text, caption, transcript, or accessibility annotation.",
+      "title": "User-visible automation evidence lacks localization and accessibility metadata"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 237],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/gui_automation_manifest.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/gui_automation_manifest.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/gui_automation_manifest.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-000162-I001",
+        "A005M15-000162-I002",
+        "A005M15-000162-I003",
+        "A005M15-000162-I004",
+        "A005M15-000162-I005",
+        "A005M15-000162-I006",
+        "A005M15-000162-I007",
+        "A005M15-000162-I008",
+        "A005M15-000162-I009",
+        "A005M15-000162-I010",
+        "A005M15-000162-I011",
+        "A005M15-000162-I012",
+        "A005M15-000162-I013",
+        "A005M15-000162-I014",
+        "A005M15-000162-I015"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 237 lines and all 19 assigned semantic and structural source units. The schema provides a closed, versioned manifest with typed artifact and browser-session records, but leaves evidence-derived status, redaction enforcement, state cross-products, temporal and referential integrity, authority, failure recovery, scale, migration, localization, and accessibility materially underconstrained.",
+      "window_id": "WIN-42A1D3F52BD5-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-42A1D3F52BD5-0001",
+    "document_path": "Plans/gui_automation_manifest.schema.json",
+    "micro_window_ids": ["WIN-42A1D3F52BD5-0001"],
+    "source_sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines how checks_path contents determine PASS, FAIL, WARN, or SKIPPED?",
+      "Which artifact-store contract enforces containment, retention, deletion, quarantine, and access control for manifest paths and redaction failures?",
+      "Which GUI consumer contract defines valid visibility_state and open_watch_state combinations and the controls shown for each?"
+    ],
+    "feature_family_keys": [
+      "gui-automation-manifest",
+      "browser-session-evidence",
+      "artifact-redaction",
+      "automation-run-status"
+    ],
+    "research_queries": [
+      "JSON Schema cross-field timestamp ordering and referential integrity patterns",
+      "secure automation artifact manifest redaction quarantine retention schema",
+      "browser automation evidence manifest accessibility localization metadata"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000162_attempt_0015_terminal"
+}

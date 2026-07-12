@@ -1,0 +1,364 @@
+{
+  "checker": "external_research_luna_receipt_closure_prelaunch_v7_2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "fail_closed",
+  "errors": [
+    "receipt_schema_v7_2_invalid_draft202012_required_array_has_duplicates",
+    "capture_writer_v7_2_missing_result_receipt_raw_and_canonical_digest_join",
+    "capture_writer_v7_2_missing_receipt_output_tree_join",
+    "capture_writer_v7_2_missing_toctou_rechecks",
+    "capture_writer_v7_2_missing_native_state_shape_and_identity_uniqueness_validation",
+    "capture_schema_v7_2_accepts_duplicate_assignment_rows",
+    "exact_frozen_644_suite_unrunnable_on_host_python3_9_due_vendored_cpython312_rpds_extension"
+  ],
+  "scope": {
+    "frozen_attempt_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007",
+    "report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/luna-independent-prelaunch-v7_2.json",
+    "fresh_direct_luna_reviewer": true,
+    "fork_turns": "none",
+    "descendants_launched": false,
+    "followups_launched": false,
+    "retries_launched": false,
+    "additional_agents_launched": false,
+    "leaves_rerun": false,
+    "canonical_plans_read": false,
+    "activation_mutated": false,
+    "production_results_mutated": false,
+    "prior_v7_v7_1_evidence_mutated": false,
+    "temporary_fixture_writes_allowed_and_cleaned": true,
+    "only_persistent_report_write": true
+  },
+  "terminal_gate": {
+    "v16_policy_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V16.json",
+    "v16_policy_sha256": "76a0c7b3a3559f18cab4f03e84ddc6382b3bc8d6719c8e263c642c96dc8efa72",
+    "preparation_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/terminal-sol-preparation-report-v7_2.json",
+    "preparation_sha256": "17835931a537616594933a978ab6a00527ee7222370a6c2f8e4ea603c11421a4",
+    "preparation_status": "READY_FOR_FRESH_LUNA_RECEIPT_CLOSURE_V7_2",
+    "preparation_binds_terminal_authority": true,
+    "authority_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/authority-v7_2-terminal.json",
+    "authority_sha256": "cb2e296fb5712e26a4fab97a11df3210c5f8dccaffe045397679fc126c0d7e39",
+    "authority_status": "READY_FOR_FRESH_LUNA_RECEIPT_CLOSURE_V7_2",
+    "authority_tool_hashes_match_pins": true,
+    "authority_failure_reproduction_shape_match": true,
+    "candidate_authority_read_only": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/authority-v7_2.json",
+      "sha256": "40646974cbaacfa310b4ea1c5fdd34568e3fb93bb95d653f34659282da8be510",
+      "status": "PREPARED_AWAITING_TESTS",
+      "used_for_gate": false,
+      "reason_not_used": "candidate authority carries the pre-terminal receipt-writer hash"
+    },
+    "terminal_verifier": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/verify_v7_2_terminal.py",
+      "sha256": "e1e15d1252eae306afaaf357aee655cebbb773d0c91d680f8d5712de7b6e830f",
+      "exit_code": 0,
+      "status": "pass",
+      "errors": [],
+      "production_receipts": 0,
+      "production_capture_rows": 0,
+      "credits": 0
+    }
+  },
+  "input_hashes": {
+    "result_validator_v7_2": "c678f65ea3518a12415af57581818cb43399eb04432412447b69ae7f0774c84f",
+    "receipt_writer_v7_2": "997e58260cf5342bee7d060e53a71278417ed253e834f3da1f1c6eda696e6d24",
+    "capture_writer_v7_2": "bf02818c247007f5d6c486e48f2c6b74d5086a9221f2d0734e028a9b922ad1d5",
+    "receipt_schema_v7_2": "a39987afa695c4a2576a8292d8bd0f2207e09288afeddbba8b5c10d9fbb3a5bb",
+    "capture_schema_v7_2": "9758ef23d92f2eab80d2c1ccdd3a87b3ec867daf556fef49c1d20c318ee390be",
+    "tests_source_v7_2": "8dcc732ddb4b7f1061df9879cd8fe7dac5053594908f4f77166979d51882fd5b",
+    "tests_exact_644_digest": "227f23a4c2d05b87997948fe1a97954c40efa8a3f4c896ac277095fae85fc76c",
+    "prior_v7_1_terminal_report": "e860585f7d5a296e39dffd3192d7982a46c903d7f411b83c4ba59f90efc14689",
+    "manifest": "0653671397d64fb798b22c8ddb2796d5df0012ca8ff3c2706ca61d684ff3ef72",
+    "native_state_v7_1": "c893c4d64004c4bc9d021f75238f832356afa353c4fd7de2eebea45b8b7a2cd5",
+    "terminal_proof_ER_0003": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+    "terminal_proof_ER_0008": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047",
+    "packet_ER_0003": "788b4767b23ebf472e5137da5c2dd7beb23c4fabfb5565231c2b42864fc6a617",
+    "packet_ER_0008": "6134d137bcaf1d533fb4750d5337078f64e12bc88d2e8c6ad38e69feb755e81f",
+    "dispatch_intent_ER_0003": "8d1fbfbe802259f3f387bdfb03e468473494ddc37d1f8e8299ecfec46475c246",
+    "dispatch_intent_ER_0008": "a68b493bd7b587c9a35f439c954534022379a465154038c82e6324054d25bb02",
+    "result_schema_v7": "f5a9c7cfd4aff0d2d6aff176518597d8a55b1233203e0659f1264531e14f8eeb",
+    "leaf_initial_task_contract": "90233009520d3489a7407a195c7db8f2c66f1e62eebaefd338d4e780e2b36e80",
+    "common_tools": "2291c403e4214c5a4e5fb0039cc5e27cf740dd535ff4240aa467acc72801441b",
+    "canonical_json_tools": "0c4b2badd3e4c21eb893d84b72bf9cdf7ced1315c838c289a91b27faa2ad97b4",
+    "base_v7_receipt_writer": "405fc385086c89f6bf72a5872556dac9cbfd7b5afff83933371d1b1533d34992",
+    "base_v7_capture_writer": "891abed02abe6361a2f096fe2f63aed99ddd18b1a15ccf103dfe5ce872d47d70",
+    "activation_core_current_file": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "authorization_ER_0003_current_file": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+    "authorization_ER_0008_current_file": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+    "activation_envelope_current_file": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "result_ER_0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+    "result_ER_0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+  },
+  "activation_digest_closure": {
+    "actual_file_sha256": {
+      "core": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+      "ER-0003": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+      "ER-0008": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+      "envelope": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406"
+    },
+    "historical_embedded_pre_final_canonical_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40"
+    },
+    "recomputed_canonical_object_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+      "envelope": "c60f6b3c51fdc9661f782f81667a8a570ea8f9e808ea0f7c20846f24537ad4f5"
+    },
+    "raw_vs_canonical_digest_separation_verified": true,
+    "embedded_core_sha256": {
+      "ER-0003_authorization": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0008_authorization": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "envelope": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88"
+    },
+    "embedded_authorization_sha256": {
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40"
+    },
+    "activation_transaction_restamped": false
+  },
+  "result_closure": {
+    "assignment_count": 2,
+    "result_count": 2,
+    "exactly_one_result_per_assignment": true,
+    "output_inventory": {
+      "ER-0003": ["result.json"],
+      "ER-0008": ["result.json"]
+    },
+    "results": {
+      "ER-0003": {
+        "raw_file_sha256": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+        "canonical_object_sha256": "9d35783a50d66f4ef9ef85d41f486f48f8ccca71cf894fc411f7c7cd48de4ec2",
+        "output_tree_sha256": "15d42ebbba867a762d801d633c045fbc13c4a3429f2fdffa5abcbaeed11efe86"
+      },
+      "ER-0008": {
+        "raw_file_sha256": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51",
+        "canonical_object_sha256": "323ebee485559652c5c97d303631d87deb499cb58ff8499994084d744700e352",
+        "output_tree_sha256": "90906e04b40062017901af427aa6cbebe9a7640173a2271c5b7d56fb1669b5bc"
+      }
+    },
+    "v7_2_raw_activation_and_authorization_bindings": true,
+    "forbidden_native_identity_fields": false
+  },
+  "v7_1_failure_reproduction": {
+    "old_validator": "common.validate_result_buffer",
+    "replacement_validator": "result_validator_v7_2.validate_result_buffer_v7_2",
+    "ER-0003": {
+      "old_common_result_errors": ["binding:activation_core_sha256", "binding:leaf_dispatch_authorization_sha256"],
+      "new_isolated_errors": [],
+      "old_error_count": 2,
+      "new_error_count": 0,
+      "result_raw_bindings_used_by_v7_2": {
+        "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "leaf_dispatch_authorization_sha256": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8"
+      }
+    },
+    "ER-0008": {
+      "old_common_result_errors": ["binding:activation_core_sha256", "binding:leaf_dispatch_authorization_sha256"],
+      "new_isolated_errors": [],
+      "old_error_count": 2,
+      "new_error_count": 0,
+      "result_raw_bindings_used_by_v7_2": {
+        "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "leaf_dispatch_authorization_sha256": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1"
+      }
+    },
+    "reproduced_exactly": true,
+    "replacement_scope_only": ["stale common.result_errors activation_core_sha256", "stale common.result_errors leaf_dispatch_authorization_sha256"],
+    "other_result_semantics_changed": false
+  },
+  "identity_and_native_closure": {
+    "native_state_sha256": "c893c4d64004c4bc9d021f75238f832356afa353c4fd7de2eebea45b8b7a2cd5",
+    "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "fork_turns": "none",
+    "leaves": {
+      "ER-0003": {
+        "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0007_terminal",
+        "native_child_thread_id": "019f53ea-7843-7891-b314-3f7f7b35dae4",
+        "native_child_turn_id": "019f53ea-78f3-7f73-a370-620ddb3df3f1",
+        "terminal_proof_sha256": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+        "terminal_response_exact": "PMR1",
+        "terminal_turn_status": "completed",
+        "descendants": 0,
+        "followups": 0,
+        "retries": 0
+      },
+      "ER-0008": {
+        "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0007_terminal",
+        "native_child_thread_id": "019f53ea-793e-7082-ba04-af9929b21485",
+        "native_child_turn_id": "019f53ea-7a93-7c71-b72a-4e3a779bb0b1",
+        "terminal_proof_sha256": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047",
+        "terminal_response_exact": "PMR1",
+        "terminal_turn_status": "completed",
+        "descendants": 0,
+        "followups": 0,
+        "retries": 0
+      }
+    },
+    "agent_paths_unique": true,
+    "native_child_threads_unique": true,
+    "native_child_turns_unique": true,
+    "prior_identity_reuse": false,
+    "native_state_and_terminal_proofs_valid": true
+  },
+  "fixture_execution": {
+    "fixture_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/fixture-sandbox/full-real",
+    "fixture_mode_environment": "AUDIT005_V7_2_FIXTURE_MODE=1",
+    "successful_receipt_writer_invocations": 2,
+    "successful_capture_writer_invocations": 1,
+    "receipt_writers": {
+      "ER-0003": {"status": "pass", "fixture_output": "ER-0003-dispatch_receipt.json"},
+      "ER-0008": {"status": "pass", "fixture_output": "ER-0008-dispatch_receipt.json"}
+    },
+    "capture_writer": {"status": "pass", "fixture_output": "native_capture.json", "capture_rows": 2},
+    "temporary_fixture_receipts": 2,
+    "temporary_fixture_capture_rows": 2,
+    "temporary_only": true,
+    "fixture_cleaned": true,
+    "production_paths_used": [],
+    "deterministic_reconstructed_artifact_digests": {
+      "ER-0003_receipt_raw_sha256": "ca7b646e12710c0e418e7b20c45e18c70c63db61b7a361b849b50ba6f510861f",
+      "ER-0003_receipt_canonical_sha256": "85967aadfc622b6d914e12d9f4df38d107270166417640f4fa4c5d70408131f7",
+      "ER-0008_receipt_raw_sha256": "2150850b40d290234605c2536ac038ce5b9c21361296c7a98c7b88404e61ef26",
+      "ER-0008_receipt_canonical_sha256": "a502cc491e587e48091a9e9ca7df4e13f3c04d78c2b7131c6bef8a7a4116def0",
+      "capture_raw_sha256": "de67da2602ee0793c54a74604fc91601539b253e686f65a315a45d7a5fdad6d3",
+      "capture_canonical_sha256": "2650e67b080fee772f06816dbe659851c45a509e7d6d39c5d65cd2576e7ca96b",
+      "capture_byte_count": 3330
+    },
+    "artifact_digest_note": "These hashes were deterministically reconstructed from the same sealed builder inputs after the successful fixture run; the on-disk fixture was removed by the suite."
+  },
+  "production_zero_state": {
+    "receipt_paths": {
+      "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/dispatch/ER-0003/attempt-0007/dispatch_receipt.json",
+      "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/dispatch/ER-0008/attempt-0007/dispatch_receipt.json"
+    },
+    "receipts_present": 0,
+    "capture_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/runtime/native_capture.json",
+    "capture_rows_present": 0,
+    "current_ER_0003_ER_0008_credit_files": [],
+    "credits": {"coverage": 0, "research": 0, "promotion": 0, "spec": 0, "merge": 0},
+    "activation_transaction_restamped": false,
+    "production_zero_state_verified": true
+  },
+  "test_and_probe_evidence": {
+    "terminal_verifier_exit_code": 0,
+    "terminal_verifier_status": "pass",
+    "exact_direct_644_test_invocation": {
+      "exit_code": 1,
+      "status": "blocked_before_suite",
+      "error": "ModuleNotFoundError: No module named 'rpds.rpds'",
+      "runtime": "Python 3.9.6",
+      "vendored_native_extension": "rpds/rpds.cpython-312-darwin.so"
+    },
+    "compatibility_harness_644_test_invocation": {
+      "status": "pass",
+      "passed": 644,
+      "total": 644,
+      "failed": 0,
+      "digest": "227f23a4c2d05b87997948fe1a97954c40efa8a3f4c896ac277095fae85fc76c",
+      "exact_test_source_unchanged": true,
+      "fixture_positive_writer_checks": {"ER-0003": true, "ER-0008": true, "capture": true},
+      "fixture_cleanup_check": true,
+      "production_zero_check": true,
+      "compatibility_note": "The exact test source and pinned hashes were preserved; same-process execution preloaded the installed Python 3.9-compatible jsonschema because the frozen vendored dependency cannot import on this host."
+    },
+    "independent_probe_count": 34,
+    "independent_probe_passed": 27,
+    "independent_probe_failed": 7,
+    "independent_probe_digest": "3d5b0697e7acf1f2b38fb2c692d71ab901dc6545e340a6c87e615a2f583ff370",
+    "independent_probe_names_digest": "ed798c6638e831b62994463c002ae01e243ee151d6dd7fbae8bbc891a459f066",
+    "independent_probe_method": "read-only in-memory result mutation, schema mutation, source-contract probes, path-guard calls, and production zero-state checks; no negative probe wrote a production artifact",
+    "independent_probe_results": [
+      {"name": "raw-vs-canonical-digest-separation:ER-0003", "pass": true},
+      {"name": "stale-core-binding-rejected:ER-0003", "pass": true},
+      {"name": "stale-auth-binding-rejected:ER-0003", "pass": true},
+      {"name": "auth-swap-rejected:ER-0003", "pass": true},
+      {"name": "core-swap-rejected:ER-0003", "pass": true},
+      {"name": "raw-vs-canonical-digest-separation:ER-0008", "pass": true},
+      {"name": "stale-core-binding-rejected:ER-0008", "pass": true},
+      {"name": "stale-auth-binding-rejected:ER-0008", "pass": true},
+      {"name": "auth-swap-rejected:ER-0008", "pass": true},
+      {"name": "core-swap-rejected:ER-0008", "pass": true},
+      {"name": "activation-raw-vs-canonical:core", "pass": true},
+      {"name": "activation-raw-vs-canonical:ER-0003", "pass": true},
+      {"name": "activation-raw-vs-canonical:ER-0008", "pass": true},
+      {"name": "activation-raw-vs-canonical:envelope", "pass": true},
+      {"name": "stale-embedded-core-rejected", "pass": true},
+      {"name": "stale-embedded-envelope-auth-rejected", "pass": true},
+      {"name": "v7_1-failure-exact-ER-0003", "pass": true},
+      {"name": "v7_1-failure-exact-ER-0008", "pass": true},
+      {"name": "receipt-schema-draft2020-valid", "pass": false},
+      {"name": "capture-schema-draft2020-valid", "pass": true},
+      {"name": "receipt-result-file-join-source", "pass": true},
+      {"name": "receipt-output-tree-join-source", "pass": true},
+      {"name": "receipt-toctou-pre-post-source", "pass": true},
+      {"name": "capture-result-receipt-join-source", "pass": false},
+      {"name": "capture-output-tree-join-source", "pass": false},
+      {"name": "capture-toctou-source", "pass": false},
+      {"name": "capture-native-state-shape-source", "pass": false},
+      {"name": "capture-native-identity-uniqueness-source", "pass": false},
+      {"name": "capture-schema-rejects-duplicate-rows", "pass": false},
+      {"name": "replay-o-excl-source", "pass": true},
+      {"name": "fixture-production-path-guard-source", "pass": true},
+      {"name": "production-receipts-zero", "pass": true},
+      {"name": "production-capture-zero", "pass": true},
+      {"name": "production-path-target-guard", "pass": true}
+    ]
+  },
+  "schema_validation": {
+    "receipt_schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/external_research_dispatch_receipt_v7_2.schema.json",
+    "receipt_schema_sha256": "a39987afa695c4a2576a8292d8bd0f2207e09288afeddbba8b5c10d9fbb3a5bb",
+    "validator": "Draft202012Validator.check_schema",
+    "receipt_schema_valid": false,
+    "required_count": 77,
+    "required_unique_count": 73,
+    "duplicate_required_fields": {
+      "activation_core_file_sha256": 2,
+      "activation_envelope_file_sha256": 2,
+      "digest_semantics_version": 2,
+      "leaf_dispatch_authorization_file_sha256": 2
+    },
+    "failure_class": "SchemaError: required must have uniqueItems",
+    "capture_schema_valid": true,
+    "capture_schema_duplicate_row_probe_errors": []
+  },
+  "capture_writer_negative_assurance": {
+    "receipt_writer_result_and_canonical_join_guard": true,
+    "receipt_writer_output_tree_join_guard": true,
+    "receipt_writer_prewrite_and_postwrite_toctou_guard": true,
+    "capture_writer_result_receipt_raw_and_canonical_join_guard": false,
+    "capture_writer_receipt_output_tree_join_guard": false,
+    "capture_writer_prewrite_and_postwrite_toctou_guard": false,
+    "capture_writer_native_state_shape_guard": false,
+    "capture_writer_native_assignment_thread_turn_uniqueness_guard": false,
+    "capture_schema_rejects_duplicate_assignment_rows": false,
+    "duplicate_row_probe": "two identical leaf rows satisfy the v7.2 capture schema with zero schema errors",
+    "missing_join_probe": "capture writer hashes current result/receipt bytes into capture without comparing the receipt's embedded result/canonical/output values",
+    "native_mutation_probe": "capture writer has no v7.1 native_state_errors-equivalent validation before writing",
+    "replay_guard": "common.write_exclusive/O_EXCL present for receipt and capture outputs",
+    "fixture_production_path_guard": "pass when fixture mode and root confinement are used"
+  },
+  "no_mutation_and_toctou_proof": {
+    "input_mutation_observed": false,
+    "activation_raw_hashes_stable_across_closing_rehashes": true,
+    "result_raw_hashes_stable_across_closing_rehashes": true,
+    "fixture_present_after_cleanup": false,
+    "production_receipts_present_after_cleanup": 0,
+    "production_capture_rows_present_after_cleanup": 0,
+    "receipt_writer_toctou_rechecks_verified": true,
+    "capture_writer_toctou_rechecks_verified": false,
+    "closing_rehashes": {
+      "pass_count": 2,
+      "identical": true,
+      "digest": "e5972d9a07455f1819d3d46978dd0b840cd625497a7877c81b9041f86d09b9e7"
+    }
+  },
+  "sole_next_action": "Do not launch v7.2 production closure; repair and reseal the duplicate-required receipt schema and the capture writer/schema join, native-identity, and TOCTOU gaps, then run a new independent prelaunch gate."
+}

@@ -1,0 +1,703 @@
+{
+  "assignment_id": "A005M15-000049-INTEGRATED-MACRO15-E54621C05CD7-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "consumers", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "This document is the **single canonical source of truth** for the Puppet Master formatter system — how formatters run, when they trigger, how they are configured, and how formatting changes are tracked. All other plan documents MUST reference this document by anchor (e.g., `Plans/Formatters_System.md#FORMATTER-CONFIG`) rather than restating formatter definitions or lifecycle rules.",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides an explicit formatter SSOT and prevents divergent lifecycle restatements in consumer plans.",
+      "item_id": "FMT-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Formatters_System.md", "PLANUNIT:FS-002", "SEMANTIC:PLANUNIT:FS-002"],
+      "statement": "Formatter execution, trigger timing, configuration, and evidence ownership are explicitly centralized in this document, with anchor-based consumption required elsewhere.",
+      "title": "Canonical formatter ownership is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "A **Formatter** is an external command that transforms a file's content to conform to a style or convention. Puppet Master invokes formatters after file-write/edit operations during Hosted Tool Execution (HTE). Formatters are stateless; they read a file, transform it in-place, and exit.",
+          "line_end": 36,
+          "line_start": 36,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "The formatter trigger event is an internal event equivalent to `File.Edited` — emitted whenever a hosted tool (`write`, `edit`, `patch`, `multiedit`) successfully modifies a file. This event carries the file path and extension.",
+          "line_end": 41,
+          "line_start": 41,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the runtime unit and successful hosted-tool transition that activates it.",
+      "item_id": "FMT-002",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-003", "SEMANTIC:PLANUNIT:FS-003"],
+      "statement": "A formatter is a stateless external in-place transform triggered only after a successful write, edit, patch, or multiedit event carrying path and extension.",
+      "title": "Formatter and trigger semantics are defined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "propagation", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "The formatter trigger event is an internal event equivalent to `File.Edited` — emitted whenever a hosted tool (`write`, `edit`, `patch`, `multiedit`) successfully modifies a file. This event carries the file path and extension.",
+          "line_end": 41,
+          "line_start": 41,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "event_contract_incomplete",
+      "impact": "Implementers must invent event identity, ordering, correlation, and replay semantics, so duplicate or stale formatter invocations cannot be falsified consistently.",
+      "item_id": "FMT-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-003", "SEMANTIC:PLANUNIT:FS-003"],
+      "statement": "The trigger declares only path and extension and calls itself merely equivalent to `File.Edited`; it does not define the exact event type/version, event or operation identifier, project identity, ordering guarantees, replay/idempotency rule, or canonical producer/consumer registration.",
+      "title": "Trigger event envelope and ordering are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["authority", "ownership", "security_privacy", "authority_boundaries", "untrusted_inputs", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "Support-system SSOTs must surface runtime and safety gaps instead of hiding them: `Plans/Formatters_System.md` / `/Formatters_System.md` owns `format.*` event registration, HTE formatter delivery, and formatter `/schema`; `Plans/Plugins_System.md` / `/Plugins_System.md` owns `mutation_capable`, in-process execution, subprocess-sandbox expectations, and prompt `/param` hooks; `Plans/Skills_System.md` / `/Skills_System.md` owns DAE `/bundling`, runtime skills `/listing`, and HTE reachability; `/FileSafe` owns file-safety boundaries when formatter subprocesses touch project files. Under-specified gaps must be visible in the owning SSOTs before implementation treats them as safe defaults.",
+          "line_end": 10,
+          "line_start": 10,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "cross_owner_handoff_unspecified",
+      "impact": "Formatter dispatch cannot prove that a subprocess received a sandbox decision and a file-safety authorization before mutation.",
+      "item_id": "FMT-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-002", "SEMANTIC:PLANUNIT:FS-002"],
+      "statement": "Ownership is delegated to Plugins_System and FileSafe, but this formatter contract does not define the mandatory handoff data, denial behavior, or enforcement point connecting formatter dispatch to subprocess and file-safety authorization.",
+      "title": "Safety-owner handoff lacks an executable contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "authority", "propagation", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: In HTE mode, formatters run after every hosted-tool file write/edit by resolving matching enabled formatters from file extension and invoking them sequentially in registration order; formatters never run during DAE, where provider CLIs own their formatting behavior.",
+          "line_end": 404,
+          "line_start": 404,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes the core HTE pipeline and the hard DAE authority exclusion.",
+      "item_id": "FMT-005",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-004", "SEMANTIC:PLANUNIT:FS-004"],
+      "statement": "HTE writes resolve enabled extension matches and execute them sequentially, while DAE delegates formatting entirely to provider CLIs.",
+      "title": "HTE lifecycle and DAE exclusion are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "3. Matching formatters are invoked **sequentially** in registration order.",
+          "line_end": 57,
+          "line_start": 57,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "concurrent_edit_and_chain_state_unspecified",
+      "impact": "Concurrent writes or a mid-chain file change can produce lost updates, format stale content, or make rollback overwrite a newer edit.",
+      "item_id": "FMT-006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:FS-004", "SEMANTIC:PLANUNIT:FS-004"],
+      "statement": "Sequential execution is specified only within a formatter chain; there is no per-file serialization, revision precondition, stale-write detection, chain snapshot, or rule for a second hosted edit arriving while the first chain runs.",
+      "title": "Concurrent edits can race formatter chains"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "acceptance_oracles", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "When a formatter modifies a file beyond whitespace-only changes, the diff between the tool's output and the formatted output is recorded in the evidence ledger as a `format.applied` event:",
+          "line_end": 69,
+          "line_start": 69,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "**AC-FMT06:** Formatting changes MUST be recorded as `format.applied` events in the evidence ledger with diff metadata.",
+          "line_end": 268,
+          "line_start": 268,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "acceptance_scope_contradiction",
+      "impact": "Conforming implementations can disagree on whether whitespace-only formatter changes require evidence, making AC-FMT06 non-deterministic.",
+      "item_id": "FMT-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-005", "SEMANTIC:PLANUNIT:FS-005"],
+      "statement": "The lifecycle records `format.applied` only for changes beyond whitespace, while AC-FMT06 requires evidence for formatting changes without that exception.",
+      "title": "Whitespace-only evidence rule contradicts AC-FMT06"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["failures_recovery", "partial_failure", "recovery_rollback", "security_privacy", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- The original tool output is **preserved** (the file is not corrupted).",
+          "line_end": 88,
+          "line_start": 88,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "- The pipeline continues; formatter failures do not block the run.",
+          "line_end": 90,
+          "line_start": 90,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "rollback_mechanism_unspecified",
+      "impact": "An in-place formatter can truncate or partially rewrite a file before returning non-zero; continuing without an atomic snapshot/restore contract can preserve corruption rather than original output.",
+      "item_id": "FMT-008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:FS-006", "SEMANTIC:PLANUNIT:FS-006"],
+      "statement": "Original-output preservation is required but the plan never defines temp-copy execution, fsync/rename boundaries, backup lifetime, restore failure handling, or what later formatters see after one formatter fails.",
+      "title": "Non-zero exit recovery is asserted but not made atomic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "inputs_outputs", "operations", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Built-in formatters are enabled by default when their per-session or per-project-switch detection checks pass, with the canonical catalog preserving every formatter name, extension set, and detection rule from prettier through cljfmt.",
+          "line_end": 566,
+          "line_start": 566,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a concrete default catalog and activation basis for built-in formatter support.",
+      "item_id": "FMT-009",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-007", "SEMANTIC:PLANUNIT:FS-007"],
+      "statement": "The built-in catalog is extension- and detector-specific and enables entries by default after a successful session or project-switch check.",
+      "title": "Built-in formatter catalog is concretely enumerated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["states_transitions", "operations", "gui_misleading_states", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "The following formatters are available out of the box. Each has an **auto-detection** check that runs once per session (or per project switch) to determine availability.",
+          "line_end": 100,
+          "line_start": 100,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "detection_cache_invalidation_missing",
+      "impact": "Installing/removing a binary or changing a detector config mid-session can leave runtime behavior and GUI status stale until an unspecified refresh boundary.",
+      "item_id": "FMT-010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:FS-007", "SEMANTIC:PLANUNIT:FS-007"],
+      "statement": "Detection runs once per session or project switch, but cache key, invalidation, manual refresh, PATH/config changes, detector timeout, and failed-check observability are not defined.",
+      "title": "Built-in detection freshness is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "security_privacy", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits"],
+      "evidence": [
+        {
+          "exact_quote": "| `command` | `string[]` | Built-in default | Command and arguments. `$FILE` is replaced with the file path at execution time. If empty (`[]`), the formatter is skipped. |",
+          "line_end": 157,
+          "line_start": 157,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "| `environment` | `map<string, string>` | `{}` | Environment variables set when running the formatter command. |",
+          "line_end": 158,
+          "line_start": 158,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "untrusted_subprocess_policy_missing",
+      "impact": "A project-controlled formatter can execute arbitrary code, inherit or exfiltrate secrets, hang, fork excessively, or emit unbounded output under implementation-selected controls.",
+      "item_id": "FMT-011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:FS-008", "SEMANTIC:PLANUNIT:FS-008"],
+      "statement": "The command/environment schema does not define direct argv execution versus shell interpretation, environment inheritance and denylisting, working directory, executable trust, user consent, timeout/cancellation, process-tree termination, or stdout/stderr byte limits.",
+      "title": "Formatter subprocess execution lacks minimum security controls"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "security_privacy", "untrusted_inputs", "failures_recovery", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "The literal string `$FILE` in the `command` array is replaced with the absolute path of the file being formatted at execution time. If `$FILE` does not appear in the command, the file path is appended as the last argument.",
+          "line_end": 163,
+          "line_start": 163,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "file_target_validation_missing",
+      "impact": "A formatter can be directed at a symlink, escaped project path, special file, or file changed after authorization, crossing the intended FileSafe boundary.",
+      "item_id": "FMT-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-008", "SEMANTIC:PLANUNIT:FS-008"],
+      "statement": "Absolute-path substitution is deterministic, but path canonicalization, symlink policy, allowed roots, special-file rejection, authorization timing, and time-of-check/time-of-use revalidation are not defined here.",
+      "title": "`$FILE` targeting omits FileSafe validation semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["capabilities", "contracts", "authority", "security_privacy", "untrusted_inputs", "invalid_states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "Users can define custom formatters by adding entries to the config with `command` and `extensions`. Custom formatters have no auto-detection; their `enabled()` check is always `true` (unless `disabled = true`).",
+          "line_end": 167,
+          "line_start": 167,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "custom_formatter_identity_and_trust_missing",
+      "impact": "A custom entry can collide with a built-in or differently scoped entry and becomes executable by default without an explicit trust transition.",
+      "item_id": "FMT-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-009", "SEMANTIC:PLANUNIT:FS-009"],
+      "statement": "Custom formatters are always enabled absent `disabled = true`, but ID grammar, normalization, built-in collision behavior, duplicate handling across scopes, provenance display, and first-run approval are unspecified.",
+      "title": "Custom formatter identity and trust states are incomplete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "propagation", "compatibility_migration", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- **Project:** `.puppet-master/config.toml` under the `[formatter]` section (overrides global per-formatter).",
+          "line_end": 179,
+          "line_start": 179,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "configuration_merge_semantics_missing",
+      "impact": "Implementations can replace whole entries or merge fields differently, changing commands, extensions, environment inheritance, and enablement for the same two config files.",
+      "item_id": "FMT-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-010", "SEMANTIC:PLANUNIT:FS-010"],
+      "statement": "Project config overrides global per formatter, but field-level versus object-level merge, missing/null/empty semantics, environment-map merge, global-kill-switch precedence, deletion/tombstone behavior, and invalid-layer recovery are not specified.",
+      "title": "Global/project formatter merge is not deterministic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "gui_truth", "consumers", "operations", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The unified Settings page exposes a dedicated Formatters tab with a global enable toggle, built-in and custom formatter table, detected/not found/disabled/custom status, expandable command/environment/extensions editors, reset-to-default controls, custom formatter add/remove workflows, validation, and Global/Project scope selection.",
+          "line_end": 788,
+          "line_start": 788,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the principal user-facing discovery, configuration, and custom-entry management surface.",
+      "item_id": "FMT-015",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-011", "SEMANTIC:PLANUNIT:FS-011"],
+      "statement": "The Settings tab exposes global and per-formatter controls, statuses, detail editors, add/remove workflows, validation, and scope selection.",
+      "title": "Formatter Settings control inventory is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["gui_truth", "failures_recovery", "gui_misleading_states", "destructive_actions", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "4. **Add custom formatter:** \"Add formatter\" button with fields: Name (ID), Command, Extensions, Environment. Validates: name unique, command non-empty, at least one extension.",
+          "line_end": 207,
+          "line_start": 207,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "5. **Remove:** Remove button for custom formatters. Built-in formatters can only be disabled, not removed.",
+          "line_end": 209,
+          "line_start": 209,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "gui_mutation_state_machine_missing",
+      "impact": "Users can lose edits, remove the wrong scoped entry, or believe a failed save/detection succeeded because no pending/error/rollback state is canonical.",
+      "item_id": "FMT-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-011", "SEMANTIC:PLANUNIT:FS-011"],
+      "statement": "The add/remove/edit surface lacks save timing, dirty-state behavior, scope-switch handling, write-conflict behavior, inline validation copy, persistence failure recovery, destructive confirmation/undo, and post-save success/error truth.",
+      "title": "Formatter GUI mutations lack save and recovery states"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["gui_truth", "accessibility", "localization", "privacy_data_lifecycle", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Formatter UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.formatters.*` prefix.",
+          "line_end": 215,
+          "line_start": 215,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "- **ELI5:** Simplified view showing formatter list with enable/disable toggles only. Command, environment, and extension editing are hidden.",
+          "line_end": 217,
+          "line_start": 217,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "interaction_mode_accessibility_and_copy_contract_missing",
+      "impact": "Builders must invent accessible labels, focus behavior, localized status/error strings, and whether hidden Expert values remain active and potentially dangerous in ELI5 mode.",
+      "item_id": "FMT-017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-012", "SEMANTIC:PLANUNIT:FS-012"],
+      "statement": "The mode split and tooltip prefix are defined, but keyboard/table semantics, screen-reader names, focus after expansion/removal, localization keys for labels/status/errors, truncation disclosure, and ELI5 visibility of active Expert configuration are not.",
+      "title": "Interaction modes omit accessibility and localization oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The OpenCode formatter baseline records automatic File.Event.Edited handling, binary/config-file detection, formatter: false global disable, per-formatter { disabled, command, environment, extensions } config, $FILE placeholder behavior, and custom formatter config.'",
+          "line_end": 893,
+          "line_start": 893,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Preserves a concrete external baseline against which Puppet Master deltas can be tested.",
+      "item_id": "FMT-018",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-013", "SEMANTIC:PLANUNIT:FS-013"],
+      "statement": "The OpenCode baseline captures event triggering, detection, disable/config shape, placeholder behavior, and custom formatter support.",
+      "title": "External formatter baseline is retained"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "ownership", "operations", "compatibility_migration", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Puppet Master differs from OpenCode by implementing formatter triggers through Rust internal event dispatch after hosted tool writes/edits, resolving binaries with the which crate or path_utils::resolve_executable, recording formatter diff evidence, and enforcing HTE-only formatter execution.",
+          "line_end": 943,
+          "line_start": 943,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes the Rust dispatch, binary lookup, evidence, and execution-strategy deviations explicit.",
+      "item_id": "FMT-019",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-014", "SEMANTIC:PLANUNIT:FS-014"],
+      "statement": "Puppet Master intentionally diverges from OpenCode through Rust event dispatch, Rust-side executable resolution, evidence recording, and HTE-only enforcement.",
+      "title": "Puppet Master runtime deltas are named"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "propagation", "observability_support", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  \"event_type\": \"format.applied\",",
+          "line_end": 73,
+          "line_start": 73,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "- A `format.error` event is logged with the formatter ID, file path, exit code, and stderr.",
+          "line_end": 89,
+          "line_start": 89,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "formatter_event_schema_incomplete",
+      "impact": "Consumers cannot reliably correlate formatter evidence to the hosted operation, formatter attempt, file revision, execution order, or recovery outcome.",
+      "item_id": "FMT-020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-014", "SEMANTIC:PLANUNIT:FS-014"],
+      "statement": "The event examples enumerate selected metadata but do not define a complete registered schema, required EventRecord fields, operation/run correlation, before/after hashes, whitespace classification, redaction/truncation for stderr, or per-chain sequence.",
+      "title": "Formatter evidence events are not fully contractible"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "gui_truth", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Puppet Master adds a GUI delta absent from OpenCode by providing a dedicated Formatters settings tab with per-formatter config editing.",
+          "line_end": 995,
+          "line_start": 995,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes that formatter configuration must be available through Puppet Master's GUI rather than config files alone.",
+      "item_id": "FMT-021",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-015", "SEMANTIC:PLANUNIT:FS-015"],
+      "statement": "A dedicated editable Formatter Settings GUI is an intentional Puppet Master product delta.",
+      "title": "GUI formatter configuration is an explicit delta"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["gui_truth", "security_privacy", "privacy_data_lifecycle", "gui_misleading_states", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "   - **Environment:** Key-value editor for environment variables.",
+          "line_end": 203,
+          "line_start": 203,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "2. **Formatter list:** Table of all formatters (built-in + custom). Columns: Name, Extensions (truncated), Status (detected/not found/disabled/custom), Enable/Disable toggle. Built-in formatters that fail detection show \"(not found)\" in Status.",
+          "line_end": 199,
+          "line_start": 199,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "gui_secret_and_status_truth_missing",
+      "impact": "The GUI may expose secrets in clear text and present cached detection as current runtime truth without age, source scope, or failure context.",
+      "item_id": "FMT-022",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:FS-015", "SEMANTIC:PLANUNIT:FS-015"],
+      "statement": "The config-editing delta does not define secret-value masking/storage/redaction, inherited-versus-explicit environment display, status provenance or freshness, last detection error, or the distinction between configured, detected, enabled, and runnable.",
+      "title": "Formatter GUI can leak secrets and misstate runnability"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["ownership", "compatibility_migration", "authority_boundaries", "builder_discretion"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The former Formatters_System doc-level source-preserving bridge is retired after Phase 2B atomized Formatters_System-S0001 through Formatters_System-S0024 into FS-002 through FS-015 and structurally dispositioned Formatters_System-S0025, S0026, and S0028. FS-001 remains only as migration lineage for Formatters_System-S0027 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.",
+          "line_end": 1041,
+          "line_start": 1041,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents a retired compatibility bridge from silently reclaiming product authority or producing executable work.",
+      "item_id": "FMT-023",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:FS-001", "SEMANTIC:PLANUNIT:FS-001"],
+      "statement": "FS-001 is explicitly retired to migration lineage, while FS-002 through FS-015 own product behavior and GUI coverage.",
+      "title": "Retired bridge authority is tightly bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "ownership", "propagation", "acceptance_oracles", "compatibility_migration", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The former Formatters_System doc-level source-preserving bridge is retired after Phase 2B atomized Formatters_System-S0001 through Formatters_System-S0024 into FS-002 through FS-015 and structurally dispositioned Formatters_System-S0025, S0026, and S0028. FS-001 remains only as migration lineage for Formatters_System-S0027 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.",
+          "line_end": 1041,
+          "line_start": 1041,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        },
+        {
+          "exact_quote": "- Repairs `sfk-52b912e858e3f723a8838777`: formatter registration order is deterministic: built-in formatters in documented order, then project formatters sorted by `formatter_id`, then user/global formatters sorted by `formatter_id`. Ties are invalid and must fail validation with `duplicate_formatter_id`.",
+          "line_end": 1106,
+          "line_start": 1106,
+          "path": "Plans/Formatters_System.md",
+          "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+        }
+      ],
+      "gap_kind": "post_planunit_rule_not_integrated",
+      "impact": "The newest deterministic ordering and duplicate-ID failure rule can be omitted by consumers that compile only PlanUnits, while the retired bridge is forbidden from owning it.",
+      "item_id": "FMT-024",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:FS-001", "SEMANTIC:PLANUNIT:FS-001"],
+      "statement": "The final addendum adds product behavior after all PlanUnits, but FS-004 does not preserve the built-in/project/user ordering or `duplicate_formatter_id` oracle, and FS-001 is explicitly barred from re-owning product coverage.",
+      "title": "Deterministic ordering repair is orphaned from PlanUnit ownership"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 396],
+      "covered_source_unit_refs": ["PLANUNIT:FS-002", "PLANUNIT:FS-003", "SEMANTIC:PROLOGUE:Plans/Formatters_System.md", "SEMANTIC:PLANUNIT:FS-002", "SEMANTIC:PLANUNIT:FS-003"],
+      "item_ids": ["FMT-001", "FMT-002", "FMT-003", "FMT-004"],
+      "reviewed": true,
+      "summary": "Verified the formatter SSOT, owner boundaries, formatter/trigger definitions, and surfaced missing event-envelope and safety-handoff contracts.",
+      "window_id": "WIN-E54621C05CD7-0001"
+    },
+    {
+      "core_range": [397, 780],
+      "covered_source_unit_refs": ["PLANUNIT:FS-004", "PLANUNIT:FS-005", "PLANUNIT:FS-006", "PLANUNIT:FS-007", "PLANUNIT:FS-008", "PLANUNIT:FS-009", "PLANUNIT:FS-010", "SEMANTIC:PLANUNIT:FS-004", "SEMANTIC:PLANUNIT:FS-005", "SEMANTIC:PLANUNIT:FS-006", "SEMANTIC:PLANUNIT:FS-007", "SEMANTIC:PLANUNIT:FS-008", "SEMANTIC:PLANUNIT:FS-009", "SEMANTIC:PLANUNIT:FS-010"],
+      "item_ids": ["FMT-005", "FMT-006", "FMT-007", "FMT-008", "FMT-009", "FMT-010", "FMT-011", "FMT-012", "FMT-013", "FMT-014"],
+      "reviewed": true,
+      "summary": "Verified HTE/DAE lifecycle, evidence, failure, detection, command, custom formatter, and config-scope behavior; found critical concurrency, atomic rollback, subprocess-security, path-safety, and merge-oracle gaps.",
+      "window_id": "WIN-E54621C05CD7-0002"
+    },
+    {
+      "core_range": [781, 1106],
+      "covered_source_unit_refs": ["PLANUNIT:FS-001", "PLANUNIT:FS-011", "PLANUNIT:FS-012", "PLANUNIT:FS-013", "PLANUNIT:FS-014", "PLANUNIT:FS-015", "SEMANTIC:PLANUNIT:FS-011", "SEMANTIC:PLANUNIT:FS-012", "SEMANTIC:PLANUNIT:FS-013", "SEMANTIC:PLANUNIT:FS-014", "SEMANTIC:PLANUNIT:FS-015", "SEMANTIC:PLANUNIT:FS-001"],
+      "item_ids": ["FMT-015", "FMT-016", "FMT-017", "FMT-018", "FMT-019", "FMT-020", "FMT-021", "FMT-022", "FMT-023", "FMT-024"],
+      "reviewed": true,
+      "summary": "Verified Settings, interaction modes, baseline/deltas, and retired lineage; found GUI recovery/accessibility/privacy gaps, incomplete event contracts, and an orphaned deterministic-order addendum.",
+      "window_id": "WIN-E54621C05CD7-0003"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-E54621C05CD7-0001",
+    "document_path": "Plans/Formatters_System.md",
+    "micro_window_ids": ["WIN-E54621C05CD7-0001", "WIN-E54621C05CD7-0002", "WIN-E54621C05CD7-0003"],
+    "source_sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does the canonical EventRecord owner register exact `format.applied` and `format.error` payloads with operation, run, file-revision, ordering, and redaction fields?",
+      "Where is the mandatory Plugins_System/FileSafe authorization handoff for formatter subprocess launch and target-path mutation defined and denied?",
+      "Does the GUI SSOT define accessible table/expansion semantics, localized formatter copy, save/error states, secret masking, and status freshness?",
+      "Which owned PlanUnit must absorb the final addendum's built-in/project/user ordering and `duplicate_formatter_id` validation oracle?",
+      "Which runtime owner defines per-file serialization and revision-safe rollback across hosted edits and sequential formatter chains?"
+    ],
+    "feature_family_keys": ["formatter-runtime", "formatter-evidence", "formatter-configuration", "formatter-security", "formatter-settings-gui", "formatter-migration-lineage"],
+    "research_queries": [
+      "secure local formatter subprocess argv environment sandbox timeout process tree output limits best practices",
+      "atomic in-place formatter execution snapshot rollback rename concurrent file modification patterns",
+      "formatter configuration GUI secret masking status freshness accessibility validation patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000049_attempt_0015_terminal"
+}

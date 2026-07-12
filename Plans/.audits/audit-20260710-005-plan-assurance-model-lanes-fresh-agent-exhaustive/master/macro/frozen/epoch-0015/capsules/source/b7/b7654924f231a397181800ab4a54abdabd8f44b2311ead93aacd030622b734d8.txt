@@ -1,0 +1,1820 @@
+L00001483	
+L00001484	Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.
+L00001485	
+L00001486	Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.
+L00001487	
+L00001488	These surfaces share one escalation ladder across Orchestrator, Dashboard, thread badges, and notifications. `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence even when advisory warnings are quieted.
+L00001489	
+L00001490	`degraded-trust` is a projection-trust condition, not a separate local warning family. It routes through the shared concern and escalation ladder so provider/runtime/UI surfaces show the same trust degradation, concern escalation, blocked owner, and recovery route instead of inventing per-panel aliases.
+L00001491	
+L00001492	This section consumes Glossary coverage for rewrite-critical objects, states, and trust terms, including Concern, blocked episode, focused run, projection trust, escalation ladder, blocked owner, and `resolution_kind`. Help is layered as inline help, context help, and canonical help-entry pages while keeping canonical term names stable.
+L00001493	
+L00001494	Notifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows.
+L00001495	
+L00001496	Dedicated help entries use a stable template: canonical term, trigger conditions, operator meaning, related concepts, primary routes, and recovery guidance. Related-concept links always point to canonical term names rather than local aliases.
+L00001497	
+L00001498	Project-facing help and notifications use project `activity_state`, project `attention_state`, the blocked-owner taxonomy, the shared escalation ladder, and resurfacing/aging rules. Dismissal requires dismissal rationale, resolution requires resolution rationale, and `accepted_risk` is treated as a resolution path rather than a dismissal.
+L00001499	
+L00001500	The blocked-owner taxonomy is explicitly eight kinds: `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`. The five-level escalation ladder is `info`, `watch`, `attention_required`, `blocked`, and `escalated`, with mapping across Orchestrator banners, Dashboard summaries, thread badges, and notifications.
+L00001501	
+L00001502	### Recommended minimum concern record shape
+L00001503	
+L00001504	Compatibility labels such as system-notification, project-card, primary-reason, pressure-summary, and help-system normalize to this concern/escalation/help surface model: project cards expose blocked-owner and primary reason detail, pressure summaries use the account/usage pressure card vocabulary, system notifications are narrowed by the shared escalation ladder, and help-system entries stay anchored to canonical term pages.
+L00001505	
+L00001506	- `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`
+L00001507	- `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`
+L00001508	- `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`
+L00001509	- `owner_kind`, `owner_ref`, `created_by_kind`, `created_by_ref`, `resolver_ref?`
+L00001510	- `governance`: authority policy, confirmation policy, rationale policy, audit refs
+L00001511	
+L00001512	`blocking_effect` stays explicitly separate from `severity`; it explains operational stop/go impact rather than concern seriousness.
+L00001513	
+L00001514	### Alert and Attention Lifecycle Contracts
+L00001515	
+L00001516	If the only evidence is a plan-state or `/exceeded` signal, the GUI emits a soft warning and waits for a canonical exhausted or blocked state before presenting a hard block.
+L00001517	
+L00001518	Command-originated and runtime-originated notifications use incident bundling when one failure creates a cascade. A cascade uses a `parent-incident` model: one primary alert owns the root cause, child issues attach as related consequences, and CTAs prioritize fixing the root cause before derivative failures. Child consequence CTAs may appear only after the root-cause CTA.
+L00001519	
+L00001520	Historical alert timelines retain enough state to answer what alerted, where the user acted, and whether it cleared. The minimum timeline fields are `raised_at`, `source_surface`, `severity`, `root_cause_key`, `owning_surface`, `acknowledged/snoozed state`, `resolved_at`, and linked receipt/run/worktree/workflow/container/workload IDs. The same record preserves the compact route key `/run/worktree/workflow/container/workload` and keeps `/snoozed` as historical state rather than deleting it when the active notification leaves the surface.
+L00001521	
+L00001522	Runtime/Kubernetes attention items are owned by Docker Manager first, with Dashboard and Orchestrator acting as mirrors or consumers. This includes unhealthy containers, restart loops, failed readiness, failed rollouts, and related Kubernetes failures even when no active Orchestrator run is open.
+L00001523	
+L00001524	Runtime alert lifecycle defines `/auto-resolution`: an alert may auto-resolve on healthy refresh, downgrade to historical `/seen` after acknowledgment, and clear badges consistently across mirrored surfaces. Persistent non-blocking issues support `per-alert` `acknowledge`, `snooze`, and `/snooze/mute`; `mute by root_cause_key` is allowed only where safe. A mute or snooze must not suppress blocking confirmations or `security-sensitive` failures, and muted issues remain visible in owning surfaces while stopping repeated interruptions.
+L00001525	
+L00001526	Condition-aging policy keeps unresolved conditions on operational surfaces, moves resolved conditions back to History, lets recently resolved major items linger in summaries, and uses policy-level defaults (normal resolved operational items about 15 minutes; major resolved items until dismissed or up to 24 hours) instead of per-alert micro-configuration.
+L00001527	
+L00001528	Active attention rows render from `attention_key` plus `root_cause_key`: `attention_key` controls the visible thread/route, and `root_cause_key` controls `/coalescing`. Repeated sightings with the same root cause update the existing attention thread, while interruptive notification surfaces fire again only when severity or state changes.
+L00001529	
+L00001530	Primary owner routing is fixed for common issue classes. Run-blocking issues open Orchestrator and its CTA stack; branch and workflow issues open GitHub Actions; runtime, `/container/rollout`, and Kubernetes issues open Docker Manager; global degraded infrastructure opens the status bar detail and Dashboard. Mirror surfaces show the same attention item as a deep link to the owner rather than offering a competing remediation flow.
+L00001531	
+L00001532	Non-active project issues surface as compact global attention items with a project label. Selecting one switches or focuses the target project and owning surface via `/focus`, with active-project and background-project items visually distinct.
+L00001533	
+L00001534	When mirrored surfaces disagree, each issue class declares freshness/authority order (`/authority`). Secondary surfaces with older data say `updating` or `state may be outdated` instead of presenting conflicting definitive copy.
+L00001535	
+L00001536	Bulk action families include stage/unstage/discard (`/unstage/discard`), rerun/cancel, cleanup/prune (`/prune`), apply/delete, and pin/unpin. Before execution, every bulk action shows target preview plus scope summary/count (`/count`). Completion state represents result state, `partial-success`, and a `per-target` failure list; when possible, the action exposes rollback/undo expectations, and when rollback is unavailable the UI says so before execution. Bulk action history and `/exported` views preserve the same per-target result state and spawned attempt/remediation refs used by receipt/evidence records.
+L00001537	
+L00001538	### 7.6 Wizard
+L00001539	
+L00001540	Wizard view anchors are source-backed entrypoints for requirements, PRD, plan review, blocked-question, and approval workflows. Wizard pages consume Planning Wizard, PRD Builder, Contracts, HITL, storage, and assistant-chat owners; this section is a route and presentation anchor, not the owner of blocked lifecycle records.
+L00001541	
+L00001542	### 7.7 Legacy Tiers Alias
+L00001543	
+L00001544	`FinalGUISpec section 7.7`, `Tab 2: Tiers`, and `orchestrator:tiers` are legacy aliases only. They remain searchable compatibility labels that route to native Orchestrator package, seam, lane, node, and Progress views rather than restoring a Tiers tab as canonical navigation.
+L00001545	
+L00001546	### 7.8 Usage
+L00001547	
+L00001548	Usage view anchors route cost, token, provider, account, model, and runtime usage pivots through `Plans/usage-feature.md`, storage projections, Runtime Artifacts, and object-first route payloads. Usage may surface account pressure and switching history, but it does not redefine usage record schemas.
+L00001549	
+L00001550	### 7.9 History
+L00001551	
+L00001552	History is the chronological durable story. It presents run, concern, recovery, usage, account-switch, artifact, and worktree timeline entries from canonical records and keeps filters, focus mode, and historical/live state visible.
+L00001553	
+L00001554	### 7.10 Ledger
+L00001555	
+L00001556	Ledger is exact record inspection. It exposes durable event, projection, receipt, artifact, and source-lineage records with routeable ids and must not flatten them into summary-only history rows.
+L00001557	
+L00001558	### 7.11 Evidence
+L00001559	
+L00001560	Evidence presents artifact, receipt, validation, and corroboration references through owner-routed records. It consumes Runtime Artifacts, storage, Contracts, Orchestrator, and FileManager references instead of inventing a GUI-local evidence schema.
+L00001561	
+L00001562	### 7.12 Artifacts
+L00001563	
+L00001564	Artifacts routes to Runtime Artifacts Panel and project-output artifact owners. It may mirror previews and links from Dashboard or Orchestrator, but artifact kind, envelope, projector, and schema authority stay with the artifact owners.
+L00001565	
+L00001566	### 7.13 Source Control
+L00001567	
+L00001568	Source Control is the Git/worktree mutation and inspection surface. It consumes WorktreeGitImprovement, storage, Contracts, and FileManager open/review behavior while preserving lane, package, safe-point, and worktree identity.
+L00001569	
+L00001570	### 7.14 GitHub Actions And Docker Manager
+L00001571	
+L00001572	GitHub Actions and Docker Manager are operational destination surfaces for branch/workflow and container/Kubernetes attention. Dashboard and Orchestrator mirror their active attention items but do not own their mutation semantics.
+L00001573	
+L00001574	### 7.15 Command Contract Anchor
+L00001575	
+L00001576	Section 7.15 is a thin anchor for command wiring references from GUI views. Concrete command ids, command arguments, handler locations, expected events, and permission gates remain owned by `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, and the destination owner docs.
+L00001577	
+L00001578	### 7.16 Chat Panel
+L00001579	
+L00001580	The Chat Panel is the canonical threaded assistant workspace for Ask, Agent, Debug, Plan, and Deep Plan modes.
+L00001581	
+L00001582	Layout:
+L00001583	- vertical split with **message stream** in the top 70% and **composer** in the bottom 30%
+L00001584	- optional collapsible **Plan panel** appears as a side panel within the chat surface when the thread is in Plan or Deep Plan mode
+L00001585	- header remains sticky while the message stream scrolls independently
+L00001586	
+L00001587	#### 7.16.1 Thread header and message stream
+L00001588	
+L00001589	Chat context and message detail requirements:
+L00001590	- The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab, and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
+L00001591	- The context-detail tab is keyed by thread and live-updates as thread data changes. Its top-level header summary is followed by a top-level view toggle with `Curated` and `Raw`; `Curated` contains Overview, Breakdown, and Messages, while Raw exposes serialized payloads and provider/runtime debugging data through the shared Contracts and Usage rules.
+L00001592	- Message rows expose an under-message icon row for copy, message actions, and message-level info-popover access. The info-popover consumes the closed field and label rules from Assistant Chat and Contracts, including runtime identity fields for provider, model, persona, account, requested/effective state, and `/model/persona/account` inspector disclosure where material.
+L00001593	
+L00001594	
+L00001595	#### 7.16.1A Thread header and message stream live contract
+L00001596	
+L00001597	Thread header content:
+L00001598	- editable thread title
+L00001599	- mode badge
+L00001600	- persona indicator
+L00001601	- model indicator
+L00001602	- token-count summary
+L00001603	- quick actions for thread search, rename, duplicate, archive, and thread settings
+L00001604	
+L00001605	Message stream requirements:
+L00001606	- scrollable virtualized list of user, assistant, system, tool, approval, and activity message blocks aligned with the taxonomy in `Plans/assistant-chat-design.md`
+L00001607	- stable message identity so streaming updates mutate existing rows rather than replacing the full list
+L00001608	- inline `activity-card` rendering for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts; compact activity cards show 5 lines, expanded cards show 15 lines, and expanded log/detail views cap at 50 lines before routing to the owning surface
+L00001609	- sticky unread marker, `New messages below`, and a `jump-to-latest` badge when the user is scrolled away from the bottom; `/auto-follow` state controls whether streaming output follows the latest row
+L00001610	
+L00001611	#### 7.16.2 Composer, commands, and plan mode affordances
+L00001612	
+L00001613	Composer requirements:
+L00001614	- multiline text input
+L00001615	- mode selector exposing at minimum `Steer` and `Queue`
+L00001616	- attachment button
+L00001617	- send / stop button
+L00001618	- visible disabled-state explanation when sending is unavailable
+L00001619	
+L00001620	Plan-mode affordances:
+L00001621	- collapsible Plan panel showing the current plan, live TODO tracker, plan steps, status, and linked artifacts
+L00001622	- plan panel supports focusing the active step and jumping to linked documents or evidence
+L00001623	- when not in a planning mode, the plan panel stays hidden rather than showing an empty placeholder
+L00001624	- provider settings layout stays OUT of this GUI widget contract while provider-runtime docs remain provisional; this document owns UI widget contracts and must not encode provider routing or configuration internals
+L00001625	
+L00001626	Composer queue rules:
+L00001627	- queued messages are FIFO with max 2 entries, transient, and not restart-persisted
+L00001628	- queue item states are `pending | in_progress | completed | blocked | skipped`; `superseded` is plan-level only and not a queue item state
+L00001629	
+L00001630	Commands and approvals:
+L00001631	- slash commands, mode switches, and tool approvals remain routed through the canonical chat/runtime command catalog
+L00001632	- the visible slash palette mirrors the final reserved slash set, including bare `/web` help/autocomplete, `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, `/web map`, `/skill`, and the deprecated `/cancel` alias
+L00001633	- tool approval dialogs launched from Chat must preserve thread context and return focus to the composer after completion
+L00001634	- chat-local controls must not duplicate ownership of Problems, Output, Ports, or Debug Console; they link to those shell surfaces instead
+L00001635	
+L00001636	### 7.17 File Manager Panel
+L00001637	
+L00001638	The File Manager Panel is the persistent project-tree side panel and defers detailed tree, drag-and-drop, and open-file behavior to `Plans/FileManager.md`.
+L00001639	
+L00001640	Required behavior summary:
+L00001641	- project tree with local filter, expand/collapse persistence, and current-file reveal
+L00001642	- click-to-open and context-menu actions route through canonical open-file and file-tree action contracts
+L00001643	- external drag-and-drop, ignored-file visibility rules, and detached-panel behavior remain aligned with `Plans/FileManager.md`
+L00001644	- File Manager owns tree navigation and file discovery, but not semantic search, diff-local search, or runtime artifact browsing
+L00001645	- The panel header carries the active repo/worktree chip plus a local tree-search field. If the current file is hidden by `/hidden` or `/ignored` filters, the GUI must disclose that state instead of silently failing reveal; Git status badges in rows stay read-only, while stronger repo/worktree state remains in the compact strip or Source Control. This row-level behavior is cross-checkable with `Plans/FileManager.md`, `Plans/GitHub_Integration.md`, and this GUI owner.
+L00001646	- Tree-level actions include `New file`, `New folder`, `Rename`, `Delete`, Copy full path, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/Cut/Paste` for workspace nodes. `cmd.file` / `cmd.file.*` is the command-family for workspace-node actions, and missing actions must not remain anonymous context-menu-only behavior; terminal reveal actions stay in the terminal family, with `Open in Terminal` using `cmd.terminal.open` and `Show Terminal` using `cmd.terminal.show`.
+L00001647	- Workspace-node clipboard is a dedicated file-operation model: paste and `/drop` reuse one path-validation plus conflict-resolution engine, cut-pending state remains visibly armed until paste or clear, and successful paste uses the same progress and toast feedback as drag/drop instead of a second feedback path.
+L00001648	- File-manager operational GUI coverage remains MVP and implementation-ready for `/file-manager/remote/review/runtime` seams: `/delete/duplicate/bulk`, `/refresh/conflicts`, generated-vs-workspace-file identity, `/open/save/export`, `/hiding`, `/test/share`, `/ignored-file` behavior, `/browser/terminal/artifacts` reveal/reuse rules, chat-thread diff exposure, multi-surface routing, exact-session terminal reveal, and project-driven orchestration-native feature-fleshing. These are PM-native obligations, not competitor-derived features to add blindly.
+L00001649	- Known GUI ownership references are explicit: `§7.16` Chat, `§7.18` File Editor, `§7.20` Bottom Panel / Browser / Problems / Debug / Ports, `§7.4.2` Settings > LSP, `§7.4.5` Settings > SSH, and `§7.4.6` Settings > Debug. Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity.
+L00001650	
+L00001651	### 7.18 File Editor
+L00001652	
+L00001653	The File Editor is the canonical in-app code and document editing surface.
+L00001654	
+L00001655	Required behavior summary:
+L00001656	- tabbed editor groups with shared buffers, diff view, preview modes, and detach / re-dock support
+L00001657	- LSP-backed diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, and go-to-definition
+L00001658	- SSH remote editing, stale-write disclosure, and recoverable unsaved local buffer persistence
+L00001659	- embedded rendering for markdown, mermaid, HTML, SVG, and image documents through the shared preview pipeline
+L00001660	- Preview/browser/file-type GUI seams include Mermaid, Markdown, HTML, SVG, image, and media preview; source-canonical preview/edit bridge; linked-asset reload; multi-preview ownership; trust tiers; sandboxing; `runtime_unavailable`; capture/mutation boundaries; and generated-vs-workspace-file open, `/save/export`, and promotion paths. Browser hosting is editor-tab-first, while File Manager search remains a `/file-manager` filtering/location surface and symbol search exposes LSP-backed versus text `/index-backed` behavior plus visible `/indexing-state`, `/offline/stale-state`, `/framework/build/preset`, and project-driven capability state.
+L00001661	- Embedded editor surfaces are leaf editing/rendering surfaces, not owners of workspace truth. DOM/browser-coupled, browser-specific, browser-runner, service-worker, query-string, localStorage, `/browser-coupled`, `/shared-doc`, `/render-root`, `/selection/IME/paste/shadow-root/Firefox`, `/auth/input`, `/version`, IDs, edge-case, collaboration-oriented, generated-vs-workspace, and `/reveal` assumptions must not shape the canonical Slint/Rust architecture even when they enable demos elsewhere.
+L00001662	- local-operational and `/native-style` references are implementation inputs for explicit PM workbench seams, not authorities that replace PM-owned workspace identity, file-manager operations, diff/review, preview/browser lifecycle, remote/SSH, or terminal/runtime ownership across the shell.
+L00001663	- Implementation-reference learning preserves breadth without inheriting shortcuts: `bench-05` informs breadth-of-file-operations, CRUD, `/archive/upload/preview/edit/search`, and security-hardening; `bench-28` informs control-plane, reverse-proxy, SSH bootstrap, URI/workspace binding, launch-time environment setup, and delegated IDE backend seams. PM remains a native `/workbench` with explicit service boundaries for `/file-tree/diff/LSP/terminal`, not a server-heavy/server-rooted file app or a thin control plane over another IDE.
+L00001664	- External workspace/editor product lessons are constraints, not feature cargo cult. AI-native `/workspace-agent` UIs validate visible plans, task state, artifacts, provider/model transparency, multi-surface orchestration across editor, terminal, browser, docs, and review, and persistent `/rules/skills`; PM must still guard against opaque agents, fragile diff/review apply flows, session-loss or compaction surprises, autonomy defaults users cannot inspect, and `/auth/reconnect` brittleness. Full IDE and `/workbench` references validate modular workspace models, cached file-type/framework detection, `/tab/window` persistence, reusable diff/viewer pipelines instead of one-off UIs, and explicit degraded/indexing states; collaborative `/online` editors are references only, not authorities for PM state or durability.
+L00001665	- The same external lessons remain negative constraints: no hanging agents, no hidden indexing/startup cost, no clutter and split/focus complexity, and no coordination regressions across large service graphs. Thin wrapper or small embeddable editor references may inform host integration, but they are poor direct product models whenever robust diff/merge, accessibility depth, resize/container reliability, large-file behavior, or advanced host/runtime integration matters.
+L00001666	- Shell/editor architecture keeps explicit document/resource identity, `/history/session-state`, event-driven file dialogs and reveal/open adapters, long-lived terminal/runtime sessions, and first-class search persistence. Electron `/extension-host`, extension-compatibility, IPC, CLI-wrapper, collaboration-first, component-level editor libraries, heavy-refresh, external-change, `/search/remote/shell`, remote bootstrap, and OS integration fragility are caution signals, not GUI ownership models.
+L00001667	- Rust + Slint implementation keeps workspace services, buffers, diff, indexing, remote/session state, persistence, AI orchestration, and durable AI task/artifact records in Rust-owned core services; Slint owns pane layout, tree/list/status surfaces, workbench `/pane/review/task` chrome, and cross-platform shell behavior rather than text `/render` logic, and specialized renderers stay bounded to preview surfaces. Cross-platform-safe IDE acceptance covers `/LSP/remote/auth` degradation, `/clipboard/session` behavior, `/rendering/DPI`, IME/input, path/symlink semantics, file watching/refresh, drag/drop, and macOS, Linux, Windows, and WSL portability.
+L00001668	- Browser/session fallback language must stay aligned with `FinalGUISpec.md:1539-1555`, `FileManager.md:391-415`, and `Section15_MVP_Promoted_Features_Spec.md:758`: browser hosting is `/editor-tab-first`, detached-window-capable, and bottom-panel-adjacent only. `runtime_unavailable` and degraded browser capability messaging replace `/screenshot` substitution as a pseudo-browser.
+L00001669	- Workspace-backed preview/browser flows preserve logical subject identity instead of retargeting to an over-cap or `/LRU` slot. `Open` on HTML stays source/editor mode, `Open in Browser` creates or opens `workspace_preview`, `Open in Detached Browser` creates or opens `detached_preview`, and split browser layout is layout state after open. Click-to-context, `/capture`, screenshots, share-with-agent, takeover, promotion, reopen, `/retry/keep-closed`, DevTools-adjacent panes, and source-mutation privilege route through canonical browser/session commands keyed by `browser_session_id`.
+L00001670	- Legacy `preview_mode` and `browser_panel` labels are compatibility aliases only. Command and storage routing use `cmd.browser.*` entries such as `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, and `cmd.browser.focus_browser_tab`, with `workspace_preview`, `detached_preview`, `preview_subject_id`, `browser_session_id`, and `normal_browsing` as the canonical session vocabulary; `Bottom Panel Browser`, generic `Browser tab`, bottom-panel-primary, and normal-browsing wording are not canonical owners for built-in browser or click-to-context flows.
+L00001671	- Diff/review GUI feedback remains explicit: files-touched strips, inline operation-card previews, click-to-open, Source Control `/compare`, docked versus detached review surfaces, hunk-action UI, conflict-review UI, scrollbar heat-map/change-marker rendering, dirty/reverted/conflicted/staged feedback, `/revert` history, and chat card mapping into editor or Source Control surfaces are required GUI contracts, not still-missing follow-up notes.
+L00001672	- The editor-engine and early search reference lessons are constrained: `bench-13` supports async project search plus command discoverability, `bench-04` warns against blurred file-tree responsibilities, and embed-first editor-engine `/mini-editors` trade host flexibility for `/caret`, IME, accessibility, diff/merge, and robust runtime integration. Cross-target learning favors PM's rich shared-buffer, multi-surface workbench rather than overfitting to tiny embeddable wrappers.
+L00001673	- The master seam inventory is MVP and implementation-ready, never `/optional/future`: shell-wide routing for editor, browser, terminal, artifacts, side panels, bottom-panel-adjacent surfaces, `OpenFile`, `OpenSubject`, route_target, browser sessions, terminal sessions, artifacts, generated documents, reuse/split/detach behavior, structure-aware editing, IME/input correctness, and cross-surface clipboard/copy-paste must be represented as GUI behavior.
+L00001674	
+L00001675	#### 7.18.1 Inline Note Mode
+L00001676	
+L00001677	Inline Note Mode enables targeted feedback and annotation inside the editor.
+L00001678	
+L00001679	Activation:
+L00001680	- user selects code in the editor
+L00001681	- `Add Note` appears in the context menu for the selection
+L00001682	- source-backed document selections expose the `Annotations` Menu through pointer context-menu and keyboard `Shift+F10`
+L00001683	- read-only `/no-source-map` and `/internal` preview renders may expose `Send selection to chat`, but durable annotation actions stay disabled unless stable semantic anchor IDs are available
+L00001684	- `Send selection to chat` creates a visible `pre-send` removable context chip `/pill` in the owning `chat-input-area`, above the textarea `/composer` shell and below any queued intervention block; the chip shows doc name `/path`, bounded excerpt, `/provenance`, and a removal affordance before send. When a document pane belongs to Interview, Assistant, or `document-viewer` chat, the UI makes the target chat obvious; if ambiguous, the action opens a small target picker instead of silently routing elsewhere, and the default is the page-owned chat panel, opening or pulsing that panel when hidden.
+L00001685	
+L00001686	Note creation:
+L00001687	- captures selection range
+L00001688	- captures `selected_text`
+L00001689	- captures note text
+L00001690	- optional category: `bug`, `improvement`, `question`, or `style`
+L00001691	
+L00001692	Display and persistence:
+L00001693	- inline annotation markers appear in the editor gutter
+L00001694	- hover reveals note content and status
+L00001695	- notes persist via `note_record.v1:{bundle_id}:{note_id}` and remain linkable from bundle review surfaces
+L00001696	- the annotation drawer/list announces per-annotation status changes through a `/live-region`
+L00001697	- user-facing status labels map to `addressed`, `still_open`, and `cannot_apply` without hiding the underlying annotation id
+L00001698	- v1 plan-graph, generic read-only, and other no-source-map previews are `send-to-chat-only` for selections unless they define stable anchor IDs
+L00001699	
+L00001700	Reusable annotation UI components:
+L00001701	- `AnnotationActionMenu` is the shared inline context menu / floating palette for selection-scoped actions; it must preserve existing editor and chat clipboard semantics, expose a keyboard-only path, and follow the custom context menu contract where Slint has `no built-in context menu`.
+L00001702	- `AnnotationDrawer` is the shared right-side `/drawer` or right binder-rail surface for annotation management, status, review summaries, and validation banners; final-review gating copy must say no open annotations, not no open notes.
+L00001703	- `ContextChipStrip` is the shared chip strip for ephemeral `send-to-chat` context in the owned chat panel composer; it must stay separate from durable annotations and avoid unreadable clutter in compact layouts.
+L00001704	- Assistant Deep Plan, Wizard requirements/PRD review, Interview embedded document pane, and document viewer review surfaces should reuse these components and shared inline annotation decorators instead of per-surface bespoke implementations.
+L00001705	- Native document preview/review imports the annotation grammar but not a `browser-gated` review workflow; durable `targeted-revision` notes and separate `send-to-chat` context actions both remain available.
+L00001706	
+L00001707	### 7.19 Agent Activity
+L00001708	
+L00001709	The Agent Activity surface is the canonical inspection view for delegated work, investigations, bundle review progress, and embedded review documents.
+L00001710	
+L00001711	Required behavior summary:
+L00001712	- active and historical child-run / subagent activity list with status, owning thread, target, and outcome
+L00001713	- clear distinction between running, queued, blocked, remediation, and completed activity
+L00001714	- direct links to related chat messages, artifacts, investigation records, and review bundles
+L00001715	
+L00001716	### 7.19A Dedicated log and audit inspector
+L00001717	
+L00001718	PM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector. Summary rows use a 5-item compact format: operation label, short query or `/url/task` preview, success/failure status, fallback note when present, and source/page counts when present. Full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs. Supported interactions include `/filter/drill-down`, filter by event family, search by tool or `/operation`, time-range queries, drill-down, and export. `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances.
+L00001719	
+L00001720	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+L00001721	
+L00001722	
+L00001723	PM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector.
+L00001724	
+L00001725	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00001726	
+L00001727	Inspector requirements:
+L00001728	- summary rows use a 5-item compact format: operation label, short query/url/task preview, success/failure status, fallback note when present, and source/page counts when present
+L00001729	- full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs
+L00001730	- supported interactions include filter by event family, search by tool or operation, time-range queries, drill-down, and export
+L00001731	- `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances
+L00001732	
+L00001733	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+L00001734	
+L00001735	#### 7.19.1 Embedded document pane
+L00001736	
+L00001737	
+L00001738	The embedded document pane is a shared-buffer review/document surface used by Interview, Builder, and bundle-review workflows.
+L00001739	
+L00001740	Rules:
+L00001741	- document selection, scroll position, active review stage, and approval state persist through `document_pane_state:v1:{project_id}:{page_context}`
+L00001742	- the pane shares source-of-truth buffers with File Editor rather than maintaining divergent document copies
+L00001743	- findings summaries and approval gates render adjacent to the document, not inside unrelated chat-local controls
+L00001744	
+L00001745	#### 7.19.2 Bundle controls and review gate
+L00001746	
+L00001747	
+L00001748	Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
+L00001749	
+L00001750	Required behavior:
+L00001751	- `Resubmit` in bundle review sends all unresolved notes as revision context
+L00001752	- final approval is blocked until every note is resolved, responded to, or dismissed
+L00001753	- bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`
+L00001754	- bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries
+L00001755	
+L00001756	### 7.20 Bottom runtime zone
+L00001757	
+L00001758	The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes.
+L00001759	
+L00001760	Required behavior summary:
+L00001761	- tabbed runtime panes with stable identity and restore behavior
+L00001762	- terminal/browser/editor integrations reveal the owning pane rather than minting parallel per-feature consoles
+L00001763	- linked dev-session state, historical/live badges, and recovery outcomes stay visible across pane switches
+L00001764	
+L00001765	#### 7.20.1 Terminal and browser tab management
+L00001766	
+L00001767	Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable across docking, focus changes, and restart recovery.
+L00001768	
+L00001769	Rules:
+L00001770	- runtime tabs persist selection, order, labels, and pin state
+L00001771	- browser and preview tabs route through canonical browser-session identities and never silently migrate ownership to chat
+L00001772	- hot reload, output routing, and preview refresh status appear in the owning runtime or preview pane
+L00001773	
+L00001774	#### 7.20.2 Debug, Problems, Output, and Ports
+L00001775	
+L00001776	The runtime zone must provide:
+L00001777	- **Problems:** aggregated diagnostics, file links, and source ownership disclosure
+L00001778	- **Output:** task/build/dev output streams with source tags and search within stream
+L00001779	- **Debug Console:** adapter and evaluation output for the active debug session
+L00001780	- **Ports:** detected ports, local/remote accessibility, open-in-browser actions, and hot-reload controls
+L00001781	
+L00001782	`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records.
+L00001783	
+L00001784	## 8. Widget Catalog
+L00001785	
+L00001786	Section 8 defines the **atomic** widget catalog used to compose pages and panels. Detailed widget references align with `Plans/FinalGUISpec.md#8-widget-catalog` and the Widget System hostability/catalog linkage in `Plans/Widget_System.md#2-hostability-and-data-contracts` and `Plans/Widget_System.md#4-orchestrator-progress-widget-scope-and-catalog-linkage`.
+L00001787	
+L00001788	### 8.1 SelectableText contract
+L00001789	
+L00001790	`SelectableText` is the canonical non-editable text primitive for logs, code snippets, labels with copy support, and read-only structured values.
+L00001791	
+L00001792	Rules:
+L00001793	- supports mouse and keyboard text selection
+L00001794	- supports copy without converting the field into an editable input
+L00001795	- participates in the shared context-menu and clipboard contract defined in §10.9
+L00001796	- must preserve stable layout when content updates incrementally
+L00001797	
+L00001798	### 8.2 Widget categories
+L00001799	
+L00001800	Major widget families:
+L00001801	- **Layout:** SplitPane, TabGroup, Panel
+L00001802	- **Input:** TextInput, Dropdown, Toggle, Slider
+L00001803	- **Display:** Tree, List, Table, Card
+L00001804	- **Feedback:** Toast, Dialog, ProgressBar, Badge
+L00001805	- **Navigation:** Breadcrumb, SideNav, CommandPalette
+L00001806	
+L00001807	Catalog rules:
+L00001808	- atomic widgets define behavior, focus, and theme-token usage once and are reused across all surfaces
+L00001809	- page widgets in `Plans/Widget_System.md` are composed from this catalog and are not a substitute for the atomic widget list here
+L00001810	- widgets must expose accessible labels, stable identity, and deterministic fallback states
+L00001811	
+L00001812	## 9. State Management
+L00001813	
+L00001814	State management follows a reactive state tree with observable projections consumed by Slint models and shell surfaces.
+L00001815	
+L00001816	### 9.1 State architecture
+L00001817	
+L00001818	- canonical runtime and durable state live in Rust-owned records/projections
+L00001819	- Slint surfaces subscribe to observable projections rather than polling
+L00001820	- UI models update through batched `invoke_from_event_loop` mutations
+L00001821	
+L00001822	### 9.2 State categories
+L00001823	
+L00001824	- **UI state:** ephemeral, not persisted; hover, local selection, transient panel expansion
+L00001825	- **Session state:** persisted per session/thread/workspace tab
+L00001826	- **Project state:** persisted per project and shared across reopened sessions for that project
+L00001827	- **Global state:** user preferences and cross-project durable defaults
+L00001828	
+L00001829	### 9.3 State flow
+L00001830	
+L00001831	Canonical flow:
+L00001832	`User action -> Command -> State mutation -> UI update`
+L00001833	
+L00001834	Rules:
+L00001835	- commands are the mutation boundary
+L00001836	- mutations write to canonical projections first
+L00001837	- UI updates render from the new projection state rather than optimistic ad hoc local rewrites unless explicitly marked pending
+L00001838	
+L00001839	### 9.4 Conflict resolution
+L00001840	
+L00001841	- last-write-wins for UI state
+L00001842	- merge strategy for project state when multiple durable sources contribute
+L00001843	- requested vs effective runtime values must remain separately inspectable
+L00001844	
+L00001845	### 9.5 Persistence boundaries
+L00001846	
+L00001847	- ephemeral state may be discarded on restart unless explicitly promoted
+L00001848	- persisted state must have stable keys and versioned migrations
+L00001849	- migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family
+L00001850	- Shell persistence keeps `/floating`, `/document`, `/chat/editor`, workspace-tab identity, per-project `project_state`, per-surface `source_control.project_state.{project_id}`, and `/file-tree/chat` restore state in narrow project shell records, not in canonical blocked or `/attention` truth.
+L00001851	- `FinalGUISpec.md` treats `widget_layout:v1:orchestrator:progress` as a `Progress` layout key layered from `app-global` defaults plus `project-scoped` overrides under `project_state:v1:{project_id}`; it is not a page-global record and `widget_layout` entries must name `project_id` when they depend on project state.
+L00001852	- Per-surface state may persist `line`, `range`, `active_subview`, compare target, panel layout, browser tab state, and widget layout only as view state; it must not replace canonical route identity.
+L00001853	- FileManager restore and handoff state preserves `repo_id`, `worktree_id`, identity-backed `/history/checkpoint` references, and backend-driven restore pipelines rather than treating path opens as the only canonical document identity.
+L00001854	
+L00001855	### 9.6 Context management
+L00001856	
+L00001857	Context management combines thread context, Investigation Context, editor/file references, and review/document references without hiding provenance.
+L00001858	
+L00001859	Rules:
+L00001860	- each context block has stable identity and owner surface
+L00001861	- context usage counters and token summaries derive from canonical usage/state projections
+L00001862	- pruning, compaction, and restoration rules must disclose what was removed, summarized, or rehydrated
+L00001863	
+L00001864	### 9.7 Agent-Config instruction projections
+L00001865	
+L00001866	The Agent-Config surface must show a canonical instruction editor for PM-owned instruction source plus a per-target rendered preview for each provider-native projection target.
+L00001867	
+L00001868	The now-locked Agent-Config `/provider` model is the visible provider/model/account/instruction management surface. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.
+L00001869	
+L00001870	Per-target control state is closed to:
+L00001871	- `controlled`
+L00001872	- `manual_override`
+L00001873	- `projection_failed`
+L00001874	
+L00001875	Rules:
+L00001876	- `controlled` means PM owns semantic sync for that target and regenerates provider-native projection text from the canonical instruction editor.
+L00001877	- `manual_override` means the target has been detached by the user; the GUI must show that semantic sync is broken for that target only.
+L00001878	- `projection_failed` means PM could not generate or write the target projection and must expose repair/retry actions without pretending the target is current.
+L00001879	
+L00001880	The visible label for `manual_override` is Manual Override. Direct edits to a PM-controlled provider-native projection target require switching only that target to Manual Override first; otherwise the GUI treats the edit as a canonical-source change and regenerates provider projections.
+L00001881	
+L00001882	ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md
+L00001883	
+L00001884	## 10. UX Patterns
+L00001885	
+L00001886	Section 10 defines reusable interaction patterns across pages, panels, dialogs, and editor/runtime surfaces.
+L00001887	
+L00001888	### 10.1 Confirmation dialogs
+L00001889	
+L00001890	Destructive or irreversible actions require confirmation with explicit consequence copy, especially for delete, reset, merge, publish, repository creation, and credential removal flows.
+L00001891	
+L00001892	Every action surface classifies confirmation level as `none`, `light`, `strong`, or `hard_gate` and separately records reversibility, so navigation-only affordances, low-risk state changes, destructive mutations, and runtime-blocked recovery gates do not share one generic confirmation dialog.
+L00001893	
+L00001894	The `light` confirmation level covers `moderate-impact` actions where accidental activation is plausible and a short confirm or inline affordance is enough.
+L00001895	
+L00001896	Concern actions map acknowledgement and `/dismiss` to `light` or `strong` confirmation according to severity and `/blocking` effect, while merge and `/split` always use `strong` because they alter structural lineage.
+L00001897	
+L00001898	Scoped-identity runtime families remain object-first and resolver-backed: GUI routes carry the owning object plus scope, while `Contracts_V0.md` owns the scoped-identity resolver rules and prevents family-specific top-level route fields.
+L00001899	
+L00001900	### 10.2 Undo
+L00001901	
+L00001902	Support `Ctrl+Z` / `Cmd+Z` where the owning surface allows reversible edits, including file operations that can be safely reverted, text editing, and message editing. Git-native history actions and external side effects are not mislabeled as editor undo.
+L00001903	
+L00001904	Git/source-control discard/compare/stage actions are not editor undo. Restore points, rollback, and revert-last-agent-edit stay explicit restore-history commands, and the GUI must not bury them behind git-panel affordances. The File Editor must expose diff heat-map/change-marker and scrollbar change-marker state as compare/review feedback while keeping the revert operation routed to the owning Source Control or FileSafe command.
+L00001905	
+L00001906	### 10.3 Loading states
+L00001907	
+L00001908	- skeleton screens for panel/page loads
+L00001909	- inline spinners or progress indicators for discrete actions
+L00001910	- keep prior validated content visible with stale/degraded labels when a refresh is in progress
+L00001911	
+L00001912	### 10.4 Error display
+L00001913	
+L00001914	- inline errors for field validation
+L00001915	- toast notifications for transient non-blocking failures
+L00001916	- blocking dialogs for failures that prevent forward progress or risk destructive ambiguity
+L00001917	
+L00001918	### 10.5 Empty states
+L00001919	
+L00001920	Empty panels must show helpful onboarding content, clear next actions, and contextual shortcuts instead of blank chrome.
+L00001921	
+L00001922	### 10.6 Blocked and recovery surfaces
+L00001923	
+L00001924	Blocked state, retry, remediation, and recovery affordances must use the canonical blocked/recovery contract and stay visually distinct from ordinary paused or idle states.
+L00001925	
+L00001926	### 10.7 Event-driven refresh rule
+L00001927	
+L00001928	Event-driven updates are canonical. UI state refresh happens on relevant runtime, filesystem, or provider events rather than generic timers.
+L00001929	
+L00001930	Exception:
+L00001931	- polling is acceptable for external systems that do not provide push updates, such as GitHub Actions status checks; those intervals are freshness aids only and must not become the correctness model for the rest of the shell
+L00001932	
+L00001933	### 10.8 Human-in-the-loop approvals
+L00001934	
+L00001935	Sensitive operations requiring approval must present:
+L00001936	- explicit action summary
+L00001937	- affected resources
+L00001938	- approval / deny actions
+L00001939	- audit trail link back to the originating thread, run, or bundle
+L00001940	
+L00001941	Approval surfaces must preserve context and never auto-approve hidden follow-up side effects.
+L00001942	
+L00001943	### 10.9 Context menus and clipboard
+L00001944	
+L00001945	Context menus are the canonical discoverability surface for copy, paste, Add Note, file actions, and selection-scoped operations.
+L00001946	
+L00001947	Copy, paste, share, and export actions must keep their payload families separate even when the user-visible labels look similar. Text clipboard, file-operation clipboard, chat context insertion, OS export, `/download`, remote-host transfer, and `/paste/share` flows carry different permissions, undo models, remote availability, and confirmation copy.
+L00001948	
+L00001949	#### 10.9.1 Copy path and copy value
+L00001950	
+L00001951	
+L00001952	Non-text path/value copy actions must copy the exact underlying value via the shared clipboard helper and must not depend on text rendering quirks.
+L00001953	
+L00001954	#### 10.9.2 Text selection and read-only copy
+L00001955	
+L00001956	Read-only text, code blocks, logs, and labels must remain selectable and copyable without entering edit mode.
+L00001957	
+L00001958	#### 10.9.3 Clipboard safety and feedback
+L00001959	
+L00001960	Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
+L00001961	
+L00001962	### 10.10 LSP-informed affordances
+L00001963	
+L00001964	This section consumes the linked owner contract and stays aligned with it.
+L00001965	
+L00001966	Core rules:
+L00001967	- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
+L00001968	- LSP GUI consumers preserve the nine `read-op` set by long-name and short-name aliases only as display/compatibility labels; canonical operations remain owner names, `diagnostics` is context/panel data, and `rename` is approval-gated.
+L00001969	
+L00001970	Fields:
+L00001971	- operation
+L00001972	- query
+L00001973	- path
+L00001974	- position
+L00001975	- newName
+L00001976	- status
+L00001977	
+L00001978	Labels and values:
+L00001979	- goToDefinition
+L00001980	- findReferences
+L00001981	- hover
+L00001982	- documentSymbol
+L00001983	- workspaceSymbol
+L00001984	- rename
+L00001985	
+L00001986	Rules:
+L00001987	- goToImplementation
+L00001988	- prepareCallHierarchy
+L00001989	- incomingCalls
+L00001990	- outgoingCalls
+L00001991	- ok | partial | unavailable | error
+L00001992	- `workspaceSymbol` requires `query`
+L00001993	- Position-based operations use `path` + `position`.
+L00001994	- `rename` requires `path` + `position` + `newName`.
+L00001995	- `rename` is approval-gated because it applies edits.
+L00001996	
+L00001997	Compatibility/source-lineage disposition: this extract preserves source tokens for LSP GUI display and compatibility search. Treat operation names, aliases, status values, and approval rules by their typed role through the Core rules and owner LSP contract; do not read the `Fields:` list as a standalone schema.
+L00001998	### 10.11 Loading-to-live transitions
+L00001999	
+L00002000	
+L00002001	When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
+L00002002	
+L00002003	### 10.12 Detached-surface continuity
+L00002004	
+L00002005	Detached panels and windows must preserve identity, selection, and keyboard focus expectations when re-docked.
+L00002006	
+L00002007	### 10.13 Sound effects
+L00002008	
+L00002009	Optional sound effects may reinforce key workflow events such as approvals required, run completion, or error escalation, but they must remain user-controllable, accessible, and never the sole carrier of important information.
+L00002010	
+L00002011	## 11. Anti-Flickering and Scroll Preservation
+L00002012	
+L00002013	### 11.1 Core Principle
+L00002014	
+L00002015	The GUI must never visually "jump" or "flicker" when background data updates arrive. Users must not lose their scroll position or see layout shifts during normal operation.
+L00002016	
+L00002017	### 11.2 Strategies
+L00002018	
+L00002019	**Scroll position preservation:**
+L00002020	- When new items are added to a `VecModel` (e.g., chat messages, log lists, evidence lists, or bounded terminal transcript projections), preserve the current scroll position unless the user is scrolled to the bottom
+L00002021	- If scrolled to bottom: auto-scroll to show new content
+L00002022	- If scrolled up (reviewing history): hold position; show a "New messages below" indicator
+L00002023	- Implementation: Track `viewport-y` property on `ListView`; only update if at bottom threshold
+L00002024	
+L00002025	**Batch UI updates:**
+L00002026	- When multiple properties change simultaneously (e.g., orchestrator status + progress + transcript projection updates), batch them into a single `invoke_from_event_loop` call to prevent partial renders
+L00002027	- Example: Do NOT call `invoke_from_event_loop` three times for three properties; collect changes, then apply all in one call
+L00002028	
+L00002029	**Stable list keys:**
+L00002030	- Each item in a `VecModel` has a stable ID (not just an index) so that Slint can reconcile updates without destroying and recreating all items
+L00002031	- When updating a list item, modify the existing model entry rather than clearing and rebuilding the entire model
+L00002032	
+L00002033	**Avoid full-model replacement:**
+L00002034	- Never call `VecModel::clear()` + re-add all items when only one item changed
+L00002035	- Use `VecModel::set_row_data()` for individual item updates
+L00002036	- Use `VecModel::push()` / `VecModel::remove()` for additions/removals
+L00002037	
+L00002038	**Layout stability:**
+L00002039	- Fixed-size containers for status badges, progress bars, and other indicators so they do not cause layout shifts when values change
+L00002040	- Reserve space for optional elements (error messages, loading indicators) even when not visible, or use animation to smoothly reveal them
+L00002041	
+L00002042	**Debounce layout persistence:**
+L00002043	- When the user resizes panels or rearranges cards, debounce the redb write (300-500ms) to avoid disk thrashing and potential UI stutter
+L00002044	
+L00002045	### 11.3 Terminal-Specific Anti-Flickering
+L00002046	
+L00002047	- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing.
+L00002048	- Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
+L00002049	- When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
+L00002050	- Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
+L00002051	- high-volume terminal output uses ring-buffer backed `/virtualized` projections so 4-split terminal panes keep layout ratios stable while the live core remains off the UI thread.
+L00002052	
+L00002053	---
+L00002054	
+L00002055	## 12. Responsive Design
+L00002056	
+L00002057	### 12.1 Breakpoints
+L00002058	
+L00002059	| Window Width | Layout Adaptation |
+L00002060	|-------------|-------------------|
+L00002061	| >= 1360px | **Full layout:** All panels visible at comfortable widths |
+L00002062	| 1080-1359px | **Compact:** Side panel at minimum (240px); bottom panel compact |
+L00002063	| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab; bottom panel collapses to header row (24px) |
+L00002064	| < 720px | **Single-column:** Activity bar only; panels accessible as overlays/drawers from activity bar icons |
+L00002065	
+L00002066	At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`, `AnnotationActionMenu`, and `ContextChipStrip` collapse into overlay/drawer patterns without hiding keyboard access or breaking `keyboard-shortcut` expectations.
+L00002067	
+L00002068	### 12.2 Side Panel Responsive Widths
+L00002069	
+L00002070	
+L00002071	| Panel Width | Adaptation |
+L00002072	|------------|------------|
+L00002073	| 480px+ | Full layout with all controls |
+L00002074	| 360-479px | Mode tabs use abbreviated text; footer collapses platform/model to icons |
+L00002075	| 280-359px | Mode tabs show icons only (tooltip on hover); footer shows only context % |
+L00002076	| 240px (minimum) | Mode icons, messages, input only; all extras behind overflow menu |
+L00002077	
+L00002078	### 12.3 Dashboard Grid Responsive
+L00002079	
+L00002080	| Window Width | Grid Columns |
+L00002081	|-------------|-------------|
+L00002082	| < 1200px | 2 columns |
+L00002083	| 1200-1600px | 3 columns |
+L00002084	| > 1600px | 4 columns |
+L00002085	
+L00002086	### 12.4 Activity Bar Responsive
+L00002087	
+L00002088	Activity bar remains at 48px at all breakpoints. At < 720px, it becomes the primary navigation mechanism, with panels opening as overlay drawers.
+L00002089	
+L00002090	The shared `/binder` and document-review surfaces use the same responsive rule: left binder rail owns document switching/status, right binder rail or drawer owns annotation management, selection actions stay in the inline `AnnotationActionMenu`, ephemeral send-to-chat state stays in `ContextChipStrip`, and chat itself remains a separate panel rather than embedded inside the binder review surface.
+L00002091	
+L00002092	The concept lineage from `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) narrows the binder placement without making the concept file a live owner. Wizard review uses a binder-style layout: the left document list `/sidebar` contains `wizard-doc-pill`, the central document content area is `wizard-binder-view`, and the top binder toolbar is `wizard-binder-toolbar`. Annotation UI belongs in a right-side drawer, `/rail`, or overlay inside binder content, not in the left document rail and not in a browser-style `annotation-review` modal. Chat remains the separate `#chatPanel` / `chatPanel` side panel with its own thread list, composer, `queued-intervention` strip, footer, and context-usage display; `send-to-chat` chips live in that chat composer through `ContextChipStrip`.
+L00002093	
+L00002094	---
+L00002095	
+L00002096	## 13. Accessibility
+L00002097	
+L00002098	### 13.1 Basic Theme as Accessibility Option
+L00002099	
+L00002100	The Basic theme is the primary accessibility-friendly option:
+L00002101	- No decorative effects (pixel grid, paper texture, scanlines)
+L00002102	- WCAG AA compliant color palette (4.5:1 minimum contrast for all text)
+L00002103	- System fonts designed for screen readability
+L00002104	- Minimum 14px body text, 1.6 line height, 0.02em letter spacing
+L00002105	- 4px border radius (less visually harsh)
+L00002106	- No hard shadows
+L00002107	- Respects `prefers-reduced-motion` (no animations or transitions)
+L00002108	
+L00002109	### 13.2 Focus Indicators
+L00002110	
+L00002111	
+L00002112	All themes must show visible focus indicators:
+L00002113	- **Retro Dark/Light:** ACID_LIME 2px border on focus
+L00002114	- **Basic:** High-contrast 2px ring with 2px offset in accent-blue
+L00002115	
+L00002116	### 13.3 Keyboard Navigation
+L00002117	
+L00002118	- All interactive elements reachable via Tab navigation
+L00002119	- Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar
+L00002120	- Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item
+L00002121	- Type-ahead filtering where appropriate (thread list, project list, file tree)
+L00002122	
+L00002123	### 13.4 Screen Reader Support
+L00002124	
+L00002125	Slint's screen reader support is limited. Mitigations:
+L00002126	- Set `accessible-role` and `accessible-label` properties on all interactive components where available in current stable Slint
+L00002127	- Panel state (docked/floating) announced via accessible labels
+L00002128	- Theme name available to assistive technology
+L00002129	- Keyboard shortcuts prominently documented and discoverable via command palette
+L00002130	
+L00002131	### 13.5 Minimum Touch/Click Targets
+L00002132	
+L00002133	All clickable/draggable controls must be at least 24px in height/width for reliable interaction.
+L00002134	
+L00002135	---
+L00002136	
+L00002137	## 14. Slint File Organization
+L00002138	
+L00002139	### 14.1 Directory Structure
+L00002140	
+L00002141	```
+L00002142	puppet-master-rs/
+L00002143	+-- build.rs                          # slint_build::compile("ui/app.slint")
+L00002144	+-- ui/                               # All .slint files
+L00002145	|   +-- app.slint                     # Root component, imports all views
+L00002146	|   +-- theme.slint                   # Theme global + token definitions
+L00002147	|   +-- widgets/                      # Reusable .slint widgets
+L00002148	|   |   +-- panel_card.slint
+L00002149	|   |   +-- status_badge.slint
+L00002150	|   |   +-- styled_button.slint
+L00002151	|   |   +-- styled_input.slint
+L00002152	|   |   +-- combo_box.slint
+L00002153	|   |   +-- progress_bar.slint
+L00002154	|   |   +-- terminal_output.slint
+L00002155	|   |   +-- toast.slint
+L00002156	|   |   +-- modal.slint
+L00002157	|   |   +-- pixel_grid_overlay.slint
+L00002158	|   |   +-- paper_texture.slint
+L00002159	|   |   +-- context_menu.slint
+L00002160	|   |   +-- selectable_text.slint
+L00002161	|   |   +-- activity_bar.slint
+L00002162	|   |   +-- status_bar.slint
+L00002163	|   |   +-- breadcrumb.slint
+L00002164	|   |   +-- command_palette.slint
+L00002165	|   |   +-- budget_donut.slint
+L00002166	|   |   +-- usage_chart.slint
+L00002167	|   |   +-- step_circle.slint
+L00002168	|   |   +-- icon.slint
+L00002169	|   |   +-- help_tooltip.slint
+L00002170	|   |   +-- interview_panel.slint
+L00002171	|   +-- views/                        # Page-level views
+L00002172	|   |   +-- dashboard.slint
+L00002173	|   |   +-- settings.slint            # Unified (old config + settings + login + doctor)
+L00002174	|   |   +-- wizard.slint
+L00002175	|   |   +-- interview.slint
+L00002176	|   |   +-- nodes.slint
+L00002177	|   |   +-- evidence.slint
+L00002178	|   |   +-- evidence_detail.slint
+L00002179	|   |   +-- metrics.slint
+L00002180	|   |   +-- history.slint
+L00002181	|   |   +-- memory.slint
+L00002182	|   |   +-- ledger.slint
+L00002183	|   |   +-- coverage.slint
+L00002184	|   |   +-- projects.slint
+L00002185	|   |   +-- setup.slint
+L00002186	|   |   +-- usage.slint               # NEW
+L00002187	|   |   +-- file_editor.slint         # NEW
+L00002188	|   |   +-- agent_activity.slint      # NEW
+L00002189	|   |   +-- not_found.slint
+L00002190	|   +-- panels/                       # Detachable panel content and shared runtime/browser hosts
+L00002191	|   |   +-- chat_panel.slint
+L00002192	|   |   +-- file_manager_panel.slint
+L00002193	|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debugger panes plus runtime-adjacent panes
+L00002194	|   |   +-- browser_panel.slint         # NEW - Shared webview host reused by workspace-tab and detached browser surfaces
+L00002195	|   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
+L00002196	|   +-- windows/                      # Secondary windows
+L00002197	|       +-- floating_panel.slint
+L00002198	|       +-- about.slint
+L00002199	+-- src/
+L00002200	    +-- main.rs                       # Entry point, BackendSelector
+L00002201	    +-- app.rs                        # AppState, message routing
+L00002202	    +-- bridge/                       # Slint <-> Rust binding layer
+L00002203	    |   +-- mod.rs
+L00002204	    |   +-- theme_bridge.rs           # ThemeVariant -> Theme global sync
+L00002205	    |   +-- model_bridge.rs           # VecModel setup, model factories
+L00002206	    |   +-- callback_bridge.rs        # Slint callback -> Rust handler wiring
+L00002207	    |   +-- window_bridge.rs          # Multi-window lifecycle
+L00002208	    +-- panels/                       # Detachable panel system
+L00002209	    |   +-- mod.rs
+L00002210	    |   +-- registry.rs               # PanelRegistry, dock/undock logic
+L00002211	    |   +-- layout.rs                 # LayoutConfig, persistence, presets
+L00002212	    |   +-- snap.rs                   # Snap zone detection
+L00002213	    +-- effects/                      # Custom rendering effects
+L00002214	    |   +-- mod.rs
+L00002215	    |   +-- grid_texture.rs           # Pixel grid tile generation (SharedPixelBuffer)
+L00002216	    |   +-- paper_texture.rs          # Paper grain tile generation (SharedPixelBuffer)
+L00002217	    +-- theme/                        # Theme definitions (Rust side)
+L00002218	    |   +-- mod.rs
+L00002219	    |   +-- palette.rs                # Color palettes (ported from current)
+L00002220	    |   +-- tokens.rs                 # Design tokens (spacing, borders, fonts, sizes)
+L00002221	    |   +-- variants.rs               # ThemeVariant enum + apply_to
+L00002222	    |   +-- custom_loader.rs          # NEW - Load custom themes from TOML files
+L00002223	    +-- browser/                      # NEW - Browser tab webview integration
+L00002224	    |   +-- mod.rs
+L00002225	    |   +-- webview.rs                # wry webview lifecycle, URL navigation
+L00002226	    |   +-- bookmarks.rs              # Bookmark persistence
+L00002227	    |   +-- context_capture.rs        # Click-to-context element capture
+L00002228	    +-- debug/                        # NEW - Debug Adapter Protocol integration
+L00002229	    |   +-- mod.rs
+L00002230	    |   +-- dap_client.rs             # DAP protocol client
+L00002231	    |   +-- breakpoints.rs            # Breakpoint management
+L00002232	    |   +-- launch_config.rs          # Run/debug configuration parsing
+L00002233	    +-- ssh/                          # NEW - SSH remote editing
+L00002234	    |   +-- mod.rs
+L00002235	    |   +-- connection.rs             # SSH/SFTP connection management
+L00002236	    |   +-- remote_fs.rs              # Remote filesystem abstraction
+L00002237	    |   +-- keychain.rs               # System keychain credential storage
+L00002238	    +-- audio/                        # NEW - Sound effects
+L00002239	    |   +-- mod.rs
+L00002240	    |   +-- player.rs                 # rodio-based audio playback
+L00002241	    |   +-- events.rs                 # Event-to-sound mapping
+L00002242	    +-- catalog/                      # NEW - Community catalog
+L00002243	    |   +-- mod.rs
+L00002244	    |   +-- index.rs                  # Catalog index fetch/cache
+L00002245	    |   +-- installer.rs              # One-click install logic
+L00002246	    +-- sync/                         # NEW - Config sync bundles
+L00002247	    |   +-- mod.rs
+L00002248	    |   +-- exporter.rs               # Bundle export
+L00002249	    |   +-- importer.rs               # Bundle import + conflict resolution
+L00002250	    +-- detect/                       # NEW - Language/framework detection
+L00002251	    |   +-- mod.rs
+L00002252	    |   +-- scanner.rs                # Project root scanning for marker files
+L00002253	    +-- hotreload/                    # NEW - Hot reload file watcher
+L00002254	    |   +-- mod.rs
+L00002255	    |   +-- watcher.rs                # notify-based file watcher
+L00002256	    |   +-- builder.rs                # Build command execution
+L00002257	    +-- ... (remaining app modules unchanged)
+L00002258	```
+L00002259	
+L00002260	### 14.2 View Switching in Slint
+L00002261	
+L00002262	Use conditional `if` blocks for lazy view rendering:
+L00002263	
+L00002264	```slint
+L00002265	if root.current-page == 0 : DashboardView { /* ... */ }
+L00002266	if root.current-page == 1 : ProjectsView { /* ... */ }
+L00002267	if root.current-page == 2 : SettingsView { /* ... */ }
+L00002268	// ... etc
+L00002269	```
+L00002270	
+L00002271	Hidden views have zero runtime cost. Widget trees are destroyed when the condition becomes false and recreated when true.
+L00002272	
+L00002273	### 14.3 Virtualized Lists
+L00002274	
+L00002275	
+L00002276	Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer, diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`.
+L00002277	
+L00002278	---
+L00002279	
+L00002280	## 15. Persistence
+L00002281	
+L00002282	### 15.1 redb Schema
+L00002283	
+L00002284	**Shell, layout, and editor state**
+L00002285	
+L00002286	| Key | Content | Write Frequency |
+L00002287	|-----|---------|----------------|
+L00002288	| `layout:v1` | Panel/editor layout geometry only: panel dock state per panel (docked side + width, or floating position/size), center splits, bottom runtime-panel height, detached-window geometry, and split ratios for terminal sections. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+L00002289	| `widget_layout:v1:dashboard` | Canonical dashboard widget grid layout, positions, sizes, and widget IDs | On change (debounced 300ms) |
+L00002290	| `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
+L00002291	| `theme:v1` | Current ThemeVariant enum value | On change |
+L00002292	| `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |
+L00002293	| `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
+L00002294	| `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
+L00002295	| `project_state:v1:{project_id}` | Lightweight shell/UX projection cache, not a canonical state store: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |
+L00002296	| `gha_panel_state.v1:{project_id}` | GitHub Actions panel UI state: account-sensitive pins, filters, auto-refresh preference, collapsed groups, and last viewed run partitioned by effective account or invalidated on account switch | On change (debounced 250ms) |
+L00002297	| `artifact_panel_state.v1:{project_id}` | Artifacts panel UI state: expanded groups, selected artifact, compare target, and preview mode | On change (debounced 250ms) |
+L00002298	
+L00002299	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+L00002300	
+L00002301	**Chat, settings, and review state**
+L00002302	
+L00002303	| Key | Content | Write Frequency |
+L00002304	|-----|---------|----------------|
+L00002305	| `settings:v1` | Durable app settings and preferences | On save |
+L00002306	| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
+L00002307	| `chat_state:v1` | Unsent input text and active thread selection | On change (debounced 200ms) |
+L00002308	| `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
+L00002309	| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |
+L00002310	| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states | On checkpoint create/restore |
+L00002311	| `review_findings_summary:v1:{project_id}:{run_id}` | Findings summary payload for requirements/interview review runs | On review completion/update |
+L00002312	| `review_approval_gate:v1:{project_id}:{run_id}` | Final approval decision state and precondition flags | On approval state change |
+L00002313	| `debug_investigation_record.v1:{project_id}:{investigation_id}` | Debug investigation record: target summary, phase/state, evidence refs, instrumentation refs, verification state, and cleanup status | On lifecycle change |
+L00002314	| `bundle_registry.v1:{project_id}:{bundle_id}` | Bundle review registry: files, review gate state, notes summary, and bundle status progression | On change |
+L00002315	| `note_record.v1:{bundle_id}:{note_id}` | Inline/bundle review note content, range, author, category, resolution, and timestamps | On change |
+L00002316	| `slash_commands:v1` | Custom slash commands (application-wide) | On save |
+L00002317	| `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
+L00002318	| `projects:v1` | Project registry: known projects with paths, detected languages, last-opened timestamps, health status, and per-project overrides | On change |
+L00002319	
+L00002320	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+L00002321	
+L00002322	**Preview, browser, recovery, LSP, and remote keys**
+L00002323	
+L00002324	| Key | Content | Write Frequency |
+L00002325	|-----|---------|----------------|
+L00002326	| `preview_state.v1:{project_id}:{preview_subject_id}` | Preview UI state keyed by document/artifact subject: mode, attached surface, export prefs, scroll sync, and last error | On change (debounced 300ms) |
+L00002327	| `preview_source_artifact.v1:{project_id}:{artifact_id}` | Artifact-backed preview metadata and source linkage | On change |
+L00002328	| `browser_session_state.v1:{project_id}:{browser_session_id}` | Browser session state: session class, workspace tab, preview subject, requested/effective runtime and capabilities, blocked actions, profile scope, restore policy, and last error | On change (debounced 300ms) |
+L00002329	| `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state, including persistent profiles requested as `profile: { name: string, saveChanges: boolean }`, `saveChanges` writeback state, and cookies/localStorage scope | On change (debounced 500ms) |
+L00002330	| `editor_unsaved_buffer.v1:{project_id}:{document_id}` | Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time | On change (debounced 500ms) |
+L00002331	| `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |
+L00002332	| `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |
+L00002333	| `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |
+L00002334	| `provider_account_record.v1:{provider_id}:{account_id}` | Provider account identity, entitlement metadata, validation state, and account-level configuration | On account change |
+L00002335	| `server_profile_record.v1:{provider_id}:{connection_profile_id}` | Provider/server profile connection defaults, capability summary, and health metadata | On change |
+L00002336	| `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}` | Rate-limit / pressure episode metadata and recovery history for account selection surfaces | On lifecycle change |
+L00002337	| `account_switch_event.v1:{provider_id}:{event_id}` | Durable record of account switch reason, source, and effective billing/entity context | On switch |
+L00002338	| `mcp_server_record.v1:{mcp_server_id}` | MCP server configuration and readiness metadata | On save/change |
+L00002339	| `skill_record.v1:{skill_id}` | Skill registry entry, enablement, source, and settings summary | On save/change |
+L00002340	| `web_operation_payload` | Stored child-run metadata for web search, fetch/read, extract, research, crawl, and map summaries referenced by GUI projections; `read` is the semantic `web_operation` for the `webfetch` tool. | On completion/update |
+L00002341	| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome | On change (debounced 300ms) |
+L00002342	| `terminal_session.v1:{terminal_session_id}` | PTY session continuity record for terminal restore and historical/live verification | On lifecycle change |
+L00002343	| `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
+L00002344	
+L00002345	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00002346	
+L00002347	Normative mapping notes:
+L00002348	- `ssh_remotes/{id}` replaces the stale flat `ssh_connections:v1` concept in GUI-facing persistence summaries.
+L00002349	- `preview_state.v1:*`, `preview_source_artifact.v1:*`, `browser_session_state.v1:*`, and `browser_profile_state.v1:*` replace stale single-blob `browser_state.v1` and `browser_state:v1` models.
+L00002350	- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.
+L00002351	- `editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded.
+L00002352	- `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
+L00002353	- §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
+L00002354	- Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
+L00002355	- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness.
+L00002356	
+L00002357	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+L00002358	
+L00002359	### 15.2 seglog Projections (for Usage)
+L00002360	
+L00002361	- Usage events (tokens, cost, platform, provider/pricing tier, session, thread_id) appended to seglog; this `tier` is entitlement or pricing metadata and is not decomposition-tier identity
+L00002362	- Analytics scan jobs produce rollups in redb (5h/7d counters, tool latency, error rates)
+L00002363	- Usage view and dashboard read from redb rollups, not raw seglog
+L00002364	- Per-thread usage derived from seglog events filtered by thread_id
+L00002365	
+L00002366	### 15.3 Tantivy Indices
+L00002367	
+L00002368	- Chat history search (human and agent messages) queryable from Chat panel search
+L00002369	- Evidence search
+L00002370	- Ledger search
+L00002371	
+L00002372	### 15.4 Startup Restore
+L00002373	On startup:
+L00002374	1. Read `layout:v1` from redb and restore panel positions, sizes, dock states, and detached-terminal geometry.
+L00002375	2. Read `theme:v1` from redb and apply theme.
+L00002376	3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
+L00002377	4. Read `activity_bar_order:v1` and restore icon order.
+L00002378	5. Read `editor_state:v1:{project}` and restore open tabs.
+L00002379	6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
+L00002380	7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
+L00002381	8. Read `hotreload_state:v1:{project_id}` and rehydrate dev-session UI state as historical or verified-live state.
+L00002382	9. Read `onboarding:v1` and determine whether tour or first-run hints should show.
+L00002383	10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
+L00002384	
+L00002385	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00002386	
+L00002387	Restore rules:
+L00002388	- terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification
+L00002389	- restored historical sessions may appear immediately, but live-state badges wait for verification
+L00002390	- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically
+L00002391	- project `/reopen` restores saved sections, tabs, panes, layout style, labels, dock/detach state, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists
+L00002392	- `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; replace with new terminal or `/restart` attaches a fresh runtime to the same slot, while close removes the workspace container
+L00002393	- Session restore is project-scoped and `/session-aware`: thread-specific restoration prompts before rebinding thread, chat, terminal, or editor focus, and the saved `/layout` projection may restore only after that scope is confirmed.
+L00002394	
+L00002395	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+L00002396	### 15.5 Session Recovery
+L00002397	On crash or unexpected shutdown, restore as much state as possible without inventing continuity that PM cannot prove.
+L00002398	
+L00002399	Recoverable state:
+L00002400	- **Chat state:** unsent input text and active thread selection may restore from `chat_state:v1`; queue state is transient and is not restored across reload or restart
+L00002401	- **Wizard state:** current wizard step and form data resume from `wizard_state:v1:{project_id}`
+L00002402	- **Document pane state:** embedded document-pane selection and view (`document` or `plan_graph`) restore from `document_pane_state:v1:{project_id}:{page_context}`
+L00002403	- **Document checkpoints:** checkpoint list and selected checkpoint context restore so the user can continue restore or approval workflows
+L00002404	- **Review findings and approval state:** findings summary and approval state restore so interrupted review runs return to the correct approval surface
+L00002405	- **Active project:** the last active project is restored automatically
+L00002406	
+L00002407	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+L00002408	
+L00002409	Terminal and dev-session recovery rules:
+L00002410	- terminal sections, tabs, panes, labels, pin state, and selected focus restore from durable terminal workspace state
+L00002411	- terminal sessions restore only as verified-live or historical records; Puppet Master MUST NOT fake live PTY continuity after restart
+L00002412	- canonical recovery outcomes are `restored_live`, `restored_exited`, `restored_disconnected`, and `restored_without_history`
+L00002413	- dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs
+L00002414	- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab
+L00002415	- Restart recovery treats privileged interactive sessions as crash-interrupted unless liveness is revalidated. `docker exec/attach`, `kubectl exec`, and `kubectl port-forward` sessions never `auto-resume` a live attachment after crash or restart. They restore as `interrupted_session` records with target identity, last-known timestamps, the source-specific blind-spot window, and a `Reconnect / Start new session` CTA; prior buffers remain historical evidence, not proof of a live attachment.
+L00002416	- A restored `log_stream_session` stores source identity plus resume cursor or `/bookmark` semantics. Source-specific resume requires the exact cursor when the backend has one, best-effort tail timestamp when it does not, or a metadata-only reopen state when no cursor model exists. GitHub Actions restart recovery distinguishes `remote run still executing`, `remote run completed while app was down`, and `local observation interrupted`: the GUI restores selection context, shows a gap marker if logs advanced while the app was down, and does not claim uninterrupted local stream continuity.
+L00002417	- Receipt finalization for crash-interrupted operation observers uses explicit lifecycle states `started`, `observation_interrupted`, `reconciled_completed`, `reconciled_failed`, and `abandoned_unknown` for exec and `/attach`, port-forward, log streams, `workflow-run` observation, and publish `/deploy` follow chains. Orchestrator `/restart` reconciliation uses `external-continuity` classifications `resumable_local`, `externally_continued`, `externally_completed`, `stale_historical`, and `unknown_after_crash` when hosted runs, containers, or Kubernetes rollouts continued while the UI observer was down.
+L00002418	- Historical inspection restore persists selected `run_id`, selected tab, selected node `/attempt`, history filters, graph `/detail` focus, and selected receipt `/detail` drawer. If the selected historical target no longer resolves, the GUI restores a labeled degraded `historical_view` or `paused_snapshot` rather than switching to the current active run; restored `follow` intent still requires source revalidation before a live stream is claimed.
+L00002419	
+L00002420	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+L00002421	
+L00002422	Composer and queue rules after restore:
+L00002423	- Stop/Edit/Resend attach ONLY to most recent user-sent message
+L00002424	- Edit restores content into composer and discards all later history/work
+L00002425	- Resend retries the most recent message and discards all later history/work
+L00002426	- FIFO, max 2 queued messages
+L00002427	- Stop does NOT clear the queue
+L00002428	- Stop becomes disabled when a run completes and no next message is queued
+L00002429	- queue state is transient and is not restored across reload or restart
+L00002430	- always-visible copy affordance on fenced code blocks remains available after restore
+L00002431	
+L00002432	Browser and runtime recovery rules remain aligned:
+L00002433	- browser sessions preserve their own restore policy and never silently become terminal-owned shells
+L00002434	- attention surfaces, command cards, and linked runtime panes must pivot back to the restored canonical identity rather than inventing replacement containers
+L00002435	
+L00002436	`Project_Output_Artifacts` / `Project_Output_Artifacts.md` and adjacent artifact `/event` owners carry `/thread/run/attempt/account` lineage, pass-report `/fields`, and wizard `/interview` producer alignment before the GUI treats an artifact pass report as canonical.
+L00002437	
+L00002438	ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+L00002439	
+L00002440	Rules:
+L00002441	- restore does not invent queue continuity
+L00002442	- Keep this recovery section consuming Plans/assistant-chat-design.md#4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
+L00002443	## 16. Migration Mapping
+L00002444	
+L00002445	
+L00002446	### 16.1 Iced View to Slint Location
+L00002447	
+L00002448	Agent ecosystem seams remain explicit migration references: `Plans/Skills_System.md` (`/Skills_System.md`), `Plans/MCP_Integration.md` (`/MCP_Integration.md`), and `Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`).
+L00002449	
+L00002450	| Retired Rust/Iced-Lineage View | New Slint Location | Notes |
+L00002451	|-------------------|-------------------|-------|
+L00002452	| `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid, 4-split terminal |
+L00002453	| `projects.rs` | `views/projects.slint` (Home group) | Minimal changes |
+L00002454	| `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
+L00002455	| `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
+L00002456	| `tiers.rs` | `views/nodes.slint` (Run group) | Renamed to match the node/package/lane/seam model; otherwise minimal changes |
+L00002457	| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Legacy Config import rows only; live Settings tabs are the §7.4.4 19-tab registry |
+L00002458	| `settings.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: General |
+L00002459	| `login.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Authentication |
+L00002460	| `doctor.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Health |
+L00002461	| `setup.rs` | `views/setup.slint` (Run group) | Minimal changes |
+L00002462	| `metrics.rs` | `views/metrics.slint` (Data group) | Minimal changes |
+L00002463	| `evidence.rs` | `views/evidence.slint` (Data group) | Minimal changes |
+L00002464	| `evidence_detail.rs` | `views/evidence_detail.slint` (Data group) | Minimal changes |
+L00002465	| `history.rs` | `views/history.slint` (Data group) | Minimal changes |
+L00002466	| `ledger.rs` | `views/ledger.slint` (Data group) | Minimal changes |
+L00002467	| `memory.rs` | `views/memory.slint` (Data group) | Minimal changes |
+L00002468	| `coverage.rs` | `views/coverage.slint` (Data group) | Minimal changes |
+L00002469	| `not_found.rs` | `views/not_found.slint` | Minimal changes |
+L00002470	| (new) | `views/usage.slint` (Data group) | New page |
+L00002471	| (new) | `views/file_editor.slint` (Primary content) | New page |
+L00002472	| (new) | `views/agent_activity.slint` (Embedded) | New component |
+L00002473	| (new) | `panels/chat_panel.slint` (Side panel) | New panel |
+L00002474	| (new) | `panels/file_manager_panel.slint` (Side panel) | New panel |
+L00002475	
+L00002476	### 16.2 Widget Migration
+L00002477	
+L00002478	All 25 retired Rust/Iced-lineage widgets map to Slint equivalents. Key differences:
+L00002479	- **Canvas-based widgets** (pixel_grid, paper_texture, step_circle, budget_donut, usage_chart): Use `SharedPixelBuffer` + `Image` instead of Iced's `canvas::Program`
+L00002480	- **text_editor::Content** (for non-terminal logs or degraded/plain historical terminal transcript projections): Use Slint's `TextEdit` (read-only mode) or custom `ListView` with styled text lines; live terminal rendering follows the Section 15 terminal-core architecture and is not a normal text-editor/list widget.
+L00002481	- **Subscriptions** (50ms polling): Replace with event-driven `invoke_from_event_loop`
+L00002482	- **Context menu:** Custom implementation (Slint has no built-in)
+L00002483	- **Animations** (page transitions, pulsing status dots): Use Slint's property transitions and `animate` keyword
+L00002484	- **Dynamic scaling** (UI scale 0.75-1.5): Use Slint's native global/window scale factor as the only scaling path; do not port Iced token-multiplication layers into Slint view code
+L00002485	
+L00002486	ContractRef: ContractName:Plans/Contracts_V0.md#8, PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration
+L00002487	
+L00002488	### 16.3 Data Type Preservation
+L00002489	
+L00002490	All current data types (AppTheme, Page, CurrentItem, ProgressState, OutputLine, BudgetDisplayInfo, DoctorCheckResult, etc.) remain in Rust. Only their Slint representations (via properties and models) change. The backend event system, orchestrator state, and persistence remain unchanged.
+L00002491	
+L00002492	<a id="16.4"></a>
+L00002493	### 16.4 Clipboard Migration Gate
+L00002494	
+L00002495	Clipboard migration gate status is **PASS** only when all required criteria below are true.
+L00002496	
+L00002497	**Pass/Fail criteria (all REQUIRED):**
+L00002498	- [ ] Native Copy/Paste/Select All behavior works in File Editor input, chat composer input, and terminal command input (if editable).
+L00002499	- [ ] Read-only terminal/log output supports selection/copy and does not accept editable paste behavior.
+L00002500	- [ ] No custom text-widget clipboard handler remains in the migration target.
+L00002501	- [ ] Non-text copy exceptions remain explicitly scoped to `ClipboardHelper` path/value contexts only.
+L00002502	- [ ] Rebuild branch passes type/build verification.
+L00002503	ContractRef: ContractName:Plans/FinalGUISpec.md#10.9.1, ContractName:Plans/DRY_Rules.md#7, SchemaID:Spec_Lock.json#locked_decisions.ui
+L00002504	
+L00002505	**Verification command (build):**
+L00002506	```bash
+L00002507	cd puppet-master-rs
+L00002508	cargo check
+L00002509	```
+L00002510	
+L00002511	**Scenario checklist (manual or automated GUI harness):**
+L00002512	
+L00002513	| Scenario | Expected result |
+L00002514	|----------|-----------------|
+L00002515	| Editor clipboard shortcuts + context menu | Ctrl/Cmd+A/C/X/V and context Copy/Paste/Select All behave natively |
+L00002516	| Chat composer clipboard shortcuts + context menu | Same behavior and parity as editor |
+L00002517	| Terminal command input clipboard actions | Native clipboard behavior on editable command input |
+L00002518	| Terminal/log read-only output copy/paste behavior | Selection/copy works; paste is not treated as editable insertion |
+L00002519	| Non-text Copy Path/Copy Value | Clipboard receives exact path/value via `ClipboardHelper` only |
+L00002520	
+L00002521	---
+L00002522	
+L00002523	## 17. Risks and Mitigations
+L00002524	
+L00002525	
+L00002526	| Risk | Severity | Mitigation |
+L00002527	|------|----------|------------|
+L00002528	| **`ImageFit.repeat` availability may differ by current stable Slint release** | Medium | Use `SharedPixelBuffer` to generate tiles at the viewport size; or manually tile via `GridLayout` with repeated `Image` elements. Test at build time; if unavailable or unsuitable, use fallback approach. |
+L00002529	| **Multi-window lifecycle edge cases** | High | State machine in Rust manages window create/destroy. On floating window close -> dock or collapse; update layout state. Test: focus management between main and floating windows; data sync when floating window is open; re-dock after window was on disconnected monitor. |
+L00002530	| **Limited screen reader support** | Medium | Keyboard navigation is comprehensive (§13.3). Set `accessible-role` and `accessible-label` where Slint supports them. Document limitations. Basic theme provides maximum readability. |
+L00002531	| **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
+L00002532	| **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
+L00002533	| **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. |
+L00002534	| **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
+L00002535	| **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
+L00002536	| **Large Settings page complexity** | Medium | The old `24 tabs across 5 groups` count is stale migration residue; the current canonical registry is the §7.4.4 19-tab Settings registry. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar. Test with real data. |
+L00002537	| **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
+L00002538	| **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |
+L00002539	| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show "Load earlier messages" button. |
+L00002540	| **Theme global property update batching** | Low | Switching 20+ theme properties could cause intermediate re-renders. Mitigation: Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback. |
+L00002541	| **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |
+L00002542	| **Floating window data sync race conditions** | High | Multiple windows reading/writing the same VecModel can race. Mitigation: All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place. |
+L00002543	| **LSP server lifecycle management** | Medium | Multiple LSP servers may exist across local and remote hosts. Mitigation: Key server supervision by `(host_id, server_id, root_identity)`, launch lazily on file open, restart boundedly on crashes, and expose stale/degraded/unavailable state instead of silently mirroring remote projects locally. |
+L00002544	| **External drag-and-drop platform APIs** | Medium | Requires platform-specific integration (Windows IDropTarget, macOS NSDraggingDestination, Linux Xdnd/Wayland). Mitigation: Abstract behind a trait; implement per-platform. If Slint exposes native drop events, use those instead. Test on all three platforms. |
+L00002545	| **HTML preview webview** | Medium | Embedding a `/webview` for HTML hot-reload preview may conflict with the Skia renderer pipeline. Mitigation: Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. If runtime support is unavailable, surface `runtime_unavailable` plus remediation and degraded browser capability messaging instead of substituting static HTML snapshots or screenshots as pseudo-browser behavior. |
+L00002546	| **Steer submission mid-stream injection** | Medium | Injecting a new user message while the assistant is actively generating requires careful stream handling. Mitigation: Buffer the steer message; on next token boundary, prepend the steer to the ongoing context. Test that partial generation + steer produces coherent output. |
+L00002547	| **Webview embedding (`wry`) conflicts** | High | Browser and HTML preview surfaces embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host. |
+L00002548	| **DAP debugger reliability** | Medium | Debug adapter communication is asynchronous and adapters may crash, hang, or produce unexpected output. Mitigation: Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in the Debugger surface when adapter is unresponsive. Cap concurrent debug sessions to 1 per project. |
+L00002549	| **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects. |
+L00002550	| **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
+L00002551	| **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
+L00002552	| **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. |
+L00002553	| **Settings page tab count (24 tabs)** | Medium | `Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels; live Settings uses the §7.4.4 19-tab registry. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette "Open setting: {name}" jumps directly to the relevant tab and scrolls to the field. |
+L00002554	| **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
+L00002555	| **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |
+L00002556	
+L00002557	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/LSPSupport.md
+L00002558	
+L00002559	## 18. Promoted Features (Formerly Future Considerations)
+L00002560	
+L00002561	Ledger directionality is closed for items `#18`, `#19`, `#28`, `#29`, `#31`, `#36`, `#50`, `#52`, and `#56`: these items are locked requirements, not directional ideas. Only sections explicitly labeled `FUTURE FEATURE` or `OPEN QUESTION` remain open by intent.
+L00002562	
+L00002563	
+L00002564	All items previously listed as future considerations are MVP scope and are fully specified in their owner docs:
+L00002565	
+L00002566	| Feature | MVP Location |
+L00002567	|---------|-------------|
+L00002568	| Built-in browser / click-to-context | Rendering Surface Addendum + `Plans/FileManager.md` §8 and §14 |
+L00002569	| Search / find in files / replace in files | Activity Bar + Command Palette boundary + Search owner contract in this doc; `Plans/UI_Command_Catalog.md` `cmd.search.*` |
+L00002570	| Instant project switch | Workspace-tab project switch model (§3.4) |
+L00002571	| Sound effects | UX Patterns §10.13 + Settings > General |
+L00002572	| Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
+L00002573	| In-app instructions editor | File Editor instructions mode in `Plans/FileManager.md` |
+L00002574	| Additional themes / custom themes | Theme extensibility (§6.6) |
+L00002575	| Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
+L00002576	| Catalog / one-click install | Settings > Catalog tab |
+L00002577	| Sync bundle manager | Settings > Sync tab |
+L00002578	| SSH remote editing | `Plans/GitHub_Integration.md` §C + `Plans/FileManager.md` remote buffer/search behavior |
+L00002579	| Run/debug configurations | Run & Debug side-panel surface + Settings > Debug |
+L00002580	| Browser/terminal tabs, pinning, and preview modes | `Plans/FileManager.md` §9 and §14 + Rendering Surface Addendum |
+L00002581	
+L00002582	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/LSPSupport.md
+L00002583	
+L00002584	No features in this specification are deferred.
+L00002585	
+L00002586	## Appendix A: Cross-References
+L00002587	
+L00002588	Cross-References inventory.
+L00002589	
+L00002590	Reference rows must point at live owner documents or live section anchors, not nonexistent section numbers.
+L00002591	
+L00002592	LF-007 stale-reference cleanup applies to this appendix and to `Plans/assistant-chat-design.md#20. References`: `Plans/FinalGUISpec.md#Appendix A: Cross-References` must keep references explicit to live owner documents or remove them, and stale-reference repairs must not remain implicit in packet scope.
+L00002593	
+L00002594	| Plan Document | Sections Incorporated |
+L00002595	| --- | --- |
+L00002596	| `Plans/assistant-chat-design.md` | Chat panel, modes, threads, steer/queue submission, subagent inline blocks, commands, activity transparency, plan panel, context usage, and HITL-to-chat handoff. |
+L00002597	| `Plans/FileManager.md` | File Manager, File Editor, embedded document pane shared-buffer contract, click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, SSH remote editing, run/debug configurations, and terminal/browser tab management. |
+L00002598	| `Plans/usage-feature.md` | Usage page, per-thread usage, ledger, analytics, visibility windows, and alerts. |
+L00002599	| `Plans/human-in-the-loop.md` | HITL settings, approval UI, and dashboard calls to action. |
+L00002600	| `Plans/chain-wizard-flexibility.md` | Wizard redesign, intent selection, intent-specific fields, file upload limits, Builder opener and turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane separation, pause/cancel/resume controls, recovery state, and adaptive interview phases. |
+L00002601	| `Plans/storage-plan.md` | Persistence, seglog projections, redb schema, and Tantivy. |
+L00002602	| `Plans/agent-rules-context.md` | Application-level rules, project-level rules, and shared rules-pipeline context for orchestrator, interview, and Assistant. |
+L00002603	| `Plans/Glossary.md` | Product name "Puppet Master" throughout. |
+L00002604	| `Plans/newfeatures.md` | Bottom panel and terminal, thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, instant project switch, sound effects, hot reload controls, instructions editor, and language auto-detection. |
+L00002605	| `Plans/interview-subagent-integration.md` | Interview config tab, agent activity, embedded document pane, findings summary preview, single final approval gate, and multi-pass review. |
+L00002606	| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |
+L00002607	| `Plans/WorktreeGitImprovement.md` | Branching tab in Settings and worktree recovery in Health. |
+L00002608	| `Plans/FileSafe.md` | Advanced tab in Settings, command blocklist, write scope, and security filter. |
+L00002609	| `Plans/MiscPlan.md` | Health tab clean-workspace button, cleanup config in Advanced, and Shortcuts tab. |
+L00002610	| `Plans/Skills_System.md` | Agent Config panel and slash/runtime boundary at `Plans/Skills_System.md#6.3 Slash and runtime boundary`. |
+L00002611	| `Plans/feature-list.md` | Master feature reference for chat modes, thread management, slash commands, ELI5/YOLO, attachments, Teach, context management, editor detach, storage and cache admin UI, and unified settings/search/import/export. |
+L00002612	| `Plans/newtools.md` | MCP/settings alignment note and non-owning cited-search guidance; live provider, routing, provenance, and billing canon stays in owner docs. |
+L00002613	| `Plans/Commands_System.md` | Reserved built-in slash-command set for chat surfaces; see `Plans/Commands_System.md#7. Reserved built-in slash commands` for `/web` family behavior and deprecated aliases. |
+L00002614	| `Plans/UI_Command_Catalog.md` | Terminal reveal identities and canonical `cmd.chat.web.*` command ids consumed by chat and command surfaces; see `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)`. |
+L00002615	| `Plans/Permissions_System.md` | Tool permission keys, approval ladder, blocked-recovery defaults, deterministic ask/plan behavior, and web-operation derivation at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`. |
+L00002616	| `Plans/MCP_Integration.md` | Requested versus effective MCP availability at `Plans/MCP_Integration.md#2. Requested versus effective availability`; GUI surfacing at `Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing`; plus auth-state and connection-state enums, credential binding, and invalidation vocabulary. |
+L00002617	| `Plans/Tools.md` | Tool permissions in Permissions tab, tool permission keys, presets, central tool registry, canonical approval ladder, web-provider matrix, routing algorithm, Firecrawl integration, batch-operation contracts, tool usage widget on Usage page, and tool approval dialog in Chat. |
+L00002618	| `Plans/Provider_OpenCode.md` / `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` | `Provider_OpenCode` / `Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A` / `Provider_Stream_Mapping_External_Reference_A2A.md` consumers cannot satisfy runtime `/account` disclosure from `/API` mappings alone; GUI details must show the owner runtime receipt, account source, or unavailable-field reason before treating provider events as complete. |
+L00002619	| `Plans/Widget_System.md` / `Plans/storage-plan.md` / `Plans/Runtime_Artifacts_Panel.md` | Widget, storage, and runtime-artifact GUI consumers route through `Plans/Widget_System.md`, `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, `/Widget_System.md`, `/storage-plan.md`, and `/Runtime_Artifacts_Panel.md` owner contracts before treating a widget or artifact view as canonical. |
+L00002620	| `Plans/Widget_System.md` / `Plans/Run_Graph_View.md` | `Plans/Widget_System.md` / `/Widget_System.md` consumes the Progress-only catalog and deterministic `drill-target` mapping, while `Plans/Run_Graph_View.md` / `/Run_Graph_View.md` uses node-aware `/graph` views, treats `by-phase` as legacy grouping, and exposes `/package-group` swimlanes. |
+L00002621	| `Plans/LSPSupport.md` | LSP tab in Settings, editor LSP features, chat-window LSP affordances, Problems tab, and status-bar LSP indicator. |
+L00002622	| `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment so GUI migration stays tied into the broader rewrite plan. |
+L00002623	| `Plans/FinalGUISpec.md` | Internal clipboard contract, clipboard migration requirements, SelectableText contract, context-menu clipboard contract, and migration gate. |
+L00002624	## Appendix B: Locked Decisions Summary
+L00002625	
+L00002626	These decisions are final and must not be revisited during implementation:
+L00002627	
+L00002628	1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework; reverify official stable releases before coding/build work
+L00002629	2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
+L00002630	3. **No React/Tauri/DOM-rendered product UI or HTML/CSS/JS product shell** -- native desktop is Rust + Slint `.slint` markup; Slint/WASM web may use only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client
+L00002631	4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
+L00002632	5. **Three theme families** -- Retro Dark, Retro Light, Basic Modern (built-in variants + custom themes via TOML)
+L00002633	6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor
+L00002634	7. **Event-driven updates** via `invoke_from_event_loop`, not polling
+L00002635	8. **redb for layout persistence**, seglog for events, Tantivy for search
+L00002636	9. **Model/platform selection via dropdowns**, not text entry
+L00002637	10. **Product name: `Puppet Master`**
+L00002638	11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
+L00002639	12. **Bottom runtime zone includes the classical debugger surface** -- Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute
+L00002640	13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
+L00002641	14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
+L00002642	15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
+L00002643	
+L00002644	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
+L00002645	
+L00002646	## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
+L00002647	
+L00002648	This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
+L00002649	
+L00002650	### C.1 Dashboard Upgrade: Card Grid to Widget Grid
+L00002651	
+L00002652	
+L00002653	The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (drag-to-swap, fixed card sizes) to a full **widget grid** with grid-based resizing:
+L00002654	
+L00002655	**What changes from section 7.2:**
+L00002656	- Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.
+L00002657	- Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).
+L00002658	- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).
+L00002659	- Widget gutters: 8px (MD spacing token) between widgets.
+L00002660	
+L00002661	**What stays the same from section 7.2:**
+L00002662	- All existing Dashboard card types remain as default widgets.
+L00002663	- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
+L00002664	- CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
+L00002665	- Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
+L00002666	
+L00002667	ContractRef: ContractName:Plans/Widget_System.md#3
+L00002668	
+L00002669	### C.2 Default Dashboard Widget Layout
+L00002670	
+L00002671	The default dashboard layout includes:
+L00002672	- **widget-orchestrator-progress** (ID: `orch-progress-v1`): Shows current run progress, node execution status, and lane state.
+L00002673	- **widget-active-lanes** (ID: `lanes-view-v1`): Lists active lanes and worktree allocation state.
+L00002674	- **widget-recent-results** (ID: `results-v1`): Shows recent execution results and artifact links.
+L00002675	
+L00002676	### C.3 Add-Widget Flow on Dashboard
+L00002677	
+L00002678	Users add widgets via:
+L00002679	1. Dashboard menu → "Add Widget"
+L00002680	2. Select from named widget catalog (see C.4)
+L00002681	3. Confirm placement and sizing
+L00002682	4. Widget appears on dashboard with default configuration
+L00002683	
+L00002684	### C.4 Widget Catalog vs. Core Widget Catalog
+L00002685	
+L00002686	The current **named widget catalog** includes:
+L00002687	- `widget-orchestrator-progress`: Orchestrator progress view (Puppet Master native).
+L00002688	- `widget-active-lanes`: Active lane browser (Puppet Master native).
+L00002689	- `widget-recent-results`: Recent result summary (Puppet Master native).
+L00002690	- `widget-custom-metrics`: User-defined metric display (user-generated, optional).
+L00002691	
+L00002692	**Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
+L00002693	
+L00002694	Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
+L00002695	
+L00002696	### C.4.1 Larger Widget Library Compatibility Note
+L00002697	
+L00002698	Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+L00002699	
+L00002700	Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
+L00002701	
+L00002702	ContractRef: ContractName:Plans/Widget_System.md#4
+L00002703	
+L00002704	### C.4.2 Widget Catalog vs. Core Widget Catalog
+L00002705	
+L00002706	Two distinct catalogs now exist. To avoid confusion:
+L00002707	
+L00002708	- **Section 8 of this document** (FinalGUISpec Widget Catalog) = **atomic UI components**: StyledButton, StyledInput, StyledBadge, TreeView, CodeBlock, and other building-block primitives. These are reusable across all views and are NOT page widgets.
+L00002709	- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator `Progress` only.
+L00002710	
+L00002711	The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
+L00002712	
+L00002713	### C.5 redb Key Migration
+L00002714	
+L00002715	
+L00002716	The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
+L00002717	
+L00002718	1. **On first load** after the widget system upgrade:
+L00002719	   - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
+L00002720	   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding named Widget Catalog ID from C.4, assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
+L00002721	   - Treat `dashboard_layout:v1` as deprecated migration input only; it does not remain canonical after migration completes.
+L00002722	2. **Future reads** use `widget_layout:v1:dashboard` only.
+L00002723	3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.
+L00002724	
+L00002725	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Widget_System.md#7
+L00002726	
+L00002727	### C.6 References (Appendix C)
+L00002728	
+L00002729	- Plans/Widget_System.md -- widget catalog, grid system, add-widget flow, layout persistence
+L00002730	- Section 7.2 of this document -- Dashboard (original card grid specification)
+L00002731	- Section 8 of this document -- Core Widget Catalog (atomic UI components)
+L00002732	- Section 12.3 of this document -- Dashboard grid responsive breakpoints
+L00002733	- Section 15.1 of this document -- redb persistence for dashboard layout
+L00002734	- Plans/storage-plan.md -- redb namespaces
+L00002735	## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
+L00002736	
+L00002737	
+L00002738	This addendum expands the GUI contract for Persona authoring and runtime visibility.
+L00002739	
+L00002740	### 19.1 Persona editor compatibility matrix (required)
+L00002741	
+L00002742	The Persona editor MUST show provider support state for Persona controls.
+L00002743	
+L00002744	Support states:
+L00002745	- `supported`
+L00002746	- `partially supported`
+L00002747	- `unsupported`
+L00002748	
+L00002749	For each control (platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents), the editor must:
+L00002750	- show normal editing when supported,
+L00002751	- show warning styling and explanatory tooltip when partially supported,
+L00002752	- show disabled control plus explanation when unsupported.
+L00002753	
+L00002754	`talkativeness` is a Persona instruction-layer control rather than a transport/runtime sampling knob. Its support state follows Persona prompt-body support: if a provider can apply Persona prompt instructions, it can apply `talkativeness`.
+L00002755	
+L00002756	Minimum provider rows to display:
+L00002757	- Claude Code
+L00002758	- Cursor CLI
+L00002759	- OpenCode
+L00002760	- Direct/API providers
+L00002761	
+L00002762	### 19.2 Persona editor fields (expanded)
+L00002763	
+L00002764	In addition to existing Persona fields, the editor must support:
+L00002765	- `default_platform`
+L00002766	- `default_model`
+L00002767	- `default_variant`
+L00002768	- `temperature`
+L00002769	- `top_p`
+L00002770	- `reasoning_effort`
+L00002771	- `talkativeness`
+L00002772	- `preferred_tools`
+L00002773	- `discouraged_tools`
+L00002774	- `tool_usage_guidance`
+L00002775	- `aliases`
+L00002776	
+L00002777	`talkativeness` must be rendered as a fixed single-select with these labels and stored enum values:
+L00002778	- `Talk a lot more` -> `talk_a_lot_more`
+L00002779	- `Talk more` -> `talk_more`
+L00002780	- `Talk a little more` -> `talk_a_little_more`
+L00002781	- `Model default` -> `model_default`
+L00002782	- `Talk a little less` -> `talk_a_little_less`
+L00002783	- `Talk less` -> `talk_less`
+L00002784	
+L00002785	### 19.3 Compatibility panel copy examples
+L00002786	
+L00002787	
+L00002788	The editor should be able to communicate states like:
+L00002789	- `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`
+L00002790	- `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`
+L00002791	- `Direct/API providers: strongest support for exact runtime controls.`
+L00002792	
+L00002793	### 19.4 Surface-level Persona controls
+L00002794	
+L00002795	This section consumes the linked owner contract and stays aligned with it.
+L00002796	
+L00002797	Core rules:
+L00002798	- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
+L00002799	- Consumer surfaces reference `Plans/Personas.md` and use requested/effective Persona fields without local substitutes; the only field names are `requested_persona` and `effective_persona`.
+L00002800	
+L00002801	Rules:
+L00002802	- requested_persona
+L00002803	- effective_persona
+L00002804	- effective_account_label
+L00002805	### 19.5 Runtime display requirements
+L00002806	
+L00002807	When a run is active, the UI must display:
+L00002808	- requested Persona when explicitly set,
+L00002809	- effective Persona,
+L00002810	- selection source/reason,
+L00002811	- effective platform,
+L00002812	- effective model,
+L00002813	- effective variant/effort when present,
+L00002814	- skipped Persona controls when applicable.
+L00002815	
+L00002816	This display requirement applies to:
+L00002817	- chat status strip or header,
+L00002818	- interview activity card,
+L00002819	- requirements builder progress/status UI,
+L00002820	- orchestrator activity and run inspection surfaces,
+L00002821	- subagent inline blocks,
+L00002822	- multi-pass reviewer status rows.
+L00002823	
+L00002824	Debug and run activity surfaces expose an `agent_trace_summary` with `subagent_count`, `tool_span_count`, `failed_attempt_count`, and `artifact_refs[]` so operator-facing cards can summarize agent work without expanding raw traces by default.
+L00002825	
+L00002826	### 19.6 Natural-language invocation feedback
+L00002827	
+L00002828	If the user summons a Persona via natural language, the UI must reflect it explicitly, for example:
+L00002829	- `Persona: Collaborator (User requested)`
+L00002830	- `Persona: Researcher (User requested, session lock)`
+L00002831	
+L00002832	If the override is turn-scoped, the UI should clear back to the previous/auto state on the next eligible turn.
+L00002833	
+L00002834	Subagent-only Persona requests such as `Explorer` or `Bash` render as child-run/delegation feedback rather than direct chat Persona locks.
+L00002835	
+L00002836	### 19.7 Provider-gap disclosure rule
+L00002837	
+L00002838	
+L00002839	The GUI must never imply that a provider honored a Persona control when it did not.
+L00002840	
+L00002841	If a control is skipped, the UI must disclose it in at least one of:
+L00002842	- inline status text,
+L00002843	- tooltip,
+L00002844	- activity detail popover,
+L00002845	- run detail/history panel.
+L00002846	
+L00002847	#### 19.7.1 Disclosure mechanics
+L00002848	
+L00002849	- **Honored** = requested control applied as requested. **Skipped** = ignored entirely. **Clamped** = partially honored but changed to a supported value/range.
+L00002850	- Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
+L00002851	- When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
+L00002852	- When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
+L00002853	- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
+L00002854	
+L00002855	### 19.8 Interview/Builder/Orchestrator mapping editors
+L00002856	
+L00002857	Settings or surface-specific configuration must support mapping Persona defaults to:
+L00002858	- Interview stages/phases,
+L00002859	- Requirements Builder steps/passes,
+L00002860	- Orchestrator node/package/lane/seam mappings,
+L00002861	- Multi-Pass review passes.
+L00002862	
+L00002863	These editors should also allow platform/model selection per mapping and show compatibility warnings.
+L00002864	
+L00002865	### 19.9 Acceptance criteria addendum
+L00002866	
+L00002867	- Persona editor must disclose unsupported and partially supported controls per provider.
+L00002868	- All interactive run surfaces must show effective Persona/model/platform and selection reason.
+L00002869	- Natural-language Persona requests must be visibly reflected in the UI when active.
+L00002870	- Provider-gap disclosure must be explicit; no silent implied support.
+L00002871	
+L00002872	> Moved to §7.4.8A — Docker Manager Panel Spec
+L00002873	
+L00002874	## Rendering Surface Addendum (2026-03-07)
+L00002875	
+L00002876	This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint GUI.
+L00002877	
+L00002878	### Surface inventory impact
+L00002879	
+L00002880	
+L00002881	The rewrite must treat browser-capable rendering as a shared capability across these surfaces:
+L00002882	
+L00002883	- **Chat Panel**: rendered Markdown text, Mermaid cards, source toggle/open actions, and explicit browser-derived capture chips routed into chat
+L00002884	- **File Editor**: source mode, split preview mode, detached preview mode, and browser mode for HTML/workspace browsing
+L00002885	- **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
+L00002886	- **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
+L00002887	- **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
+L00002888	- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+L00002889	- **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
+L00002890	
+L00002891	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00002892	
+L00002893	Browser-derived capture chips in the Chat Panel appear in the composer chip strip with a bounded preview, page/source label, capture kind, remove/revoke affordance, and blocked/expired state when applicable. They serialize only when the user sends the message and only through the corresponding structured attachment path.
+L00002894	
+L00002895	### GUI behavior rules
+L00002896	
+L00002897	- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.
+L00002898	- Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.
+L00002899	- Debug attention banners display `attention_required_reason_code` values such as `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, and `target_selection_required`. Debugger attach loss or manual debugger steering that PM does not own in MVP degrades to `attention_required`.
+L00002900	- An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.
+L00002901	- detached preview/browser windows are part of the intended UX and are not described as degraded workarounds
+L00002902	- the editor/workspace tab surface is the canonical in-shell host for normal browsing and HTML preview
+L00002903	- the bottom panel must not be described as the primary browser host
+L00002904	- HTML/browser mode must visually read as a real browser-capable surface rather than as a static Markdown preview
+L00002905	- users must be able to watch agent-driven browser/testing sessions live when automation is running visibly
+L00002906	- docked DevTools is the default and lives inside the currently focused browser session surface; detached DevTools is an alternate layout
+L00002907	- Browser/rendered mode carries the required/desired browser capability set: it must open browser-handled content, support highlight/select browser content and screenshot capture into chat through visible chips, allow agent control to fully navigate/use user-locked web-app and website flows through named actions, preserve web-app compatibility including DevTools plus screenshot / console / network inspection, and expose DevTools on Linux, macOS, and Windows.
+L00002908	- Session-class UX distinguishes the same visible browser session the user watches, a separate visible automation window/tab, and hidden/ephemeral automation sessions; hidden/ephemeral sessions are allowed only as separate `automation_session` surfaces with an open/watch affordance, user-facing browser tabs remain the default visible host, and `Open in Detached Browser` is the explicit command when a separate window is needed.
+L00002909	- image viewing remains native and must not inherit unnecessary browser chrome
+L00002910	
+L00002911	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00002912	
+L00002913	### Chat panel behavior
+L00002914	
+L00002915	Chat messages that contain renderable Markdown/Mermaid content must support:
+L00002916	
+L00002917	- readable Markdown formatting
+L00002918	- native Mermaid diagram cards where Mermaid syntax is detected
+L00002919	- actions for copy source, open in editor, open detached preview, and export diagram where relevant
+L00002920	- visible error states for malformed Mermaid instead of silent raw-block disappearance
+L00002921	
+L00002922	Chat must not execute arbitrary HTML from message content.
+L00002923	
+L00002924	Context Lens placement is fixed in the Chat panel: the control lives in the top-right of the chat window immediately to the right of the search bar, renders as an icon plus dropdown arrow, supports multi-select in all modes, and exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+L00002925	
+L00002926	### File editor behavior
+L00002927	
+L00002928	The File Editor view must expose clear mode controls for render-capable files:
+L00002929	
+L00002930	- Source
+L00002931	- Preview
+L00002932	- Split
+L00002933	- Detached preview
+L00002934	- Browser/rendered mode for HTML
+L00002935	
+L00002936	The mode switch must not change the canonical buffer model. Split mode should preserve shared-buffer editing semantics with the existing document/editor contract.
+L00002937	
+L00002938	Preview, browser, and other `/rendered` experiences are derivative of source and `/buffer` state. They may cache view mode, scroll, or export preferences, but they do not become peers with separate canonical content authority.
+L00002939	
+L00002940	For local HTML, default `Open` = source editor; explicit `Open in Browser` opens the editor/workspace tabs browser surface, `Open in Detached Browser` opens a secondary detached browser window, and the editor toolbar/action plus agent file-target flow invoke the same canonical open command.
+L00002941	
+L00002942	### Embedded document pane behavior
+L00002943	
+L00002944	The Embedded Document Pane must reuse the same rendering pipeline and PreviewSession abstraction as the file editor and chat. It is a review/inspection surface, not a separate rendering system.
+L00002945	
+L00002946	Required actions:
+L00002947	
+L00002948	- open source
+L00002949	- open detached preview
+L00002950	- request re-render/reload
+L00002951	- perform allowed structured edits when the underlying document kind supports them
+L00002952	
+L00002953	### Bottom panel browser behavior
+L00002954	
+L00002955	The bottom panel is not the canonical host for normal browsing, HTML preview, or click-to-context workflows.
+L00002956	
+L00002957	Allowed bottom-panel browser-adjacent roles are:
+L00002958	- console/network summaries for the focused browser session
+L00002959	- downloads, trace/video progress, and evidence activity tied to the focused browser session
+L00002960	- automation activity, step status, or capture status linked to a visible browser session
+L00002961	- DevTools-adjacent panes that complement the focused browser session without becoming a separate browser host
+L00002962	
+L00002963	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+L00002964	
+L00002965	Rules:
+L00002966	- actions surfaced from the bottom panel must focus or act on the owning browser session rather than invent a separate browser identity
+L00002967	- browser open, detached-open, takeover, promotion, and recovery actions always target the canonical browser session model
+L00002968	- PM browser chrome and any bottom-panel browser-adjacent actions may expose DevTools entry/bridge actions (`Open DevTools`, `Toggle DevTools Dock`, `Focus Browser`) or evidence actions; deeper inspection tools live inside the DevTools UI itself, and these actions must act on the owning `browser_session_id` without making the bottom panel the primary browsing session.
+L00002969	
+L00002970	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+L00002971	
+L00002972	### Windowing and platform behavior
+L00002973	
+L00002974	- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux
+L00002975	- native child-window embedding is the baseline host strategy; offscreen rendering is secondary
+L00002976	- if the implementation uses a CEF wrapper such as `wef`, user-visible chrome must still present the feature as PM-managed browser capability rather than wrapper branding
+L00002977	- setup, Doctor, update, and installer surfaces must disclose a selected CEF path's roughly ~1 GB app-size impact and provide remediation when runtime install/update verification fails
+L00002978	- offscreen rendering may support capture, evidence, and degraded rendering workflows, but it must not replace the native child-window baseline for the canonical visible browser host
+L00002979	- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session
+L00002980	- GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions
+L00002981	- when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable
+L00002982	- the UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained
+L00002983	
+L00002984	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md
+L00002985	
+L00002986	### Performance and accessibility
+L00002987	
+L00002988	- Use lazy rendering and virtualization for long message streams and large documents.
+L00002989	- Preserve scroll positions where feasible when re-rendering preview content.
+L00002990	- Preview controls must be keyboard reachable.
+L00002991	- Diagram export/open/source actions must have explicit labels and accessible tooltips/text.
+L00002992	
+L00002993	### Acceptance criteria addendum
+L00002994	
+L00002995	- the same logical subject can move between chat card, editor preview, embedded doc pane, editor-tab browser, detached preview, and detached browser without inventing separate rendering contracts
+L00002996	- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces
+L00002997	- HTML rendered mode behaves like a real browser/workspace preview, not a static screenshot
+L00002998	- the bottom panel is not required as the primary browser host for the feature to work
+L00002999	- platform limitations may change embedding details, but they must not remove the feature or hide requested/effective browser capability differences
+L00003000	- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser
+L00003001	
+L00003002	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00003003	
+L00003004	## Assistant Planning UX Addendum (2026-03-08)
+L00003005	
+L00003006	### 1. Assistant Chat planning controls
+L00003007	
+L00003008	Assistant Chat planning controls must expose both **Plan** and **Deep Plan** as chat workflow choices.
+L00003009	
+L00003010	Required controls:
+L00003011	- planning-mode selector entry for `Plan`
+L00003012	- planning-mode selector entry for `Deep Plan`
+L00003013	- `Plan Thoroughness (PT)` control visible when either planning overlay is active
+L00003014	
+L00003015	PT control contract:
+L00003016	- control type: segmented control, dropdown, or equivalent compact selector
+L00003017	- canonical labels: `Light`, `Balanced`, `Comprehensive`
+L00003018	- default selection: `Balanced`
+L00003019	- Deep Plan and Plan share the same PT labels
+L00003020	- tooltip/help copy must explain that Deep Plan is more intensive than Plan at the same PT
+L00003021	
+L00003022	### 2. Plan vs Deep Plan visible behavior
+L00003023	
+L00003024	**Plan** UI expectations:
+L00003025	- lightweight plan artifact in thread
+L00003026	- sticky plan panel remains visible in chat
+L00003027	- normalized TODO list is visible before approval
+L00003028	- users may revise TODO structure before approval
+L00003029	- execution begins only after explicit approval
+L00003030	
+L00003031	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00003032	
+L00003033	**Deep Plan** UI expectations:
+L00003034	- richer planning artifact opens in a preview-capable document/editor surface
+L00003035	- the same normalized TODO contract remains visible in the thread plan panel
+L00003036	- document review, annotations, and targeted revision remain available
+L00003037	- Deep Plan remains more intensive than Plan at the same PT
+L00003038	
+L00003039	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+L00003040	
+L00003041	**Shared TODO tracker rules:**
+L00003042	- the sticky plan panel is the authoritative TODO tracker
+L00003043	- inline chat updates are milestone-style, not a competing tracker
+L00003044	- TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`
+L00003045	- the same TODO identity must survive single-agent, subagent, and crew execution
+L00003046	- plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable
+L00003047	
+L00003048	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00003049	
+L00003050	### 3. Deep Plan review in editor / Embedded Document Pane
+L00003051	
+L00003052	Deep Plan documents reuse the Embedded Document Pane annotation/revision contract.
+L00003053	
+L00003054	Required behavior:
+L00003055	- highlight text -> annotation action palette
+L00003056	- annotation markers in margin + annotation list/drawer
+L00003057	- `Resubmit with Annotations` launches targeted revision for the plan document
+L00003058	- deterministic annotation re-anchoring after edits
+L00003059	- no silent annotation loss
+L00003060	- no automatic Multi-Pass Review requirement before plan approval/execution
+L00003061	
+L00003062	The plan document may contain:
+L00003063	- headings
+L00003064	- lists / tables
+L00003065	- fenced code blocks
+L00003066	- Mermaid diagrams
+L00003067	- file paths / references
+L00003068	- validation and rollout notes
+L00003069	
+L00003070	### 4. Assistant recommendation card for Planning Wizard
+L00003071	
+L00003072	When Assistant Chat or Deep Plan recommends the Planning Wizard, show a visible recommendation card rather than silently switching surfaces.
+L00003073	
+L00003074	Required card content:
+L00003075	- reason summary (for example: `This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow.`)
+L00003076	- primary CTA: `Add a new Feature or Enhancement`
+L00003077	- secondary action: `Stay in Chat` / `Not now`
+L00003078	
+L00003079	Optional supporting copy may mention:
+L00003080	- that Planning Wizard can prune irrelevant topics automatically
+L00003081	- that imported plan/chat context will be carried into the wizard
+L00003082	
+L00003083	### 5. Post-acceptance wizard handoff surface
+L00003084	
+L00003085	If the user accepts the recommendation:
+L00003086	- switch to the Planning Wizard intake/interview flow
+L00003087	- show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)
+L00003088	- show whether a plan artifact was included
+L00003089	- show the imported goal/scope summary
+L00003090	
+L00003091	Recommended imported-context panel contents:
+L00003092	- user goal
+L00003093	- scope summary
+L00003094	- included plan yes/no
+L00003095	- open questions count
+L00003096	- `has_gui` hint when known
+L00003097	
+L00003098	If a project is already active, the wizard should open on the preloaded feature/enhancement path rather than on a blank intent picker.
+L00003099	
+L00003100	### 6. Non-goals
+L00003101	
+L00003102	- Do not copy external GUI layout from OpenCode, Cursor, VSCode, or other tools.
+L00003103	- Do not auto-create repo files for planning artifacts without explicit user action.
+L00003104	- Do not silently redirect the user from chat into the wizard.
+L00003105	
+L00003106	### 7. Acceptance criteria
+L00003107	
+L00003108	- Assistant Chat visibly exposes both Plan and Deep Plan.
+L00003109	- PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
+L00003110	- Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
+L00003111	- When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
+L00003112	- Accepting the CTA opens the Planning Wizard intake/interview flow with visible imported context.
+L00003113	- Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
+L00003114	
+L00003115	## Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
+L00003116	
+L00003117	
+L00003118	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact GUI tokens and older examples; the canonical GUI summary and referenced owner docs govern overlapping blocked/recovery behavior.
+L00003119	
+L00003120	### 1. Dashboard cards
+L00003121	
+L00003122	
+L00003123	The Dashboard must distinguish:
+L00003124	- `wizard_attention_required`
+L00003125	- `wizard_blocked`
+L00003126	- HITL blocked actions
+L00003127	- remote-side-effect blocked actions
+L00003128	
+L00003129	`wizard_blocked` card requirements:
+L00003130	- more severe copy than `wizard_attention_required`
+L00003131	- primary CTA: `Resume Wizard`
+L00003132	- secondary CTA: `View report`
+L00003133	- auto-dismiss only when the wizard leaves `blocked`
+L00003134	
+L00003135	### 2. Assistant thread selector / badges
+L00003136	
+L00003137	#### 2.1 Worktree icon in thread selector
+L00003138	
+L00003139	Each thread row in the thread selector displays a worktree icon when the thread has an active worktree binding.
+L00003140	
+L00003141	- **Position:** Left gutter of thread row, vertically below the status badge (running/blocked/attention)
+L00003142	- **Icon:** Theme-consistent branch/tree glyph from icon set
+L00003143	- **Size:** Same size as status badge icons so visual weight stays consistent.
+L00003144	- **Visibility:** Present only when thread has a worktree binding; absent (no placeholder) when unbound
+L00003145	- **Hover tooltip content:** Line 1 is the branch name, e.g. `assistant/fix-auth-bug`; line 2 is status pill text such as `clean`, `dirty`, or `conflict`; line 3 is the worktree path, e.g. `.puppet-master/worktrees/wt-abc123`.
+L00003146	- **Icon color:** Clean: `icon-secondary`. Dirty: `accent-warning`. Conflict: `accent-error`. Colors resolve through theme tokens across all three built-in themes.
+L00003147	- **Stale projection:** Icon shows last-known state with subtle desaturation; tooltip appends "(status may be outdated)"
+L00003148	- **Accessible label:** Thread selector worktree icon uses `aria-label="Has worktree: {branch_name}, {status}"`.
+L00003149	- **Announcements:** Worktree state changes are announced through an `aria-live="polite"` region for create, unbind, remove, dirty status, conflict status, and creation-failed transitions.
+L00003150	- **Completed/failed dirty worktrees:** If a completed or failed thread still has a dirty bound worktree, the selector may show status pill text such as `dirty · completed` or `dirty · failed`, and the completion toast suggests merge/cleanup; there is no auto-cleanup.
+L00003151	
+L00003152	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+L00003153	
+L00003154	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003155	
+L00003156	Thread and session navigation uses persistent shell surfaces.
+L00003157	
+L00003158	Rules:
+L00003159	- the active thread list is visible in a persistent sidebar or equivalent persistent region, not only in a floating overlay
+L00003160	- the selector must expose running, queued, blocked, and attention-required badges per thread
+L00003161	- branch lineage is visible in the selector/history model using stable branch labels and source-origin metadata
+L00003162	- badge aggregation must preserve highest-severity state while still showing blocked counts when present
+L00003163	- the project/session browser may complement thread navigation but does not replace the active-thread list inside chat
+L00003164	
+L00003165	The floating thread-list overlay pattern is not canonical after this section.
+L00003166	### 3. Run Graph and Orchestrator views
+L00003167	
+L00003168	Required visible scheduler/remediation data:
+L00003169	- wake reason
+L00003170	- ready/blocked/backoff/remediation counts
+L00003171	- selected-node score breakdown
+L00003172	- ready-but-unselected reasons
+L00003173	- safe-point ID
+L00003174	- remediation lineage identifiers
+L00003175	
+L00003176	### 4. blocked outcome copy
+L00003177	
+L00003178	When a remote side effect or guard prevents execution, the GUI MUST present the outcome as `blocked`, not `failed`, and must preserve any completed local work.
+L00003179	
+L00003180	### 5. Event-driven correctness
+L00003181	
+L00003182	All scheduler/remediation/blocked UI updates must follow the existing `invoke_from_event_loop` event-driven rule. No timer polling for correctness.
+L00003183	
+L00003184	### 6. Acceptance criteria
+L00003185	
+L00003186	- Dashboard has a first-class `wizard_blocked` card.
+L00003187	- Thread badges distinguish `blocked` from `attention_required`.
+L00003188	- Scheduler/remediation state is inspectable in run surfaces.
+L00003189	- blocked outcomes are not mislabeled as failures.
+L00003190	- new runtime widgets obey the event-driven rewrite rule.
+L00003191	## Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+L00003192	
+L00003193	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves older parity wording; it is not a peer normative blocked/recovery section.
+L00003194	
+L00003195	The GUI must expose the packet's runtime state without relying on hidden behavior.
+L00003196	
+L00003197	### Required visible elements
+L00003198	- queue-analysis summary with last wake reason
+L00003199	- blocked-state badges and grouped blocked lists
+L00003200	- safe-point state and restore status where applicable
+L00003201	- remediation lineage navigation
+L00003202	- disabled-action explanations tied to canonical reason codes
+L00003203	- clear distinction between `attention_required`, `blocked`, `retrying`, and terminal failure
+L00003204	
+L00003205	### Event-driven update rule
+L00003206	
+L00003207	
+L00003208	All scheduler, blocked, and remediation widgets MUST update from runtime events/projections rather than periodic timers.
+L00003209	
+L00003210	### UX safety rule
+L00003211	If the GUI cannot perform a required action in the current mode, it must state why and point to the canonical recovery path. The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior.
+L00003212	## Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)
+L00003213	
+L00003214	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact `wizard_blocked`, queue, and recovery tokens while the canonical GUI summary governs precedence.
+L00003215	
+L00003216	### `wizard_blocked` CtA card
+L00003217	Add a first-class `wizard_blocked` card alongside `wizard_attention_required`.
+L00003218	
+L00003219	Required fields:
+L00003220	- `card_type = wizard_blocked`
+L00003221	- `wizard_id`
+L00003222	- `wizard_step`
+L00003223	- `blocked_reason_code`
+L00003224	- `report_ref`
+L00003225	- `resume_url`
+L00003226	- `thread_id?`
+L00003227	
+L00003228	Required UI behavior:
+L00003229	- more severe visual treatment than `wizard_attention_required`
+L00003230	- primary action: `Resume Wizard`
+L00003231	- secondary action: `View report`
+L00003232	- auto-dismiss only when the wizard leaves `blocked`
+L00003233	- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+L00003234	### Thread/status surfaces
+L00003235	Thread and run status surfaces MUST include distinct presentations for:
+L00003236	- `attention_required`
+L00003237	- `blocked`
+L00003238	- `retrying/backoff`
+L00003239	- `remediation`
+L00003240	## Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+L00003241	
+L00003242	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves GUI-specific recovery tokens that supplement the canonical summary only where they do not conflict with named owner docs.
+L00003243	
+L00003244	This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
+L00003245	
+L00003246	### FileSafe rendering
+L00003247	A FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.
+L00003248	
+L00003249	### Degraded draft warning
+L00003250	
+L00003251	
+L00003252	Decomposition degradation is a pre-lock planning state only. GUI copy MUST NOT imply silent degraded canonical execution after graph lock.
+L00003253	
+L00003254	### All-nodes-blocked gating
+L00003255	
+L00003256	
+L00003257	Until owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.
+L00003258	## Canonical Blocked/Recovery Behavior
+L00003259	This section is the canonical GUI summary for blocked and recovery surfaces.
+L00003260	
+L00003261	### Dashboard Action Required
+L00003262	Blocked and recovery UI binds to canonical blocked projections and HITL records.
+L00003263	- `wizard_blocked` is a first-class card alongside `wizard_attention_required`
+L00003264	- blocked cards use the fields `card_type`, `wizard_id`, `wizard_step`, `blocked_reason_code`, `report_ref`, `resume_url`, and optional `thread_id`
+L00003265	- `wizard_blocked` uses more severe visual treatment than `wizard_attention_required`
+L00003266	- primary action: `Resume Wizard`
+L00003267	- secondary action: `View report`
+L00003268	- auto-dismiss only when the wizard leaves `blocked`
+L00003269	- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+L00003270	- blocked payloads use ordered `allowed_action_ids[]`
+L00003271	- blocked episodes remain distinct when more than one is active
+L00003272	- GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog
+L00003273	- Blocked and attention-required remain distinct; `wizard-blocked` cards outrank `wizard-attention-required`, thread badges preserve highest severity and blocked counts, usage warnings preserve thresholds, quiet periods, and clear actions, and all-nodes-blocked can escalate by elapsed time.
+L00003274	
+L00003275	### Thread and run status taxonomy
+L00003276	`waiting_approval` and other blocked reasons are runtime overlays, not replacement run-graph lifecycle states.
+L00003277	- lifecycle remains the graph-progress contract
+L00003278	- blocked, backoff, retry, remediation, and approval-pending are rendered from runtime projections
+L00003279	- requested vs effective persona/platform/model remains visible where runtime substitution occurred
+L00003280	
+L00003281	### Scope rule
+L00003282	The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.
+L00003283	
+L00003284	The shared blocked/remediation taxonomy preserves actor-specific state machines and object identities: assistant, interview/builder, runtime, and Orchestrator actors consume common blocked fields without collapsing their lifecycle models.
+L00003285	
+L00003286	### Visual distinction
+L00003287	- blocked episodes are visually distinct from ordinary paused/idle states
+L00003288	- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
+L00003289	- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
+L00003290	
+L00003291	### Runtime state presentation
+L00003292	Scheduler surfaces MUST visually distinguish:
+L00003293	- blocked waiting for prerequisite or approval
+L00003294	- retrying/backoff
+L00003295	- remediation in progress
+L00003296	- terminal failure
+L00003297	
+L00003298	### Recovery UX rules
+L00003299	- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+L00003300	- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
+L00003301	- if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+L00003302	- Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.

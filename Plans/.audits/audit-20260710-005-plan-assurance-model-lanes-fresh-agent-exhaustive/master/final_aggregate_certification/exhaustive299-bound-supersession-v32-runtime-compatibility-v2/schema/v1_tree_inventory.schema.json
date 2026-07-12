@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:puppet-master:audit005:exhaustive299:runtime-compatibility-v2:v1-tree",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["byte_count", "file_count", "files", "schema_version", "status", "terminal_lineage", "tree_sha256"],
+  "properties": {
+    "byte_count": {"const": 164999},
+    "file_count": {"const": 19},
+    "files": {
+      "type": "array",
+      "minItems": 19,
+      "maxItems": 19,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["byte_count", "path", "sha256"],
+        "properties": {
+          "byte_count": {"type": "integer", "minimum": 1},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "schema_version": {"const": "audit005-exhaustive299-v1-tree-inventory-v2"},
+    "status": {"const": "V1_FROZEN_CONTROLLER_VALID_NOT_AUDIT_RUNTIME_AUTHORITY"},
+    "terminal_lineage": {"type": "object"},
+    "tree_sha256": {"const": "2cbc0fa005eefbd8a8844cb9ff7e3ba2b9cc0e13cf31a0b978b1e917453a0dcb"}
+  }
+}

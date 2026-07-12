@@ -1,0 +1,1020 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-result-v1",
+  "phase": "cross_shard_reverse_orientation_shadow_candidate_discovery",
+  "assignment_id": "A005CSS-0029",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0029_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSSPKT-0029",
+    "packet_sha256": "03e8d06f6d0346076c1f51166afab719cfb5b9729078d7147a204315abef2803",
+    "anchor_refs_digest": "b06cfc7c159a8233ca815d00144731c11f8fbfa7a75e86fa6dc76b4adf56c22f",
+    "comparator_refs_digest": "354429efe42f397401c16db3ac2ef447476fd180dc57ce9644ec47d22fdf9005",
+    "orientation": "primary_right_as_shadow_anchor",
+    "anchor_owner_assignment_id": "A005OM-0017",
+    "comparator_owner_assignment_id": "A005OM-0016"
+  },
+  "coverage": {
+    "anchor_count": 65,
+    "anchor_refs": [
+      "OPF::A005OM-0017::PF-0001",
+      "OPF::A005OM-0017::PF-0002",
+      "OPF::A005OM-0017::PF-0003",
+      "OPF::A005OM-0017::PF-0004",
+      "OPF::A005OM-0017::PF-0005",
+      "OPF::A005OM-0017::PF-0006",
+      "OPF::A005OM-0017::PF-0007",
+      "OPF::A005OM-0017::PF-0008",
+      "OPF::A005OM-0017::PF-0009",
+      "OPF::A005OM-0017::PF-0010",
+      "OPF::A005OM-0017::PF-0011",
+      "OPF::A005OM-0017::PF-0012",
+      "OPF::A005OM-0017::PF-0013",
+      "OPF::A005OM-0017::PF-0014",
+      "OPF::A005OM-0017::PF-0015",
+      "OPF::A005OM-0017::PF-0016",
+      "OPF::A005OM-0017::PF-0017",
+      "OPF::A005OM-0017::PF-0018",
+      "OPF::A005OM-0017::PF-0019",
+      "OPF::A005OM-0017::PF-0020",
+      "OPF::A005OM-0017::PF-0021",
+      "OPF::A005OM-0017::PF-0022",
+      "OPF::A005OM-0017::PF-0023",
+      "OPF::A005OM-0017::PF-0024",
+      "OPF::A005OM-0017::PF-0025",
+      "OPF::A005OM-0017::PF-0026",
+      "OPF::A005OM-0017::PF-0027",
+      "OPF::A005OM-0017::PF-0028",
+      "OPF::A005OM-0017::PF-0029",
+      "OPF::A005OM-0017::PF-0030",
+      "OPF::A005OM-0017::PF-0031",
+      "OPF::A005OM-0017::PF-0032",
+      "OPF::A005OM-0017::PF-0033",
+      "OPF::A005OM-0017::PF-0034",
+      "OPF::A005OM-0017::PF-0035",
+      "OPF::A005OM-0017::PF-0036",
+      "OPF::A005OM-0017::PF-0037",
+      "OPF::A005OM-0017::PF-0038",
+      "OPF::A005OM-0017::PF-0039",
+      "OPF::A005OM-0017::PF-0040",
+      "OPF::A005OM-0017::PF-0041",
+      "OPF::A005OM-0017::PF-0042",
+      "OPF::A005OM-0017::PF-0043",
+      "OPF::A005OM-0017::PF-0044",
+      "OPF::A005OM-0017::PF-0045",
+      "OPF::A005OM-0017::PF-0046",
+      "OPF::A005OM-0017::PF-0047",
+      "OPF::A005OM-0017::PF-0048",
+      "OPF::A005OM-0017::PF-0049",
+      "OPF::A005OM-0017::PF-0050",
+      "OPF::A005OM-0017::PF-0051",
+      "OPF::A005OM-0017::PF-0052",
+      "OPF::A005OM-0017::PF-0053",
+      "OPF::A005OM-0017::PF-0054",
+      "OPF::A005OM-0017::PF-0055",
+      "OPF::A005OM-0017::PF-0056",
+      "OPF::A005OM-0017::PF-0057",
+      "OPF::A005OM-0017::PF-0058",
+      "OPF::A005OM-0017::PF-0059",
+      "OPF::A005OM-0017::PF-0060",
+      "OPF::A005OM-0017::PF-0061",
+      "OPF::A005OM-0017::PF-0062",
+      "OPF::A005OM-0017::PF-0063",
+      "OPF::A005OM-0017::PF-0064",
+      "OPF::A005OM-0017::PF-0065"
+    ],
+    "comparator_count": 200,
+    "comparator_refs": [
+      "OPF::A005OM-0016::PF-0001",
+      "OPF::A005OM-0016::PF-0002",
+      "OPF::A005OM-0016::PF-0003",
+      "OPF::A005OM-0016::PF-0004",
+      "OPF::A005OM-0016::PF-0005",
+      "OPF::A005OM-0016::PF-0006",
+      "OPF::A005OM-0016::PF-0007",
+      "OPF::A005OM-0016::PF-0008",
+      "OPF::A005OM-0016::PF-0009",
+      "OPF::A005OM-0016::PF-0010",
+      "OPF::A005OM-0016::PF-0011",
+      "OPF::A005OM-0016::PF-0012",
+      "OPF::A005OM-0016::PF-0013",
+      "OPF::A005OM-0016::PF-0014",
+      "OPF::A005OM-0016::PF-0015",
+      "OPF::A005OM-0016::PF-0016",
+      "OPF::A005OM-0016::PF-0017",
+      "OPF::A005OM-0016::PF-0018",
+      "OPF::A005OM-0016::PF-0019",
+      "OPF::A005OM-0016::PF-0020",
+      "OPF::A005OM-0016::PF-0021",
+      "OPF::A005OM-0016::PF-0022",
+      "OPF::A005OM-0016::PF-0023",
+      "OPF::A005OM-0016::PF-0024",
+      "OPF::A005OM-0016::PF-0025",
+      "OPF::A005OM-0016::PF-0026",
+      "OPF::A005OM-0016::PF-0027",
+      "OPF::A005OM-0016::PF-0028",
+      "OPF::A005OM-0016::PF-0029",
+      "OPF::A005OM-0016::PF-0030",
+      "OPF::A005OM-0016::PF-0031",
+      "OPF::A005OM-0016::PF-0032",
+      "OPF::A005OM-0016::PF-0033",
+      "OPF::A005OM-0016::PF-0034",
+      "OPF::A005OM-0016::PF-0035",
+      "OPF::A005OM-0016::PF-0036",
+      "OPF::A005OM-0016::PF-0037",
+      "OPF::A005OM-0016::PF-0038",
+      "OPF::A005OM-0016::PF-0039",
+      "OPF::A005OM-0016::PF-0040",
+      "OPF::A005OM-0016::PF-0041",
+      "OPF::A005OM-0016::PF-0042",
+      "OPF::A005OM-0016::PF-0043",
+      "OPF::A005OM-0016::PF-0044",
+      "OPF::A005OM-0016::PF-0045",
+      "OPF::A005OM-0016::PF-0046",
+      "OPF::A005OM-0016::PF-0047",
+      "OPF::A005OM-0016::PF-0048",
+      "OPF::A005OM-0016::PF-0049",
+      "OPF::A005OM-0016::PF-0050",
+      "OPF::A005OM-0016::PF-0051",
+      "OPF::A005OM-0016::PF-0052",
+      "OPF::A005OM-0016::PF-0053",
+      "OPF::A005OM-0016::PF-0054",
+      "OPF::A005OM-0016::PF-0055",
+      "OPF::A005OM-0016::PF-0056",
+      "OPF::A005OM-0016::PF-0057",
+      "OPF::A005OM-0016::PF-0058",
+      "OPF::A005OM-0016::PF-0059",
+      "OPF::A005OM-0016::PF-0060",
+      "OPF::A005OM-0016::PF-0061",
+      "OPF::A005OM-0016::PF-0062",
+      "OPF::A005OM-0016::PF-0063",
+      "OPF::A005OM-0016::PF-0064",
+      "OPF::A005OM-0016::PF-0065",
+      "OPF::A005OM-0016::PF-0066",
+      "OPF::A005OM-0016::PF-0067",
+      "OPF::A005OM-0016::PF-0068",
+      "OPF::A005OM-0016::PF-0069",
+      "OPF::A005OM-0016::PF-0070",
+      "OPF::A005OM-0016::PF-0071",
+      "OPF::A005OM-0016::PF-0072",
+      "OPF::A005OM-0016::PF-0073",
+      "OPF::A005OM-0016::PF-0074",
+      "OPF::A005OM-0016::PF-0075",
+      "OPF::A005OM-0016::PF-0076",
+      "OPF::A005OM-0016::PF-0077",
+      "OPF::A005OM-0016::PF-0078",
+      "OPF::A005OM-0016::PF-0079",
+      "OPF::A005OM-0016::PF-0080",
+      "OPF::A005OM-0016::PF-0081",
+      "OPF::A005OM-0016::PF-0082",
+      "OPF::A005OM-0016::PF-0083",
+      "OPF::A005OM-0016::PF-0084",
+      "OPF::A005OM-0016::PF-0085",
+      "OPF::A005OM-0016::PF-0086",
+      "OPF::A005OM-0016::PF-0087",
+      "OPF::A005OM-0016::PF-0088",
+      "OPF::A005OM-0016::PF-0089",
+      "OPF::A005OM-0016::PF-0090",
+      "OPF::A005OM-0016::PF-0091",
+      "OPF::A005OM-0016::PF-0092",
+      "OPF::A005OM-0016::PF-0093",
+      "OPF::A005OM-0016::PF-0094",
+      "OPF::A005OM-0016::PF-0095",
+      "OPF::A005OM-0016::PF-0096",
+      "OPF::A005OM-0016::PF-0097",
+      "OPF::A005OM-0016::PF-0098",
+      "OPF::A005OM-0016::PF-0099",
+      "OPF::A005OM-0016::PF-0100",
+      "OPF::A005OM-0016::PF-0101",
+      "OPF::A005OM-0016::PF-0102",
+      "OPF::A005OM-0016::PF-0103",
+      "OPF::A005OM-0016::PF-0104",
+      "OPF::A005OM-0016::PF-0105",
+      "OPF::A005OM-0016::PF-0106",
+      "OPF::A005OM-0016::PF-0107",
+      "OPF::A005OM-0016::PF-0108",
+      "OPF::A005OM-0016::PF-0109",
+      "OPF::A005OM-0016::PF-0110",
+      "OPF::A005OM-0016::PF-0111",
+      "OPF::A005OM-0016::PF-0112",
+      "OPF::A005OM-0016::PF-0113",
+      "OPF::A005OM-0016::PF-0114",
+      "OPF::A005OM-0016::PF-0115",
+      "OPF::A005OM-0016::PF-0116",
+      "OPF::A005OM-0016::PF-0117",
+      "OPF::A005OM-0016::PF-0118",
+      "OPF::A005OM-0016::PF-0119",
+      "OPF::A005OM-0016::PF-0120",
+      "OPF::A005OM-0016::PF-0121",
+      "OPF::A005OM-0016::PF-0122",
+      "OPF::A005OM-0016::PF-0123",
+      "OPF::A005OM-0016::PF-0124",
+      "OPF::A005OM-0016::PF-0125",
+      "OPF::A005OM-0016::PF-0126",
+      "OPF::A005OM-0016::PF-0127",
+      "OPF::A005OM-0016::PF-0128",
+      "OPF::A005OM-0016::PF-0129",
+      "OPF::A005OM-0016::PF-0130",
+      "OPF::A005OM-0016::PF-0131",
+      "OPF::A005OM-0016::PF-0132",
+      "OPF::A005OM-0016::PF-0133",
+      "OPF::A005OM-0016::PF-0134",
+      "OPF::A005OM-0016::PF-0135",
+      "OPF::A005OM-0016::PF-0136",
+      "OPF::A005OM-0016::PF-0137",
+      "OPF::A005OM-0016::PF-0138",
+      "OPF::A005OM-0016::PF-0139",
+      "OPF::A005OM-0016::PF-0140",
+      "OPF::A005OM-0016::PF-0141",
+      "OPF::A005OM-0016::PF-0142",
+      "OPF::A005OM-0016::PF-0143",
+      "OPF::A005OM-0016::PF-0144",
+      "OPF::A005OM-0016::PF-0145",
+      "OPF::A005OM-0016::PF-0146",
+      "OPF::A005OM-0016::PF-0147",
+      "OPF::A005OM-0016::PF-0148",
+      "OPF::A005OM-0016::PF-0149",
+      "OPF::A005OM-0016::PF-0150",
+      "OPF::A005OM-0016::PF-0151",
+      "OPF::A005OM-0016::PF-0152",
+      "OPF::A005OM-0016::PF-0153",
+      "OPF::A005OM-0016::PF-0154",
+      "OPF::A005OM-0016::PF-0155",
+      "OPF::A005OM-0016::PF-0156",
+      "OPF::A005OM-0016::PF-0157",
+      "OPF::A005OM-0016::PF-0158",
+      "OPF::A005OM-0016::PF-0159",
+      "OPF::A005OM-0016::PF-0160",
+      "OPF::A005OM-0016::PF-0161",
+      "OPF::A005OM-0016::PF-0162",
+      "OPF::A005OM-0016::PF-0163",
+      "OPF::A005OM-0016::PF-0164",
+      "OPF::A005OM-0016::PF-0165",
+      "OPF::A005OM-0016::PF-0166",
+      "OPF::A005OM-0016::PF-0167",
+      "OPF::A005OM-0016::PF-0168",
+      "OPF::A005OM-0016::PF-0169",
+      "OPF::A005OM-0016::PF-0170",
+      "OPF::A005OM-0016::PF-0171",
+      "OPF::A005OM-0016::PF-0172",
+      "OPF::A005OM-0016::PF-0173",
+      "OPF::A005OM-0016::PF-0174",
+      "OPF::A005OM-0016::PF-0175",
+      "OPF::A005OM-0016::PF-0176",
+      "OPF::A005OM-0016::PF-0177",
+      "OPF::A005OM-0016::PF-0178",
+      "OPF::A005OM-0016::PF-0179",
+      "OPF::A005OM-0016::PF-0180",
+      "OPF::A005OM-0016::PF-0181",
+      "OPF::A005OM-0016::PF-0182",
+      "OPF::A005OM-0016::PF-0183",
+      "OPF::A005OM-0016::PF-0184",
+      "OPF::A005OM-0016::PF-0185",
+      "OPF::A005OM-0016::PF-0186",
+      "OPF::A005OM-0016::PF-0187",
+      "OPF::A005OM-0016::PF-0188",
+      "OPF::A005OM-0016::PF-0189",
+      "OPF::A005OM-0016::PF-0190",
+      "OPF::A005OM-0016::PF-0191",
+      "OPF::A005OM-0016::PF-0192",
+      "OPF::A005OM-0016::PF-0193",
+      "OPF::A005OM-0016::PF-0194",
+      "OPF::A005OM-0016::PF-0195",
+      "OPF::A005OM-0016::PF-0196",
+      "OPF::A005OM-0016::PF-0197",
+      "OPF::A005OM-0016::PF-0198",
+      "OPF::A005OM-0016::PF-0199",
+      "OPF::A005OM-0016::PF-0200"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0001",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"Bootstrap directory usability has a concrete identity check\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0002",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"Ledger validation is explicitly falsifiable\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0003",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0008",
+        "OPF::A005OM-0016::PF-0012",
+        "OPF::A005OM-0016::PF-0180",
+        "OPF::A005OM-0016::PF-0193"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Ledger-to-Plans compile boundary\". The related entries (Initial canonical owner-doc compilation; Governance seal mutation boundary; PDS-006 enforces the index-only boundary; PDS-020 preserves the executable-proof boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0004",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0106",
+        "OPF::A005OM-0016::PF-0187",
+        "OPF::A005OM-0016::PF-0194"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Semantic closure registry lifecycle and concurrency\". The related entries (Taught-memory locking lacks a lifecycle contract; PDS-014 leaves deterministic identity and concurrent closure writes underspecified; PDS-020 closure evidence is not immutably or authoritatively bound) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0005",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0030"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Compile-input matrices are required but not currently enforceable\". The related entries (Requirement Coverage Authority) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0006",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0068",
+        "OPF::A005OM-0016::PF-0171"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Ledger synchronization failure has no complete GUI truth contract\". The related entries (Planning, worktree, navigation, and blocked-state truth lack race-level GUI oracles; Source picker failure states lack recovery and accessible GUI contracts) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0007",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0163"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Native ledger durability and recovery are strongly specified\". The related entries (Planning ledger turn atomicity and recovery) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0008",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0187",
+        "OPF::A005OM-0016::PF-0192",
+        "OPF::A005OM-0016::PF-0194"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"External finding closure has an unresolved registry seam\". The related entries (PDS-014 leaves deterministic identity and concurrent closure writes underspecified; PDS-019 omits authoritative blocker transition semantics; PDS-020 closure evidence is not immutably or authoritatively bound) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0009",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0167",
+        "OPF::A005OM-0016::PF-0196"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Native import security is concretely bounded\". The related entries (Untrusted-source authority boundary is explicit; Bootstrap-native migration remains under-specified) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0010",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0079",
+        "OPF::A005OM-0016::PF-0171"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Bot closure visibility is not a usable GUI contract\". The related entries (Planning controls lack localization semantics; Source picker failure states lack recovery and accessible GUI contracts) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0011",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0192",
+        "OPF::A005OM-0016::PF-0194"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"P1 external issue closure is not implementation-ready\". The related entries (PDS-019 omits authoritative blocker transition semantics; PDS-020 closure evidence is not immutably or authoritatively bound) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0012",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0104",
+        "OPF::A005OM-0016::PF-0160"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Canonical planning intake and naming boundary\". The related entries (Retired bridge disposition is bounded; PRD intake boundary is explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0013",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0010",
+        "OPF::A005OM-0016::PF-0163"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"PlanningRun aggregate and bounded thread topology\". The related entries (Cross-thread phase handoff contract; Planning ledger turn atomicity and recovery) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0014",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0040"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Dynamic topic graph operations\". The related entries (Blocked, graph, and snapshot failures lack recovery closure) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0015",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0004",
+        "OPF::A005OM-0016::PF-0157"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Bounded topic-agent autonomy and HITL boundary\". The related entries (Mandatory parallel evidence and sole-writer contract; Verification and HITL policy choices lack an authority contract) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0016",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0061",
+        "OPF::A005OM-0016::PF-0164"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Typed invalidation and immutable PRD amendments\". The related entries (Plan approval and revision race; Approval and successor-version transitions are explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0017",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0004",
+        "OPF::A005OM-0016::PF-0007"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Topic conversion and independent audit loop\". The related entries (Mandatory parallel evidence and sole-writer contract; Controlled lossless Plan conversion) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0018",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0161",
+        "OPF::A005OM-0016::PF-0165"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Final integration and text-canonical visual evidence\". The related entries (Hybrid PRD creation is required; Preserved-source and extraction ownership contract is strong) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0019",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0043",
+        "OPF::A005OM-0016::PF-0167",
+        "OPF::A005OM-0016::PF-0170"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Project discovery and mutation authority boundary\". The related entries (Planning allowance does not imply mutation authority; Untrusted-source authority boundary is explicit; DiscoveryService consumer seam is named) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0020",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0121",
+        "OPF::A005OM-0016::PF-0166"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Testing-topic handoff is not mechanically specified\". The related entries (OP-025 claims command policy without command contracts; Parallel extraction lacks deterministic sharding and partial-failure rules) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0021",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0115",
+        "OPF::A005OM-0016::PF-0119",
+        "OPF::A005OM-0016::PF-0147"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"ApprovedPlanPack and Approve And Build authority\". The related entries (Approval-to-compile launch is explicitly idempotent; Compile and execution observability are separated after handoff; Final approval has a durable production-wiring contract) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0022",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0115",
+        "OPF::A005OM-0016::PF-0144",
+        "OPF::A005OM-0016::PF-0147"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Approve And Build CAS and durable PlanCompileRun binding\". The related entries (Approval-to-compile launch is explicitly idempotent; PRD approval partial-failure semantics are missing; Final approval has a durable production-wiring contract) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0023",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0004"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Product-native specialist audit and sole-writer repair\". The related entries (Mandatory parallel evidence and sole-writer contract) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0024",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0003",
+        "OPF::A005OM-0016::PF-0006",
+        "OPF::A005OM-0016::PF-0030",
+        "OPF::A005OM-0016::PF-0193"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Planning zero-incomplete compile-readiness gate\". The related entries (Readiness states are explicitly separated; The readiness gate has no complete caller and consumer inventory; Requirement Coverage Authority; PDS-020 preserves the executable-proof boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0025",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0063"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Planning topic state vocabularies conflict\". The related entries (Shared planning state-machine gap) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0026",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0170",
+        "OPF::A005OM-0016::PF-0171"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Policy-aware planning source picker\". The related entries (DiscoveryService consumer seam is named; Source picker failure states lack recovery and accessible GUI contracts) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0027",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0172"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Historical plan-pack retention lacks a complete lifecycle\". The related entries (Historical PRD lifecycle omits privacy and destructive-action rules) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0028",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"First-run limited-provider landing state\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0029",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0003",
+        "OPF::A005OM-0016::PF-0006",
+        "OPF::A005OM-0016::PF-0047",
+        "OPF::A005OM-0016::PF-0123",
+        "OPF::A005OM-0016::PF-0150",
+        "OPF::A005OM-0016::PF-0193"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Fail-closed implementation buildability truth gate\". The related entries (Readiness states are explicitly separated; The readiness gate has no complete caller and consumer inventory; EP-025 includes runtime overlays and generation validity in readiness; Clean-room pipeline proof is named but not executable; Plan Compile progress can overstate runtime truth; PDS-020 preserves the executable-proof boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0030",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0147",
+        "OPF::A005OM-0016::PF-0189"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Approved Planning Packs\". The related entries (Final approval has a durable production-wiring contract; PDS-016 lacks a concrete plan-pack reconciliation protocol) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0031",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0030",
+        "OPF::A005OM-0016::PF-0057",
+        "OPF::A005OM-0016::PF-0188"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Cross Document Verification\". The related entries (Requirement Coverage Authority; Appendix Reference Hygiene; PDS-015 reference-scan completion is not fully falsifiable) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0032",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0159",
+        "OPF::A005OM-0016::PF-0181"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Fable Gate Registry\". The related entries (Owner adjudication remains a hard promotion gate; Plan GUI model-routing contract and FABLE integration) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0033",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0022",
+        "OPF::A005OM-0016::PF-0028"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Node Model Package Seam Lane Gates\". The related entries (Contractref Traceability; Owner Consumer Routing) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0034",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0029",
+        "OPF::A005OM-0016::PF-0030",
+        "OPF::A005OM-0016::PF-0083"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Progression Verifier Normalization\". The related entries (Packet Fidelity Normalization; Requirement Coverage Authority; Rewrite terminology boundary is explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0035",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0022",
+        "OPF::A005OM-0016::PF-0030",
+        "OPF::A005OM-0016::PF-0095"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Requirements Traceability And Quality Gates\". The related entries (Contractref Traceability; Requirement Coverage Authority; Evidence failure classes are explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0036",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0086",
+        "OPF::A005OM-0016::PF-0152",
+        "OPF::A005OM-0016::PF-0159"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Route Aware Promotion And Waivers\". The related entries (Route and attempt boundaries are explicit; Production promotion gate is named; Owner adjudication remains a hard promotion gate) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0037",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0047",
+        "OPF::A005OM-0016::PF-0123",
+        "OPF::A005OM-0016::PF-0193"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Runtime Integrity And Recovery Gates\". The related entries (EP-025 includes runtime overlays and generation validity in readiness; Clean-room pipeline proof is named but not executable; PDS-020 preserves the executable-proof boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0038",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0040",
+        "OPF::A005OM-0016::PF-0166",
+        "OPF::A005OM-0016::PF-0182"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Sharded Plan Graph\". The related entries (Blocked, graph, and snapshot failures lack recovery closure; Parallel extraction lacks deterministic sharding and partial-failure rules; PDS-008 omits global identity collision and atomic extraction rules) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0039",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"RM-031 carries AC-01 through AC-03 behavior\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0040",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0049"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Most PlanUnit acceptance criteria certify preservation rather than behavior\". The related entries (PlanUnit acceptance criteria are migration checks, not product oracles) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0041",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0005",
+        "OPF::A005OM-0016::PF-0046"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Stale gap prose contradicts live requirements inside the canonical body\". The related entries (0PI-062 contradicts its own canonical compile state; EP-008 promotes superseded lexical readiness as canonical text) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0042",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"Two-section limit lacks overflow behavior\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0043",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0096",
+        "OPF::A005OM-0016::PF-0106",
+        "OPF::A005OM-0016::PF-0172"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Profile storage isolation lacks lifecycle closure\". The related entries (Secret persistence boundary is explicit; Taught-memory locking lacks a lifecycle contract; Historical PRD lifecycle omits privacy and destructive-action rules) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0044",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0026"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"SS-002 through SS-007 preserve authority, identity, format, body, roots, and shadowing\". The related entries (Dry SSOT Authority) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0045",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0087",
+        "OPF::A005OM-0016::PF-0104"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Retired Persona selectors lack migration mechanics\". The related entries (Compatibility migration unit is not independently falsifiable; Retired bridge disposition is bounded) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0046",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0043",
+        "OPF::A005OM-0016::PF-0052",
+        "OPF::A005OM-0016::PF-0167"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"RAP-015 ownership transition has no guarded adoption protocol\". The related entries (Planning allowance does not imply mutation authority; F-012 preserves Shift-move without resolving external deletion authority; Untrusted-source authority boundary is explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0047",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0044"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Final core segment contains unrepresented semantic content\". The related entries (Post-atomization addendum is outside the PlanUnit coverage claim) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0048",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0043"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"RM-006 retains read-only ask and plan authority\". The related entries (Planning allowance does not imply mutation authority) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0049",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0029",
+        "OPF::A005OM-0016::PF-0049"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Active-worktree constraint is mechanically copied into unrelated PlanUnits\". The related entries (Packet Fidelity Normalization; PlanUnit acceptance criteria are migration checks, not product oracles) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0050",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0049",
+        "OPF::A005OM-0016::PF-0068",
+        "OPF::A005OM-0016::PF-0088"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"SMPFS-003 shell ownership is not behavior-tested\". The related entries (PlanUnit acceptance criteria are migration checks, not product oracles; Planning, worktree, navigation, and blocked-state truth lack race-level GUI oracles; Shell surface ownership is separated) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0051",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0113"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Per-account DAE eligibility and account-switch ordering are explicitly unresolved\". The related entries (Multi-account planning lineage boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0052",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0049",
+        "OPF::A005OM-0016::PF-0068",
+        "OPF::A005OM-0016::PF-0117"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Browser UI test plan remains qualitative\". The related entries (PlanUnit acceptance criteria are migration checks, not product oracles; Planning, worktree, navigation, and blocked-state truth lack race-level GUI oracles; Progress widget catalog has no accessibility or localization contract) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0053",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0049"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"SMPFS-004 inventory has no surface lifecycle oracle\". The related entries (PlanUnit acceptance criteria are migration checks, not product oracles) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0054",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"RM-024 preserves closed coarse outcomes and identity behavior\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0055",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0182",
+        "OPF::A005OM-0016::PF-0184",
+        "OPF::A005OM-0016::PF-0187"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"RAP-026 row versioning lacks migration and atomic rebuild rules\". The related entries (PDS-008 omits global identity collision and atomic extraction rules; PDS-010 lacks migration transaction and crash-recovery semantics; PDS-014 leaves deterministic identity and concurrent closure writes underspecified) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0056",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0029",
+        "OPF::A005OM-0016::PF-0037",
+        "OPF::A005OM-0016::PF-0083"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"SS-014 canonical_text changes PTY to PTX\". The related entries (Packet Fidelity Normalization; DL-001 retired-bridge lineage contains truncated source text; Rewrite terminology boundary is explicit) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0057",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0026"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"RM-003 preserves the SSOT and DRY owner boundary\". The related entries (Dry SSOT Authority) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0058",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0049",
+        "OPF::A005OM-0016::PF-0088"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"SMPFS-002 lacks a behavioral owner-boundary oracle\". The related entries (PlanUnit acceptance criteria are migration checks, not product oracles; Shell surface ownership is separated) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0059",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent or sufficiently plausible distinct neighbor for \"RM-004 preserves mode and overlay separation\". Its product authority, lifecycle, user outcome, state boundary, and failure semantics remain unique within this comparator set.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0060",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0026",
+        "OPF::A005OM-0016::PF-0028",
+        "OPF::A005OM-0016::PF-0126",
+        "OPF::A005OM-0016::PF-0159"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Production wiring authority and template lineage\". The related entries (Dry SSOT Authority; Owner Consumer Routing; Concept inventory has an explicit non-authority boundary; Owner adjudication remains a hard promotion gate) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0061",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0030",
+        "OPF::A005OM-0016::PF-0125",
+        "OPF::A005OM-0016::PF-0126"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Production wiring coverage and exclusions governance\". The related entries (Requirement Coverage Authority; Promotion boundary does not identify actual owners, callers, consumers, or seam oracles; Concept inventory has an explicit non-authority boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0062",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0022",
+        "OPF::A005OM-0016::PF-0028",
+        "OPF::A005OM-0016::PF-0119",
+        "OPF::A005OM-0016::PF-0126"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Runtime wiring trace and precedence consolidation\". The related entries (Contractref Traceability; Owner Consumer Routing; Compile and execution observability are separated after handoff; Concept inventory has an explicit non-authority boundary) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0063",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0083",
+        "OPF::A005OM-0016::PF-0099"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Runtime-record demotion gate\". The related entries (Rewrite terminology boundary is explicit; SessionStore retains an unmapped tier-era record) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0064",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0077",
+        "OPF::A005OM-0016::PF-0121"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Source-control review and conflict command ownership\". The related entries (GUI-first terminal control plane is explicit; OP-025 claims command policy without command contracts) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0017::PF-0065",
+      "compared_against_count": 200,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0016::PF-0115",
+        "OPF::A005OM-0016::PF-0118",
+        "OPF::A005OM-0016::PF-0119",
+        "OPF::A005OM-0016::PF-0131",
+        "OPF::A005OM-0016::PF-0132",
+        "OPF::A005OM-0016::PF-0133",
+        "OPF::A005OM-0016::PF-0150"
+      ],
+      "rationale": "Exhaustive review of all 200 comparators found no strict merge-equivalent for \"Plan Compile pre-enable lifecycle\". The related entries (Approval-to-compile launch is explicitly idempotent; Plan Compile stages and ETA have no semantic or accuracy contract; Compile and execution observability are separated after handoff; Open Plan Compile routing contract; Open Build is not launch authority; Runtime lifecycle buttons remain unsafe concept lineage; Plan Compile progress can overstate runtime truth) are plausible neighbors, but each differs in product authority, lifecycle scope, state boundary, user outcome, or failure semantics; umbrella/member structure, dependency, adjacency, and shared vocabulary were kept distinct.",
+      "confidence": 0.94
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "strict_merge_equivalence_applied": true,
+    "umbrella_member_and_adjacency_kept_distinct": true,
+    "reverse_orientation_verified": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

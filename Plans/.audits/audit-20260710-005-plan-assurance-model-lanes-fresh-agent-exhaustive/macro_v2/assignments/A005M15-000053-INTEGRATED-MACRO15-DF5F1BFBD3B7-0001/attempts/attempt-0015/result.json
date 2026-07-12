@@ -1,0 +1,470 @@
+{
+  "assignment_id": "A005M15-000053-INTEGRATED-MACRO15-DF5F1BFBD3B7-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "failures_recovery", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "- UI returns idle with preserved history",
+          "line_end": 2499,
+          "line_start": 2499,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_behavior",
+      "impact": "A user interrupt has an explicit visible terminal condition that preserves history rather than erasing the interrupted session.",
+      "item_id": "A005M15-000053-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-034", "SEMANTIC:PLANUNIT:GRS-034"],
+      "statement": "GRS-034 explicitly requires the UI to return to idle while preserving history after interruption.",
+      "title": "Interrupt settles to visible idle with history"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "propagation", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: 'Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary.'",
+          "line_end": 2556,
+          "line_start": 2556,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        },
+        {
+          "exact_quote": "- Stop active MCP call leaves partial/cancelled result",
+          "line_end": 2497,
+          "line_start": 2497,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "incomplete_cancellation_settlement_oracles",
+      "impact": "Implementations can diverge on subprocess, browser/device, and child-run cancellation, especially when completion races cancellation or a transport is offline, and still satisfy the listed MCP/provider/UI checks.",
+      "item_id": "A005M15-000053-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-034", "SEMANTIC:PLANUNIT:GRS-034"],
+      "statement": "GRS-034 names five propagation surfaces, but its acceptance oracles directly cover only an MCP call, a provider stream, and UI history; it does not define cancellation-vs-completion precedence, timeout settlement, idempotent repeated stop, or receipts for the other surfaces.",
+      "title": "Cancellation propagation is broader than its oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "gui_truth", "propagation", "authority_boundaries", "gui_misleading_states", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "- A child/subagent cannot exceed parent ceiling even if model/tool output requests it.",
+          "line_end": 2579,
+          "line_start": 2579,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_authority_boundary",
+      "impact": "The parent envelope is an explicit hard ceiling, preventing child output from self-escalating runtime authority.",
+      "item_id": "A005M15-000053-I003",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-035", "SEMANTIC:PLANUNIT:GRS-035"],
+      "statement": "GRS-035 makes the parent control ceiling authoritative over child model or tool requests.",
+      "title": "Parent envelope is a hard authority ceiling"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "security_privacy", "propagation", "operations", "scale_performance", "compatibility_migration", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "privacy_data_lifecycle", "scale_limits", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "proposal_or_recommendation: Define AgentControlEnvelope with autonomy_mode, write_surface, provider/model/effort policy, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering semantics, progress heartbeat, and receipt refs.",
+          "line_end": 2653,
+          "line_start": 2653,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "underspecified_envelope_schema_and_lifecycle",
+      "impact": "Different runtimes can serialize, inherit, mutate, expire, and enforce the same-named envelope differently; mid-run steering and concurrent updates can produce mismatched effective authority or budget accounting.",
+      "item_id": "A005M15-000053-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-035", "SEMANTIC:PLANUNIT:GRS-035"],
+      "statement": "GRS-035 enumerates envelope fields but does not define field types, required/default values, inheritance/merge precedence, revision and effective-at boundaries, violation outcomes, sensitive-field retention, or aggregate budget accounting under concurrency.",
+      "title": "AgentControlEnvelope lacks deterministic lifecycle semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "consumers", "acceptance_oracles", "missing_callers_consumers", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "- Parent cannot certify complete until all required child results are settled or explicitly waived.",
+          "line_end": 2675,
+          "line_start": 2675,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_completion_gate",
+      "impact": "Parent completion is prevented from silently ignoring required child results.",
+      "item_id": "A005M15-000053-I005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-036", "SEMANTIC:PLANUNIT:GRS-036"],
+      "statement": "GRS-036 explicitly gates parent certification on settlement or waiver of every required child result.",
+      "title": "Child settlement gates parent certification"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "operations", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: 'PM needs a single child execution lifecycle independent of prompt packets: spawn, admitted context, first event, heartbeat, partial result, await, cancellation, orphan reap, result settlement, and parent completion gating.'",
+          "line_end": 2742,
+          "line_start": 2742,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "missing_child_lifecycle_transition_table",
+      "impact": "Cancellation, late results, timeouts, parent crashes, waivers, and orphan cleanup can race without a shared winner rule, leaving child authority and parent completion nondeterministic.",
+      "item_id": "A005M15-000053-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-036", "SEMANTIC:PLANUNIT:GRS-036"],
+      "statement": "GRS-036 lists lifecycle stages but does not define legal transitions, terminal-state precedence, late-result handling, waiver authority and evidence, crash/restart recovery, or orphan-reaper idempotency.",
+      "title": "Subagent lifecycle has no race-safe state machine"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "failures_recovery", "acceptance_oracles", "scale_limits", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Fixtures for each loop family stop within bounded attempts.",
+          "line_end": 2764,
+          "line_start": 2764,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_bounded_loop_oracle",
+      "impact": "Each loop family has an explicit falsifiable expectation that it terminates within a bound.",
+      "item_id": "A005M15-000053-I007",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-037", "SEMANTIC:PLANUNIT:GRS-037"],
+      "statement": "GRS-037 requires a bounded-stop fixture for every registered loop family.",
+      "title": "Loop families require bounded-stop fixtures"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "recovery_rollback", "gui_misleading_states", "scale_limits", "observability_support", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "proposal_or_recommendation: 'Add LoopBreakerRegistry with typed families: identical_tool_failure, empty_assistant, no_tool_progress, repeated_edit_miss, compaction_no_gain, context_overflow_replay, MCP_resource_missing, first_event_timeout, transport_idle, reasoning_no_action, subagent_same_read, and spend_anomaly. Each family has fingerprint, max_count, required observation window, terminal action, and user-facing reason.'",
+          "line_end": 2835,
+          "line_start": 2835,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "undefined_loop_family_parameters_and_false_positive_recovery",
+      "impact": "Builders must invent fingerprints, thresholds, windows, and terminal actions, so the same run may stop in one runtime and continue in another; false positives have no defined safe resume or override path.",
+      "item_id": "A005M15-000053-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-037", "SEMANTIC:PLANUNIT:GRS-037"],
+      "statement": "GRS-037 names the required parameters for each loop family but supplies no values or derivation rules, fingerprint versioning, cross-family precedence, distributed/parallel aggregation semantics, or recovery from a mistaken stop.",
+      "title": "Loop breaker taxonomy leaves enforcement discretionary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "propagation", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "- Every subagent receives a ChildAgentLease with parent_goal_id, allowed_phase, read/write mode, max_depth, cannot_resume_parent_goal=true, and terminal return channel.",
+          "line_end": 2855,
+          "line_start": 2855,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_child_lease_boundary",
+      "impact": "A child receives an explicit scope and cannot legitimately assume the parent goal identity.",
+      "item_id": "A005M15-000053-I009",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-038", "SEMANTIC:PLANUNIT:GRS-038"],
+      "statement": "GRS-038 defines a ChildAgentLease carrying parent identity, allowed phase, access mode, depth, a parent-resume prohibition, and return channel.",
+      "title": "ChildAgentLease bounds goal identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "failures_recovery", "security_privacy", "propagation", "operations", "compatibility_migration", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: AgentControlEnvelope covered authority, but not enough about inheritable goal identity, child-agent leases, or proving that a child cannot resume/advance the parent goal.",
+          "line_end": 2909,
+          "line_start": 2909,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "missing_lease_issuance_revocation_and_recovery_semantics",
+      "impact": "A stale or duplicated child may retain usable authority after cancellation, parent restart, replan, or reconnect because lease freshness and revocation cannot be proven consistently.",
+      "item_id": "A005M15-000053-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-038", "SEMANTIC:PLANUNIT:GRS-038"],
+      "statement": "GRS-038 lists lease contents and restrictions but does not define issuer identity, signing or binding, lease revision/expiry, renewal, revocation propagation, replay prevention, or crash/restart reconciliation.",
+      "title": "Child leases lack lifecycle and anti-replay rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "gui_truth", "security_privacy", "compatibility_migration", "authority_boundaries", "untrusted_inputs", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "- External agent output/tool requests enter PM as untrusted until settled by PM receipts.",
+          "line_end": 2932,
+          "line_start": 2932,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_untrusted_import_boundary",
+      "impact": "Imported output cannot immediately exercise native PM authority merely because it came from a supported external agent.",
+      "item_id": "A005M15-000053-I011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-039", "SEMANTIC:PLANUNIT:GRS-039"],
+      "statement": "GRS-039 explicitly classifies external output and tool requests as untrusted until PM receipt settlement.",
+      "title": "External agent output starts untrusted"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "operations", "compatibility_migration", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Imported external-agent session has source tool/version, authority surface, context lineage, credential handling, cwd/worktree, terminal/session transcript, and continuation mode.",
+          "line_end": 2930,
+          "line_start": 2930,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "undefined_import_validation_and_sensitive_data_lifecycle",
+      "impact": "Malformed or hostile handoff data can be interpreted inconsistently, while credentials and transcripts may be retained or displayed without a deterministic redaction, encryption, expiry, and deletion policy.",
+      "item_id": "A005M15-000053-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-039", "SEMANTIC:PLANUNIT:GRS-039"],
+      "statement": "GRS-039 names provenance fields and credential handling but does not define import parsing limits, schema/version compatibility, sanitization, secret redaction and retention, receipt trust-promotion criteria, partial-import rollback, or conflict resolution when local and external histories diverge.",
+      "title": "External handoff validation and data lifecycle are open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "security_privacy", "authority_boundaries", "untrusted_inputs", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  External agent sessions, MCP config imports, and handoff packets enter PM as untrusted provenance/evidence until settled by PM receipts. Imported sessions do not become native PM authority or bypass Goal, Tool, or Permission ownership.",
+          "line_end": 2995,
+          "line_start": 2995,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_import_guardrail",
+      "impact": "The constraint preserves Goal, Tool, and Permission ownership against authority laundering through imported sessions or configuration.",
+      "item_id": "A005M15-000053-I013",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-040", "SEMANTIC:PLANUNIT:GRS-040"],
+      "statement": "GRS-040 explicitly prevents imported sessions from becoming native authority or bypassing existing ownership boundaries.",
+      "title": "Imported sessions cannot bypass native ownership"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "acceptance_oracles", "authority_boundaries", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- atom-0121 source details remain traceable through source_lineage and preserved source fields.",
+          "line_end": 3003,
+          "line_start": 3003,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "missing_guardrail_enforcement_oracle",
+      "impact": "Traceability can pass while an importer still grants native authority or bypasses Goal, Tool, or Permission checks; the central safety claim is therefore not directly falsified by the acceptance surface.",
+      "item_id": "A005M15-000053-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-040", "SEMANTIC:PLANUNIT:GRS-040"],
+      "statement": "GRS-040's only behavior-specific acceptance criterion proves source traceability, not rejection, quarantine, receipt settlement, or non-bypass across the three named owners.",
+      "title": "Import guardrail lacks a non-bypass test"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "compatibility_migration", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  - Do not re-own Executor scheduling, storage replay, permission enforcement, or provider/model/account resolution.",
+          "line_end": 3114,
+          "line_start": 3114,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "none_explicit_semantic_ownership_boundary",
+      "impact": "Goal Runtime's event closure is prevented from silently absorbing scheduling, replay, permission, or identity authority from their canonical owners.",
+      "item_id": "A005M15-000053-I015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:GRS-041", "SEMANTIC:PLANUNIT:GRS-041"],
+      "statement": "GRS-041 explicitly constrains its ownership to Goal Runtime semantics while consuming other owners' contracts.",
+      "title": "Event closure preserves cross-document ownership"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "ownership", "consumers", "failures_recovery", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "partial_failure", "recovery_rollback", "authority_boundaries", "observability_support", "cross_document_seams", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "  - The common payload envelope includes event_name, schema_version, occurred_at_utc, project/thread/goal identity, revisions, actor/execution role, requested/effective provider/model/account refs, correlation/causation/idempotency, evidence/artifact refs, approval refs, and block refs.",
+          "line_end": 3056,
+          "line_start": 3056,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        },
+        {
+          "exact_quote": "  - All 15 goal events and all 6 goal_run events list event-specific payload minima.",
+          "line_end": 3057,
+          "line_start": 3057,
+          "path": "Plans/Goal_Runtime_System.md",
+          "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+        }
+      ],
+      "gap_kind": "missing_schema_evolution_and_event_matrix_oracles",
+      "impact": "Consumers can disagree on required fields, unknown-event behavior, revision compatibility, replay after partial writes, and owner-contract mismatch while aggregate count checks still pass.",
+      "item_id": "A005M15-000053-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:GRS-041", "SEMANTIC:PLANUNIT:GRS-041"],
+      "statement": "GRS-041 requires a shared envelope and per-event minima but does not state schema-version compatibility and migration rules, required-vs-optional field matrices, unknown-field/event handling, replay/rollback behavior for partial persistence, or deterministic reconciliation when consumed owner contracts change.",
+      "title": "Event closure lacks evolution and per-event falsifiability rules"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [2481, 2838],
+      "covered_source_unit_refs": ["PLANUNIT:GRS-034", "PLANUNIT:GRS-035", "PLANUNIT:GRS-036", "PLANUNIT:GRS-037", "SEMANTIC:PLANUNIT:GRS-034", "SEMANTIC:PLANUNIT:GRS-035", "SEMANTIC:PLANUNIT:GRS-036", "SEMANTIC:PLANUNIT:GRS-037"],
+      "item_ids": ["A005M15-000053-I001", "A005M15-000053-I002", "A005M15-000053-I003", "A005M15-000053-I004", "A005M15-000053-I005", "A005M15-000053-I006", "A005M15-000053-I007", "A005M15-000053-I008"],
+      "reviewed": true,
+      "summary": "GRS-034 through GRS-037 establish cancellation settlement, an agent-control ceiling, child-result gating, and typed loop breakers. The intent is strong, but deterministic state transitions, race precedence, schema/lifecycle rules, concrete enforcement parameters, recovery paths, and surface-complete acceptance oracles remain materially underspecified.",
+      "window_id": "WIN-DF5F1BFBD3B7-0008"
+    },
+    {
+      "core_range": [2839, 3119],
+      "covered_source_unit_refs": ["PLANUNIT:GRS-038", "PLANUNIT:GRS-039", "PLANUNIT:GRS-040", "PLANUNIT:GRS-041", "SEMANTIC:PLANUNIT:GRS-038", "SEMANTIC:PLANUNIT:GRS-039", "SEMANTIC:PLANUNIT:GRS-040", "SEMANTIC:PLANUNIT:GRS-041"],
+      "item_ids": ["A005M15-000053-I009", "A005M15-000053-I010", "A005M15-000053-I011", "A005M15-000053-I012", "A005M15-000053-I013", "A005M15-000053-I014", "A005M15-000053-I015", "A005M15-000053-I016"],
+      "reviewed": true,
+      "summary": "GRS-038 through GRS-041 establish child goal leases, untrusted external-session handoff, a non-bypass import guardrail, and Goal Runtime event-envelope ownership. Major gaps remain in lease revocation/replay safety, hostile and sensitive import handling, executable non-bypass tests, and versioned per-event schema/recovery semantics across owner seams.",
+      "window_id": "WIN-DF5F1BFBD3B7-0009"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-DF5F1BFBD3B7-0001",
+    "document_path": "Plans/Goal_Runtime_System.md",
+    "micro_window_ids": ["WIN-DF5F1BFBD3B7-0008", "WIN-DF5F1BFBD3B7-0009"],
+    "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner defines cancellation precedence and settlement receipts across provider streams, subprocesses, MCP calls, browser/device sessions, and child runs?",
+      "Which owner defines AgentControlEnvelope and ChildAgentLease revision, persistence, revocation, and replay semantics across Goal Runtime, Executor, Tools, Models, Permissions, and storage?",
+      "Which owner defines external-session import parsing, credential redaction and retention, trust promotion, and rollback when imported and local histories conflict?",
+      "How are Goal Runtime event schema versions reconciled with Contracts_V0 field names, storage replay, Executor safe points, and requested/effective identity owners?"
+    ],
+    "feature_family_keys": ["interrupt-cancel-settlement", "agent-control-envelope", "subagent-execution-contract", "loop-breaker-registry", "child-agent-lease", "external-agent-handoff", "untrusted-import-guardrail", "goal-runtime-event-payload-closure"],
+    "research_queries": [
+      "cancellation settlement race semantics for streamed providers subprocesses MCP browser devices and child agents",
+      "capability lease revocation replay prevention and crash recovery for hierarchical agents",
+      "secure external agent session import credential transcript provenance validation and trust promotion",
+      "versioned event envelope compatibility replay idempotency and cross-owner contract evolution"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000053_attempt_0015_terminal"
+}

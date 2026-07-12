@@ -1,0 +1,821 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0032",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0032_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0032",
+    "packet_sha256": "fa12f55ec7d7298878682c1af196e6af4a7cc5037fcc7ef5a01f8b95e2bfddf9",
+    "anchor_refs_digest": "e70f98d531092d81c85afc1a0bdcdd6d1074facacb84a9769cc5aaef53edd445",
+    "comparator_refs_digest": "57482ba0d7f288ab2fe5f8974ad507d02b560e6cced59d60cedbb6cbb8b421ee"
+  },
+  "coverage": {
+    "anchor_count": 54,
+    "anchor_refs": [
+      "OPF::A005OM-0021::PF-0111",
+      "OPF::A005OM-0021::PF-0112",
+      "OPF::A005OM-0021::PF-0113",
+      "OPF::A005OM-0021::PF-0114",
+      "OPF::A005OM-0021::PF-0115",
+      "OPF::A005OM-0021::PF-0116",
+      "OPF::A005OM-0021::PF-0117",
+      "OPF::A005OM-0021::PF-0118",
+      "OPF::A005OM-0021::PF-0119",
+      "OPF::A005OM-0021::PF-0120",
+      "OPF::A005OM-0021::PF-0121",
+      "OPF::A005OM-0021::PF-0122",
+      "OPF::A005OM-0021::PF-0123",
+      "OPF::A005OM-0021::PF-0124",
+      "OPF::A005OM-0021::PF-0125",
+      "OPF::A005OM-0021::PF-0126",
+      "OPF::A005OM-0021::PF-0127",
+      "OPF::A005OM-0021::PF-0128",
+      "OPF::A005OM-0021::PF-0129",
+      "OPF::A005OM-0021::PF-0130",
+      "OPF::A005OM-0021::PF-0131",
+      "OPF::A005OM-0021::PF-0132",
+      "OPF::A005OM-0021::PF-0133",
+      "OPF::A005OM-0021::PF-0134",
+      "OPF::A005OM-0021::PF-0135",
+      "OPF::A005OM-0021::PF-0136",
+      "OPF::A005OM-0021::PF-0137",
+      "OPF::A005OM-0021::PF-0138",
+      "OPF::A005OM-0021::PF-0139",
+      "OPF::A005OM-0021::PF-0140",
+      "OPF::A005OM-0021::PF-0141",
+      "OPF::A005OM-0021::PF-0142",
+      "OPF::A005OM-0021::PF-0143",
+      "OPF::A005OM-0021::PF-0144",
+      "OPF::A005OM-0021::PF-0145",
+      "OPF::A005OM-0021::PF-0146",
+      "OPF::A005OM-0021::PF-0147",
+      "OPF::A005OM-0021::PF-0148",
+      "OPF::A005OM-0021::PF-0149",
+      "OPF::A005OM-0021::PF-0150",
+      "OPF::A005OM-0021::PF-0151",
+      "OPF::A005OM-0021::PF-0152",
+      "OPF::A005OM-0021::PF-0153",
+      "OPF::A005OM-0021::PF-0154",
+      "OPF::A005OM-0021::PF-0155",
+      "OPF::A005OM-0021::PF-0156",
+      "OPF::A005OM-0021::PF-0157",
+      "OPF::A005OM-0021::PF-0158",
+      "OPF::A005OM-0021::PF-0159",
+      "OPF::A005OM-0021::PF-0160",
+      "OPF::A005OM-0021::PF-0161",
+      "OPF::A005OM-0021::PF-0162",
+      "OPF::A005OM-0021::PF-0163",
+      "OPF::A005OM-0021::PF-0164"
+    ],
+    "comparator_count": 162,
+    "comparator_refs": [
+      "OPF::A005OM-0022::PF-0001",
+      "OPF::A005OM-0022::PF-0002",
+      "OPF::A005OM-0022::PF-0003",
+      "OPF::A005OM-0022::PF-0004",
+      "OPF::A005OM-0022::PF-0005",
+      "OPF::A005OM-0022::PF-0006",
+      "OPF::A005OM-0022::PF-0007",
+      "OPF::A005OM-0022::PF-0008",
+      "OPF::A005OM-0022::PF-0009",
+      "OPF::A005OM-0022::PF-0010",
+      "OPF::A005OM-0022::PF-0011",
+      "OPF::A005OM-0022::PF-0012",
+      "OPF::A005OM-0022::PF-0013",
+      "OPF::A005OM-0022::PF-0014",
+      "OPF::A005OM-0022::PF-0015",
+      "OPF::A005OM-0022::PF-0016",
+      "OPF::A005OM-0022::PF-0017",
+      "OPF::A005OM-0022::PF-0018",
+      "OPF::A005OM-0022::PF-0019",
+      "OPF::A005OM-0022::PF-0020",
+      "OPF::A005OM-0022::PF-0021",
+      "OPF::A005OM-0022::PF-0022",
+      "OPF::A005OM-0022::PF-0023",
+      "OPF::A005OM-0022::PF-0024",
+      "OPF::A005OM-0022::PF-0025",
+      "OPF::A005OM-0022::PF-0026",
+      "OPF::A005OM-0022::PF-0027",
+      "OPF::A005OM-0022::PF-0028",
+      "OPF::A005OM-0022::PF-0029",
+      "OPF::A005OM-0022::PF-0030",
+      "OPF::A005OM-0022::PF-0031",
+      "OPF::A005OM-0022::PF-0032",
+      "OPF::A005OM-0022::PF-0033",
+      "OPF::A005OM-0022::PF-0034",
+      "OPF::A005OM-0022::PF-0035",
+      "OPF::A005OM-0022::PF-0036",
+      "OPF::A005OM-0022::PF-0037",
+      "OPF::A005OM-0022::PF-0038",
+      "OPF::A005OM-0022::PF-0039",
+      "OPF::A005OM-0022::PF-0040",
+      "OPF::A005OM-0022::PF-0041",
+      "OPF::A005OM-0022::PF-0042",
+      "OPF::A005OM-0022::PF-0043",
+      "OPF::A005OM-0022::PF-0044",
+      "OPF::A005OM-0022::PF-0045",
+      "OPF::A005OM-0022::PF-0046",
+      "OPF::A005OM-0022::PF-0047",
+      "OPF::A005OM-0022::PF-0048",
+      "OPF::A005OM-0022::PF-0049",
+      "OPF::A005OM-0022::PF-0050",
+      "OPF::A005OM-0022::PF-0051",
+      "OPF::A005OM-0022::PF-0052",
+      "OPF::A005OM-0022::PF-0053",
+      "OPF::A005OM-0022::PF-0054",
+      "OPF::A005OM-0022::PF-0055",
+      "OPF::A005OM-0022::PF-0056",
+      "OPF::A005OM-0022::PF-0057",
+      "OPF::A005OM-0022::PF-0058",
+      "OPF::A005OM-0022::PF-0059",
+      "OPF::A005OM-0022::PF-0060",
+      "OPF::A005OM-0022::PF-0061",
+      "OPF::A005OM-0022::PF-0062",
+      "OPF::A005OM-0022::PF-0063",
+      "OPF::A005OM-0022::PF-0064",
+      "OPF::A005OM-0022::PF-0065",
+      "OPF::A005OM-0022::PF-0066",
+      "OPF::A005OM-0022::PF-0067",
+      "OPF::A005OM-0022::PF-0068",
+      "OPF::A005OM-0022::PF-0069",
+      "OPF::A005OM-0022::PF-0070",
+      "OPF::A005OM-0022::PF-0071",
+      "OPF::A005OM-0022::PF-0072",
+      "OPF::A005OM-0022::PF-0073",
+      "OPF::A005OM-0022::PF-0074",
+      "OPF::A005OM-0022::PF-0075",
+      "OPF::A005OM-0022::PF-0076",
+      "OPF::A005OM-0022::PF-0077",
+      "OPF::A005OM-0022::PF-0078",
+      "OPF::A005OM-0022::PF-0079",
+      "OPF::A005OM-0022::PF-0080",
+      "OPF::A005OM-0022::PF-0081",
+      "OPF::A005OM-0022::PF-0082",
+      "OPF::A005OM-0022::PF-0083",
+      "OPF::A005OM-0022::PF-0084",
+      "OPF::A005OM-0022::PF-0085",
+      "OPF::A005OM-0022::PF-0086",
+      "OPF::A005OM-0022::PF-0087",
+      "OPF::A005OM-0022::PF-0088",
+      "OPF::A005OM-0022::PF-0089",
+      "OPF::A005OM-0022::PF-0090",
+      "OPF::A005OM-0022::PF-0091",
+      "OPF::A005OM-0022::PF-0092",
+      "OPF::A005OM-0022::PF-0093",
+      "OPF::A005OM-0022::PF-0094",
+      "OPF::A005OM-0022::PF-0095",
+      "OPF::A005OM-0022::PF-0096",
+      "OPF::A005OM-0022::PF-0097",
+      "OPF::A005OM-0022::PF-0098",
+      "OPF::A005OM-0022::PF-0099",
+      "OPF::A005OM-0022::PF-0100",
+      "OPF::A005OM-0022::PF-0101",
+      "OPF::A005OM-0022::PF-0102",
+      "OPF::A005OM-0022::PF-0103",
+      "OPF::A005OM-0022::PF-0104",
+      "OPF::A005OM-0022::PF-0105",
+      "OPF::A005OM-0022::PF-0106",
+      "OPF::A005OM-0022::PF-0107",
+      "OPF::A005OM-0022::PF-0108",
+      "OPF::A005OM-0022::PF-0109",
+      "OPF::A005OM-0022::PF-0110",
+      "OPF::A005OM-0022::PF-0111",
+      "OPF::A005OM-0022::PF-0112",
+      "OPF::A005OM-0022::PF-0113",
+      "OPF::A005OM-0022::PF-0114",
+      "OPF::A005OM-0022::PF-0115",
+      "OPF::A005OM-0022::PF-0116",
+      "OPF::A005OM-0022::PF-0117",
+      "OPF::A005OM-0022::PF-0118",
+      "OPF::A005OM-0022::PF-0119",
+      "OPF::A005OM-0022::PF-0120",
+      "OPF::A005OM-0022::PF-0121",
+      "OPF::A005OM-0022::PF-0122",
+      "OPF::A005OM-0022::PF-0123",
+      "OPF::A005OM-0022::PF-0124",
+      "OPF::A005OM-0022::PF-0125",
+      "OPF::A005OM-0022::PF-0126",
+      "OPF::A005OM-0022::PF-0127",
+      "OPF::A005OM-0022::PF-0128",
+      "OPF::A005OM-0022::PF-0129",
+      "OPF::A005OM-0022::PF-0130",
+      "OPF::A005OM-0022::PF-0131",
+      "OPF::A005OM-0022::PF-0132",
+      "OPF::A005OM-0022::PF-0133",
+      "OPF::A005OM-0022::PF-0134",
+      "OPF::A005OM-0022::PF-0135",
+      "OPF::A005OM-0022::PF-0136",
+      "OPF::A005OM-0022::PF-0137",
+      "OPF::A005OM-0022::PF-0138",
+      "OPF::A005OM-0022::PF-0139",
+      "OPF::A005OM-0022::PF-0140",
+      "OPF::A005OM-0022::PF-0141",
+      "OPF::A005OM-0022::PF-0142",
+      "OPF::A005OM-0022::PF-0143",
+      "OPF::A005OM-0022::PF-0144",
+      "OPF::A005OM-0022::PF-0145",
+      "OPF::A005OM-0022::PF-0146",
+      "OPF::A005OM-0022::PF-0147",
+      "OPF::A005OM-0022::PF-0148",
+      "OPF::A005OM-0022::PF-0149",
+      "OPF::A005OM-0022::PF-0150",
+      "OPF::A005OM-0022::PF-0151",
+      "OPF::A005OM-0022::PF-0152",
+      "OPF::A005OM-0022::PF-0153",
+      "OPF::A005OM-0022::PF-0154",
+      "OPF::A005OM-0022::PF-0155",
+      "OPF::A005OM-0022::PF-0156",
+      "OPF::A005OM-0022::PF-0157",
+      "OPF::A005OM-0022::PF-0158",
+      "OPF::A005OM-0022::PF-0159",
+      "OPF::A005OM-0022::PF-0160",
+      "OPF::A005OM-0022::PF-0161",
+      "OPF::A005OM-0022::PF-0162"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0111",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator governs the retired media-specific Gemini CLI and Nanobanana route disposition.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0112",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0018"
+      ],
+      "rationale": "Compared all 162 packet comparators. The OpenCode capability-usage row is a consumer-specific usage-state contract, not media label ownership.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0113",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. Generic storage and payload records do not share the media runtime/storage authority or lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0114",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0071",
+        "OPF::A005OM-0022::PF-0098"
+      ],
+      "rationale": "Compared all 162 packet comparators. The readiness-manifest and risk-register rows are broader governance mechanisms, not the MGAC PlanUnit readiness defect.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0115",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0019",
+        "OPF::A005OM-0022::PF-0040"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode normalization and stream continuity are transport lifecycles, not the media.generate response and artifact lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0116",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns the media prompt preprocessing and kind-detection grammar.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0117",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator addresses Unicode, locale, and resource behavior for this media mini grammar.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0118",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator defines the same media kind, model, count, and aspect extraction lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0119",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0073"
+      ],
+      "rationale": "Compared all 162 packet comparators. Web extract normalization is a different input authority and consumer despite analogous precedence gaps.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0120",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns the media size, duration, format, voice, quality, and seed slot extraction lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0121",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator governs provider validation of the media-specific extracted slots and combinations.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0122",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0093"
+      ],
+      "rationale": "Compared all 162 packet comparators. Provider-status accessibility is a separate settings disclosure surface from the media capability picker.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0123",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0093"
+      ],
+      "rationale": "Compared all 162 packet comparators. Provider-status accessibility is adjacent but lacks the open-picker focus and dynamic eligibility lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0124",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0018",
+        "OPF::A005OM-0022::PF-0050",
+        "OPF::A005OM-0022::PF-0063"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode, browser, and automation availability contracts have different capability authorities and consumers.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0125",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0017",
+        "OPF::A005OM-0022::PF-0018",
+        "OPF::A005OM-0022::PF-0050"
+      ],
+      "rationale": "Compared all 162 packet comparators. Blocked-state and disclosure rows are other capability surfaces, not media routing and picker acceptance.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0126",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator defines the same Assistant, Interviewer, and PRD Builder capabilities.get caller obligation.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0127",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0135"
+      ],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. PF-0135 preserves the same plan-wide DRY anchor, authority, and governance lifecycle represented by this media anchor rule.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0128",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0082"
+      ],
+      "rationale": "Compared all 162 packet comparators. Firecrawl configuration/enablement is a provider setup state machine, not the media administrator toggle mapping.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0129",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0017"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode blocked normalization is a different runtime state authority despite a similar precedence concern.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0130",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0066"
+      ],
+      "rationale": "Compared all 162 packet comparators. Web dispatcher fallback is a different operation family and provider-routing lifecycle from explicit media-route authority.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0131",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0018",
+        "OPF::A005OM-0022::PF-0045",
+        "OPF::A005OM-0022::PF-0093"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode and web disclosure surfaces consume different route, usage, and provider state.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0132",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0104"
+      ],
+      "rationale": "Compared all 162 packet comparators. Browser screenshot capture has a separate consent, privacy, and capture lifecycle from generated-media response persistence.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0133",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0076"
+      ],
+      "rationale": "Compared all 162 packet comparators. The general owner-map boundary is adjacent governance, not the media appendix mirror lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0134",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns the media quality, seed, and BPM parsing guards.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0135",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns deterministic media negative-prompt combination.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0136",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0020"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode external lineage is a different compatibility bridge from retired MGAC-001.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0137",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0018",
+        "OPF::A005OM-0022::PF-0050",
+        "OPF::A005OM-0022::PF-0063"
+      ],
+      "rationale": "Compared all 162 packet comparators. Other capability availability rows have different producers, consumers, and state machines from media caller-specific usability.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0138",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0104"
+      ],
+      "rationale": "Compared all 162 packet comparators. Browser capture artifacts have a different authority, privacy boundary, and lifecycle from planning visual references.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0139",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0043"
+      ],
+      "rationale": "Compared all 162 packet comparators. Prompt Pipeline Vision Bridge is the downstream bridge authority; MGAC route eligibility is a distinct provider-capability boundary.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0140",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0043"
+      ],
+      "rationale": "Compared all 162 packet comparators. Vision Bridge routing is adjacent, but multimodal settlement owns a separate request schema and state machine.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0141",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0043"
+      ],
+      "rationale": "Compared all 162 packet comparators. Vision Bridge is adjacent, but opt-in fallback captioning owns a distinct artifact and user-visible modality promise.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0142",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns the media partial-artifact cleanup state and UI exit lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0143",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0044",
+        "OPF::A005OM-0022::PF-0047",
+        "OPF::A005OM-0022::PF-0051",
+        "OPF::A005OM-0022::PF-0055",
+        "OPF::A005OM-0022::PF-0058",
+        "OPF::A005OM-0022::PF-0059",
+        "OPF::A005OM-0022::PF-0129"
+      ],
+      "rationale": "Compared all 162 packet comparators. The Skills System rows split discovery, import, invocation, and identity lifecycles that this MiscPlan composite references without sharing one authority.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0144",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0063",
+        "OPF::A005OM-0022::PF-0066",
+        "OPF::A005OM-0022::PF-0079",
+        "OPF::A005OM-0022::PF-0082",
+        "OPF::A005OM-0022::PF-0085",
+        "OPF::A005OM-0022::PF-0090",
+        "OPF::A005OM-0022::PF-0101",
+        "OPF::A005OM-0022::PF-0144",
+        "OPF::A005OM-0022::PF-0158"
+      ],
+      "rationale": "Compared all 162 packet comparators. Tool dispatcher, provider configuration, support-tier, and projection rows are distinct owners and lifecycles from the Models capability mirror.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0145",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0162"
+      ],
+      "rationale": "Compared all 162 packet comparators. MCP projection command materialization has a different configuration consumer and security boundary from OpenCode command-template execution.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0146",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0032",
+        "OPF::A005OM-0022::PF-0035",
+        "OPF::A005OM-0022::PF-0051",
+        "OPF::A005OM-0022::PF-0055"
+      ],
+      "rationale": "Compared all 162 packet comparators. Canonical plugin trust and skill-import transactions are separate authorities from the OpenCode remote supply-chain lineage concern.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0147",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0123",
+        "OPF::A005OM-0022::PF-0162"
+      ],
+      "rationale": "Compared all 162 packet comparators. LSP edit transactions and MCP command projection are separate execution authorities from formatter subprocess and edit-event recovery.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0148",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Compared all 162 packet comparators. No comparator owns the same OpenCode formatter catalog detection contract.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0149",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0058",
+        "OPF::A005OM-0022::PF-0059"
+      ],
+      "rationale": "Compared all 162 packet comparators. PM-native local skill discovery has a different source, trust, cache, and overwrite lifecycle from remote OpenCode skill discovery.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0150",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0044",
+        "OPF::A005OM-0022::PF-0047",
+        "OPF::A005OM-0022::PF-0058"
+      ],
+      "rationale": "Compared all 162 packet comparators. PM-native skill discovery and collision rows are adjacent, but OpenCode frontmatter compatibility validation retains a distinct authority.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0151",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0047",
+        "OPF::A005OM-0022::PF-0129"
+      ],
+      "rationale": "Compared all 162 packet comparators. Skill management visibility and chat invocation are separate consumers from cross-surface availability consistency.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0152",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0036",
+        "OPF::A005OM-0022::PF-0129"
+      ],
+      "rationale": "Compared all 162 packet comparators. Plugin permission hooks and chat invocation do not own the OpenCode skill path, symlink, revocation, and compaction boundary.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0153",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0014",
+        "OPF::A005OM-0022::PF-0032",
+        "OPF::A005OM-0022::PF-0035"
+      ],
+      "rationale": "Compared all 162 packet comparators. Canonical plugin discovery, manifest trust, and catalog mutation are related but differ from the OpenCode plugin-loading lineage authority.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0154",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0033",
+        "OPF::A005OM-0022::PF-0036"
+      ],
+      "rationale": "Compared all 162 packet comparators. Plugin host policy and mutation hooks are adjacent, but PluginInput capability exposure is its own API authority and lifetime.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0155",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0029",
+        "OPF::A005OM-0022::PF-0036",
+        "OPF::A005OM-0022::PF-0141"
+      ],
+      "rationale": "Compared all 162 packet comparators. Plugin blocking/mutation hooks and orchestrator lifecycle middleware have distinct consumers and state machines from the OpenCode hook catalog.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0156",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0030",
+        "OPF::A005OM-0022::PF-0031",
+        "OPF::A005OM-0022::PF-0033",
+        "OPF::A005OM-0022::PF-0036"
+      ],
+      "rationale": "Compared all 162 packet comparators. Plugin aliases, configuration, host policy, and mutation rules are adjacent but do not share the built-in tool override authority seam.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0157",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0076",
+        "OPF::A005OM-0022::PF-0132"
+      ],
+      "rationale": "Compared all 162 packet comparators. Tools migration maps preserve other owner seams; they do not adjudicate run and agent SSOT precedence.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0158",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0033",
+        "OPF::A005OM-0022::PF-0076",
+        "OPF::A005OM-0022::PF-0132"
+      ],
+      "rationale": "Compared all 162 packet comparators. Plugin and Tools owner-map rows are neighboring governance contracts, not the same formatter, skill, plugin, and model routing boundary.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0159",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0076",
+        "OPF::A005OM-0022::PF-0132"
+      ],
+      "rationale": "Compared all 162 packet comparators. General owner-map rows do not close the field-level tool-provider-storage producer and consumer map.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0160",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0046",
+        "OPF::A005OM-0022::PF-0071"
+      ],
+      "rationale": "Compared all 162 packet comparators. Command-family coverage and readiness manifests are distinct governance consumers from UI ContractRef seam validation.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0161",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0089",
+        "OPF::A005OM-0022::PF-0130"
+      ],
+      "rationale": "Compared all 162 packet comparators. Research write authority and project-retrieval budgets have different scheduling and resource lifecycles from subagent context pruning.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0162",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0044",
+        "OPF::A005OM-0022::PF-0047",
+        "OPF::A005OM-0022::PF-0059",
+        "OPF::A005OM-0022::PF-0129"
+      ],
+      "rationale": "Compared all 162 packet comparators. PM-native skill identity, discovery, and invocation rules are adjacent but separate from the OpenCode compatibility import boundary.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0163",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0033",
+        "OPF::A005OM-0022::PF-0035",
+        "OPF::A005OM-0022::PF-0038"
+      ],
+      "rationale": "Compared all 162 packet comparators. Canonical plugin host, sandbox, and adapter contracts are related, but selecting the PM Rust plugin runtime is a distinct strategy decision lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0164",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0020",
+        "OPF::A005OM-0022::PF-0022",
+        "OPF::A005OM-0022::PF-0030"
+      ],
+      "rationale": "Compared all 162 packet comparators. OpenCode lineage, authority-domain, and alias rows are related, but this row is the explicit non-equivalence governance boundary.",
+      "confidence": 0.97
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

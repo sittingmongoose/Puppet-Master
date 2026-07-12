@@ -31,6 +31,26 @@
     .pm-sheen:hover .pm-hover-icon { transform: scale(1.06); }
     [data-motion="reduced"] .pm-sheen:hover { transform: none; }
 
+    /* --- pm6 jiggle: one-shot pointer-entry wobble (trigger JS in
+       pm6-js-globals adds .pm-jiggle-run; animationend removes it).
+       Keyframes animate the standalone `rotate` property, NOT transform,
+       so the transitioned translateY lift + glow keep composing beneath
+       the wobble (transient-class model: pm-term-subtab--enter). --- */
+    @keyframes pm6Jiggle {
+      0%   { rotate: 0deg; }
+      20%  { rotate: 1.8deg; }
+      45%  { rotate: -1.4deg; }
+      70%  { rotate: .8deg; }
+      100% { rotate: 0deg; }
+    }
+    .pm-jiggle-run { animation: pm6Jiggle 420ms var(--ease-out); }
+    /* friendly scale-conflict kills: snap the 1.1 spring-scale while the
+       symbol wobbles, and drop the sheen scale(1.005) during the wobble */
+    [data-theme^="friendly"] .activity-bar .icon:hover .symbol.pm-jiggle-run {
+      transition: background var(--motion-fast) var(--ease-smooth);
+    }
+    [data-theme^="friendly"] .pm-sheen.pm-jiggle-run:hover { transform: translateY(-2px); }
+
     /* --- motion keyframes --- */
     @keyframes pm-enter-up {
       from { opacity: 0; transform: translateY(12px); }
@@ -413,9 +433,41 @@
       line-height: 1;
     }
     /* per-system deltas */
-    .title-bar .page-tabs { margin-left: var(--2xl); flex: 1 1 auto; }
+    .title-bar .page-tabs {
+      flex: 1 1 auto;
+      /* glow gutter: pad the scrollport so the friendly mint active glow
+         (14px) and the 22px :focus-visible glow render inside it; the
+         negative margins cancel the layout shift (zero visual shift).
+         Per-strip on purpose — NOT in the shared recipe: theme skins
+         repad other strips and carry border-bottom hairlines that must
+         stay on the content edge. */
+      padding-block: 12px;
+      margin-block: -12px;
+      padding-inline: 6px;
+      margin-inline: -6px;
+      margin-left: calc(var(--2xl) - 6px);   /* keeps the 2xl tab offset under the -6px start margin */
+    }
     .orch-tabs .orch-tab { height: 100%; }   /* keep the 3px underline on the 36px strip's baseline */
     .editor-tabs .tab { max-width: 160px; }
+    /* glow gutter for the editor strip (gains close/overflow chrome later):
+       additive to the base padding (06: var(--xs) var(--md) 0 calc(var(--md)
+       + 8px)) so tab positions do not move; no bottom gutter — the strip's
+       border-bottom must hug the tabs. */
+    .editor-tabs {
+      padding-top: calc(var(--xs) + 12px);
+      margin-top: -12px;
+      padding-right: calc(var(--md) + 6px);
+      padding-left: calc(var(--md) + 8px + 6px);
+      margin-inline: -6px;
+    }
+    /* glass repads .editor-tabs (03: padding 0 10px 0 16px + hairline
+       border-bottom); its padding override already voids the gutter there,
+       so cancel the leftover margins to keep glass geometry exact (glass
+       editor tabs carry inset-only shadows — nothing to un-clip). */
+    [data-theme^="glass"] .editor-tabs {
+      margin-top: 0;
+      margin-inline: 0;
+    }
 
     /* ==================================================================
        DENSITY (design_system section 6) — data-density maps onto
@@ -543,4 +595,5 @@
       scroll-behavior: auto !important;
     }
     [data-motion="reduced"] #glass-bg * { animation: none !important; }
+    [data-motion="reduced"] .pm-jiggle-run { animation: none; }
   </style>

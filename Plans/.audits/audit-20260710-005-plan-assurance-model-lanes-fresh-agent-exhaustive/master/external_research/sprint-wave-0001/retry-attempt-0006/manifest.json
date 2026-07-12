@@ -1,0 +1,130 @@
+{
+  "activation_granted": false,
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "assignments": [
+    {
+      "assignment_id": "ER-0003",
+      "attempt_id": "attempt-0006",
+      "canonical_agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0003/attempt-0006/dispatch_intent.json",
+      "dispatch_intent_sha256": "349b1546931476b1364664591659569286a0ea10d5e91c0527e4984e8c48136b",
+      "feature_refs": [
+        "OPF::A005OM-0018::PF-0071",
+        "OPF::A005OM-0019::PF-0066"
+      ],
+      "future_activation_core_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/activation-transaction/activation-core.json",
+      "future_leaf_dispatch_authorization_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/activation-transaction/leaf-dispatch-authorizations/ER-0003.json",
+      "model": "gpt-5.6-luna",
+      "native_child_thread_id": null,
+      "native_child_turn_id": null,
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0006",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0006/result.json",
+      "owner_domains": [
+        "source_control_workspace_code",
+        "orchestration_runtime_execution"
+      ],
+      "packet_id": "ER6PKT-0001",
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/packets/ER-0003.json",
+      "packet_sha256": "2951e2b35f60ad3762d9c995fc3f306762b2d150dc7ae864b2322960ad795ead",
+      "prevalidation_credit": 0,
+      "reasoning_effort": "max",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0003/attempt-0006/dispatch_receipt.json",
+      "recovery_sequence": 1,
+      "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+      "research_credit": 0,
+      "research_questions": [
+        "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+        "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+        "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+        "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?"
+      ],
+      "task_thread_id": null,
+      "topic": "Versioned file-revert operation contracts versus whole-turn or conversation rewind"
+    },
+    {
+      "assignment_id": "ER-0008",
+      "attempt_id": "attempt-0006",
+      "canonical_agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal",
+      "dispatch_intent_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0008/attempt-0006/dispatch_intent.json",
+      "dispatch_intent_sha256": "344825c7391aeb25832e43401ad33b681ca5fa9138d791225f4009da0e2656c1",
+      "feature_refs": [],
+      "future_activation_core_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/activation-transaction/activation-core.json",
+      "future_leaf_dispatch_authorization_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/activation-transaction/leaf-dispatch-authorizations/ER-0008.json",
+      "model": "gpt-5.6-luna",
+      "native_child_thread_id": null,
+      "native_child_turn_id": null,
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0006",
+      "output_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0006/result.json",
+      "owner_domains": [
+        "orchestration_runtime_execution",
+        "planning_specification_governance"
+      ],
+      "packet_id": "ER6PKT-0002",
+      "packet_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/packets/ER-0008.json",
+      "packet_sha256": "9930ce37cf3aae3253ebed745b80a562cff4ad68c68acfafa8f8dceddb883d58",
+      "prevalidation_credit": 0,
+      "reasoning_effort": "max",
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0008/attempt-0006/dispatch_receipt.json",
+      "recovery_sequence": 2,
+      "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+      "research_credit": 0,
+      "research_questions": [
+        "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+        "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+        "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+        "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?"
+      ],
+      "task_thread_id": null,
+      "topic": "Agentic plan-to-code preflight and adversarial certification: executable acceptance criteria, simulation, negative-space review, evidence gates, human override, and regression traceability"
+    }
+  ],
+  "attempt_0005_native_capture_sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+  "attempt_0005_primary_cumulative_report_sha256": "3e5de5018a3e419fe3e3c85d0bf4598c2af92a8479c926dd0778bdf058a8a20d",
+  "attempt_id": "attempt-0006",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "concurrency_policy_v9_sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "counts": {
+    "activation_transaction_files": 0,
+    "assignments": 2,
+    "empty_outputs": 2,
+    "intents": 2,
+    "native_capture_rows": 0,
+    "output_files": 0,
+    "packets": 2,
+    "receipts": 0,
+    "results": 0
+  },
+  "coverage_credit": 0,
+  "cumulative_research_credit": 0,
+  "descendants_forbidden": true,
+  "followup_messages_forbidden": true,
+  "fork_turns": "none",
+  "fresh_direct_leaves": 2,
+  "merge_credit": 0,
+  "model": "gpt-5.6-luna",
+  "preserved_cumulative_floor_count": 6,
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "promotion_credit": 0,
+  "reasoning_effort": "max",
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+  "retries_forbidden": true,
+  "retry_namespace": "retry-attempt-0006",
+  "schema_version": "external-research-recovery-manifest-v6",
+  "semantic_transaction_cap": 2,
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH"
+}

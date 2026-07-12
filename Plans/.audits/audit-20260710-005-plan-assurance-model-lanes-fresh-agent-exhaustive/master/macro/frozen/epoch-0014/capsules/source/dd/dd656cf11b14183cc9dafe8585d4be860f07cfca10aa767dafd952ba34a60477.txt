@@ -1,0 +1,2335 @@
+L00000001	# Overseer Protocol (Canonical)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Retire tier-era canon and shadow fields
+L00000009	
+L00000010	
+L00000011	- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+L00000012	### Identity and blocked-policy transfer cluster
+L00000013	### Coverage blocker provider/model precedence owner section
+L00000014	### Approval scope key and approver identity
+L00000015	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000016	
+L00000017	
+L00000018	## 0. Purpose and scope
+L00000019	This document defines deterministic execution ordering for `plan_graph` nodes and completion semantics for Builder, Verifier, and Overseer roles.
+L00000020	
+L00000021	It applies to:
+L00000022	- Self-build plan graph artifacts in `Plans/plan_graph.json`
+L00000023	- User-project sharded plan graph artifacts under `.puppet-master/project/plan_graph/`
+L00000024	
+L00000025	For user projects, canonical entrypoint and derived-export policy are defined in `Plans/Project_Output_Artifacts.md` (`.puppet-master/project/plan_graph/index.json` canonical; monolithic export is optional/non-canonical).
+L00000026	
+L00000027	ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md
+L00000028	
+L00000029	---
+L00000030	
+L00000031	## 1. Role definitions
+L00000032	
+L00000033	### 1.1 Builder / node worker
+L00000034	
+L00000035	
+L00000036	The execution worker that performs the node attempt.
+L00000037	
+L00000038	### 1.2 Verifier / reviewer / corroborator
+L00000039	
+L00000040	
+L00000041	The execution-support actors that review, verify, or corroborate work products without becoming the scheduler.
+L00000042	
+L00000043	### 1.3 Package Overseer
+L00000044	
+L00000045	
+L00000046	Local governance for one `Work Package`.
+L00000047	
+L00000048	### 1.4 Seam Overseer
+L00000049	
+L00000050	
+L00000051	Cross-package integration governance for one `Feature Seam`.
+L00000052	
+L00000053	### 1.5 Runtime scheduler
+L00000054	The canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch.
+L00000055	
+L00000056	Rules:
+L00000057	- overseers are governance actors, not hidden second schedulers
+L00000058	- most node execution may be performed through overseer-spawned node workers, but runtime still owns canonical execution state
+L00000059	- Direct-runtime-dispatched execution is a `/special-case` or edge-case `/fallback/special` path; `/default` node-worker execution is overseer-spawned, with requested-vs-effective account/model/persona resolution recorded before dispatch.
+L00000060	- conversational actors that share runtime identity semantics do not become orchestration nodes, packages, or seams
+L00000061	- Executor is the runtime SSOT for attempt state across `/seam/lane/work-package` identity: no HTE-by-default mode is assumed, and HITL is represented as explicit blocked/approval boundaries rather than hidden scheduler behavior.
+L00000062	- Terminology ownership for work package, feature seam, package overseer, seam overseer, Weak Integration, Promotion, Corroboration, Graph Patch, Reopened, Revoked, promotion classes, lane pools, contamination, safe points, and effective execution identity remains in Glossary, Crosswalk, Decision Policy, and the plans index; Executor consumes those graph-owned terms for runtime behavior and does not revive tier vocabulary as primary canon.
+L00000063	- Any surviving `tier` language is compatibility or derived-view vocabulary only. `Plans/human-in-the-loop.md` (`human-in-the-loop.md`) may remain a strong tier-era owner doc for approval UX, but `Plans/Executor_Protocol.md` (`Executor_Protocol.md`) owns this runtime seam and is already ahead of it; `Plans/Orchestrator_Page.md` (`Orchestrator_Page.md`) is the larger tier-era drift multiplier for page structure, not a reason to weaken Executor canon.
+L00000064	- Governance layering is graph-based rather than tier-based: older `Overseer` execution-role language is retained only as compatibility framing, while a `work package overseer` owns package-local delivery/readiness truth and a `same-feature-seam overseer` owns same-feature-seam integration truth across packages. They are not redundant or conflicting co-governors; the governance-boundary is the feature-seam/package split, with firm contract language required wherever future seam writeups or recommendations describe authority.
+L00000065	- Worktree mode is resolved at dispatch from explicit policy inputs: `Plans/chain-wizard-flexibility.md` (`chain-wizard-flexibility.md`) may describe `no-worktrees` user intent, while `Plans/WorktreeGitImprovement.md` (`WorktreeGitImprovement.md`) may require `per-subtask` worktree isolation. Executor records which mode won for the attempt instead of treating worktree-on and worktree-off language as interchangeable.
+L00000066	- The graph-canonical `/control` loop is not a single giant agent walking the whole graph; runtime-core pressure-testing preserves a dual-overseer model: package and seam overseers govern spawned workers through `/model`, `/review`, scheduler evidence, and explicit runtime control records.
+L00000067	- The node-native execution-core contract carries reviewer, `/corroboration/concern`, and wake `/block` lifecycle hooks so downstream runtime-core consumers do not treat concern, corroboration, or graph-patch behavior as missing local inventions.
+L00000068	- Runtime scheduling consumes package/seam/lane and sharded-node state from durable runtime records such as seglog/redb-backed projections; `active-agents`, `TierType`, `TierContext`, and `/seams` compatibility labels cannot define executor lane ownership or hardcoded subagent registries.
+L00000069	- Background agent queues integrate with the Lane scheduler through package lane pools; snapshot consumers must resolve snapshot/safe-point ambiguity to `/safe-point/runtime` records, while `tier` / `subtask` queue labels remain compatibility lineage rather than package-lane ownership.
+L00000070	- Event and widget projections translate `run.tier_`, `run.tier_*`, `tier_tree`, and `Tiers` into seam/worktree/package-native, `/worktree/package-native`, and `/package/lane-aware` runtime events; live-status consumers read canonical runtime records and projections, while `PuppetMasterEvent` and `PuppetMasterEvent::*` streams are tier-era compatibility inputs.
+L00000071	- Concern `/resolution` records are first-class runtime objects created by runtime, package overseer, seam overseer, corroboration outcome, graph patch, or graph `/state-transition` logic; workers may nominate findings, but `/escalate/downgrade` actions update concern state through the concern owner contract.
+L00000072	- Executor opens runtime objects through `route_target` and `OpenSubject` consumers instead of request-centric local links; projection-backed actions must show `projection_health` and `projection_freshness` before mutating a blocked-episode, Feature Seam, Work Package, Seam Overseer, or Package Overseer target.
+L00000073	- Seam review loops trigger at package-completion boundaries, integration-edge and cross-package crossings, pre-seam completion, and high-impact package-overseer challenges; the result is review/corroboration evidence, not an implicit tier-era completion shortcut.
+L00000074	- A seam is not reconciliation-ready while it lacks a canonical event/`/record` family or owner doc; when direction is already-set, `/reconciliation` work updates stale consumers to the owner contract instead of inventing replacement canon.
+L00000075	- Cleanup `/reconciliation` moves stale `/tier` consumers to `/worktree/package/seam-aware` routing, `/effective/account/runtime` identity displays, canonical runtime actions, route payloads, and `/layout/help/glossary` terminology surfaces.
+L00000076	
+L00000077	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000078	## 2. Deterministic readiness
+L00000079	
+L00000080	Overseer MUST read node execution state from the canonical node document:
+L00000081	- Self-build graph: `Plans/plan_graph.json.nodes[]`
+L00000082	- User-project sharded graph: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
+L00000083	
+L00000084	Overseer MUST NOT infer execution state from index metadata alone.
+L00000085	ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/project_plan_graph_index.schema.json
+L00000086	
+L00000087	A node is ready if and only if all conditions are true:
+L00000088	1. `status == "queued"`
+L00000089	2. every node ID in `blockers[]` currently has `status == "done"`
+L00000090	3. `spec_lock_requirements.schema_versions` exactly matches `Plans/Spec_Lock.json.schema_versions` for every referenced key
+L00000091	
+L00000092	If multiple nodes are ready simultaneously, Overseer MUST choose the lexicographically smallest `node_id`.
+L00000093	ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json
+L00000094	
+L00000095	If any referenced Spec Lock version key is missing or mismatched, Overseer MUST treat that node as not ready.
+L00000096	ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Executor_Protocol.md
+L00000097	
+L00000098	**Spec Lock requirement key contract for user-project nodes:**
+L00000099	- For user-project node shards under `.puppet-master/project/plan_graph/nodes/*.json`, `spec_lock_requirements.schema_versions` MUST use key names published in `Plans/Spec_Lock.json.schema_versions`.
+L00000100	- User-project nodes MUST NOT invent ad-hoc schema-version key names.
+L00000101	- If a referenced key is absent from `Plans/Spec_Lock.json.schema_versions`, Overseer MUST treat the node as not ready.
+L00000102	
+L00000103	**Blocker integrity rule:**
+L00000104	- Every `blockers[]` entry MUST resolve to an existing canonical node document.
+L00000105	- An unresolved blocker ID is invalid graph input and the node MUST be treated as not ready.
+L00000106	
+L00000107	ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Project_Output_Artifacts.md
+L00000108	
+L00000109	---
+L00000110	
+L00000111	## 3. Canonical status lifecycle
+L00000112	
+L00000113	Success lifecycle:
+L00000114	`queued -> in_progress -> verify_pending -> verified -> done`
+L00000115	
+L00000116	Failure lifecycle:
+L00000117	`verify_pending -> failed`
+L00000118	
+L00000119	`done` and `failed` are terminal states for this protocol revision.
+L00000120	
+L00000121	UI/orchestrator labels such as `waiting_approval`, `needs_review`, `cancelled`, or `complete_with_warnings` are **run-local overlays / CTA states**, not canonical node `status` values in this protocol. Such overlays MUST be persisted as separate events or projections and MUST NOT replace the status lifecycle above.
+L00000122	
+L00000123	Overseer MUST enforce lifecycle ordering and reject out-of-order transitions.
+L00000124	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md
+L00000125	
+L00000126	---
+L00000127	
+L00000128	## 4. Auto-marking rule
+L00000129	
+L00000130	Verifier writes evidence to `evidence_pointer` and returns `verifier_result`.
+L00000131	
+L00000132	When `verifier_result.outcome == "pass"` and the evidence bundle exists and validates, Overseer MUST first set node `status = "verified"`, then immediately transition to `status = "done"`.
+L00000133	ContractRef: ContractName:Plans/Progression_Gates.md#GATE-005, ContractName:Plans/evidence.schema.json
+L00000134	
+L00000135	The `verified` state is a schema-enforced transitional state (requiring `outcome == "pass"` and `timestamp_utc` per both `plan_graph.schema.json` and `project_plan_node.schema.json`); Overseer SHALL NOT skip it.
+L00000136	ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/project_plan_node.schema.json
+L00000137	
+L00000138	Manual mark-complete action MUST NOT be required for verified nodes.
+L00000139	ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Executor_Protocol.md
+L00000140	
+L00000141	When `verifier_result.outcome == "fail"`, Overseer sets node `status = "failed"`.
+L00000142	ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
+L00000143	
+L00000144	---
+L00000145	
+L00000146	### 5.0 `execution_unit_context` canonical contract
+L00000147	
+L00000148	`Plans/Executor_Protocol.md` is the sole canonical owner of `execution_unit_context`. The normative machine-readable contract is `Plans/execution_unit_context.schema.json` with `schema_id = "pm.execution_unit_context"` and `schema_version = "1.0.0"`. Consumer docs may reference fields from that schema, but they must not copy or redefine the required or optional field set.
+L00000149	
+L00000150	Required fields are closed and must appear exactly as the schema lists them:
+L00000151	
+L00000152	| Field | Type and nullability | Requirement |
+L00000153	| --- | --- | --- |
+L00000154	| `schema_id` | string const, non-null | Contract identity; always `pm.execution_unit_context`. |
+L00000155	| `schema_version` | string const, non-null | Contract version; always `1.0.0` until a governed successor schema exists. |
+L00000156	| `execution_unit_type` | closed enum, non-null | Runtime unit class: `run`, `seam`, `package`, `node`, `overseer`, `delegated_subagent`, `recovery`, `verification`, or `host_operation`. |
+L00000157	| `execution_unit_id` | string, non-null | Canonical identity for the runtime unit being executed or recovered. |
+L00000158	| `run_id` | string, non-null | Canonical run identity for execution lineage. |
+L00000159	| `node_id` | string, non-null | Canonical node identity for dispatch and receipts. |
+L00000160	| `attempt_id` | string, non-null | Immutable local execution-attempt identity. |
+L00000161	| `execution_role` | closed enum, non-null | Runtime actor role: `assistant`, `interviewer`, `requirements_builder`, `prd_builder`, `package_overseer`, `seam_overseer`, `node_worker`, `reviewer`, `verifier`, `corroborator`, `recovery_actor`, or `host_operator`. |
+L00000162	| `operational_identity` | object, non-null | Stable audit identity with closed `identity_kind` and non-empty `identity_id`. |
+L00000163	| `requested_account_binding` | closed enum, non-null | Binding mode: `none`, `preferred`, `required`, or `system_default`. |
+L00000164	| `approval_scope_key` | string, non-null | Approval and blocked-action scope key for recovery/HITL joins. |
+L00000165	| `created_at_utc` | date-time string, non-null | UTC creation timestamp for persistence and replay ordering. |
+L00000166	
+L00000167	Optional fields are closed by the same schema. When present, nullable optional string fields may be `null` only when unknown or not applicable; arrays and closed enums are non-null when present:
+L00000168	
+L00000169	| Optional field family | Fields |
+L00000170	| --- | --- |
+L00000171	| Parent/project/planning linkage | `parent_execution_unit_id`, `project_id`, `thread_id`, `wizard_id`, `resolution_id` |
+L00000172	| Graph/lane/worktree linkage | `lane_id`, `package_id`, `seam_id`, `worktree_id`, `working_directory`, `scheduler_pass_id` |
+L00000173	| Account/policy resolution | `requested_account_id`, `requested_account_policy`, `effective_account_id` |
+L00000174	| Blocked/recovery/action linkage | `blocked_sequence`, `allowed_action_ids[]`, `permission_snapshot_id`, `safe_point_id` |
+L00000175	| Artifact/runtime/source-control refs | `usage_event_ref`, `runtime_policy_snapshot_ref`, `source_control_context_ref`, `host_assignment_id` |
+L00000176	| Persistence/replay controls | `redaction_profile`, `replay_policy`, `updated_at_utc` |
+L00000177	
+L00000178	Lifecycle ownership is Executor-owned: the scheduler, Executor intake, worker spawn, recovery, remediation, verification, and host-operation boundaries mint, receive, rehydrate, and persist the same `execution_unit_context` packet. Prompt Pipeline produces the immutable handoff inputs, Executor materializes the runtime packet, and storage/events/artifacts/UI/PlanCompile/Planning Wizard consume the packet or a ref to it.
+L00000179	
+L00000180	Persistence and replay rules:
+L00000181	- Persisted `execution_unit_context` payloads MUST include `schema_id` and `schema_version`; refs may point to a separately persisted payload only when the referenced payload carries those fields.
+L00000182	- Replay, retry, remediation, recovery, and safe-point restoration MUST rehydrate the persisted packet or fail closed; they MUST NOT reconstruct required identity from tier-era compatibility objects or loose prose fields.
+L00000183	- `additionalProperties: false` in the schema is normative. Adding, renaming, or widening fields requires a governed successor `schema_version`.
+L00000184	
+L00000185	Redaction and secret rules:
+L00000186	- `execution_unit_context` MUST NOT persist raw secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00000187	- Secret-bearing state is represented only through governed refs outside this payload; `redaction_profile` may disclose `no_secrets`, `redacted`, or `secret_refs_only`.
+L00000188	
+L00000189	Negative constraints:
+L00000190	- No consumer may redefine the field set, required list, optional list, enum values, or nullability rules.
+L00000191	- No persisted context payload is valid without `schema_version`.
+L00000192	- No runtime, storage, provider, GUI, PlanCompile, or Planning Wizard consumer may treat this contract as evidence that Puppet Master is buildable.
+L00000193	
+L00000194	Stale local worker identity names such as `requested_persona_id`, `effective_persona_id`, `_persona_id`, and `/values` persona slots are compatibility inputs only; provider and model choices remain precedence inputs that must resolve into `execution_unit_context` identity fields before dispatch.
+L00000195	
+L00000196	`execution_unit_context` is the node-native execution-core handoff that replaces or wraps `TierContext` between scheduler, worker spawn, verification, remediation, recovery, and UI projections.
+L00000197	
+L00000198	ContractRef: ContractName:Plans/execution_unit_context.schema.json, Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+L00000199	
+L00000200	### 5.1 Unified `DispatchContext` projection
+L00000201	The canonical dispatch view is the unified `DispatchContext` projection over one `execution_unit_context` instance. `DispatchContext` reads the required, optional, type, nullability, and enum rules from `Plans/execution_unit_context.schema.json`; it does not own a second required-field list.
+L00000202	
+L00000203	Behavioral rules:
+L00000204	- dispatch, recovery, remediation, and inspection read one execution-unit packet rather than tier-era compatibility objects.
+L00000205	- downstream consumers join losslessly to attempt, worktree, permission, and runtime records.
+L00000206	- blocked-action carrythrough stays anchored to blocked-episode lineage.
+L00000207	- Assistant Chat populates `execution_unit_context.worktree_id` and `working_directory` from `thread_state:{thread_id}:worktree_binding` at turn-start, freezes those values for the turn, and sends the frozen `working_directory` through FileSafe checks, tool invocation cwd, MCP tools, `@file` resolution, auto-retrieval scope, and provider CLI or DAE execution-context payloads.
+L00000208	- Worktree-bound safe points include `worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`, with `HEAD_sha` captured from `git rev-parse HEAD` in the worktree before mutation-capable execution continues.
+L00000209	- Runtime safe points are recovery/audit anchors, not user-facing restore points; Assistant Chat blocked-state and `/runtime-identity` consumers must rely on `execution_unit_context`, `usage_event_ref`, and blocked records instead of stale closure verdicts.
+L00000210	- A worktree-bound safe point is valid only while the referenced worktree identity is not contaminated and still matches the recorded fields; contamination or stale baseline must surface as a blocked/degraded recovery event.
+L00000211	- `/safe-point/runtime` policy is one field/event/object family: safe-point, restore-point, rollback, and contamination records share `/event/object` identity, state scope, lineage, and recovery semantics rather than competing local object models.
+L00000212	- Wizard-originated runtime handoffs use the same `execution_unit_context` and execution-context payload rules as Orchestrator and Assistant Chat, preserving launch lineage into DAE or provider execution.
+L00000213	- Worktree lifecycle actions are explicit: `recover` restores or reconciles a suspect `/orphaned/conflicted` workspace into a safe known state; `archive` retires active use while preserving `/metadata/lineage`; `prune` is a cleanup-oriented action for policy-eligible `/orphaned/live-no-longer-needed` worktrees; `remove` destructively removes live backing only after confirmation and eligibility checks.
+L00000214	- Historical lineage must survive live worktree cleanup: run/package/node/lane references preserve `worktree_id`, worktree path, branch and HEAD snapshot, compare target or commit-range snapshot, and owning package/lane identity; when backing worktree is missing, consumers render `historical/retired/removed` or `/retired/removed` rather than dropping the record.
+L00000215	- Worktree-aware projections must not assume one active-worktree or current-worktree scalar. File tree surfaces, artifact roots, `/worktree` displays, and safe-point payloads read active package-lane worktree sets, because rewrite-era surface ownership mixed with tier-era execution/worktree identity is a high-risk backdoor for drift.
+L00000216	- Runtime `/artifact` and tool drills carry attempt identity: `artifact_id`, attempt/`/receipt-based` refs, `tool_name`, invocation summary or `invocation_summary`, options, and `usage_event_ref` remain secondary detail refs under `execution_unit_context`; node-only or re-describing action contracts are compatibility inputs, never replacements for attempt identity or canonical runtime attribution.
+L00000217	- Wizard, Builder, settings/GUI, and CUP pre-run handoffs carry requested/effective account identity, `/account/role` disclosure, actor/role, execution-role/`execution_role`, `/model` plus provider/model/persona policy, `/governance`, explicit `/isolation` and worktree mode, and `/package/seam` launch lineage through the same `execution_unit_context`; stale `/Builder`, `/role`, `/subtask`, `/worktree`, `/model/persona`, `CUP`, `intent-specific`, `orchestration-mode`, `ContributePr`, and `single-branch` shortcuts are compatibility/source-lineage labels unless mapped into explicit runtime policy.
+L00000218	- `/interview` and wizard handoff payloads carry blocked-state and runtime identity through the same packet rather than stopping at local lineage fields.
+L00000219	- Executor and Prompt Pipeline are the canonical execution_unit_context producer/consumer pair; storage and `/event/docs` consume the shared field set by reference instead of cloning partial runtime identity payloads.
+L00000220	- Compatibility adapters may derive `decomposition_context` or `selection_context` for selector translation, but those objects are optional disclosure or planning views only; `execution_unit_context` remains the canonical object for dispatch, recovery, remediation, and runtime inspection.
+L00000221	- `Plans/Prompt_Pipeline.md` captures the immutable handoff bundle, and Executor consumes that bundle with `/runtime`, `/recovery`, and `/blocked` anchors intact when a resumed flow launches. `Plans/Executor_Protocol.md` owns the dispatch-side section for mandatory dispatch fields, conditional recovery/blocked fields, and optional disclosure fields.
+L00000222	- The attempt-native handoff identity includes `run_id`, `node_id`, `attempt_id`, `scheduler_pass_id`, and lineage metadata before worker spawn. Those fields make resumed runtime inspection deterministic instead of reconstructing a partial handoff from tier-era compatibility objects.
+L00000223	- Usage correlation follows `usage_event_ref` plus run/node/attempt/package/lane identity; tier-era usage correlation and `usage-event` shorthand are compatibility only.
+L00000224	- `Progress` remains widget-composed, but default widget contracts must not reintroduce tier-era or `tier_id` ownership. `Plans/usage-feature.md` (`usage-feature.md`) is consumed only through run/node/attempt/package/lane usage identity when Executor receipts or progress projections need cost and usage context.
+L00000225	- Optional UI, `/ledger/history/debuggability`, and inspection fields such as `thread_id`, `scheduler_lane`, `feature_seam_id`, `work_package_id`, `manual_priority`, `allowed_action_ids`, `allowed_action_ids[]`, `operational_identity`, and `effective_project_id` may enrich projections but are not prerequisites for dispatch validity.
+L00000226	- Assistant Chat and operational surfaces may expose `/queue` and thread-routing views for multi-lane concurrency and effective identity display, but those projections read scheduler/runtime records rather than collapsing the run into a single-threaded thread or queue owner.
+L00000227	- Every side-effect-bearing or evidence-bearing runtime object must answer which run, `/attempt`, node, `/thread`, provider attempt, effective account/runtime identity, `/runtime` object, `/artifact`, and `/usage` reference produced or owns it.
+L00000228	- Seams-tab projections group top-level `Feature Seams` and second-level `Work Packages`; node entries render as summaries and `/problem` drill-ins, while detail panels emphasize governance, completion, and `/completion/integration` truth rather than raw node execution churn.
+L00000229	- `/Orchestrator` navigation replaces tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress and `/Seams` set; `Progress` remains execution-state projection while `/Seams` carries seam/package governance structure.
+L00000230	- Source Control stays worktree-first while routing by canonical worktree object identity: `worktree_id` and `base_branch` are durable routing fields, CTAs preserve worktree lineage and `/state`, active-run ownership is visible before destructive actions, first-class worktree selection is not shell state, thread-scoped state, or tier metadata, and tier metadata cannot replace canonical worktree identity.
+L00000231	- Route payloads restore `focused_run_id` and `/object` context instead of merely switching tabs; route/object vocabulary stays shared so UI_Command_Catalog and Final GUI consumers do not re-fragment route targets.
+L00000232	- Route pivots normalize `object_kind = worktree` plus `/seam/package/concern/promotion` subjects through `object_kind` route targets, not filter-shaped payloads; `resume_url` is transport compatibility, and blocked-thread messages resolve to shared route/runtime actions.
+L00000233	- A `route-target` seam prevents deep-link routing from turning into per-surface spaghetti: exact-record exports depend on record-envelope ownership, `/help`, follow-up, cross-reference, and runtime-identity routes stay shared, and deep-link parameters may add presentation focus only after canonical object identity is known.
+L00000234	- Route payloads must not absorb filter or `/subview` noise and become surface-shaped again. Once Executor has the runtime contract, stale route examples are a consumer-doc sourcing problem, not a missing-runtime-contract problem.
+L00000235	- Storage already carries most route/open identity needed for this seam; the remaining lag belongs to universal-open and `/file-centric` consumer docs, which must consume Executor route/runtime identity instead of inventing a second open model.
+L00000236	- `Overseer` remains user-visible / doc-visible where this protocol title and legacy role framing require it, but `/runtime` worker copy prefers `overseer-spawned node worker`; `delegated worker` is a vague compatibility label, not the canonical execution actor name.
+L00000237	- File mutation logs store absolute paths. If `cmd.chat.revert` targets a removed worktree path such as `/project/.puppet-master/worktrees/thread-abc/src/main.rs` for an edit to `src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
+L00000238	
+L00000239	ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+L00000240	## 6. Overseer dispatch algorithm (deterministic)
+L00000241	
+L00000242	Compatibility/source-lineage disposition: older smallest-lexical-node dispatch wording is no longer the scheduler authority. The canonical executor pass is the scored ready-set algorithm in the Runtime Scheduler Addendum below; lexicographically smaller `node_id` is only the final deterministic tiebreak after scheduler lane, manual priority, transitive unblock count, and ready-since time.
+L00000243	
+L00000244	1. Evaluate readiness, blocked, backoff, graph-integrity, and capacity predicates over all candidate nodes.
+L00000245	2. Build the ready set.
+L00000246	3. Score the ready set with the canonical scheduler tuple.
+L00000247	4. Select up to available capacity.
+L00000248	5. Dispatch selected node workers.
+L00000249	6. On worker completion, route verification, receipt, blocked, retry, remediation, or replan outcomes through the canonical runtime outcome taxonomy.
+L00000250	7. Repeat on scheduler wake reasons until no ready nodes remain.
+L00000251	
+L00000252	Overseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
+L00000253	ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+L00000254	
+L00000255	### 6.1 Run-completion Document Packaging gate
+L00000256	
+L00000257	Before a run is finalized, Overseer MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced by the run that reached packaging triggers.
+L00000258	
+L00000259	A run MUST NOT be marked complete when any required Document Set audit (reconstruction/line accounting/idempotency, index-manifest match, clean-room determinism) fails.
+L00000260	
+L00000261	Scope note:
+L00000262	- This run-completion gate applies to generated `.puppet-master/**` artifacts whether or not the current repo-local `run-gates` command enforces those artifact families directly.
+L00000263	- Repo-local verifier coverage and generated-artifact validator coverage MAY be delivered by different commands, but the packaging contract remains mandatory before final completion.
+L00000264	
+L00000265	ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014
+L00000266	
+L00000267	## Runtime Scheduler Addendum (2026-03-08)
+L00000268	
+L00000269	Compatibility/source-lineage disposition: this historical scheduler addendum preserves exact runtime tokens and earlier scheduling examples. Where it overlaps later named PlanUnits, Contracts_V0, Run_Modes, Models_System, storage-plan, or Wiring_Matrix ownership, those owner docs govern; do not infer precedence from this addendum's position.
+L00000270	
+L00000271	This addendum supersedes any earlier lexical-dispatch wording wherever they conflict.
+L00000272	
+L00000273	### 1. Canonical scheduler pass
+L00000274	
+L00000275	The executor MUST process scheduling as a deterministic repeated pass:
+L00000276	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000277	1. Rebuild or refresh the candidate node set from canonical run state.
+L00000278	2. Recompute readiness for all candidate nodes.
+L00000279	3. Recompute blocked/backoff/capacity state.
+L00000280	4. Build the ready set.
+L00000281	5. Score ready nodes using the canonical ordered tuple.
+L00000282	6. Select as many nodes as available capacity permits.
+L00000283	7. Emit queue-analysis observability before dispatch.
+L00000284	8. Dispatch selected nodes.
+L00000285	
+L00000286	### 2. Readiness rules
+L00000287	
+L00000288	A node is ready only if all of the following are true:
+L00000289	- canonical node state is schedulable (`queued`, `reopened`, or equivalent ready-eligible state)
+L00000290	- every blocker in `blockers[]` has completed successfully or reached a state explicitly declared as dependency-satisfying
+L00000291	- no unresolved graph-integrity error exists for the node
+L00000292	- node is not in active backoff
+L00000293	- node is not blocked on HITL, clarification, external side-effect confirmation, permission denial, FileSafe, auth refresh, or replan-required state
+L00000294	- the node's plan/spec generation is still valid for the active `replan_generation`
+L00000295	- runtime capacity allows another dispatch in the applicable lane / pool
+L00000296	
+L00000297	Invalid blocker IDs remain invalid graph input and MUST keep the node non-ready.
+L00000298	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Contracts_V0.md
+L00000299	
+L00000300	### 3. Deterministic score tuple
+L00000301	
+L00000302	The canonical ready-node selection tuple is:
+L00000303	- `scheduler_lane`
+L00000304	- `manual_priority`
+L00000305	- `transitive_unblock_count`
+L00000306	- `ready_since_utc`
+L00000307	- `node_id`
+L00000308	
+L00000309	Normalization rules:
+L00000310	- `scheduler_lane` order is `remediation > unblocker > normal`
+L00000311	- larger `manual_priority` wins
+L00000312	- larger `transitive_unblock_count` wins
+L00000313	- older `ready_since_utc` wins
+L00000314	- lexicographically smaller `node_id` wins only as the final tiebreak
+L00000315	
+L00000316	Required notes:
+L00000317	- no critical-path weighting term is part of MVP selection
+L00000318	- queue analysis MUST expose the tuple breakdown so the user can see why a node was chosen
+L00000319	- `ready_since_utc` is set when the node first enters the ready set after being non-ready; it is retained while the node stays continuously ready
+L00000320	
+L00000321	Selection algorithm:
+L00000322	1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`.
+L00000323	2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`.
+L00000324	3. Persist the complete score tuple on every selected and non-selected node in `scheduler.pass`.
+L00000325	4. Preserve `non_selected_reason` for ready nodes that lose to capacity, lane, or policy bounds.
+L00000326	
+L00000327	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+L00000328	
+L00000329	### 4. Capacity-aware parallel dispatch
+L00000330	
+L00000331	The executor MUST select up to `available_slots` nodes per scheduler pass.
+L00000332	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+L00000333	
+L00000334	`available_slots` is derived from:
+L00000335	- run-level concurrency limit
+L00000336	- any active package/lane/seam concurrency constraints; legacy phase/task/subtask labels may only normalize into those scopes
+L00000337	- resource / provider saturation limits
+L00000338	- remediation lane reservations when configured
+L00000339	
+L00000340	Selection is global across the ready set, not level-by-level lexical dispatch.
+L00000341	
+L00000342	### 5. Wakeup triggers
+L00000343	
+L00000344	Canonical wake-trigger values and coalescing behavior are defined in `### Wake reasons and coalescing`.
+L00000345	
+L00000346	This section is a forward-reference only so the wake-trigger canon has a single owner section in this file.
+L00000347	
+L00000348	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+L00000349	
+L00000350	### Wake reasons and coalescing
+L00000351	
+L00000352	`wake_reason` is closed to:
+L00000353	- `prerequisite_resolved`
+L00000354	- `approval_resolved`
+L00000355	- `clarification_resolved`
+L00000356	- `auth_recovered`
+L00000357	- `startup_recovered`
+L00000358	- `backoff_expired`
+L00000359	- `verification_completed`
+L00000360	- `remediation_resolved`
+L00000361	- `safe_point_restored`
+L00000362	- `capacity_available`
+L00000363	- `replan_applied`
+L00000364	- `watchdog_recheck`
+L00000365	
+L00000366	Coalescing rules:
+L00000367	- Runtime keeps one pending wake set per `{run_id, replan_generation}`.
+L00000368	- The first wake recorded by `(recorded_at_utc, event_id)` becomes the primary `scheduler.pass.wake_reason`.
+L00000369	- Additional wakes in the same pending set are persisted in `scheduler.pass.coalesced_wake_reasons[]` and `scheduler.pass.wake_event_refs[]`.
+L00000370	- One pending wake set produces at most one `scheduler.pass`; no additional pass is created only to replay a coalesced reason.
+L00000371	- `watchdog_recheck` is admitted only when no event-driven wake is pending for the same `{run_id, replan_generation}`.
+L00000372	- `replan_applied` invalidates stale attempts from the prior `replan_generation` before ready-set scoring.
+L00000373	
+L00000374	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000375	
+L00000376	### 6. Blocked-to-runnable cascade
+L00000377	
+L00000378	When a dependency completes or a blocking condition clears:
+L00000379	- direct dependents are reevaluated immediately
+L00000380	- if now ready, they enter the ready set in the same scheduler wake cycle
+L00000381	- unrelated blocked or waiting nodes MUST NOT stall runnable work elsewhere in the graph
+L00000382	
+L00000383	Canonical prerequisite-resolution event:
+L00000384	- `node.prerequisite_resolved` — emitted when a prerequisite node completes successfully, is dependency-satisfying via skip policy, or is force-resolved, potentially unblocking dependent nodes
+L00000385	- payload: `{ source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: "completed" | "skipped" | "force_resolved" }`
+L00000386	- wake behavior: receiving this event triggers prerequisite re-evaluation on all `target_node_ids`; if all prerequisites are now resolved, the runtime blocked projection clears and the node transitions from `blocked` to `pending` / ready-eligible queue state in the same scheduler wake
+L00000387	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
+L00000388	
+L00000389	### 7. Failure classes and retry entry points
+L00000390	
+L00000391	
+L00000392	The executor classifies every failed or non-executed attempt into one canonical failure class or blocked-episode cause before deciding the next action.
+L00000393	
+L00000394	Rules:
+L00000395	- transient provider faults, auth expiry, quota pressure, verification failure, reviewer findings, storage I/O, and graph-integrity failure remain distinct outcome families.
+L00000396	- permission-denied, user-declined, headless approval denial, FileSafe block, external-side-effect block, and replan-needed outcomes stay blocked until the owning recovery action resolves them.
+L00000397	- retry, backoff, remediation, safe-point restore, and escalation are keyed from the canonical classification owned by `Plans/Contracts_V0.md`.
+L00000398	- no consumer in this document may revive legacy approval arrays, opaque recovery option lists, or tier-era compatibility nouns.
+L00000399	- Search-in-files / Search side panel handoffs consume Search/FileManager route ownership through `cmd.search.find_in_files` and `cmd.search.open_result`; SSH-backed file-operation handoffs consume FileManager/Tools classification so network/trust failures map to `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted`, permission denial maps to `permission_denied`, and not-found paths map to `path_not_found` without inventing executor-only file failure classes.
+L00000400	
+L00000401	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+L00000402	### 7.1 Classified outcome matrix
+L00000403	| `classifier_family` | `classifier` | Max retries | Backoff | Auto-retry? | Notes |
+L00000404	|---|---|---|---|---|---|
+L00000405	| `failure_class` | `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors and transient 5xx only |
+L00000406	| `failure_class` | `rate_limited` | 3 | `Retry-After` or 30s fallback before bounded retry continues | Yes | 429 / provider pressure remains distinct from generic transient failure |
+L00000407	| `failure_class` | `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |
+L00000408	| `failure_class` | `verification_failed` | 0 | — | No | may spawn remediation or review flow; no blind retry |
+L00000409	| `failure_class` | `reviewer_findings` | 0 | — | No | may spawn remediation or remain pending review |
+L00000410	| `failure_class` | `auth_expired` | 1 | immediate after refresh | Yes | refresh once, rebuild client, retry once |
+L00000411	| `blocked_reason_code` | `permission_denied` | 0 | — | No | requires explicit user decision |
+L00000412	| `blocked_reason_code` | `user_declined` | 0 | — | No | terminal unless the user explicitly changes posture |
+L00000413	| `blocked_reason_code` | `headless_ask_denied` | 0 | — | No | blocked or denied outcome; never silently retry |
+L00000414	| `blocked_reason_code` | `filesafe_blocked` | 0 | — | No | never auto-retry; honor FileSafe restore requirements |
+L00000415	| `blocked_reason_code` | `external_side_effect_blocked` | 0 | — | No | preserve local work and wait for approval/decline |
+L00000416	| `failure_class` | `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
+L00000417	| `failure_class` | `quota_exceeded` | 0 | — | No | user action or later retry window |
+L00000418	| `failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only |
+L00000419	| `blocked_reason_code` | `replan_required` | 0 | — | No | remain blocked until patch or replan is applied |
+L00000420	
+L00000421	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md
+L00000422	
+L00000423	Closed mapping requirements:
+L00000424	- provider/network 5xx or transient disconnects map to `failure_class = provider_transient`.
+L00000425	- provider 429 or quota pressure that can retry later maps to `failure_class = rate_limited`; hard quota exhaustion maps to `failure_class = quota_exceeded`.
+L00000426	- malformed model/provider structured output maps to `failure_class = structured_output_invalid`.
+L00000427	- verifier failure and reviewer findings stay distinct as `verification_failed` and `reviewer_findings`.
+L00000428	- missing or expired refreshable credentials map to `failure_class = auth_expired`; absent credentials, missing scopes, or required login before admission map to `blocked_reason_code = auth_required`.
+L00000429	- operator permission denial maps to `blocked_reason_code = permission_denied`.
+L00000430	- approval declined, headless approval denial, FileSafe denial, external side-effect approval, replan-required, validation blockers, worktree conflicts, and dirty worktrees remain blocked reason codes, not failure classes.
+L00000431	- unknown values fail closed as `blocked_reason_code = validation_blocked` until the owning enum is extended through governance.
+L00000432	
+L00000433	Per-class (`per-class`) retry rules:
+L00000434	- `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
+L00000435	- `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
+L00000436	- generic retry without prior classification is prohibited
+L00000437	
+L00000438	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000439	
+L00000440	### 7.2 Doom-loop guard
+L00000441	
+L00000442	If the same triple `(tool_name, serialized_args_hash, error_message)` is observed twice consecutively at the same nesting level, the executor MUST emit `stop.identical_failure` and terminate the run immediately.
+L00000443	
+L00000444	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+L00000445	
+L00000446	### 7.2A Cross-owner retry, usage, and lifecycle alignment
+L00000447	
+L00000448	The executor's retry/classification consumer surface spans `### 7.1 Classified outcome matrix`, `### 7.2 Doom-loop guard`, `### 7.3 Signal handling and process lifecycle`, and `### Blocked and retry behavior`; together those anchors are the executor `/classification/lifecycle` projection and must not redefine the owning Run Modes, Tools, storage, usage, or provider-facade contracts.
+L00000449	
+L00000450	Provider-transient retry evidence preserves the explicit `1s -> 2s -> 4s` sequence and the compatibility shorthand `/2s/4s`; retry counters are per-error after classification, not a shared global retry bucket. Doom-loop matching uses `(tool_name, args_hash, error_message)`, where `serialized_args_hash` is the canonical serialized form of `args_hash`; the terminal outcome is `kill.identical_failure`, with `stop.identical_failure` retained only as an older compatibility alias.
+L00000451	
+L00000452	The fresh-worker retry value is preserved only with explicit handoff artifacts. Executor does not copy the simplistic single-story loop as-is: retry may dispatch another overseer-spawned node worker, enter remediation, request review or `/corroboration`, open graph patch/replan, or restore through safe-point logic.
+L00000453	
+L00000454	MCP tool inventory discovery around `listTools` is degraded, not unavailable: retry three times with 1s backoff, then use the last-known stale tool list until the five-minute periodic refresh succeeds. Failed discovery must never permanent-kill the executor, provider session, or run by itself.
+L00000455	
+L00000456	Bridged-provider execution consumes `### Contract shape (facade)` and `### Provider guard rails` from `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`), the provider-facade owner-doc for bridge tool-event payloads. Provider adapters must complete `/parsing/sanitization/payload-preflight` before executor classification, and stream disconnects use `/resume` with at most three reconnect attempts, provider-specific constants, and a circuit breaker that moves open to half-open to close or `/reopen`.
+L00000457	
+L00000458	Storage and usage alignment consumes `### 2.4 Projector pipeline`, `## 3. Implementation checklist`, and `### 8.3 Startup and shutdown` from `Plans/storage-plan.md`, plus `### Canonical usage pipeline` from `Plans/usage-feature.md` (`/usage-feature.md`). Executor receipts carry `checkpoint-marker`, `run.completed.usage`, the bounded `usage.jsonl` compatibility retirement path, `lock-path` / FileSafe / worktree path alignment, and the split between pre-dispatch `kill.budget_exceeded` and post-response `done.budget_exceeded`.
+L00000459	
+L00000460	Regex-index build lifecycle state is executor-observable for scheduling, blocking, and cancellation: each project index transitions `no_index` -> `building_full` -> `ready`, `ready` -> `rebuilding_incremental` -> `ready`, and forced rebuild uses `ready` -> `building_full` -> `ready`; failures and cancellation still use the executor's classified error/cancel paths rather than anonymous indexing work.
+L00000461	
+L00000462	Regex-index builds use one build-slot per project. A new full or incremental build request either occupies that build-slot or supersedes the pending build plan before entering `building_full` or `rebuilding_incremental`, so executor scheduling never runs competing builders for the same project index.
+L00000463	
+L00000464	The executor-visible regex-index FSM is `no_index → building_full → ready → rebuilding_incremental → ready`; any state may move to `error` on failure. Superseded builds cancel through a `CancellationToken` checked between file-processing iterations, clean partial generation directories, and multi-project builds share a thread pool while per-project build slots enter FIFO order when the pool is saturated. Per-project build slots also prevent concurrent writes to regex-index generation directories.
+L00000465	
+L00000466	Helper and background attempts remain first-class usage contributors: `/helper/background` lineage must be represented in the execution receipt and projected usage record instead of disappearing into generic background work. Prompt/context handoff preserves implementation-grade `/context` continuation, giant-instruction-file handling, budget-visibility, and compatibility-shim retirement semantics.
+L00000467	
+L00000468	Lifecycle shutdown consumers treat shutdown as `/idempotent`: double shutdown is guarded with a Once/idempotent root and becomes a safe no-op rather than a second destructive lifecycle transition.
+L00000469	
+L00000470	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000471	
+L00000472	### 7.2B Stream coalescer, backpressure, and transport decision receipts
+L00000473	
+L00000474	Provider, CLI, SSE, WebSocket, stdout, unix-socket, and HTTP adapters settle streams through one stream coalescer. The coalescer admits `partial_delta`, `cumulative_snapshot`, `reasoning_delta`, `tool_call_fragment`, `provider_item_id`, `provider_error`, `final_assistant_turn`, and `durable_history_write` phases, but only `final_assistant_turn` plus the matching receipt may become durable assistant history.
+L00000475	
+L00000476	Transport defaults:
+L00000477	- `stream_terminal_event_timeout_ms = 5000`.
+L00000478	- Missing terminal event before timeout is a retryable transport failure with `failure_class = provider_transient` and `timeout_class = inactivity_timeout`; zero-usage aborted turns are not replay content.
+L00000479	- Backpressure bound is `max_pending_stream_frames = 1024` or `max_pending_stream_bytes = 16777216`, whichever trips first.
+L00000480	- Overflow returns a structured overload/blocking result with `blocked_reason_code = validation_blocked`, `transport_pressure = overloaded`, and no silent frame drop.
+L00000481	
+L00000482	Every adapter selection records `transport_decision_receipt` with `receipt_id`, `schema_version`, `run_id?`, `node_id?`, `attempt_id?`, `provider_id`, `adapter_kind`, `transport_kind`, `locality`, `auth_mode`, `replay_policy`, `backpressure_policy`, `fallback_policy`, `provider_support_ref`, `decision_reason`, `selected_at_utc`, and `event_refs[]`.
+L00000483	
+L00000484	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+L00000485	
+L00000486	### 7.3 Signal handling and process lifecycle
+L00000487	
+L00000488	
+L00000489	PM entrypoints establish the canonical shutdown root with `signal.NotifyContext` or an equivalent once-owned signal fan-out before any managed subprocess is started.
+L00000490	
+L00000491	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000492	
+L00000493	Provider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
+L00000494	
+L00000495	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+L00000496	
+L00000497	### 8. Safe points
+L00000498	
+L00000499	#### 8.1 Worktree snapshot in safe-point payloads
+L00000500	
+L00000501	
+L00000502	When an execution unit runs inside a worktree (thread-owned or orchestrator-owned), the safe-point event payload MUST include:
+L00000503	
+L00000504	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+L00000505	
+L00000506	| Field | Type | Description |
+L00000507	|---|---|---|
+L00000508	| `worktree_id` | string? | ID of bound worktree, null if running in main repo |
+L00000509	| `worktree_path` | string? | Absolute path of worktree on disk |
+L00000510	| `worktree_branch` | string? | Branch checked out in worktree |
+L00000511	| `HEAD_sha` | string? | `git rev-parse HEAD` captured from the worktree when the safe point or recovery snapshot is created |
+L00000512	| `worktree_dirty` | bool | Whether worktree has uncommitted changes at snapshot time |
+L00000513	
+L00000514	These fields enable remediation/resume to restore the correct execution context. They are advisory for recovery — the canonical binding source is the redb projection from seglog events.
+L00000515	
+L00000516	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+L00000517	
+L00000518	
+L00000519	Before any mutation-capable node attempt, the executor MUST create or attach a runtime safe point.
+L00000520	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000521	
+L00000522	Required properties:
+L00000523	- `safe_point_id`
+L00000524	- `run_id`
+L00000525	- `node_id`
+L00000526	- `attempt_id`
+L00000527	- `worktree_path` or equivalent execution root
+L00000528	- `worktree_id`, `branch_name`, and `HEAD_sha` for worktree-bound attempts, with `HEAD_sha` captured from `git rev-parse HEAD` in the worktree
+L00000529	- refs to the relevant pre-attempt artifact/workspace baseline
+L00000530	- active `replan_generation`
+L00000531	
+L00000532	Safe points are runtime recovery anchors. They are not user-facing restore points and MUST NOT be conflated with thread rewind/rollback semantics.
+L00000533	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/newfeatures.md
+L00000534	
+L00000535	### 9. Remediation child lineage
+L00000536	
+L00000537	When verification or review requires an automatic fix cycle:
+L00000538	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md
+L00000539	- create remediation child lineage attached to the failed node attempt
+L00000540	- record `remediation_root_id`, `remediation_parent_attempt_id`, `generation`, and `origin_failure_event_id`
+L00000541	- preserve finding IDs / issue IDs through the remediation cycle
+L00000542	- retry the parent node only after remediation completes and the retry policy says to continue
+L00000543	
+L00000544	A canonical graph node is created only when the remediation requires a replan that changes scope.
+L00000545	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md
+L00000546	
+L00000547	### 10. Draft decomposition degradation boundary
+L00000548	
+L00000549	The executor MUST distinguish between:
+L00000550	ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
+L00000551	- draft decomposition / pre-canonical planning
+L00000552	- canonical graph execution
+L00000553	
+L00000554	Rules:
+L00000555	- draft decomposition may degrade to deterministic flat sequencing with warning evidence when dependency output is invalid or cyclic
+L00000556	- canonical graph execution MUST NOT silently flatten or otherwise degrade invalid canonical graphs
+L00000557	- invalid canonical graphs are `graph_integrity` failures and stop execution until repaired
+L00000558	- A `text-only` projection is not a fallback mode for required rich execution surfaces; the executor MUST NOT silently degrade required artifacts, tool outputs, or browser/web surfaces to text-only output.
+L00000559	- When `auto-use` fires before canonical execution, on-trigger behavior creates or refreshes a plan in `draft` state, surfaces the sticky Plan panel, and keeps it user-dismissible and reviewable before execution observes the revised TODO projection.
+L00000560	ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/chain-wizard-flexibility.md
+L00000561	
+L00000562	### 11. Acceptance criteria
+L00000563	
+L00000564	- Ready-node selection is no longer defined as pure lexicographic dispatch.
+L00000565	- Queue analysis explains why selected nodes won and why ready-but-unselected nodes did not.
+L00000566	- Parallel dispatch is capacity-aware and deterministic.
+L00000567	- Blocked-to-runnable cascade is explicit and event-driven.
+L00000568	- Safe points exist before risky execution.
+L00000569	- Retry behavior is class-driven, not generic.
+L00000570	- Canonical graph integrity failures do not silently degrade.
+L00000571	## Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)
+L00000572	
+L00000573	Compatibility/source-lineage disposition: this historical recovery addendum preserves exact scheduler/recovery terms. It is subordinate to the consolidated runtime/addenda boundary and named owner sections where overlapping rules appear.
+L00000574	
+L00000575	This addendum is normative and supersedes any earlier pure-lexicographic dispatch wording where they conflict.
+L00000576	
+L00000577	### Runtime recovery scheduler pass
+L00000578	The executor MUST process scheduling as a deterministic pass with these steps:
+L00000579	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000580	1. refresh candidate runtime state for the active `replan_generation`
+L00000581	2. recompute readiness, blocked state, and backoff state
+L00000582	3. recompute lane and score terms for every ready candidate
+L00000583	4. select up to available capacity
+L00000584	5. emit queue-analysis state before dispatch
+L00000585	6. dispatch selected attempts
+L00000586	
+L00000587	### Readiness contract
+L00000588	A node is ready only when all blockers are satisfied, the generation is current, the node is not blocked, the node is not in backoff, and capacity rules permit dispatch in its lane. Nodes blocked by permission denial, FileSafe, auth refresh, user confirmation, or replan-required state are not ready.
+L00000589	
+L00000590	### Runtime recovery score tuple
+L00000591	The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+L00000592	- `scheduler_lane` order: `remediation > unblocker > normal`
+L00000593	- higher `manual_priority` wins
+L00000594	- higher `transitive_unblock_count` wins
+L00000595	- older `ready_since_utc` wins
+L00000596	- `node_id` is the final tiebreak only
+L00000597	
+L00000598	No critical-path term is part of MVP selection.
+L00000599	
+L00000600	### Runtime recovery wakeup triggers
+L00000601	See `### Wake reasons and coalescing` for the canonical wake-trigger list, `wake_reason` values, and watchdog-only polling rule.
+L00000602	
+L00000603	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
+L00000604	
+L00000605	### Blocked and retry behavior
+L00000606	
+L00000607	The executor treats rich `/editor-agent` and `/workbench` surfaces as runtime peers of terminal, browser, document, and artifact callers. `/plugin-first` and command-first entry points, `/rules/skills` guided plans, multi-surface review loops, `/persisted` tabs and `/splits/windows`, and `/history/navigation` re-entry all dispatch through the same `execution_unit_context` rather than surface-local state. Auth `/login` friction, remote/reconnect loss, dumb-mode or `/disabled-feature` fallbacks, regex-heavy UI blocking, indexing/startup cost, performance pressure under large projects, and IDE `/workbenches` switching clutter surface as explicit blocked, degraded, backoff, or recovery events and MUST NOT erase attempt identity, safe points, worktree binding, diff/review visibility, or user-visible autonomy defaults.
+L00000608	
+L00000609	Browser-driven debug handoff uses explicit pause and `/resume` inside an isolated automation session. Auth and `/manual-repro` boundaries degrade to `attention_required`; the MVP does not support chaotic concurrent mixed steering as the default co-pilot model. Richer co-piloting, collaborative browser steering, and broader remote parity are future expansions after the pause/resume handoff proves stable.
+L00000610	
+L00000611	Runtime context summarization should stay PM-native. The executor must not transplant a provider `_context_updates` protocol as-is; PM treats that protocol as a reference for incremental tool-result compression driven on every tool call, then emits its own context-detail and compaction updates so tool-result history remains auditable. Incremental shrinking must preserve stable tool-call handles such as `tcN` labels for safe targeted replacement, and the active model or LLM may replace stale full tool results with short audited summaries as part of the ordinary subsequent model/tool-call flow, without a separate extra LLM call; already-compressed results must not be re-compressed.
+L00000612	
+L00000613	UI `/checkpoint`, `/approve/deny`, retry, and `/seam/lane/promotion/resolution-thread` actions are runtime action families keyed by `blocked_sequence` and `allowed_action_ids[]`; they are not graph-local commands, completed-work shortcuts, or single-current-task state.
+L00000614	
+L00000615	Projection and setup rules:
+L00000616	- Cursor-native managed instructions target `.cursor/rules/*.mdc` and the `.cursor/rules` tree; `.cursorrules` is legacy compatibility only and must not be the primary managed target. Compatibility outputs such as `AGENTS.md`, `CLAUDE.md`, root-level files, or provider-native projected copies are optional, target-based projections, and readiness must never depend solely on projected copies.
+L00000617	- At launch-time, a `PM Outdated` projection should auto-reproject before run launch when safe.
+L00000618	- GUI auth/setup copy exposes user-visible choices such as `Sign in with ChatGPT` and `Use API Key`; lower-level protocol details remain recovery diagnostics unless needed to resolve failure.
+L00000619	- Direct-Gemini OAuth removal is treated as PM app-policy and /compliance/public-distribution policy, not evidence that Google OAuth disappeared as a protocol.
+L00000620	
+L00000621	
+L00000622	The executor MUST classify every non-success outcome before applying policy.
+L00000623	
+L00000624	- blocked episodes preserve local work, runtime identity, and explicit resume prerequisites.
+L00000625	- FileSafe and external side-effect blocks do not auto-retry; they wait for the owning restore or approval action.
+L00000626	- one decision path must not treat the same situation as both a failure class and a blocked-episode cause.
+L00000627	
+L00000628	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
+L00000629	
+L00000630	### Runtime recovery attempt identity and safe points
+L00000631	Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
+L00000632	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000633	
+L00000634	For MVP cleanup, the executor uses the canonical workspace or `/remote` project binding plus safe points, restore points, and explicit temporary-vs-durable mutation lineage. It must not require sandbox worktree `/jail` semantics for ordinary debug instrumentation cleanup.
+L00000635	
+L00000636	### Runtime recovery remediation lineage
+L00000637	Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, finding identifiers, and final resolution state. A new canonical graph node is created only when a replan changes canonical graph scope.
+L00000638	
+L00000639	### Degradation boundary
+L00000640	Invalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.
+L00000641	ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
+L00000642	
+L00000643	## Canonical Runtime Scheduler Canonical Alignment (2026-03-09)
+L00000644	
+L00000645	Compatibility/source-lineage disposition: this historical canonical-alignment addendum preserves scheduler, blocked, score, and graph-lock tokens. Executor implementers must follow named owner sections and PlanUnits rather than treating adjacent addenda order as precedence.
+L00000646	
+L00000647	This addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.
+L00000648	
+L00000649	### Runtime scheduler readiness reconciliation
+L00000650	A node is ready only when all of the following are true:
+L00000651	1. lifecycle state is ready-eligible for dispatch
+L00000652	2. every blocker resolves to an existing canonical node in the active graph
+L00000653	3. every resolved blocker is in a dependency-satisfying state
+L00000654	4. the node is not in active backoff
+L00000655	5. the node is not blocked by any active runtime projection
+L00000656	6. the node's `replan_generation` matches the active run generation
+L00000657	7. no worktree/conflict rule forbids dispatch
+L00000658	8. lane/pool capacity permits dispatch
+L00000659	
+L00000660	Invalid blocker IDs are `graph_integrity` problems and keep the node non-ready.
+L00000661	
+L00000662	### Node lifecycle versus runtime overlays
+L00000663	Node lifecycle remains the graph-progress contract.
+L00000664	
+L00000665	Runtime overlays include blocked, backoff, retrying, remediation, and waiting-approval states.
+L00000666	
+L00000667	Rules:
+L00000668	- overlays do not replace canonical node lifecycle values
+L00000669	- readiness consults both lifecycle state and active runtime overlays
+L00000670	- `waiting_approval` is represented through blocked/runtime records rather than by mutating node lifecycle taxonomy
+L00000671	- safe-point and remediation state likewise remain runtime overlays attached to attempts or blocked projections
+L00000672	
+L00000673	This preserves one stable lifecycle contract for planning/graph semantics while allowing runtime recovery behavior to remain richly observable.
+L00000674	
+L00000675	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/human-in-the-loop.md
+L00000676	
+L00000677	### Runtime scheduler score term definitions
+L00000678	The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+L00000679	
+L00000680	Rules:
+L00000681	- `scheduler_lane = remediation` only for remediation lineage work
+L00000682	- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation
+L00000683	- `scheduler_lane = normal` otherwise
+L00000684	- `manual_priority` is an integer `0..100`; default `50`; higher wins
+L00000685	- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded
+L00000686	- `ready_since_utc` is reset whenever the node leaves the ready set for any reason and is retained only while the node stays continuously ready
+L00000687	- `node_id` is the final tiebreak only
+L00000688	
+L00000689	### Capacity-aware dispatch cycle
+L00000690	For each scheduler wake:
+L00000691	1. refresh candidate runtime state
+L00000692	2. recompute readiness and score terms
+L00000693	3. synchronously reevaluate directly affected dependents for the current wake
+L00000694	4. build the global ready set
+L00000695	5. emit queue-analysis observability keyed by `scheduler_pass_id`
+L00000696	6. select up to `available_slots` in canonical score order
+L00000697	7. dispatch selected attempts
+L00000698	
+L00000699	### Runtime blocked-to-runnable cascade timing
+L00000700	When a dependency completes or a blocking condition clears:
+L00000701	- direct dependents are reevaluated synchronously in the same wake cycle
+L00000702	- newly ready nodes enter the same ready set before dispatch completes
+L00000703	- no extra scheduler pass is required just to notice a direct unblock
+L00000704	
+L00000705	### Class-driven next-step rules
+L00000706	- provider/model selection, worktree availability, and prerequisite readiness are resolved before dispatch begins.
+L00000707	- dirty-baseline, merge-conflict, approval, auth, or validation blockers surface through the canonical blocked-episode contract owned by `Plans/Contracts_V0.md`.
+L00000708	- class-driven follow-up never silently rewrites runtime identity, worktree ownership, or recovery posture.
+L00000709	- HTE and DAE execution paths share graph-lock and write-scope safety: `/generation` staleness, under-owned `/degradation`, cleanup-remediation loops, FileSafe bypass, side-effect and remote side-effect uncertainty, safe-point/restore-point conflicts, and projection trust failures surface as blocked/degraded/remediation classes rather than silent fallback.
+L00000710	- `node-blocked`, `wizard-blocked`, and thread-blocked projections keep family-local fields separate: node-blocked owns `blocked_sequence`, `attempt_id`, and `failure_class`; wizard-blocked may add clarification `/report` fields; `/persisted` thread notices remain rendered consumer state.
+L00000711	- Executor mints `blocked_sequence` when a HITL, auth, `/storage`, or recovery condition creates a blocked-episode; repeated updates keep the same `blocked_sequence`, and `request_id` is lineage or lookup metadata rather than a competing approval target.
+L00000712	- `startup_recovered` and startup-recovery handshakes restore the existing blocked-episode and `blocked_sequence` when one exists; recovery MUST NOT cause silent block-loss or accidental episode reminting.
+L00000713	- Reserved diagnostic schemas for execution, audit, handoff, and HITL events carry `attempt_id` and preserve attempt continuity as an architecture invariant.
+L00000714	
+L00000715	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md
+L00000716	
+L00000717	### Graph-lock boundary
+L00000718	Draft decomposition fallback is allowed only before `run.graph_canonical_locked`.
+L00000719	After that event:
+L00000720	- invalid canonical graph structure is `graph_integrity`
+L00000721	- execution MUST stop accepting new dispatches
+L00000722	- no silent flattening or degraded canonical execution is allowed
+L00000723	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/chain-wizard-flexibility.md
+L00000724	
+L00000725	### Runtime attempt identity rule
+L00000726	Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.
+L00000727	After graph lock, execution MUST NOT fall back to a planning-artifact-centric, identity-blind, single-branch execution-model; DAE and orchestration paths preserve runtime identity plus `/corroboration/promotion/runtime` context.
+L00000728	## Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)
+L00000729	
+L00000730	
+L00000731	Compatibility/source-lineage disposition: this historical lifecycle addendum preserves attempt, tier-era, blocked-episode, approval, and provider/model carry-through tokens. It remains a source-lineage section subordinate to the consolidated executor/runtime owner boundary.
+L00000732	
+L00000733	This addendum deprecates tier-era vocabulary and extends execution_unit_context, blocked-episode continuity, approval scope, and precedence/worktree ownership semantics.
+L00000734	
+L00000735	### Tier-era compatibility retirement
+L00000736	
+L00000737	Normative rules:
+L00000738	- Introduce execution_unit_context as canonical runtime-facing context object.
+L00000739	- The canonical dispatch/runtime packet carries execution_unit_context.
+L00000740	- The retired tier-era context object is a derived or compatibility-only selection/decomposition helper.
+L00000741	- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+L00000742	- The retired tier-era context object and the retired tier-era identifier are not canonical runtime fields; execution_unit_context together with execution_unit_type defines authoritative runtime scope.
+L00000743	- Worker spawn MUST mint or receive execution_unit_context before dispatch, and recovery plus remediation MUST rehydrate that same packet rather than reconstruct runtime scope from retired tier-era compatibility fields.
+L00000744	- Coordination services, scheduler joins, and UI inspection surfaces MUST read one shared execution_unit_context instance so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.
+L00000745	- Compatibility adapters MAY derive the retired tier-era context object only for legacy selector translation or decomposition, but they MUST NOT persist, exchange, or rehydrate it as the live runtime contract.
+L00000746	  ContractRef: Primitive:ExecutionContext
+L00000747	  ContractRef: ContractName:Plans/Executor_Protocol.md
+L00000748	
+L00000749	### Blocked episode identity and restart recovery
+L00000750	
+L00000751	
+L00000752	#### Blocked episode acceptance carry-through
+L00000753	- Make blocked_sequence canonical per run_id/node_id blocked episode
+L00000754	- Restore unresolved blocked episodes on restart without reminting them
+L00000755	- Keep request_id as subordinate compatibility handle only
+L00000756	- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+L00000757	- Carry usage switch-history and usage execution-role follow-through
+L00000758	- Separate blocked-episode approval scope from session-wide policy scope
+L00000759	- Persist durable approver identity fields on approval and rejection events
+L00000760	
+L00000761	### Provider/model precedence and parallel worktree assignment
+L00000762	
+L00000763	#### Provider/model acceptance carry-through
+L00000764	- Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+L00000765	- Tie that section to parallel-node worktree assignment and ownership transitions
+L00000766	- Provider and event records for dispatched work must be promotion-aware and preserve requested/effective account resolution across package and seam overseer delegation; `Phase/Task/Subtask/Iteration` remains legacy taxonomy, not canonical runtime ownership.
+L00000767	- Actor resolver inputs include actor type, package overseer, seam overseer, node worker, verifier/`/reviewer`, corroborator, graph patch planner, recovery actor, operation type, scope level, language/framework, repo `/domain`, and GUI, backend-heavy, or infra-heavy hints. Planning and `/patching` are explicit operation types rather than hidden fallbacks.
+L00000768	- The high-level persona defaults remain policy defaults, not vague prompts: package overseer is biased toward package-local delivery and `/governance` readiness truth, seam overseer toward cross-package integration truth, node worker toward `/implementation` by language and `/framework/work`, verifier/`/reviewer` toward review, corroborator toward `/challenge`, recovery actor toward `/recovery`, and graph patch planner toward `/architecture`.
+L00000769	- `auto` resolution must be explainable through an actor-type mapping. When `auto` selects an account/model/persona for an overseer or worker, the receipt records the resolved actor-type basis so overseer-heavy rewrite roles do not feel arbitrary.
+L00000770	
+L00000771	Persisted executor/runtime events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and the machine-readable schema in `Plans/event_record.schema.json`. Executor-owned records may define event semantics and receipts, but they must not copy the EventRecord field set or store raw secrets in event payloads.
+L00000772	
+L00000773	### Run-level deferred rule
+L00000774	- if any node is runnable, the run remains active.
+L00000775	- if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred rather than terminal.
+L00000776	- prerequisite resolution, restore completion, remediation completion, auth recovery, or capacity change wakes the scheduler.
+L00000777	
+L00000778	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+L00000779	## Counter Relationships and Event Ordering Addendum
+L00000780	
+L00000781	### Counter relationships
+L00000782	
+L00000783	```
+L00000784	attempt_count = automatic_retry_count
+L00000785	             + prerequisite_resume_count
+L00000786	             + manual_resume_count
+L00000787	             + remediation_retry_count
+L00000788	             + 1 (initial attempt)
+L00000789	```
+L00000790	
+L00000791	- `attempt_count` is the total number of attempts for a node across all causes.
+L00000792	- Each sub-counter tracks attempts triggered by a specific cause.
+L00000793	- The sum of all sub-counters plus the initial attempt MUST equal `attempt_count`.
+L00000794	- Each sub-counter increments at attempt start, not at completion.
+L00000795	- Independent policy counters MUST NOT be inferred by subtracting from `attempt_count`.
+L00000796	
+L00000797	Debug-mode verification records a `verification_summary` with `adapter_kind`, `attempt_count`, `passed`, `heuristic_version`, optional `latest_receipt_ref`, and optional `notes[]`. Agent-session verification passes only when the prior `failure_class`, `blocked_reason_code`, or tool error signature does not recur and the rerun reaches the expected terminal state for that adapter.
+L00000798	
+L00000799	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000800	
+L00000801	### Event ordering guarantees
+L00000802	
+L00000803	1. **Per-node sequential**: All events for a given `node_id` MUST be processed in emission order. The event bus MUST NOT reorder events within a single node's event stream.
+L00000804	2. **Cross-node eventual**: Events from different nodes have no guaranteed relative order. Consumers MUST be idempotent and tolerate out-of-order delivery across nodes.
+L00000805	3. **Deduplication**: The event bus MUST deduplicate events by `(event_name, node_id, attempt_id, ts)` tuple. Duplicate deliveries are silently dropped.
+L00000806	4. **Wakeup coalescing**: Multiple wakeup triggers arriving within a single scheduler pass window are coalesced into one scheduler pass. The `wake_reason` for the pass records the first trigger; additional triggers are logged but do not cause additional passes.
+L00000807	
+L00000808	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+L00000809	
+L00000810	### Replan generation lifecycle
+L00000811	
+L00000812	`replan_generation` is a per-run monotonic `u32` counter starting at `0` for the initial graph.
+L00000813	
+L00000814	- Increments by exactly 1 each time a replan is applied and the canonical graph is updated via `run.graph_canonical_locked`.
+L00000815	- A replan is defined as any structural change to the canonical graph (adding/removing/reordering nodes or edges).
+L00000816	- Attempts, safe points, and blocked projections created under generation N become stale when generation increments to N+1.
+L00000817	- Stale attempts remain queryable for audit but are never resumable.
+L00000818	- There is no practical maximum value.
+L00000819	
+L00000820	ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000821	
+L00000822	## Execution Context: Worktree Handoff
+L00000823	
+L00000824	PM-native `Open With` stays inside the file/editor surface and carries the same worktree handoff context as other executor file operations. Any later OS handoff must be a separate explicit command such as `cmd.file.open_in_system_default`, so system-default launching does not dilute PM-native target selection, blocked/recovery semantics, or worktree-scoped file identity.
+L00000825	
+L00000826	
+L00000827	When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes the Executor-owned `execution_unit_context` packet plus safe-point or source-control context refs when branch/snapshot recovery data is needed. `execution_unit_context` owns `working_directory` and `worktree_id`; branch, HEAD, dirty-state, and worktree-mode booleans belong to safe-point/source-control/worktree-binding context rather than the closed execution-unit packet.
+L00000828	
+L00000829	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+L00000830	
+L00000831	The execution context MUST include:
+L00000832	- `execution_unit_context.working_directory`: set to worktree root path (not project root) when a worktree is bound
+L00000833	- `execution_unit_context.worktree_id`: identifier of the target worktree
+L00000834	- `execution_unit_context.source_control_context_ref` or safe-point payload refs when branch, HEAD, dirty-state, or worktree snapshot data is required for recovery
+L00000835	
+L00000836	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000837	
+L00000838	**Caller responsibilities:**
+L00000839	- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+L00000840	- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+L00000841	- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root
+L00000842	
+L00000843	For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_binding`, populates `execution_unit_context.worktree_id` and `working_directory`, and freezes both values for that turn. Mid-turn unbind changes apply only to the next turn or rotated follow-up. The executor propagates the frozen `working_directory` to FileSafe checks, tool invocations, bash/shell `cwd`, MCP tools, `@file` resolution, auto-retrieval scope context, and provider CLI or DAE execution-context JSON payloads. This is a cwd-based execution contract; it does not require separate prompt-only worktree injection.
+L00000844	
+L00000845	**Executor responsibilities:**
+L00000846	- File operations resolve relative to `working_directory`
+L00000847	- Git operations target the worktree, not the main repo
+L00000848	- Terminal sessions start in `working_directory`
+L00000849	- LSP root identity uses the worktree path when the execution-unit worktree binding or safe-point context identifies a worktree
+L00000850	- File mutation logs store absolute paths. If `cmd.chat.revert` targets an edit from a removed worktree, for example `/project/.puppet-master/worktrees/thread-abc/src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
+L00000851	
+L00000852	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+L00000853	
+L00000854	ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+L00000855	
+L00000856	Required fields:
+L00000857	- run_id
+L00000858	- node_id
+L00000859	- attempt_id
+L00000860	- lane_id
+L00000861	- package_id
+L00000862	- seam_id
+L00000863	- execution_role
+L00000864	- requested_account_id
+L00000865	- effective_account_id
+L00000866	- operational_identity
+L00000867	- blocked_sequence
+L00000868	- approval_scope_key
+L00000869	
+L00000870	Canonical terms and values:
+L00000871	- execution_unit_context
+L00000872	- run_id
+L00000873	- node_id
+L00000874	- attempt_id
+L00000875	- lane_id
+L00000876	- package_id
+L00000877	- seam_id
+L00000878	- execution_role
+L00000879	- requested_account_id
+L00000880	- effective_account_id
+L00000881	- operational_identity
+L00000882	- blocked_sequence
+L00000883	- approval_scope_key
+L00000884	
+L00000885	Labels:
+L00000886	- execution unit context
+L00000887	- blocked episode
+L00000888	
+L00000889	Behavioral rules:
+L00000890	- Execution protocol must define runtime scope through execution-unit context rather than tier roots.
+L00000891	- Blocked-episode identity must remain explicit in execution-relevant recovery paths.
+L00000892	
+L00000893	Permission carry-through:
+L00000894	- effective account, execution role, and blocked-episode approval scope must survive execution handoff
+L00000895	### Mode interaction
+L00000896	
+L00000897	All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+L00000898	- Ask mode: read-only context from worktree files
+L00000899	- Agent mode: file edits go to worktree
+L00000900	- Plan/Deep Plan mode: plans execute in worktree context
+L00000901	- Debug mode: debug operations target worktree
+L00000902	
+L00000903	Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+L00000904	
+L00000905	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+L00000906	
+L00000907	## Owner / Consumer Map
+L00000908	
+L00000909	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Executor_Protocol.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000910	
+L00000911	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000912	
+L00000913	## PlanUnits
+L00000914	
+L00000915	### EP-002 - Doc Authority, Compliance, And Scope
+L00000916	
+L00000917	```yaml
+L00000918	plan_unit_id: EP-002
+L00000919	unit_type: requirement
+L00000920	status: accepted
+L00000921	owner_doc: Plans/Executor_Protocol.md
+L00000922	canonical_text: Executor Protocol owns deterministic plan_graph execution ordering and completion semantics for self-build and user-project sharded plan graph artifacts, while preserving owner-section authority, compliance, and compatibility-only vocabulary boundaries.
+L00000923	gui_related: false
+L00000924	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00000925	split_recommended: false
+L00000926	depends_on: []
+L00000927	unblocks: []
+L00000928	acceptance_criteria:
+L00000929	- The covered source span remains losslessly available for exact-text audit.
+L00000930	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00000931	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00000932	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000933	validation_surfaces:
+L00000934	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000935	- python3 scripts/pm-plan-index.py validate
+L00000936	risk_class: executor_protocol_drift
+L00000937	reasoning_tier: standard
+L00000938	context_scope: executor_protocol_standardization
+L00000939	implementation_surfaces:
+L00000940	- Plans/Executor_Protocol.md
+L00000941	node_compile_hint:
+L00000942	  mode: doc_authority_compliance_and_scope
+L00000943	  create_worknodes: false
+L00000944	source_lineage:
+L00000945	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0001
+L00000946	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0002
+L00000947	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0003
+L00000948	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0004
+L00000949	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0005
+L00000950	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0006
+L00000951	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0007
+L00000952	preserved_exact_tokens:
+L00000953	- Overseer Protocol (Canonical)
+L00000954	- Canonical owner-section requirements
+L00000955	- Compatibility-only source vocabulary is noncanonical
+L00000956	- Puppet Master
+L00000957	- plan_graph
+L00000958	- Plans/plan_graph.json
+L00000959	- .puppet-master/project/plan_graph/
+L00000960	- .puppet-master/project/plan_graph/index.json
+L00000961	- monolithic export is optional/non-canonical
+L00000962	- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md'
+L00000963	negative_constraints: []
+L00000964	compatibility_only_notes:
+L00000965	- Compatibility-only source vocabulary is noncanonical; live wording uses owner terminology.
+L00000966	stale_retired_dispositions: []
+L00000967	owner_boundary_notes: []
+L00000968	owner_hints:
+L00000969	- Plans/Executor_Protocol.md
+L00000970	```
+L00000971	
+L00000972	### EP-003 - Execution Actor Role Definitions
+L00000973	
+L00000974	```yaml
+L00000975	plan_unit_id: EP-003
+L00000976	unit_type: requirement
+L00000977	status: accepted
+L00000978	owner_doc: Plans/Executor_Protocol.md
+L00000979	canonical_text: Executor Protocol defines Builder/node worker, Verifier/reviewer/corroborator, Package Overseer, and Seam Overseer roles without making execution-support actors the scheduler.
+L00000980	gui_related: false
+L00000981	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00000982	split_recommended: false
+L00000983	depends_on: []
+L00000984	unblocks: []
+L00000985	acceptance_criteria:
+L00000986	- The covered source span remains losslessly available for exact-text audit.
+L00000987	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00000988	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00000989	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000990	validation_surfaces:
+L00000991	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000992	- python3 scripts/pm-plan-index.py validate
+L00000993	risk_class: executor_protocol_drift
+L00000994	reasoning_tier: standard
+L00000995	context_scope: executor_protocol_standardization
+L00000996	implementation_surfaces:
+L00000997	- Plans/Executor_Protocol.md
+L00000998	node_compile_hint:
+L00000999	  mode: execution_actor_role_definitions
+L00001000	  create_worknodes: false
+L00001001	source_lineage:
+L00001002	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0008
+L00001003	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0009
+L00001004	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0010
+L00001005	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0011
+L00001006	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0012
+L00001007	preserved_exact_tokens:
+L00001008	- Builder / node worker
+L00001009	- Verifier / reviewer / corroborator
+L00001010	- Package Overseer
+L00001011	- Seam Overseer
+L00001012	- Work Package
+L00001013	- Feature Seam
+L00001014	negative_constraints: []
+L00001015	compatibility_only_notes: []
+L00001016	stale_retired_dispositions: []
+L00001017	owner_boundary_notes: []
+L00001018	owner_hints:
+L00001019	- Plans/Executor_Protocol.md
+L00001020	```
+L00001021	
+L00001022	### EP-004 - Runtime Scheduler Authority And Dual Overseer Boundary
+L00001023	
+L00001024	```yaml
+L00001025	plan_unit_id: EP-004
+L00001026	unit_type: requirement
+L00001027	status: accepted
+L00001028	owner_doc: Plans/Executor_Protocol.md
+L00001029	canonical_text: Runtime scheduler owns readiness, blocked state, transitions, retry budgets, wakeups, and dispatch; overseers remain governance actors and are not hidden second schedulers.
+L00001030	gui_related: false
+L00001031	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001032	split_recommended: false
+L00001033	depends_on: []
+L00001034	unblocks: []
+L00001035	acceptance_criteria:
+L00001036	- The covered source span remains losslessly available for exact-text audit.
+L00001037	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001038	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001039	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001040	validation_surfaces:
+L00001041	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001042	- python3 scripts/pm-plan-index.py validate
+L00001043	risk_class: executor_protocol_drift
+L00001044	reasoning_tier: standard
+L00001045	context_scope: executor_protocol_standardization
+L00001046	implementation_surfaces:
+L00001047	- Plans/Executor_Protocol.md
+L00001048	node_compile_hint:
+L00001049	  mode: runtime_scheduler_authority_and_dual_overseer_boundary
+L00001050	  create_worknodes: false
+L00001051	source_lineage:
+L00001052	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001053	preserved_exact_tokens:
+L00001054	- Runtime scheduler
+L00001055	- readiness
+L00001056	- blocked state
+L00001057	- transitions
+L00001058	- retry budgets
+L00001059	- wakeups
+L00001060	- dispatch
+L00001061	- overseers are governance actors, not hidden second schedulers
+L00001062	- /control
+L00001063	- dual-overseer model
+L00001064	- package and seam overseers
+L00001065	negative_constraints:
+L00001066	- Overseers are governance actors, not hidden second schedulers.
+L00001067	compatibility_only_notes: []
+L00001068	stale_retired_dispositions: []
+L00001069	owner_boundary_notes: []
+L00001070	owner_hints:
+L00001071	- Plans/Executor_Protocol.md
+L00001072	```
+L00001073	
+L00001074	### EP-005 - Scheduler Durable State And Tier Compatibility Retirement
+L00001075	
+L00001076	```yaml
+L00001077	plan_unit_id: EP-005
+L00001078	unit_type: requirement
+L00001079	status: accepted
+L00001080	owner_doc: Plans/Executor_Protocol.md
+L00001081	canonical_text: Runtime scheduling consumes durable package/seam/lane and sharded-node state; tier-era terms, TierType, TierContext, active-agents, tier_tree, Tiers, PuppetMasterEvent streams, and related labels are compatibility inputs only.
+L00001082	gui_related: false
+L00001083	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001084	split_recommended: false
+L00001085	depends_on: []
+L00001086	unblocks: []
+L00001087	acceptance_criteria:
+L00001088	- The covered source span remains losslessly available for exact-text audit.
+L00001089	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001090	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001091	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001092	validation_surfaces:
+L00001093	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001094	- python3 scripts/pm-plan-index.py validate
+L00001095	risk_class: executor_protocol_drift
+L00001096	reasoning_tier: standard
+L00001097	context_scope: executor_protocol_standardization
+L00001098	implementation_surfaces:
+L00001099	- Plans/Executor_Protocol.md
+L00001100	node_compile_hint:
+L00001101	  mode: scheduler_durable_state_and_tier_compatibility_retirement
+L00001102	  create_worknodes: false
+L00001103	source_lineage:
+L00001104	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001105	preserved_exact_tokens:
+L00001106	- package/seam/lane
+L00001107	- seglog/redb-backed projections
+L00001108	- active-agents
+L00001109	- TierType
+L00001110	- TierContext
+L00001111	- /seams
+L00001112	- tier
+L00001113	- subtask
+L00001114	- run.tier_
+L00001115	- run.tier_*
+L00001116	- tier_tree
+L00001117	- Tiers
+L00001118	- PuppetMasterEvent
+L00001119	- PuppetMasterEvent::*
+L00001120	negative_constraints: []
+L00001121	compatibility_only_notes:
+L00001122	- Tier-era vocabulary is compatibility or derived-view vocabulary only.
+L00001123	stale_retired_dispositions:
+L00001124	- Cleanup /reconciliation moves stale /tier consumers to worktree/package/seam-aware routing and effective account/runtime identity displays.
+L00001125	owner_boundary_notes: []
+L00001126	owner_hints:
+L00001127	- Plans/Executor_Protocol.md
+L00001128	```
+L00001129	
+L00001130	### EP-006 - Runtime Object Opening And Projection Consumers
+L00001131	
+L00001132	```yaml
+L00001133	plan_unit_id: EP-006
+L00001134	unit_type: requirement
+L00001135	status: accepted
+L00001136	owner_doc: Plans/Executor_Protocol.md
+L00001137	canonical_text: Runtime objects open through route_target and OpenSubject consumers; projection-backed actions show projection_health and projection_freshness before mutating blocked episodes, seams, packages, or overseer targets.
+L00001138	gui_related: true
+L00001139	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001140	split_recommended: false
+L00001141	depends_on: []
+L00001142	unblocks: []
+L00001143	acceptance_criteria:
+L00001144	- The covered source span remains losslessly available for exact-text audit.
+L00001145	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001146	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001147	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001148	validation_surfaces:
+L00001149	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001150	- python3 scripts/pm-plan-index.py validate
+L00001151	risk_class: executor_protocol_drift
+L00001152	reasoning_tier: standard
+L00001153	context_scope: executor_protocol_standardization
+L00001154	implementation_surfaces:
+L00001155	- Plans/Executor_Protocol.md
+L00001156	node_compile_hint:
+L00001157	  mode: runtime_object_opening_and_projection_consumers
+L00001158	  create_worknodes: false
+L00001159	source_lineage:
+L00001160	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001161	preserved_exact_tokens:
+L00001162	- route_target
+L00001163	- OpenSubject
+L00001164	- projection_health
+L00001165	- projection_freshness
+L00001166	- blocked-episode
+L00001167	- Feature Seam
+L00001168	- Work Package
+L00001169	- Seam Overseer
+L00001170	- Package Overseer
+L00001171	- /layout/help/glossary
+L00001172	negative_constraints:
+L00001173	- Projection-backed actions must not mutate runtime objects without health/freshness context.
+L00001174	compatibility_only_notes: []
+L00001175	stale_retired_dispositions: []
+L00001176	owner_boundary_notes: []
+L00001177	owner_hints:
+L00001178	- Plans/Executor_Protocol.md
+L00001179	```
+L00001180	
+L00001181	### EP-007 - Canonical Node State Readiness Source
+L00001182	
+L00001183	```yaml
+L00001184	plan_unit_id: EP-007
+L00001185	unit_type: requirement
+L00001186	status: accepted
+L00001187	owner_doc: Plans/Executor_Protocol.md
+L00001188	canonical_text: Overseer reads execution state from canonical node documents in self-build or user-project sharded graph storage and must not infer execution state from index metadata alone.
+L00001189	gui_related: false
+L00001190	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001191	split_recommended: false
+L00001192	depends_on: []
+L00001193	unblocks: []
+L00001194	acceptance_criteria:
+L00001195	- The covered source span remains losslessly available for exact-text audit.
+L00001196	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001197	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001198	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001199	validation_surfaces:
+L00001200	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001201	- python3 scripts/pm-plan-index.py validate
+L00001202	risk_class: executor_protocol_drift
+L00001203	reasoning_tier: standard
+L00001204	context_scope: executor_protocol_standardization
+L00001205	implementation_surfaces:
+L00001206	- Plans/Executor_Protocol.md
+L00001207	node_compile_hint:
+L00001208	  mode: canonical_node_state_readiness_source
+L00001209	  create_worknodes: false
+L00001210	source_lineage:
+L00001211	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001212	preserved_exact_tokens:
+L00001213	- Plans/plan_graph.json.nodes[]
+L00001214	- .puppet-master/project/plan_graph/nodes/<node_id>.json
+L00001215	- Overseer MUST NOT infer execution state from index metadata alone
+L00001216	- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/project_plan_graph_index.schema.json'
+L00001217	negative_constraints:
+L00001218	- Overseer must not infer execution state from index metadata alone.
+L00001219	compatibility_only_notes: []
+L00001220	stale_retired_dispositions: []
+L00001221	owner_boundary_notes: []
+L00001222	owner_hints:
+L00001223	- Plans/Executor_Protocol.md
+L00001224	```
+L00001225	
+L00001226	### EP-008 - Ready Predicate And Spec Lock Matching
+L00001227	
+L00001228	```yaml
+L00001229	plan_unit_id: EP-008
+L00001230	unit_type: requirement
+L00001231	status: accepted
+L00001232	owner_doc: Plans/Executor_Protocol.md
+L00001233	canonical_text: A node is ready only when queued, all blockers are done, Spec Lock schema_versions exactly match, and tie-breaking chooses the lexicographically smallest node_id.
+L00001234	gui_related: false
+L00001235	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001236	split_recommended: false
+L00001237	depends_on: []
+L00001238	unblocks: []
+L00001239	acceptance_criteria:
+L00001240	- The covered source span remains losslessly available for exact-text audit.
+L00001241	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001242	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001243	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001244	validation_surfaces:
+L00001245	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001246	- python3 scripts/pm-plan-index.py validate
+L00001247	risk_class: executor_protocol_drift
+L00001248	reasoning_tier: standard
+L00001249	context_scope: executor_protocol_standardization
+L00001250	implementation_surfaces:
+L00001251	- Plans/Executor_Protocol.md
+L00001252	node_compile_hint:
+L00001253	  mode: ready_predicate_and_spec_lock_matching
+L00001254	  create_worknodes: false
+L00001255	source_lineage:
+L00001256	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001257	preserved_exact_tokens:
+L00001258	- status == "queued"
+L00001259	- blockers[]
+L00001260	- status == "done"
+L00001261	- spec_lock_requirements.schema_versions
+L00001262	- Plans/Spec_Lock.json.schema_versions
+L00001263	- lexicographically smallest `node_id`
+L00001264	- 'ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json'
+L00001265	negative_constraints: []
+L00001266	compatibility_only_notes: []
+L00001267	stale_retired_dispositions: []
+L00001268	owner_boundary_notes: []
+L00001269	owner_hints:
+L00001270	- Plans/Executor_Protocol.md
+L00001271	```
+L00001272	
+L00001273	### EP-009 - Blocker Integrity Rule
+L00001274	
+L00001275	```yaml
+L00001276	plan_unit_id: EP-009
+L00001277	unit_type: requirement
+L00001278	status: accepted
+L00001279	owner_doc: Plans/Executor_Protocol.md
+L00001280	canonical_text: Every blockers[] entry resolves to an existing canonical node document; unresolved blocker IDs are invalid graph input and keep the node not ready.
+L00001281	gui_related: false
+L00001282	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001283	split_recommended: false
+L00001284	depends_on: []
+L00001285	unblocks: []
+L00001286	acceptance_criteria:
+L00001287	- The covered source span remains losslessly available for exact-text audit.
+L00001288	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001289	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001290	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001291	validation_surfaces:
+L00001292	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001293	- python3 scripts/pm-plan-index.py validate
+L00001294	risk_class: executor_protocol_drift
+L00001295	reasoning_tier: standard
+L00001296	context_scope: executor_protocol_standardization
+L00001297	implementation_surfaces:
+L00001298	- Plans/Executor_Protocol.md
+L00001299	node_compile_hint:
+L00001300	  mode: blocker_integrity_rule
+L00001301	  create_worknodes: false
+L00001302	source_lineage:
+L00001303	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001304	preserved_exact_tokens:
+L00001305	- Every `blockers[]` entry MUST resolve
+L00001306	- existing canonical node document
+L00001307	- unresolved blocker ID
+L00001308	- invalid graph input
+L00001309	- not ready
+L00001310	- 'ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Project_Output_Artifacts.md'
+L00001311	negative_constraints:
+L00001312	- User-project nodes must not invent ad-hoc schema-version key names.
+L00001313	compatibility_only_notes: []
+L00001314	stale_retired_dispositions: []
+L00001315	owner_boundary_notes: []
+L00001316	owner_hints:
+L00001317	- Plans/Executor_Protocol.md
+L00001318	```
+L00001319	
+L00001320	### EP-010 - Canonical Node Status Lifecycle
+L00001321	
+L00001322	```yaml
+L00001323	plan_unit_id: EP-010
+L00001324	unit_type: requirement
+L00001325	status: accepted
+L00001326	owner_doc: Plans/Executor_Protocol.md
+L00001327	canonical_text: Canonical status lifecycle is queued -> in_progress -> verify_pending -> verified -> done for success and verify_pending -> failed for failure; done and failed are terminal and out-of-order transitions are rejected.
+L00001328	gui_related: false
+L00001329	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001330	split_recommended: false
+L00001331	depends_on: []
+L00001332	unblocks: []
+L00001333	acceptance_criteria:
+L00001334	- The covered source span remains losslessly available for exact-text audit.
+L00001335	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001336	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001337	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001338	validation_surfaces:
+L00001339	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001340	- python3 scripts/pm-plan-index.py validate
+L00001341	risk_class: executor_protocol_drift
+L00001342	reasoning_tier: standard
+L00001343	context_scope: executor_protocol_standardization
+L00001344	implementation_surfaces:
+L00001345	- Plans/Executor_Protocol.md
+L00001346	node_compile_hint:
+L00001347	  mode: canonical_node_status_lifecycle
+L00001348	  create_worknodes: false
+L00001349	source_lineage:
+L00001350	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0015
+L00001351	preserved_exact_tokens:
+L00001352	- queued -> in_progress -> verify_pending -> verified -> done
+L00001353	- verify_pending -> failed
+L00001354	- done
+L00001355	- failed
+L00001356	- terminal states
+L00001357	- reject out-of-order transitions
+L00001358	- 'ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md'
+L00001359	negative_constraints: []
+L00001360	compatibility_only_notes: []
+L00001361	stale_retired_dispositions: []
+L00001362	owner_boundary_notes: []
+L00001363	owner_hints:
+L00001364	- Plans/Executor_Protocol.md
+L00001365	```
+L00001366	
+L00001367	### EP-011 - Run-Local UI/Orchestrator Status Overlays
+L00001368	
+L00001369	```yaml
+L00001370	plan_unit_id: EP-011
+L00001371	unit_type: requirement
+L00001372	status: accepted
+L00001373	owner_doc: Plans/Executor_Protocol.md
+L00001374	canonical_text: UI and orchestrator labels such as waiting_approval, needs_review, cancelled, or complete_with_warnings are run-local overlay or CTA states, not canonical node status values, and must persist separately.
+L00001375	gui_related: true
+L00001376	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001377	split_recommended: false
+L00001378	depends_on: []
+L00001379	unblocks: []
+L00001380	acceptance_criteria:
+L00001381	- The covered source span remains losslessly available for exact-text audit.
+L00001382	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001383	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001384	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001385	validation_surfaces:
+L00001386	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001387	- python3 scripts/pm-plan-index.py validate
+L00001388	risk_class: executor_protocol_drift
+L00001389	reasoning_tier: standard
+L00001390	context_scope: executor_protocol_standardization
+L00001391	implementation_surfaces:
+L00001392	- Plans/Executor_Protocol.md
+L00001393	node_compile_hint:
+L00001394	  mode: run_local_ui_orchestrator_status_overlays
+L00001395	  create_worknodes: false
+L00001396	source_lineage:
+L00001397	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0015
+L00001398	preserved_exact_tokens:
+L00001399	- waiting_approval
+L00001400	- needs_review
+L00001401	- cancelled
+L00001402	- complete_with_warnings
+L00001403	- run-local overlays / CTA states
+L00001404	- canonical node `status` values
+L00001405	- persisted as separate events or projections
+L00001406	negative_constraints:
+L00001407	- Run-local overlays must not replace the canonical status lifecycle.
+L00001408	compatibility_only_notes: []
+L00001409	stale_retired_dispositions: []
+L00001410	owner_boundary_notes: []
+L00001411	owner_hints:
+L00001412	- Plans/Executor_Protocol.md
+L00001413	```
+L00001414	
+L00001415	### EP-012 - Verifier Auto-Marking And Verified Transition
+L00001416	
+L00001417	```yaml
+L00001418	plan_unit_id: EP-012
+L00001419	unit_type: requirement
+L00001420	status: accepted
+L00001421	owner_doc: Plans/Executor_Protocol.md
+L00001422	canonical_text: Verifier evidence with pass outcome moves status through verified before done; the verified state is schema-enforced, manual mark-complete is not required, and fail outcome sets failed.
+L00001423	gui_related: false
+L00001424	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001425	split_recommended: false
+L00001426	depends_on: []
+L00001427	unblocks: []
+L00001428	acceptance_criteria:
+L00001429	- The covered source span remains losslessly available for exact-text audit.
+L00001430	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001431	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001432	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001433	validation_surfaces:
+L00001434	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001435	- python3 scripts/pm-plan-index.py validate
+L00001436	risk_class: executor_protocol_drift
+L00001437	reasoning_tier: standard
+L00001438	context_scope: executor_protocol_standardization
+L00001439	implementation_surfaces:
+L00001440	- Plans/Executor_Protocol.md
+L00001441	node_compile_hint:
+L00001442	  mode: verifier_auto_marking_and_verified_transition
+L00001443	  create_worknodes: false
+L00001444	source_lineage:
+L00001445	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0016
+L00001446	preserved_exact_tokens:
+L00001447	- evidence_pointer
+L00001448	- verifier_result
+L00001449	- verifier_result.outcome == "pass"
+L00001450	- status = "verified"
+L00001451	- status = "done"
+L00001452	- outcome == "pass"
+L00001453	- timestamp_utc
+L00001454	- SHALL NOT skip it
+L00001455	- Manual mark-complete action MUST NOT be required
+L00001456	- verifier_result.outcome == "fail"
+L00001457	- status = "failed"
+L00001458	- 'ContractRef: ContractName:Plans/Progression_Gates.md#GATE-005, ContractName:Plans/evidence.schema.json'
+L00001459	negative_constraints: []
+L00001460	compatibility_only_notes: []
+L00001461	stale_retired_dispositions: []
+L00001462	owner_boundary_notes: []
+L00001463	owner_hints:
+L00001464	- Plans/Executor_Protocol.md
+L00001465	```
+L00001466	
+L00001467	### EP-013 - Execution Unit Context Field Contract
+L00001468	
+L00001469	```yaml
+L00001470	plan_unit_id: EP-013
+L00001471	unit_type: requirement
+L00001472	status: accepted
+L00001473	owner_doc: Plans/Executor_Protocol.md
+L00001474	canonical_text: The canonical dispatch/runtime packet carries the Executor-owned execution_unit_context contract with schema_id pm.execution_unit_context, schema_version 1.0.0, closed required and optional field sets, closed enums, persistence/replay rules, redaction requirements, and consumer-reference-only boundaries; stale persona names are compatibility inputs only.
+L00001475	gui_related: false
+L00001476	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001477	split_recommended: false
+L00001478	depends_on: []
+L00001479	unblocks: []
+L00001480	acceptance_criteria:
+L00001481	- The covered source span remains losslessly available for exact-text audit.
+L00001482	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001483	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001484	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001485	validation_surfaces:
+L00001486	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001487	- python3 scripts/pm-plan-index.py validate
+L00001488	risk_class: executor_protocol_drift
+L00001489	reasoning_tier: standard
+L00001490	context_scope: executor_protocol_standardization
+L00001491	implementation_surfaces:
+L00001492	- Plans/Executor_Protocol.md
+L00001493	node_compile_hint:
+L00001494	  mode: execution_unit_context_field_contract
+L00001495	  create_worknodes: false
+L00001496	source_lineage:
+L00001497	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0016
+L00001498	preserved_exact_tokens:
+L00001499	- execution_unit_context
+L00001500	- run_id
+L00001501	- node_id
+L00001502	- attempt_id
+L00001503	- lane_id
+L00001504	- package_id
+L00001505	- seam_id
+L00001506	- worktree_id
+L00001507	- execution_role
+L00001508	- requested_account_id
+L00001509	- requested_account_binding
+L00001510	- requested_account_policy
+L00001511	- effective_account_id
+L00001512	- operational_identity
+L00001513	- blocked_sequence
+L00001514	- allowed_action_ids[]
+L00001515	- schema_id
+L00001516	- schema_version
+L00001517	- execution_unit_type
+L00001518	- execution_unit_id
+L00001519	- approval_scope_key
+L00001520	- requested_persona_id
+L00001521	- effective_persona_id
+L00001522	- _persona_id
+L00001523	- /values
+L00001524	- assistant
+L00001525	- interviewer
+L00001526	- requirements_builder
+L00001527	- prd_builder
+L00001528	- package_overseer
+L00001529	- seam_overseer
+L00001530	- node_worker
+L00001531	- reviewer
+L00001532	- corroborator
+L00001533	- recovery_actor
+L00001534	- 'ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership'
+L00001535	negative_constraints:
+L00001536	- No consumer may redefine the execution_unit_context required or optional field set.
+L00001537	- No persisted execution_unit_context payload is valid without schema_version.
+L00001538	- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00001539	compatibility_only_notes:
+L00001540	- Stale local worker identity names and persona slots are compatibility inputs only.
+L00001541	stale_retired_dispositions: []
+L00001542	owner_boundary_notes: []
+L00001543	owner_hints:
+L00001544	- Plans/Executor_Protocol.md
+L00001545	```
+L00001546	
+L00001547	### EP-014 - DispatchContext Required Projection
+L00001548	
+L00001549	```yaml
+L00001550	plan_unit_id: EP-014
+L00001551	unit_type: requirement
+L00001552	status: accepted
+L00001553	owner_doc: Plans/Executor_Protocol.md
+L00001554	canonical_text: DispatchContext is a projection over the Executor-owned execution_unit_context schema and reads required fields, optional fields, nullability, enum values, and persistence rules from Plans/execution_unit_context.schema.json instead of defining a second required-field list.
+L00001555	gui_related: false
+L00001556	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001557	split_recommended: false
+L00001558	depends_on: []
+L00001559	unblocks: []
+L00001560	acceptance_criteria:
+L00001561	- The covered source span remains losslessly available for exact-text audit.
+L00001562	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001563	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001564	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001565	validation_surfaces:
+L00001566	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001567	- python3 scripts/pm-plan-index.py validate
+L00001568	risk_class: executor_protocol_drift
+L00001569	reasoning_tier: standard
+L00001570	context_scope: executor_protocol_standardization
+L00001571	implementation_surfaces:
+L00001572	- Plans/Executor_Protocol.md
+L00001573	node_compile_hint:
+L00001574	  mode: dispatchcontext_required_projection
+L00001575	  create_worknodes: false
+L00001576	source_lineage:
+L00001577	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001578	preserved_exact_tokens:
+L00001579	- DispatchContext
+L00001580	- execution_unit_context
+L00001581	- approval_scope_key
+L00001582	- requested_account_policy
+L00001583	- effective_account_id
+L00001584	- operational_identity
+L00001585	- blocked_sequence
+L00001586	negative_constraints:
+L00001587	- DispatchContext must not define an alternate execution_unit_context required-field list.
+L00001588	- DispatchContext must not omit schema_version when a persisted context payload is stored.
+L00001589	compatibility_only_notes: []
+L00001590	stale_retired_dispositions: []
+L00001591	owner_boundary_notes: []
+L00001592	owner_hints:
+L00001593	- Plans/Executor_Protocol.md
+L00001594	```
+L00001595	
+L00001596	### EP-015 - Execution Packet Joins And Blocked Carrythrough
+L00001597	
+L00001598	```yaml
+L00001599	plan_unit_id: EP-015
+L00001600	unit_type: requirement
+L00001601	status: accepted
+L00001602	owner_doc: Plans/Executor_Protocol.md
+L00001603	canonical_text: Dispatch, recovery, remediation, and inspection read one execution-unit packet; downstream consumers join losslessly to attempt, worktree, permission, and runtime records while blocked-action carrythrough stays anchored to blocked-episode lineage.
+L00001604	gui_related: false
+L00001605	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001606	split_recommended: false
+L00001607	depends_on: []
+L00001608	unblocks: []
+L00001609	acceptance_criteria:
+L00001610	- The covered source span remains losslessly available for exact-text audit.
+L00001611	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001612	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001613	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001614	validation_surfaces:
+L00001615	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001616	- python3 scripts/pm-plan-index.py validate
+L00001617	risk_class: executor_protocol_drift
+L00001618	reasoning_tier: standard
+L00001619	context_scope: executor_protocol_standardization
+L00001620	implementation_surfaces:
+L00001621	- Plans/Executor_Protocol.md
+L00001622	node_compile_hint:
+L00001623	  mode: execution_packet_joins_and_blocked_carrythrough
+L00001624	  create_worknodes: false
+L00001625	source_lineage:
+L00001626	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001627	preserved_exact_tokens:
+L00001628	- dispatch, recovery, remediation, and inspection
+L00001629	- one execution-unit packet
+L00001630	- attempt
+L00001631	- worktree
+L00001632	- permission
+L00001633	- runtime records
+L00001634	- blocked-action carrythrough
+L00001635	- blocked-episode lineage
+L00001636	negative_constraints: []
+L00001637	compatibility_only_notes: []
+L00001638	stale_retired_dispositions: []
+L00001639	owner_boundary_notes: []
+L00001640	owner_hints:
+L00001641	- Plans/Executor_Protocol.md
+L00001642	```
+L00001643	
+L00001644	### EP-016 - Assistant Chat Worktree And Safe-Point Handoff
+L00001645	
+L00001646	```yaml
+L00001647	plan_unit_id: EP-016
+L00001648	unit_type: requirement
+L00001649	status: accepted
+L00001650	owner_doc: Plans/Executor_Protocol.md
+L00001651	canonical_text: Assistant Chat freezes worktree_id and working_directory from thread_state worktree binding at turn start, sends working directory through FileSafe/tools/MCP/provider contexts, and records worktree-bound safe point fields before mutation-capable execution.
+L00001652	gui_related: false
+L00001653	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001654	split_recommended: false
+L00001655	depends_on: []
+L00001656	unblocks: []
+L00001657	acceptance_criteria:
+L00001658	- The covered source span remains losslessly available for exact-text audit.
+L00001659	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001660	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001661	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001662	validation_surfaces:
+L00001663	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001664	- python3 scripts/pm-plan-index.py validate
+L00001665	risk_class: executor_protocol_drift
+L00001666	reasoning_tier: standard
+L00001667	context_scope: executor_protocol_standardization
+L00001668	implementation_surfaces:
+L00001669	- Plans/Executor_Protocol.md
+L00001670	node_compile_hint:
+L00001671	  mode: assistant_chat_worktree_and_safe_point_handoff
+L00001672	  create_worknodes: false
+L00001673	source_lineage:
+L00001674	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001675	preserved_exact_tokens:
+L00001676	- thread_state:{thread_id}:worktree_binding
+L00001677	- worktree_id
+L00001678	- working_directory
+L00001679	- turn-start
+L00001680	- FileSafe
+L00001681	- tool invocation cwd
+L00001682	- MCP tools
+L00001683	- '@file'
+L00001684	- provider CLI
+L00001685	- DAE execution-context payloads
+L00001686	- worktree_path
+L00001687	- branch_name
+L00001688	- HEAD_sha
+L00001689	- git rev-parse HEAD
+L00001690	- /safe-point/runtime
+L00001691	negative_constraints: []
+L00001692	compatibility_only_notes: []
+L00001693	stale_retired_dispositions: []
+L00001694	owner_boundary_notes: []
+L00001695	owner_hints:
+L00001696	- Plans/Executor_Protocol.md
+L00001697	```
+L00001698	
+L00001699	### EP-017 - Worktree Lifecycle And Projection Boundary
+L00001700	
+L00001701	```yaml
+L00001702	plan_unit_id: EP-017
+L00001703	unit_type: requirement
+L00001704	status: accepted
+L00001705	owner_doc: Plans/Executor_Protocol.md
+L00001706	canonical_text: Worktree lifecycle actions recover, archive, prune, and remove have explicit meanings; projections must preserve historical lineage and cannot assume one active-worktree or current-worktree scalar.
+L00001707	gui_related: true
+L00001708	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001709	split_recommended: false
+L00001710	depends_on: []
+L00001711	unblocks: []
+L00001712	acceptance_criteria:
+L00001713	- The covered source span remains losslessly available for exact-text audit.
+L00001714	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001715	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001716	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001717	validation_surfaces:
+L00001718	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001719	- python3 scripts/pm-plan-index.py validate
+L00001720	risk_class: executor_protocol_drift
+L00001721	reasoning_tier: standard
+L00001722	context_scope: executor_protocol_standardization
+L00001723	implementation_surfaces:
+L00001724	- Plans/Executor_Protocol.md
+L00001725	node_compile_hint:
+L00001726	  mode: worktree_lifecycle_and_projection_boundary
+L00001727	  create_worknodes: false
+L00001728	source_lineage:
+L00001729	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001730	preserved_exact_tokens:
+L00001731	- recover
+L00001732	- archive
+L00001733	- prune
+L00001734	- remove
+L00001735	- /orphaned/conflicted
+L00001736	- /metadata/lineage
+L00001737	- /orphaned/live-no-longer-needed
+L00001738	- historical/retired/removed
+L00001739	- /retired/removed
+L00001740	- one active-worktree
+L00001741	- current-worktree scalar
+L00001742	- File tree surfaces
+L00001743	- artifact roots
+L00001744	- /worktree
+L00001745	- active package-lane worktree sets
+L00001746	negative_constraints:
+L00001747	- Worktree-aware projections must not assume one active-worktree or current-worktree scalar.
+L00001748	compatibility_only_notes: []
+L00001749	stale_retired_dispositions: []
+L00001750	owner_boundary_notes: []
+L00001751	owner_hints:
+L00001752	- Plans/Executor_Protocol.md
+L00001753	```
+L00001754	
+L00001755	### EP-018 - Artifact, Wizard Builder CUP Handoff, And Producer Boundary
+L00001756	
+L00001757	```yaml
+L00001758	plan_unit_id: EP-018
+L00001759	unit_type: requirement
+L00001760	status: accepted
+L00001761	owner_doc: Plans/Executor_Protocol.md
+L00001762	canonical_text: Runtime artifacts, tool drills, wizard/builder/settings/GUI/CUP pre-run handoffs, interview handoffs, and provider execution payloads carry attempt identity plus requested/effective identity through execution_unit_context; mixed settings/GUI handoff wording remains intact until a later owner split is proven safe.
+L00001763	gui_related: false
+L00001764	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001765	split_recommended: true
+L00001766	depends_on: []
+L00001767	unblocks: []
+L00001768	acceptance_criteria:
+L00001769	- The covered source span remains losslessly available for exact-text audit.
+L00001770	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001771	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001772	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001773	validation_surfaces:
+L00001774	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001775	- python3 scripts/pm-plan-index.py validate
+L00001776	risk_class: executor_protocol_drift
+L00001777	reasoning_tier: standard
+L00001778	context_scope: executor_protocol_standardization
+L00001779	implementation_surfaces:
+L00001780	- Plans/Executor_Protocol.md
+L00001781	node_compile_hint:
+L00001782	  mode: artifact_wizard_builder_cup_handoff_and_producer_boundary
+L00001783	  create_worknodes: false
+L00001784	source_lineage:
+L00001785	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001786	preserved_exact_tokens:
+L00001787	- artifact_id
+L00001788	- /receipt-based
+L00001789	- tool_name
+L00001790	- invocation_summary
+L00001791	- usage_event_ref
+L00001792	- Wizard
+L00001793	- Builder
+L00001794	- settings/GUI
+L00001795	- CUP
+L00001796	- requested/effective account identity
+L00001797	- /account/role
+L00001798	- /model
+L00001799	- provider/model/persona policy
+L00001800	- /governance
+L00001801	- /isolation
+L00001802	- /package/seam
+L00001803	- /interview
+L00001804	- execution_unit_context
+L00001805	- decomposition_context
+L00001806	- selection_context
+L00001807	negative_constraints: []
+L00001808	compatibility_only_notes:
+L00001809	- Compatibility adapters may derive decomposition_context or selection_context only as optional disclosure or planning views.
+L00001810	stale_retired_dispositions: []
+L00001811	owner_boundary_notes: []
+L00001812	owner_hints:
+L00001813	- Plans/Executor_Protocol.md
+L00001814	```
+L00001815	
+L00001816	### EP-019 - Operational Queue, Progress, Seams, Source Control, And Routes
+L00001817	
+L00001818	```yaml
+L00001819	plan_unit_id: EP-019
+L00001820	unit_type: requirement
+L00001821	status: accepted
+L00001822	owner_doc: Plans/Executor_Protocol.md
+L00001823	canonical_text: Operational projections expose queue/thread views, Progress and Seams navigation, Source Control worktree-first routing, route payload object context, and route-target normalization without collapsing route payloads into filter/subview-shaped surface noise.
+L00001824	gui_related: true
+L00001825	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001826	split_recommended: false
+L00001827	depends_on: []
+L00001828	unblocks: []
+L00001829	acceptance_criteria:
+L00001830	- The covered source span remains losslessly available for exact-text audit.
+L00001831	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001832	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001833	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001834	validation_surfaces:
+L00001835	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001836	- python3 scripts/pm-plan-index.py validate
+L00001837	risk_class: executor_protocol_drift
+L00001838	reasoning_tier: standard
+L00001839	context_scope: executor_protocol_standardization
+L00001840	implementation_surfaces:
+L00001841	- Plans/Executor_Protocol.md
+L00001842	node_compile_hint:
+L00001843	  mode: operational_queue_progress_seams_source_control_and_routes
+L00001844	  create_worknodes: false
+L00001845	source_lineage:
+L00001846	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001847	preserved_exact_tokens:
+L00001848	- /queue
+L00001849	- thread-routing views
+L00001850	- Progress
+L00001851	- /Seams
+L00001852	- Feature Seams
+L00001853	- Work Packages
+L00001854	- /problem
+L00001855	- /completion/integration
+L00001856	- Source Control
+L00001857	- worktree_id
+L00001858	- base_branch
+L00001859	- focused_run_id
+L00001860	- /object
+L00001861	- object_kind = worktree
+L00001862	- /seam/package/concern/promotion
+L00001863	- resume_url
+L00001864	- route-target
+L00001865	- /help
+L00001866	- runtime-identity routes
+L00001867	- filter
+L00001868	- /subview
+L00001869	negative_constraints:
+L00001870	- Route payloads must not absorb filter or /subview noise and become surface-shaped again.
+L00001871	compatibility_only_notes: []
+L00001872	stale_retired_dispositions: []
+L00001873	owner_boundary_notes: []
+L00001874	owner_hints:
+L00001875	- Plans/Executor_Protocol.md
+L00001876	```
+L00001877	
+L00001878	### EP-020 - Overseer Worker Naming And Removed-Worktree Revert Error
+L00001879	
+L00001880	```yaml
+L00001881	plan_unit_id: EP-020
+L00001882	unit_type: requirement
+L00001883	status: accepted
+L00001884	owner_doc: Plans/Executor_Protocol.md
+L00001885	canonical_text: Runtime worker copy prefers overseer-spawned node worker while retaining Overseer where protocol title and legacy role framing require it; removed-worktree revert reports the fixed missing-path error without recreating directories.
+L00001886	gui_related: false
+L00001887	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001888	split_recommended: false
+L00001889	depends_on: []
+L00001890	unblocks: []
+L00001891	acceptance_criteria:
+L00001892	- The covered source span remains losslessly available for exact-text audit.
+L00001893	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001894	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001895	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001896	validation_surfaces:
+L00001897	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001898	- python3 scripts/pm-plan-index.py validate
+L00001899	risk_class: executor_protocol_drift
+L00001900	reasoning_tier: standard
+L00001901	context_scope: executor_protocol_standardization
+L00001902	implementation_surfaces:
+L00001903	- Plans/Executor_Protocol.md
+L00001904	node_compile_hint:
+L00001905	  mode: overseer_worker_naming_and_removed_worktree_revert_error
+L00001906	  create_worknodes: false
+L00001907	source_lineage:
+L00001908	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0017
+L00001909	preserved_exact_tokens:
+L00001910	- Overseer
+L00001911	- overseer-spawned node worker
+L00001912	- delegated worker
+L00001913	- cmd.chat.revert
+L00001914	- /project/.puppet-master/worktrees/thread-abc/src/main.rs
+L00001915	- src/main.rs
+L00001916	- 'Cannot restore file: original path no longer exists. The worktree may have been removed.'
+L00001917	negative_constraints: []
+L00001918	compatibility_only_notes:
+L00001919	- delegated worker is a vague compatibility label, not the canonical execution actor name.
+L00001920	stale_retired_dispositions: []
+L00001921	owner_boundary_notes: []
+L00001922	owner_hints:
+L00001923	- Plans/Executor_Protocol.md
+L00001924	```
+L00001925	
+L00001926	### EP-021 - Deterministic Overseer Dispatch Loop
+L00001927	
+L00001928	```yaml
+L00001929	plan_unit_id: EP-021
+L00001930	unit_type: requirement
+L00001931	status: accepted
+L00001932	owner_doc: Plans/Executor_Protocol.md
+L00001933	canonical_text: The baseline deterministic loop evaluates readiness over queued nodes, selects the smallest lexical node_id, dispatches Builder then Verifier, applies auto-marking, and repeats; later scheduler addendum rules supersede this wording where they conflict.
+L00001934	gui_related: false
+L00001935	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001936	split_recommended: false
+L00001937	depends_on: []
+L00001938	unblocks: []
+L00001939	acceptance_criteria:
+L00001940	- The covered source span remains losslessly available for exact-text audit.
+L00001941	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001942	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001943	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001944	validation_surfaces:
+L00001945	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001946	- python3 scripts/pm-plan-index.py validate
+L00001947	risk_class: executor_protocol_drift
+L00001948	reasoning_tier: standard
+L00001949	context_scope: executor_protocol_standardization
+L00001950	implementation_surfaces:
+L00001951	- Plans/Executor_Protocol.md
+L00001952	node_compile_hint:
+L00001953	  mode: deterministic_overseer_dispatch_loop
+L00001954	  create_worknodes: false
+L00001955	source_lineage:
+L00001956	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0018
+L00001957	preserved_exact_tokens:
+L00001958	- Evaluate readiness predicate
+L00001959	- smallest lexical `node_id`
+L00001960	- Dispatch Builder
+L00001961	- verify_pending
+L00001962	- dispatch Verifier
+L00001963	- verified
+L00001964	- done
+L00001965	- failed
+L00001966	- deterministic ordering
+L00001967	- PolicyRule:Decision_Policy.md§2
+L00001968	- PolicyRule:Decision_Policy.md§3
+L00001969	negative_constraints: []
+L00001970	compatibility_only_notes: []
+L00001971	stale_retired_dispositions: []
+L00001972	owner_boundary_notes:
+L00001973	- Runtime Scheduler Addendum supersedes earlier lexical-dispatch wording where it conflicts.
+L00001974	owner_hints:
+L00001975	- Plans/Executor_Protocol.md
+L00001976	```
+L00001977	
+L00001978	### EP-022 - Run Completion Document Packaging Gate
+L00001979	
+L00001980	```yaml
+L00001981	plan_unit_id: EP-022
+L00001982	unit_type: requirement
+L00001983	status: accepted
+L00001984	owner_doc: Plans/Executor_Protocol.md
+L00001985	canonical_text: Before run finalization, Executor enforces Document Packaging Policy for triggered Markdown/text artifacts under .puppet-master/**, and failed reconstruction, line accounting, idempotency, index-manifest, or clean-room audits block completion.
+L00001986	gui_related: false
+L00001987	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001988	split_recommended: false
+L00001989	depends_on: []
+L00001990	unblocks: []
+L00001991	acceptance_criteria:
+L00001992	- The covered source span remains losslessly available for exact-text audit.
+L00001993	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001994	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001995	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001996	validation_surfaces:
+L00001997	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001998	- python3 scripts/pm-plan-index.py validate
+L00001999	risk_class: executor_protocol_drift
+L00002000	reasoning_tier: standard
+L00002001	context_scope: executor_protocol_standardization
+L00002002	implementation_surfaces:
+L00002003	- Plans/Executor_Protocol.md
+L00002004	node_compile_hint:
+L00002005	  mode: run_completion_document_packaging_gate
+L00002006	  create_worknodes: false
+L00002007	source_lineage:
+L00002008	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0019
+L00002009	preserved_exact_tokens:
+L00002010	- Plans/Document_Packaging_Policy.md
+L00002011	- .puppet-master/**
+L00002012	- A run MUST NOT be marked complete
+L00002013	- reconstruction/line accounting/idempotency
+L00002014	- index-manifest match
+L00002015	- clean-room determinism
+L00002016	- Repo-local verifier coverage
+L00002017	- generated-artifact validator coverage
+L00002018	- ContractName:Plans/Progression_Gates.md#GATE-014
+L00002019	negative_constraints:
+L00002020	- A run must not be marked complete when any required Document Set audit fails.
+L00002021	compatibility_only_notes: []
+L00002022	stale_retired_dispositions: []
+L00002023	owner_boundary_notes: []
+L00002024	owner_hints:
+L00002025	- Plans/Executor_Protocol.md
+L00002026	```
+L00002027	
+L00002028	### EP-023 - Runtime Scheduler Addendum Supersession
+L00002029	
+L00002030	```yaml
+L00002031	plan_unit_id: EP-023
+L00002032	unit_type: requirement
+L00002033	status: accepted
+L00002034	owner_doc: Plans/Executor_Protocol.md
+L00002035	canonical_text: The Runtime Scheduler Addendum dated 2026-03-08 supersedes earlier lexical-dispatch wording wherever conflicts exist.
+L00002036	gui_related: false
+L00002037	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002038	split_recommended: false
+L00002039	depends_on: []
+L00002040	unblocks: []
+L00002041	acceptance_criteria:
+L00002042	- The covered source span remains losslessly available for exact-text audit.
+L00002043	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002044	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002045	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002046	validation_surfaces:
+L00002047	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002048	- python3 scripts/pm-plan-index.py validate
+L00002049	risk_class: executor_protocol_drift
+L00002050	reasoning_tier: standard
+L00002051	context_scope: executor_protocol_standardization
+L00002052	implementation_surfaces:
+L00002053	- Plans/Executor_Protocol.md
+L00002054	node_compile_hint:
+L00002055	  mode: runtime_scheduler_addendum_supersession
+L00002056	  create_worknodes: false
+L00002057	source_lineage:
+L00002058	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0020
+L00002059	preserved_exact_tokens:
+L00002060	- Runtime Scheduler Addendum (2026-03-08)
+L00002061	- supersedes any earlier lexical-dispatch wording wherever they conflict
+L00002062	negative_constraints: []
+L00002063	compatibility_only_notes: []
+L00002064	stale_retired_dispositions: []
+L00002065	owner_boundary_notes: []
+L00002066	owner_hints:
+L00002067	- Plans/Executor_Protocol.md
+L00002068	```
+L00002069	
+L00002070	### EP-024 - Canonical Scheduler Pass
+L00002071	
+L00002072	```yaml
+L00002073	plan_unit_id: EP-024
+L00002074	unit_type: requirement
+L00002075	status: accepted
+L00002076	owner_doc: Plans/Executor_Protocol.md
+L00002077	canonical_text: Each scheduler pass rebuilds or refreshes candidates, recomputes readiness, blocked, backoff, and capacity state, builds and scores the ready set, emits queue-analysis observability, and dispatches selected nodes.
+L00002078	gui_related: false
+L00002079	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002080	split_recommended: false
+L00002081	depends_on: []
+L00002082	unblocks: []
+L00002083	acceptance_criteria:
+L00002084	- The covered source span remains losslessly available for exact-text audit.
+L00002085	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002086	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002087	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002088	validation_surfaces:
+L00002089	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002090	- python3 scripts/pm-plan-index.py validate
+L00002091	risk_class: executor_protocol_drift
+L00002092	reasoning_tier: standard
+L00002093	context_scope: executor_protocol_standardization
+L00002094	implementation_surfaces:
+L00002095	- Plans/Executor_Protocol.md
+L00002096	node_compile_hint:
+L00002097	  mode: canonical_scheduler_pass
+L00002098	  create_worknodes: false
+L00002099	source_lineage:
+L00002100	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0021
+L00002101	preserved_exact_tokens:
+L00002102	- Rebuild or refresh the candidate node set
+L00002103	- Recompute readiness
+L00002104	- Recompute blocked/backoff/capacity state
+L00002105	- Build the ready set
+L00002106	- Score ready nodes
+L00002107	- Emit queue-analysis observability
+L00002108	- Dispatch selected nodes
+L00002109	- ContractName:Plans/orchestrator-subagent-integration.md
+L00002110	- ContractName:Plans/Contracts_V0.md
+L00002111	- ContractName:Plans/storage-plan.md
+L00002112	negative_constraints: []
+L00002113	compatibility_only_notes: []
+L00002114	stale_retired_dispositions: []
+L00002115	owner_boundary_notes: []
+L00002116	owner_hints:
+L00002117	- Plans/Executor_Protocol.md
+L00002118	```
+L00002119	
+L00002120	### EP-025 - Scheduler Readiness Rules Under Addendum
+L00002121	
+L00002122	```yaml
+L00002123	plan_unit_id: EP-025
+L00002124	unit_type: requirement
+L00002125	status: accepted
+L00002126	owner_doc: Plans/Executor_Protocol.md
+L00002127	canonical_text: Under the scheduler addendum, ready nodes must be schedulable, dependency-satisfied, graph-integrity-clean, not in backoff or blocked on listed conditions, valid for active replan_generation, and allowed by lane/pool capacity.
+L00002128	gui_related: false
+L00002129	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002130	split_recommended: false
+L00002131	depends_on: []
+L00002132	unblocks: []
+L00002133	acceptance_criteria:
+L00002134	- The covered source span remains losslessly available for exact-text audit.
+L00002135	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002136	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002137	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002138	validation_surfaces:
+L00002139	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002140	- python3 scripts/pm-plan-index.py validate
+L00002141	risk_class: executor_protocol_drift
+L00002142	reasoning_tier: standard
+L00002143	context_scope: executor_protocol_standardization
+L00002144	implementation_surfaces:
+L00002145	- Plans/Executor_Protocol.md
+L00002146	node_compile_hint:
+L00002147	  mode: scheduler_readiness_rules_under_addendum
+L00002148	  create_worknodes: false
+L00002149	source_lineage:
+L00002150	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0022
+L00002151	preserved_exact_tokens:
+L00002152	- queued
+L00002153	- reopened
+L00002154	- dependency-satisfying
+L00002155	- graph-integrity error
+L00002156	- active backoff
+L00002157	- HITL
+L00002158	- clarification
+L00002159	- external side-effect confirmation
+L00002160	- permission denial
+L00002161	- FileSafe
+L00002162	- auth refresh
+L00002163	- replan-required
+L00002164	- replan_generation
+L00002165	- runtime capacity
+L00002166	- Invalid blocker IDs
+L00002167	- ContractName:Plans/Progression_Gates.md
+L00002168	negative_constraints: []
+L00002169	compatibility_only_notes: []
+L00002170	stale_retired_dispositions: []
+L00002171	owner_boundary_notes: []
+L00002172	owner_hints:
+L00002173	- Plans/Executor_Protocol.md
+L00002174	```
+L00002175	
+L00002176	### EP-026 - Deterministic Score Tuple And Queue Analysis
+L00002177	
+L00002178	```yaml
+L00002179	plan_unit_id: EP-026
+L00002180	unit_type: requirement
+L00002181	status: accepted
+L00002182	owner_doc: Plans/Executor_Protocol.md
+L00002183	canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown.
+L00002184	gui_related: false
+L00002185	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002186	split_recommended: false
+L00002187	depends_on: []
+L00002188	unblocks: []
+L00002189	acceptance_criteria:
+L00002190	- The covered source span remains losslessly available for exact-text audit.
+L00002191	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002192	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002193	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002194	validation_surfaces:
+L00002195	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002196	- python3 scripts/pm-plan-index.py validate
+L00002197	risk_class: executor_protocol_drift
+L00002198	reasoning_tier: standard
+L00002199	context_scope: executor_protocol_standardization
+L00002200	implementation_surfaces:
+L00002201	- Plans/Executor_Protocol.md
+L00002202	node_compile_hint:
+L00002203	  mode: deterministic_score_tuple_and_queue_analysis
+L00002204	  create_worknodes: false
+L00002205	source_lineage:
+L00002206	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0023
+L00002207	preserved_exact_tokens:
+L00002208	- scheduler_lane
+L00002209	- manual_priority
+L00002210	- transitive_unblock_count
+L00002211	- ready_since_utc
+L00002212	- node_id
+L00002213	- remediation > unblocker > normal
+L00002214	- larger `manual_priority` wins
+L00002215	- larger `transitive_unblock_count` wins
+L00002216	- older `ready_since_utc` wins
+L00002217	- lexicographically smaller `node_id`
+L00002218	- no critical-path weighting term
+L00002219	- queue analysis MUST expose the tuple breakdown
+L00002220	- ContractName:Plans/Run_Graph_View.md
+L00002221	- ContractName:Plans/Orchestrator_Page.md
+L00002222	negative_constraints: []
+L00002223	compatibility_only_notes: []
+L00002224	stale_retired_dispositions: []
+L00002225	owner_boundary_notes: []
+L00002226	owner_hints:
+L00002227	- Plans/Executor_Protocol.md
+L00002228	```
+L00002229	
+L00002230	### EP-027 - Capacity-Aware Parallel Dispatch
+L00002231	
+L00002232	```yaml
+L00002233	plan_unit_id: EP-027
+L00002234	unit_type: requirement
+L00002235	status: accepted
+L00002236	owner_doc: Plans/Executor_Protocol.md
+L00002237	canonical_text: Executor selects up to available_slots nodes per scheduler pass, derived from run, phase/task/subtask, resource/provider, and remediation lane constraints, with selection global across the ready set rather than level-by-level lexical dispatch.
+L00002238	gui_related: false
+L00002239	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002240	split_recommended: false
+L00002241	depends_on: []
+L00002242	unblocks: []
+L00002243	acceptance_criteria:
+L00002244	- The covered source span remains losslessly available for exact-text audit.
+L00002245	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002246	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002247	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002248	validation_surfaces:
+L00002249	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002250	- python3 scripts/pm-plan-index.py validate
+L00002251	risk_class: executor_protocol_drift
+L00002252	reasoning_tier: standard
+L00002253	context_scope: executor_protocol_standardization
+L00002254	implementation_surfaces:
+L00002255	- Plans/Executor_Protocol.md
+L00002256	node_compile_hint:
+L00002257	  mode: capacity_aware_parallel_dispatch
+L00002258	  create_worknodes: false
+L00002259	source_lineage:
+L00002260	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0024
+L00002261	preserved_exact_tokens:
+L00002262	- available_slots
+L00002263	- run-level concurrency limit
+L00002264	- phase/task/subtask concurrency constraints
+L00002265	- resource / provider saturation limits
+L00002266	- remediation lane reservations
+L00002267	- global across the ready set
+L00002268	- not level-by-level lexical dispatch
+L00002269	- ContractName:Plans/storage-plan.md
+L00002270	negative_constraints: []
+L00002271	compatibility_only_notes: []
+L00002272	stale_retired_dispositions: []
+L00002273	owner_boundary_notes: []
+L00002274	owner_hints:
+L00002275	- Plans/Executor_Protocol.md
+L00002276	```
+L00002277	
+L00002278	### EP-028 - Wake Trigger Forward Reference Boundary
+L00002279	
+L00002280	```yaml
+L00002281	plan_unit_id: EP-028
+L00002282	unit_type: requirement
+L00002283	status: accepted
+L00002284	owner_doc: Plans/Executor_Protocol.md
+L00002285	canonical_text: Wake-trigger values and coalescing behavior are owned by the later Wake reasons and coalescing section; this span is only a forward-reference boundary.
+L00002286	gui_related: false
+L00002287	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002288	split_recommended: false
+L00002289	depends_on: []
+L00002290	unblocks: []
+L00002291	acceptance_criteria:
+L00002292	- The covered source span remains losslessly available for exact-text audit.
+L00002293	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00002294	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00002295	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002296	validation_surfaces:
+L00002297	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002298	- python3 scripts/pm-plan-index.py validate
+L00002299	risk_class: executor_protocol_drift
+L00002300	reasoning_tier: standard
+L00002301	context_scope: executor_protocol_standardization
+L00002302	implementation_surfaces:
+L00002303	- Plans/Executor_Protocol.md
+L00002304	node_compile_hint:
+L00002305	  mode: wake_trigger_forward_reference_boundary
+L00002306	  create_worknodes: false
+L00002307	source_lineage:
+L00002308	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0025
+L00002309	preserved_exact_tokens:
+L00002310	- Wakeup triggers
+L00002311	- Wake reasons and coalescing
+L00002312	- forward-reference only
+L00002313	- single owner section
+L00002314	- ContractName:Plans/FinalGUISpec.md
+L00002315	negative_constraints: []
+L00002316	compatibility_only_notes: []
+L00002317	stale_retired_dispositions: []
+L00002318	owner_boundary_notes:
+L00002319	- No wake-trigger values are redefined in this forward-reference span.
+L00002320	owner_hints:
+L00002321	- Plans/Executor_Protocol.md
+L00002322	```
+L00002323	
+L00002324	### EP-029 - Blocked-To-Runnable Cascade And Prerequisite Event
+L00002325	
+L00002326	```yaml
+L00002327	plan_unit_id: EP-029
+L00002328	unit_type: requirement
+L00002329	status: accepted
+L00002330	owner_doc: Plans/Executor_Protocol.md
+L00002331	canonical_text: When a dependency completes or a blocking condition clears, direct dependents reevaluate immediately and can enter the ready set in the same wake cycle; node.prerequisite_resolved carries source, resolved prerequisite, targets, resolution, and wake behavior.
+L00002332	gui_related: false
+L00002333	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00002334	split_recommended: false
+L00002335	depends_on: []

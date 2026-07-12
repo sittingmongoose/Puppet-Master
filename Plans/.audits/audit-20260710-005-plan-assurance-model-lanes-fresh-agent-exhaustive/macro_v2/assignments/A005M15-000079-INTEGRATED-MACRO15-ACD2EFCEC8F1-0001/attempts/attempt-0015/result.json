@@ -1,0 +1,736 @@
+{
+  "assignment_id": "A005M15-000079-INTEGRATED-MACRO15-ACD2EFCEC8F1-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "compatibility_migration",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "PRD Builder is the finished-product planning-intake workspace that creates, normalizes, reviews, versions, and approves PRD Packs before Planning Wizard work begins. It supports conversation-first, import-first, and hybrid requirements capture while preserving exact source lineage, source manifests, conflicts, annotations, readiness, and immutable approval snapshots.",
+          "line_end": 9,
+          "line_start": 9,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        },
+        {
+          "exact_quote": "PRD Builder owns intake-depth product intent, source ingestion, PRD projection, Approved PRD Pack creation, PRD annotations, and the explicit `Approve PRD for Planning Wizard` handoff. It consumes Assistant Chat, Planning Ledger, Plan Document System, FileSafe, Project Output Artifacts, Contracts, Final GUI, and UI Command contracts without owning implementation planning, Plan Compile, Executor provisioning, WorkNodes, or Orchestrator runtime execution.",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The product boundary is explicit enough to prevent PRD intake from silently acquiring implementation-planning or runtime authority.",
+      "item_id": "A005M15-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-001",
+        "SEMANTIC:PROLOGUE:Plans/PRD_Builder.md",
+        "SEMANTIC:PLANUNIT:PRDB-001"
+      ],
+      "statement": "PRD Builder is a planning-intake owner and Approved PRD Pack producer, while Planning Wizard and runtime execution remain explicitly outside its authority.",
+      "title": "PRD intake boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "gui_truth",
+        "propagation",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'A user with no source documents can start in PRD Builder chat; the agent asks discovery questions, updates the PRD ledger every turn, and continuously renders the PRD projection. A user can upload existing requirements material and have PRD Builder preserve, parse, extract, reconcile, and normalize it into the standard PRD and PRD Pack. Uploads and conversation may be combined at any time in one PRD Builder workspace so users can clarify, correct, extend, override, and source newly introduced requirements without restarting.'",
+          "line_end": 118,
+          "line_start": 118,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Users can move between conversation and imported evidence without abandoning work or creating disconnected PRD state.",
+      "item_id": "A005M15-I002",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-002",
+        "SEMANTIC:PLANUNIT:PRDB-002"
+      ],
+      "statement": "The workspace supports conversation-first, import-first, and hybrid intake with continuous ledger and projection updates.",
+      "title": "Hybrid PRD creation is required"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'PRD Builder proactively asks enough targeted discovery questions to make product intent complete and testable, including problem, users, goals, scope, non-goals, constraints, success, source authority, risks, assumptions, and uncertainty. Ask questions in digestible batches, use existing ledger answers before asking, avoid repetition, and prefer questions whose answers materially change the PRD. PRD Builder captures what, why, who, scope, constraints, acceptance expectations, risks, assumptions, dependencies, and open questions without pretending to produce implementation-ready plans.'",
+          "line_end": 176,
+          "line_start": 176,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "underspecified_discovery_oracle",
+      "impact": "Implementations can disagree on batch size, when discovery is complete, and when an unanswered topic blocks approval, making UX and tests non-deterministic.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-003",
+        "SEMANTIC:PLANUNIT:PRDB-003"
+      ],
+      "statement": "Terms such as enough, digestible batches, and materially change are not paired with measurable stopping, batching, escalation, or completeness rules.",
+      "title": "Discovery completion and batching lack deterministic oracles"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Every substantive PRD Builder exchange must append an event and update affected PRD atoms, decisions, assumptions, constraints, questions, conflicts, annotations, projections, and handoff state before the turn is complete. The durable PRD ledger is working memory and source lineage; the visible PRD is a versioned human-readable projection of accepted ledger atoms and must not become the only source of truth. The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. Material functional requirements and acceptance criteria receive stable identifiers such as FR-001 and AC-001, with stable internal atom IDs and source lineage.'",
+          "line_end": 234,
+          "line_start": 234,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "missing_atomicity_and_recovery_contract",
+      "impact": "A crash, duplicate turn, or concurrent editor can leave the ledger, projection, and handoff state disagreeing without a defined replay or rollback path.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-004",
+        "SEMANTIC:PLANUNIT:PRDB-004"
+      ],
+      "statement": "The required multi-record update has no transaction boundary, idempotency rule, concurrency control, partial-write state, replay procedure, or recovery oracle.",
+      "title": "Ledger turn completion lacks atomicity and recovery semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The default workspace emphasizes one primary PRD while exposing supporting assumptions and constraints, open questions, source traceability, and quality/readiness views without making users manage many equal documents. Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. Edits after approval create a new draft based on the approved version and require a new approval event; previous Approved PRD Packs remain immutable and addressable. PRD Builder exposes Ready, Ready with Warnings, and Blocked based on source extraction,",
+          "line_end": 304,
+          "line_start": 304,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Planning Wizard receives an immutable addressed version, and post-approval changes cannot silently mutate an already approved handoff.",
+      "item_id": "A005M15-I005",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-005",
+        "SEMANTIC:PLANUNIT:PRDB-005"
+      ],
+      "statement": "Approval snapshots mutable editor state into an immutable version; later edits fork a new draft and require another approval.",
+      "title": "Approval and successor-version transitions are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "propagation",
+        "operations",
+        "scale_performance"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'PRD Builder preserves original uploaded artifacts byte-for-byte with stable source IDs, hashes, MIME/type metadata, and extraction status before semantic processing. Create deterministic text, heading, page, table, image, and offset projections plus a source manifest recording coverage, extraction warnings, skipped content, and parser versions. Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once. When source size or diversity exceeds bounded thresholds, the controller must launch many read-only extraction subagents in parallel, record assignment and result receipts, and reject completion if required parallel work was skipped. Each intake subagent emits bounded candidate requirement atoms, source spans, confidence, ambiguity, conflicts, duplicates, and extraction warnings;",
+          "line_end": 376,
+          "line_start": 376,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The original evidence remains auditable while extraction work is bounded and only the designated owner can mutate canonical PRD state.",
+      "item_id": "A005M15-I006",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-006",
+        "SEMANTIC:PLANUNIT:PRDB-006"
+      ],
+      "statement": "Source ingestion preserves byte-level originals and deterministic lineage, parallelizes bounded extraction, and reserves canonical writes for the controller or assigned owner.",
+      "title": "Preserved-source and extraction ownership contract is strong"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once.",
+          "line_end": 376,
+          "line_start": 376,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "underspecified_sharding_and_partial_failure",
+      "impact": "Different controllers can create incompatible slices or disagree about retry, completion, and reduction after missing, duplicate, timed-out, or conflicting extraction results.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-006",
+        "SEMANTIC:PLANUNIT:PRDB-006"
+      ],
+      "statement": "The plan names bounded slices and required parallel work but does not define deterministic slice boundaries, threshold values, result deduplication, retry ownership, or a partial-fleet terminal-state matrix.",
+      "title": "Parallel extraction lacks deterministic sharding and partial-failure rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Source intake cannot feed PRD atoms until MIME, hash, parser-sandbox, path, network, scan/quarantine, and resource-limit receipts are recorded or explicitly unavailable with a warning.",
+          "line_end": 462,
+          "line_start": 462,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        },
+        {
+          "exact_quote": "- Prompt-injection text inside uploaded sources is preserved as source content but cannot become assistant instruction or policy authority.",
+          "line_end": 463,
+          "line_start": 463,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Untrusted content cannot influence accepted product intent before evidence-backed preflight, and embedded prompt injection never receives instruction authority.",
+      "item_id": "A005M15-I008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-008",
+        "SEMANTIC:PLANUNIT:PRDB-008"
+      ],
+      "statement": "Source-security receipts gate atom creation, while source text is explicitly denied assistant or policy authority.",
+      "title": "Untrusted-source authority boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "recovery_rollback",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "When revisions invalidate a highlighted span, mark the anchor stale, preserve the original selected text, attempt evidence-backed remapping, write a stale_anchor_relocation_receipt when successful, and ask the user only when safe remapping is impossible.",
+          "line_end": 519,
+          "line_start": 519,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Annotation intent is preserved through revision, unsafe remapping is not silently accepted, and the user is engaged only when evidence cannot safely relocate the anchor.",
+      "item_id": "A005M15-I009",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-007",
+        "SEMANTIC:PLANUNIT:PRDB-007"
+      ],
+      "statement": "Stale annotations transition through evidence-backed relocation with a receipt, otherwise requiring user re-anchoring.",
+      "title": "Stale annotation recovery is specified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Highlight, comment, ask, request change, replace, remove, move to non-goal, mark unclear, show source, and challenge source actions create durable context or annotation records bound to document version, projection revision, actor identity, ordered source spans, action-specific payload, and text anchors.",
+          "line_end": 519,
+          "line_start": 519,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "missing_annotation_concurrency_contract",
+      "impact": "Two actors or commands can resolve the same conflict or mutate overlapping anchored text without a specified winner, rejection state, idempotency behavior, or merge receipt.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-007",
+        "SEMANTIC:PLANUNIT:PRDB-007"
+      ],
+      "statement": "Version and actor binding are defined, but concurrent annotation actions and simultaneous conflict resolutions lack compare-and-set, ordering, duplication, and collision semantics.",
+      "title": "Concurrent annotation and conflict mutations are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "propagation",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "PRD Builder source picker and source ingestion use DiscoveryService for project source discovery when building PRD source references. Requests use prd_builder_source_picker, project/worktree or remote/SSH identity, policy_context, and file or content_candidate target kinds.",
+          "line_end": 617,
+          "line_start": 617,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Project source discovery has a named service, request identity, target vocabulary, policy context, and provenance consumer instead of relying on chat transcript evidence.",
+      "item_id": "A005M15-I011",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-009",
+        "SEMANTIC:PLANUNIT:PRDB-009"
+      ],
+      "statement": "PRD Builder is a DiscoveryService consumer for local, worktree, remote, and SSH source selection, with selected provenance written into PRD source references.",
+      "title": "DiscoveryService consumer seam is named"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Denied/stale/fallback states are visible without leaking blocked path details.",
+          "line_end": 625,
+          "line_start": 625,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "missing_source_picker_recovery_ux",
+      "impact": "A safe but non-actionable state can strand users, differ across implementations, or be conveyed only visually without accessible status and remediation controls.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-009",
+        "SEMANTIC:PLANUNIT:PRDB-009"
+      ],
+      "statement": "Denied, stale, fallback, hidden-by-policy, and no-results states are named, but their recovery actions, offline/network-loss transitions, accessible announcements, and localization-safe explanations are not specified.",
+      "title": "Source picker failure states lack recovery and accessible GUI contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Final/approved PRD outputs are retained forever by default and appear",
+          "line_end": 667,
+          "line_start": 667,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        },
+        {
+          "exact_quote": "- Do not silently remove final/approved outputs from History.",
+          "line_end": 774,
+          "line_start": 774,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "missing_history_retention_privacy_and_deletion_authority",
+      "impact": "Forever retention can conflict with privacy deletion, legal hold, project destruction, storage pressure, or export revocation; undefined authority can cause either impermissible deletion or data that cannot be removed.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-010",
+        "SEMANTIC:PLANUNIT:PRDB-010"
+      ],
+      "statement": "Historical PRD records define default perpetual retention and archive visibility, but not deletion authority, privacy erasure, legal hold, tombstones, export lifecycle, storage quotas, projection-rebuild recovery, or audit receipts for destructive actions.",
+      "title": "Historical PRD lifecycle omits privacy and destructive-action rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- ConflictRecord tie-break order is explicit user resolution, higher-authority source_ref, latest accepted user correction, higher confidence, then blocked_requires_user_decision.",
+          "line_end": 820,
+          "line_start": 820,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        },
+        {
+          "exact_quote": "- The canonical approval command is cmd.prd_builder.approve_for_planning_wizard; compatibility alias cmd.prd_builder.approve_for_planning must project to the canonical command and emit the same approval receipt.",
+          "line_end": 824,
+          "line_start": 824,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Conflict authority has a deterministic terminal fallback, and legacy callers cannot create a semantically weaker approval receipt.",
+      "item_id": "A005M15-I014",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-011",
+        "SEMANTIC:PLANUNIT:PRDB-011"
+      ],
+      "statement": "Conflict tie-breaking, blocked user-decision fallback, resolution command, and approval-command alias behavior are explicitly contracted.",
+      "title": "Conflict authority and approval compatibility are deterministic"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "scale_limits",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Readiness score defaults are completeness 0.35, evidence 0.25, conflicts 0.20, dependencies 0.10, resources 0.10, with approve threshold >= 0.85 and conflicts axis requiring no blocking conflicts.",
+          "line_end": 822,
+          "line_start": 822,
+          "path": "Plans/PRD_Builder.md",
+          "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+        }
+      ],
+      "gap_kind": "underspecified_readiness_scoring_math",
+      "impact": "Identical PRD inputs can produce different approve or blocked outcomes across implementations because the axis functions and numeric semantics are still discretionary.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PRDB-011",
+        "SEMANTIC:PLANUNIT:PRDB-011"
+      ],
+      "statement": "Weights and the approval threshold are fixed, but axis domains, formulas, missing-data treatment, precision and rounding, score versioning, recomputation triggers, and threshold-boundary tests are not defined.",
+      "title": "Readiness score is weighted but not fully computable"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        367
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PRDB-001",
+        "PLANUNIT:PRDB-002",
+        "PLANUNIT:PRDB-003",
+        "PLANUNIT:PRDB-004",
+        "PLANUNIT:PRDB-005",
+        "SEMANTIC:PROLOGUE:Plans/PRD_Builder.md",
+        "SEMANTIC:PLANUNIT:PRDB-001",
+        "SEMANTIC:PLANUNIT:PRDB-002",
+        "SEMANTIC:PLANUNIT:PRDB-003",
+        "SEMANTIC:PLANUNIT:PRDB-004",
+        "SEMANTIC:PLANUNIT:PRDB-005"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005"
+      ],
+      "reviewed": true,
+      "summary": "The first window defines a clear intake boundary, hybrid creation flow, ledger-backed projection, and immutable approval transition. Adversarial review found missing discovery oracles and missing atomicity, concurrency, and recovery semantics for per-turn ledger synchronization.",
+      "window_id": "WIN-ACD2EFCEC8F1-0001"
+    },
+    {
+      "core_range": [
+        368,
+        658
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PRDB-006",
+        "PLANUNIT:PRDB-007",
+        "PLANUNIT:PRDB-008",
+        "PLANUNIT:PRDB-009",
+        "SEMANTIC:PLANUNIT:PRDB-006",
+        "SEMANTIC:PLANUNIT:PRDB-008",
+        "SEMANTIC:PLANUNIT:PRDB-007",
+        "SEMANTIC:PLANUNIT:PRDB-009"
+      ],
+      "item_ids": [
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012"
+      ],
+      "reviewed": true,
+      "summary": "The second window strongly binds preserved sources, untrusted-input authority, annotation relocation, and DiscoveryService provenance. Gaps remain in deterministic sharding and partial-fleet recovery, concurrent annotation mutation, and source-picker remediation across offline and accessible GUI states.",
+      "window_id": "WIN-ACD2EFCEC8F1-0002"
+    },
+    {
+      "core_range": [
+        659,
+        859
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PRDB-010",
+        "PLANUNIT:PRDB-011",
+        "SEMANTIC:PLANUNIT:PRDB-010",
+        "SEMANTIC:PLANUNIT:PRDB-011"
+      ],
+      "item_ids": [
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015"
+      ],
+      "reviewed": true,
+      "summary": "The final window specifies project-scoped historical records, conflict tie-breaking, readiness weights, and approval-command compatibility. It leaves consequential history privacy and deletion lifecycle rules undefined and does not fully define readiness-axis computation or numeric boundary behavior.",
+      "window_id": "WIN-ACD2EFCEC8F1-0003"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-ACD2EFCEC8F1-0001",
+    "document_path": "Plans/PRD_Builder.md",
+    "micro_window_ids": [
+      "WIN-ACD2EFCEC8F1-0001",
+      "WIN-ACD2EFCEC8F1-0002",
+      "WIN-ACD2EFCEC8F1-0003"
+    ],
+    "source_sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract owns atomic PRD-ledger turn commits, replay, idempotency, and concurrent-editor conflict behavior?",
+      "Which FileSafe, Permissions, and runtime contracts define unavailable security-control policy and source-intake terminal receipts?",
+      "Which History and storage contracts own privacy erasure, legal hold, tombstones, quotas, archive authority, and projection-rebuild recovery?",
+      "Which UI contract defines accessible, localized remediation for denied, stale, fallback, hidden-by-policy, no-results, and offline source-picker states?",
+      "Which shared scoring contract defines readiness axis functions, missing values, precision, versioning, and recomputation?"
+    ],
+    "feature_family_keys": [
+      "prd-builder-intake-boundary",
+      "prd-builder-hybrid-discovery",
+      "prd-ledger-projection-and-approval",
+      "prd-source-ingestion-and-security",
+      "prd-conflicts-and-annotations",
+      "prd-source-discovery",
+      "prd-history-lifecycle",
+      "prd-readiness-and-command-contracts"
+    ],
+    "research_queries": [
+      "transactional event ledger projection idempotency and crash recovery patterns",
+      "deterministic document sharding and parallel extraction partial failure contracts",
+      "secure untrusted document ingestion parser sandbox prompt injection quarantine controls",
+      "privacy-aware immutable document history retention legal hold erasure tombstones",
+      "deterministic weighted readiness scoring missing data rounding and versioning"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000079_attempt_0015_terminal"
+}

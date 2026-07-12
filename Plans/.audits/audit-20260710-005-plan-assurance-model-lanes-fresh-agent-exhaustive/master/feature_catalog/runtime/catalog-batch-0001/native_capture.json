@@ -1,0 +1,244 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "feature-catalog-native-capture-v1",
+  "epoch_id": "catalog-epoch-0001",
+  "batch_id": "catalog-batch-0001",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "controller_turn_id": "019f5052-6e45-7513-8588-c186e1fad9ab",
+  "controller_thread_state": "idle",
+  "controller_turn_status": "completed",
+  "controller_turn_error": null,
+  "capture_basis": "codex_app_read_thread_after_controller_and_all_23_direct_children_terminal",
+  "leaves": [
+    {
+      "assignment_id": "A005C-0001",
+      "native_child_thread_id": "019f5053-502a-7633-8ff2-5d5bb3245dba",
+      "native_child_turn_id": "019f5053-50c3-7bc3-ad50-1eee2e337417",
+      "agent_path": "/root/a005_catalog_0001_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0002",
+      "native_child_thread_id": "019f5053-72ca-7e31-a99b-57298601382a",
+      "native_child_turn_id": "019f5053-7346-7f03-b0d3-9fb2665da2e7",
+      "agent_path": "/root/a005_catalog_0002_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0003",
+      "native_child_thread_id": "019f5053-a62d-74f0-ad04-721c766f2436",
+      "native_child_turn_id": "019f5053-a6b1-7492-9137-8dcd5910be66",
+      "agent_path": "/root/a005_catalog_0003_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0004",
+      "native_child_thread_id": "019f5053-ca04-7ac3-ad14-9a52469b421a",
+      "native_child_turn_id": "019f5053-ca86-7c81-ac29-fcf4cb7eadd5",
+      "agent_path": "/root/a005_catalog_0004_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0005",
+      "native_child_thread_id": "019f5053-eb6f-71a1-8a45-7af5717d314f",
+      "native_child_turn_id": "019f5053-ebf7-7ea2-ad53-5dcb6bfe3eac",
+      "agent_path": "/root/a005_catalog_0005_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0006",
+      "native_child_thread_id": "019f5054-1cd9-78f0-b68c-4853387f832f",
+      "native_child_turn_id": "019f5054-1d6c-73a1-9466-98ae1fda8c97",
+      "agent_path": "/root/a005_catalog_0006_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0007",
+      "native_child_thread_id": "019f5054-4314-74d3-9b63-cd6c0391908a",
+      "native_child_turn_id": "019f5054-438c-70b1-a9e1-093187e2170c",
+      "agent_path": "/root/a005_catalog_0007_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0008",
+      "native_child_thread_id": "019f5054-62bb-7253-b4b4-f0a30f2e10cf",
+      "native_child_turn_id": "019f5054-632f-7a71-acf4-d023979dd01b",
+      "agent_path": "/root/a005_catalog_0008_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0009",
+      "native_child_thread_id": "019f5054-824c-7180-a0b6-4b76f9d4e906",
+      "native_child_turn_id": "019f5054-82c1-7f02-816e-6122815964c9",
+      "agent_path": "/root/a005_catalog_0009_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0010",
+      "native_child_thread_id": "019f5054-a535-7520-8ade-54596c9fbb83",
+      "native_child_turn_id": "019f5054-a5af-7921-9ad9-b5dc18be2e89",
+      "agent_path": "/root/a005_catalog_0010_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0011",
+      "native_child_thread_id": "019f5054-c3fc-7d70-aa7a-45fbda52635a",
+      "native_child_turn_id": "019f5054-c478-73c1-9f57-bea5fbb71d0e",
+      "agent_path": "/root/a005_catalog_0011_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0012",
+      "native_child_thread_id": "019f5054-e9e9-7e02-ac86-9f1386853cba",
+      "native_child_turn_id": "019f5054-ea69-78d3-86d1-d7358b6c237e",
+      "agent_path": "/root/a005_catalog_0012_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0013",
+      "native_child_thread_id": "019f5055-0894-7ca0-8668-101fb52303ea",
+      "native_child_turn_id": "019f5055-091c-79d3-a976-f3bfe57ca69e",
+      "agent_path": "/root/a005_catalog_0013_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0014",
+      "native_child_thread_id": "019f5055-2742-7542-b91e-e9ebbdd99c57",
+      "native_child_turn_id": "019f5055-27d8-7490-adc4-fe139b002fc0",
+      "agent_path": "/root/a005_catalog_0014_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0015",
+      "native_child_thread_id": "019f5055-4a01-7e80-8e28-caf37915e8f0",
+      "native_child_turn_id": "019f5055-4a6e-7d22-9315-28070515c616",
+      "agent_path": "/root/a005_catalog_0015_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0016",
+      "native_child_thread_id": "019f5055-6a64-7212-b88b-20d1e5a0ce37",
+      "native_child_turn_id": "019f5055-6ae8-7ca2-af86-3ffaf1ef4d51",
+      "agent_path": "/root/a005_catalog_0016_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0017",
+      "native_child_thread_id": "019f5055-8b12-7420-b583-f206f9703248",
+      "native_child_turn_id": "019f5055-8b98-7332-b95d-5708a6461b09",
+      "agent_path": "/root/a005_catalog_0017_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0018",
+      "native_child_thread_id": "019f5055-b164-7b32-a590-36afbc477832",
+      "native_child_turn_id": "019f5055-b1df-75d1-8214-2820f508518f",
+      "agent_path": "/root/a005_catalog_0018_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0019",
+      "native_child_thread_id": "019f5055-d093-7613-97e9-eb25ee9a5fa1",
+      "native_child_turn_id": "019f5055-d10d-7f73-be88-739145ef45d6",
+      "agent_path": "/root/a005_catalog_0019_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0020",
+      "native_child_thread_id": "019f5055-f006-7580-8a00-37398f4ee0b8",
+      "native_child_turn_id": "019f5055-f0a6-7210-91ff-31dec863acb0",
+      "agent_path": "/root/a005_catalog_0020_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0021",
+      "native_child_thread_id": "019f5056-0fb3-74b2-a9c5-f4e55f27812d",
+      "native_child_turn_id": "019f5056-1039-70a1-88e8-e54e5ea65024",
+      "agent_path": "/root/a005_catalog_0021_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0022",
+      "native_child_thread_id": "019f5056-2ec9-7561-8e65-f7e5b1a3ce9f",
+      "native_child_turn_id": "019f5056-2f4f-7840-a3be-e64f5dc620fe",
+      "agent_path": "/root/a005_catalog_0022_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005C-0023",
+      "native_child_thread_id": "019f5056-4e9f-7d81-9a06-e088aa63f017",
+      "native_child_turn_id": "019f5056-4f24-7d90-aef8-0e5a46e81e14",
+      "agent_path": "/root/a005_catalog_0023_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ]
+}

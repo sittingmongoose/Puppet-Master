@@ -115,7 +115,7 @@ plan_unit_id: PRDB-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/PRD_Builder.md
-canonical_text: 'A user with no source documents can start in PRD Builder chat; the agent asks discovery questions, updates the PRD ledger every turn, and continuously renders the PRD projection. A user can upload existing requirements material and have PRD Builder preserve, parse, extract, reconcile, and normalize it into the standard PRD and PRD Pack. Uploads and conversation may be combined at any time in one PRD Builder workspace so users can clarify, correct, extend, override, and source newly introduced requirements without restarting.'
+canonical_text: 'A user with no source documents can start in PRD Builder chat; the agent asks discovery questions, updates the PRD ledger every turn, and continuously renders the PRD projection. A user can upload existing requirements material and have PRD Builder preserve, parse, extract, reconcile, and normalize it into the standard PRD and PRD Pack. Uploads and conversation may be combined at any time in one PRD Builder workspace so users can clarify, correct, extend, override, and source newly introduced requirements without restarting. PRD Builder opens with a dedicated requirements entry surface that presents the conversation-first, import-first, and hybrid starts as first-class affordances with resume support; every entry lands in the same combined PRD Builder workspace, so the entry surface precedes but never replaces the conversation-first path and hybrid remains available at any time.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

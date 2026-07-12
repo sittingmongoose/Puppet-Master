@@ -1,0 +1,47 @@
+{
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0007",
+  "initial_task_contains": [
+    "frozen leaf prompt verbatim",
+    "own absolute dispatch intent",
+    "own later authorization path and SHA",
+    "activation core path and SHA",
+    "explicit no descendants/followups/retries"
+  ],
+  "parent_spawn_capture_required": true,
+  "parent_spawn_must_explicitly_request": {
+    "fork_turns": "none",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max"
+  },
+  "positive_receipt_writer": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/tools/write_positive_receipt.py",
+  "required_self_attestations": [
+    "current_web_research_performed",
+    "official_or_primary_sources_first",
+    "direct_urls_only",
+    "source_count_contract_checked",
+    "supported_inference_no_evidence_labels_present",
+    "no_fabricated_claims",
+    "no_long_quotations",
+    "topic_and_refs_binding_verified",
+    "exact_attempt_id_verified",
+    "fresh_direct_terminal_contract_acknowledged",
+    "fresh_current_public_web_research_redone",
+    "canonical_agent_path_is_only_leaf_known_identity",
+    "native_identity_deferred_to_controller_receipt_and_capture",
+    "prior_attempt_result_bodies_and_peer_outputs_not_read",
+    "leaf_local_schema_conformance_check_passed_before_final_write",
+    "exact_schema_key_set_verified",
+    "source_registry_unique_and_complete",
+    "source_registry_completed_before_claim_emission",
+    "activation_core_and_authorization_verified",
+    "blocked_prelaunch_intent_treated_as_lineage_only",
+    "result_required_before_pmr1",
+    "pmr1_not_returned_before_result_write"
+  ],
+  "result_identity": "canonical agent_path only",
+  "schema_version": "external-research-leaf-initial-task-contract-v7"
+}

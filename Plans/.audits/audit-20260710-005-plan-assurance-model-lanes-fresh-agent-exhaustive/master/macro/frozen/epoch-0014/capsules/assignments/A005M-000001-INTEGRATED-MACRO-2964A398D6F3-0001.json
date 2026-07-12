@@ -1,0 +1,143 @@
+{
+  "assignment_id": "A005M-000001-INTEGRATED-MACRO-2964A398D6F3-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    443
+  ],
+  "bundle_id": "MACRO-2964A398D6F3-0001",
+  "context_ranges": [],
+  "document_path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+  "micro_window_ids": [
+    "WIN-2964A398D6F3-0001",
+    "WIN-2964A398D6F3-0002"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        305
+      ],
+      "core_sha256": "e60a21df71378708e992a37a542adee563a81ce835695f24ed1f1bd20b15db95",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "semantic_block_ids": [
+        "JSON_PREFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$schema",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$id",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:title",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:type",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:additionalProperties",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:required",
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$id",
+        "$.$schema",
+        "$.additionalProperties",
+        "$.properties",
+        "$.required",
+        "$.title",
+        "$.type"
+      ],
+      "token_estimate": 3610,
+      "window_id": "WIN-2964A398D6F3-0001"
+    },
+    {
+      "core_range": [
+        306,
+        443
+      ],
+      "core_sha256": "75c7f3b72584303bfff00c497ef7a830143f9d166f08a9715049fc69ed56634c",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "JSON_SUFFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$defs"
+      ],
+      "token_estimate": 1057,
+      "window_id": "WIN-2964A398D6F3-0002"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/9c/9c1aff7e6eb5e6fdb28bbb42fd7371566688fb36130504f87d34c610f8aebdfb.txt",
+  "source_excerpt_sha256": "9c1aff7e6eb5e6fdb28bbb42fd7371566688fb36130504f87d34c610f8aebdfb",
+  "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428",
+  "token_estimate": 4667
+}

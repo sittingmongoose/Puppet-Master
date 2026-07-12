@@ -1,0 +1,305 @@
+{
+  "$id": "urn:puppetmaster:audit005:cross-domain-seam-window-v2-result",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_path": {
+      "pattern": "^/root/a005_cross_domain_seam_v2_00(?:0[1-9]|[1-5][0-9]|6[0-4])_attempt_0001_terminal$"
+    },
+    "assignment_id": {
+      "pattern": "^A005CDSV2-00(?:0[1-9]|[1-5][0-9]|6[0-4])$"
+    },
+    "attempt_id": {
+      "const": "attempt-0001"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "cohort_id": {
+      "enum": [
+        "cohort-0001",
+        "cohort-0002",
+        "cohort-0003",
+        "cohort-0004"
+      ]
+    },
+    "coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "normalized_edge_ids": {
+          "items": {
+            "pattern": "^A005CDS-EDGE-[0-9]{5}$"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "edge_count",
+        "normalized_edge_ids"
+      ],
+      "type": "object"
+    },
+    "decisions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "authority_lifecycle_outcome_state_failure_analysis": {
+            "minLength": 40,
+            "type": "string"
+          },
+          "counterevidence": {
+            "items": {
+              "minLength": 8,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "decision": {
+            "enum": [
+              "same_feature_merge",
+              "shared_subsystem_distinct",
+              "dependency_or_interface_seam",
+              "conflict_requires_plan_revision",
+              "unsupported_candidate",
+              "uncertain_requires_targeted_research"
+            ]
+          },
+          "external_research": {
+            "additionalProperties": false,
+            "properties": {
+              "claims": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "applicability": {
+                      "minLength": 10,
+                      "type": "string"
+                    },
+                    "claim": {
+                      "minLength": 10,
+                      "type": "string"
+                    },
+                    "source_urls": {
+                      "items": {
+                        "pattern": "^https://",
+                        "type": "string"
+                      },
+                      "minItems": 1,
+                      "type": "array",
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "claim",
+                    "source_urls",
+                    "applicability"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "live_web_research_performed": {
+                "type": "boolean"
+              },
+              "sources": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "accessed_date": {
+                      "format": "date",
+                      "type": "string"
+                    },
+                    "publisher": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "title": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "url": {
+                      "pattern": "^https://",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "title",
+                    "publisher",
+                    "accessed_date"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "state": {
+                "enum": [
+                  "sufficient_for_judgment",
+                  "insufficient_unresolved"
+                ]
+              }
+            },
+            "required": [
+              "state",
+              "live_web_research_performed",
+              "sources",
+              "claims"
+            ],
+            "type": "object"
+          },
+          "normalized_edge_id": {
+            "pattern": "^A005CDS-EDGE-[0-9]{5}$"
+          },
+          "promotion_performed": {
+            "const": false
+          },
+          "proposed_plan_revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rationale": {
+            "minLength": 30,
+            "type": "string"
+          },
+          "supporting_evidence": {
+            "items": {
+              "minLength": 8,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "unresolved_reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "normalized_edge_id",
+          "decision",
+          "rationale",
+          "authority_lifecycle_outcome_state_failure_analysis",
+          "supporting_evidence",
+          "counterevidence",
+          "external_research",
+          "unresolved_reason",
+          "promotion_performed",
+          "proposed_plan_revision"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "input_binding": {
+      "additionalProperties": false,
+      "properties": {
+        "cohort_activation_sha256": {
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "edge_membership_digest": {
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "packet_id": {
+          "pattern": "^CDSV2PKT-00(?:0[1-9]|[1-5][0-9]|6[0-4])$"
+        },
+        "packet_sha256": {
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_capsule_sha256": {
+          "const": "24ff5ef62eda716207e0a1d24a942f7488b36d9ce93c54de42da2540aeeb67a1"
+        }
+      },
+      "required": [
+        "packet_id",
+        "packet_sha256",
+        "edge_membership_digest",
+        "source_capsule_sha256",
+        "cohort_activation_sha256"
+      ],
+      "type": "object"
+    },
+    "model": {
+      "const": "gpt-5.6-sol"
+    },
+    "phase": {
+      "const": "cross_domain_seam_window_adjudication_v2"
+    },
+    "reasoning_effort": {
+      "const": "xhigh"
+    },
+    "schema_version": {
+      "const": "cross-domain-seam-window-v2-result-v1"
+    },
+    "self_attestation": {
+      "additionalProperties": false,
+      "properties": {
+        "all_edges_reviewed": {
+          "const": true
+        },
+        "external_research_used_for_each_final_judgment": {
+          "const": true
+        },
+        "no_descendants": {
+          "const": true
+        },
+        "no_final_promotion": {
+          "const": true
+        },
+        "no_merge_by_name_similarity": {
+          "const": true
+        },
+        "no_peer_outputs": {
+          "const": true
+        },
+        "no_silent_domain_collapse": {
+          "const": true
+        },
+        "whole_edge_evidence_reviewed": {
+          "const": true
+        }
+      },
+      "required": [
+        "all_edges_reviewed",
+        "whole_edge_evidence_reviewed",
+        "no_merge_by_name_similarity",
+        "no_silent_domain_collapse",
+        "no_final_promotion",
+        "external_research_used_for_each_final_judgment",
+        "no_descendants",
+        "no_peer_outputs"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "const": "completed"
+    }
+  },
+  "required": [
+    "audit_id",
+    "schema_version",
+    "phase",
+    "assignment_id",
+    "cohort_id",
+    "attempt_id",
+    "agent_path",
+    "model",
+    "reasoning_effort",
+    "status",
+    "input_binding",
+    "coverage",
+    "decisions",
+    "self_attestation"
+  ],
+  "type": "object"
+}

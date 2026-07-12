@@ -1,0 +1,90 @@
+{
+  "assignment_id": "A005M-000223-INTEGRATED-MACRO-65F05C86F764-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1
+  ],
+  "bundle_id": "MACRO-65F05C86F764-0001",
+  "context_ranges": [],
+  "document_path": "Plans/runtime_artifact_implementation_plan.schema.json",
+  "micro_window_ids": [
+    "WIN-65F05C86F764-0001"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "core_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "semantic_block_ids": [
+        "JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json"
+      ],
+      "structural_paths": [
+        "$"
+      ],
+      "token_estimate": 483,
+      "window_id": "WIN-65F05C86F764-0001"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/e9/e9dd7503c6f2e32ebf6c7a19e50f110f66484045f3a231bc34cc262949e1d6c3.txt",
+  "source_excerpt_sha256": "e9dd7503c6f2e32ebf6c7a19e50f110f66484045f3a231bc34cc262949e1d6c3",
+  "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0",
+  "token_estimate": 483
+}

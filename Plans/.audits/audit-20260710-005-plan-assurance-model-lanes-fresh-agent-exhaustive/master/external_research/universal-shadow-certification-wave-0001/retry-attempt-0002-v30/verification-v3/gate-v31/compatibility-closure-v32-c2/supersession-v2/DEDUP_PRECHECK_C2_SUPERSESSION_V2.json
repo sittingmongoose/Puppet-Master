@@ -1,0 +1,20 @@
+{
+  "credit_equivalence_rule": "A_TERMINAL_COUNTS_ONLY_IF_ITS_INVOCATION_REPLAY_PASSED_THE_PINNED_RUNTIME_AND_SEALED_HASHES_WITH_ZERO_ERRORS",
+  "foreign_terminal_credit_equivalent_count": 0,
+  "precreation_scan": {
+    "rejected_same_branch_predecessor_count": 1,
+    "supersession_v2_terminal_present": false,
+    "terminal_credit_equivalent_count": 0
+  },
+  "rejected_same_branch_predecessor": {
+    "credit": 0,
+    "path": "../TERMINAL_PREPARATION_C2_V32.json",
+    "root_replayed_terminal_sha256": "e584e8925a3cde96947918a10077edb7c4850a58546fc8402c2bd8d02eafced2",
+    "status": "REJECTED_FAIL_CLOSED",
+    "current_frozen_terminal_sha256": "9c009f970680cde50be5c6407c5f3ee37dd103ba4543642e13a028fc00cb2032"
+  },
+  "schema_version": "a005-c2-compatibility-supersession-v2-dedup-precheck-v1",
+  "slot_id": "c2-atomic8-prelaunch",
+  "status": "PASS_ONE_REJECTED_SAME_BRANCH_PREDECESSOR_ZERO_TERMINAL_CREDIT_EQUIVALENTS",
+  "target_namespace": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/verification-v3/gate-v31/compatibility-closure-v32-c2/supersession-v2"
+}

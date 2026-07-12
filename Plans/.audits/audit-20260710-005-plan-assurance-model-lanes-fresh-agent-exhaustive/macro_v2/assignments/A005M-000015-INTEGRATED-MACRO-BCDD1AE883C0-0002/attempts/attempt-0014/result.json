@@ -1,0 +1,989 @@
+{
+  "assignment_id": "A005M-000015-INTEGRATED-MACRO-BCDD1AE883C0-0002",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "document_path": "Plans/Containers_Registry_and_Unraid.md",
+    "core_line_range": [1740, 4700],
+    "core_lines_reviewed": 2961,
+    "context_ranges_reviewed": [[1728, 1739], [4701, 4712]],
+    "segments_reviewed": 8,
+    "plan_units_reviewed": [
+      "CRAU-015", "CRAU-016", "CRAU-017", "CRAU-018", "CRAU-019", "CRAU-020",
+      "CRAU-021", "CRAU-022", "CRAU-023", "CRAU-024", "CRAU-025", "CRAU-026",
+      "CRAU-027", "CRAU-028", "CRAU-029", "CRAU-030", "CRAU-031", "CRAU-032", "CRAU-033",
+      "CRAU-034", "CRAU-035", "CRAU-036", "CRAU-037", "CRAU-038", "CRAU-039", "CRAU-040",
+      "CRAU-041", "CRAU-042", "CRAU-043", "CRAU-044", "CRAU-045", "CRAU-046", "CRAU-047",
+      "CRAU-048", "CRAU-049", "CRAU-050", "CRAU-051", "CRAU-052", "CRAU-053", "CRAU-054",
+      "CRAU-055", "CRAU-056", "CRAU-057", "CRAU-058", "CRAU-059", "CRAU-060", "CRAU-061", "CRAU-062",
+      "CRAU-063", "CRAU-064", "CRAU-065", "CRAU-066", "CRAU-067", "CRAU-068", "CRAU-069", "CRAU-070"
+    ],
+    "required_source_unit_refs_total": 112,
+    "required_source_unit_refs_reviewed": 112,
+    "required_dimensions": [
+      "behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "scale_performance", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability", "unknown_unknowns"
+    ],
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "items_total": 47,
+    "gaps_by_severity": {"critical": 2, "high": 21, "medium": 8, "low": 0}
+  },
+  "items": [
+    {
+      "item_id": "A005M-000015-I001",
+      "item_type": "contract",
+      "title": "Shared receipt and blocked-state join contract is explicit",
+      "statement": "Docker Manager receipts are not local UI inventions: they must carry action, actor, target, approval, subsystem, result, and source-event joins, while object-bearing navigation uses the shared route target. This is a strong cross-surface contract and materially limits local panel drift.",
+      "source_unit_refs": ["PLANUNIT:CRAU-015", "SEMANTIC:PLANUNIT:CRAU-015"],
+      "dimensions": ["contracts", "inputs_outputs", "authority", "consumers", "observability_support"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Implementations have a concrete minimum receipt join surface and cannot substitute panel-local recovery payloads.",
+      "builder_discretion": "Implementation mechanics only; the named receipt fields and shared route boundary are fixed.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1763, "line_end": 1763, "exact_quote": "Receipts record requested action, effective action, actor, targets, result ids, allowed action ids, approval source, executing subsystem, and source event ids.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I002",
+      "item_type": "gap",
+      "title": "GUI-related metadata contradicts visible acceptance behavior",
+      "statement": "CRAU-016, CRAU-025, CRAU-060, CRAU-061, and CRAU-067 are marked gui_related false even though their acceptance criteria require panel disclosure, GUI visibility, settings, setup overrides, or user resolution choices. This can exclude required UI work from GUI-scoped compilation and assurance.",
+      "source_unit_refs": ["PLANUNIT:CRAU-016", "SEMANTIC:PLANUNIT:CRAU-016", "PLANUNIT:CRAU-025", "SEMANTIC:PLANUNIT:CRAU-025", "PLANUNIT:CRAU-060", "SEMANTIC:PLANUNIT:CRAU-060", "PLANUNIT:CRAU-061", "SEMANTIC:PLANUNIT:CRAU-061", "PLANUNIT:CRAU-067", "SEMANTIC:PLANUNIT:CRAU-067"],
+      "dimensions": ["gui_truth", "consumers", "propagation", "cross_document_seams"],
+      "severity": "medium",
+      "gap_kind": "metadata_contradiction",
+      "impact": "GUI PlanUnit indexes or GUI-only work selection can silently omit visible requirements.",
+      "builder_discretion": "None; classification must be reconciled with the visible acceptance criteria.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1821, "line_end": 1821, "exact_quote": "gui_related: false", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1829, "line_end": 1829, "exact_quote": "Panels disclose whether a repo is pinned or inferred.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2360, "line_end": 2360, "exact_quote": "gui_related: false", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2367, "line_end": 2367, "exact_quote": "Positive detection shows Docker Manager, enables DockerHub repository, preview, publish, and Unraid template actions, and retains last-used Docker surface state.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4198, "line_end": 4198, "exact_quote": "User can disable managed template-repo handling in settings.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4247, "line_end": 4247, "exact_quote": "User may override repo name, branch, local path, and maintainer slug during setup.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4541, "line_end": 4541, "exact_quote": "Allowed resolutions are user cleans the repo first, user explicitly adopts the dirty repo state, or user switches to another managed repo path.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I003",
+      "item_type": "gui",
+      "title": "Requested-versus-effective identity disclosure is exact",
+      "statement": "The UI must expose runtime identity divergence with the fixed concepts Requested account, Requested binding, Effective account, and Switch reason; persona or model labels alone are explicitly insufficient.",
+      "source_unit_refs": ["PLANUNIT:CRAU-018", "SEMANTIC:PLANUNIT:CRAU-018"],
+      "dimensions": ["gui_truth", "behavior", "states_transitions", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Users can distinguish requested configuration from the identity that actually executed work.",
+      "builder_discretion": "Visual composition is open; the semantic distinctions and labels are fixed.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1942, "line_end": 1942, "exact_quote": "Docker Manager uses the exact grammar Requested account, Requested binding, Effective account, and Switch reason.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I004",
+      "item_type": "gap",
+      "title": "Projection freshness and convergence are named but not defined",
+      "statement": "CRAU-019 correctly makes dashboard, orchestrator, Docker Manager, widget, and source-control views projections of canonical runtime facts, but it provides no version, causal ordering, invalidation trigger, maximum staleness, or degraded-staleness rendering oracle. The preserved token projection freshness is not converted into acceptance behavior.",
+      "source_unit_refs": ["PLANUNIT:CRAU-019", "SEMANTIC:PLANUNIT:CRAU-019"],
+      "dimensions": ["propagation", "consumers", "states_transitions", "gui_misleading_states", "test_falsifiability"],
+      "severity": "medium",
+      "gap_kind": "missing_propagation_contract",
+      "impact": "Different consumers can show mutually inconsistent yet apparently authoritative state.",
+      "builder_discretion": "Bounded implementation choices are acceptable only after a canonical freshness/version rule is specified.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2004, "line_end": 2004, "exact_quote": "Dashboard, orchestrator, Docker Manager /page, widget presentation, and source-control summaries project from canonical runtime facts instead of becoming separate truth sources.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2027, "line_end": 2027, "exact_quote": "\"`projection freshness`\"", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I005",
+      "item_type": "gap",
+      "title": "Broad container detection conflicts with a later narrow detector",
+      "statement": "CRAU-022 requires Kubernetes manifests, Helm artifacts, persisted Kubernetes state, and prior Kubernetes receipts to surface Docker Manager, including manifest-only and Helm-only projects. CRAU-025 then defines Docker-related detection without any of those inputs and allows negative detection to hide the surface. The two accepted detectors can produce opposite navigation results.",
+      "source_unit_refs": ["PLANUNIT:CRAU-022", "SEMANTIC:PLANUNIT:CRAU-022", "PLANUNIT:CRAU-025", "SEMANTIC:PLANUNIT:CRAU-025"],
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "cross_document_seams", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "normative_contradiction",
+      "impact": "Manifest-only and Helm-only projects can be hidden despite an explicit requirement that they surface Docker Manager.",
+      "builder_discretion": "None; one merged detector and one acceptance matrix are required.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2172, "line_end": 2172, "exact_quote": "manually_enabled, and not_detected; Helm-only and manifest-only projects still", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2355, "line_end": 2355, "exact_quote": "publish settings, or an associated managed Unraid template repository; positive", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I006",
+      "item_type": "gap",
+      "title": "Owned-target override and indeterminate reconciliation lack authority rules",
+      "statement": "CRAU-021 requires explicit override or forked control for run-owned targets and later reconciliation for indeterminate remote outcomes, but it does not name who may override, how ownership is locked against races, whether override revokes run control, or what timeout and terminal reconciliation states apply.",
+      "source_unit_refs": ["PLANUNIT:CRAU-021", "SEMANTIC:PLANUNIT:CRAU-021"],
+      "dimensions": ["authority", "authority_boundaries", "concurrency_races", "failures_recovery", "states_transitions"],
+      "severity": "high",
+      "gap_kind": "missing_authority_and_reconciliation_contract",
+      "impact": "A manual mutation can race the owning run or remain indefinitely uncertain after transport loss.",
+      "builder_discretion": "None for authorization, ownership transfer, or terminal states; retry timing may be bounded by policy.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2122, "line_end": 2122, "exact_quote": "indeterminate_remote_outcome receipts record requested, transport_lost, later reconciled, and a Refresh remote state CTA.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2124, "line_end": 2124, "exact_quote": "Manual mutation of owned worktrees, preview containers, or rollout-associated workloads blocks, requires explicit override, or forks control explicitly, with receipts.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I007",
+      "item_type": "authority",
+      "title": "Docker, orchestrator, source-control, and GitHub owners are separated",
+      "statement": "Docker Manager complements active-run controls and owns DockerHub repository/auth/push policy; Source Control owns AI commit messages; GitHub /Actions owns workflow runs and Manage Secrets. Source-lineage HTML is explicitly denied canonical ownership.",
+      "source_unit_refs": ["PLANUNIT:CRAU-024", "SEMANTIC:PLANUNIT:CRAU-024"],
+      "dimensions": ["authority", "ownership", "consumers", "cross_document_seams"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The plan avoids a combined management surface becoming a duplicate source of truth.",
+      "builder_discretion": "None for owner assignment; cross-surface navigation details remain open.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2311, "line_end": 2311, "exact_quote": "Orchestrator/dashboard build and preview surfaces keep Docker-related actions for active Docker-related runs.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I008",
+      "item_type": "feature",
+      "title": "DockerHub auth preserves browser and PAT paths with bounded secret custody",
+      "statement": "The feature retains guided browser/device login and an explicit PAT path, then separates requested auth mode from validated effective capabilities. Browser credentials stay in Docker's credential chain, PATs in the OS credential store, and evidence capture must redact credentials and auth-bearing data.",
+      "source_unit_refs": ["PLANUNIT:CRAU-026", "SEMANTIC:PLANUNIT:CRAU-026", "PLANUNIT:CRAU-028", "SEMANTIC:PLANUNIT:CRAU-028", "PLANUNIT:CRAU-029", "SEMANTIC:PLANUNIT:CRAU-029"],
+      "dimensions": ["capabilities", "security_privacy", "privacy_data_lifecycle", "gui_truth"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "A friendly auth path does not erase the durable advanced-user path or imply unvalidated capability.",
+      "builder_discretion": "Credential-helper integration details are platform-specific; storage boundaries and capability separation are fixed.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2418, "line_end": 2418, "exact_quote": "Browser login support does not remove the explicit durable advanced-user PAT path.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2531, "line_end": 2531, "exact_quote": "requested_auth_mode, selected namespace/repository, and last validation snapshot remain project-scoped UI state.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I009",
+      "item_type": "gap",
+      "title": "Auth polling, capability freshness, and list scale are under-specified",
+      "statement": "The five-second browser-login poll has no restart/resume rule or late-success-versus-cancel arbitration. Effective capability snapshots have no TTL or invalidation triggers, and namespace/repository discovery has no pagination, rate-limit, cache, or backoff contract. Stale authorization can therefore outlive an account switch or outage.",
+      "source_unit_refs": ["PLANUNIT:CRAU-027", "SEMANTIC:PLANUNIT:CRAU-027", "PLANUNIT:CRAU-029", "SEMANTIC:PLANUNIT:CRAU-029", "PLANUNIT:CRAU-030", "SEMANTIC:PLANUNIT:CRAU-030"],
+      "dimensions": ["states_transitions", "concurrency_races", "offline_network_loss", "scale_limits", "scale_performance", "security_privacy"],
+      "severity": "high",
+      "gap_kind": "missing_lifecycle_and_scale_contract",
+      "impact": "The UI can report a terminal auth result incorrectly, authorize against stale capability, or fail on large/rate-limited accounts.",
+      "builder_discretion": "Retry algorithms may vary, but terminal arbitration, freshness invalidation, and pagination semantics must be canonical.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2466, "line_end": 2466, "exact_quote": "Terminal outcomes are exactly docker.auth.capability_validated, docker.auth.browser_login.cancelled, docker.auth.browser_login.timed_out, and docker.auth.failed.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2597, "line_end": 2597, "exact_quote": "Controls requiring missing capabilities remain visible but disabled with inline explanation naming missing capability and degraded_reason when present.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I010",
+      "item_type": "explicit_non_gap",
+      "title": "Repository creation is a non-bypassable, separately approved side effect",
+      "statement": "The missing DockerHub repository path is correctly isolated from push approval: the dialog exposes namespace, repository, and privacy; private is explicit by default; confirm and cancel have distinct commands; and autonomy or fast-path modes cannot bypass the gate.",
+      "source_unit_refs": ["PLANUNIT:CRAU-031", "SEMANTIC:PLANUNIT:CRAU-031"],
+      "dimensions": ["authority_boundaries", "destructive_actions", "security_privacy", "gui_truth", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "explicit_non_gap",
+      "impact": "Image-push approval cannot silently create a remote repository with unintended visibility.",
+      "builder_discretion": "None for confirmation, fields, default privacy, or command separation.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2716, "line_end": 2716, "exact_quote": "Newly created repositories default private, and the confirmation dialog makes that default explicit while allowing user change before creation.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I011",
+      "item_type": "gap",
+      "title": "Buildx command selection is mislabeled as deterministic output",
+      "statement": "CRAU-032 calls docker buildx build the deterministic image-build path, but its acceptance oracle only requires that command and preflight. It does not constrain base-image digests, build network, timestamps, cache, build arguments, or reproducible output comparison, so deterministic artifact identity is not falsifiable.",
+      "source_unit_refs": ["PLANUNIT:CRAU-032", "SEMANTIC:PLANUNIT:CRAU-032"],
+      "dimensions": ["operations", "acceptance_oracles", "test_falsifiability", "ambiguity_unknowns"],
+      "severity": "high",
+      "gap_kind": "overclaim_without_oracle",
+      "impact": "Builders can satisfy the named command while producing non-reproducible images under a claim of determinism.",
+      "builder_discretion": "The plan must either narrow deterministic to deterministic command routing or specify reproducibility inputs and comparison oracles.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2760, "line_end": 2760, "exact_quote": "validity, buildx availability, required ports, and target repository/auth when", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2769, "line_end": 2769, "exact_quote": "docker buildx build remains the deterministic image-build path.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I012",
+      "item_type": "consumer",
+      "title": "Build-result consumers share one traceable result",
+      "statement": "Chat, orchestrator, and Docker Manager must surface the same structured build result containing artifacts, logs, and image identity. This prevents three consumer-specific build truths.",
+      "source_unit_refs": ["PLANUNIT:CRAU-033", "SEMANTIC:PLANUNIT:CRAU-033"],
+      "dimensions": ["consumers", "propagation", "inputs_outputs", "observability_support"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Cross-surface navigation can retain a single result identity and evidence chain.",
+      "builder_discretion": "Presentation is open; result identity and traceability are fixed.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2816, "line_end": 2816, "exact_quote": "Chat, orchestrator, and Docker Manager UI can surface and trace the same build result.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I013",
+      "item_type": "gap",
+      "title": "Preview controls lack a runtime lifecycle and URL trust contract",
+      "statement": "Start, stop, logs, health, and open are named without starting/running/stopping/failed states, idempotency, cancellation, timeouts, or concurrent start-stop arbitration. URL resolution names port preference but not scheme/host construction, wildcard and IPv6 handling, explicit-override validation, or allowed URL schemes, so Open can be unsafe or inconsistent.",
+      "source_unit_refs": ["PLANUNIT:CRAU-034", "SEMANTIC:PLANUNIT:CRAU-034", "PLANUNIT:CRAU-035", "SEMANTIC:PLANUNIT:CRAU-035"],
+      "dimensions": ["states_transitions", "concurrency_races", "operations", "untrusted_inputs", "security_privacy", "gui_misleading_states"],
+      "severity": "high",
+      "gap_kind": "missing_runtime_state_and_url_validation",
+      "impact": "Duplicate or crossed lifecycle commands can orphan containers, and an unvalidated override or inferred host can open an unsafe target.",
+      "builder_discretion": "None for lifecycle states, idempotency, or URL trust boundary; UI arrangement is open.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2861, "line_end": 2861, "exact_quote": "Open endpoint, open logs, inspect health, and show resolved URL/port actions are available when their prerequisites exist.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2897, "line_end": 2897, "exact_quote": "access URL; when none exists Docker Manager shows No direct access URL detected", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I014",
+      "item_type": "explicit_non_gap",
+      "title": "Stream and port-forward history refuses silent rebinding",
+      "statement": "Follow intent is revalidated after restart, target drift creates a new session, old sessions remain historical, browser tabs do not rebind, and unknown crash gaps are rendered explicitly. These are strong anti-misrepresentation rules.",
+      "source_unit_refs": ["PLANUNIT:CRAU-036", "SEMANTIC:PLANUNIT:CRAU-036"],
+      "dimensions": ["states_transitions", "failures_recovery", "gui_misleading_states", "observability_support"],
+      "severity": "info",
+      "gap_kind": "explicit_non_gap",
+      "impact": "Users are not shown a new target or incomplete stream as if it were continuous historical evidence.",
+      "builder_discretion": "None for session rebinding or gap disclosure.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2957, "line_end": 2957, "exact_quote": "Port-forward target drift, changed target, or unavailable local port keeps the old session historical and issues a new session id.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I015",
+      "item_type": "gap",
+      "title": "Long-running streams lack backpressure, redaction, and reconnect bounds",
+      "statement": "The persisted stream model does not specify buffer limits, truncation markers, retention, secret redaction, reconnect backoff, maximum retry, or what happens when a consumer is slower than Actions/container/Kubernetes log production.",
+      "source_unit_refs": ["PLANUNIT:CRAU-036", "SEMANTIC:PLANUNIT:CRAU-036"],
+      "dimensions": ["scale_performance", "scale_limits", "security_privacy", "offline_network_loss", "privacy_data_lifecycle", "observability_support"],
+      "severity": "medium",
+      "gap_kind": "missing_stream_operational_limits",
+      "impact": "A high-volume or secret-bearing stream can exhaust resources, leak data, or reconnect without a falsifiable continuity guarantee.",
+      "builder_discretion": "Numeric limits may be configurable, but truncation, redaction, and bounded reconnect semantics must be specified.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2943, "line_end": 2943, "exact_quote": "historical_view states; restart restores follow only after source revalidation,", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I016",
+      "item_type": "authority",
+      "title": "Alert ownership and trust-policy consumption are explicit",
+      "statement": "Docker Manager owns runtime/Kubernetes alert actionability while Dashboard and Orchestrator mirror attention only. Runtime and hosted links consume shared host, proxy, credential, and CA policy instead of inventing Unraid-local trust behavior.",
+      "source_unit_refs": ["PLANUNIT:CRAU-037", "SEMANTIC:PLANUNIT:CRAU-037", "PLANUNIT:CRAU-038", "SEMANTIC:PLANUNIT:CRAU-038"],
+      "dimensions": ["ownership", "authority", "consumers", "security_privacy", "cross_document_seams"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Attention can be mirrored without transferring remediation ownership or forking network trust policy.",
+      "builder_discretion": "Presentation is open; owner/mirror and shared-policy boundaries are fixed.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3009, "line_end": 3009, "exact_quote": "Shared /network/trust policy preserves proxy modes, OS credential-store proxy credentials, per-domain/per-surface opt-outs, and CA validation/expiry reporting.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I017",
+      "item_type": "gap",
+      "title": "Host policy omits input normalization, reason precedence, and live revocation",
+      "statement": "Registry and Kubernetes hosts can be supplied through host/context configuration, but the contract does not define canonical host parsing, wildcard rules, DNS rebinding or local-address defenses, duplicate-entry precedence, the primary reason when offline/policy/untrusted states overlap, or cancellation when policy is revoked during an in-flight operation.",
+      "source_unit_refs": ["PLANUNIT:CRAU-038", "SEMANTIC:PLANUNIT:CRAU-038", "PLANUNIT:CRAU-039", "SEMANTIC:PLANUNIT:CRAU-039"],
+      "dimensions": ["untrusted_inputs", "security_privacy", "states_transitions", "authority_boundaries", "concurrency_races", "gui_misleading_states"],
+      "severity": "high",
+      "gap_kind": "missing_host_policy_edge_contract",
+      "impact": "Equivalent hosts can bypass intended policy, stale approval can survive revocation, and the UI can show the wrong remediation reason.",
+      "builder_discretion": "None for canonicalization, precedence, and revocation behavior.",
+      "confidence": "medium",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3064, "line_end": 3064, "exact_quote": "registry_hosts[] entries include registry host, host policy, trust/proxy inheritance, capability snapshot, and default push target.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3128, "line_end": 3128, "exact_quote": "Retry/resume re-runs preflight when target, permission snapshot, host policy, or governance state may have changed.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I018",
+      "item_type": "explicit_non_gap",
+      "title": "Mutation preflight precedes approval and binds exact scope",
+      "statement": "The plan correctly refuses approval for unknowable operations, binds approval to a target/capability/policy snapshot and exact action scope, and distinguishes governance blocking from attempted runtime failure.",
+      "source_unit_refs": ["PLANUNIT:CRAU-039", "SEMANTIC:PLANUNIT:CRAU-039"],
+      "dimensions": ["contracts", "authority_boundaries", "destructive_actions", "failures_recovery"],
+      "severity": "info",
+      "gap_kind": "explicit_non_gap",
+      "impact": "Users are not asked to approve an unresolved or differently scoped mutation.",
+      "builder_discretion": "None for ordering, scope binding, or blocked-versus-failed taxonomy.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3129, "line_end": 3129, "exact_quote": "Policy-denied outcomes after preflight or approval emit blocked/governance payloads with policy source and reason-code family rather than *.failed.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I019",
+      "item_type": "gap",
+      "title": "Approval snapshots have no execution-time freshness guard",
+      "statement": "Binding approval to preflight is insufficient without a snapshot version, expiry, compare-and-swap, or mandatory final revalidation immediately before mutation. The only explicit re-preflight trigger is retry/resume when facts may have changed, leaving a time-of-check/time-of-use window after approval.",
+      "source_unit_refs": ["PLANUNIT:CRAU-039", "SEMANTIC:PLANUNIT:CRAU-039"],
+      "dimensions": ["concurrency_races", "authority_boundaries", "security_privacy", "invalid_states_transitions", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "toctou_gap",
+      "impact": "A target, permission, or policy change after approval can cause a mutation outside what the user approved.",
+      "builder_discretion": "None; freshness/version semantics must be canonical.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3117, "line_end": 3117, "exact_quote": "scope, retry/resume re-runs preflight when relevant facts may have changed, and", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I020",
+      "item_type": "feature",
+      "title": "Kubernetes relevance and doctor checks retain non-mutating work",
+      "statement": "Kubernetes appears only for project relevance or explicit settings, and doctor checks gate apply/diff/logs/exec/port-forward while preserving manifest editing and cached inspection where possible. This is a coherent project-focused degradation model.",
+      "source_unit_refs": ["PLANUNIT:CRAU-040", "SEMANTIC:PLANUNIT:CRAU-040"],
+      "dimensions": ["behavior", "capabilities", "gui_truth", "failures_recovery", "offline_network_loss"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "A failed cluster check does not erase useful local/cached work or broaden Docker Manager into a cluster console.",
+      "builder_discretion": "Doctor implementation may vary; checked capabilities and degraded availability are fixed.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3177, "line_end": 3177, "exact_quote": "Doctor checks verify kubectl, kubeconfig/context, namespace access, project-focused workload scope, Helm when selected, and allowed verbs.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I021",
+      "item_type": "unknown",
+      "title": "Four required operation anchors remain placeholder-shaped",
+      "statement": "CRAU-041 says registry promotion, drift detection, access intelligence, and project-focused Kubernetes linkage must not be vague placeholders, yet it supplies only categories of typed payloads. It names no commands, field schemas, state enums, permission scopes, callers, consumers, or per-area acceptance oracles.",
+      "source_unit_refs": ["PLANUNIT:CRAU-041", "SEMANTIC:PLANUNIT:CRAU-041"],
+      "dimensions": ["ambiguity_unknowns", "missing_callers_consumers", "contracts", "states_transitions", "test_falsifiability", "unknown_unknowns"],
+      "severity": "high",
+      "gap_kind": "self_negating_placeholder",
+      "impact": "Builders can invent mutually incompatible operations while still claiming typed payloads exist.",
+      "builder_discretion": "Prohibited until each operation area has a named executable contract and oracle.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3217, "line_end": 3217, "exact_quote": "review/failure fields where applicable, and GUI action derivation from structured", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3227, "line_end": 3227, "exact_quote": "Each area has typed operation identity, status/result payloads, preflight and permission outcomes, and review/failure fields where applicable.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I022",
+      "item_type": "authority",
+      "title": "Event producer, registration, and persistence authorities are separated",
+      "statement": "The owner plan defines producer intent, Contracts_V0 registers stable cross-product names, and storage-plan owns persisted payload schemas. Consumers are barred from treating unregistered names as durable events.",
+      "source_unit_refs": ["PLANUNIT:CRAU-042", "SEMANTIC:PLANUNIT:CRAU-042"],
+      "dimensions": ["authority", "ownership", "contracts", "consumers", "cross_document_seams"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "An event name in this owner plan alone cannot silently become a persisted product contract.",
+      "builder_discretion": "None for registration and schema ownership.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3285, "line_end": 3285, "exact_quote": "Containers_Registry_and_Unraid defines Docker, registry, Kubernetes, and Unraid event producers and payload expectations for its owner surface.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I023",
+      "item_type": "failure_recovery",
+      "title": "Build, push, repository creation, and template push remain separate recoverable effects",
+      "statement": "Local build is preserved when remote publication blocks, missing repository creation has its own approval, successful creation resumes the pending push without rebuild, and after-build policy still evaluates push approval. The blocked-versus-failed distinction is explicit.",
+      "source_unit_refs": ["PLANUNIT:CRAU-043", "SEMANTIC:PLANUNIT:CRAU-043", "PLANUNIT:CRAU-044", "SEMANTIC:PLANUNIT:CRAU-044", "PLANUNIT:CRAU-045", "SEMANTIC:PLANUNIT:CRAU-045"],
+      "dimensions": ["failures_recovery", "partial_failure", "authority_boundaries", "states_transitions", "destructive_actions"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "A denied remote effect does not erase completed local work or imply approval for a different remote mutation.",
+      "builder_discretion": "None for side-effect separation and local-result preservation.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3342, "line_end": 3342, "exact_quote": "docker.publish.blocked means a remote side effect intentionally did not execute because confirmation or permission approval was missing, rejected, or cancelled.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3394, "line_end": 3394, "exact_quote": "Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed, blocked_step create_repository, and allowed_action_ids[].", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I024",
+      "item_type": "gap",
+      "title": "DockerHub publish dispatch lacks durable idempotency and pending-state recovery",
+      "statement": "Direct push, after-build auto-dispatch, confirmation resume, and retry can target the same result, but no idempotency key, backend lock, duplicate-dispatch rule, restart persistence, pending-state expiry, or reconciliation behavior is specified for awaiting_repo_creation_confirmation or push_image.",
+      "source_unit_refs": ["PLANUNIT:CRAU-043", "SEMANTIC:PLANUNIT:CRAU-043", "PLANUNIT:CRAU-044", "SEMANTIC:PLANUNIT:CRAU-044", "PLANUNIT:CRAU-045", "SEMANTIC:PLANUNIT:CRAU-045"],
+      "dimensions": ["concurrency_races", "states_transitions", "partial_failure", "recovery_rollback", "offline_network_loss"],
+      "severity": "high",
+      "gap_kind": "missing_idempotency_and_restart_contract",
+      "impact": "A double click, auto/manual race, or restart can duplicate publication or strand a preserved build result.",
+      "builder_discretion": "None for operation identity, mutual exclusion, and restart recovery.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3380, "line_end": 3380, "exact_quote": "docker.repository.create.confirmation_requested, resumes the pending push after", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3446, "line_end": 3446, "exact_quote": "Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result, and surfaces Push image as recovery CTA.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I025",
+      "item_type": "gap",
+      "title": "Canonical tag fallback can produce an undefined Repository value",
+      "statement": "CRAU-046 selects the first resolved tag when primary_publish_tag is absent, but still requires generated Repository to use primary_publish_tag. The fallback branch therefore has a canonical tag and an unset output variable. The same area alternates docker_publish_result.digests[] and docker_publish_result.digest[], creating a second exact schema ambiguity.",
+      "source_unit_refs": ["PLANUNIT:CRAU-046", "SEMANTIC:PLANUNIT:CRAU-046", "PLANUNIT:CRAU-050", "SEMANTIC:PLANUNIT:CRAU-050"],
+      "dimensions": ["inputs_outputs", "contracts", "invalid_states_transitions", "cross_document_seams", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "internal_value_and_token_contradiction",
+      "impact": "Template XML can emit an empty/wrong Repository tag or bind to the wrong digest field.",
+      "builder_discretion": "None; define one resolved canonical tag variable and one digest field name.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3497, "line_end": 3497, "exact_quote": "docker_publish_result.digests[] manifest-list digest becomes canonical image_digest when present.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3705, "line_end": 3705, "exact_quote": "\"`docker_publish_result.digest[]`\"", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I026",
+      "item_type": "oracle",
+      "title": "Tag variable sources and normalization order are testable",
+      "statement": "Commit, version, and publish-start timestamp sources have deterministic precedence and formats; substitution is followed by lowercase, replacement, hyphen collapse, and empty-result blocking. This supports table-driven acceptance tests.",
+      "source_unit_refs": ["PLANUNIT:CRAU-047", "SEMANTIC:PLANUNIT:CRAU-047"],
+      "dimensions": ["acceptance_oracles", "inputs_outputs", "test_falsifiability"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Core tag transformation behavior can be reproduced without builder invention.",
+      "builder_discretion": "None for source precedence, timestamp format, or transformation order.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3549, "line_end": 3549, "exact_quote": "Tags lowercase, replace outside [a-z0-9_.-] with hyphen, collapse consecutive hyphens, and block when empty after sanitization.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I027",
+      "item_type": "gap",
+      "title": "Tag normalization omits boundary validity, collisions, and retry identity",
+      "statement": "The tag contract has no maximum length, leading-character rule, collision handling after lossy replacement, or persistence rule for publish-start timestamp across retries. Two distinct inputs can normalize to one tag, and a retry can select a different timestamp tag for the same logical publish.",
+      "source_unit_refs": ["PLANUNIT:CRAU-047", "SEMANTIC:PLANUNIT:CRAU-047"],
+      "dimensions": ["compatibility_migration", "concurrency_races", "inputs_outputs", "test_falsifiability", "recovery_rollback"],
+      "severity": "high",
+      "gap_kind": "missing_tag_edge_constraints",
+      "impact": "Generated tags can be rejected, overwrite an unintended tag, or drift across retry.",
+      "builder_discretion": "None for validity bounds, collision policy, and retry-stable publish identity.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3537, "line_end": 3537, "exact_quote": "[a-z0-9_.-] with hyphen, collapse consecutive hyphens, and block publish with", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I028",
+      "item_type": "gap",
+      "title": "Post-publish follow-on has no stage-level partial-failure contract",
+      "statement": "After image publication, XML generation, repo update, auto-commit, and optional push form a sequence, but there is no operation state model for generation failure, asset-copy failure, commit failure, crash between stages, resume point, compensating action, or which successful outputs remain authoritative.",
+      "source_unit_refs": ["PLANUNIT:CRAU-048", "SEMANTIC:PLANUNIT:CRAU-048"],
+      "dimensions": ["partial_failure", "states_transitions", "recovery_rollback", "observability_support"],
+      "severity": "high",
+      "gap_kind": "missing_multistage_failure_contract",
+      "impact": "A successful image publish can leave ambiguous local/template state with no safe resume boundary.",
+      "builder_discretion": "None for stage identities and durable resume semantics.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3585, "line_end": 3585, "exact_quote": "enabled, auto-commits template-repo changes by default, does not auto-push by", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I029",
+      "item_type": "gap",
+      "title": "Generated and managed paths lack containment and symlink rules",
+      "statement": "project_id, publish_result_id, maintainer_slug, project_slug, uploaded asset names, and an overrideable local repo path all feed filesystem writes. No normalization rejects absolute paths, dot segments, separators, case collisions, reserved names, or symlink traversal, and no post-resolution containment oracle is stated.",
+      "source_unit_refs": ["PLANUNIT:CRAU-049", "SEMANTIC:PLANUNIT:CRAU-049", "PLANUNIT:CRAU-057", "SEMANTIC:PLANUNIT:CRAU-057", "PLANUNIT:CRAU-061", "SEMANTIC:PLANUNIT:CRAU-061", "PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-065"],
+      "dimensions": ["untrusted_inputs", "security_privacy", "destructive_actions", "compatibility_migration"],
+      "severity": "high",
+      "gap_kind": "path_traversal_and_containment_gap",
+      "impact": "A crafted identity, slug, asset, or symlink can write or commit outside the intended generated or managed path.",
+      "builder_discretion": "None for normalization and containment; platform-specific reserved-name handling may be layered.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3640, "line_end": 3640, "exact_quote": "Application template XML is written at <maintainer_slug>/<project_slug>.xml.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4246, "line_end": 4246, "exact_quote": "Template path is <maintainer_slug>/<project_slug>.xml and profile path is ca_profile.xml.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I030",
+      "item_type": "gap",
+      "title": "Artifact provenance matrix is asserted but not carried into canonical criteria",
+      "statement": "CRAU-050 names fields and says a matrix preserves primary source, fallback, auto-commit, and auto-push columns, but it does not state the actual per-field values. Acceptance merely says preserve the unnamed matrix and source distinctions, leaving image_ref, digest, URLs, categories, config, and maintainer data precedence non-executable from this canonical unit.",
+      "source_unit_refs": ["PLANUNIT:CRAU-050", "SEMANTIC:PLANUNIT:CRAU-050"],
+      "dimensions": ["inputs_outputs", "contracts", "ambiguity_unknowns", "acceptance_oracles", "builder_discretion"],
+      "severity": "high",
+      "gap_kind": "semantic_table_loss",
+      "impact": "Two builders can choose different provenance and push gating while both satisfy the prose.",
+      "builder_discretion": "Prohibited; the per-field matrix values must be canonical.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3673, "line_end": 3673, "exact_quote": "The Unraid artifact input provenance matrix preserves each canonical PM field", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3687, "line_end": 3687, "exact_quote": "docker_publish_result, preview/runtime URL, shared/per-project ca_profile state, and user overrides remain distinct provenance sources.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I031",
+      "item_type": "gap",
+      "title": "Raw and round-trip XML lack an untrusted-parser and atomic-save contract",
+      "statement": "Existing repository XML and raw-editor content are untrusted inputs, yet no rule disables DTD/external entities, bounds expansion/document size, validates before replacement, writes atomically, detects external modification between load and save, or recovers the prior file after interruption.",
+      "source_unit_refs": ["PLANUNIT:CRAU-051", "SEMANTIC:PLANUNIT:CRAU-051", "PLANUNIT:CRAU-052", "SEMANTIC:PLANUNIT:CRAU-052", "PLANUNIT:CRAU-054", "SEMANTIC:PLANUNIT:CRAU-054"],
+      "dimensions": ["untrusted_inputs", "security_privacy", "destructive_actions", "concurrency_races", "recovery_rollback", "partial_failure"],
+      "severity": "high",
+      "gap_kind": "unsafe_xml_io_boundary",
+      "impact": "Parsing can expose local resources or exhaust memory, while concurrent or interrupted saves can destroy template content.",
+      "builder_discretion": "None for safe parser settings, optimistic concurrency, atomic replacement, and rollback.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3727, "line_end": 3727, "exact_quote": "normalized model rather than hard-coding UI logic to raw XML tags, must map the", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3778, "line_end": 3778, "exact_quote": "copy into the managed template repo by default, and external URL mode preserves", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I032",
+      "item_type": "gap",
+      "title": "needs_review both permits and forbids auto-commit",
+      "statement": "CRAU-053 explicitly allows local auto-commit during needs_review, while CRAU-065 explicitly stops auto-commit when needs_review is present. Both are accepted constraints in the same workflow and cannot be implemented simultaneously.",
+      "source_unit_refs": ["PLANUNIT:CRAU-053", "SEMANTIC:PLANUNIT:CRAU-053", "PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-065"],
+      "dimensions": ["states_transitions", "invalid_states_transitions", "operations", "test_falsifiability"],
+      "severity": "critical",
+      "gap_kind": "direct_normative_contradiction",
+      "impact": "The same review state can either create a commit or block it, producing incompatible runtime and UI behavior.",
+      "builder_discretion": "None; one rule must supersede the other and transitions must be restated.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3840, "line_end": 3840, "exact_quote": "needs_review blocks auto-push and surfaces visible warning in Docker Manager.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4433, "line_end": 4433, "exact_quote": "nondeterministic required path updates stop auto-commit and surface review.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I033",
+      "item_type": "explicit_non_gap",
+      "title": "Unknown XML passthrough is consistently protected",
+      "statement": "Application and ca_profile round trips preserve unknown fields, elements, attributes, comments, root attributes, and unmodeled content unless the user explicitly removes it. This is a strong compatibility and data-loss guard.",
+      "source_unit_refs": ["PLANUNIT:CRAU-051", "SEMANTIC:PLANUNIT:CRAU-051", "PLANUNIT:CRAU-052", "SEMANTIC:PLANUNIT:CRAU-052", "PLANUNIT:CRAU-054", "SEMANTIC:PLANUNIT:CRAU-054"],
+      "dimensions": ["compatibility_migration", "recovery_rollback", "destructive_actions"],
+      "severity": "info",
+      "gap_kind": "explicit_non_gap",
+      "impact": "Editing known fields does not silently erase extensions from existing Unraid XML.",
+      "builder_discretion": "None for preservation; internal normalized representation is open.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3892, "line_end": 3892, "exact_quote": "Unknown elements, attributes, XML comments, and root attributes preserve verbatim on round-trip unless explicitly removed.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I034",
+      "item_type": "gap",
+      "title": "CDATA terminator handling is absent",
+      "statement": "Overview must emit as CDATA, but no rule handles overview text containing the CDATA terminator. Without split-CDATAs or another exact encoding rule, valid user content can produce invalid XML or be altered inconsistently.",
+      "source_unit_refs": ["PLANUNIT:CRAU-054", "SEMANTIC:PLANUNIT:CRAU-054"],
+      "dimensions": ["untrusted_inputs", "inputs_outputs", "test_falsifiability", "compatibility_migration"],
+      "severity": "medium",
+      "gap_kind": "missing_xml_edge_encoding",
+      "impact": "A legal overview string can break generated application-template XML.",
+      "builder_discretion": "Choose and specify one deterministic valid encoding for the terminator sequence.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3881, "line_end": 3881, "exact_quote": "root attributes verbatim on round-trip unless the user explicitly removes them.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I035",
+      "item_type": "gap",
+      "title": "Masked Config variables can still persist secret defaults",
+      "statement": "Config mapping includes Default and says Mask is true for secret environment variables, but it never forbids writing the secret value into XML or a committed template repository. Mask is presentation metadata, not secret custody or redaction.",
+      "source_unit_refs": ["PLANUNIT:CRAU-055", "SEMANTIC:PLANUNIT:CRAU-055"],
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "inputs_outputs", "destructive_actions"],
+      "severity": "high",
+      "gap_kind": "secret_persistence_boundary_missing",
+      "impact": "A secret environment value can be committed and later pushed in generated Unraid XML.",
+      "builder_discretion": "None; secret values need an explicit non-persistence/reference-only contract.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3937, "line_end": 3937, "exact_quote": "environment variables, Mode is required only for Type Port and is exactly tcp", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3949, "line_end": 3949, "exact_quote": "Mask is true only for secret environment variables.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I036",
+      "item_type": "gap",
+      "title": "Auto-push required fields disagree with needs_review entry conditions",
+      "statement": "CRAU-056 says ca_profile display_name, overview_markdown, support_url, and icon_source are required for auto-push, but CRAU-053 enters needs_review only for missing support_url, overview_markdown, icon_source, or unsafe mapping. Missing display_name therefore has no stated blocking transition despite being required.",
+      "source_unit_refs": ["PLANUNIT:CRAU-053", "SEMANTIC:PLANUNIT:CRAU-053", "PLANUNIT:CRAU-056", "SEMANTIC:PLANUNIT:CRAU-056"],
+      "dimensions": ["states_transitions", "contracts", "invalid_states_transitions", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "gate_condition_mismatch",
+      "impact": "Auto-push can either proceed without a required field or be blocked by an invented condition.",
+      "builder_discretion": "None; define one required-field registry and derive needs_review from it.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3841, "line_end": 3841, "exact_quote": "Existing fields that cannot be mapped safely are preserved and marked needs_review.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4004, "line_end": 4004, "exact_quote": "ca_profile.xml recognized fields display_name, overview_markdown, support_url, and icon_source are required for auto-push.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I037",
+      "item_type": "behavior",
+      "title": "Unmanaged generation preserves local output and correct distribution semantics",
+      "statement": "When managed repo handling is unavailable, generation still produces a structured local artifact set and a completion event with not_attempted commit/push state. The UI identifies it as local/unmanaged and keeps Unraid XML distribution separate from DockerHub image storage.",
+      "source_unit_refs": ["PLANUNIT:CRAU-057", "SEMANTIC:PLANUNIT:CRAU-057", "PLANUNIT:CRAU-058", "SEMANTIC:PLANUNIT:CRAU-058"],
+      "dimensions": ["behavior", "failures_recovery", "inputs_outputs", "gui_truth"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Invalid managed-repo configuration does not suppress useful artifacts or misroute XML to DockerHub.",
+      "builder_discretion": "None for fallback availability, status, or target distinction.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4058, "line_end": 4058, "exact_quote": "Required output includes template/<maintainer_slug>/<project_slug>.xml, template/ca_profile.xml when active profile is projected, and template/assets/maintainer/** for repo-managed uploaded assets.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4111, "line_end": 4111, "exact_quote": "Separate Unraid template repository or Community Applications-friendly template location is the primary default distribution target.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I038",
+      "item_type": "gap",
+      "title": "Generated artifacts and enabled-by-default workflows lack lifecycle migration",
+      "statement": "Per-publish local artifacts can accumulate indefinitely because no retention, quota, cleanup ownership, pinning, or low-disk behavior is defined. Separately, generation and managed-repo handling default enabled without a migration rule for existing projects, versioned defaults, or first-use disclosure of local file and auto-commit effects.",
+      "source_unit_refs": ["PLANUNIT:CRAU-057", "SEMANTIC:PLANUNIT:CRAU-057", "PLANUNIT:CRAU-059", "SEMANTIC:PLANUNIT:CRAU-059", "PLANUNIT:CRAU-060", "SEMANTIC:PLANUNIT:CRAU-060"],
+      "dimensions": ["privacy_data_lifecycle", "scale_limits", "operations", "compatibility_migration", "destructive_actions", "gui_truth"],
+      "severity": "medium",
+      "gap_kind": "missing_retention_and_default_migration",
+      "impact": "Disk use can grow without bound and upgrades can unexpectedly create files or commits for projects that never opted into the workflow.",
+      "builder_discretion": "Retention values may be policy-driven; migration and disclosure semantics must be canonical.",
+      "confidence": "medium",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4047, "line_end": 4047, "exact_quote": "assets, emits unraid.template.generation.completed, and records template_repo_id", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4158, "line_end": 4158, "exact_quote": "Generation remains part of first-class Docker publish flow, not hidden manual follow-up.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4198, "line_end": 4198, "exact_quote": "User can disable managed template-repo handling in settings.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I039",
+      "item_type": "gap",
+      "title": "Existing-repo migration and dirty adoption lack rollback semantics",
+      "statement": "Existing layout may migrate with confirmation and a dirty repo may be explicitly adopted, but the plan does not define a backup/restore point, atomic migration, validation-write race handling, what adoption authorizes, whether adoption is one-shot or durable, or how the repo returns to unadopted state.",
+      "source_unit_refs": ["PLANUNIT:CRAU-062", "SEMANTIC:PLANUNIT:CRAU-062", "PLANUNIT:CRAU-067", "SEMANTIC:PLANUNIT:CRAU-067"],
+      "dimensions": ["compatibility_migration", "recovery_rollback", "authority_boundaries", "concurrency_races", "destructive_actions"],
+      "severity": "high",
+      "gap_kind": "missing_migration_and_adoption_state",
+      "impact": "A confirmed migration can partially rewrite a repository, and adoption can be interpreted as broader mutation permission than the user intended.",
+      "builder_discretion": "None for rollback, adoption scope, and validation freshness.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4287, "line_end": 4287, "exact_quote": "disables managed publishing for the project and shows the exact failing condition.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4541, "line_end": 4541, "exact_quote": "Allowed resolutions are user cleans the repo first, user explicitly adopts the dirty repo state, or user switches to another managed repo path.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I040",
+      "item_type": "state",
+      "title": "Single template-repo state has no precedence for overlapping facts",
+      "statement": "The status row must use one canonical state, but config_invalid, dirty_uncommitted, needs_review, diverged_remote, push_failed, and push_in_progress can coexist. No precedence, orthogonal substate model, or transition matrix says which state wins or which CTAs remain available.",
+      "source_unit_refs": ["PLANUNIT:CRAU-063", "SEMANTIC:PLANUNIT:CRAU-063", "PLANUNIT:CRAU-064", "SEMANTIC:PLANUNIT:CRAU-064", "PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-065"],
+      "dimensions": ["states_transitions", "invalid_states_transitions", "gui_misleading_states", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "state_precedence_ambiguity",
+      "impact": "The same repository facts can render different status and enable different destructive actions.",
+      "builder_discretion": "None; specify precedence or model orthogonal state dimensions explicitly.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4330, "line_end": 4330, "exact_quote": "meanings and user-visible consequences; transition rules continue in the next", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4444, "line_end": 4444, "exact_quote": "Auto-commit stops and surfaces review for config_invalid, diverged_remote, needs_review, unrelated files, or nondeterministic required path updates.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I041",
+      "item_type": "gap",
+      "title": "Working-tree containment does not protect the staged Git index",
+      "statement": "Auto-commit safety is defined in terms of the working-tree diff and PM-owned paths, but an unrelated file may already be staged. Unless the operation uses an isolated index or exact pathspec and verifies the resulting tree, a normal commit can include unrelated staged content even when the working-tree diff is contained.",
+      "source_unit_refs": ["PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-065"],
+      "dimensions": ["destructive_actions", "concurrency_races", "security_privacy", "test_falsifiability"],
+      "severity": "critical",
+      "gap_kind": "unsafe_git_index_boundary",
+      "impact": "Puppet Master can commit unrelated user changes despite the explicit containment promise.",
+      "builder_discretion": "None; staged-index isolation and committed-tree verification must be required.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4433, "line_end": 4433, "exact_quote": "nondeterministic required path updates stop auto-commit and surface review.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4441, "line_end": 4441, "exact_quote": "PM-owned paths are exactly ca_profile.xml, <maintainer_slug>/<project_slug>.xml, and assets/maintainer/** written in the current generation pass.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I042",
+      "item_type": "gap",
+      "title": "Template push has no indeterminate outcome state",
+      "statement": "The commit/push model permits only push_in_progress, completed, and failed, while this same plan recognizes indeterminate_remote_outcome after transport loss. A network break after the remote accepts a Git push cannot be truthfully classified, and retry may collide with an already-updated remote.",
+      "source_unit_refs": ["PLANUNIT:CRAU-021", "SEMANTIC:PLANUNIT:CRAU-021", "PLANUNIT:CRAU-066", "SEMANTIC:PLANUNIT:CRAU-066"],
+      "dimensions": ["offline_network_loss", "partial_failure", "states_transitions", "recovery_rollback", "gui_misleading_states"],
+      "severity": "high",
+      "gap_kind": "missing_indeterminate_push_state",
+      "impact": "The UI can falsely report failure and offer an unsafe retry after a successful remote mutation.",
+      "builder_discretion": "None; add reconcile-before-retry and an indeterminate terminal/intermediate state.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 2122, "line_end": 2122, "exact_quote": "indeterminate_remote_outcome receipts record requested, transport_lost, later reconciled, and a Refresh remote state CTA.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4494, "line_end": 4494, "exact_quote": "diverged_remote exits only after branch divergence is resolved externally or by a future reconcile flow and Puppet Master revalidates repo state.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I043",
+      "item_type": "explicit_non_gap",
+      "title": "Dirty repositories cannot be silently absorbed",
+      "statement": "Unrelated local modifications block managed mutation until the user cleans, explicitly adopts, or switches paths. This protects existing work from silent folding into generated commits.",
+      "source_unit_refs": ["PLANUNIT:CRAU-067", "SEMANTIC:PLANUNIT:CRAU-067"],
+      "dimensions": ["destructive_actions", "authority_boundaries", "recovery_rollback"],
+      "severity": "info",
+      "gap_kind": "explicit_non_gap",
+      "impact": "Generated changes cannot silently appropriate an unrelated dirty worktree.",
+      "builder_discretion": "None for the block and explicit user choice.",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4532, "line_end": 4532, "exact_quote": "requires the user to clean the repo, explicitly adopt the dirty repo state, or", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}]
+    },
+    {
+      "item_id": "A005M-000015-I044",
+      "item_type": "gap",
+      "title": "Template path vocabulary and maintainer-slug migration are ambiguous",
+      "statement": "Most units use <project_slug>.xml, while CRAU-069 preserves project-name.xml. The plan also permits changing maintainer_slug but gives no rename/move, collision, deletion, redirect, or historical receipt behavior after files already exist.",
+      "source_unit_refs": ["PLANUNIT:CRAU-061", "SEMANTIC:PLANUNIT:CRAU-061", "PLANUNIT:CRAU-069", "SEMANTIC:PLANUNIT:CRAU-069"],
+      "dimensions": ["compatibility_migration", "inputs_outputs", "ambiguity_unknowns", "recovery_rollback"],
+      "severity": "medium",
+      "gap_kind": "path_identity_and_migration_ambiguity",
+      "impact": "Builders can create different filenames or leave duplicate/orphaned templates after a slug change.",
+      "builder_discretion": "None for canonical filename token and rename migration.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4246, "line_end": 4246, "exact_quote": "Template path is <maintainer_slug>/<project_slug>.xml and profile path is ca_profile.xml.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4629, "line_end": 4629, "exact_quote": "Managed repos include a maintainer folder containing project-name.xml.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I045",
+      "item_type": "gap",
+      "title": "Managed template-repo create and push lack the promised approval protocol",
+      "statement": "CRAU-043 says remote template-repo creation and push are separately approved effects, and CRAU-068/070 expose create-new and one-click push, but no command IDs, preflight fields, confirmation payload, approval scope, blocked reason, receipt fields, cancel path, or revalidation rule is defined for either effect.",
+      "source_unit_refs": ["PLANUNIT:CRAU-043", "SEMANTIC:PLANUNIT:CRAU-043", "PLANUNIT:CRAU-068", "SEMANTIC:PLANUNIT:CRAU-068", "PLANUNIT:CRAU-070", "SEMANTIC:PLANUNIT:CRAU-070"],
+      "dimensions": ["authority_boundaries", "contracts", "destructive_actions", "inputs_outputs", "missing_callers_consumers", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "missing_remote_side_effect_protocol",
+      "impact": "A builder must invent whether one click is approval, how remote repo creation is authorized, and how denial or policy change is represented.",
+      "builder_discretion": "Prohibited; mirror the typed protected-side-effect discipline used for DockerHub repository creation.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3447, "line_end": 3447, "exact_quote": "Repository creation and managed-template remote repo create/push remain separately approved side effects.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4585, "line_end": 4585, "exact_quote": "Default repo shape remains one template repo per project.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4676, "line_end": 4676, "exact_quote": "Docker Manager shows template-repo dirty, committed, and ready-to-push status.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I046",
+      "item_type": "gap",
+      "title": "Friendly repo status labels are not mapped to canonical states",
+      "statement": "CRAU-063 defines exact states such as dirty_uncommitted and committed_local_only, while CRAU-070 requires dirty, committed, and ready-to-push presentation. No mapping says whether committed and ready-to-push are aliases, distinct badges, or projections, nor how push_failed, diverged_remote, and needs_review appear in that grammar.",
+      "source_unit_refs": ["PLANUNIT:CRAU-063", "SEMANTIC:PLANUNIT:CRAU-063", "PLANUNIT:CRAU-070", "SEMANTIC:PLANUNIT:CRAU-070"],
+      "dimensions": ["gui_truth", "gui_misleading_states", "states_transitions", "localization"],
+      "severity": "medium",
+      "gap_kind": "missing_gui_state_mapping",
+      "impact": "The GUI can flatten blocked or failed canonical state into an apparently push-ready label.",
+      "builder_discretion": "Visual wording may be localized, but the semantic mapping must be explicit.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4330, "line_end": 4330, "exact_quote": "meanings and user-visible consequences; transition rules continue in the next", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 4664, "line_end": 4664, "exact_quote": "Template-repo changes auto-commit by default, auto-push remains configurable", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    },
+    {
+      "item_id": "A005M-000015-I047",
+      "item_type": "gap",
+      "title": "GUI-heavy contracts have no accessibility or localization oracle",
+      "statement": "Across authentication, disabled controls, identity disclosure, confirmation, runtime controls, warnings, raw XML editing, and status rows, no acceptance criterion covers keyboard/focus order, screen-reader names and live updates, non-color state cues, zoom/reflow, reduced motion, localized expansion, or whether preserved exact English phrases are semantic message keys versus hard-coded copy.",
+      "source_unit_refs": ["PLANUNIT:CRAU-015", "SEMANTIC:PLANUNIT:CRAU-015", "PLANUNIT:CRAU-018", "SEMANTIC:PLANUNIT:CRAU-018", "PLANUNIT:CRAU-026", "SEMANTIC:PLANUNIT:CRAU-026", "PLANUNIT:CRAU-031", "SEMANTIC:PLANUNIT:CRAU-031", "PLANUNIT:CRAU-034", "SEMANTIC:PLANUNIT:CRAU-034", "PLANUNIT:CRAU-052", "SEMANTIC:PLANUNIT:CRAU-052", "PLANUNIT:CRAU-063", "SEMANTIC:PLANUNIT:CRAU-063"],
+      "dimensions": ["accessibility", "localization", "gui_truth", "test_falsifiability"],
+      "severity": "medium",
+      "gap_kind": "missing_cross_cutting_gui_oracles",
+      "impact": "A visually correct implementation can remain unusable with assistive technology or fail under localized text expansion while still satisfying every listed acceptance criterion.",
+      "builder_discretion": "Implementation technique is open; accessibility and localization acceptance behavior is not optional.",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1767, "line_end": 1767, "exact_quote": "Disabled controls remain explainable with exact blocking condition, missing capability, degraded reason, reason code, last validation time, and primary recovery CTA when one exists.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 1942, "line_end": 1942, "exact_quote": "Docker Manager uses the exact grammar Requested account, Requested binding, Effective account, and Switch reason.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"},
+        {"path": "Plans/Containers_Registry_and_Unraid.md", "line_start": 3789, "line_end": 3789, "exact_quote": "Unknown or unmodeled content remains editable through raw XML and saves preserve unmodified passthrough content verbatim.", "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"}
+      ]
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "window_id": "WIN-BCDD1AE883C0-0006",
+      "core_range": [1740, 2096],
+      "core_sha256": "87a1031cca300cf90cf1c90a5a5978503f51bb1aab63cbda7e431241ef96f819",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-015", "PLANUNIT:CRAU-016", "PLANUNIT:CRAU-017", "PLANUNIT:CRAU-018", "PLANUNIT:CRAU-019", "PLANUNIT:CRAU-020", "SEMANTIC:PLANUNIT:CRAU-015", "SEMANTIC:PLANUNIT:CRAU-016", "SEMANTIC:PLANUNIT:CRAU-017", "SEMANTIC:PLANUNIT:CRAU-018", "SEMANTIC:PLANUNIT:CRAU-019", "SEMANTIC:PLANUNIT:CRAU-020"],
+      "item_ids": ["A005M-000015-I001", "A005M-000015-I002", "A005M-000015-I003", "A005M-000015-I004"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-015", "source_unit_refs": ["PLANUNIT:CRAU-015", "SEMANTIC:PLANUNIT:CRAU-015"], "exact_lens": "Receipt fields, route ownership, blocked reasons, and negative constraints are concrete.", "adversarial_lens": "Execution-time freshness depends on the unresolved CRAU-039 snapshot race.", "verdict": "specified_with_cross_unit_gap"},
+        {"plan_unit_id": "CRAU-016", "source_unit_refs": ["PLANUNIT:CRAU-016", "SEMANTIC:PLANUNIT:CRAU-016"], "exact_lens": "Repo precedence and stale restore behavior are deterministic.", "adversarial_lens": "Visible pin/infer disclosure conflicts with gui_related false.", "verdict": "metadata_gap"},
+        {"plan_unit_id": "CRAU-017", "source_unit_refs": ["PLANUNIT:CRAU-017", "SEMANTIC:PLANUNIT:CRAU-017"], "exact_lens": "Durable workload identity rejects silent same-name Kubernetes rebinding.", "adversarial_lens": "Typed extension is allowed without a registry/version collision rule.", "verdict": "mostly_specified"},
+        {"plan_unit_id": "CRAU-018", "source_unit_refs": ["PLANUNIT:CRAU-018", "SEMANTIC:PLANUNIT:CRAU-018"], "exact_lens": "Requested/effective identity grammar and source fields are fixed.", "adversarial_lens": "Localization semantics for exact English grammar are absent.", "verdict": "specified_with_cross_cutting_gap"},
+        {"plan_unit_id": "CRAU-019", "source_unit_refs": ["PLANUNIT:CRAU-019", "SEMANTIC:PLANUNIT:CRAU-019"], "exact_lens": "Canonical state and projection consumers are named.", "adversarial_lens": "Freshness, ordering, and invalidation are not testable.", "verdict": "propagation_gap"},
+        {"plan_unit_id": "CRAU-020", "source_unit_refs": ["PLANUNIT:CRAU-020", "SEMANTIC:PLANUNIT:CRAU-020"], "exact_lens": "Compatibility labels and owner exclusions are explicit.", "adversarial_lens": "One bounded auto-retry has no idempotency, backoff, or terminal rule.", "verdict": "mostly_specified"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0007",
+      "core_range": [2097, 2441],
+      "core_sha256": "766261917b739ddf5deb02c90891bc830e4d04f8857f27f5e389925dd1ce45e5",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-021", "PLANUNIT:CRAU-022", "PLANUNIT:CRAU-023", "PLANUNIT:CRAU-024", "PLANUNIT:CRAU-025", "PLANUNIT:CRAU-026", "SEMANTIC:PLANUNIT:CRAU-021", "SEMANTIC:PLANUNIT:CRAU-022", "SEMANTIC:PLANUNIT:CRAU-023", "SEMANTIC:PLANUNIT:CRAU-024", "SEMANTIC:PLANUNIT:CRAU-025", "SEMANTIC:PLANUNIT:CRAU-026"],
+      "item_ids": ["A005M-000015-I005", "A005M-000015-I006", "A005M-000015-I007", "A005M-000015-I008"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-021", "source_unit_refs": ["PLANUNIT:CRAU-021", "SEMANTIC:PLANUNIT:CRAU-021"], "exact_lens": "Drift, indeterminate outcome, degradation, and row-action requirements are distinct.", "adversarial_lens": "Override authority, locking, and reconciliation completion are missing.", "verdict": "authority_gap"},
+        {"plan_unit_id": "CRAU-022", "source_unit_refs": ["PLANUNIT:CRAU-022", "SEMANTIC:PLANUNIT:CRAU-022"], "exact_lens": "Broad detection and legacy navigation migration are explicit.", "adversarial_lens": "CRAU-025 reintroduces a narrower conflicting detector.", "verdict": "contradicted"},
+        {"plan_unit_id": "CRAU-023", "source_unit_refs": ["PLANUNIT:CRAU-023", "SEMANTIC:PLANUNIT:CRAU-023"], "exact_lens": "Digest-first history, command families, and help ownership are named.", "adversarial_lens": "Registry list scale and lifecycle transition details remain thin.", "verdict": "mostly_specified"},
+        {"plan_unit_id": "CRAU-024", "source_unit_refs": ["PLANUNIT:CRAU-024", "SEMANTIC:PLANUNIT:CRAU-024"], "exact_lens": "Cross-surface owner split is unambiguous.", "adversarial_lens": "No material gap within this unit.", "verdict": "specified"},
+        {"plan_unit_id": "CRAU-025", "source_unit_refs": ["PLANUNIT:CRAU-025", "SEMANTIC:PLANUNIT:CRAU-025"], "exact_lens": "Positive and negative Docker detection consequences are stated.", "adversarial_lens": "Input set contradicts CRAU-022 and visible behavior is misclassified non-GUI.", "verdict": "contradicted"},
+        {"plan_unit_id": "CRAU-026", "source_unit_refs": ["PLANUNIT:CRAU-026", "SEMANTIC:PLANUNIT:CRAU-026"], "exact_lens": "Browser/device and PAT input paths plus helper copy are preserved.", "adversarial_lens": "Fallback exists, so browser-launch failure does not remove auth capability.", "verdict": "specified"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0008",
+      "core_range": [2442, 2841],
+      "core_sha256": "b02df1f12dec53f5f214d25e68d519346fbb601fa09f3ebdc48d1ea68d576996",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-027", "PLANUNIT:CRAU-028", "PLANUNIT:CRAU-029", "PLANUNIT:CRAU-030", "PLANUNIT:CRAU-031", "PLANUNIT:CRAU-032", "PLANUNIT:CRAU-033", "SEMANTIC:PLANUNIT:CRAU-027", "SEMANTIC:PLANUNIT:CRAU-028", "SEMANTIC:PLANUNIT:CRAU-029", "SEMANTIC:PLANUNIT:CRAU-030", "SEMANTIC:PLANUNIT:CRAU-031", "SEMANTIC:PLANUNIT:CRAU-032", "SEMANTIC:PLANUNIT:CRAU-033"],
+      "item_ids": ["A005M-000015-I008", "A005M-000015-I009", "A005M-000015-I010", "A005M-000015-I011", "A005M-000015-I012"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-027", "source_unit_refs": ["PLANUNIT:CRAU-027", "SEMANTIC:PLANUNIT:CRAU-027"], "exact_lens": "Events, cadence, terminal outcomes, and auth-expiry recovery are enumerated.", "adversarial_lens": "Restart and late terminal races are unspecified.", "verdict": "lifecycle_gap"},
+        {"plan_unit_id": "CRAU-028", "source_unit_refs": ["PLANUNIT:CRAU-028", "SEMANTIC:PLANUNIT:CRAU-028"], "exact_lens": "Credential custody, scope, clear semantics, and redaction are strong.", "adversarial_lens": "The boundary is DockerHub-specific and does not protect later Config defaults.", "verdict": "specified_with_external_secret_gap"},
+        {"plan_unit_id": "CRAU-029", "source_unit_refs": ["PLANUNIT:CRAU-029", "SEMANTIC:PLANUNIT:CRAU-029"], "exact_lens": "Closed capability enum and control gates are testable.", "adversarial_lens": "Snapshot freshness and invalidation are missing.", "verdict": "freshness_gap"},
+        {"plan_unit_id": "CRAU-030", "source_unit_refs": ["PLANUNIT:CRAU-030", "SEMANTIC:PLANUNIT:CRAU-030"], "exact_lens": "CLI/API and image/template distribution boundaries are clear.", "adversarial_lens": "Pagination, rate limits, and caching are absent.", "verdict": "scale_gap"},
+        {"plan_unit_id": "CRAU-031", "source_unit_refs": ["PLANUNIT:CRAU-031", "SEMANTIC:PLANUNIT:CRAU-031"], "exact_lens": "Protected creation is non-bypassable and separately approved.", "adversarial_lens": "Remote create conflict/idempotency is handled only by the broader missing publish protocol.", "verdict": "specified_with_recovery_gap"},
+        {"plan_unit_id": "CRAU-032", "source_unit_refs": ["PLANUNIT:CRAU-032", "SEMANTIC:PLANUNIT:CRAU-032"], "exact_lens": "Buildx and preflight prerequisites are named.", "adversarial_lens": "Deterministic output is overclaimed without reproducibility constraints.", "verdict": "oracle_gap"},
+        {"plan_unit_id": "CRAU-033", "source_unit_refs": ["PLANUNIT:CRAU-033", "SEMANTIC:PLANUNIT:CRAU-033"], "exact_lens": "All three consumers share one result with artifacts, logs, and image identity.", "adversarial_lens": "Retention and redaction depend on surrounding contracts.", "verdict": "specified"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0009",
+      "core_range": [2842, 3205],
+      "core_sha256": "d445958f30a2eef471ae420e8320929439351cb923f1f1d9d0fba53734a0c071",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-034", "PLANUNIT:CRAU-035", "PLANUNIT:CRAU-036", "PLANUNIT:CRAU-037", "PLANUNIT:CRAU-038", "PLANUNIT:CRAU-039", "PLANUNIT:CRAU-040", "SEMANTIC:PLANUNIT:CRAU-034", "SEMANTIC:PLANUNIT:CRAU-035", "SEMANTIC:PLANUNIT:CRAU-036", "SEMANTIC:PLANUNIT:CRAU-037", "SEMANTIC:PLANUNIT:CRAU-038", "SEMANTIC:PLANUNIT:CRAU-039", "SEMANTIC:PLANUNIT:CRAU-040"],
+      "item_ids": ["A005M-000015-I013", "A005M-000015-I014", "A005M-000015-I015", "A005M-000015-I016", "A005M-000015-I017", "A005M-000015-I018", "A005M-000015-I019", "A005M-000015-I020"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-034", "source_unit_refs": ["PLANUNIT:CRAU-034", "SEMANTIC:PLANUNIT:CRAU-034"], "exact_lens": "Runtime actions and unavailable-fact degradation are named.", "adversarial_lens": "Lifecycle, idempotency, and concurrency states are absent.", "verdict": "state_gap"},
+        {"plan_unit_id": "CRAU-035", "source_unit_refs": ["PLANUNIT:CRAU-035", "SEMANTIC:PLANUNIT:CRAU-035"], "exact_lens": "Resolution order and no-guess fallback are exact.", "adversarial_lens": "URL construction and trust validation are missing.", "verdict": "security_gap"},
+        {"plan_unit_id": "CRAU-036", "source_unit_refs": ["PLANUNIT:CRAU-036", "SEMANTIC:PLANUNIT:CRAU-036"], "exact_lens": "Session continuity and crash gaps avoid silent rebinding.", "adversarial_lens": "Backpressure, redaction, and bounded reconnect are absent.", "verdict": "operational_gap"},
+        {"plan_unit_id": "CRAU-037", "source_unit_refs": ["PLANUNIT:CRAU-037", "SEMANTIC:PLANUNIT:CRAU-037"], "exact_lens": "Alert owner/mirror and shared trust policy are explicit.", "adversarial_lens": "Per-surface opt-out authority is not elaborated.", "verdict": "mostly_specified"},
+        {"plan_unit_id": "CRAU-038", "source_unit_refs": ["PLANUNIT:CRAU-038", "SEMANTIC:PLANUNIT:CRAU-038"], "exact_lens": "Host policy fields, verbs, and distinct blocked states are named.", "adversarial_lens": "Host canonicalization, overlapping-state precedence, and live revocation are missing.", "verdict": "security_gap"},
+        {"plan_unit_id": "CRAU-039", "source_unit_refs": ["PLANUNIT:CRAU-039", "SEMANTIC:PLANUNIT:CRAU-039"], "exact_lens": "Preflight-before-approval and blocked taxonomy are strong.", "adversarial_lens": "No execution-time freshness guard closes TOCTOU.", "verdict": "race_gap"},
+        {"plan_unit_id": "CRAU-040", "source_unit_refs": ["PLANUNIT:CRAU-040", "SEMANTIC:PLANUNIT:CRAU-040"], "exact_lens": "Relevance, doctor checks, and degraded non-mutating availability are coherent.", "adversarial_lens": "Doctor snapshot lifetime inherits CRAU-039 freshness ambiguity.", "verdict": "specified_with_cross_unit_gap"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0010",
+      "core_range": [3206, 3574],
+      "core_sha256": "5492ce999dce1f65372b34c1e83537288467ab353065d5b0fab1abdffd1f79d2",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-041", "PLANUNIT:CRAU-042", "PLANUNIT:CRAU-043", "PLANUNIT:CRAU-044", "PLANUNIT:CRAU-045", "PLANUNIT:CRAU-046", "PLANUNIT:CRAU-047", "SEMANTIC:PLANUNIT:CRAU-041", "SEMANTIC:PLANUNIT:CRAU-042", "SEMANTIC:PLANUNIT:CRAU-043", "SEMANTIC:PLANUNIT:CRAU-044", "SEMANTIC:PLANUNIT:CRAU-045", "SEMANTIC:PLANUNIT:CRAU-046", "SEMANTIC:PLANUNIT:CRAU-047"],
+      "item_ids": ["A005M-000015-I021", "A005M-000015-I022", "A005M-000015-I023", "A005M-000015-I024", "A005M-000015-I025", "A005M-000015-I026", "A005M-000015-I027"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-041", "source_unit_refs": ["PLANUNIT:CRAU-041", "SEMANTIC:PLANUNIT:CRAU-041"], "exact_lens": "Four active operation areas and required payload categories are named.", "adversarial_lens": "The unit remains the vague placeholder it prohibits.", "verdict": "not_buildable"},
+        {"plan_unit_id": "CRAU-042", "source_unit_refs": ["PLANUNIT:CRAU-042", "SEMANTIC:PLANUNIT:CRAU-042"], "exact_lens": "Producer, registration, and persistence authorities are separated.", "adversarial_lens": "Registration proof is external by design and not inferred here.", "verdict": "specified_boundary"},
+        {"plan_unit_id": "CRAU-043", "source_unit_refs": ["PLANUNIT:CRAU-043", "SEMANTIC:PLANUNIT:CRAU-043"], "exact_lens": "Build and push effects, approvals, and blocked/failed outcomes are separate.", "adversarial_lens": "Concurrent direct and auto push lack idempotency.", "verdict": "recovery_gap"},
+        {"plan_unit_id": "CRAU-044", "source_unit_refs": ["PLANUNIT:CRAU-044", "SEMANTIC:PLANUNIT:CRAU-044"], "exact_lens": "Missing-repo state preserves and resumes the build result.", "adversarial_lens": "Pending-state restart, expiry, and correlation are absent.", "verdict": "restart_gap"},
+        {"plan_unit_id": "CRAU-045", "source_unit_refs": ["PLANUNIT:CRAU-045", "SEMANTIC:PLANUNIT:CRAU-045"], "exact_lens": "after_build is not standing remote approval.", "adversarial_lens": "Auto/manual dispatch arbitration is absent.", "verdict": "concurrency_gap"},
+        {"plan_unit_id": "CRAU-046", "source_unit_refs": ["PLANUNIT:CRAU-046", "SEMANTIC:PLANUNIT:CRAU-046"], "exact_lens": "Tag/digest precedence is mostly exact.", "adversarial_lens": "Fallback tag cannot populate a Repository defined only with primary_publish_tag; digest token also drifts.", "verdict": "contract_contradiction"},
+        {"plan_unit_id": "CRAU-047", "source_unit_refs": ["PLANUNIT:CRAU-047", "SEMANTIC:PLANUNIT:CRAU-047"], "exact_lens": "Variable sources and normalization order are testable.", "adversarial_lens": "Length, leading character, collision, and retry-stability rules are missing.", "verdict": "edge_contract_gap"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0011",
+      "core_range": [3575, 3924],
+      "core_sha256": "3e31562ccf1be19b737f2a1e7a82e29fd8e1a0790a3d8787b8ca2aafc378022f",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-048", "PLANUNIT:CRAU-049", "PLANUNIT:CRAU-050", "PLANUNIT:CRAU-051", "PLANUNIT:CRAU-052", "PLANUNIT:CRAU-053", "PLANUNIT:CRAU-054", "SEMANTIC:PLANUNIT:CRAU-048", "SEMANTIC:PLANUNIT:CRAU-049", "SEMANTIC:PLANUNIT:CRAU-050", "SEMANTIC:PLANUNIT:CRAU-051", "SEMANTIC:PLANUNIT:CRAU-052", "SEMANTIC:PLANUNIT:CRAU-053", "SEMANTIC:PLANUNIT:CRAU-054"],
+      "item_ids": ["A005M-000015-I028", "A005M-000015-I029", "A005M-000015-I030", "A005M-000015-I031", "A005M-000015-I032", "A005M-000015-I033", "A005M-000015-I034"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-048", "source_unit_refs": ["PLANUNIT:CRAU-048", "SEMANTIC:PLANUNIT:CRAU-048"], "exact_lens": "Default commit/no-push sequencing and one-click follow-on are clear.", "adversarial_lens": "Stage-level partial failure and resume are undefined.", "verdict": "partial_failure_gap"},
+        {"plan_unit_id": "CRAU-049", "source_unit_refs": ["PLANUNIT:CRAU-049", "SEMANTIC:PLANUNIT:CRAU-049"], "exact_lens": "Three artifact classes and locations are explicit.", "adversarial_lens": "Slug, asset-name, and symlink containment are absent.", "verdict": "path_security_gap"},
+        {"plan_unit_id": "CRAU-050", "source_unit_refs": ["PLANUNIT:CRAU-050", "SEMANTIC:PLANUNIT:CRAU-050"], "exact_lens": "Provenance dimensions and field set are named.", "adversarial_lens": "Actual per-field matrix values were not preserved in the canonical unit.", "verdict": "semantic_loss"},
+        {"plan_unit_id": "CRAU-051", "source_unit_refs": ["PLANUNIT:CRAU-051", "SEMANTIC:PLANUNIT:CRAU-051"], "exact_lens": "Normalized round trip and unknown-field preservation are required.", "adversarial_lens": "Untrusted XML parsing, concurrent edits, and atomic save are absent.", "verdict": "io_security_gap"},
+        {"plan_unit_id": "CRAU-052", "source_unit_refs": ["PLANUNIT:CRAU-052", "SEMANTIC:PLANUNIT:CRAU-052"], "exact_lens": "Structured plus raw layers make all-fields-editable falsifiable.", "adversarial_lens": "Raw input validation and save conflict handling are absent.", "verdict": "io_security_gap"},
+        {"plan_unit_id": "CRAU-053", "source_unit_refs": ["PLANUNIT:CRAU-053", "SEMANTIC:PLANUNIT:CRAU-053"], "exact_lens": "Review entry and auto-push blocking are mostly explicit.", "adversarial_lens": "Auto-commit permission directly contradicts CRAU-065 and required display_name is omitted.", "verdict": "critical_contradiction"},
+        {"plan_unit_id": "CRAU-054", "source_unit_refs": ["PLANUNIT:CRAU-054", "SEMANTIC:PLANUNIT:CRAU-054"], "exact_lens": "Root, order, escaping split, and passthrough are exact.", "adversarial_lens": "CDATA terminator and safe parsing are unspecified.", "verdict": "edge_encoding_gap"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0012",
+      "core_range": [3925, 4318],
+      "core_sha256": "378c31080ee931dcbe8e416a4de8367df1d513147aec9a8d4d468b80b7238aad",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-055", "PLANUNIT:CRAU-056", "PLANUNIT:CRAU-057", "PLANUNIT:CRAU-058", "PLANUNIT:CRAU-059", "PLANUNIT:CRAU-060", "PLANUNIT:CRAU-061", "PLANUNIT:CRAU-062", "SEMANTIC:PLANUNIT:CRAU-055", "SEMANTIC:PLANUNIT:CRAU-056", "SEMANTIC:PLANUNIT:CRAU-057", "SEMANTIC:PLANUNIT:CRAU-058", "SEMANTIC:PLANUNIT:CRAU-059", "SEMANTIC:PLANUNIT:CRAU-060", "SEMANTIC:PLANUNIT:CRAU-061", "SEMANTIC:PLANUNIT:CRAU-062"],
+      "item_ids": ["A005M-000015-I002", "A005M-000015-I029", "A005M-000015-I035", "A005M-000015-I036", "A005M-000015-I037", "A005M-000015-I038", "A005M-000015-I039"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-055", "source_unit_refs": ["PLANUNIT:CRAU-055", "SEMANTIC:PLANUNIT:CRAU-055"], "exact_lens": "Config shapes and attribute rules are named.", "adversarial_lens": "Mask does not prohibit secret Default persistence.", "verdict": "secret_boundary_gap"},
+        {"plan_unit_id": "CRAU-056", "source_unit_refs": ["PLANUNIT:CRAU-056", "SEMANTIC:PLANUNIT:CRAU-056"], "exact_lens": "Known application/profile field sets are named.", "adversarial_lens": "Per-field mapping is thin and display_name gating conflicts with CRAU-053.", "verdict": "gate_mismatch"},
+        {"plan_unit_id": "CRAU-057", "source_unit_refs": ["PLANUNIT:CRAU-057", "SEMANTIC:PLANUNIT:CRAU-057"], "exact_lens": "Unmanaged local output path, content, event, and statuses are exact.", "adversarial_lens": "Containment and retention are absent.", "verdict": "operational_gap"},
+        {"plan_unit_id": "CRAU-058", "source_unit_refs": ["PLANUNIT:CRAU-058", "SEMANTIC:PLANUNIT:CRAU-058"], "exact_lens": "Local-result wording and distribution target rationale are clear.", "adversarial_lens": "No material unit-local gap beyond localization.", "verdict": "specified"},
+        {"plan_unit_id": "CRAU-059", "source_unit_refs": ["PLANUNIT:CRAU-059", "SEMANTIC:PLANUNIT:CRAU-059"], "exact_lens": "Generation default and nearby toggle are explicit.", "adversarial_lens": "Existing-project migration and disclosure are absent.", "verdict": "migration_gap"},
+        {"plan_unit_id": "CRAU-060", "source_unit_refs": ["PLANUNIT:CRAU-060", "SEMANTIC:PLANUNIT:CRAU-060"], "exact_lens": "Managed workflow default and disable setting are explicit.", "adversarial_lens": "Visible setting is misclassified non-GUI and upgrade behavior is absent.", "verdict": "metadata_and_migration_gap"},
+        {"plan_unit_id": "CRAU-061", "source_unit_refs": ["PLANUNIT:CRAU-061", "SEMANTIC:PLANUNIT:CRAU-061"], "exact_lens": "Repo name, branch, paths, and override fields are explicit.", "adversarial_lens": "User path/slug containment and migration are absent; visible setup is misclassified.", "verdict": "path_security_gap"},
+        {"plan_unit_id": "CRAU-062", "source_unit_refs": ["PLANUNIT:CRAU-062", "SEMANTIC:PLANUNIT:CRAU-062"], "exact_lens": "Reachability, writability, branch, layout, and dirty-state validation are broad.", "adversarial_lens": "Migration rollback, validation freshness, and adoption scope are absent.", "verdict": "recovery_gap"}
+      ]
+    },
+    {
+      "window_id": "WIN-BCDD1AE883C0-0013",
+      "core_range": [4319, 4700],
+      "core_sha256": "b1a5ed529df05064981e67bac0ffde5b6c2dda8bbbe5d16cf3a7023194223ca7",
+      "core_hash_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:CRAU-063", "PLANUNIT:CRAU-064", "PLANUNIT:CRAU-065", "PLANUNIT:CRAU-066", "PLANUNIT:CRAU-067", "PLANUNIT:CRAU-068", "PLANUNIT:CRAU-069", "PLANUNIT:CRAU-070", "SEMANTIC:PLANUNIT:CRAU-063", "SEMANTIC:PLANUNIT:CRAU-064", "SEMANTIC:PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-066", "SEMANTIC:PLANUNIT:CRAU-067", "SEMANTIC:PLANUNIT:CRAU-068", "SEMANTIC:PLANUNIT:CRAU-069", "SEMANTIC:PLANUNIT:CRAU-070"],
+      "item_ids": ["A005M-000015-I002", "A005M-000015-I032", "A005M-000015-I040", "A005M-000015-I041", "A005M-000015-I042", "A005M-000015-I043", "A005M-000015-I044", "A005M-000015-I045", "A005M-000015-I046"],
+      "unit_assessments": [
+        {"plan_unit_id": "CRAU-063", "source_unit_refs": ["PLANUNIT:CRAU-063", "SEMANTIC:PLANUNIT:CRAU-063"], "exact_lens": "State names and several GUI consequences are explicit.", "adversarial_lens": "Overlapping facts have no state precedence or orthogonal model.", "verdict": "state_model_gap"},
+        {"plan_unit_id": "CRAU-064", "source_unit_refs": ["PLANUNIT:CRAU-064", "SEMANTIC:PLANUNIT:CRAU-064"], "exact_lens": "Review entry, clearing, and dirty/clean transition are stated.", "adversarial_lens": "Required-field set inherits the display_name mismatch.", "verdict": "cross_unit_gate_gap"},
+        {"plan_unit_id": "CRAU-065", "source_unit_refs": ["PLANUNIT:CRAU-065", "SEMANTIC:PLANUNIT:CRAU-065"], "exact_lens": "PM-owned paths and unrelated-change block are explicit.", "adversarial_lens": "needs_review contradicts CRAU-053; staged index and symlink containment remain unsafe.", "verdict": "critical_safety_gap"},
+        {"plan_unit_id": "CRAU-066", "source_unit_refs": ["PLANUNIT:CRAU-066", "SEMANTIC:PLANUNIT:CRAU-066"], "exact_lens": "Commit/push statuses and retry preservation are enumerated.", "adversarial_lens": "Transport-loss indeterminacy and concurrent-edit clean transition are absent.", "verdict": "partial_failure_gap"},
+        {"plan_unit_id": "CRAU-067", "source_unit_refs": ["PLANUNIT:CRAU-067", "SEMANTIC:PLANUNIT:CRAU-067"], "exact_lens": "Silent dirty-worktree folding is prohibited with three user resolutions.", "adversarial_lens": "Adoption scope is undefined and visible choice is misclassified non-GUI.", "verdict": "specified_with_authority_gap"},
+        {"plan_unit_id": "CRAU-068", "source_unit_refs": ["PLANUNIT:CRAU-068", "SEMANTIC:PLANUNIT:CRAU-068"], "exact_lens": "Create/select setup and one-repo-per-project default are clear.", "adversarial_lens": "Remote create command and approval protocol are absent.", "verdict": "authority_contract_gap"},
+        {"plan_unit_id": "CRAU-069", "source_unit_refs": ["PLANUNIT:CRAU-069", "SEMANTIC:PLANUNIT:CRAU-069"], "exact_lens": "Root profile, maintainer folder, namespace default, and override are stated.", "adversarial_lens": "project-name versus project_slug and slug migration are unresolved.", "verdict": "identity_migration_gap"},
+        {"plan_unit_id": "CRAU-070", "source_unit_refs": ["PLANUNIT:CRAU-070", "SEMANTIC:PLANUNIT:CRAU-070"], "exact_lens": "Commit/push defaults and one-click action are explicit.", "adversarial_lens": "Friendly labels lack canonical mapping and remote push approval protocol is absent.", "verdict": "gui_and_authority_gap"}
+      ]
+    }
+  ],
+  "self_attestation": {
+    "every_assigned_core_line_read": true,
+    "every_required_source_unit_ref_accounted": true,
+    "exact_behavior_review_completed": true,
+    "adversarial_negative_space_review_completed": true,
+    "all_required_dimensions_applied": true,
+    "only_dispatch_intent_capsule_source_excerpt_and_result_schema_read": true,
+    "peer_results_read": false,
+    "prior_audits_read": false,
+    "external_research_performed": false,
+    "unrelated_sources_read": false,
+    "canonical_plans_edited": false,
+    "files_written_in_output_directory": 1,
+    "terminal_seal_written": false
+  },
+  "source_binding": {
+    "document_path": "Plans/Containers_Registry_and_Unraid.md",
+    "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+    "source_sha256_verification_scope": "Bound from the assigned capsule; canonical source was not read under the blindness contract.",
+    "source_excerpt_ref": "capsules/source/7d/7d2d8715f0faccfd3d852c972af2e1f96145accc579ec23d086ac1d5c3a1f033.txt",
+    "source_excerpt_sha256_expected": "7d2d8715f0faccfd3d852c972af2e1f96145accc579ec23d086ac1d5c3a1f033",
+    "source_excerpt_sha256_observed": "7d2d8715f0faccfd3d852c972af2e1f96145accc579ec23d086ac1d5c3a1f033",
+    "capsule_sha256_expected": "add69a8da1ae982140b567154a69dd359a1aa10e3061cbacde6cf4ca3943107d",
+    "capsule_sha256_observed": "add69a8da1ae982140b567154a69dd359a1aa10e3061cbacde6cf4ca3943107d",
+    "assignment_record_sha256": "1a0939d86e5b50d1356bee97d1cbb41cb6b2740f53f4a2edbffff02b7f0d1813",
+    "assignment_record_content_read": false,
+    "identity_fields_verified_between_intent_capsule_and_schema": ["assignment_id", "attempt_id", "audit_id", "phase", "model", "reasoning_effort", "result_schema_ref"],
+    "segment_core_hashes_verified": [
+      {"window_id": "WIN-BCDD1AE883C0-0006", "sha256": "87a1031cca300cf90cf1c90a5a5978503f51bb1aab63cbda7e431241ef96f819"},
+      {"window_id": "WIN-BCDD1AE883C0-0007", "sha256": "766261917b739ddf5deb02c90891bc830e4d04f8857f27f5e389925dd1ce45e5"},
+      {"window_id": "WIN-BCDD1AE883C0-0008", "sha256": "b02df1f12dec53f5f214d25e68d519346fbb601fa09f3ebdc48d1ea68d576996"},
+      {"window_id": "WIN-BCDD1AE883C0-0009", "sha256": "d445958f30a2eef471ae420e8320929439351cb923f1f1d9d0fba53734a0c071"},
+      {"window_id": "WIN-BCDD1AE883C0-0010", "sha256": "5492ce999dce1f65372b34c1e83537288467ab353065d5b0fab1abdffd1f79d2"},
+      {"window_id": "WIN-BCDD1AE883C0-0011", "sha256": "3e31562ccf1be19b737f2a1e7a82e29fd8e1a0790a3d8787b8ca2aafc378022f"},
+      {"window_id": "WIN-BCDD1AE883C0-0012", "sha256": "378c31080ee931dcbe8e416a4de8367df1d513147aec9a8d4d468b80b7238aad"},
+      {"window_id": "WIN-BCDD1AE883C0-0013", "sha256": "b1a5ed529df05064981e67bac0ffde5b6c2dda8bbbe5d16cf3a7023194223ca7"}
+    ]
+  },
+  "status": "completed",
+  "synthesis": {
+    "verdict": "completed_with_material_gaps",
+    "summary": "The macro has strong separation of remote side effects, explicit receipt/blocked-state joins, durable runtime identity, protected DockerHub repository creation, no-silent-rebind stream behavior, untrusted-state disclosure, and XML passthrough preservation. It is not implementation-closed: two critical contradictions/safety defects and twenty-one high-severity gaps remain, concentrated in detection truth, execution-time approval freshness, placeholder operation anchors, publish idempotency, tag identity, path/XML safety, review/commit state, Git index containment, and template-repo remote effects.",
+    "critical_items": ["A005M-000015-I032", "A005M-000015-I041"],
+    "highest_priority_resolution_order": [
+      "Resolve needs_review auto-commit contradiction and derive all review gates from one required-field registry.",
+      "Make auto-commit index-safe and path-contained, including staged content and symlinks.",
+      "Unify broad project detection and close approval-snapshot TOCTOU.",
+      "Replace CRAU-041 placeholders with typed commands, states, callers, consumers, and oracles.",
+      "Define idempotent publish/repo workflows, canonical tag/digest identity, and indeterminate remote recovery.",
+      "Specify safe XML parsing, atomic saves, secret non-persistence, and generated-path containment."
+    ],
+    "explicit_strengths": [
+      "Remote build, image push, repository creation, and template push are conceptually distinct effects.",
+      "Blocked, failed, degraded, historical, and indeterminate concepts are not intentionally flattened.",
+      "Unknown XML content is protected from silent deletion.",
+      "Cross-surface owner and event-registration boundaries are explicit.",
+      "Local artifacts and completed builds survive several remote-side failure paths."
+    ],
+    "builder_discretion_boundary": "Builders may choose internal libraries, visual composition, bounded retry timing, and normalized data structures only where exact contracts are already present. They must not invent resolutions for the listed contradictions, authority gaps, state precedence, path/secret safety, event/operation schemas, or remote-effect protocols."
+  },
+  "task_thread_id": "/root/a005m_000015_attempt_0014_terminal"
+}

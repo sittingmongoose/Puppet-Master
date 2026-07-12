@@ -1,16 +1,30 @@
 <script id="pm6-js-chat">
-/* pm6-js-chat — chat surfaces wiring (owner: chat).
-   Renders PM_DEMO chat story into #chatPanel / #floatingChat: typed message
-   stream, web operation cards (addendum_pm173), queue chips, send/stop morph,
-   /web slash family, plan panel, gate thread, layout cycle. Defensive: every
-   external call is guarded; a missing engine degrades to static markup. */
+/* pm6-js-chat — unified chat renderer + wiring (owner: chat).
+   One renderer, one data source, three mounts: CHAT_TEMPLATE(m) renders the
+   full canonical chrome (floating layout + the four locked tweaks) into
+   #chatPanel and #floatingChat at boot; thread display data comes from
+   window.PM6_CHAT_THREADS (29x-pm6-js-chat-data); live state stays in the
+   demo engine (d.state.chat). The wizard-embedded surface renders on demand
+   through window.PM6_CHAT_UI with all chrome flags off.
+   Also owns: switchChatThread (the single thread switcher), the composer
+   mode dropdown with the nested planning-thoroughness flyout, the unified
+   context-usage module (hover reveal + pin), the context-lens popover, the
+   files.open-shaped window.PM6_CONTEXT_TAB facade, and closeChatBtn.
+   Transitional note: part 25 still carries its legacy thread delegation until
+   the cleanup stage lands — the switcher here re-renders idempotently and
+   skips snapshotting streams a foreign writer clobbered (stamp check).
+   Defensive: every external call is guarded; a missing engine degrades to
+   static markup. */
 (function () {
   'use strict';
 
-  var CURRENT = 'th-main';           /* active pm6-owned thread */
+  var CURRENT = 'th-main';           /* active thread id */
   var SAVED = {};                    /* threadId -> cached innerHTML per stream index */
   var STREAM_SINKS = {};             /* msgId -> [sink elements] */
   var LAYOUT = 'detached';           /* floating chat layout mode */
+  var MODE = 'agent';                /* composer mode: ask|agent|debug|plan|deep-plan */
+  var PT = 'Balanced';               /* planning thoroughness: Light|Balanced|Comprehensive */
+  var TPL_CACHE = {};                /* builder key -> resolved stream html */
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -25,6 +39,8 @@
     try { return (window.PM_ICONS && window.PM_ICONS[name]) || ''; } catch (e) { return ''; }
   }
   function streams() { return $all('#chatPanel .messageStream, #floatingChat .messageStream'); }
+  function THREADS() { return window.PM6_CHAT_THREADS || {}; }
+  function inMounts(el) { return !!(el && el.closest && el.closest('#chatPanel, #floatingChat')); }
 
   /* ---------- icon hydration ---------- */
   function hydrateIcons(root) {
@@ -273,73 +289,482 @@
     hydrateIcons();
   }
 
-  /* ---------- thread switching (pm6-owned threads) ---------- */
-  function gateThreadHtml() {
-    var d = demo();
-    var notice = (d && d.text && d.text.chat && d.text.chat.gateNotice) ||
-      'Run #47 is holding at node n-13: <b>publish package: image-processing</b>. Reply <b>approve and continue</b> to release it.';
-    return '<div class="message system pm6-chat-sys"><span class="pm6-ico">' + ico('shield') + '</span> Spawned by the HITL gate on run pcr-47 · resolves here, on the Dashboard, or in Orchestrator</div>' +
-      '<div class="pm6-chat-notice pm6-chat-notice-warn pm6-chat-gatenotice"><span class="pm6-ico">' + ico('warning') + '</span><span>' + notice + '</span></div>' +
-      '<div class="pm6-chat-card pm6-chat-gatecard"><div class="pm6-chat-card-head"><span class="pm6-ico">' + ico('scales') + '</span>' +
-      '<span class="pm6-chat-card-title">Package gate: image-processing</span></div>' +
-      '<div class="pm6-chat-card-body">Publishing makes this package a dependency for lane-c media work. Declining parks node n-13 at its safe point — nothing is lost either way.</div>' +
-      '<div class="pm6-chat-card-actions">' +
-      '<button class="pm6-chat-btn pm6-chat-btn-primary" data-demo-action="run.approve_gate">Approve and continue</button>' +
-      '<button class="pm6-chat-btn" data-demo-action="run.decline_gate">Decline — park at safe point</button>' +
-      '<button class="pm6-chat-btn" data-demo-action="page.go" data-demo-arg="orchestrator:progress">Open in Orchestrator</button>' +
-      '</div><div class="pm6-chat-card-body" style="font-style:italic;">Typing "approve and continue" in any thread works too.</div></div>';
+  /* ---------- chrome markup: shared svg fragments ---------- */
+  var SVG = {
+    chev: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>',
+    collapse: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>',
+    close: '<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+    search: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+    branch: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>',
+    branchSm: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>',
+    duplicate: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>',
+    archive: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>',
+    popout: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>',
+    layout: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="14" y1="3" x2="14" y2="21"></line></svg>',
+    attach: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>',
+    warnDot: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+    jump: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>',
+    sendIco: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>',
+    stopIco: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>',
+    lensDefault: '<svg class="cl-icon cl-icon-default" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="9" x2="16" y2="9"></line><line x1="8" y1="15" x2="16" y2="15"></line></svg>',
+    lensMuteBtn: '<svg class="cl-icon cl-icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
+    lensFocusBtn: '<svg class="cl-icon cl-icon-focus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
+    lensSubBtn: '<svg class="cl-icon cl-icon-subcompact" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
+    lensMute: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
+    lensFocus: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
+    lensSub: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>'
+  };
+
+  /* ---------- chrome markup: builders ---------- */
+  /* Canonical layout = floating, with the locked tweaks: New Thread right of
+     the HISTORY sidebar title, search + context lens in header row 1, no
+     input hint, unified context-usage module (hover reveal, click = pin). */
+  var MOUNTS = [
+    { root: '#chatPanel', actions: 'docked' },
+    { root: '#floatingChat', actions: 'floating' }
+  ];
+  var MODE_LABELS = { ask: 'Ask', agent: 'Agent', debug: 'Debug', plan: 'Plan', 'deep-plan': 'Deep Plan' };
+
+  function wtBindHtml() {
+    /* worktree binding — inline handlers stay: the globals live in part 25 */
+    return '<div class="wt-bind-wrap" style="position:relative;">' +
+      '<button class="wt-bind-btn wt-bound-clean pm6-chat-wt" onclick="toggleWorktreeDropdown(this)" title="Worktree binding: bound, clean — click to switch, create or unbind" style="display:flex; align-items:center; padding:2px; background:none; border:none; color:var(--accent-lime); cursor:pointer;">' +
+      SVG.branch + '<span class="pm6-chat-wt-dot" aria-hidden="true"></span></button>' +
+      '<div class="wt-bind-dropdown">' +
+      '<div class="wt-current-label" style="padding:4px 8px; font-weight:600; color:var(--text-primary); border-bottom:1px solid var(--border-light); margin-bottom:4px; display:flex; align-items:center; gap:4px;">' +
+      SVG.branchSm + ' <span class="wt-current-name">feat/dashboard-v2</span> <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>' +
+      '<div style="font-weight:600; font-size:10px; padding:4px 8px; color:var(--text-muted);">Switch Worktree</div>' +
+      '<div class="pm6-chat-wt-row" onclick="bindWorktree(\'feat/dashboard-v2\')">feat/dashboard-v2 <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>' +
+      '<div class="pm6-chat-wt-row" onclick="bindWorktree(\'feat/schema-update\')">feat/schema-update <span class="wt-status-pill dirty" style="font-size:8px;">2 dirty</span></div>' +
+      '<div class="pm6-chat-wt-row" onclick="bindWorktree(\'feat/oauth2-pkce\')">feat/oauth2-pkce <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>' +
+      '<div class="pm6-chat-wt-row" onclick="bindWorktree(\'feat/multi-tenant\')">feat/multi-tenant <span class="wt-status-pill dirty" style="font-size:8px;">1 dirty</span></div>' +
+      '<div class="pm6-chat-wt-row" onclick="bindWorktree(\'perf/analytics-opt\')">perf/analytics-opt <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>' +
+      '<div style="border-top:1px solid var(--border-light); margin-top:4px; padding-top:4px;">' +
+      '<div class="pm6-chat-wt-row" style="color:var(--accent-blue);" onclick="showCreateWorktreeModal()">+ Create New Worktree</div>' +
+      '<div class="pm6-chat-wt-row" style="color:var(--text-muted);" onclick="unbindWorktree()">Unbind</div>' +
+      '</div></div></div>';
   }
+  function ctxModuleHtml() {
+    /* unified context-usage module: Est. Cost row in BOTH mounts; reveal is
+       pure CSS (:hover / .pinned), Compact now is always visible in the module */
+    return '<span class="context-usage pm6-chat-ctx" title="Context: 42k / 128k — hover for usage, click to pin">' +
+      '<svg width="12" height="12" viewBox="0 0 24 24" style="transform: rotate(-90deg);">' +
+      '<circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>' +
+      '<circle class="pm6-chat-ctx-arc" cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-primary)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle></svg>' +
+      '<span class="pm6-chat-ctx-label">42k/128k</span>' +
+      '<div class="context-hover-module">' +
+      '<div class="chm-row"><span class="chm-label">Usage</span><span class="chm-value pm6-chat-ctx-usage">42,180 / 128,000</span></div>' +
+      '<div class="chm-bar"><div class="chm-bar-fill" style="width: 33%;"></div></div>' +
+      '<div class="chm-row"><span class="chm-label">Input</span><span class="chm-value">38.2k tokens</span></div>' +
+      '<div class="chm-row"><span class="chm-label">Output</span><span class="chm-value">3.9k tokens</span></div>' +
+      '<div class="chm-row"><span class="chm-label">Est. Cost</span><span class="chm-value">$0.19 this thread</span></div>' +
+      '<div class="chm-actions">' +
+      '<button class="chm-compact-btn">Compact now</button>' +
+      '<button class="chm-details-link" title="Opens the Context tab in the editor">More details</button>' +
+      '</div></div></span>';
+  }
+  function lensHtml() {
+    /* context lens — same markup as the carved popover, handlers delegated */
+    return '<div class="context-lens-wrap" style="position:relative; flex-shrink:0;">' +
+      '<button class="context-lens-btn" title="Context Lens">' +
+      SVG.lensDefault + SVG.lensMuteBtn + SVG.lensFocusBtn + SVG.lensSubBtn + '</button>' +
+      '<div class="context-lens-popover">' +
+      '<div class="cl-popover-title">Context Lens</div>' +
+      '<div class="cl-mode-item" data-mode="mute">' + SVG.lensMute +
+      '<div class="cl-mode-info"><span class="cl-mode-name">Mute</span><span class="cl-mode-desc">Exclude messages from context</span></div></div>' +
+      '<div class="cl-mode-item" data-mode="focus">' + SVG.lensFocus +
+      '<div class="cl-mode-info"><span class="cl-mode-name">Focus</span><span class="cl-mode-desc">Pin messages to top of context</span></div></div>' +
+      '<div class="cl-mode-item" data-mode="subcompact">' + SVG.lensSub +
+      '<div class="cl-mode-info"><span class="cl-mode-name">Subcompact</span><span class="cl-mode-desc">Replace with local summary</span></div></div>' +
+      '<div class="cl-popover-footer"><button class="cl-off-btn">Turn off</button></div>' +
+      '</div></div>';
+  }
+  function headerActionsHtml(m) {
+    if (m.actions === 'floating') {
+      return '<div class="panel-actions" style="display:flex; gap:var(--xs);">' +
+        '<button class="pm6-chat-layout-cycle pm6-chat-iconbtn" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '</button>' +
+        '<button class="closeChatBtn pm6-chat-iconbtn" title="Close chat">' + SVG.close + '</button></div>';
+    }
+    return '<div class="panel-actions" style="display:flex; gap:var(--xs);">' +
+      '<button class="pm6-chat-iconbtn" title="Duplicate thread" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '</button>' +
+      '<button class="pm6-chat-iconbtn" title="Archive thread" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '</button>' +
+      '<button class="popOutBtn pm6-chat-iconbtn" title="Pop out to floating window">' + SVG.popout + '</button>' +
+      '<button class="closeChatBtn pm6-chat-iconbtn" title="Close chat panel">' + SVG.close + '</button></div>';
+  }
+  function headerHtml(m) {
+    /* single header row: title · search · lens · worktree · context · issues · actions */
+    return '<div class="chat-panel-header chat-panel-header-stacked pm6-chat-header">' +
+      '<div class="pm6-chat-headrow">' +
+      '<div class="title pm6-chat-titlewrap" style="flex:0 1 auto; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font); min-width:0;">' +
+      '<span class="chatHeaderTitle pm6-chat-title" contenteditable="true" spellcheck="false" title="Click to rename this thread">Tastebook — planning chat</span></div>' +
+      '<div class="pm6-chat-headsearch">' + SVG.search +
+      '<input type="text" placeholder="Search messages &amp; threads..."></div>' +
+      lensHtml() +
+      wtBindHtml() +
+      ctxModuleHtml() +
+      '<a href="#" class="pm6-chat-issues" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab(\'problems\');" title="Open Problems in the bottom panel">' + SVG.warnDot + ' 3 Issues</a>' +
+      headerActionsHtml(m) +
+      '</div></div>';
+  }
+  function threadStatusHtml(status) {
+    if (status === 'working') return '<div class="thread-working-pulse"></div>';
+    if (status === 'unread') return '<div class="thread-status-unread"></div>';
+    if (status === 'draft') return '<div class="thread-status-draft"></div>';
+    return '<div class="thread-status-read"></div>';
+  }
+  function threadRowHtml(t, active) {
+    /* t: PM6_CHAT_THREADS entry (title/summaryHtml are HTML-ready) or an
+       engine thread record {id,title,kind} */
+    var role = t.role || t.kind || 'assistant';
+    var title = t.titleHtml || t.title || 'New thread';
+    return '<div class="chat-thread-item' + (active ? ' active' : '') + ' role-' + esc(role) + ' pm6-chat-thread" data-thread="' + esc(t.id) + '">' +
+      '<div class="thread-top-row"><span class="thread-timestamp">' + (t.timestamp || 'now') + '</span>' +
+      '<div class="thread-title"' + (t.titleHtml ? ' style="display:flex; align-items:center; gap:4px;"' : '') + '>' + title + '</div></div>' +
+      '<div class="thread-bottom-row"><div class="thread-status-col">' + threadStatusHtml(t.status) + '</div>' +
+      '<div class="thread-summary">' + (t.summaryHtml || '') + '</div></div>' +
+      '<div class="thread-hover-actions">' + ((t.hoverActions || []).join('')) + '</div></div>';
+  }
+  function sidebarHtml() {
+    var T = THREADS();
+    var rows = Object.keys(T).map(function (id) {
+      return threadRowHtml(T[id], id === 'th-main');
+    }).join('');
+    return '<div class="chat-thread-sidebar">' +
+      '<div class="sidebar-title pm6-chat-sbtitle"><span class="pm6-chat-sbtitle-label">HISTORY</span>' +
+      '<button class="pm6-chat-newthread pm6-chat-newthread-mini" data-demo-action="chat.new_thread" data-demo-arg="assistant" title="Start a new thread"><span class="pm6-ico" data-pm6-ico="sparkle"></span> New Thread</button>' +
+      '<button class="collapse-btn" title="Collapse thread list" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:2px;" onclick="this.closest(\'.chat-thread-sidebar\').classList.toggle(\'collapsed\');">' + SVG.collapse + '</button></div>' +
+      '<div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">' + rows + '</div></div>';
+  }
+  function planPanelHtml() {
+    return '<div class="pm6-chat-planpanel pm6-hidden">' +
+      '<div class="pm6-chat-planhead">' +
+      '<span class="pm6-ico" data-pm6-ico="clipboard"></span>' +
+      '<span class="pm6-chat-plantitle">Plan: Image pipeline</span>' +
+      '<span class="pm6-chat-badge">approved · executing</span>' +
+      '<button class="pm6-chat-btn" data-demo-action="files.open" data-demo-arg="PRD.md" title="Jump to the plan document">Open doc</button>' +
+      '<button class="pm6-chat-btn pm6-chat-planfocus" title="Scroll the active step into view">Focus active step</button></div>' +
+      '<div class="pm6-chat-plantodos">' +
+      '<div class="pm6-chat-todo" data-todo="completed"><span class="pm6-chat-tododot"></span> Define rendition ladder (320/768/1600)</div>' +
+      '<div class="pm6-chat-todo" data-todo="completed"><span class="pm6-chat-tododot"></span> Strip EXIF on ingest</div>' +
+      '<div class="pm6-chat-todo pm6-chat-todo-active" data-todo="in_progress"><span class="pm6-chat-tododot"></span> Wire image-processing package behind seam-content</div>' +
+      '<div class="pm6-chat-todo" data-todo="blocked"><span class="pm6-chat-tododot"></span> R2 bucket + lifecycle rules <i>(blocked: storage decision)</i></div>' +
+      '<div class="pm6-chat-todo" data-todo="pending"><span class="pm6-chat-tododot"></span> Backfill existing photos</div>' +
+      '</div></div>';
+  }
+  function streamFooterHtml() {
+    /* richer floating footer; per-thread values land via renderFooter(ui) */
+    return '<div class="chat-stream-footer">' +
+      '<div class="chat-footer-status chatFooterSubagents"><span class="subagent-dot"></span><span>1 active subagent</span></div>' +
+      '<div class="files-touched-strip chatFooterFiles"></div>' +
+      '<div style="display:flex; gap:var(--sm); padding:var(--xs) var(--md); align-items:center;">' +
+      '<button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast(\'cmd.chat.revert → restoring files from last assistant turn...\')">Revert last edit</button>' +
+      '<button class="wizard-btn" style="font-size:10px; padding:2px 8px; opacity:0.7;" title="cmd.chat.rewind — Conversation history only. Does NOT restore files." onclick="toast(\'cmd.chat.rewind → rewinding conversation (files unchanged)\')">Rewind Chat</button>' +
+      '<span style="font-size:9px; color:var(--text-muted); margin-left:auto;">revert ≠ rewind</span></div>' +
+      '<div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>' +
+      '</div>';
+  }
+  function slashMenuHtml() {
+    return '<div class="slash-command-menu pm6-chat-slash" style="bottom: 100%; margin-bottom: 8px;">' +
+      '<div class="pm6-chat-slash-title">/web — general web abilities (also reachable by plain language, palette, or the agent itself)</div>' +
+      '<div class="slash-cmd-item active pm6-chat-slash-item" data-pm6-insert="/web " data-pm6-help="1">' +
+      '<span class="slash-cmd-name">/web</span><span class="slash-cmd-desc">Show web abilities — help only, runs nothing</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web search ">' +
+      '<span class="slash-cmd-name">/web search</span><span class="slash-cmd-desc">cmd.chat.web.search → "Searching Web:"</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web fetch ">' +
+      '<span class="slash-cmd-name">/web fetch</span><span class="slash-cmd-desc">cmd.chat.web.fetch → "Reading Site:" (host-scoped)</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web extract ">' +
+      '<span class="slash-cmd-name">/web extract</span><span class="slash-cmd-desc">cmd.chat.web.extract → "Extracting Site:" (host-scoped)</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web research ">' +
+      '<span class="slash-cmd-name">/web research</span><span class="slash-cmd-desc">cmd.chat.web.research → "Researching Web:" (visible run)</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web crawl ">' +
+      '<span class="slash-cmd-name">/web crawl</span><span class="slash-cmd-desc">cmd.chat.web.crawl → "Crawling Site:" (origin + caps)</span></div>' +
+      '<div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web map ">' +
+      '<span class="slash-cmd-name">/web map</span><span class="slash-cmd-desc">cmd.chat.web.map → "Mapping Site:" (root URL)</span></div>' +
+      '</div>';
+  }
+  function ptFlyoutHtml() {
+    return '<div class="pm6-chat-pt-flyout" title="Planning thoroughness — caps user-facing questions">' +
+      '<div class="pm6-chat-pt-flytitle">Planning thoroughness</div>' +
+      '<span class="pm6-chat-ptbtn" data-pt="Light">Light — at most 2 questions</span>' +
+      '<span class="pm6-chat-ptbtn active" data-pt="Balanced">Balanced — at most 4</span>' +
+      '<span class="pm6-chat-ptbtn" data-pt="Comprehensive">Comprehensive — at most 6</span></div>';
+  }
+  function modeItemHtml(v, label, title, hasPt, active) {
+    return '<div class="chat-dropdown-item' + (hasPt ? ' pm6-has-pt' : '') + (active ? ' active' : '') +
+      '" data-mode="' + v + '" title="' + title + '">' +
+      '<span class="pm6-mode-name">' + label + '</span>' + (hasPt ? ptFlyoutHtml() : '') + '</div>';
+  }
+  function modeDropdownHtml() {
+    return '<div style="position:relative;">' +
+      '<button class="chat-dropdown-btn pm6-chat-modebtn" title="Chat mode" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--radius-sm); padding:2px 8px; min-width:92px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size:11px; font-weight:600;">' +
+      '<span class="mode-label">Agent</span> ' + SVG.chev + '</button>' +
+      '<div class="chat-dropdown-popover pm6-chat-modepop" style="bottom:100%; top:auto; margin-bottom:4px; left:0;">' +
+      '<div class="chat-dropdown-list">' +
+      modeItemHtml('ask', 'Ask', 'Ask — read-only: answers and analysis, no mutations', false, false) +
+      modeItemHtml('agent', 'Agent', 'Agent — executes with your permission rules', false, true) +
+      modeItemHtml('debug', 'Debug', 'Debug — evidence-first investigation, 8-step loop from target binding to cleanup', false, false) +
+      modeItemHtml('plan', 'Plan', 'Plan — drafts a plan with a live TODO tracker · hover for thoroughness', true, false) +
+      modeItemHtml('deep-plan', 'Deep Plan', 'Deep Plan — rich plan document in the preview editor · hover for thoroughness', true, false) +
+      '</div></div></div>';
+  }
+  function selectorRowHtml() {
+    var btnStyle = 'background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--radius-sm); padding:3px 10px; min-width:120px; min-height:26px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;';
+    var group = 'padding: var(--sm) var(--md); font-weight: 700; color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;';
+    var groupNext = group + ' border-top: 1px solid var(--border-light); margin-top: var(--xs);';
+    return '<div class="pm6-chat-selrow" style="display:flex; gap:var(--md); align-items:center; font-size:10px; padding: 2px 0;">' +
+      '<div style="position:relative;">' +
+      '<button class="chat-dropdown-btn" title="Persona — applies from the next turn" style="' + btnStyle + '">' +
+      '<span class="persona-label">Product Manager</span> ' + SVG.chev + '</button>' +
+      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">' +
+      '<div class="chat-dropdown-list">' +
+      '<div class="chat-dropdown-item active">Product Manager</div>' +
+      '<div class="chat-dropdown-item">Architect Reviewer</div>' +
+      '<div class="chat-dropdown-item">Rust Engineer</div>' +
+      '</div></div></div>' +
+      '<div style="position:relative;">' +
+      '<button class="chat-dropdown-btn" title="Model — requested; the effective model per turn shows on each message" style="' + btnStyle + '">' +
+      '<span class="model-label">Sonnet 4.6</span> ' + SVG.chev + '</button>' +
+      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0; max-height: 320px; overflow-y: auto;">' +
+      '<div class="chat-dropdown-list">' +
+      '<div style="' + group + '">Claude</div>' +
+      '<div class="chat-dropdown-item">Opus 4.6</div>' +
+      '<div class="chat-dropdown-item active">Sonnet 4.6</div>' +
+      '<div class="chat-dropdown-item">Haiku 4.5</div>' +
+      '<div style="' + groupNext + '">Codex</div>' +
+      '<div class="chat-dropdown-item">GPT-5.4</div>' +
+      '<div class="chat-dropdown-item">GPT-5.3 Codex</div>' +
+      '<div class="chat-dropdown-item">GPT-5.4 Mini</div>' +
+      '<div style="' + groupNext + '">Gemini</div>' +
+      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
+      '<div class="chat-dropdown-item">Gemini 3 Pro</div>' +
+      '<div class="chat-dropdown-item">Gemini 3 Flash</div>' +
+      '<div style="' + groupNext + '">Copilot</div>' +
+      '<div class="chat-dropdown-item">GPT-5.4</div>' +
+      '<div class="chat-dropdown-item">Sonnet 4.6</div>' +
+      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
+      '<div style="' + groupNext + '">Cursor</div>' +
+      '<div class="chat-dropdown-item">GPT-5.4</div>' +
+      '<div class="chat-dropdown-item">Opus 4.6</div>' +
+      '<div class="chat-dropdown-item">Gemini 3 Pro</div>' +
+      '<div style="' + groupNext + '">OpenCode</div>' +
+      '<div class="chat-dropdown-item">Sonnet 4.6</div>' +
+      '<div class="chat-dropdown-item">GPT-5.4</div>' +
+      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
+      '</div></div></div>' +
+      '<div style="position:relative;">' +
+      '<button class="chat-dropdown-btn" title="Reasoning effort — shown because this model supports it" style="' + btnStyle + ' min-width:80px;">' +
+      '<span class="pm6-chat-effort-label">High</span> ' + SVG.chev + '</button>' +
+      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">' +
+      '<div class="chat-dropdown-list">' +
+      '<div style="padding: var(--sm) var(--md); font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">Select Effort</div>' +
+      '<div class="chat-dropdown-item active">High</div>' +
+      '<div class="chat-dropdown-item">Medium</div>' +
+      '<div class="chat-dropdown-item">Low</div>' +
+      '</div></div></div>' +
+      '</div>';
+  }
+  function inputAreaHtml() {
+    return '<div class="chat-input-area pm6-chat-inputarea" style="position:relative; padding: var(--xs) var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">' +
+      '<div class="pm6-chat-suggest pm6-hidden" role="group" aria-label="Suggested web runs"></div>' +
+      '<div class="pm6-chat-composer" style="position:relative; background:var(--surface-elevated); border: 1px solid var(--border); border-radius:var(--radius-md); padding:var(--xs); display:flex; flex-direction:column;">' +
+      slashMenuHtml() +
+      '<div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>' +
+      '<textarea class="pm6-chat-input" placeholder="Message the agent — @ mentions files, / shows commands (try /web)…" rows="2" style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>' +
+      '<div class="pm6-chat-queuefull pm6-hidden">Queue full — two messages are already waiting. Recovery: stop the current turn or let it finish.</div>' +
+      '<div class="pm6-chat-composer-foot" style="display:flex; justify-content:space-between; align-items:center; gap:var(--sm); padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light); flex-wrap:wrap;">' +
+      '<div style="display:flex; gap:var(--sm); align-items:center; flex-wrap:wrap;">' +
+      '<button title="Attach file or image" data-demo-action="demo.toast" data-demo-arg="Attachments ride along as context — images land in the plan review too." style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;">' + SVG.attach + '</button>' +
+      modeDropdownHtml() +
+      '<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
+      '<span class="chat-toggle-btn toggle-eli5" title="Explain Like I\'m 5" onclick="this.classList.toggle(\'active\')">ELI5</span>' +
+      '<span class="chat-toggle-btn toggle-yolo" title="Auto-approve eligible tools. Never bypasses FileSafe, permissions, policy, secrets or protected-branch guards." onclick="this.classList.toggle(\'active\')">YOLO</span>' +
+      '<span class="chat-toggle-btn toggle-crew" title="Multi-model Crew overlay with an inspectable crew board" onclick="this.classList.toggle(\'active\')">CREW</span>' +
+      '</div></div>' +
+      '<button class="pm6-chat-send" data-pm6-state="idle" title="Send (Enter) — becomes Stop while the agent works">' +
+      '<span class="pm6-chat-send-ico-send">' + SVG.sendIco + '</span>' +
+      '<span class="pm6-chat-send-ico-stop">' + SVG.stopIco + '</span>' +
+      '<span class="pm6-chat-send-label">Send</span></button>' +
+      '</div></div>' +
+      selectorRowHtml() +
+      '</div>';
+  }
+  function chatMainHtml() {
+    return '<div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">' +
+      '<div class="message-stream messageStream pm6-chat-stream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);"></div>' +
+      '<div class="jump-to-latest pm6-chat-jump" title="Jump to latest">' + SVG.jump + '</div>' +
+      planPanelHtml() +
+      '<div class="pendingInterventionBlock hidden"></div>' +
+      '<div class="pm6-chat-queue"></div>' +
+      streamFooterHtml() +
+      inputAreaHtml() +
+      '</div>';
+  }
+  function CHAT_TEMPLATE(m) {
+    return '<div class="float-content pm6-chat-root" style="flex:1; display:flex; flex-direction:column; overflow:hidden; height:100%; min-height:0;">' +
+      headerHtml(m) +
+      '<div class="chat-body">' + sidebarHtml() + chatMainHtml() + '</div>' +
+      '</div>';
+  }
+  function renderMounts() {
+    MOUNTS.forEach(function (m) {
+      var root = $(m.root);
+      if (!root) return;
+      root.innerHTML = CHAT_TEMPLATE(m);
+    });
+    hydrateIcons();
+  }
+
+  /* ---------- thread switching (single switcher, all mounts) ---------- */
   function deepPlanThreadHtml() {
     return '<div class="message system pm6-chat-sys"><span class="pm6-ico">' + ico('clipboard') + '</span> Deep Plan mode — the full plan document lives in the preview editor; this thread tracks it</div>' +
       userMsgHtml('Plan the image pipeline work before we touch code.') +
       '<div class="message assistant pm6-chat-msg"><div class="msg-body">' +
       '<div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>' +
-      'Draft is up. Plan state moved <b>draft → approved → executing</b>; the TODO tracker below the stream stays live while work runs. Step 4 is blocked on the storage decision — answer it in the wizard and the tracker unblocks itself.' +
+      'Draft is up. Plan state moved <b>draft → approved → executing</b>; the TODO tracker below the stream stays live while work runs. Step 4 is blocked on the storage decision — answer it in the plan review and the tracker unblocks itself.' +
       '<div class="pm6-chat-card-actions" style="margin-top:var(--sm);">' +
-      '<button class="pm6-chat-btn" data-demo-action="files.open" data-demo-arg="PRD.md">Open plan doc</button>' +
-      '<button class="pm6-chat-btn" data-demo-action="page.go" data-demo-arg="wizard">Jump to wizard question</button></div>' +
+      '<button class="pm6-chat-btn" data-demo-action="files.open" data-demo-arg="PRD.md">Open plan doc</button></div>' +
       msgControlsHtml() + '</div></div>';
+  }
+  function stampHtml(id) {
+    /* render stamp: lets the switcher detect (and skip caching) streams that a
+       legacy writer rewrote wholesale between switches */
+    return '<span class="pm6-chat-stamp" data-pm6-stamp="' + esc(id) + '" hidden></span>';
+  }
+  function streamStamped(st, id) {
+    var s = $('.pm6-chat-stamp', st);
+    return !!(s && s.getAttribute('data-pm6-stamp') === id);
+  }
+  function builderStream(ui) {
+    if (!ui || !ui.builder) return null;
+    if (ui.builder === 'deepPlan') return deepPlanThreadHtml();
+    if (ui.builder === 'terminalDemoTpl') {
+      if (TPL_CACHE.terminalDemoTpl == null) {
+        var tpl = document.getElementById('tplThreadTerminalDemo');
+        TPL_CACHE.terminalDemoTpl = tpl ? tpl.innerHTML : '';
+      }
+      return TPL_CACHE.terminalDemoTpl || null;
+    }
+    return null;
   }
   function setActiveThreadItem(threadId) {
     $all('.chat-thread-item').forEach(function (it) {
       it.classList.toggle('active', it.getAttribute('data-thread') === threadId);
     });
   }
-  function switchPm6Thread(threadId) {
+  function threadTitleText(ui, id) {
+    var row = $('.chat-thread-item[data-thread="' + id + '"] .thread-title');
+    if (row) return row.textContent.trim();
+    var tmp = document.createElement('div');
+    tmp.innerHTML = (ui && (ui.titleHtml || ui.title)) || 'New thread';
+    return tmp.textContent.trim();
+  }
+  function renderFooter(ui) {
+    var f = (ui && ui.footer) || {};
+    var agents = f.subagents || '';
+    var files = f.filesHtml || '';
+    var hasAgents = !!agents && agents.charAt(0) !== '0';
+    var hasFiles = !!files;
+    var hasProblems = !!f.problems;
+    $all('.chatFooterSubagents').forEach(function (el) {
+      if (!inMounts(el)) return;
+      if (hasAgents) {
+        el.innerHTML = '<span class="subagent-dot"></span><span>' + agents + '</span>';
+        el.style.display = 'flex';
+      } else { el.style.display = 'none'; }
+    });
+    $all('.chatFooterFiles').forEach(function (el) {
+      if (!inMounts(el)) return;
+      if (hasFiles) { el.innerHTML = files; el.style.display = 'flex'; }
+      else { el.innerHTML = ''; el.style.display = 'none'; }
+    });
+    $all('.chatFooterProblems').forEach(function (el) {
+      if (!inMounts(el)) return;
+      if (hasProblems) {
+        el.innerHTML = '<span class="pm-problems-footer" role="button" tabindex="0" onclick="if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab(\'problems\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();if(window.PM_TERMINAL_DEMO)PM_TERMINAL_DEMO.showBottomTab(\'problems\');}">3 problems</span> <span style="color:var(--text-muted)">· filtered to demo project</span>';
+        el.style.display = 'block';
+      } else { el.innerHTML = ''; el.style.display = 'none'; }
+    });
+    $all('.chat-stream-footer').forEach(function (el) {
+      if (!inMounts(el)) return;
+      el.style.display = (hasAgents || hasFiles || hasProblems) ? 'block' : 'none';
+    });
+  }
+  function renderSuggestions(ui) {
+    var chips = ui && ui.suggestions;
+    $all('.pm6-chat-suggest').forEach(function (host) {
+      if (!inMounts(host)) return;
+      if (!chips || !chips.length) { host.classList.add('pm6-hidden'); host.innerHTML = ''; return; }
+      host.classList.remove('pm6-hidden');
+      host.innerHTML = '<span class="pm6-chat-suggest-label"><span class="pm6-ico" data-pm6-ico="globe"></span> Try a live web run</span>' +
+        chips.map(function (c) {
+          return '<button class="pm6-chat-suggestchip" data-demo-action="' + esc(c.action) + '" data-demo-arg="' + esc(c.arg) + '" title="' + esc(c.title || '') + '">' + esc(c.label) + '</button>';
+        }).join('');
+    });
+    hydrateIcons();
+  }
+  function renderComposerChips(ui) {
+    var chips = (ui && ui.composerChips) || [];
+    $all('.composer-chips-container').forEach(function (host) {
+      if (!inMounts(host)) return;
+      host.innerHTML = chips.map(function (c) {
+        return '<div class="composer-chip file-ref"><span>' + esc(c) + '</span> <span class="close-chip" title="Remove">&times;</span></div>';
+      }).join('');
+    });
+  }
+  function switchChatThread(threadId) {
     var sts = streams();
     if (!sts.length) return;
+    var ui = THREADS()[threadId] || null;
+    /* 1. snapshot the outgoing thread (skip streams a legacy writer clobbered) */
     sts.forEach(function (st, i) {
-      (SAVED[CURRENT] = SAVED[CURRENT] || {})[i] = st.innerHTML;
+      if (streamStamped(st, CURRENT)) (SAVED[CURRENT] = SAVED[CURRENT] || {})[i] = st.innerHTML;
     });
+    /* 2. */
     CURRENT = threadId;
     var cached = SAVED[threadId];
+    /* 3. restore cache, else data blob / builder, else empty-thread notice */
     sts.forEach(function (st, i) {
-      if (cached && cached[i] != null) { st.innerHTML = cached[i]; return; }
-      if (threadId === 'th-gate') st.innerHTML = gateThreadHtml();
-      else if (threadId === 'th-deepplan') st.innerHTML = deepPlanThreadHtml();
-      else if (cached && cached[0] != null) st.innerHTML = cached[0];
-      else st.innerHTML = '<div class="message system pm6-chat-sys">New thread — say something to get going.</div>';
+      if (cached && cached[i] != null) { st.innerHTML = cached[i]; }
+      else {
+        var html = builderStream(ui);
+        if (html == null && ui && ui.streamHtml != null) html = ui.streamHtml;
+        if (html == null && cached && cached[0] != null) html = cached[0];
+        if (html == null) html = '<div class="message system pm6-chat-sys">New thread — say something to get going.</div>';
+        st.innerHTML = stampHtml(threadId) + html;
+      }
       st.scrollTop = st.scrollHeight;
     });
+    /* 4. */
     setActiveThreadItem(threadId);
-    $all('.pm6-chat-planpanel').forEach(function (p) {
-      p.classList.toggle('pm6-hidden', threadId !== 'th-deepplan' && !isPlanMode());
+    /* 5. header title + role color */
+    var titleText = threadTitleText(ui, threadId);
+    var color = ui && ui.role === 'doc' ? 'var(--accent-orange)' : 'var(--text-primary)';
+    $all('.chatHeaderTitle').forEach(function (el) {
+      if (!inMounts(el)) return;
+      el.textContent = titleText;
+      el.style.color = color;
     });
-    var item = $('.chat-thread-item[data-thread="' + threadId + '"] .thread-title');
-    if (item) {
-      $all('.chatHeaderTitle').forEach(function (el) { el.textContent = item.textContent.trim(); el.style.color = 'var(--text-primary)'; });
-    }
-    hydrateIcons();
+    /* 6. footer */
+    renderFooter(ui);
+    /* 7. mode dropdown (label + active item + flyout eligibility by data-mode) */
+    setModeUI((ui && ui.mode) || MODE);
+    /* 8. plan panel */
+    $all('.pm6-chat-planpanel').forEach(function (p) {
+      p.classList.toggle('pm6-hidden', !(threadId === 'th-deepplan' || isPlanMode()));
+    });
+    /* 9. suggestions + composer chips */
+    renderSuggestions(ui);
+    renderComposerChips(ui);
+    /* 10. worktree button (global stays in part 25) */
+    try { if (window.updateWorktreeButtonForThread) window.updateWorktreeButtonForThread(threadId); } catch (e) {}
+    /* 11. */
     var d = demo();
     if (d && d.state && d.state.chat) d.state.chat.activeThread = threadId;
+    hydrateIcons();
   }
 
   /* ---------- composer ---------- */
-  function isPlanMode() {
-    var m = $('.pm6-chat-modes .mode.active');
-    var v = m ? m.getAttribute('data-mode') : 'agent';
-    return v === 'plan' || v === 'deep-plan';
-  }
+  function isPlanMode() { return MODE === 'plan' || MODE === 'deep-plan'; }
   function composerOf(el) { return el.closest('.chat-input-area') || el.closest('.chat-main') || document; }
   function webHelpCardHtml() {
     return '<div class="pm6-chat-card pm6-chat-webhelp"><div class="pm6-chat-card-head"><span class="pm6-ico">' + ico('globe') + '</span>' +
@@ -437,6 +862,9 @@
       }
       var send = e.target && e.target.closest ? e.target.closest('.pm6-chat-send') : null;
       if (send) {
+        /* embedded gated sends carry data-demo-action — the engine's action
+           router owns those (blocked_by_gate reasons included) */
+        if (send.getAttribute('data-demo-action')) return;
         var d = demo();
         if (send.getAttribute('data-pm6-state') === 'busy') {
           var r = d && d.chat && d.chat.stop ? d.chat.stop(CURRENT) : null;
@@ -449,53 +877,80 @@
     });
   }
 
-  /* ---------- mode strip / PT / dropdowns ---------- */
+  /* ---------- mode dropdown + thoroughness flyout + generic dropdowns ---------- */
+  function modePlaceholder(v) {
+    return v === 'ask' ? 'Ask anything — read-only, nothing gets mutated…' :
+      v === 'debug' ? 'Describe the bug — Debug mode collects evidence before touching code…' :
+      (v === 'plan' || v === 'deep-plan') ? 'Describe the goal — a plan with a live TODO tracker comes back…' :
+      'Message the agent — @ mentions files, / shows commands (try /web)…';
+  }
+  function setModeUI(v) {
+    MODE = MODE_LABELS[v] ? v : 'agent';
+    $all('.mode-label').forEach(function (l) {
+      if (inMounts(l)) l.textContent = MODE_LABELS[MODE];
+    });
+    $all('.pm6-chat-modepop .chat-dropdown-item[data-mode]').forEach(function (it) {
+      it.classList.toggle('active', it.getAttribute('data-mode') === MODE);
+    });
+    $all('.pm6-chat-input').forEach(function (ta) { ta.placeholder = modePlaceholder(MODE); });
+  }
+  function setPtUI(pt) {
+    PT = pt;
+    $all('.pm6-chat-ptbtn').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-pt') === pt);
+    });
+    var d = demo();
+    if (d && d.state && d.state.chat) d.state.chat.thoroughness = pt;
+  }
   function wireModes() {
     document.addEventListener('click', function (e) {
-      var mode = e.target && e.target.closest ? e.target.closest('.pm6-chat-modes .mode') : null;
-      if (mode) {
-        var bar = mode.closest('.pm6-chat-modes');
-        $all('.mode', bar).forEach(function (m) { m.classList.remove('active'); });
-        mode.classList.add('active');
-        var v = mode.getAttribute('data-mode') || 'agent';
-        var label = mode.textContent.trim();
-        $all('.pm6-chat-badge-mode').forEach(function (b) { b.textContent = label; });
-        $all('.pm6-chat-planpanel').forEach(function (p) {
-          p.classList.toggle('pm6-hidden', !(v === 'plan' || v === 'deep-plan' || CURRENT === 'th-deepplan'));
-        });
-        $all('.pm6-chat-input').forEach(function (ta) {
-          ta.placeholder = v === 'ask' ? 'Ask anything — read-only, nothing gets mutated…' :
-            v === 'debug' ? 'Describe the bug — Debug mode collects evidence before touching code…' :
-            (v === 'plan' || v === 'deep-plan') ? 'Describe the goal — a plan with a live TODO tracker comes back…' :
-            'Message the agent — @ mentions files, / shows commands (try /web)…';
-        });
-        if (v === 'debug') say('Debug mode: evidence-first, 8-step loop from target binding to cleanup.');
+      if (!e.target || !e.target.closest) return;
+      /* thoroughness rows FIRST — they sit inside the Plan / Deep Plan items */
+      var pt = e.target.closest('.pm6-chat-ptbtn');
+      if (pt && inMounts(pt)) {
+        e.stopPropagation();
+        setPtUI(pt.getAttribute('data-pt') || 'Balanced');
+        var budget = { Light: 2, Balanced: 4, Comprehensive: 6 }[PT] || 4;
+        say(PT + ' thoroughness — at most ' + budget + ' user-facing questions.');
         return;
       }
-      var pt = e.target && e.target.closest ? e.target.closest('.pm6-chat-ptbtn') : null;
-      if (pt) {
-        $all('.pm6-chat-ptbtn', pt.closest('.pm6-chat-pt')).forEach(function (b) { b.classList.remove('active'); });
-        pt.classList.add('active');
-        var budget = { Light: 2, Balanced: 4, Comprehensive: 6 }[pt.getAttribute('data-pt')] || 4;
-        say(pt.getAttribute('data-pt') + ' thoroughness — at most ' + budget + ' user-facing questions.');
+      /* clicks elsewhere inside a flyout (title/padding) never switch mode */
+      if (e.target.closest('.pm6-chat-pt-flyout')) return;
+      var btn = e.target.closest('.chat-dropdown-btn');
+      if (btn && inMounts(btn)) {
+        var pop = btn.nextElementSibling;
+        var was = !!(pop && pop.classList.contains('active'));
+        $all('#chatPanel .chat-dropdown-popover, #floatingChat .chat-dropdown-popover').forEach(function (p) { p.classList.remove('active'); });
+        if (pop && !was) pop.classList.add('active');
         return;
       }
-      var dd = e.target && e.target.closest ? e.target.closest('.chat-dropdown-popover .chat-dropdown-item') : null;
-      if (dd && dd.closest('#chatPanel, #floatingChat')) {
-        var pop = dd.closest('.chat-dropdown-popover');
-        $all('.chat-dropdown-item', pop).forEach(function (i) { i.classList.remove('active'); });
+      var dd = e.target.closest('.chat-dropdown-popover .chat-dropdown-item');
+      if (dd && inMounts(dd)) {
+        var pop2 = dd.closest('.chat-dropdown-popover');
+        var mode = dd.getAttribute('data-mode');
+        if (mode) {
+          setModeUI(mode);
+          $all('.pm6-chat-planpanel').forEach(function (p) {
+            p.classList.toggle('pm6-hidden', !(isPlanMode() || CURRENT === 'th-deepplan'));
+          });
+          if (mode === 'debug') say('Debug mode: evidence-first, 8-step loop from target binding to cleanup.');
+          var T = THREADS();
+          if (T[CURRENT]) T[CURRENT].mode = mode;
+          if (pop2) pop2.classList.remove('active');
+          return;
+        }
+        $all('.chat-dropdown-item', pop2).forEach(function (i) { i.classList.remove('active'); });
         dd.classList.add('active');
-        var btn = pop.previousElementSibling;
-        var lab = btn ? $('span', btn) : null;
+        var b2 = pop2 ? pop2.previousElementSibling : null;
+        var lab = b2 ? $('span', b2) : null;
         if (lab) lab.textContent = dd.textContent.trim();
-        pop.classList.remove('active');
-        if (lab && lab.classList.contains('model-label')) {
-          $all('.pm6-chat-badge-model').forEach(function (b) { b.textContent = dd.textContent.trim(); });
-        }
-        if (lab && lab.classList.contains('persona-label')) {
-          $all('.pm6-chat-badge-persona').forEach(function (b) { b.textContent = dd.textContent.trim(); });
-        }
+        if (pop2) pop2.classList.remove('active');
         say('Applied from the next turn — requested vs effective is recorded on each message.');
+        return;
+      }
+      /* outside click closes any open chat dropdown popover */
+      if (!e.target.closest('.chat-dropdown-popover')) {
+        $all('#chatPanel .chat-dropdown-popover.active, #floatingChat .chat-dropdown-popover.active').forEach(function (p) { p.classList.remove('active'); });
       }
     });
   }
@@ -536,9 +991,10 @@
     });
   }
 
-  /* ---------- engine event wiring ---------- */
+  /* ---------- engine event rendering ---------- */
   function setBusy(busy) {
     $all('.pm6-chat-send').forEach(function (b) {
+      if (b.getAttribute('data-demo-action')) return; /* embedded gated send stays as-is */
       b.setAttribute('data-pm6-state', busy ? 'busy' : 'idle');
       var lab = $('.pm6-chat-send-label', b);
       if (lab) lab.textContent = busy ? 'Stop' : 'Send';
@@ -558,9 +1014,6 @@
     $all('.chat-thread-item[data-thread="' + threadId + '"] .thread-status-col').forEach(function (col) {
       col.innerHTML = '<div class="thread-status-unread"></div>';
     });
-  }
-  function revealGateThread() {
-    $all('.pm6-chat-thread-gate').forEach(function (it) { it.classList.remove('pm6-hidden'); });
   }
   function updateResearchCard(op) {
     $all('[data-pm6-opid="op-web-r1"]').forEach(function (card) {
@@ -653,20 +1106,118 @@
       }
       var jump = e.target && e.target.closest ? e.target.closest('.pm6-chat-jump') : null;
       if (jump) {
-        var st = jump.closest('.messageStream');
+        var st = jump.closest('.messageStream') || $('.messageStream', jump.closest('.chat-main') || document);
         if (st) st.scrollTop = st.scrollHeight;
       }
     });
   }
 
-  /* ---------- thread clicks (pm6-owned ids only; part-25 handles its mocks) ---------- */
+  /* ---------- chrome behavior: context module, lens, close, chips, rename ---------- */
+  function selectLens(item, mode) {
+    var wrap = item.closest('.context-lens-wrap');
+    if (!wrap) return;
+    var btn = $('.context-lens-btn', wrap);
+    var popover = $('.context-lens-popover', wrap);
+    if (popover) $all('.cl-mode-item', popover).forEach(function (m) { m.classList.remove('cl-selected'); });
+    item.classList.add('cl-selected');
+    if (btn) btn.className = 'context-lens-btn cl-active cl-mode-' + mode;
+    if (popover) popover.classList.remove('active');
+    say('Context Lens → ' + mode.charAt(0).toUpperCase() + mode.slice(1) + ' mode active');
+  }
+  function clearLens(offBtn) {
+    var wrap = offBtn.closest('.context-lens-wrap');
+    if (!wrap) return;
+    var btn = $('.context-lens-btn', wrap);
+    var popover = $('.context-lens-popover', wrap);
+    if (popover) $all('.cl-mode-item', popover).forEach(function (m) { m.classList.remove('cl-selected'); });
+    if (btn) btn.className = 'context-lens-btn';
+    if (popover) popover.classList.remove('active');
+    say('Context Lens turned off');
+  }
+  function wireChrome() {
+    document.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest) return;
+      /* composer chips: delegated removal */
+      var chipX = e.target.closest('.close-chip');
+      if (chipX && inMounts(chipX)) {
+        var chip = chipX.closest('.composer-chip');
+        if (chip) chip.remove();
+        return;
+      }
+      /* footer overflow: reveal hidden ft-file rows */
+      var more = e.target.closest('.ft-more');
+      if (more && inMounts(more)) {
+        more.style.display = 'none';
+        $all('.ft-overflow', more.parentElement).forEach(function (f) { f.style.display = ''; });
+        return;
+      }
+      /* context-usage module */
+      var compact = e.target.closest('.chm-compact-btn');
+      if (compact && inMounts(compact)) {
+        compact.textContent = 'Compacting…';
+        compact.style.opacity = '0.6';
+        say('Compacting thread context — older turns fold into a summary.');
+        return;
+      }
+      var details = e.target.closest('.chm-details-link');
+      if (details && inMounts(details)) {
+        if (window.PM6_CONTEXT_TAB) window.PM6_CONTEXT_TAB.open(CURRENT);
+        return;
+      }
+      if (e.target.closest('.context-hover-module')) return; /* module body clicks never toggle the pin */
+      var ctx = e.target.closest('.context-usage');
+      if (ctx && inMounts(ctx)) { ctx.classList.toggle('pinned'); return; }
+      /* context lens */
+      var lensBtn = e.target.closest('.context-lens-btn');
+      if (lensBtn && inMounts(lensBtn)) {
+        var popover = lensBtn.nextElementSibling;
+        var isActive = !!(popover && popover.classList.contains('active'));
+        $all('.context-lens-popover').forEach(function (p) { p.classList.remove('active'); });
+        if (popover && !isActive) popover.classList.add('active');
+        return;
+      }
+      var clMode = e.target.closest('.cl-mode-item');
+      if (clMode && inMounts(clMode)) { selectLens(clMode, clMode.getAttribute('data-mode') || 'mute'); return; }
+      var clOff = e.target.closest('.cl-off-btn');
+      if (clOff && inMounts(clOff)) { clearLens(clOff); return; }
+      if (!e.target.closest('.context-lens-wrap')) {
+        $all('#chatPanel .context-lens-popover.active, #floatingChat .context-lens-popover.active').forEach(function (p) { p.classList.remove('active'); });
+      }
+      /* close buttons (both mounts) */
+      var closeBtn = e.target.closest('.closeChatBtn');
+      if (closeBtn) {
+        if (closeBtn.closest('#floatingChat')) {
+          var float0 = document.getElementById('floatingChat');
+          if (float0) float0.style.display = 'none';
+        } else {
+          var panel = document.getElementById('chatPanel');
+          var resizer = document.getElementById('chatResizer');
+          if (panel) panel.classList.add('hidden');
+          if (resizer) resizer.classList.add('hidden');
+          var icon = document.querySelector('.activity-bar .icon[title="Chat"]');
+          if (icon) icon.classList.remove('active');
+        }
+        return;
+      }
+    });
+    /* header rename: contenteditable title commits on blur (focusout bubbles) */
+    document.addEventListener('focusout', function (e) {
+      var t = e.target;
+      if (t && t.classList && t.classList.contains('chatHeaderTitle') && inMounts(t)) {
+        say('Thread renamed — title saved.');
+      }
+    });
+  }
+
+  /* ---------- thread clicks (every .chat-thread-item; idempotent re-render) ---------- */
   function wireThreads() {
     document.addEventListener('click', function (e) {
       var it = e.target && e.target.closest ? e.target.closest('.chat-thread-item[data-thread]') : null;
       if (!it) return;
       if (e.target.closest && e.target.closest('.thread-action-btn')) return;
+      if (!inMounts(it)) return;
       var id = it.getAttribute('data-thread');
-      if (id && id.indexOf('th-') === 0) switchPm6Thread(id);
+      if (id) switchChatThread(id);
     });
   }
 
@@ -767,6 +1318,108 @@
     });
   }
 
+  /* ---------- context details as an editor tab (files.open-shaped facade) ---------- */
+  function countStreamMessages() {
+    var st = streams()[0];
+    return st ? $all('.message', st).length : 0;
+  }
+  function currentLabel(sel, fallback) {
+    var el = $('#chatPanel ' + sel) || $('#floatingChat ' + sel);
+    return el ? el.textContent.trim() : fallback;
+  }
+  window.PM6_CONTEXT_TAB = {
+    open: function (threadId) {
+      var id = threadId || CURRENT;
+      var ui = THREADS()[id] || null;
+      var pane = document.getElementById('contextDetailPane');
+      if (!pane) { say('Context details pane is not on this page.'); return { ok: false }; }
+      var title = threadTitleText(ui, id);
+      /* the title span + [data-cdp] value hooks land with a later stage of
+         this workstream — fill whatever is already present, skip the rest */
+      var tt = $('.cdp-tab-title', pane);
+      if (tt) tt.textContent = 'Context: ' + title;
+      var d = demo();
+      var c = d && d.state && d.state.chat && d.state.chat.context;
+      var fills = {
+        thread: title,
+        messages: String((ui && ui.context && ui.context.messages) || countStreamMessages()),
+        provider: 'Claude',
+        model: currentLabel('.model-label', 'Sonnet 4.6'),
+        mode: MODE_LABELS[MODE] || 'Agent',
+        persona: currentLabel('.persona-label', 'Product Manager'),
+        tokens: c && c.max ? c.used.toLocaleString() + ' / ' + c.max.toLocaleString() : '42,180 / 128,000'
+      };
+      Object.keys(fills).forEach(function (k) {
+        var el = pane.querySelector('[data-cdp="' + k + '"]');
+        if (el) el.textContent = fills[k];
+      });
+      /* show contract (same as the legacy detail-pane opener) */
+      pane.style.display = 'flex';
+      var edView = document.getElementById('editorView');
+      if (edView) edView.style.display = 'flex';
+      var splitResizer = document.getElementById('editorSplitResizer');
+      if (splitResizer) splitResizer.style.display = 'block';
+      return { ok: true };
+    },
+    close: function () {
+      var pane = document.getElementById('contextDetailPane');
+      if (pane) pane.style.display = 'none';
+      return { ok: true };
+    }
+  };
+
+  /* ---------- wizard-embedded adapter (all chrome flags off) ---------- */
+  window.PM6_CHAT_UI = {
+    bubbleHtml: function (en) {
+      if (!en) return '';
+      if (en.role === 'note') {
+        return '<div class="message system pm6-chat-sys pm6-chat-embed-note"><span class="pm6-wiz-glyph">↳</span> ' + esc(en.text) + '</div>';
+      }
+      if (en.role === 'user') {
+        return '<div class="message user pm6-chat-msg pm6-chat-embed-msg"><div class="msg-body">' + esc(en.text) + '</div></div>';
+      }
+      return '<div class="message assistant pm6-chat-msg pm6-chat-embed-msg"><span class="pm6-chat-embed-av">' + ico('wand') + '</span><div class="msg-body">' + esc(en.text) + '</div></div>';
+    },
+    typingHtml: function () {
+      return '<div class="message assistant pm6-chat-msg pm6-chat-embed-msg"><span class="pm6-chat-embed-av">' + ico('wand') + '</span>' +
+        '<span class="pm6-wiz-typing pm6-chat-embed-typing"><span></span><span></span><span></span></span></div>';
+    },
+    chipsHtml: function (chips, action, argPrefix) {
+      return (chips || []).map(function (c) {
+        return '<button type="button" class="pm6-wiz-opt pm6-chat-quickchip" data-demo-action="' + esc(action) +
+          '" data-demo-arg="' + esc((argPrefix || '') + '|' + c) + '">' + esc(c) + '</button>';
+      }).join('');
+    },
+    composerHtml: function (opts) {
+      var o = opts || {};
+      return '<div class="pm6-wiz-composer pm6-chat-composer-embed">' +
+        '<textarea rows="1" class="pm6-chat-embed-input" data-pm6-wiz-input="' + esc(o.base || '') + '" placeholder="' + esc(o.placeholder || '') + '"></textarea>' +
+        '<button type="button" class="pm6-chat-send pm6-chat-send-embed" aria-disabled="true" data-demo-reason="blocked_by_gate"' +
+        ' data-demo-action="' + esc(o.action || '') + '" data-demo-arg="' + esc(o.base || '') + '|">Send</button></div>';
+    },
+    /* focus-preserving writer: while the user is typing in the embedded
+       composer, only the log + quick chips re-render — the composer stays */
+    writeEmbedded: function (host, key, bubbles, chips, composer) {
+      if (!host) return;
+      var ta = $('.pm6-chat-embed-input', host);
+      var keep = !!(composer && ta && document.activeElement === ta &&
+        host.getAttribute('data-pm6-wiz-key') === key);
+      if (keep) {
+        var b = $('[data-pm6-wiz-bubbles]', host);
+        var c = $('[data-pm6-wiz-chips]', host);
+        if (b) b.innerHTML = bubbles || '';
+        if (c) c.innerHTML = chips || '';
+      } else {
+        host.setAttribute('data-pm6-wiz-key', key);
+        host.innerHTML = '<div class="pm6-wiz-chat pm6-chat-embed">' +
+          '<div class="pm6-wiz-chat-log pm6-chat-embed-log" data-pm6-wiz-bubbles>' + (bubbles || '') + '</div>' +
+          '<div class="pm6-wiz-quickchips pm6-chat-embed-chips" data-pm6-wiz-chips>' + (chips || '') + '</div>' +
+          (composer || '') + '</div>';
+      }
+      hydrateIcons(host);
+    }
+  };
+
   /* ---------- engine subscription ---------- */
   function subscribe() {
     var d = demo();
@@ -774,13 +1427,6 @@
     d.on('chat.stream', function (p) {
       if (!p) return;
       try {
-        if (p.threadId === 'th-gate' && p.type === 'notice') {
-          revealGateThread();
-          markUnread('th-gate');
-          delete SAVED['th-gate'];
-          if (CURRENT === 'th-gate') switchPm6Thread('th-gate');
-          return;
-        }
         if (p.threadId && p.threadId !== CURRENT) {
           if (p.type === 'user' || p.type === 'start') markUnread(p.threadId);
           return;
@@ -812,10 +1458,7 @@
       if (!p || !p.card) return;
       try {
         var c = p.card;
-        if (p.threadId && p.threadId !== CURRENT) {
-          if (p.threadId === 'th-gate' && c.type === 'hitl') { revealGateThread(); markUnread('th-gate'); }
-          return;
-        }
+        if (p.threadId && p.threadId !== CURRENT) return;
         if (c.type === 'operation') {
           var existing = $all('[data-pm6-opid="' + c.id + '"]');
           if (existing.length) {
@@ -836,8 +1479,6 @@
           if (c.op && c.op.runner) return; /* live runner ops render through the web.run subscription */
           if (c.op && c.op.id === 'op-web-r1') updateResearchCard(c.op);
           else if (c.op && !$all('[data-pm6-opid="' + c.op.id + '"]').length) appendToStreams(webOpCardHtml(c.op));
-        } else if (c.type === 'hitl') {
-          revealGateThread();
         }
       } catch (e) {}
     });
@@ -849,19 +1490,26 @@
     });
     d.on('chat.queue', function (p) { if (p) renderQueue(p.queue || []); });
     d.on('chat.thread', function (p) {
-      if (p && p.thread && p.thread.id === 'th-gate') revealGateThread();
-    });
-    d.on('run.gate', function (g) {
-      if (!g) return;
-      if (g.state === 'attention_required') { revealGateThread(); markUnread('th-gate'); }
-      if (g.state === 'approved') {
-        $all('.pm6-chat-gatecard .pm6-chat-btn-primary').forEach(function (b) {
-          b.setAttribute('disabled', 'disabled');
-          b.textContent = 'Approved ✓';
+      /* New Thread (chat.new_thread) and any engine-side ensureThread land
+         here: add a roster row to every mount, then focus the thread */
+      if (!p || p.action !== 'new' || !p.thread || !p.thread.id) return;
+      try {
+        var t = p.thread;
+        if (t.id === 'th-gate') return; /* gates surface on Dashboard/Orchestrator, not as chat threads */
+        var T = THREADS();
+        if (!T[t.id]) {
+          T[t.id] = { id: t.id, title: esc(t.title || 'New thread'), role: t.kind || 'assistant', timestamp: 'now',
+            status: 'unread', summaryHtml: 'Fresh thread — no turns yet', mode: 'agent',
+            footer: null, suggestions: null, composerChips: null, hoverActions: [] };
+        }
+        if ($('.chat-thread-item[data-thread="' + t.id + '"]')) return; /* roster row already exists */
+        $all('#chatPanel .chatThreadList, #floatingChat .chatThreadList').forEach(function (list) {
+          var wrap = document.createElement('div');
+          wrap.innerHTML = threadRowHtml(T[t.id], false);
+          while (wrap.firstChild) list.appendChild(wrap.firstChild);
         });
-        $all('.pm6-chat-thread-gate .pm6-chat-gate-dot').forEach(function (dot) { dot.style.background = 'var(--accent-lime)'; dot.style.animation = 'none'; });
-        delete SAVED['th-gate'];
-      }
+        switchChatThread(t.id);
+      } catch (e) {}
     });
     d.on('web.op', function (p) { if (p && p.op && p.op.id === 'op-web-r1') updateResearchCard(p.op); });
     d.on('web.run', function (p) {
@@ -887,25 +1535,43 @@
     try {
       if (d.actions && d.actions.register) {
         d.actions.register('chat.web.help', function () { appendToStreams(webHelpCardHtml()); return { ok: true }; });
+        d.actions.register('chat.context.open', function (ctx) {
+          var arg = null;
+          try { arg = ctx && ctx.getAttribute ? ctx.getAttribute('data-demo-arg') : (ctx && ctx.arg) || null; } catch (e) {}
+          return window.PM6_CONTEXT_TAB.open(arg || CURRENT);
+        });
       }
     } catch (e) {}
   }
 
   /* ---------- boot ---------- */
+  function mergeEngineThreads() {
+    /* attach display data to engine records; seed records + order entries
+       for roster ids the engine has not created yet (no emit — boot only) */
+    var d = demo();
+    if (!d || !d.state || !d.state.chat) return;
+    var T = THREADS();
+    Object.keys(T).forEach(function (id) {
+      if (!d.state.chat.threads[id]) {
+        d.state.chat.threads[id] = { id: id, title: threadTitleText(T[id], id), kind: T[id].role || 'assistant', messages: [] };
+        if (d.state.chat.order && d.state.chat.order.indexOf(id) === -1) d.state.chat.order.push(id);
+      }
+      d.state.chat.threads[id].ui = T[id];
+    });
+  }
   function boot() {
-    try { hydrateIcons(); } catch (e) {}
-    try {
-      /* capture the authored th-main baseline per stream */
-      streams().forEach(function (st, i) { (SAVED['th-main'] = SAVED['th-main'] || {})[i] = st.innerHTML; });
-    } catch (e) {}
+    try { renderMounts(); } catch (e) {}
+    try { mergeEngineThreads(); } catch (e) {}
     wireComposers();
     wireModes();
     wireQueue();
     wireThreads();
     wireCardControls();
+    wireChrome();
     wireLayoutCycle();
     wireFloatDrag();
     subscribe();
+    try { switchChatThread('th-main'); } catch (e) {}
     var d = demo();
     if (d && d.state && d.state.chat) setContext(d.state.chat.context);
   }

@@ -1,0 +1,2080 @@
+{
+  "assignment_id": "A005M-000113-INTEGRATED-MACRO-673E34012C23-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "ownership",
+        "propagation",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- The closed runtime-mode enum is `ask|plan|regular|yolo`; the closed workflow-overlay enum is `none|plan|deep_plan|debug|interview|brainstorm|crew`.",
+          "line_end": 46,
+          "line_start": 46,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- children inherit the parent runtime ceiling and may narrow it only.",
+          "line_end": 49,
+          "line_start": 49,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Builders and consumers have one deterministic authority vocabulary instead of inventing extra modes.",
+      "item_id": "A005M-000113-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Run_Modes owns a closed four-value runtime enum, keeps workflow overlays separate, forbids overlay-based authority widening, and requires children to inherit or narrow the parent ceiling.",
+      "title": "Closed runtime-mode and overlay canon is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "authority",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- HTE is a **host-owned action loop**: the provider may request the next hosted action or return a final answer, but Puppet Master executes every real tool call itself under the permission + FileSafe stack and feeds the structured result back into the next provider turn.",
+          "line_end": 89,
+          "line_start": 89,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This is a strong authority boundary and a directly testable provider-adapter invariant.",
+      "item_id": "A005M-000113-I002",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "HTE separates provider reasoning from action authority: PM executes every tool call through permissions and FileSafe, and provider-originated tool use is terminally forbidden.",
+      "title": "HTE keeps every real action host-owned"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "operations",
+        "security_privacy",
+        "authority_boundaries",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- The canonical workspace MUST NOT be directly writable during DAE. Host-side reconciliation applies the verified jail diff back only after scans and FileSafe checks succeed.",
+          "line_end": 111,
+          "line_start": 111,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- The **actual jail diff** is authoritative for mutation accounting; provider-reported tool/file activity is advisory correlation data only.",
+          "line_end": 113,
+          "line_start": 113,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The core delegated-execution containment model is explicit and not left to adapter discretion.",
+      "item_id": "A005M-000113-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "DAE must execute in a PM-managed jail, treat actual jail diff as mutation truth, keep the canonical workspace non-writable, and reconcile only after scans and FileSafe checks.",
+      "title": "DAE isolates canonical workspace writes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "security_privacy",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Workspace isolation is per-subagent: HTE child/subagent turns inherit the parent write-scope because PM executes tools, while DAE child/subagent turns run in their own jail and reconcile back only after scans and FileSafe checks succeed.",
+          "line_end": 115,
+          "line_start": 115,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_transaction_contract",
+      "impact": "Parallel children can pass isolated scans yet race or overwrite one another during host reconciliation.",
+      "item_id": "A005M-000113-I004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Each DAE child receives its own jail, but this owner text does not define reconciliation ordering, conflict detection, atomic application, stale-base rejection, or rollback when sibling diffs touch the same canonical path.",
+      "title": "Concurrent child-jail reconciliation has no merge transaction"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "states_transitions",
+        "invalid_states_transitions",
+        "security_privacy",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps: - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned. - `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, `/event` recovery, `attention_required` persistence, blocked semantics, or mid-run account-switch invalidation of committed strategy. - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering. - `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placement.",
+          "line_end": 176,
+          "line_start": 176,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps: - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned. - `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, `/event` recovery, `attention_required` persistence, blocked semantics, or mid-run account-switch invalidation of committed strategy. - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering. - `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placement.",
+          "line_end": 176,
+          "line_start": 176,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "explicit_governance_gap",
+      "impact": "A run can select DAE under one identity and continue under another identity whose provider/account policy does not authorize DAE.",
+      "item_id": "A005M-000113-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The selection algorithm is deterministic only for its declared snapshot; the document itself records that per-account DAE eligibility and child account re-resolution ordering are missing, and that mid-run account switches can invalidate committed strategy.",
+      "title": "Per-account DAE eligibility and account-switch ordering are explicitly unresolved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_performance",
+        "scale_limits",
+        "concurrency_races",
+        "operations",
+        "observability_support",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Queueing at concurrency caps is deterministic; PM MUST NOT silently discard or auto-widen queued work.",
+          "line_end": 230,
+          "line_start": 230,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_queue_contract",
+      "impact": "A conforming implementation can still starve work, reorder queued children nondeterministically, or duplicate admission after recovery.",
+      "item_id": "A005M-000113-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The caps and queue-on-full behavior are exact, but no fairness key, priority policy, cancellation semantics, durable queue identity, or crash/pause replay ordering is defined.",
+      "title": "Concurrency queue ordering and recovery are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "scale_limits",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.",
+          "line_end": 229,
+          "line_start": 229,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Budget propagation has a clear monotonic ceiling.",
+      "item_id": "A005M-000113-I007",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Budgets are frozen for a run, survive pause/resume, distinguish nesting from tool rounds, and allow per-run or child narrowing without widening the policy ceiling.",
+      "title": "Run-envelope budget inheritance is bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "compatibility_migration",
+        "failures_recovery",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Run outcome naming follows a two-family reason-code contract: `kill.*` names pre-dispatch or `/active-kill` supervisor triggers, while `done.*` names terminal outcomes recorded after shutdown, usage, or recovery finalization.",
+          "line_end": 240,
+          "line_start": 240,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- `kill.budget_exceeded` remains pre-dispatch only. Post-response budget-overrun cases use terminal `done.budget_exceeded` after usage has been durably recorded and MUST NOT be folded back into the pre-dispatch row above.",
+          "line_end": 264,
+          "line_start": 264,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Persisted event consumers can avoid collapsing materially different budget and timeout phases.",
+      "item_id": "A005M-000113-I008",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The consumer contract distinguishes kill.* supervisor triggers from done.* terminal reasons, retires kill.task_timeout as a consumer alias, and keeps pre-request and post-response budget exhaustion distinct.",
+      "title": "Pre-dispatch kill reasons and terminal outcomes are deliberately separated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "operations",
+        "failures_recovery",
+        "partial_failure",
+        "observability_support",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`SIGTERM` and `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped to the `/process-group` rather than individual PIDs.",
+          "line_end": 281,
+          "line_start": 281,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- PM MUST NOT silently drop an incomplete run or rewrite it as `done.failed` without the crash marker",
+          "line_end": 304,
+          "line_start": 304,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Subprocess leaks and silent loss of unfinished runs are explicit non-gaps.",
+      "item_id": "A005M-000113-I009",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The plan owns a single signal fan-out, isolated process groups, platform-specific grace periods, idempotent shutdown, durable event flushing, and crash-marked startup recovery.",
+      "title": "Process-group shutdown and crash recovery are strongly specified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "partial_failure",
+        "invalid_states_transitions",
+        "ambiguity_unknowns",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- if durability flush fails, PM emits a structured diagnostic and the terminal outcome escalates to `done.crashed` rather than claiming a clean shutdown",
+          "line_end": 296,
+          "line_start": 296,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- user-driven or parent-driven cancellation produces `done.cancelled`, not `done.failed`, even if force termination is needed after the grace window",
+          "line_end": 297,
+          "line_start": 297,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_precedence_rule",
+      "impact": "Two implementations can persist different coarse outcomes for the same cancelled run whose final flush fails.",
+      "item_id": "A005M-000113-I010",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Durability-flush failure escalates to done.crashed, while user or parent cancellation remains done.cancelled even after forced termination; the simultaneous case has no stated precedence or multi-reason encoding.",
+      "title": "Shutdown outcome precedence is not total"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_performance",
+        "operations",
+        "observability_support",
+        "acceptance_oracles",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- sustained growth beyond configured restart thresholds emits `diagnostic(category=\"resource_pressure\")` or equivalent structured telemetry",
+          "line_end": 319,
+          "line_start": 319,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_threshold_oracle",
+      "impact": "The requirement cannot be implemented or falsified consistently, and oscillating restarts can amplify outages.",
+      "item_id": "A005M-000113-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Memory-pressure monitoring and controlled restart are mandatory, but threshold units, sampling window, sustained-growth definition, hysteresis, restart budget, and unhealthy-helper routing are not specified here.",
+      "title": "Helper health monitoring has no measurable restart oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "failures_recovery",
+        "destructive_actions",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures",
+          "line_end": 344,
+          "line_start": 344,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count",
+          "line_end": 356,
+          "line_start": 356,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Policy denials and UI operations cannot accidentally consume runtime kill budgets.",
+      "item_id": "A005M-000113-I012",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The plan precisely defines executed-shell fingerprints, reset behavior, normalized file identity, qualifying mutations, sliding-window timing, and exclusions for denied, blocked, UI-only, no-diff, rollback, and PM-owned operations.",
+      "title": "Shell-failure and write-thrash counting exclude false positives"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "When a DAE run completes (any terminal outcome), the following scans MUST execute before the outcome is finalized:",
+          "line_end": 361,
+          "line_start": 361,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "Scan failures escalate the outcome to `done.failed` with reason `kill.post_scan_failure`.",
+          "line_end": 366,
+          "line_start": 366,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_scan_reconcile_commit_protocol",
+      "impact": "The workspace can change between scan and apply, or a crash can persist a terminal outcome without a provably matching scanned diff.",
+      "item_id": "A005M-000113-I013",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "All three scans are required before finalization, but their ordering, timeout/retry policy, snapshot identity, mutation freeze, and atomic relationship to reconciliation and terminal-event persistence are not defined.",
+      "title": "Mandatory DAE scans lack a finalization transaction boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "inputs_outputs",
+        "consumers",
+        "observability_support",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Every run terminates with exactly one canonical coarse outcome value.",
+          "line_end": 375,
+          "line_start": 375,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- normalized `done.payload.status` remains a coarse transport-facing status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above",
+          "line_end": 393,
+          "line_start": 393,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers have a stable terminal-state model and identity rule.",
+      "item_id": "A005M-000113-I014",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "Every run receives exactly one of seven coarse outcomes; transport status remains separate, explicit cancellation is not generic failure, and restart/replacement mints new identity.",
+      "title": "Coarse outcome taxonomy is closed and persisted"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "privacy_data_lifecycle",
+        "security_privacy",
+        "untrusted_inputs",
+        "recovery_rollback",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- DAE uses an **ephemeral Puppet Master-managed jail** (prefer a dedicated worktree; otherwise an equivalent isolated workspace) and the provider sees only jail paths.",
+          "line_end": 110,
+          "line_start": 110,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps: - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned. - `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, `/event` recovery, `attention_required` persistence, blocked semantics, or mid-run account-switch invalidation of committed strategy. - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering. - `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placement.",
+          "line_end": 176,
+          "line_start": 176,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_data_lifecycle_contract",
+      "impact": "Secrets or private data can persist in jail storage, diffs, logs, or crash artifacts beyond the run without a canonical deletion or audit rule.",
+      "item_id": "A005M-000113-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "statement": "The jail is called ephemeral and security scans are mandatory, but retention, secure deletion, crash remnants, provider transcript redaction, diagnostic redaction, and recovery ownership for sensitive jailed content are not specified; the gap register separately admits jail-durability uncertainty.",
+      "title": "DAE jail and sensitive-data lifecycle is unresolved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "propagation",
+        "contracts",
+        "security_privacy",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`read_only` excludes mutation-authority metadata (write scopes, DAE reconciliation metadata, and execution affordances). `plan_output_scaffold_v1` adds a deterministic plan/todo scaffold only. The overlay is applied during prompt/context compilation before attachments and the Injected Context breakdown are emitted. Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into `full_execution`.",
+          "line_end": 434,
+          "line_start": 434,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "`read_only` excludes mutation-authority metadata (write scopes, DAE reconciliation metadata, and execution affordances). `plan_output_scaffold_v1` adds a deterministic plan/todo scaffold only. The overlay is applied during prompt/context compilation before attachments and the Injected Context breakdown are emitted. Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into `full_execution`.",
+          "line_end": 434,
+          "line_start": 434,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prompt compilation cannot silently grant an execution surface to a read-only lineage.",
+      "item_id": "A005M-000113-I016",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "Ask and plan exclude mutation authority metadata, regular/yolo receive full execution context, and child, subagent, and rotated runs may only narrow the effective overlay.",
+      "title": "Context overlays preserve read-only authority across descendants"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "gui_truth",
+        "offline_network_loss",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Ask, Plan, and Deep Plan may self-initiate read-only web, Site Reader, and browser-evidence actions when current, external, URL, visual, dynamic-page, docs/issues/PR, compare, research, or deep-research evidence matters. Strict no-network, admin policy, private-host, robots, or mode-specific denial still blocks execution, but the block is rendered as a visible denied/unavailable card with recovery actions rather than silently hiding the capability.",
+          "line_end": 482,
+          "line_start": 482,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Read-only modes retain useful evidence gathering without gaining mutation authority.",
+      "item_id": "A005M-000113-I017",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "Ask and plan may use read-only repository, LSP, task, browser, and web evidence capabilities through normal permissions; denial remains visible with recovery instead of silently hiding the feature.",
+      "title": "Read-only research remains visible and permission-gated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "behavior",
+        "failures_recovery",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "These criteria are testable assertions that MUST hold for any conforming implementation.",
+          "line_end": 502,
+          "line_start": 502,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "**AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.",
+          "line_end": 567,
+          "line_start": 567,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The prose has a substantial executable-oracle basis even though later PlanUnit wrappers do not carry those oracles directly.",
+      "item_id": "A005M-000113-I018",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "AC-01 through AC-15 provide concrete assertions for HTE kill behavior, DAE scans, deterministic selection, read-only mutation blocking, FileSafe, budgets, outcomes, DAE policy fallback, kill counters, overlay inheritance, and terminal identity.",
+      "title": "Behavioral acceptance suite covers core authority and outcome rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "invalid_states_transitions",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Plan/Deep Plan mode: executes plans in worktree context",
+          "line_end": 646,
+          "line_start": 646,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "{plan_unit_id: \"RM-006\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"ask and plan are read-only postures: ask is inspection/explanation only, plan is planning only, and plan may carry plan or deep_plan overlay identity without granting project mutation authority.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-006\", \"SP-001\", \"F2-086\"], unblocks: [], acceptance_criteria: [\"RM-006 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"read_only_mode_widening\", reasoning_tier: \"standard\", context_scope: \"run_mode_definition\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"ask_plan_read_only_modes\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0008\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0009\"], preserved_exact_tokens: [\"ask\", \"plan\", \"read-only inspection and explanation posture\", \"read-only planning posture\", \"plan_output_scaffold_v1\"], negative_constraints: [\"No project mutation or execution authority is implied by ask or plan.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md\", \"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/FileSafe.md\", \"Plans/Prompt_Pipeline.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 757,
+          "line_start": 757,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "internal_contradiction",
+      "impact": "A builder can interpret the addendum as authorizing plan execution or project mutation, violating the closed authority model.",
+      "item_id": "A005M-000113-I019",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002",
+        "PLANUNIT:RM-006",
+        "SEMANTIC:PLANUNIT:RM-006"
+      ],
+      "statement": "The worktree addendum says Plan and Deep Plan execute plans in worktree context, while the canonical mode definition and RM-006 say plan is a read-only planning posture without mutation authority. The verb 'executes' is not narrowed to planning-only operations.",
+      "title": "Plan mode is both read-only and described as executing plans"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "consumers",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `done.deferred` | Run paused; work remains but requires external input such as HITL approval. |",
+          "line_end": 383,
+          "line_start": 383,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.",
+          "line_end": 676,
+          "line_start": 676,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "terminality_contradiction",
+      "impact": "Schedulers, storage, CLI, and GUI consumers cannot know whether to emit terminal done, keep the run active, or permit resume under the same run identity.",
+      "item_id": "A005M-000113-I020",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "The outcome taxonomy says every run terminates and defines done.deferred as paused work, while the blocked-recovery addendum says the same no-runnable/blocked condition is deferred or waiting rather than terminal.",
+      "title": "done.deferred is simultaneously terminal and non-terminal waiting"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "consumers",
+        "destructive_actions",
+        "authority_boundaries",
+        "missing_callers_consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Runtime-governance docs continue to sharpen rather than stabilize: - startup recovery remains split across policy, executor, and storage docs with no single owner deciding how interrupted attempts become `stale_historical` vs rehydrated vs `startup_recovered`. - retry/backoff policy is now more clearly blocked on counter-family ownership because `retry_count` is display-only yet policy wording still acts like a generic \u201cattempts\u201d ceiling is enough. - recovery actions still leak unstable UI labels (`deny`, `manual fix`, `abort node`) even though HITL/runtime docs are closer to a canonical `allowed_action_ids[]` family. - Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context. - `yolo` is still overstated as approval-free even though non-bypassable step-7 guards remain in force.",
+          "line_end": 177,
+          "line_start": 177,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "Recovery: the user must either (a) change the run mode to interactive and resume, (b) adjust permission presets to pre-approve the needed action, or (c) abort the blocked node.",
+          "line_end": 701,
+          "line_start": 701,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "action_contract_drift",
+      "impact": "CLI, GUI, orchestrator, and API consumers can expose different or unsafe recovery actions for the same block.",
+      "item_id": "A005M-000113-I021",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "The document warns that recovery labels must converge on allowed_action_ids[], yet later prescribes free-text alternatives including aborting a blocked node. Canonical action IDs, eligibility, idempotency, and outcome semantics are absent.",
+      "title": "Headless recovery actions bypass the declared action-ID convergence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "accessibility",
+        "localization",
+        "gui_truth",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "2. The run status summary (visible in CLI output, logs, or dashboard if a UI session is connected) shows the blocked node count.",
+          "line_end": 697,
+          "line_start": 697,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "3. If the run has a connected UI session, a dashboard notification badge appears.",
+          "line_end": 698,
+          "line_start": 698,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_gui_quality_contract",
+      "impact": "The required blocked state can be invisible to assistive technology or diverge across locales while still appearing visually complete.",
+      "item_id": "A005M-000113-I022",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "CLI/log summaries, dashboard badges, denied cards, permissions, and recovery guidance are required, but no live-region announcement, keyboard/focus behavior, non-color indicator, localized message key, parameter schema, text expansion, or stable machine-readable copy boundary is stated.",
+      "title": "Blocked notices lack accessibility and localization contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "authority",
+        "privacy_data_lifecycle",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Require blocked-policy continuity to include `blocked_sequence` minting/persistence, startup recovery rehydration, and unchanged DAE jail/approval policy ownership.",
+          "line_end": 717,
+          "line_start": 717,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "uncompiled_requirement_cluster",
+      "impact": "Mode changes and blocked recovery can lose or mutate the identity and usage history needed to revalidate authority.",
+      "item_id": "A005M-000113-I023",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002"
+      ],
+      "statement": "execution_role, requested_account_id, operational_identity, blocked_sequence, startup recovery, account-switch pressure ownership, and usage switch history are required, but the section contains transfer instructions rather than field schemas, minting triggers, persistence tables, transition order, or acceptance oracles.",
+      "title": "Runtime identity continuity is still a carry-through checklist"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "ownership",
+        "builder_discretion",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-002\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run_Modes.md is the canonical Run Modes SSOT and owner-section document; it preserves Puppet Master naming, deterministic defaults, no-open-question posture, and cross-reference compliance with DRY, contracts, glossary, and decision-policy owners.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CV-002\"], unblocks: [], acceptance_criteria: [\"RM-002 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"owner_identity_drift\", reasoning_tier: \"standard\", context_scope: \"run_modes_identity\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"run_modes_document_identity\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0001\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0002\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0003\"], preserved_exact_tokens: [\"Run Modes (Canonical SSOT)\", \"Canonical owner-section requirements\", \"Identity and blocked-policy transfer cluster\", \"Puppet Master\", \"No open questions\", \"deterministic defaults\"], negative_constraints: [], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/DRY_Rules.md\", \"Plans/Decision_Policy.md\", \"Plans/Contracts_V0.md\"]}",
+          "line_end": 733,
+          "line_start": 733,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "{plan_unit_id: \"RM-002\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run_Modes.md is the canonical Run Modes SSOT and owner-section document; it preserves Puppet Master naming, deterministic defaults, no-open-question posture, and cross-reference compliance with DRY, contracts, glossary, and decision-policy owners.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CV-002\"], unblocks: [], acceptance_criteria: [\"RM-002 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"owner_identity_drift\", reasoning_tier: \"standard\", context_scope: \"run_modes_identity\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"run_modes_document_identity\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0001\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0002\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0003\"], preserved_exact_tokens: [\"Run Modes (Canonical SSOT)\", \"Canonical owner-section requirements\", \"Identity and blocked-policy transfer cluster\", \"Puppet Master\", \"No open questions\", \"deterministic defaults\"], negative_constraints: [], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/DRY_Rules.md\", \"Plans/Decision_Policy.md\", \"Plans/Contracts_V0.md\"]}",
+          "line_end": 733,
+          "line_start": 733,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "gui_classification_mismatch",
+      "impact": "GUI routing and downstream node-readiness can over-include governance-only work and distort GUI coverage metrics.",
+      "item_id": "A005M-000113-I024",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RM-002",
+        "SEMANTIC:PLANUNIT:RM-002"
+      ],
+      "statement": "RM-002's canonical behavior is document identity, naming, defaults, and cross-reference compliance, yet gui_related is true with a generic classification reason. No user-visible surface is named.",
+      "title": "RM-002 is marked GUI-related without GUI semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "contracts",
+        "cross_document_seams",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-003\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run_Modes.md is the single canonical source of truth for run-mode definitions, strategy selection, budgets, and kill conditions; other docs must reference its anchors rather than restating those contracts.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"BPM-004\"], unblocks: [], acceptance_criteria: [\"RM-003 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"drY_boundary_drift\", reasoning_tier: \"standard\", context_scope: \"run_modes_ssot\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"run_modes_ssot_boundary\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0004\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0005\"], preserved_exact_tokens: [\"single canonical source of truth\", \"Plans/Run_Modes.md#MODE-ask\", \"SSOT references (DRY)\", \"ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md\"], negative_constraints: [\"Other plan documents MUST reference Run_Modes.md by anchor rather than restating mode definitions, strategy selection rules, budgets, or kill conditions.\"], preserved_contractrefs: [\"ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md\", \"ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/DRY_Rules.md\", \"Plans/Glossary.md\", \"Plans/Decision_Policy.md\"]}",
+          "line_end": 739,
+          "line_start": 739,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Owner drift is explicitly guarded.",
+      "item_id": "A005M-000113-I025",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-003",
+        "SEMANTIC:PLANUNIT:RM-003"
+      ],
+      "statement": "The PlanUnit correctly binds run-mode definitions, selection, budgets, and kill conditions to Run_Modes and forbids downstream restatement.",
+      "title": "RM-003 preserves the SSOT and DRY owner boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-004\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Runtime mode and workflow overlay are separate closed enums: runtime mode is ask|plan|regular|yolo, overlay is none|plan|deep_plan|debug|interview|brainstorm|crew, overlays never widen runtime authority, and children inherit or narrow the parent ceiling.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-006\", \"UCC-001\"], unblocks: [], acceptance_criteria: [\"RM-004 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"runtime_enum_drift\", reasoning_tier: \"standard\", context_scope: \"run_mode_definition\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"runtime_mode_overlay_enum_boundary\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0006\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007\"], preserved_exact_tokens: [\"ask|plan|regular|yolo\", \"none|plan|deep_plan|debug|interview|brainstorm|crew\", \"debug\", \"deep_plan\", \"interview\", \"brainstorm\", \"crew\"], negative_constraints: [\"overlay choice must not widen runtime authority.\", \"children inherit the parent runtime ceiling and may narrow it only.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/assistant-chat-design.md\", \"Plans/Commands_System.md\", \"Plans/orchestrator-subagent-integration.md\"]}",
+          "line_end": 745,
+          "line_start": 745,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The semantic unit is faithful to the core behavior.",
+      "item_id": "A005M-000113-I026",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-004",
+        "SEMANTIC:PLANUNIT:RM-004"
+      ],
+      "statement": "The PlanUnit accurately carries the closed enums and authority inheritance rule.",
+      "title": "RM-004 preserves mode and overlay separation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "ownership",
+        "compatibility_migration",
+        "consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-005\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"External IDE assistant-mode baselines may validate visible progress and review/apply affordances, but PM maps those affordances to /agent, /apply, operation-card/terminal surfaces, and the runtime authority enum instead of treating external products as owners.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-008\", \"UCC-001\"], unblocks: [], acceptance_criteria: [\"RM-005 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"external_baseline_owner_drift\", reasoning_tier: \"standard\", context_scope: \"run_mode_gui_boundary\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"workflow_affordance_owner_boundary\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007\"], preserved_exact_tokens: [\"JetBrains chat/agent modes\", \"Junie\", \"visible progress\", \"review/apply affordances\", \"/agent\", \"/apply\", \"operation-card/terminal surfaces\", \"runtime authority enum\"], negative_constraints: [\"External IDE baselines validate comparable affordances but do not become Puppet Master owner docs.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/assistant-chat-design.md\", \"Plans/UI_Command_Catalog.md\"]}",
+          "line_end": 751,
+          "line_start": 751,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Reference products do not become hidden product owners.",
+      "item_id": "A005M-000113-I027",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-005",
+        "SEMANTIC:PLANUNIT:RM-005"
+      ],
+      "statement": "Visible progress and review/apply affordances may be informed by external IDEs, but PM maps them to its own commands, cards, terminal surfaces, and authority enum.",
+      "title": "RM-005 keeps external IDE affordances non-normative"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "capabilities",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-006\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"ask and plan are read-only postures: ask is inspection/explanation only, plan is planning only, and plan may carry plan or deep_plan overlay identity without granting project mutation authority.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-006\", \"SP-001\", \"F2-086\"], unblocks: [], acceptance_criteria: [\"RM-006 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"read_only_mode_widening\", reasoning_tier: \"standard\", context_scope: \"run_mode_definition\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"ask_plan_read_only_modes\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0008\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0009\"], preserved_exact_tokens: [\"ask\", \"plan\", \"read-only inspection and explanation posture\", \"read-only planning posture\", \"plan_output_scaffold_v1\"], negative_constraints: [\"No project mutation or execution authority is implied by ask or plan.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md\", \"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/FileSafe.md\", \"Plans/Prompt_Pipeline.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 757,
+          "line_start": 757,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_within_unit",
+      "impact": "The unit itself is unambiguous even though the earlier worktree addendum conflicts with it.",
+      "item_id": "A005M-000113-I028",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-006",
+        "SEMANTIC:PLANUNIT:RM-006"
+      ],
+      "statement": "The PlanUnit correctly prevents plan and deep_plan overlay identity from granting project mutation authority.",
+      "title": "RM-006 retains read-only ask and plan authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-007\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"regular is the standard execution posture with normal approvals; yolo is the full-automation execution posture, still bounded by permissions, FileSafe, provider, and prompt-pipeline constraints.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\", \"F2-086\", \"CBP-003\"], unblocks: [], acceptance_criteria: [\"RM-007 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"execution_mode_authority_drift\", reasoning_tier: \"standard\", context_scope: \"run_mode_definition\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"regular_yolo_execution_modes\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0010\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0011\"], preserved_exact_tokens: [\"regular\", \"yolo\", \"standard execution posture with normal approvals\", \"full-automation execution posture\"], negative_constraints: [\"yolo does not bypass child capability narrowing, provider restrictions, or FileSafe guardrails.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Permissions_System.md\", \"Plans/FileSafe.md\", \"Plans/Prompt_Pipeline.md\"]}",
+          "line_end": 763,
+          "line_start": 763,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Full automation is not represented as absolute or guard-free authority.",
+      "item_id": "A005M-000113-I029",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-007",
+        "SEMANTIC:PLANUNIT:RM-007"
+      ],
+      "statement": "regular and yolo are execution-capable, but neither escapes permissions, FileSafe, provider, or prompt-pipeline constraints.",
+      "title": "RM-007 keeps regular and yolo bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-008\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Hosted Tool Execution keeps provider CLIs in plan/reasoner and no-side-effect posture while Puppet Master owns every real action through its tools, permissions, FileSafe stack, and hosted action loop; provider tool_use in HTE is a kill condition.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CBP-003\", \"CBP-005\", \"T-001\", \"PS-001\", \"F2-086\"], unblocks: [], acceptance_criteria: [\"RM-008 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"delegated_tool_leakage\", reasoning_tier: \"standard\", context_scope: \"execution_strategy\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"hte_execution_strategy\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0012\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0013\"], preserved_exact_tokens: [\"STRATEGY-HTE\", \"HTE \u2014 Hosted Tool Execution\", \"plan/reasoner only\", \"no-tools / no-side-effect\", \"/plan/regular\", \"kill.hte_tool_observed\"], negative_constraints: [\"HTE MUST NOT allow delegated tool execution.\", \"Any tool-call observation from the provider stream during HTE is a kill condition.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-009\"], compatibility_only_notes: [\"The legacy /plan/regular shorthand maps to ask/plan/regular default HTE unless regular explicitly selects DAE and provider policy allows it.\"], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/Tools.md\", \"Plans/FileSafe.md\"]}",
+          "line_end": 769,
+          "line_start": 769,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "HTE's authority boundary survives standardization.",
+      "item_id": "A005M-000113-I030",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-008",
+        "SEMANTIC:PLANUNIT:RM-008"
+      ],
+      "statement": "The unit preserves no-side-effect provider posture, PM-owned actions, permission/FileSafe enforcement, and provider tool_use as a kill condition.",
+      "title": "RM-008 faithfully compiles HTE"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "operations",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-009\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Delegated Agent Execution runs provider tools inside an isolated PM-managed jail or worktree context, records worktree identity in execution context, treats jail diff as authoritative, blocks direct canonical-workspace writes, requires dae_allowed policy, and reconciles only after scans and FileSafe checks.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CBP-003\", \"CBP-005\", \"T-001\", \"PS-001\", \"F2-086\"], unblocks: [], acceptance_criteria: [\"RM-009 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"dae_isolation_drift\", reasoning_tier: \"standard\", context_scope: \"execution_strategy\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"dae_jail_worktree_strategy\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0014\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0015\"], preserved_exact_tokens: [\"STRATEGY-DAE\", \"DAE \u2014 Delegated Agent Execution\", \"2.2.1 DAE worktree context\", \"working_directory\", \"worktree_id\", \"worktree_branch\", \"is_worktree\", \"dae_allowed = false\", \"actual jail diff\"], negative_constraints: [\"The canonical workspace MUST NOT be directly writable during DAE.\", \"Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise dae_allowed = false and cannot be selected for DAE.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Executor_Protocol.md\", \"Plans/assistant-chat-design.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/FileSafe.md\"]}",
+          "line_end": 775,
+          "line_start": 775,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_within_compiled_summary",
+      "impact": "Isolation essentials are retained, while atomic multi-jail reconciliation remains the separate I004/I013 gap.",
+      "item_id": "A005M-000113-I031",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-009",
+        "SEMANTIC:PLANUNIT:RM-009"
+      ],
+      "statement": "The unit binds worktree identity, actual jail diff, canonical-workspace non-writability, dae_allowed policy, scans, and reconciliation.",
+      "title": "RM-009 faithfully compiles DAE isolation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "states_transitions",
+        "authority",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-010\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Surface states normalize to runtime mode before strategy selection: Ask to ask, Plan and Deep Plan to plan, Agent/Debug/Interview/BrainStorm/Crew standard approvals to regular, and explicit YOLO posture to yolo.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-008\", \"ACD-006\", \"CV-002\", \"CV-006\", \"UCC-001\"], unblocks: [], acceptance_criteria: [\"RM-010 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"surface_runtime_mapping_drift\", reasoning_tier: \"standard\", context_scope: \"strategy_selection_gui_normalization\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"surface_state_runtime_normalization\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016\"], preserved_exact_tokens: [\"Ask\", \"Plan\", \"Deep Plan\", \"Agent\", \"Debug\", \"Interview\", \"BrainStorm\", \"Crew\", \"Explicit YOLO posture outside Debug\", \"Normalized runtime mode\"], negative_constraints: [\"Interview, BrainStorm, and Crew MUST NOT create additional runtime mode values.\"], preserved_contractrefs: [\"ContractRef: PolicyRule:Decision_Policy.md\u00a72, PolicyRule:Decision_Policy.md\u00a73\", \"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/assistant-chat-design.md\", \"Plans/Prompt_Pipeline.md\", \"Plans/Contracts_V0.md\"]}",
+          "line_end": 781,
+          "line_start": 781,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "GUI labels cannot silently become new authority values.",
+      "item_id": "A005M-000113-I032",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-010",
+        "SEMANTIC:PLANUNIT:RM-010"
+      ],
+      "statement": "Ask, Plan, Deep Plan, Agent, Debug, Interview, BrainStorm, Crew, and explicit YOLO postures map to the closed runtime enum before strategy selection.",
+      "title": "RM-010 specifies workflow-to-runtime normalization"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-011\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Strategy selection is a deterministic pure function of requested runtime mode, effective overlay, config, and policy: ask/plan always HTE, regular defaults HTE unless DAE is requested and allowed, and yolo selects DAE.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CBP-003\", \"CBP-005\", \"T-001\", \"PS-001\"], unblocks: [], acceptance_criteria: [\"RM-011 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"strategy_selection_drift\", reasoning_tier: \"standard\", context_scope: \"strategy_selection\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"deterministic_strategy_selection\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016\"], preserved_exact_tokens: [\"Strategy selection is a pure function\", \"requested_runtime_mode\", \"effective_mode_overlay\", \"cli_bridged_strategy: \\\"dae\\\"\", \"dae_allowed == true\", \"strategy_resolution_reason\"], negative_constraints: [\"Given the same inputs, the same strategy MUST be selected.\", \"regular must not select DAE unless config requests it and provider policy allows it.\"], preserved_contractrefs: [\"ContractRef: PolicyRule:Decision_Policy.md\u00a72, PolicyRule:Decision_Policy.md\u00a73\", \"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/Tools.md\", \"Plans/Decision_Policy.md\"]}",
+          "line_end": 787,
+          "line_start": 787,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_with_declared_inputs",
+      "impact": "Selection has a stable functional contract, subject to the unresolved account snapshot in I005.",
+      "item_id": "A005M-000113-I033",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-011",
+        "SEMANTIC:PLANUNIT:RM-011"
+      ],
+      "statement": "The unit carries the pure-function inputs and exact ask/plan, regular, and yolo strategy outcomes.",
+      "title": "RM-011 preserves deterministic strategy selection"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "authority",
+        "states_transitions",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-012\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Debug is a workflow overlay plus target/evidence package, not a new runtime mode; automated Debug cannot execute in read-only mode, defaults to regular+HTE, treats yolo as explicit opt-in, and persists overlay, mode, strategy, reason, and active Debug Automation Profile snapshot in run.started.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"ACD-008\", \"ACD-006\", \"CV-002\", \"CV-006\", \"CBP-005\", \"UCC-001\"], unblocks: [], acceptance_criteria: [\"RM-012 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"debug_mode_authority_drift\", reasoning_tier: \"standard\", context_scope: \"debug_runtime_overlay\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"debug_overlay_runtime_resolution\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016\"], preserved_exact_tokens: [\"effective_mode_overlay = debug\", \"Debug Mode + regular + HTE\", \"Debug Mode + yolo\", \"run.started\", \"requested_mode_overlay\", \"strategy_resolution_reason\", \"Debug Automation Profile snapshot\"], negative_constraints: [\"Debug with mode ask or plan is an invalid automated-debug combination.\", \"Debug Mode + yolo is an advanced opt-in only and MUST NOT become the default Debug posture.\", \"yolo still requires DAE and MUST NOT silently downgrade to HTE.\"], preserved_contractrefs: [\"ContractRef: PolicyRule:Decision_Policy.md\u00a72, PolicyRule:Decision_Policy.md\u00a73\", \"ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/assistant-chat-design.md\", \"Plans/Contracts_V0.md\", \"Plans/CLI_Bridged_Providers.md\"]}",
+          "line_end": 793,
+          "line_start": 793,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A visible Debug picker cannot bypass runtime authority normalization.",
+      "item_id": "A005M-000113-I034",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-012",
+        "SEMANTIC:PLANUNIT:RM-012"
+      ],
+      "statement": "Debug remains an overlay, automated Debug cannot run read-only, regular+HTE is default, yolo is opt-in, and run.started persists the resolution snapshot.",
+      "title": "RM-012 constrains Debug overlay authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "authority_boundaries",
+        "failures_recovery",
+        "destructive_actions",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-013\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"The P5 run-mode recovery section preserves implementation-blocking governance gaps around startup recovery, retry/backoff ownership, Contribute(PR) versus DAE isolation, DAE jail durability, external publish side effects, /event recovery, attention_required persistence, blocked semantics, account-switch invalidation, child-run account re-resolution, gate placement, and work-item posture.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\", \"SP-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-013 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"governance_gap_loss\", reasoning_tier: \"standard\", context_scope: \"runtime_governance_gaps\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"runtime_governance_recovery_gap_register\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017\"], preserved_exact_tokens: [\"P5 run-mode governance recovery requirements\", \"startup recovery\", \"Contribute(PR) vs DAE isolation\", \"DAE-jail durability\", \"external_publish_side_effect\", \"/event recovery\", \"attention_required\", \"blocked semantics\", \"account-switch invalidation\", \"GATE-007 / GATE-008\"], negative_constraints: [], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\"], compatibility_only_notes: [], stale_retired_dispositions: [\"Runtime-governance docs continue to sharpen rather than stabilize.\"], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Decision_Policy.md\", \"Plans/Progression_Gates.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 799,
+          "line_start": 799,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "explicit_implementation_blockers",
+      "impact": "These behaviors cannot be treated as builder discretion or build-ready simply because the PlanUnit status is accepted.",
+      "item_id": "A005M-000113-I035",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:RM-013",
+        "SEMANTIC:PLANUNIT:RM-013"
+      ],
+      "statement": "The unit intentionally preserves open implementation blockers for startup recovery, retry/backoff, PR/worktree isolation, jail durability, publish side effects, event recovery, attention state, account switches, child account resolution, and gate placement.",
+      "title": "RM-013 is an unresolved blocker register, not a build contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "localization",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-014\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Runtime recovery and explanation surfaces must converge on canonical allowed_action_ids[] and explanation-depth controls; unstable UI labels are warning examples, and ELI5/Expert changes simplify explanation depth without renaming canonical object names such as Feature Seam.\", gui_related: true, gui_classification_reason: \"This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"UCC-001\", \"ACD-008\", \"CV-006\"], unblocks: [], acceptance_criteria: [\"RM-014 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"ui_recovery_label_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_governance_gui\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"runtime_governance_ui_explanation_terms\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017\"], preserved_exact_tokens: [\"allowed_action_ids[]\", \"deny\", \"manual fix\", \"abort node\", \"ELI5/Expert\", \"Feature Seam\"], negative_constraints: [\"ELI5/Expert must simplify explanation depth, not canonical object names.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/human-in-the-loop.md\", \"Plans/UI_Command_Catalog.md\", \"Plans/assistant-chat-design.md\"]}",
+          "line_end": 805,
+          "line_start": 805,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_in_unit_intent",
+      "impact": "Users and machine consumers receive stable concepts across presentation modes.",
+      "item_id": "A005M-000113-I036",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-014",
+        "SEMANTIC:PLANUNIT:RM-014"
+      ],
+      "statement": "Recovery surfaces should converge on allowed_action_ids[], and ELI5/Expert changes explanation depth rather than object names such as Feature Seam.",
+      "title": "RM-014 preserves canonical terminology across explanation depth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_limits",
+        "scale_performance",
+        "compatibility_migration",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-015\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Global run-strategy concurrency defaults are max_concurrent_crews_per_platform=4, max_concurrent_agents_per_crew=8, and max_total_active_agents=32; Persona or overlay configuration alone must not override them, and stale 5-crew/10-agent wording is retired.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"PS-001\"], unblocks: [], acceptance_criteria: [\"RM-015 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"budget_default_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_budget_defaults\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"global_concurrency_cap_defaults\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0018\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0019\"], preserved_exact_tokens: [\"max_concurrent_crews_per_platform=4\", \"max_concurrent_agents_per_crew=8\", \"max_total_active_agents=32\", \"5-crews / 10-agents\", \"queue until a slot is free\"], negative_constraints: [\"Three-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or overlay configuration alone.\", \"PM MUST NOT silently discard or auto-widen queued work.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md\", \"ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md\"], compatibility_only_notes: [], stale_retired_dispositions: [\"Any 5-crews / 10-agents wording in downstream docs is stale drift and must be retired rather than treated as an alternate cap.\"], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/orchestrator-subagent-integration.md\", \"Plans/interview-subagent-integration.md\", \"Plans/Executor_Protocol.md\"]}",
+          "line_end": 811,
+          "line_start": 811,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_for_cap_values",
+      "impact": "Capacity ceilings and migration disposition are explicit; queue fairness remains I006.",
+      "item_id": "A005M-000113-I037",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-015",
+        "SEMANTIC:PLANUNIT:RM-015"
+      ],
+      "statement": "The exact 4/8/32 active concurrency defaults are global, cannot be widened by persona or overlay alone, and retire stale 5/10 wording.",
+      "title": "RM-015 freezes global concurrency defaults"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-016\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run supervisors enforce canonical run-envelope budget fields across strategies, freezing them into the envelope across pause/resume: max_nesting_depth=4, max_total_spawned_agents=99, max_tool_rounds=200, max_wall_ms=1200000, max_estimated_tokens=80000, max_same_shell_failure=3, max_write_thrashing=5 writes/10 min, max_retryable_errors=3, inherited task_timeout_ms, and warn_budget_pct=80.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"PS-001\", \"CBP-003\"], unblocks: [], acceptance_criteria: [\"RM-016 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"budget_field_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_budget_defaults\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"run_envelope_budget_fields\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0020\"], preserved_exact_tokens: [\"max_nesting_depth\", \"max_total_spawned_agents\", \"max_tool_rounds\", \"max_wall_ms\", \"max_estimated_tokens\", \"max_same_shell_failure\", \"max_write_thrashing\", \"max_retryable_errors\", \"task_timeout_ms\", \"warn_budget_pct\", \"max_tokens\", \"max_wall_time\"], negative_constraints: [\"Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.\", \"task_timeout_ms may narrow parent budget but MUST NOT exceed it.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [\"Legacy A2A/OpenCode gap wording may call these ceilings max_tokens and max_wall_time; canonical keys are max_estimated_tokens and max_wall_ms.\"], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Executor_Protocol.md\", \"Plans/Contracts_V0.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 817,
+          "line_start": 817,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "**AC-06:** Budget limits (\u00a74) MUST be enforced regardless of mode. Exceeding any budget MUST trigger the corresponding kill condition.",
+          "line_end": 532,
+          "line_start": 532,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "incomplete_reason_code_matrix",
+      "impact": "Supervisors and tests cannot derive one exhaustive budget-to-terminal matrix from the owner document.",
+      "item_id": "A005M-000113-I038",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RM-016",
+        "SEMANTIC:PLANUNIT:RM-016"
+      ],
+      "statement": "The unit lists ten budget and kill-related fields, while AC-06 says exceeding any budget triggers the corresponding kill condition. The source does not define corresponding reason/outcome mappings for every field, notably max_retryable_errors and warn_budget_pct, and concurrency caps queue rather than kill.",
+      "title": "RM-016 budget fields do not all map to terminal reasons"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "consumers",
+        "inputs_outputs",
+        "compatibility_migration",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-017\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run kill enforcement distinguishes pre-dispatch/supervisor kill.* triggers from terminal done.* outcomes, persists canonical stop reasons, retires consumer-facing kill.task_timeout, and keeps post-response budget overrun as done.budget_exceeded after usage is durably recorded.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"F2-086\", \"CBP-003\", \"PS-001\", \"CV-215\", \"SP-001\"], unblocks: [], acceptance_criteria: [\"RM-017 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"stop_reason_drift\", reasoning_tier: \"standard\", context_scope: \"kill_conditions\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"universal_kill_terminal_reason_contract\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0021\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0022\"], preserved_exact_tokens: [\"KILL-CONDITIONS\", \"done.failed\", \"kill.*\", \"done.*\", \"done.task_timeout\", \"kill.budget_exceeded\", \"done.budget_exceeded\", \"kill.task_timeout\"], negative_constraints: [\"kill.budget_exceeded remains pre-dispatch only.\", \"Post-response budget-overrun cases MUST NOT be folded back into pre-dispatch kill.budget_exceeded.\", \"kill.task_timeout is retired as a consumer-facing terminal alias.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md\", \"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md\", \"ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md\"], compatibility_only_notes: [], stale_retired_dispositions: [\"kill.task_timeout is retired as a consumer-facing terminal alias.\"], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/FileSafe.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/Executor_Protocol.md\", \"Plans/Contracts_V0.md\", \"Plans/usage-feature.md\"]}",
+          "line_end": 823,
+          "line_start": 823,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Event consumers can preserve accurate phase and recovery semantics.",
+      "item_id": "A005M-000113-I039",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-017",
+        "SEMANTIC:PLANUNIT:RM-017"
+      ],
+      "statement": "The unit keeps kill.* and done.* families distinct, retires consumer-facing kill.task_timeout, and requires durable usage before done.budget_exceeded.",
+      "title": "RM-017 preserves reason-code phase distinctions"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "acceptance_oracles",
+        "failures_recovery",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-018\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"The doom-loop guard compares only the same tool_name, serialized_args_hash, and error_message triple at the same nesting level across consecutive attempts; fuzzy, substring, or looks-similar matching is prohibited and broader retry suppression belongs to Tools.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-018 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"retry_guard_overreach\", reasoning_tier: \"standard\", context_scope: \"kill_conditions\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"exact_match_doom_loop_guard\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0023\"], preserved_exact_tokens: [\"stop.identical_failure\", \"tool_name\", \"serialized_args_hash\", \"error_message\", \"same nesting level\", \"looks similar\"], negative_constraints: [\"Fuzzy matching, substring matching, and looks similar heuristics are prohibited for this terminal stop condition.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Executor_Protocol.md\", \"Plans/Architecture_Invariants.md\", \"Plans/Tools.md\"]}",
+          "line_end": 829,
+          "line_start": 829,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Heuristic similarity cannot terminate unrelated recovery attempts.",
+      "item_id": "A005M-000113-I040",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-018",
+        "SEMANTIC:PLANUNIT:RM-018"
+      ],
+      "statement": "Only an exact tool, serialized-arguments hash, error message, nesting-level, and consecutive-attempt match can trigger the terminal guard; broader equivalence belongs elsewhere.",
+      "title": "RM-018 forbids fuzzy doom-loop termination"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "partial_failure",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-019\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"PM entrypoints own shutdown signal fan-out, process group isolation, platform-specific teardown, idempotent shutdown, durability flushing, cancellation outcome mapping, and startup crash recovery that synthesizes done.crashed with crash_recovered metadata instead of silently dropping unfinished runs.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-019 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"runtime_lifecycle_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_lifecycle\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"signal_shutdown_startup_recovery\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0024\"], preserved_exact_tokens: [\"signal.NotifyContext\", \"SIGTERM\", \"SIGINT\", \"SIGHUP\", \"setsid\", \"CREATE_NEW_PROCESS_GROUP\", \"CTRL_BREAK_EVENT\", \"done.cancelled\", \"done.crashed\", \"crash_recovered\"], negative_constraints: [\"PM MUST NOT silently drop an incomplete run or rewrite it as done.failed without the crash marker.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Executor_Protocol.md\", \"ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Executor_Protocol.md\", \"Plans/Contracts_V0.md\", \"Plans/storage-plan.md\", \"Plans/LSPSupport.md\"]}",
+          "line_end": 835,
+          "line_start": 835,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_within_summary",
+      "impact": "Lifecycle essentials survive PlanUnit standardization; precedence and startup ownership gaps remain separately identified.",
+      "item_id": "A005M-000113-I041",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-019",
+        "SEMANTIC:PLANUNIT:RM-019"
+      ],
+      "statement": "The unit carries signal ownership, process isolation, teardown, idempotency, durable flushing, cancellation mapping, and crash_recovered synthesis.",
+      "title": "RM-019 preserves shutdown and crash-recovery essentials"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "operations",
+        "scale_performance",
+        "observability_support",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-020\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Runtime teardown deterministically closes DB handles, MCP sessions, terminal shells, temporary files, and subprocess groups, emits diagnostics for failed teardown, mints new helper identity after restart, and monitors long-lived helper memory pressure for controlled restart or failover.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"T-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-020 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"helper_lifecycle_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_lifecycle\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"resource_disposal_helper_health_monitoring\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0025\"], preserved_exact_tokens: [\"Resource disposal and health monitoring\", \"DB handles\", \"MCP sessions\", \"terminal shells\", \"temporary files\", \"resident-set growth\", \"resource_pressure\"], negative_constraints: [\"PM MUST NOT silently reuse poisoned process state or abandoned shell/session state.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md\", \"ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/storage-plan.md\", \"Plans/Tools.md\", \"Plans/orchestrator-subagent-integration.md\", \"Plans/Architecture_Invariants.md\"]}",
+          "line_end": 841,
+          "line_start": 841,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "missing_runtime_oracle",
+      "impact": "A migration/index validator can pass while the runtime leaks helpers or restarts indefinitely.",
+      "item_id": "A005M-000113-I042",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RM-020",
+        "SEMANTIC:PLANUNIT:RM-020"
+      ],
+      "statement": "The unit requires deterministic disposal, new helper identity, memory-pressure monitoring, and controlled restart/failover, but does not carry threshold, order, timeout, restart-budget, or observable acceptance assertions.",
+      "title": "RM-020 has behavior but no health-monitoring oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "untrusted_inputs",
+        "authority_boundaries",
+        "failures_recovery",
+        "consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-021\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"The first provider-originated tool_use observed during HTE terminates the run immediately with stop_reason kill.hte_tool_observed in the terminal normalized done event and persisted run.completed metadata.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CBP-003\", \"CBP-005\", \"T-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-021 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"hte_kill_contract_drift\", reasoning_tier: \"standard\", context_scope: \"kill_conditions\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"hte_tool_observation_kill_contract\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0026\"], preserved_exact_tokens: [\"kill.hte_tool_observed\", \"tool_use\", \"terminal normalized done event\", \"run.completed\"], negative_constraints: [\"HTE MUST NOT allow delegated tool execution.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Executor_Protocol.md\", \"Plans/Architecture_Invariants.md\", \"Plans/Contracts_V0.md\", \"Plans/Tools.md\"]}",
+          "line_end": 847,
+          "line_start": 847,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "No grace count or adapter override can weaken HTE's no-tools boundary.",
+      "item_id": "A005M-000113-I043",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-021",
+        "SEMANTIC:PLANUNIT:RM-021"
+      ],
+      "statement": "The first provider-originated tool_use terminates immediately and preserves the same stop reason in normalized done and run.completed.",
+      "title": "RM-021 makes the first HTE tool observation terminal"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "destructive_actions",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-022\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"DAE-specific kill counting treats shell_failure as actual executed canonical shell invocation failures for one normalized fingerprint, excludes denials and UI-only terminal actions, resets on success or replacement, and treats write_thrash as qualifying content-changing writes to one normalized jail path in a sliding 10-minute window.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"SP-001\", \"UCC-001\", \"F2-086\", \"CBP-003\"], unblocks: [], acceptance_criteria: [\"RM-022 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"dae_kill_counting_drift\", reasoning_tier: \"standard\", context_scope: \"kill_conditions\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"dae_shell_write_thrash_counting\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0027\"], preserved_exact_tokens: [\"kill.shell_failure\", \"kill.write_thrash\", \"canonical shell fingerprint\", \"terminal_session_id\", \"shell-fingerprint\", \"terminal-normalized\", \"/replace/stop\", \"sliding 10-minute window\"], negative_constraints: [\"Policy denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do not count as shell failures.\", \"Denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do not count.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [\"Compatibility labels are canonicalized here: shell-fingerprint, terminal-normalized, and /replace/stop.\"], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Tools.md\", \"Plans/storage-plan.md\", \"Plans/UI_Command_Catalog.md\", \"Plans/FileSafe.md\", \"Plans/CLI_Bridged_Providers.md\"]}",
+          "line_end": 853,
+          "line_start": 853,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Counter semantics are precise enough for adversarial false-positive tests.",
+      "item_id": "A005M-000113-I044",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-022",
+        "SEMANTIC:PLANUNIT:RM-022"
+      ],
+      "statement": "Shell failure is tied to actual normalized executions and session continuity; write thrash is tied to qualifying content changes on one normalized path in a sliding window.",
+      "title": "RM-022 preserves kill-counter qualification and resets"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "failures_recovery",
+        "observability_support",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-023\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Every DAE terminal outcome runs mandatory FileSafe write-scope audit, security-filter scan, and diff reconciliation before finalization; scan failure escalates to done.failed with kill.post_scan_failure and persists scan name/details in stop-reason metadata.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"F2-086\", \"CBP-003\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-023 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"post_scan_gap\", reasoning_tier: \"standard\", context_scope: \"kill_conditions\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"dae_mandatory_end_of_run_scans\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0028\"], preserved_exact_tokens: [\"FileSafe write-scope audit\", \"Security-filter scan\", \"Diff reconciliation\", \"done.failed\", \"kill.post_scan_failure\", \"scan_name = \\\"diff_reconciliation\\\"\"], negative_constraints: [\"DAE terminal outcomes must not finalize before mandatory end-of-run scans complete.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/FileSafe.md\", \"Plans/CLI_Bridged_Providers.md\"]}",
+          "line_end": 859,
+          "line_start": 859,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_for_inventory_and_mapping",
+      "impact": "The scan inventory and failure mapping are explicit, while atomic application remains I013.",
+      "item_id": "A005M-000113-I045",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-023",
+        "SEMANTIC:PLANUNIT:RM-023"
+      ],
+      "statement": "Every DAE outcome requires write-scope, security-filter, and diff-reconciliation scans before finalization; failure maps to done.failed and kill.post_scan_failure with details.",
+      "title": "RM-023 preserves mandatory DAE scan set"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "compatibility_migration",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-024\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Every run terminates with exactly one canonical outcome from done.ok, done.failed, done.deferred, done.rotated, done.gutter, done.cancelled, or done.crashed, recorded in terminal done event and persisted through EventRecord/seglog without treating user cancellation or reveal-only terminal actions as generic failure or new runtime identity.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CV-215\", \"SP-001\", \"T-001\", \"UCC-001\"], unblocks: [], acceptance_criteria: [\"RM-024 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"outcome_taxonomy_drift\", reasoning_tier: \"standard\", context_scope: \"run_outcomes\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"run_outcome_taxonomy\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0029\"], preserved_exact_tokens: [\"done.ok\", \"done.failed\", \"done.deferred\", \"done.rotated\", \"done.gutter\", \"done.cancelled\", \"done.crashed\", \"done.payload.status\", \"done.payload.outcome\", \"terminal_session_id\"], negative_constraints: [\"done.failed is not a catch-all for intentionally requested stop paths.\", \"Clearing scrollback or revealing an existing terminal session does not mint a new run outcome.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md\u00a72\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Contracts_V0.md\", \"Plans/Tools.md\", \"Plans/storage-plan.md\", \"Plans/UI_Command_Catalog.md\", \"Plans/Section15_MVP_Promoted_Features_Spec.md\"]}",
+          "line_end": 865,
+          "line_start": 865,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_within_summary",
+      "impact": "Outcome vocabulary is faithful, subject to the done.deferred terminality contradiction in I020.",
+      "item_id": "A005M-000113-I046",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-024",
+        "SEMANTIC:PLANUNIT:RM-024"
+      ],
+      "statement": "The PlanUnit carries all seven outcomes, terminal persistence, cancellation distinction, and reveal/restart identity rules.",
+      "title": "RM-024 preserves closed coarse outcomes and identity behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "consumers",
+        "compatibility_migration",
+        "failures_recovery",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-025\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Runtime stop-reason refinements preserve kill.budget_exceeded for pre-dispatch budget prevention, done.budget_exceeded for post-response overrun after durable usage recording, and done.task_timeout for elapsed-budget exhaustion after graceful teardown; kill.task_timeout is internal-only bookkeeping and done.timeout is retired.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"CV-215\", \"SP-001\"], unblocks: [], acceptance_criteria: [\"RM-025 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"stop_reason_drift\", reasoning_tier: \"standard\", context_scope: \"run_outcomes\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"terminal_stop_reason_refinements\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0030\"], preserved_exact_tokens: [\"kill.budget_exceeded\", \"done.budget_exceeded\", \"done.task_timeout\", \"kill.task_timeout\", \"done.timeout\", \"run.completed\"], negative_constraints: [\"kill.task_timeout MUST NOT be emitted as the consumer-facing terminal alias.\", \"Consumers MUST NOT collapse post-response budget overruns back into pre-dispatch naming.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md\"], compatibility_only_notes: [], stale_retired_dispositions: [\"done.timeout is retired as a synonym.\"], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/usage-feature.md\", \"Plans/storage-plan.md\", \"Plans/Contracts_V0.md\", \"Plans/orchestrator-subagent-integration.md\", \"Plans/Executor_Protocol.md\"]}",
+          "line_end": 871,
+          "line_start": 871,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Storage and UI consumers receive stable migration semantics.",
+      "item_id": "A005M-000113-I047",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-025",
+        "SEMANTIC:PLANUNIT:RM-025"
+      ],
+      "statement": "Pre-dispatch and post-response budget reasons remain distinct, timeout is terminal only after graceful teardown, kill.task_timeout is internal-only, and done.timeout is retired.",
+      "title": "RM-025 preserves terminal reason refinements"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "propagation",
+        "authority",
+        "states_transitions",
+        "scale_performance"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-026\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Run mode controls context overlays and rotation: ask uses read_only, plan uses read_only plus plan_output_scaffold_v1, regular/yolo use full_execution, read-only children and rotated follow-ups may narrow but never widen to full_execution, and ask/plan remain rotation-ineligible after deterministic compaction.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"PS-001\"], unblocks: [], acceptance_criteria: [\"RM-026 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"context_overlay_drift\", reasoning_tier: \"standard\", context_scope: \"context_management\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"context_overlay_rotation_effects\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0031\"], preserved_exact_tokens: [\"read_only\", \"read_only + plan_output_scaffold_v1\", \"full_execution\", \"done.rotated\", \"Injected Context\", \"Rotation decision boundary\"], negative_constraints: [\"read_only excludes mutation-authority metadata.\", \"Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into full_execution.\", \"ask and plan are rotation-ineligible.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md\", \"ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Prompt_Pipeline.md\", \"Plans/FileSafe.md\", \"Plans/Contracts_V0.md\", \"Plans/storage-plan.md\", \"Plans/Permissions_System.md\"]}",
+          "line_end": 877,
+          "line_start": 877,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Context pressure cannot become an authority-escalation route.",
+      "item_id": "A005M-000113-I048",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-026",
+        "SEMANTIC:PLANUNIT:RM-026"
+      ],
+      "statement": "The unit keeps exact overlay values, prevents read-only widening, and makes ask/plan rotation-ineligible after deterministic compaction.",
+      "title": "RM-026 preserves context overlay and rotation ceilings"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-027\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"OpenCode material is reference-only background for run modes; PM is not normatively based on OpenCode, and PM owner docs resolve mode, approval, TODO, and web-tool semantics when external baselines conflict.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\"], unblocks: [], acceptance_criteria: [\"RM-027 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"external_reference_drift\", reasoning_tier: \"standard\", context_scope: \"external_reference_boundary\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"opencode_reference_boundary\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0032\"], preserved_exact_tokens: [\"OpenCode baseline\", \"reference-only background\", \"PM is not \u201cbased on\u201d OpenCode\", \"mode, approval, TODO, and web-tool semantics\"], negative_constraints: [], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md\"], compatibility_only_notes: [\"OpenCode material is reference-only background. Puppet Master run-mode semantics are PM-owned canon.\"], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Permissions_System.md\", \"Plans/assistant-chat-design.md\"]}",
+          "line_end": 883,
+          "line_start": 883,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "External product drift cannot mutate canonical PM behavior.",
+      "item_id": "A005M-000113-I049",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-027",
+        "SEMANTIC:PLANUNIT:RM-027"
+      ],
+      "statement": "External baseline material may inform contrast but cannot override PM-owned mode, approval, TODO, or web semantics.",
+      "title": "RM-027 keeps OpenCode reference-only"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-028\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Mode selection does not remove read-only repository search: agents and delegated read-only children may use grep in every runtime mode subject to the tool registry and permission policy while mutation remains bounded by the active mode ceiling.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"PS-001\"], unblocks: [], acceptance_criteria: [\"RM-028 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"read_tool_permission_drift\", reasoning_tier: \"standard\", context_scope: \"mode_tooling_deltas\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"cross_mode_read_only_search\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0033\"], preserved_exact_tokens: [\"grep\", \"read-only repository search\", \"tool registry\", \"permission policy\", \"authority ceiling\"], negative_constraints: [], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Tools.md\", \"Plans/Permissions_System.md\"]}",
+          "line_end": 889,
+          "line_start": 889,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Read authority is not accidentally removed when mutation authority changes.",
+      "item_id": "A005M-000113-I050",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-028",
+        "SEMANTIC:PLANUNIT:RM-028"
+      ],
+      "statement": "grep remains available to agents and delegated read-only children in every mode under registry and permission policy, while mutation remains ceiling-bound.",
+      "title": "RM-028 preserves cross-mode read-only search"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "offline_network_loss",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-029\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"ask may launch delegated read-only research children but no execution or mutation children; plan remains read-first with explicit planning artifacts, TODO projection, read/navigation LSP, limited read-only task tooling, and ask-gated websearch/webfetch/webextract/webresearch/webcrawl/webmap rather than a silent auto-deny shell.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"PS-001\", \"ACD-006\"], unblocks: [], acceptance_criteria: [\"RM-029 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"read_only_tooling_drift\", reasoning_tier: \"standard\", context_scope: \"mode_tooling_deltas\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"ask_plan_tooling_deltas\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0034\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0035\"], preserved_exact_tokens: [\"todoread\", \"todowrite\", \"task\", \"lsp\", \"/web\", \"websearch\", \"webfetch\", \"webextract\", \"webresearch\", \"webcrawl\", \"webmap\", \"Deep Plan\"], negative_constraints: [\"ask may not launch execution or mutation children.\", \"Plan mode is not a silent auto-deny shell around web tools.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Tools.md\", \"Plans/Permissions_System.md\", \"Plans/assistant-chat-design.md\"]}",
+          "line_end": 895,
+          "line_start": 895,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Capability availability and approval posture remain distinct.",
+      "item_id": "A005M-000113-I051",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-029",
+        "SEMANTIC:PLANUNIT:RM-029"
+      ],
+      "statement": "Ask may spawn only read-only research children; plan exposes planning, TODO, LSP, limited task, and ask-gated web families instead of silently denying the whole family.",
+      "title": "RM-029 preserves ask/plan tooling deltas"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "propagation",
+        "capabilities",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-030\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"regular allows full child-run behavior subject to permission, provider, and capability rules; yolo may broaden execution but cannot bypass child capability narrowing, provider restrictions, or Copilot-native routing; Crew is an overlay over the current parent mode rather than a separate runtime mode.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"PS-001\", \"CBP-003\", \"ACD-006\"], unblocks: [], acceptance_criteria: [\"RM-030 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"execution_authority_drift\", reasoning_tier: \"standard\", context_scope: \"mode_tooling_deltas\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"regular_yolo_crew_authority_deltas\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0036\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0037\", \"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0038\"], preserved_exact_tokens: [\"regular\", \"yolo\", \"Copilot-native routing exception\", \"Crew is an overlay\", \"FinalGUISpec\"], negative_constraints: [\"yolo still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.\", \"Crew is an overlay over the current parent mode, not a separate runtime mode.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md\", \"ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md\", \"ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Tools.md\", \"Plans/Models_System.md\", \"Plans/Permissions_System.md\", \"Plans/CLI_Bridged_Providers.md\", \"Plans/orchestrator-subagent-integration.md\", \"Plans/FinalGUISpec.md\"]}",
+          "line_end": 901,
+          "line_start": 901,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Crew and full automation cannot become authority-elevation shortcuts.",
+      "item_id": "A005M-000113-I052",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-030",
+        "SEMANTIC:PLANUNIT:RM-030"
+      ],
+      "statement": "regular child behavior remains policy-bound, yolo cannot bypass capability/provider/routing restrictions, and Crew remains an overlay on the parent mode.",
+      "title": "RM-030 preserves child and Crew ceilings"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "failures_recovery",
+        "behavior"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-031\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Acceptance criteria AC-01 through AC-03 require HTE provider tool_use to kill with kill.hte_tool_observed, DAE end-of-run scans to run for every terminal outcome with scan failures escalating to done.failed, and identical inputs to deterministically produce the same mode/strategy pair.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"T-001\", \"CBP-003\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-031 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"acceptance_criteria_loss\", reasoning_tier: \"standard\", context_scope: \"acceptance_criteria\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"strategy_determinism_acceptance_criteria\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039\"], preserved_exact_tokens: [\"AC-01\", \"AC-02\", \"AC-03\", \"kill.hte_tool_observed\", \"done.failed\", \"mode, strategy\"], negative_constraints: [\"Mode selection is deterministic for identical run envelope and config inputs.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md\", \"ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md\", \"ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Progression_Gates.md\", \"Plans/Tools.md\", \"Plans/Contracts_V0.md\"]}",
+          "line_end": 907,
+          "line_start": 907,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none_for_canonical_text",
+      "impact": "These core strategy contracts remain traceable to named acceptance criteria.",
+      "item_id": "A005M-000113-I053",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RM-031",
+        "SEMANTIC:PLANUNIT:RM-031"
+      ],
+      "statement": "The unit retains HTE tool-use termination, mandatory DAE scans with failure escalation, and deterministic mode/strategy selection.",
+      "title": "RM-031 carries AC-01 through AC-03 behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "gui_misleading_states",
+        "security_privacy",
+        "destructive_actions",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-032\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Acceptance criteria AC-04 through AC-07 require ask/plan project-file mutations to be blocked by permissions, yolo to keep FileSafe guards active with user-visible warnings if disabled, budgets to be enforced regardless of mode, and exactly one outcome to be recorded in done and persisted to seglog.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\", \"F2-086\", \"SP-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-032 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"acceptance_criteria_loss\", reasoning_tier: \"standard\", context_scope: \"acceptance_criteria\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"read_only_filesafe_budget_outcome_acceptance\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039\"], preserved_exact_tokens: [\"AC-04\", \"AC-05\", \"AC-06\", \"AC-07\", \"user-visible warning\", \"seglog\"], negative_constraints: [\"In ask and plan modes, no project-file mutation may occur.\", \"FileSafe guards MUST remain active in yolo mode.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md\", \"ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md\", \"ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Permissions_System.md\", \"Plans/FileSafe.md\", \"Plans/Progression_Gates.md\", \"Plans/Contracts_V0.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 913,
+          "line_start": 913,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "{plan_unit_id: \"RM-032\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Acceptance criteria AC-04 through AC-07 require ask/plan project-file mutations to be blocked by permissions, yolo to keep FileSafe guards active with user-visible warnings if disabled, budgets to be enforced regardless of mode, and exactly one outcome to be recorded in done and persisted to seglog.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\", \"F2-086\", \"SP-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-032 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"acceptance_criteria_loss\", reasoning_tier: \"standard\", context_scope: \"acceptance_criteria\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"read_only_filesafe_budget_outcome_acceptance\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039\"], preserved_exact_tokens: [\"AC-04\", \"AC-05\", \"AC-06\", \"AC-07\", \"user-visible warning\", \"seglog\"], negative_constraints: [\"In ask and plan modes, no project-file mutation may occur.\", \"FileSafe guards MUST remain active in yolo mode.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md\", \"ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md\", \"ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Permissions_System.md\", \"Plans/FileSafe.md\", \"Plans/Progression_Gates.md\", \"Plans/Contracts_V0.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 913,
+          "line_start": 913,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "gui_classification_mismatch",
+      "impact": "GUI planning and node-readiness can omit a mandatory warning surface, producing a misleading or absent safety state.",
+      "item_id": "A005M-000113-I054",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RM-032",
+        "SEMANTIC:PLANUNIT:RM-032"
+      ],
+      "statement": "RM-032's canonical text requires a user-visible warning when FileSafe is disabled under yolo, but the unit declares gui_related false.",
+      "title": "RM-032 is falsely classified non-GUI"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "builder_discretion",
+        "operations",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{plan_unit_id: \"RM-020\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Runtime teardown deterministically closes DB handles, MCP sessions, terminal shells, temporary files, and subprocess groups, emits diagnostics for failed teardown, mints new helper identity after restart, and monitors long-lived helper memory pressure for controlled restart or failover.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"SP-001\", \"T-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-020 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"helper_lifecycle_drift\", reasoning_tier: \"standard\", context_scope: \"runtime_lifecycle\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"resource_disposal_helper_health_monitoring\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0025\"], preserved_exact_tokens: [\"Resource disposal and health monitoring\", \"DB handles\", \"MCP sessions\", \"terminal shells\", \"temporary files\", \"resident-set growth\", \"resource_pressure\"], negative_constraints: [\"PM MUST NOT silently reuse poisoned process state or abandoned shell/session state.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md\", \"ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/storage-plan.md\", \"Plans/Tools.md\", \"Plans/orchestrator-subagent-integration.md\", \"Plans/Architecture_Invariants.md\"]}",
+          "line_end": 841,
+          "line_start": 841,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "{plan_unit_id: \"RM-032\", unit_type: \"requirement\", status: \"accepted\", owner_doc: \"Plans/Run_Modes.md\", canonical_text: \"Acceptance criteria AC-04 through AC-07 require ask/plan project-file mutations to be blocked by permissions, yolo to keep FileSafe guards active with user-visible warnings if disabled, budgets to be enforced regardless of mode, and exactly one outcome to be recorded in done and persisted to seglog.\", gui_related: false, gui_classification_reason: \"This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.\", split_recommended: false, depends_on: [\"PDS-003\", \"PDS-004\", \"PDS-005\", \"PNC-001\", \"PS-001\", \"F2-086\", \"SP-001\", \"CV-215\"], unblocks: [], acceptance_criteria: [\"RM-032 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.\", \"ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.\", \"No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.\"], validation_surfaces: [\"python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\", \"python3 scripts/pm-plan-index.py validate\"], risk_class: \"acceptance_criteria_loss\", reasoning_tier: \"standard\", context_scope: \"acceptance_criteria\", implementation_surfaces: [\"Plans/Run_Modes.md\"], node_compile_hint: {mode: \"read_only_filesafe_budget_outcome_acceptance\", create_worknodes: false}, source_lineage: [\"Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039\"], preserved_exact_tokens: [\"AC-04\", \"AC-05\", \"AC-06\", \"AC-07\", \"user-visible warning\", \"seglog\"], negative_constraints: [\"In ask and plan modes, no project-file mutation may occur.\", \"FileSafe guards MUST remain active in yolo mode.\"], preserved_contractrefs: [\"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\", \"ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md\", \"ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md\", \"ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md\", \"ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\", \"ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md\"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: [\"Plans/Run_Modes.md\", \"Plans/Permissions_System.md\", \"Plans/FileSafe.md\", \"Plans/Progression_Gates.md\", \"Plans/Contracts_V0.md\", \"Plans/storage-plan.md\"]}",
+          "line_end": 913,
+          "line_start": 913,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "non_executable_validation_surface",
+      "impact": "Plan governance can pass while the implementation violates the very behavior the PlanUnit canonical_text names.",
+      "item_id": "A005M-000113-I055",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:RM-020",
+        "PLANUNIT:RM-021",
+        "PLANUNIT:RM-022",
+        "PLANUNIT:RM-023",
+        "PLANUNIT:RM-024",
+        "PLANUNIT:RM-025",
+        "PLANUNIT:RM-026",
+        "PLANUNIT:RM-027",
+        "PLANUNIT:RM-028",
+        "PLANUNIT:RM-029",
+        "PLANUNIT:RM-030",
+        "PLANUNIT:RM-031",
+        "PLANUNIT:RM-032",
+        "SEMANTIC:PLANUNIT:RM-020",
+        "SEMANTIC:PLANUNIT:RM-021",
+        "SEMANTIC:PLANUNIT:RM-022",
+        "SEMANTIC:PLANUNIT:RM-023",
+        "SEMANTIC:PLANUNIT:RM-024",
+        "SEMANTIC:PLANUNIT:RM-025",
+        "SEMANTIC:PLANUNIT:RM-026",
+        "SEMANTIC:PLANUNIT:RM-027",
+        "SEMANTIC:PLANUNIT:RM-028",
+        "SEMANTIC:PLANUNIT:RM-029",
+        "SEMANTIC:PLANUNIT:RM-030",
+        "SEMANTIC:PLANUNIT:RM-031",
+        "SEMANTIC:PLANUNIT:RM-032"
+      ],
+      "statement": "RM-002 through RM-032 repeatedly use addressability/preservation/no-code acceptance boilerplate and only plan-migration/index validation surfaces. Those checks cannot falsify runtime authority, state, failure, GUI, performance, or recovery behavior described by the units.",
+      "title": "Standardized PlanUnits validate document migration, not runtime behavior"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        399
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "item_ids": [
+        "A005M-000113-I001",
+        "A005M-000113-I002",
+        "A005M-000113-I003",
+        "A005M-000113-I004",
+        "A005M-000113-I005",
+        "A005M-000113-I006",
+        "A005M-000113-I007",
+        "A005M-000113-I008",
+        "A005M-000113-I009",
+        "A005M-000113-I010",
+        "A005M-000113-I011",
+        "A005M-000113-I012",
+        "A005M-000113-I013",
+        "A005M-000113-I014",
+        "A005M-000113-I015"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-673E34012C23-0001; evidence is carried by item_ids A005M-000113-I001, A005M-000113-I002, A005M-000113-I003, A005M-000113-I004, A005M-000113-I005, A005M-000113-I006, A005M-000113-I007, A005M-000113-I008, A005M-000113-I009, A005M-000113-I010, A005M-000113-I011, A005M-000113-I012, A005M-000113-I013, A005M-000113-I014, A005M-000113-I015.",
+      "window_id": "WIN-673E34012C23-0001"
+    },
+    {
+      "core_range": [
+        400,
+        759
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RM-002",
+        "PLANUNIT:RM-003",
+        "PLANUNIT:RM-004",
+        "PLANUNIT:RM-005",
+        "PLANUNIT:RM-006",
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002",
+        "SEMANTIC:PLANUNIT:RM-002",
+        "SEMANTIC:PLANUNIT:RM-003",
+        "SEMANTIC:PLANUNIT:RM-004",
+        "SEMANTIC:PLANUNIT:RM-005",
+        "SEMANTIC:PLANUNIT:RM-006"
+      ],
+      "item_ids": [
+        "A005M-000113-I016",
+        "A005M-000113-I017",
+        "A005M-000113-I018",
+        "A005M-000113-I019",
+        "A005M-000113-I020",
+        "A005M-000113-I021",
+        "A005M-000113-I022",
+        "A005M-000113-I023",
+        "A005M-000113-I024",
+        "A005M-000113-I025",
+        "A005M-000113-I026",
+        "A005M-000113-I027",
+        "A005M-000113-I028"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-673E34012C23-0002; evidence is carried by item_ids A005M-000113-I016, A005M-000113-I017, A005M-000113-I018, A005M-000113-I019, A005M-000113-I020, A005M-000113-I021, A005M-000113-I022, A005M-000113-I023, A005M-000113-I024, A005M-000113-I025, A005M-000113-I026, A005M-000113-I027, A005M-000113-I028.",
+      "window_id": "WIN-673E34012C23-0002"
+    },
+    {
+      "core_range": [
+        760,
+        837
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RM-007",
+        "PLANUNIT:RM-008",
+        "PLANUNIT:RM-009",
+        "PLANUNIT:RM-010",
+        "PLANUNIT:RM-011",
+        "PLANUNIT:RM-012",
+        "PLANUNIT:RM-013",
+        "PLANUNIT:RM-014",
+        "PLANUNIT:RM-015",
+        "PLANUNIT:RM-016",
+        "PLANUNIT:RM-017",
+        "PLANUNIT:RM-018",
+        "PLANUNIT:RM-019",
+        "SEMANTIC:PLANUNIT:RM-007",
+        "SEMANTIC:PLANUNIT:RM-008",
+        "SEMANTIC:PLANUNIT:RM-009",
+        "SEMANTIC:PLANUNIT:RM-010",
+        "SEMANTIC:PLANUNIT:RM-011",
+        "SEMANTIC:PLANUNIT:RM-012",
+        "SEMANTIC:PLANUNIT:RM-013",
+        "SEMANTIC:PLANUNIT:RM-014",
+        "SEMANTIC:PLANUNIT:RM-015",
+        "SEMANTIC:PLANUNIT:RM-016",
+        "SEMANTIC:PLANUNIT:RM-017",
+        "SEMANTIC:PLANUNIT:RM-018",
+        "SEMANTIC:PLANUNIT:RM-019"
+      ],
+      "item_ids": [
+        "A005M-000113-I029",
+        "A005M-000113-I030",
+        "A005M-000113-I031",
+        "A005M-000113-I032",
+        "A005M-000113-I033",
+        "A005M-000113-I034",
+        "A005M-000113-I035",
+        "A005M-000113-I036",
+        "A005M-000113-I037",
+        "A005M-000113-I038",
+        "A005M-000113-I039",
+        "A005M-000113-I040",
+        "A005M-000113-I041"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-673E34012C23-0003; evidence is carried by item_ids A005M-000113-I029, A005M-000113-I030, A005M-000113-I031, A005M-000113-I032, A005M-000113-I033, A005M-000113-I034, A005M-000113-I035, A005M-000113-I036, A005M-000113-I037, A005M-000113-I038, A005M-000113-I039, A005M-000113-I040, A005M-000113-I041.",
+      "window_id": "WIN-673E34012C23-0003"
+    },
+    {
+      "core_range": [
+        838,
+        915
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RM-020",
+        "PLANUNIT:RM-021",
+        "PLANUNIT:RM-022",
+        "PLANUNIT:RM-023",
+        "PLANUNIT:RM-024",
+        "PLANUNIT:RM-025",
+        "PLANUNIT:RM-026",
+        "PLANUNIT:RM-027",
+        "PLANUNIT:RM-028",
+        "PLANUNIT:RM-029",
+        "PLANUNIT:RM-030",
+        "PLANUNIT:RM-031",
+        "PLANUNIT:RM-032",
+        "SEMANTIC:PLANUNIT:RM-020",
+        "SEMANTIC:PLANUNIT:RM-021",
+        "SEMANTIC:PLANUNIT:RM-022",
+        "SEMANTIC:PLANUNIT:RM-023",
+        "SEMANTIC:PLANUNIT:RM-024",
+        "SEMANTIC:PLANUNIT:RM-025",
+        "SEMANTIC:PLANUNIT:RM-026",
+        "SEMANTIC:PLANUNIT:RM-027",
+        "SEMANTIC:PLANUNIT:RM-028",
+        "SEMANTIC:PLANUNIT:RM-029",
+        "SEMANTIC:PLANUNIT:RM-030",
+        "SEMANTIC:PLANUNIT:RM-031",
+        "SEMANTIC:PLANUNIT:RM-032"
+      ],
+      "item_ids": [
+        "A005M-000113-I042",
+        "A005M-000113-I043",
+        "A005M-000113-I044",
+        "A005M-000113-I045",
+        "A005M-000113-I046",
+        "A005M-000113-I047",
+        "A005M-000113-I048",
+        "A005M-000113-I049",
+        "A005M-000113-I050",
+        "A005M-000113-I051",
+        "A005M-000113-I052",
+        "A005M-000113-I053",
+        "A005M-000113-I054",
+        "A005M-000113-I055"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-673E34012C23-0004; evidence is carried by item_ids A005M-000113-I042, A005M-000113-I043, A005M-000113-I044, A005M-000113-I045, A005M-000113-I046, A005M-000113-I047, A005M-000113-I048, A005M-000113-I049, A005M-000113-I050, A005M-000113-I051, A005M-000113-I052, A005M-000113-I053, A005M-000113-I054, A005M-000113-I055.",
+      "window_id": "WIN-673E34012C23-0004"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO-673E34012C23-0001",
+    "document_path": "Plans/Run_Modes.md",
+    "micro_window_ids": [
+      "WIN-673E34012C23-0001",
+      "WIN-673E34012C23-0002",
+      "WIN-673E34012C23-0003",
+      "WIN-673E34012C23-0004"
+    ],
+    "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [],
+    "feature_family_keys": [],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m_000113_attempt_0014_terminal"
+}

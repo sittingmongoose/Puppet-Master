@@ -1,0 +1,16 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "canonical_plan_writes_authorized": false,
+  "concurrency": 24,
+  "coverage_unit": "canonical_structural_micro_window",
+  "expected_assignment_reduction_ratio": 9.9140625,
+  "new_epoch_launch_seal_sha256": "a7569c959133d5146b91e7771b9018e51aaf2db965c2b77af327b9295210d4ed",
+  "new_epoch_ref": "master/macro/frozen/epoch-0014",
+  "new_macro_assignment_count": 256,
+  "old_assignment_credits_preserved": 63,
+  "old_coverage_ref": "master/live/coverage_state.snapshot-0015.json",
+  "old_fully_dual_reviewed_windows_seeded": 31,
+  "old_runner_outputs_mutated": false,
+  "schema_version": "macro-v2-migration-authority-v1",
+  "status": "PRESERVE_OLD_LINEAGE_REBASE_FUTURE_COVERAGE"
+}

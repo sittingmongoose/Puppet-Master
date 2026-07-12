@@ -1,0 +1,50 @@
+{
+  "schema_version": "scenario-adversarial-dual-cohort-launch-template-v2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "wave-0001",
+  "scope_id": "dual-cohort-0001-0002",
+  "status": "BLOCKED_AWAITING_RESEARCH_CHECKPOINT_AND_TWO_INDEPENDENT_ACTIVATIONS",
+  "activation_granted": false,
+  "launch_authorized": false,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "concurrency_policy_v6_semantic_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+  "concurrency_policy_v7_scheduling_only_sha256": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+  "v7_changes_semantics": false,
+  "combined_active_semantic_count": 16,
+  "combined_assignment_ids": ["A005SA-0001", "A005SA-0002", "A005SA-0003", "A005SA-0004", "A005SA-0005", "A005SA-0006", "A005SA-0007", "A005SA-0008", "A005SA-0009", "A005SA-0010", "A005SA-0011", "A005SA-0012", "A005SA-0013", "A005SA-0014", "A005SA-0015", "A005SA-0016"],
+  "combined_assignment_digest_sha256": "6d2f77e5a24fdd5a6d7fc4a2d34e811b40b92028d43cf1244da8c02583b1a1a6",
+  "combined_agent_paths": ["/root/a005_scenario_adversarial_0001_attempt_0001_terminal", "/root/a005_scenario_adversarial_0002_attempt_0001_terminal", "/root/a005_scenario_adversarial_0003_attempt_0001_terminal", "/root/a005_scenario_adversarial_0004_attempt_0001_terminal", "/root/a005_scenario_adversarial_0005_attempt_0001_terminal", "/root/a005_scenario_adversarial_0006_attempt_0001_terminal", "/root/a005_scenario_adversarial_0007_attempt_0001_terminal", "/root/a005_scenario_adversarial_0008_attempt_0001_terminal", "/root/a005_scenario_adversarial_0009_attempt_0001_terminal", "/root/a005_scenario_adversarial_0010_attempt_0001_terminal", "/root/a005_scenario_adversarial_0011_attempt_0001_terminal", "/root/a005_scenario_adversarial_0012_attempt_0001_terminal", "/root/a005_scenario_adversarial_0013_attempt_0001_terminal", "/root/a005_scenario_adversarial_0014_attempt_0001_terminal", "/root/a005_scenario_adversarial_0015_attempt_0001_terminal", "/root/a005_scenario_adversarial_0016_attempt_0001_terminal"],
+  "combined_agent_path_digest_sha256": "bb9131e6ce1a3e5aaa23969ac08db8c64a564e94de3c38a2018c7649c2b0feef",
+  "combined_feature_count": 1640,
+  "combined_feature_union_digest_sha256": "a7b9bbf19927b5605fb3fa7ed10cc52878c08528c9f4587a5c973b6c8c3f34de",
+  "feature_overlap_count": 0,
+  "fixed_hashes": {
+    "full_wave_luna_prelaunch_sha256": "ae8e493e21a6fba1408d7555c6d3ec45f65895c24b611131283c2396c931df83",
+    "concurrency_policy_v6_semantic_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+    "concurrency_policy_v7_scheduling_only_sha256": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+    "prior_dual_v1_hashes": {"authority": "6e8756b67c8db057f7a688c4a0769db89a8415241d9b9bd23ae3e57ed266b9b8", "template": "c8ebd59844a825d4b1a959453cc80d67c5d4db5d6240c6df37da9884eb61926c", "readiness": "6b0b51f89ac194a68f306dbbd9fd01a1b2a7c7915ccb40a0b95898266de15ecf", "verifier": "fdada52c6d5a7b3660434e93113b7034bde7120e7fc1cbd0884cb5a0cedd48b2", "tests": "41b0c8ea87b4d6137211dcca20c3bb73b4a9acecaa0109cf697b28412151c7a3"},
+    "cohort_0001_v6_preparation_hashes": {"authority": "a74d46ea02ba3e0f6ef4c465cfa1c969b72fc4dafa1437143ee31e9536081f49", "readiness": "a13ed1b4e0129b6d086d1b9c566f8f4a51a595bac38805d1497d14a0bb1c3f39", "template": "77f2f96f910ffbea999a7aaa27291ecebbcba18a2c3b89f9d04b52e81b6135e4", "generator": "aa0066bac6c090c11318ea8ae75f2038f605b72d4cb3c6f5a3b16d6910aa0647", "verifier": "d47c2e88b688675455246a77bdd91fc99e115d4be0ec9d96c469b74ade4b23fc", "tests": "2e730c41ee095e6de6d3b538641c288d33b97272a5a4c21c70219e3e917ee55d"},
+    "cohort_0002_v6_preparation_hashes": {"authority": "f9ac772b6fb7490848b69f280bde8a63d3ce1dca0f03e8a69923efccc519c1a6", "readiness": "aa7b2aabac273445c64c9c9127168542c4dc17c565f6e507ba0da0c8a3ad5df9", "template": "965ecdab2e6cb079fb7a920fbef40a13c7de18b2f6ab0afd6cb44f5cd639ec5a", "generator": "7df31f951bad6761950848ff8f7bf8b0a8e273e054d14852dbf0df72d76383ab", "verifier": "3335d8f0e20bca4d34ee86a8e5856a7e2afd67ddabf9a7080b89e35a9452f219", "tests": "4f45895ee1d095e398edbb67ae8177a65fa3d82c49c00994524764d45ea02c6d"},
+    "combined_assignment_digest_sha256": "6d2f77e5a24fdd5a6d7fc4a2d34e811b40b92028d43cf1244da8c02583b1a1a6",
+    "combined_agent_path_digest_sha256": "bb9131e6ce1a3e5aaa23969ac08db8c64a564e94de3c38a2018c7649c2b0feef",
+    "combined_feature_union_digest_sha256": "a7b9bbf19927b5605fb3fa7ed10cc52878c08528c9f4587a5c973b6c8c3f34de"
+  },
+  "cohorts": [
+    {"cohort_id": "cohort-0001", "assignment_ids": ["A005SA-0001", "A005SA-0002", "A005SA-0003", "A005SA-0004", "A005SA-0005", "A005SA-0006", "A005SA-0007", "A005SA-0008"], "feature_count": 823, "feature_refs_digest_sha256": "aead114c4e46d8bea5bf27623902f0a052d1ba969b7e1c3aad5181537e6183b5", "required_activation": "separately generated by activation-preparation-v2-v6-compat", "required_independent_validation": true},
+    {"cohort_id": "cohort-0002", "assignment_ids": ["A005SA-0009", "A005SA-0010", "A005SA-0011", "A005SA-0012", "A005SA-0013", "A005SA-0014", "A005SA-0015", "A005SA-0016"], "feature_count": 817, "feature_refs_digest_sha256": "99163803098a19f4db61c85836f773a0c7a226c313acec0a177a8c1692f93f93", "required_activation": "separately generated by existing V6-native activation-preparation-v1", "required_independent_validation": true}
+  ],
+  "later_gate_inputs": [
+    {"input_id": "global_independent_research_checkpoint", "path": null, "sha256": null},
+    {"input_id": "cohort_0001_v6_activation", "path": null, "sha256": null},
+    {"input_id": "cohort_0001_independent_activation_validation", "path": null, "sha256": null},
+    {"input_id": "cohort_0002_v6_activation", "path": null, "sha256": null},
+    {"input_id": "cohort_0002_independent_activation_validation", "path": null, "sha256": null}
+  ],
+  "forbidden_scope": ["cohort-0003", "cohort-0004", "all-32", "single all-16 activation", "overlapping cohort assignments or paths"],
+  "current_zero_state": {"outputs": 16, "output_files": 0, "receipts": 0, "results": 0, "activations": 0},
+  "coverage_credit": 0,
+  "certification_credit": 0,
+  "launch_credit": 0
+}

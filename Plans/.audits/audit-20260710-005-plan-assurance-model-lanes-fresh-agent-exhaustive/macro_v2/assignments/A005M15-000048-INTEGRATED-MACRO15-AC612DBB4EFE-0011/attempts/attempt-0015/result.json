@@ -1,0 +1,642 @@
+{
+  "assignment_id": "A005M15-000048-INTEGRATED-MACRO15-AC612DBB4EFE-0011",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "consumers", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "- Every terminal action has GUI-visible state and command palette command; no core workflow requires opaque CLI-only state.",
+          "line_end": 26819,
+          "line_start": 26819,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_control_plane_contract",
+      "impact": "Core terminal workflows remain inspectable and invocable from the GUI rather than accumulating hidden CLI-only product state.",
+      "item_id": "A005M15-000048-I01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-413", "SEMANTIC:PLANUNIT:F3-413"],
+      "statement": "F3-413 establishes the GUI and command palette as the visible PM control plane for every terminal action.",
+      "title": "GUI-first terminal control plane is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "propagation", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "gui_misleading_states", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Every terminal action has GUI-visible state and command palette command; no core workflow requires opaque CLI-only state.",
+          "line_end": 26819,
+          "line_start": 26819,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "undefined_action_inventory_and_projection_oracle",
+      "impact": "Builders can disagree about what counts as a terminal action, which state must be projected, and how failures, stale state, accessibility, and command/action parity are proven.",
+      "item_id": "A005M15-000048-I02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-413", "SEMANTIC:PLANUNIT:F3-413"],
+      "statement": "The universal terminal-action requirement has no enumerated action identity, projection-state schema, parity mapping, failure-state behavior, or falsifiable completeness oracle.",
+      "title": "Every terminal action is not operationally enumerable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "gui_truth", "localization", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity.",
+          "line_end": 26949,
+          "line_start": 26949,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_fixture_scope",
+      "impact": "The intended rendering-fidelity domain includes source/rendered parity across multiple Unicode and glyph-shaping cases rather than terminal-only fidelity.",
+      "item_id": "A005M15-000048-I03",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-414", "SEMANTIC:PLANUNIT:F3-414"],
+      "statement": "F3-414 names a broad rich-text fixture surface spanning ligatures, bullets, arrows, emoji, combining marks, CJK width, view mode, and source-byte copying.",
+      "title": "Rich-text fidelity fixture domain is broad"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "gui_truth", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "localization", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Rendered Markdown preserves displayed glyphs for fi/bullet fixtures",
+          "line_end": 26897,
+          "line_start": 26897,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- Copy from rendered view preserves source bytes where expected",
+          "line_end": 26898,
+          "line_start": 26898,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "acceptance_scope_narrower_than_canonical_requirement",
+      "impact": "A build can pass the listed criteria while arrows, emoji, combining marks, CJK width, raw/rendered parity, or source-byte copying still fail; the phrase where expected also leaves byte-preservation cases discretionary.",
+      "item_id": "A005M15-000048-I04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-414", "SEMANTIC:PLANUNIT:F3-414"],
+      "statement": "F3-414's acceptance criteria test only fi/bullet display and conditionally specified copying, omitting most fixture classes promised by the canonical text.",
+      "title": "Rich-text acceptance does not cover its stated fixture matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "acceptance_oracles", "invalid_states_transitions", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "- Bypass attempts become typed gate violations with blocked state and repair route.",
+          "line_end": 26971,
+          "line_start": 26971,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_gate_violation_contract",
+      "impact": "Hard-gate bypasses cannot silently complete an artifact and instead expose a typed blocked state with a recovery route.",
+      "item_id": "A005M15-000048-I05",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-415", "SEMANTIC:PLANUNIT:F3-415"],
+      "statement": "F3-415 explicitly converts visual QA, evidence, artifact-delivery, and output-modality bypasses into typed violations and blocked recovery states.",
+      "title": "Hard-gate bypass has typed blocking behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "failures_recovery", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- An artifact cannot be delivered/marked complete until required visual/evidence gates settle.",
+          "line_end": 26970,
+          "line_start": 26970,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "undefined_gate_lifecycle_and_authority",
+      "impact": "Concurrent, timed-out, canceled, contradictory, or partially satisfied gates can be settled inconsistently, and the authority to waive, retry, invalidate, or repair a gate is left to implementation choice.",
+      "item_id": "A005M15-000048-I06",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-415", "SEMANTIC:PLANUNIT:F3-415"],
+      "statement": "The contract does not define gate states, aggregation and settlement rules, timeout/cancellation behavior, evidence invalidation, waiver authority, or idempotent repair transitions.",
+      "title": "RuntimeHardGate settlement is not a state machine"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "gui_truth", "propagation", "scale_performance", "acceptance_oracles", "privacy_data_lifecycle", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.",
+          "line_end": 27034,
+          "line_start": 27034,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_store_separation_contract",
+      "impact": "Ephemeral UI projections are prevented from becoming an unbounded proxy for durable semantic history, and eviction is intended to be observable.",
+      "item_id": "A005M15-000048-I07",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-416", "SEMANTIC:PLANUNIT:F3-416"],
+      "statement": "F3-416 explicitly separates caps for GUI thread projection, replay history, terminal scrollback, media thumbnails, and debug logs and requires eviction receipts.",
+      "title": "Projection stores are separated from durable history"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "failures_recovery", "operations", "scale_performance", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "scale_limits", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- 5MB+ projection cannot freeze main UI",
+          "line_end": 27042,
+          "line_start": 27042,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "- Evicted projection data records receipt",
+          "line_end": 27043,
+          "line_start": 27043,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_per_store_budget_and_eviction_algorithm",
+      "impact": "Implementations can choose incompatible caps, accounting units, eviction order, pinning behavior, receipt fields, and concurrency handling while still satisfying a vague non-freeze check.",
+      "item_id": "A005M15-000048-I08",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-416", "SEMANTIC:PLANUNIT:F3-416"],
+      "statement": "The unit names separate stores but defines no per-store budgets, measurement boundary, pressure thresholds, eviction order, protected records, concurrent writer semantics, or receipt schema; 5MB+ is not a measurable latency oracle.",
+      "title": "Projection budget is a goal without enforceable limits"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "failures_recovery", "compatibility_migration", "recovery_rollback", "privacy_data_lifecycle"],
+      "evidence": [
+        {
+          "exact_quote": "- Durable semantic history is not lost when UI projection prunes",
+          "line_end": 27044,
+          "line_start": 27044,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_durability_invariant",
+      "impact": "UI compaction is explicitly forbidden from deleting durable semantic history.",
+      "item_id": "A005M15-000048-I09",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-416", "SEMANTIC:PLANUNIT:F3-416"],
+      "statement": "F3-416 states the critical durability invariant separating projection pruning from durable-history loss.",
+      "title": "Projection pruning cannot erase semantic history"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "gui_truth", "security_privacy", "compatibility_migration", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.",
+          "line_end": 27112,
+          "line_start": 27112,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_gui_platform_and_icon_contract",
+      "impact": "The GUI platform, web architecture, icon supply chain, and accessible non-icon state representation are constrained consistently across builds.",
+      "item_id": "A005M15-000048-I10",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-417", "SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "F3-417 locks Slint 1.17.1, native and WASM GUI architecture, bundled SVG icon identities, accessible labels, and visible non-icon state text while forbidding remote or pictographic pseudo-icons.",
+      "title": "GUI platform and icon policy are strongly bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "contracts", "authority", "security_privacy", "failures_recovery", "authority_boundaries", "untrusted_inputs", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or",
+          "line_end": 27107,
+          "line_start": 27107,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded",
+          "line_end": 27108,
+          "line_start": 27108,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_browser_authority_boundary",
+      "impact": "Browser-only WASM cannot silently exercise OS authority and must traverse an authenticated, permissioned, redacted, and auditable bridge.",
+      "item_id": "A005M15-000048-I11",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-417", "SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "F3-417 establishes a clear browser/OS authority boundary and enumerates security and audit controls for trusted-local-daemon routing.",
+      "title": "Browser OS capabilities require trusted daemon mediation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "gui_misleading_states", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,",
+          "line_end": 27109,
+          "line_start": 27109,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses",
+          "line_end": 27110,
+          "line_start": 27110,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "capability_enum_without_transition_protocol",
+      "impact": "A disconnected, revoked, stale, or partially failed daemon can leave GUI capability claims misleading, and implementations may differ on when authority is downgraded or restored.",
+      "item_id": "A005M15-000048-I12",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-417", "SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "The web capability enum lacks transition triggers, freshness and expiry, daemon disconnect/reconnect behavior, pairing revocation, in-flight request handling, and deterministic downgrade/recovery precedence.",
+      "title": "Web capability states lack lifecycle semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted",
+          "line_end": 27102,
+          "line_start": 27102,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes",
+          "line_end": 27103,
+          "line_start": 27103,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "renderer_order_without_failure_and_observability_contract",
+      "impact": "Invalid overrides, corrupt persisted preferences, initialization failures, or emergency software fallback can be handled inconsistently and may remain invisible to users and support tooling.",
+      "item_id": "A005M15-000048-I13",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:F3-417", "SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "The renderer precedence is explicit, but validation of override/preference values, fallback triggers, persistence repair, user-visible degradation, retry behavior, and selection receipts are unspecified.",
+      "title": "Renderer fallback order lacks failure semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "All CTA cards share fields `card_id`, `card_kind`, `severity`, `title`, `body`, `primary_action_id`, `secondary_action_ids[]`, `dismissible`, `owner_route`, `blocked_reason_code?`, and `created_at_utc`.",
+          "line_end": 27189,
+          "line_start": 27189,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_cta_card_shape",
+      "impact": "CTA rendering and dispatch can be keyed by a common record shape with card-kind-specific command and ownership data.",
+      "item_id": "A005M15-000048-I14",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "The F3-417 semantic window defines a shared CTA card schema and row-specific action requirements instead of generic behavioral equivalence.",
+      "title": "CTA cards have a concrete shared field contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "propagation", "operations", "builder_discretion", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "accessibility", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "All CTA cards share fields `card_id`, `card_kind`, `severity`, `title`, `body`, `primary_action_id`, `secondary_action_ids[]`, `dismissible`, `owner_route`, `blocked_reason_code?`, and `created_at_utc`.",
+          "line_end": 27189,
+          "line_start": 27189,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "cta_schema_without_lifecycle_semantics",
+      "impact": "Duplicate, stale, concurrently updated, unauthorized, or destructively dismissed cards can diverge across surfaces because record lifecycle and command outcomes are not specified.",
+      "item_id": "A005M15-000048-I15",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "CTA fields and commands are enumerated, but creation/update identity, ordering, deduplication, expiry, dismissal persistence, command authorization, disabled/pending states, idempotency, and failure recovery are absent.",
+      "title": "CTA card lifecycle remains discretionary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "consumers", "gui_truth", "propagation", "compatibility_migration", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "`Ctrl+1..8` binds to the first eight visible side-panel items in group order after policy and feature availability filtering. Hidden or unsupported items remain command-palette addressable but do not consume a shortcut slot.",
+          "line_end": 27213,
+          "line_start": 27213,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_deterministic_shortcut_binding",
+      "impact": "Shortcut slots derive predictably from visible policy-supported items while hidden items remain reachable through the command palette.",
+      "item_id": "A005M15-000048-I16",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "The Activity Bar contract defines stable group order, visibility filtering, shortcut-slot consumption, and an alternate command-palette path.",
+      "title": "Activity Bar shortcut assignment is deterministic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "compatibility_migration", "recovery_rollback", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "Startup restore reads `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}` as defined by `Plans/storage-plan.md`. The GUI treats missing keys as first-run defaults, corrupt keys as recoverable reset with a warning card, and compatibility aliases as migration inputs only.",
+          "line_end": 27247,
+          "line_start": 27247,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_restore_state_handling",
+      "impact": "Missing, corrupt, and compatibility-key states have distinct GUI and migration outcomes rather than collapsing into an opaque startup failure.",
+      "item_id": "A005M15-000048-I17",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "Startup restore defines project-scoped keys and explicit first-run, recoverable-corruption, and migration-only alias behavior.",
+      "title": "Startup restore distinguishes missing, corrupt, and legacy state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "compatibility_migration", "acceptance_oracles", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.",
+          "line_end": 27258,
+          "line_start": 27258,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_lineage_non_authority_boundary",
+      "impact": "Audit summaries cannot be mistaken for product repair proof, runtime authorization, or a buildability transition.",
+      "item_id": "A005M15-000048-I18",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:F3-417"],
+      "statement": "The semantic window expressly limits FABLE rows to audit lineage and requires independent canonical evidence or a non-repair disposition for closure.",
+      "title": "Audit-lineage notes are explicitly non-canonical proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "consumers", "gui_truth", "propagation", "security_privacy"],
+      "evidence": [
+        {
+          "exact_quote": "  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord identity and usage_event_ref normalized to object_kind = usage_event are the primary navigation and rollup identity; thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.",
+          "line_end": 27279,
+          "line_start": 27279,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_shared_usage_identity_and_projection_contract",
+      "impact": "Usage identity, provenance, settlement, freshness, health, and redaction semantics propagate consistently across all named GUI consumers.",
+      "item_id": "A005M15-000048-I19",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-418", "SEMANTIC:PLANUNIT:F3-418"],
+      "statement": "F3-418 defines usage_event_ref or UsageRecord identity as primary and requires every named usage surface to render a shared provenance-aware value-state projection.",
+      "title": "Usage identity and value-state propagation are unified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "gui_truth", "security_privacy", "privacy_data_lifecycle", "gui_misleading_states", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  - Do not render missing, unknown, hidden, stale, disabled, not exposed, partial, failed, or unsupported values as zero.",
+          "line_end": 27335,
+          "line_start": 27335,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  - Do not expose unredacted raw provider payloads in GUI debug views.",
+          "line_end": 27338,
+          "line_start": 27338,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "none_explicit_false_zero_and_redaction_guards",
+      "impact": "The GUI cannot misrepresent absent or uncertain telemetry as real zero and cannot expose raw provider payloads through debugging affordances.",
+      "item_id": "A005M15-000048-I20",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:F3-418", "SEMANTIC:PLANUNIT:F3-418"],
+      "statement": "F3-418 has explicit negative constraints against false-zero rendering and unredacted provider-payload disclosure.",
+      "title": "Usage GUI forbids false zero and raw payload exposure"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "consumers", "gui_truth", "failures_recovery", "propagation", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "offline_network_loss", "localization", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Visible token, cost, quota, context, cache, reasoning, provider_total, and credit cells render disabled, not_exposed, unknown, stale, estimated, hidden_byok, hidden_subscription, streaming_partial, failed, adjusted, and provider-reported zero as distinct states.",
+          "line_end": 27286,
+          "line_start": 27286,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "value_state_list_without_precedence_or_transition_matrix",
+      "impact": "Surfaces can display, sort, aggregate, retry, and transition the same UsageRecord differently when freshness, settlement, provider visibility, partial streaming, failure, and adjustment conditions overlap.",
+      "item_id": "A005M15-000048-I21",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:F3-418", "SEMANTIC:PLANUNIT:F3-418"],
+      "statement": "The accepted state names are not accompanied by precedence, legal transition, time-threshold, reconnect/retry, aggregation, sorting, localization-copy, or multi-condition composition rules.",
+      "title": "Usage value states lack an executable matrix"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "consumers", "gui_truth", "security_privacy", "propagation", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content.",
+          "line_end": 27291,
+          "line_start": 27291,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "redaction_projection_without_access_and_lifecycle_rules",
+      "impact": "A UI may expose metadata that enables inference or stale access, and different consumers may disagree about who can resolve raw_payload_ref, how long it lives, or how omitted counts and permission changes propagate.",
+      "item_id": "A005M15-000048-I22",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:F3-418", "SEMANTIC:PLANUNIT:F3-418"],
+      "statement": "The redacted debug projection names fields but does not define permission authority, raw reference dereference behavior, retention/revocation, hash threat model, metadata redaction, or cross-surface invalidation.",
+      "title": "Usage debug redaction lacks authority and lifecycle detail"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [26803, 27092],
+      "covered_source_unit_refs": ["PLANUNIT:F3-413", "PLANUNIT:F3-414", "PLANUNIT:F3-415", "PLANUNIT:F3-416", "SEMANTIC:PLANUNIT:F3-413", "SEMANTIC:PLANUNIT:F3-414", "SEMANTIC:PLANUNIT:F3-415", "SEMANTIC:PLANUNIT:F3-416"],
+      "item_ids": ["A005M15-000048-I01", "A005M15-000048-I02", "A005M15-000048-I03", "A005M15-000048-I04", "A005M15-000048-I05", "A005M15-000048-I06", "A005M15-000048-I07", "A005M15-000048-I08", "A005M15-000048-I09"],
+      "reviewed": true,
+      "summary": "Reviewed F3-413 through F3-416 line-by-line: GUI-first terminal control, rich-text fidelity, UI hard gates, and bounded projection stores have clear intent, but their action inventory, fixture oracles, gate lifecycle, and per-store budget algorithms leave material test and recovery gaps.",
+      "window_id": "WIN-AC612DBB4EFE-0075"
+    },
+    {
+      "core_range": [27093, 27344],
+      "covered_source_unit_refs": ["PLANUNIT:F3-417", "PLANUNIT:F3-418", "SEMANTIC:PLANUNIT:F3-417", "SEMANTIC:PLANUNIT:F3-418"],
+      "item_ids": ["A005M15-000048-I10", "A005M15-000048-I11", "A005M15-000048-I12", "A005M15-000048-I13", "A005M15-000048-I14", "A005M15-000048-I15", "A005M15-000048-I16", "A005M15-000048-I17", "A005M15-000048-I18", "A005M15-000048-I19", "A005M15-000048-I20", "A005M15-000048-I21", "A005M15-000048-I22"],
+      "reviewed": true,
+      "summary": "Reviewed the full F3-417 and F3-418 semantic window line-by-line, including platform, renderer, web authority, icon, CTA, navigation, restore, lineage, and Usage propagation contracts. Strong negative constraints coexist with missing lifecycle, precedence, failure, and data-authority rules.",
+      "window_id": "WIN-AC612DBB4EFE-0076"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-AC612DBB4EFE-0011",
+    "document_path": "Plans/FinalGUISpec.md",
+    "micro_window_ids": ["WIN-AC612DBB4EFE-0075", "WIN-AC612DBB4EFE-0076"],
+    "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do UI_Command_Catalog and Section15 enumerate every terminal action and define the required GUI projection, state identity, and parity oracle for F3-413?",
+      "Do Automated_Testing_System and Plan_Document_System define the full Unicode fixture matrix and exact source-byte preservation conditions required by F3-414?",
+      "Which owner defines RuntimeHardGate state transitions, aggregation, waiver authority, timeouts, evidence invalidation, and repair receipts for F3-415?",
+      "Where are the per-store cap values, accounting units, eviction order, protected-data rules, and eviction receipt schema for F3-416?",
+      "Do the web test workflow and trusted-local-daemon owners define capability freshness, disconnect, revocation, in-flight request, and recovery behavior for F3-417?",
+      "Do usage-feature and its consumer owner docs define value-state precedence, transition, rollup, localization, retention, and raw-reference permission behavior for F3-418?"
+    ],
+    "feature_family_keys": [
+      "gui_terminal_control_plane",
+      "rich_text_rendering_fidelity",
+      "runtime_hard_gates",
+      "bounded_ui_projection_stores",
+      "slint_web_capability_authority",
+      "gui_navigation_restore_and_cta_contracts",
+      "usage_value_state_identity_and_redaction"
+    ],
+    "research_queries": [
+      "desktop GUI terminal command parity inventory and observable state test patterns",
+      "Unicode rich text renderer conformance fixtures ligatures combining marks CJK copy source bytes",
+      "runtime policy gate state machine aggregation timeout waiver and repair semantics",
+      "bounded UI projection cache eviction receipts latency budgets and durable history isolation",
+      "WASM trusted local daemon capability revocation disconnect CSRF pairing lifecycle",
+      "usage telemetry value-state precedence stale partial adjusted failed rollup UX"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000048_attempt_0015_terminal"
+}

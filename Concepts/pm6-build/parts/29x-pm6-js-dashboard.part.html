@@ -363,6 +363,483 @@
   }
 
   /* ==========================================================
+     Editor tab lifecycle — the pane1 strip is owned by the demo
+     model (S.files.openTabs / S.files.activeTab): seeded once
+     from the static markup, then rendered exclusively from state.
+     Tab clicks route through filesFacade.open (PM6_RENDER_FILE
+     pipeline + wrapEditorFns wrappers stay intact); a no-op guard
+     on the already-active tab prevents render loops.
+
+     CONTEXT-TAB COMPATIBILITY CONTRACT (reserved for the chat
+     workstream): S.files.openTabs entries may be pseudo-paths of
+     the form "context:<threadId>". The renderer branches on that
+     prefix and calls window.PM6_RENDER_CONTEXT(threadId, 'pane1')
+     when defined (else it renders a fallback notice into pane1).
+     Labels come from the optional S.files.tabLabels map keyed by
+     the full (pseudo-)path; closeTab() and the overflow chip are
+     path-agnostic, so context tabs close and collapse like file
+     tabs. The #contextDetailPane strip itself stays owned by
+     PM6_CONTEXT_TAB (29x-pm6-js-chat): its X still closes through
+     that facade — we only recompute resizer/empty-state chrome.
+     ========================================================== */
+  var ED_X_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+  var edLocalState = { openTabs: [], activeTab: null }; /* fallback when PM_DEMO is absent */
+  var edDirty = {};      /* path -> true (dirty dot carried over from the seed markup) */
+  var edHidden = [];     /* paths collapsed into the +N chip (derived on every fit) */
+  var edMenuEl = null;
+  var edFitQueued = false;
+  var edSeeded = false;
+
+  function edState() {
+    try {
+      if (window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.files) return window.PM_DEMO.state.files;
+    } catch (e) {}
+    return edLocalState;
+  }
+  function edStrip() { return document.querySelector('#editorPane1 .editor-tabs'); }
+  function edIsContext(path) { return String(path).indexOf('context:') === 0; }
+  function edLabel(path) {
+    var st = edState();
+    if (st.tabLabels && st.tabLabels[path]) return st.tabLabels[path];
+    if (edIsContext(path)) return 'Context: ' + String(path).slice(8);
+    return String(path).split('/').pop();
+  }
+
+  /* static-markup seed, captured at script eval (part 14 precedes us) so a
+     pre-boot engine render cannot wipe the strip before we read it */
+  var edSeed = (function () {
+    var out = { paths: [], active: null, dirty: {} };
+    var strip = edStrip();
+    if (!strip) return out;
+    var tabs = strip.querySelectorAll('.tab[data-file]');
+    for (var i = 0; i < tabs.length; i++) {
+      var p = tabs[i].getAttribute('data-file');
+      if (!p) continue;
+      out.paths.push(p);
+      if (tabs[i].classList.contains('active')) out.active = p;
+      if (tabs[i].querySelector('.dot')) out.dirty[p] = true;
+    }
+    return out;
+  })();
+  function edEnsureSeed() {
+    if (edSeeded) return;
+    edSeeded = true;
+    var st = edState();
+    edDirty = edSeed.dirty;
+    /* statics go in front (markup order); anything the engine opened before
+       boot stays appended after them */
+    for (var i = edSeed.paths.length - 1; i >= 0; i--) {
+      if (st.openTabs.indexOf(edSeed.paths[i]) === -1) st.openTabs.unshift(edSeed.paths[i]);
+    }
+    if (!st.activeTab) st.activeTab = edSeed.active || st.openTabs[0] || null;
+  }
+
+  function renderEditorTabs() {
+    var strip = edStrip();
+    if (!strip) return;
+    edEnsureSeed();
+    edCloseOverflowMenu();
+    var st = edState();
+    var old = strip.querySelectorAll('.tab, .pm-ed-overflow');
+    for (var i = 0; i < old.length; i++) strip.removeChild(old[i]);
+    var actions = strip.querySelector('.pane-tabbar-actions');
+    st.openTabs.forEach(function (path) {
+      var tab = document.createElement('span');
+      tab.className = 'tab' + (path === st.activeTab ? ' active' : '');
+      tab.setAttribute('data-file', path);
+      tab.title = path;
+      tab.appendChild(document.createTextNode(edLabel(path)));
+      if (edDirty[path]) {
+        var dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.textContent = '*';
+        tab.appendChild(dot);
+      }
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.className = 'tab-close-btn';
+      x.title = 'Close tab';
+      x.setAttribute('aria-label', 'Close ' + edLabel(path));
+      x.innerHTML = ED_X_SVG;
+      tab.appendChild(x);
+      tab.onclick = function (e) {
+        if (e && e.target && e.target.closest && e.target.closest('.tab-close-btn')) return;
+        edOpen(path);
+      };
+      strip.insertBefore(tab, actions);
+    });
+    edFitOverflow();
+  }
+  window.PM6_RENDER_EDITOR_TABS = renderEditorTabs;
+
+  function edOpen(path) {
+    var st = edState();
+    if (st.activeTab === path) return; /* no-op guard: double-render protection */
+    if (edIsContext(path)) {
+      if (st.openTabs.indexOf(path) === -1) st.openTabs.push(path);
+      st.activeTab = path;
+      renderEditorTabs();
+      edRenderBody(path);
+      return;
+    }
+    try {
+      if (window.PM_DEMO && window.PM_DEMO.files && window.PM_DEMO.files.open) {
+        window.PM_DEMO.files.open(path);
+        return;
+      }
+    } catch (e) {}
+    /* engine absent: local bookkeeping + direct render */
+    if (st.openTabs.indexOf(path) === -1) st.openTabs.push(path);
+    st.activeTab = path;
+    renderEditorTabs();
+    edRenderBody(path);
+  }
+
+  function edRenderBody(path) {
+    if (edIsContext(path)) {
+      var tid = String(path).slice(8);
+      if (typeof window.PM6_RENDER_CONTEXT === 'function') {
+        try { window.PM6_RENDER_CONTEXT(tid, 'pane1'); return; } catch (e) {}
+      }
+      var gutter = document.getElementById('pane1Gutter');
+      var code = document.getElementById('pane1Code');
+      if (gutter) gutter.innerHTML = '';
+      if (code) {
+        code.innerHTML = '<span class="code-line"><span style="color:var(--text-muted);">// Context details for thread &quot;' +
+          esc(tid) + '&quot; render here once the shared context renderer lands (demo_scope).</span></span>';
+      }
+      return;
+    }
+    var ok = false;
+    try { ok = !!pm6RenderFile(path, 'pane1'); } catch (e2) {}
+    if (!ok) {
+      try {
+        if (window.PM_DEMO && window.PM_DEMO.files && window.PM_DEMO.files.open) window.PM_DEMO.files.open(path);
+      } catch (e3) {}
+    }
+  }
+
+  function edClearPane1() {
+    var gutter = document.getElementById('pane1Gutter');
+    var code = document.getElementById('pane1Code');
+    if (gutter) gutter.innerHTML = '';
+    if (code) code.innerHTML = '';
+  }
+
+  function closeTab(path) {
+    edEnsureSeed();
+    var st = edState();
+    var i = st.openTabs.indexOf(path);
+    if (i === -1) {
+      /* path-agnostic: accept a basename for file tabs */
+      for (var k = 0; k < st.openTabs.length; k++) {
+        if (!edIsContext(st.openTabs[k]) && String(st.openTabs[k]).split('/').pop() === path) { i = k; break; }
+      }
+    }
+    if (i === -1) return { disabled: true, reason: 'already_done' };
+    var closed = st.openTabs[i];
+    var wasActive = st.activeTab === closed;
+    st.openTabs.splice(i, 1);
+    if (wasActive) st.activeTab = st.openTabs[i - 1] || st.openTabs[i] || null; /* left neighbor, else right */
+    try {
+      if (window.PM_DEMO && window.PM_DEMO.emit) window.PM_DEMO.emit('files.close', { path: closed, tabs: st.openTabs.slice() });
+    } catch (e) {}
+    renderEditorTabs();
+    if (!st.openTabs.length) {
+      st.activeTab = null;
+      edClearPane1();
+      edClosePane('editorPane1'); /* pane-visibility logic (empty state et al) */
+    } else if (wasActive && st.activeTab) {
+      edRenderBody(st.activeTab);
+    }
+    return { ok: true };
+  }
+  window.PM6_CLOSE_EDITOR_TAB = closeTab;
+
+  /* ---------- width-aware overflow: collapse tabs into a "+N more" chip ---------- */
+  function edFitOverflow() {
+    var strip = edStrip();
+    if (!strip) return;
+    var chip = strip.querySelector('.pm-ed-overflow');
+    if (chip) strip.removeChild(chip);
+    chip = null;
+    edHidden = [];
+    var all = strip.querySelectorAll('.tab');
+    var i;
+    for (i = 0; i < all.length; i++) all[i].style.display = '';
+    if (!strip.clientWidth) return; /* strip not laid out — refit runs on resize */
+    var guard = all.length + 1;
+    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+      var visible = 0;
+      for (i = 0; i < all.length; i++) { if (all[i].style.display !== 'none') visible++; }
+      if (visible <= 1) break;
+      var pick = null;
+      for (i = all.length - 1; i >= 0; i--) {
+        if (all[i].style.display === 'none') continue;
+        if (all[i].classList.contains('active')) continue; /* active tab always stays visible */
+        pick = all[i];
+        break;
+      }
+      if (!pick) break;
+      pick.style.display = 'none';
+      edHidden.unshift(pick.getAttribute('data-file'));
+      if (!chip) {
+        chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'pm-ed-overflow';
+        chip.title = 'Collapsed editor tabs';
+        chip.onclick = edToggleOverflowMenu;
+        strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
+      }
+      chip.textContent = '+' + edHidden.length + ' more';
+    }
+    if (chip && !edHidden.length) strip.removeChild(chip);
+  }
+  function edScheduleFit() {
+    if (edFitQueued) return;
+    edFitQueued = true;
+    var run = function () {
+      edFitQueued = false;
+      edFitOverflow();
+    };
+    /* rAF is paused in hidden documents — do not defer refits forever */
+    if (document.hidden) { setTimeout(run, 50); return; }
+    requestAnimationFrame(run);
+  }
+
+  /* body-appended picker (terminal overflow-menu pattern): row click
+     promotes the tab into the bar, the per-row X closes it */
+  function edCloseOverflowMenu() {
+    if (edMenuEl && edMenuEl.parentNode) edMenuEl.parentNode.removeChild(edMenuEl);
+    edMenuEl = null;
+    document.removeEventListener('click', edMenuOutside, true);
+    var strip = edStrip();
+    var chip = strip && strip.querySelector('.pm-ed-overflow');
+    if (chip) chip.classList.remove('active');
+  }
+  function edMenuOutside(e) {
+    if (!edMenuEl) return;
+    var t = e.target;
+    if (edMenuEl.contains(t)) return;
+    if (t && t.closest && t.closest('.pm-ed-overflow')) return;
+    edCloseOverflowMenu();
+  }
+  function edToggleOverflowMenu(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (edMenuEl) { edCloseOverflowMenu(); return; }
+    var strip = edStrip();
+    var chip = strip && strip.querySelector('.pm-ed-overflow');
+    if (!chip) return;
+    var menu = document.createElement('div');
+    menu.className = 'pm-ed-overflow-menu';
+    edHidden.forEach(function (path) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      var lbl = document.createElement('span');
+      lbl.className = 'pm-ed-overflow-label';
+      lbl.textContent = edLabel(path);
+      lbl.title = path;
+      var x = document.createElement('span');
+      x.className = 'pm-ed-overflow-x';
+      x.title = 'Close tab';
+      x.innerHTML = ED_X_SVG;
+      row.appendChild(lbl);
+      row.appendChild(x);
+      row.onclick = function (ev) {
+        if (ev && ev.stopPropagation) ev.stopPropagation();
+        var closeHit = ev && ev.target && ev.target.closest && ev.target.closest('.pm-ed-overflow-x');
+        edCloseOverflowMenu();
+        if (closeHit) { closeTab(path); return; }
+        edPromote(path);
+      };
+      menu.appendChild(row);
+    });
+    document.body.appendChild(menu);
+    var r = chip.getBoundingClientRect();
+    var left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8));
+    menu.style.left = left + 'px';
+    menu.style.top = (r.bottom + 4) + 'px';
+    chip.classList.add('active');
+    edMenuEl = menu;
+    document.addEventListener('click', edMenuOutside, true);
+  }
+  function edPromote(path) {
+    var st = edState();
+    if (st.openTabs.indexOf(path) === -1) return;
+    /* promoteGroupIntoBar semantics: swap the hidden tab with the last
+       visible slot, then activate it */
+    var strip = edStrip();
+    var displaced = null;
+    if (strip) {
+      var tabs = strip.querySelectorAll('.tab');
+      for (var i = tabs.length - 1; i >= 0; i--) {
+        if (tabs[i].style.display === 'none') continue;
+        if (tabs[i].getAttribute('data-file') === path) continue;
+        displaced = tabs[i].getAttribute('data-file');
+        break;
+      }
+    }
+    var a = st.openTabs.indexOf(path);
+    var b = displaced == null ? -1 : st.openTabs.indexOf(displaced);
+    if (a !== -1 && b !== -1 && a !== b) {
+      st.openTabs[a] = displaced;
+      st.openTabs[b] = path;
+    }
+    edOpen(path);
+  }
+
+  /* ---------- pane close / reopen + editor chrome recompute ---------- */
+  function edPaneVisible(id) {
+    var el = document.getElementById(id);
+    return !!(el && el.style.display !== 'none');
+  }
+  function edRecomputeChrome() {
+    var vis = 0;
+    ['editorPane1', 'editorPane2', 'contextDetailPane'].forEach(function (id) {
+      if (edPaneVisible(id)) vis++;
+    });
+    /* split resizer: visible only when at least 2 of the 3 sibling panes
+       are visible — the same rule PM6_CONTEXT_TAB's show contract drives */
+    var rz = document.getElementById('editorSplitResizer');
+    if (rz) rz.style.display = vis >= 2 ? 'block' : 'none';
+    var edView = document.getElementById('editorView');
+    var empty = document.getElementById('editorEmptyState');
+    if (vis === 0) {
+      var dash = document.getElementById('dashboardView');
+      if (dash && dash.style.display !== 'none') {
+        /* dashboard grid sits behind: same behavior as part 25's
+           hideEditorViewIfNoVisiblePanes() */
+        if (edView) edView.style.display = 'none';
+        if (empty) empty.style.display = 'none';
+      } else {
+        /* editorView must stay (nothing behind it): show the empty state */
+        if (edView) edView.style.display = 'flex';
+        if (empty) empty.style.display = 'flex';
+      }
+    } else if (empty) {
+      empty.style.display = 'none';
+    }
+    edScheduleFit();
+  }
+  function edClosePane(paneId) {
+    var pane = paneId && document.getElementById(paneId);
+    if (!pane) return;
+    pane.style.display = 'none';
+    /* sibling fills the freed width: drop resizer-pinned inline sizing */
+    ['editorPane1', 'editorPane2'].forEach(function (id) {
+      if (id === paneId) return;
+      var sib = document.getElementById(id);
+      if (sib && sib.style.display !== 'none') { sib.style.width = ''; sib.style.flex = ''; }
+    });
+    edRecomputeChrome();
+  }
+  window.pm6ReopenEditorPane = function (id) {
+    if (id !== 'editorPane1' && id !== 'editorPane2' && id !== 'contextDetailPane') return { ok: false };
+    var pane = document.getElementById(id);
+    if (!pane) return { ok: false };
+    var wasHidden = pane.style.display === 'none';
+    pane.style.display = 'flex';
+    var edView = document.getElementById('editorView');
+    if (edView) edView.style.display = 'flex';
+    edRecomputeChrome();
+    if (id === 'editorPane1' && wasHidden) renderEditorTabs();
+    return { ok: true };
+  };
+
+  /* ---------- pane2 / browser tabs: delegation over the legacy X svgs ---------- */
+  function edPane2Neighbor(tab) {
+    var sib = tab.previousElementSibling;
+    while (sib && !(sib.classList && sib.classList.contains('tab') && sib.style.display !== 'none')) sib = sib.previousElementSibling;
+    if (!sib) {
+      sib = tab.nextElementSibling;
+      while (sib && !(sib.classList && sib.classList.contains('tab') && sib.style.display !== 'none')) sib = sib.nextElementSibling;
+    }
+    return sib;
+  }
+  function edActivatePane2(tab) {
+    if (!tab) return;
+    var tt = tab.getAttribute('data-tab-type');
+    if ((tt === 'browser' || tt === 'automation') && typeof window.switchEditorPane2Tab === 'function') {
+      window.switchEditorPane2Tab(tt);
+      return;
+    }
+    var f = tab.getAttribute('data-file');
+    if (f && typeof window.switchEditorPane2CodeTab === 'function') window.switchEditorPane2CodeTab(f);
+  }
+  function edClosePane2Tab(tab) {
+    if (!tab || !tab.parentNode) return;
+    var wasActive = tab.classList.contains('active');
+    var neighbor = edPane2Neighbor(tab);
+    var strip = tab.parentNode;
+    strip.removeChild(tab); /* no S.files bookkeeping for pane2 — the strip IS the model */
+    var rest = strip.querySelectorAll('.tab');
+    var visibleLeft = 0;
+    for (var i = 0; i < rest.length; i++) { if (rest[i].style.display !== 'none') visibleLeft++; }
+    if (!visibleLeft) {
+      edClosePane('editorPane2');
+      return;
+    }
+    if (wasActive) edActivatePane2(neighbor);
+  }
+
+  /* one delegated capture listener for all editor close chrome; it runs
+     ahead of part 25's legacy body click handler (which would remove tab
+     nodes without model bookkeeping or neighbor activation) */
+  function edDelegatedClose(e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var pcb = t.closest('.pane-close-btn');
+    if (pcb) {
+      e.preventDefault();
+      e.stopPropagation();
+      var paneEl = pcb.closest('.editor-pane');
+      edClosePane(pcb.getAttribute('data-pane') || (paneEl && paneEl.id));
+      return;
+    }
+    var x1 = t.closest('#editorPane1 .editor-tabs .tab-close-btn');
+    if (x1) {
+      e.preventDefault();
+      e.stopPropagation();
+      var tab1 = x1.closest('.tab');
+      if (tab1) closeTab(tab1.getAttribute('data-file'));
+      return;
+    }
+    var x2 = t.closest('#editorPane2 .editor-tabs .tab-close');
+    if (x2) {
+      /* legacy decorative X in pane2 (incl. #browserPreviewTab) */
+      e.preventDefault();
+      e.stopPropagation();
+      edClosePane2Tab(x2.closest('.tab'));
+      return;
+    }
+    var xc = t.closest('#contextDetailPane .editor-tabs .tab-close');
+    if (xc) {
+      /* close through PM6_CONTEXT_TAB so its show/hide contract holds
+         (part 25's legacy handler would otherwise delete the tab node) */
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        if (window.PM6_CONTEXT_TAB && window.PM6_CONTEXT_TAB.close) window.PM6_CONTEXT_TAB.close();
+      } catch (ec) {}
+      edRecomputeChrome();
+      return;
+    }
+  }
+
+  function initEditorTabs() {
+    edEnsureSeed();
+    renderEditorTabs();
+    document.addEventListener('click', edDelegatedClose, true);
+    var strip = edStrip();
+    if (strip && typeof ResizeObserver !== 'undefined') {
+      try {
+        new ResizeObserver(function () { edScheduleFit(); }).observe(strip);
+      } catch (e) {}
+    }
+    window.addEventListener('resize', edScheduleFit);
+  }
+
+  /* ==========================================================
      Widget catalog renderers (8 entries)
      ========================================================== */
   function lane(nameTxt, cls, width, val) {
@@ -1033,6 +1510,7 @@
   function boot() {
     injectIcons();
     wrapEditorFns();
+    initEditorTabs();
     initDnd();
     initResize();
     initChromeClicks();

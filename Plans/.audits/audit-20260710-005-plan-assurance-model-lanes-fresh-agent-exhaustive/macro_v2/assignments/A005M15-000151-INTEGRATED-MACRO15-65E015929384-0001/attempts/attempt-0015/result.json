@@ -1,0 +1,1184 @@
+{
+  "assignment_id": "A005M15-000151-INTEGRATED-MACRO15-65E015929384-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "authority",
+        "consumers",
+        "security_privacy",
+        "authority_boundaries",
+        "privacy_data_lifecycle"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: Assistant memory MUST run fully in-process and local-only; it MUST NOT require external servers and MUST NOT use SQLite.",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This establishes a hard local-only implementation and data boundary for the Assistant continuity subsystem.",
+      "item_id": "A005M15-000151-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-001"
+      ],
+      "statement": "Assistant memory is a separate Assistant-only continuity subsystem, backed by compact evidence pointers and implemented in-process without external servers or SQLite.",
+      "title": "Assistant-only local memory authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: Memory data MUST be project-scoped and project switching MUST swap active memory stores atomically at the project boundary.",
+          "line_end": 82,
+          "line_start": 82,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "atomic_switch_failure_semantics",
+      "impact": "A builder cannot prove the no-cross-project-leakage oracle under concurrent searches, writes, queued index work, or a failed handoff; stale handles could expose or mutate the wrong project.",
+      "item_id": "A005M15-000151-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-001"
+      ],
+      "statement": "Atomic project switching is required but its transaction boundary, quiescence rules, treatment of in-flight provider calls and index jobs, failure rollback, and post-switch handle invalidation are not specified.",
+      "title": "Atomic project switching is not operationally defined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "authority_boundaries",
+        "missing_callers_consumers",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: Orchestrator, Interviewer, requirements builder, and all subagents MUST be wired to `NullMemoryProvider` and MUST receive no Assistant memory payload.",
+          "line_end": 50,
+          "line_start": 50,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Compile-time routing can be tested as a strict information-flow boundary between Assistant and non-Assistant execution paths.",
+      "item_id": "A005M15-000151-I003",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-001",
+        "PLANUNIT:AMS-002",
+        "PLANUNIT:AMS-003",
+        "PLANUNIT:AMS-004",
+        "PLANUNIT:AMS-005",
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-002",
+        "SEMANTIC:PLANUNIT:AMS-001",
+        "SEMANTIC:PLANUNIT:AMS-002",
+        "SEMANTIC:PLANUNIT:AMS-003",
+        "SEMANTIC:PLANUNIT:AMS-004",
+        "SEMANTIC:PLANUNIT:AMS-005"
+      ],
+      "statement": "RealMemoryProvider is reserved for Assistant prompt assembly, while every named non-Assistant actor is routed to NullMemoryProvider and prohibited from receiving memory through prompts, tools, handoffs, or metadata.",
+      "title": "Provider routing enforces the Assistant boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Required interface surface (logical contract; naming may vary in code):",
+          "line_end": 39,
+          "line_start": 39,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "provider_result_and_authorization_contract",
+      "impact": "Implementations may disagree on not-found behavior, idempotence, authorization, conflict detection, retryability, and how callers distinguish validation failure from storage failure, weakening cross-provider substitutability and destructive-operation safety.",
+      "item_id": "A005M15-000151-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-001",
+        "PLANUNIT:AMS-002",
+        "PLANUNIT:AMS-003",
+        "PLANUNIT:AMS-004",
+        "PLANUNIT:AMS-005",
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-002",
+        "SEMANTIC:PLANUNIT:AMS-001",
+        "SEMANTIC:PLANUNIT:AMS-002",
+        "SEMANTIC:PLANUNIT:AMS-003",
+        "SEMANTIC:PLANUNIT:AMS-004",
+        "SEMANTIC:PLANUNIT:AMS-005"
+      ],
+      "statement": "The provider surface names operations but does not define concrete result and error types, caller authority, optimistic-concurrency or revision rules, idempotency for writes and deletes, or safe handling of hostile query and path inputs.",
+      "title": "MemoryProvider operation semantics remain underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "recovery_rollback",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Canonical writes must succeed to assistant_memory.redb before Tantivy and USearch index updates are enqueued and applied asynchronously, with recoverable index failures.",
+          "line_end": 1119,
+          "line_start": 1119,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The canonical database remains lossless even when either derived index fails, and full deterministic rebuilds provide a recovery route.",
+      "item_id": "A005M15-000151-I005",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-006",
+        "PLANUNIT:AMS-007",
+        "PLANUNIT:AMS-008",
+        "PLANUNIT:AMS-009",
+        "PLANUNIT:AMS-010",
+        "PLANUNIT:AMS-011",
+        "PLANUNIT:AMS-012",
+        "PLANUNIT:AMS-013",
+        "SEMANTIC:PLANUNIT:AMS-006",
+        "SEMANTIC:PLANUNIT:AMS-007",
+        "SEMANTIC:PLANUNIT:AMS-008",
+        "SEMANTIC:PLANUNIT:AMS-009",
+        "SEMANTIC:PLANUNIT:AMS-010",
+        "SEMANTIC:PLANUNIT:AMS-011",
+        "SEMANTIC:PLANUNIT:AMS-012",
+        "SEMANTIC:PLANUNIT:AMS-013"
+      ],
+      "statement": "MemoryGist is the canonical record, EvidenceRefs stay pointer-only, and canonical writes precede asynchronous Tantivy and USearch updates with rebuild-based recovery.",
+      "title": "Canonical-first storage and rebuild recovery"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Index failures are recoverable without data loss.",
+          "line_end": 1127,
+          "line_start": 1127,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "asynchronous_index_consistency_protocol",
+      "impact": "A crash or burst of updates could lose queued work, reorder delete and update operations, return stale or resurrected gists, or allow unbounded backlog without violating any stated oracle.",
+      "item_id": "A005M15-000151-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-006",
+        "PLANUNIT:AMS-007",
+        "PLANUNIT:AMS-008",
+        "PLANUNIT:AMS-009",
+        "PLANUNIT:AMS-010",
+        "PLANUNIT:AMS-011",
+        "PLANUNIT:AMS-012",
+        "PLANUNIT:AMS-013",
+        "SEMANTIC:PLANUNIT:AMS-006",
+        "SEMANTIC:PLANUNIT:AMS-007",
+        "SEMANTIC:PLANUNIT:AMS-008",
+        "SEMANTIC:PLANUNIT:AMS-009",
+        "SEMANTIC:PLANUNIT:AMS-010",
+        "SEMANTIC:PLANUNIT:AMS-011",
+        "SEMANTIC:PLANUNIT:AMS-012",
+        "SEMANTIC:PLANUNIT:AMS-013"
+      ],
+      "statement": "Recoverability is asserted without specifying queue durability, per-gist revision ordering, duplicate delivery, tombstone races, read-your-writes visibility, retry and backoff, backlog bounds, or the user-visible degraded state while indexes lag.",
+      "title": "Asynchronous index consistency is not defined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Memory injection eligibility is Verified by default; verification_state is Unverified, Verified, or Discarded, and a gist transitions to Verified only when deterministic evidence rules pass.",
+          "line_end": 1160,
+          "line_start": 1160,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The default prompt path excludes unverified and discarded content and gives deterministic evidence a central safety role.",
+      "item_id": "A005M15-000151-I007",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-014",
+        "PLANUNIT:AMS-015",
+        "PLANUNIT:AMS-016",
+        "PLANUNIT:AMS-017",
+        "PLANUNIT:AMS-018",
+        "PLANUNIT:AMS-019",
+        "PLANUNIT:AMS-020",
+        "PLANUNIT:AMS-021",
+        "PLANUNIT:AMS-022",
+        "SEMANTIC:PLANUNIT:AMS-014",
+        "SEMANTIC:PLANUNIT:AMS-015",
+        "SEMANTIC:PLANUNIT:AMS-016",
+        "SEMANTIC:PLANUNIT:AMS-017",
+        "SEMANTIC:PLANUNIT:AMS-018",
+        "SEMANTIC:PLANUNIT:AMS-019",
+        "SEMANTIC:PLANUNIT:AMS-020",
+        "SEMANTIC:PLANUNIT:AMS-021",
+        "SEMANTIC:PLANUNIT:AMS-022"
+      ],
+      "statement": "Verification is a three-state gate, automatic injection is Verified-only by default, and run-boundary and milestone triggers are bounded and deduplicated.",
+      "title": "Deterministic verification gates prompt injection"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - A gist transitions to Verified only when one of the deterministic evidence rules holds.",
+          "line_end": 1168,
+          "line_start": 1168,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        },
+        {
+          "exact_quote": "canonical_text: User confirmation of done through a GUI action is a valid AutoMilestone milestone source alongside tests, commits, PRs, and artifacts.",
+          "line_end": 1295,
+          "line_start": 1295,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "verification_authority_conflict",
+      "impact": "Different implementations could treat a GUI done action or enabled manual override as sufficient evidence, merely a trigger, or an invalid transition, producing inconsistent and potentially misleading Verified state.",
+      "item_id": "A005M15-000151-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-014",
+        "PLANUNIT:AMS-015",
+        "PLANUNIT:AMS-016",
+        "PLANUNIT:AMS-017",
+        "PLANUNIT:AMS-018",
+        "PLANUNIT:AMS-019",
+        "PLANUNIT:AMS-020",
+        "PLANUNIT:AMS-021",
+        "PLANUNIT:AMS-022",
+        "SEMANTIC:PLANUNIT:AMS-014",
+        "SEMANTIC:PLANUNIT:AMS-015",
+        "SEMANTIC:PLANUNIT:AMS-016",
+        "SEMANTIC:PLANUNIT:AMS-017",
+        "SEMANTIC:PLANUNIT:AMS-018",
+        "SEMANTIC:PLANUNIT:AMS-019",
+        "SEMANTIC:PLANUNIT:AMS-020",
+        "SEMANTIC:PLANUNIT:AMS-021",
+        "SEMANTIC:PLANUNIT:AMS-022"
+      ],
+      "statement": "The unconditional only-when-evidence rule is not reconciled with the configurable manual verification override, and a GUI done milestone is not mapped to a specific EvidenceRef or an explicit verification outcome.",
+      "title": "Verification authority has conflicting escape paths"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Prune/archive never deletes pinned gists.",
+          "line_end": 1523,
+          "line_start": 1523,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "destructive_maintenance_safety",
+      "impact": "Unpinned memories may be irreversibly removed by a manual or scheduled job without a specified preview, confirmation, retention window, backup, undo, or partial-failure recovery path.",
+      "item_id": "A005M15-000151-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-014",
+        "PLANUNIT:AMS-015",
+        "PLANUNIT:AMS-016",
+        "PLANUNIT:AMS-017",
+        "PLANUNIT:AMS-018",
+        "PLANUNIT:AMS-019",
+        "PLANUNIT:AMS-020",
+        "PLANUNIT:AMS-021",
+        "PLANUNIT:AMS-022",
+        "SEMANTIC:PLANUNIT:AMS-014",
+        "SEMANTIC:PLANUNIT:AMS-015",
+        "SEMANTIC:PLANUNIT:AMS-016",
+        "SEMANTIC:PLANUNIT:AMS-017",
+        "SEMANTIC:PLANUNIT:AMS-018",
+        "SEMANTIC:PLANUNIT:AMS-019",
+        "SEMANTIC:PLANUNIT:AMS-020",
+        "SEMANTIC:PLANUNIT:AMS-021",
+        "SEMANTIC:PLANUNIT:AMS-022"
+      ],
+      "statement": "Prune and archive protect pinned gists, but the plan does not define user consent, dry-run preview, deletion versus archive policy, retention and undo, transactional batching, or recovery after a partially completed sweep.",
+      "title": "Destructive maintenance lacks lifecycle safeguards"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "missing_callers_consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Child continuity comes from canonical child records, reconstructed handoff bundles, current effective shaping state, and crew shared state, not hidden child-local long-term memory.",
+          "line_end": 1720,
+          "line_start": 1720,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This prevents implicit personal memory from leaking into disposable children while retaining explicit, auditable continuity mechanisms.",
+      "item_id": "A005M15-000151-I010",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-023",
+        "PLANUNIT:AMS-024",
+        "PLANUNIT:AMS-025",
+        "PLANUNIT:AMS-026",
+        "PLANUNIT:AMS-027",
+        "PLANUNIT:AMS-028",
+        "PLANUNIT:AMS-029",
+        "PLANUNIT:AMS-030",
+        "PLANUNIT:AMS-031",
+        "SEMANTIC:PLANUNIT:AMS-023",
+        "SEMANTIC:PLANUNIT:AMS-024",
+        "SEMANTIC:PLANUNIT:AMS-025",
+        "SEMANTIC:PLANUNIT:AMS-026",
+        "SEMANTIC:PLANUNIT:AMS-027",
+        "SEMANTIC:PLANUNIT:AMS-028",
+        "SEMANTIC:PLANUNIT:AMS-029",
+        "SEMANTIC:PLANUNIT:AMS-030",
+        "SEMANTIC:PLANUNIT:AMS-031"
+      ],
+      "statement": "Child and crew continuity is explicitly sourced from canonical coordination state rather than hidden long-term Assistant memory.",
+      "title": "Child continuity has an explicit non-memory source boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Memory maintenance operations are user-invokable in the GUI and callable by internal maintenance jobs with explicit success and failure status.",
+          "line_end": 1559,
+          "line_start": 1559,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "maintenance_operation_protocol",
+      "impact": "Long-running rebuilds and sweeps can freeze the UI, fail ambiguously, or resume inconsistently, and internal jobs may report a different result model than the GUI.",
+      "item_id": "A005M15-000151-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-023",
+        "PLANUNIT:AMS-024",
+        "PLANUNIT:AMS-025",
+        "PLANUNIT:AMS-026",
+        "PLANUNIT:AMS-027",
+        "PLANUNIT:AMS-028",
+        "PLANUNIT:AMS-029",
+        "PLANUNIT:AMS-030",
+        "PLANUNIT:AMS-031",
+        "SEMANTIC:PLANUNIT:AMS-023",
+        "SEMANTIC:PLANUNIT:AMS-024",
+        "SEMANTIC:PLANUNIT:AMS-025",
+        "SEMANTIC:PLANUNIT:AMS-026",
+        "SEMANTIC:PLANUNIT:AMS-027",
+        "SEMANTIC:PLANUNIT:AMS-028",
+        "SEMANTIC:PLANUNIT:AMS-029",
+        "SEMANTIC:PLANUNIT:AMS-030",
+        "SEMANTIC:PLANUNIT:AMS-031"
+      ],
+      "statement": "Explicit success and failure are required, but the shared operation result schema, progress and cancellation behavior, retryability, timeout, crash recovery, resource ceilings, accessibility announcements, and localization of status are unspecified.",
+      "title": "Maintenance invocation lacks an executable operation protocol"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Backend acceptance criteria cover provider routing, Verified-only gating, unverified-save behavior, trigger correctness and deduplication, storage layout, canonical data model persistence, summary cache coherence, decay, project isolation, index rebuild equivalence, rules separation, and deterministic completion.",
+          "line_end": 2053,
+          "line_start": 2053,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The plan identifies broad deterministic completion surfaces spanning routing, storage, retrieval, cache coherence, isolation, and rules separation.",
+      "item_id": "A005M15-000151-I012",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-032",
+        "PLANUNIT:AMS-033",
+        "PLANUNIT:AMS-034",
+        "PLANUNIT:AMS-035",
+        "PLANUNIT:AMS-036",
+        "PLANUNIT:AMS-037",
+        "PLANUNIT:AMS-038",
+        "PLANUNIT:AMS-039",
+        "PLANUNIT:AMS-040",
+        "SEMANTIC:PLANUNIT:AMS-032",
+        "SEMANTIC:PLANUNIT:AMS-033",
+        "SEMANTIC:PLANUNIT:AMS-034",
+        "SEMANTIC:PLANUNIT:AMS-035",
+        "SEMANTIC:PLANUNIT:AMS-036",
+        "SEMANTIC:PLANUNIT:AMS-037",
+        "SEMANTIC:PLANUNIT:AMS-038",
+        "SEMANTIC:PLANUNIT:AMS-039",
+        "SEMANTIC:PLANUNIT:AMS-040"
+      ],
+      "statement": "Defaults and acceptance units preserve Verified-only injection, project-scoped configuration, provider routing, persistence, cache coherence, project isolation, rebuild equivalence, and rules separation as completion criteria.",
+      "title": "Backend completion has named deterministic oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "scale_performance",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "scale_limits",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Gemini CLI provider-native model.compressionThreshold default 0.5 is distinct from any PM-exposed or stored 90 percent assistant memory compression threshold, which is an intentional PM override.",
+          "line_end": 2013,
+          "line_start": 2013,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "compression_threshold_contract",
+      "impact": "A builder cannot determine whether 0.5 and 90 percent measure the same quantity, when compression runs, which config key owns the PM override, or how either threshold interacts with token budgets and provider behavior.",
+      "item_id": "A005M15-000151-I013",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-032",
+        "PLANUNIT:AMS-033",
+        "PLANUNIT:AMS-034",
+        "PLANUNIT:AMS-035",
+        "PLANUNIT:AMS-036",
+        "PLANUNIT:AMS-037",
+        "PLANUNIT:AMS-038",
+        "PLANUNIT:AMS-039",
+        "PLANUNIT:AMS-040",
+        "SEMANTIC:PLANUNIT:AMS-032",
+        "SEMANTIC:PLANUNIT:AMS-033",
+        "SEMANTIC:PLANUNIT:AMS-034",
+        "SEMANTIC:PLANUNIT:AMS-035",
+        "SEMANTIC:PLANUNIT:AMS-036",
+        "SEMANTIC:PLANUNIT:AMS-037",
+        "SEMANTIC:PLANUNIT:AMS-038",
+        "SEMANTIC:PLANUNIT:AMS-039",
+        "SEMANTIC:PLANUNIT:AMS-040"
+      ],
+      "statement": "The provider threshold note preserves two values but does not define their common unit, semantic direction, owner config key, evaluation point, or conversion and precedence rules.",
+      "title": "Compression threshold override is not implementable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Assistant-memory-subsystem remains owner for behavior described by its preserved sections, while cross-doc ownership follows preserved ContractRefs and owner/consumer boundary notes.",
+          "line_end": 2267,
+          "line_start": 2267,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "cross_document_conformance_oracles",
+      "impact": "Migration and index validation can pass while runtime callers violate the no-forwarding, command ownership, evidence-ref, or GUI behavior contracts that the owner map claims to preserve.",
+      "item_id": "A005M15-000151-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-032",
+        "PLANUNIT:AMS-033",
+        "PLANUNIT:AMS-034",
+        "PLANUNIT:AMS-035",
+        "PLANUNIT:AMS-036",
+        "PLANUNIT:AMS-037",
+        "PLANUNIT:AMS-038",
+        "PLANUNIT:AMS-039",
+        "PLANUNIT:AMS-040",
+        "SEMANTIC:PLANUNIT:AMS-032",
+        "SEMANTIC:PLANUNIT:AMS-033",
+        "SEMANTIC:PLANUNIT:AMS-034",
+        "SEMANTIC:PLANUNIT:AMS-035",
+        "SEMANTIC:PLANUNIT:AMS-036",
+        "SEMANTIC:PLANUNIT:AMS-037",
+        "SEMANTIC:PLANUNIT:AMS-038",
+        "SEMANTIC:PLANUNIT:AMS-039",
+        "SEMANTIC:PLANUNIT:AMS-040"
+      ],
+      "statement": "Cross-document ownership is delegated to preserved references, but the listed validation surfaces do not define executable seam checks or identify which owner supplies each runtime schema, command, event, and consumer oracle.",
+      "title": "Owner references lack seam-level conformance checks"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Add MemoryTierContract: scope, writer authority, TTL, compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired status, consolidation timeout, and failure semantics.",
+          "line_end": 2364,
+          "line_start": 2364,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The addendum correctly expands memory governance beyond Assistant gists to explicit tiers, lifecycle controls, retrieval budgets, causality, and failure handling.",
+      "item_id": "A005M15-000151-I015",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-041",
+        "PLANUNIT:AMS-042",
+        "PLANUNIT:AMS-043",
+        "SEMANTIC:PLANUNIT:AMS-041",
+        "SEMANTIC:PLANUNIT:AMS-042",
+        "SEMANTIC:PLANUNIT:AMS-043"
+      ],
+      "statement": "The addendum introduces a MemoryTierContract and user-visible memory store CRUD, history, provenance, redaction, rollback, citations, and surfaced consolidation failures.",
+      "title": "Memory tiering and store governance are added"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "scale_limits",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The preserved PM gap/delta is: PM should explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger, assistant preference memory, tool/artifact memory, and ephemeral context working set.",
+          "line_end": 2364,
+          "line_start": 2364,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "memory_tier_schema_and_precedence",
+      "impact": "The stated acceptance tests cannot determine whether facts are stored, compacted, superseded, retrieved, or injected by the correct tier, especially during concurrent goal, project, and conversation updates.",
+      "item_id": "A005M15-000151-I016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-041",
+        "PLANUNIT:AMS-042",
+        "PLANUNIT:AMS-043",
+        "SEMANTIC:PLANUNIT:AMS-041",
+        "SEMANTIC:PLANUNIT:AMS-042",
+        "SEMANTIC:PLANUNIT:AMS-043"
+      ],
+      "statement": "AMS-042 names the fields and tier examples but does not define a normative MemoryTierContract schema, tier identities, writer matrix, precedence and supersession algorithm, TTL clock, compaction state machine, injection-budget arbitration, timeout result, or cross-tier transaction semantics.",
+      "title": "MemoryTierContract is still a proposal rather than a contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.",
+          "line_end": 2458,
+          "line_start": 2458,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "memory_crud_security_and_version_protocol",
+      "impact": "CRUD could expose private memory, lose concurrent edits, make rollback non-deterministic, retain supposedly redacted data in history or indexes, or delete shared stores without adequate warning and recovery.",
+      "item_id": "A005M15-000151-I017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-041",
+        "PLANUNIT:AMS-042",
+        "PLANUNIT:AMS-043",
+        "SEMANTIC:PLANUNIT:AMS-041",
+        "SEMANTIC:PLANUNIT:AMS-042",
+        "SEMANTIC:PLANUNIT:AMS-043"
+      ],
+      "statement": "AMS-043 requires CRUD, version history, provenance, redaction, and rollback but omits memory-store identity and ownership, authorization, revision and conflict rules, redaction propagation to versions and indexes, delete confirmation and retention, rollback target semantics, citation invalidation, accessibility, localization, and typed partial failures.",
+      "title": "User-visible memory CRUD lacks a secure version protocol"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "security_privacy",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "observed_signal: Warp Oz updates add memory store management commands and memory citations. | Codex changelog moved memory state to a dedicated SQLite DB and gated dedicated memory tools in config. | Agent Zero shows memory/history bloat and silent memory consolidation failure risks.",
+          "line_end": 2509,
+          "line_start": 2509,
+          "path": "Plans/assistant-memory-subsystem.md",
+          "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+        }
+      ],
+      "gap_kind": "none_external_signal_only",
+      "impact": "This avoids a false conflict with the canonical no-SQLite storage boundary while retaining external lineage for the CRUD and tooling idea.",
+      "item_id": "A005M15-000151-I018",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:AMS-041",
+        "PLANUNIT:AMS-042",
+        "PLANUNIT:AMS-043",
+        "SEMANTIC:PLANUNIT:AMS-041",
+        "SEMANTIC:PLANUNIT:AMS-042",
+        "SEMANTIC:PLANUNIT:AMS-043"
+      ],
+      "statement": "The SQLite mention in AMS-043 is labeled observed external-repo signal and does not adopt SQLite as Puppet Master intent; the canonical local redb and no-SQLite boundary remains controlling.",
+      "title": "External SQLite lineage does not override the storage contract"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 399],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-001"
+      ],
+      "item_ids": [
+        "A005M15-000151-I001",
+        "A005M15-000151-I002"
+      ],
+      "reviewed": true,
+      "summary": "Established the Assistant-only local evidence-backed gist architecture and found the atomic project-switch contract incomplete under concurrency and failure.",
+      "window_id": "WIN-65E015929384-0001"
+    },
+    {
+      "core_range": [400, 793],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-001",
+        "PLANUNIT:AMS-002",
+        "PLANUNIT:AMS-003",
+        "PLANUNIT:AMS-004",
+        "PLANUNIT:AMS-005",
+        "SEMANTIC:PROLOGUE:Plans/assistant-memory-subsystem.md:CONT-002",
+        "SEMANTIC:PLANUNIT:AMS-001",
+        "SEMANTIC:PLANUNIT:AMS-002",
+        "SEMANTIC:PLANUNIT:AMS-003",
+        "SEMANTIC:PLANUNIT:AMS-004",
+        "SEMANTIC:PLANUNIT:AMS-005"
+      ],
+      "item_ids": [
+        "A005M15-000151-I003",
+        "A005M15-000151-I004"
+      ],
+      "reviewed": true,
+      "summary": "Confirmed strict RealMemoryProvider versus NullMemoryProvider routing and identified missing provider result, authorization, concurrency, and destructive-operation semantics.",
+      "window_id": "WIN-65E015929384-0002"
+    },
+    {
+      "core_range": [794, 1152],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-006",
+        "PLANUNIT:AMS-007",
+        "PLANUNIT:AMS-008",
+        "PLANUNIT:AMS-009",
+        "PLANUNIT:AMS-010",
+        "PLANUNIT:AMS-011",
+        "PLANUNIT:AMS-012",
+        "PLANUNIT:AMS-013",
+        "SEMANTIC:PLANUNIT:AMS-006",
+        "SEMANTIC:PLANUNIT:AMS-007",
+        "SEMANTIC:PLANUNIT:AMS-008",
+        "SEMANTIC:PLANUNIT:AMS-009",
+        "SEMANTIC:PLANUNIT:AMS-010",
+        "SEMANTIC:PLANUNIT:AMS-011",
+        "SEMANTIC:PLANUNIT:AMS-012",
+        "SEMANTIC:PLANUNIT:AMS-013"
+      ],
+      "item_ids": [
+        "A005M15-000151-I005",
+        "A005M15-000151-I006"
+      ],
+      "reviewed": true,
+      "summary": "Confirmed pointer-only evidence, canonical MemoryGist storage, deterministic indexes, and canonical-first writes; found no durable asynchronous index consistency protocol.",
+      "window_id": "WIN-65E015929384-0003"
+    },
+    {
+      "core_range": [1153, 1551],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-014",
+        "PLANUNIT:AMS-015",
+        "PLANUNIT:AMS-016",
+        "PLANUNIT:AMS-017",
+        "PLANUNIT:AMS-018",
+        "PLANUNIT:AMS-019",
+        "PLANUNIT:AMS-020",
+        "PLANUNIT:AMS-021",
+        "PLANUNIT:AMS-022",
+        "SEMANTIC:PLANUNIT:AMS-014",
+        "SEMANTIC:PLANUNIT:AMS-015",
+        "SEMANTIC:PLANUNIT:AMS-016",
+        "SEMANTIC:PLANUNIT:AMS-017",
+        "SEMANTIC:PLANUNIT:AMS-018",
+        "SEMANTIC:PLANUNIT:AMS-019",
+        "SEMANTIC:PLANUNIT:AMS-020",
+        "SEMANTIC:PLANUNIT:AMS-021",
+        "SEMANTIC:PLANUNIT:AMS-022"
+      ],
+      "item_ids": [
+        "A005M15-000151-I007",
+        "A005M15-000151-I008",
+        "A005M15-000151-I009"
+      ],
+      "reviewed": true,
+      "summary": "Verified the deterministic gating, bounded triggers, retrieval, GUI, and maintenance intent; found conflicting verification authority and unsafe destructive-maintenance lifecycle gaps.",
+      "window_id": "WIN-65E015929384-0004"
+    },
+    {
+      "core_range": [1552, 1918],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-023",
+        "PLANUNIT:AMS-024",
+        "PLANUNIT:AMS-025",
+        "PLANUNIT:AMS-026",
+        "PLANUNIT:AMS-027",
+        "PLANUNIT:AMS-028",
+        "PLANUNIT:AMS-029",
+        "PLANUNIT:AMS-030",
+        "PLANUNIT:AMS-031",
+        "SEMANTIC:PLANUNIT:AMS-023",
+        "SEMANTIC:PLANUNIT:AMS-024",
+        "SEMANTIC:PLANUNIT:AMS-025",
+        "SEMANTIC:PLANUNIT:AMS-026",
+        "SEMANTIC:PLANUNIT:AMS-027",
+        "SEMANTIC:PLANUNIT:AMS-028",
+        "SEMANTIC:PLANUNIT:AMS-029",
+        "SEMANTIC:PLANUNIT:AMS-030",
+        "SEMANTIC:PLANUNIT:AMS-031"
+      ],
+      "item_ids": [
+        "A005M15-000151-I010",
+        "A005M15-000151-I011"
+      ],
+      "reviewed": true,
+      "summary": "Confirmed explicit non-memory child continuity and deterministic defaults; identified missing shared protocols for long-running GUI and internal maintenance jobs.",
+      "window_id": "WIN-65E015929384-0005"
+    },
+    {
+      "core_range": [1919, 2300],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-032",
+        "PLANUNIT:AMS-033",
+        "PLANUNIT:AMS-034",
+        "PLANUNIT:AMS-035",
+        "PLANUNIT:AMS-036",
+        "PLANUNIT:AMS-037",
+        "PLANUNIT:AMS-038",
+        "PLANUNIT:AMS-039",
+        "PLANUNIT:AMS-040",
+        "SEMANTIC:PLANUNIT:AMS-032",
+        "SEMANTIC:PLANUNIT:AMS-033",
+        "SEMANTIC:PLANUNIT:AMS-034",
+        "SEMANTIC:PLANUNIT:AMS-035",
+        "SEMANTIC:PLANUNIT:AMS-036",
+        "SEMANTIC:PLANUNIT:AMS-037",
+        "SEMANTIC:PLANUNIT:AMS-038",
+        "SEMANTIC:PLANUNIT:AMS-039",
+        "SEMANTIC:PLANUNIT:AMS-040"
+      ],
+      "item_ids": [
+        "A005M15-000151-I012",
+        "A005M15-000151-I013",
+        "A005M15-000151-I014"
+      ],
+      "reviewed": true,
+      "summary": "Confirmed deterministic defaults and broad completion oracles; found an unimplementable compression-threshold override and missing executable conformance checks at owner and consumer seams.",
+      "window_id": "WIN-65E015929384-0006"
+    },
+    {
+      "core_range": [2301, 2513],
+      "covered_source_unit_refs": [
+        "PLANUNIT:AMS-041",
+        "PLANUNIT:AMS-042",
+        "PLANUNIT:AMS-043",
+        "SEMANTIC:PLANUNIT:AMS-041",
+        "SEMANTIC:PLANUNIT:AMS-042",
+        "SEMANTIC:PLANUNIT:AMS-043"
+      ],
+      "item_ids": [
+        "A005M15-000151-I015",
+        "A005M15-000151-I016",
+        "A005M15-000151-I017",
+        "A005M15-000151-I018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed structural migration coverage and the new tiering and CRUD addendum; found critical normative schema, security, versioning, and lifecycle gaps while confirming the SQLite mention is lineage only.",
+      "window_id": "WIN-65E015929384-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-65E015929384-0001",
+    "document_path": "Plans/assistant-memory-subsystem.md",
+    "micro_window_ids": [
+      "WIN-65E015929384-0001",
+      "WIN-65E015929384-0002",
+      "WIN-65E015929384-0003",
+      "WIN-65E015929384-0004",
+      "WIN-65E015929384-0005",
+      "WIN-65E015929384-0006",
+      "WIN-65E015929384-0007"
+    ],
+    "source_sha256": "f67355515a842dec9e091bb4b8e062908f3c5dae360bbf4e8ae37b1a34f512e8"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines the durable queue, revision ordering, and degraded-read contract for asynchronous Tantivy and USearch updates?",
+      "Which canonical owner defines the MemoryTierContract schema and arbitrates precedence between transcript, goal, project ledger, preference, artifact, and ephemeral tiers?",
+      "Which command and storage owners define authorization, revision conflicts, redaction propagation, deletion retention, rollback, and citation invalidation for memory-store CRUD?",
+      "How do Assistant chat, Goal Runtime, Planning Ledger, storage, and GUI command owners prove no cross-tier or cross-project injection leakage?"
+    ],
+    "feature_family_keys": [
+      "assistant_memory_provider_boundary",
+      "evidence_backed_memory_gists",
+      "memory_verification_and_injection",
+      "hybrid_memory_retrieval",
+      "memory_gui_and_maintenance",
+      "memory_tier_contract",
+      "memory_store_crud_versions_citations"
+    ],
+    "research_queries": [
+      "durable asynchronous search index queue per-record revision tombstone race recovery local embedded database",
+      "memory tier precedence supersession TTL compaction retrieval budget contract agent systems",
+      "secure memory store CRUD version history redaction rollback citation invalidation local AI assistant",
+      "accessible long-running maintenance operation progress cancellation error recovery desktop UI"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000151_attempt_0015_terminal"
+}

@@ -1,0 +1,638 @@
+{
+  "assignment_id": "A005M15-000082-INTEGRATED-MACRO15-4CB48A2AA77A-0003",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["capabilities", "contracts", "authority_boundaries", "failures_recovery", "privacy_data_lifecycle", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Permission allow is necessary but insufficient: tools must be capability-registered, unregistered tools remain non-runnable, file tools stay scoped to roots unless policy broadens access, and web tools honor domain allowlists and web-operation scope keys.\"",
+          "line_end": 5292,
+          "line_start": 5292,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Every operationally meaningful permission grant, deny, or prompt writes a seglog audit record with at least tool_pattern, decision, scope, and requesting_context.\"",
+          "line_end": 5347,
+          "line_start": 5347,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "under_specified_security_contract",
+      "impact": "Builders cannot implement consistent root broadening, domain normalization, audit durability, audit-write failure handling, retention, or tamper protection; permissive divergence or missing forensic records can result.",
+      "item_id": "M15-0001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-075", "PLANUNIT:PS-076", "PLANUNIT:PS-077", "PLANUNIT:PS-078", "SEMANTIC:PLANUNIT:PS-075", "SEMANTIC:PLANUNIT:PS-076", "SEMANTIC:PLANUNIT:PS-077", "SEMANTIC:PLANUNIT:PS-078"],
+      "statement": "The capability, reference-boundary, PM-delta, and audit obligations are directionally explicit, but the excerpt does not close policy-broadening authority, registrable-domain canonicalization, audit commit ordering, audit sink failure behavior, retention, integrity, or executable conformance oracles.",
+      "title": "Capability and audit boundary lacks closed operational semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "concurrency_races", "authority", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"AC-PM07 binds deny response cascade to the current blocked episode and only to other pending asks with exactly matching approval_scope_key.\"",
+          "line_end": 5503,
+          "line_start": 5503,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Acceptance criteria AC-PM01, AC-PM02, AC-PM03, AC-PM10, AC-PM13, and AC-PM14 cover deterministic resolution, precedence layer ordering, last-match wins, mode override behavior, scope specificity, and context narrowing.\"",
+          "line_end": 5551,
+          "line_start": 5551,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "named_oracles_without_local_falsifiability",
+      "impact": "Concurrent pending asks can be over-denied or left unresolved if key comparison and episode membership differ, while named acceptance identifiers alone do not provide an executable expected-result matrix.",
+      "item_id": "M15-0002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-079", "PLANUNIT:PS-080", "PLANUNIT:PS-081", "SEMANTIC:PLANUNIT:PS-079", "SEMANTIC:PLANUNIT:PS-080", "SEMANTIC:PLANUNIT:PS-081"],
+      "statement": "Deny-cascade and deterministic-resolution groups name important constraints, yet do not specify approval_scope_key canonical comparison, blocked-episode membership under concurrent arrival or resolution, atomic cascade ordering, or concrete input-output fixtures for the cited AC-PM cases.",
+      "title": "Deny cascade and resolution criteria are not race-falsifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["gui_truth", "authority_boundaries", "security_privacy", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Acceptance criteria AC-PM06, AC-PM09, and AC-PM11 cover always approval scope, Permissions tab display/edit/persist behavior, durable approval record persistence, restart survival, and revocation.\"",
+          "line_end": 5672,
+          "line_start": 5672,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Local build approval and enabled defaults do not approve later remote publication, external_publish_side_effect defaults to ask, is non-bypassable, and cannot be globally suppressed by yolo or session-scoped always approvals.\"",
+          "line_end": 5839,
+          "line_start": 5839,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "approval_persistence_and_publish_guard_oracle_gap",
+      "impact": "A durable rule can survive or revoke inconsistently across restart, and remote publication could be accidentally covered by a broader remembered approval without a normative test matrix.",
+      "item_id": "M15-0003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-082", "PLANUNIT:PS-083", "PLANUNIT:PS-084", "PLANUNIT:PS-085", "SEMANTIC:PLANUNIT:PS-082", "SEMANTIC:PLANUNIT:PS-083", "SEMANTIC:PLANUNIT:PS-084", "SEMANTIC:PLANUNIT:PS-085"],
+      "statement": "The acceptance groups establish persistence, revocation, capability gating, audit, and non-bypassable external-publish intent, but omit durable-record conflict/version behavior, revocation propagation timing, restart recovery from partial writes, and executable proof that yolo or remembered approvals cannot subsume the guard.",
+      "title": "Durable approval and non-bypassable publish rules lack lifecycle oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["authority_boundaries", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Direct user clicks approve only the exact publish, create, or push side effect requested, preserving examples that Push image does not auto-approve creating a missing DockerHub repo or pushing a managed Unraid template repo unless that was the exact action.\"",
+          "line_end": 5891,
+          "line_start": 5891,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"When the external publish guard is rejected, local build results and template edits remain intact, remote side effects do not execute, and the runtime surfaces a corrected error naming the blocked remote step.\"",
+          "line_end": 5942,
+          "line_start": 5942,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "exact_action_identity_and_partial_remote_failure_gap",
+      "impact": "A target can drift between click and dispatch, or a remote system can partially mutate before rejection or transport loss, making the promised no-side-effect state and corrected error misleading.",
+      "item_id": "M15-0004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-086", "PLANUNIT:PS-087", "PLANUNIT:PS-088", "SEMANTIC:PLANUNIT:PS-086", "SEMANTIC:PLANUNIT:PS-087", "SEMANTIC:PLANUNIT:PS-088"],
+      "statement": "Exact-action approval and rejection preservation are explicit, but the action-target identity tuple, time-of-check/time-of-use binding, multi-step remote transaction boundary, partial-remote-success classification, and required corrected-error payload are not defined.",
+      "title": "Exact publish approval is not bound to a transactional target identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "inputs_outputs", "states_transitions", "compatibility_migration", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Permission blocked and denied outcomes expose canonical blocked-state payload fields, blocked family, guard details, allowed_action_ids[], optional approval and snapshot refs, revalidation status, and executed: false; legacy recovery_options[] and allowed_actions[] are compatibility aliases only.\"",
+          "line_end": 6098,
+          "line_start": 6098,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Domain-sensitive operational sessions and remote mutations use separate permission classes, so generic tool allow, /session/YOLO, or headless defaults never approve SCM destructive actions, workflow admin CRUD, image or template publish, Kubernetes mutations, docker exec or attach, kubectl exec, or kubectl port-forward.\"",
+          "line_end": 6217,
+          "line_start": 6217,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "payload_and_permission_class_schema_incomplete",
+      "impact": "Producers and GUI consumers can disagree on required fields, nullability, blocked-family transitions, alias emission, or which permission class governs an action, producing unsafe reuse or unusable recovery actions.",
+      "item_id": "M15-0005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-089", "PLANUNIT:PS-090", "PLANUNIT:PS-091", "PLANUNIT:PS-092", "SEMANTIC:PLANUNIT:PS-089", "SEMANTIC:PLANUNIT:PS-090", "SEMANTIC:PLANUNIT:PS-091", "SEMANTIC:PLANUNIT:PS-092"],
+      "statement": "Blocked outcome, UI action, and domain-sensitive class prose defines field names and examples but not a normative typed schema, requiredness matrix, alias read/write rules, blocked-versus-denied state mapping, or exhaustive action-to-permission-class table.",
+      "title": "Blocked payload and domain class contracts remain structurally open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["concurrency_races", "invalid_states_transitions", "authority_boundaries", "test_falsifiability", "recovery_rollback"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"/queued and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot; resumption can pause one node, block the run, or block a follow-on step, but it always re-runs preflight when target, policy, or permission snapshot may have changed.\"",
+          "line_end": 6275,
+          "line_start": 6275,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Mutating actions use a per-target in-flight operation key for /dedupe across the main window, detached windows, Dashboard, and Orchestrator shortcuts; identical operations coalesce and conflicting operations surface operation_in_progress with owning target and action context.\"",
+          "line_end": 6327,
+          "line_start": 6327,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale /selections; material target changes abort with state_changed_refresh_required and require refresh or reselection.\"",
+          "line_end": 6379,
+          "line_start": 6379,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "distributed_dedupe_and_revalidation_atomicity_gap",
+      "impact": "Separate surfaces can race, incorrectly coalesce distinct mutations, retain dead in-flight ownership, or mutate a target that changes after revalidation but before the remote commit.",
+      "item_id": "M15-0006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-093", "PLANUNIT:PS-094", "PLANUNIT:PS-095", "SEMANTIC:PLANUNIT:PS-093", "SEMANTIC:PLANUNIT:PS-094", "SEMANTIC:PLANUNIT:PS-095"],
+      "statement": "Queued binding, cross-surface dedupe, and stable-target revalidation omit canonical key composition, identical-versus-conflicting equivalence, atomic claim/release semantics, crash expiry, monotonic revision comparison, and the mutation-side conditional that closes the revalidate-to-execute race.",
+      "title": "Mutation dedupe and preflight do not close cross-surface races"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "offline_network_loss", "partial_failure", "privacy_data_lifecycle", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Remote-side-effect transports may end as indeterminate_remote_outcome when server-side action might have succeeded but the client lost confirmation; the receipt preserves requested, transport_lost, and later reconciled states, and the UI exposes a Refresh remote state recovery CTA instead of labeling the action simply failed.\"",
+          "line_end": 6431,
+          "line_start": 6431,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Permission snapshot schema preserves approval scope and target refs, requested and effective account bindings, permission_decision_context, actor_surface_context, runtime_identity_context, and resolved_permissions with requested and effective state, downgrade reason, source, and effective value.\"",
+          "line_end": 6538,
+          "line_start": 6538,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "reconciliation_and_snapshot_schema_gap",
+      "impact": "Indeterminate operations can remain permanently ambiguous or be retried unsafely, while snapshot producers can serialize incompatible or over-retained identity and permission context.",
+      "item_id": "M15-0007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-096", "PLANUNIT:PS-097", "PLANUNIT:PS-098", "PLANUNIT:PS-099", "SEMANTIC:PLANUNIT:PS-096", "SEMANTIC:PLANUNIT:PS-097", "SEMANTIC:PLANUNIT:PS-098", "SEMANTIC:PLANUNIT:PS-099"],
+      "statement": "Indeterminate outcome and immutable snapshot behavior is strong, but reconciliation ownership, timeout and retry policy, terminal state set, snapshot field types and cardinality, atomic capture relative to attempt start, retention, deletion, and unavailable-or-corrupt historical snapshot display are unspecified.",
+      "title": "Indeterminate recovery and immutable snapshots lack terminal lifecycle rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["propagation", "concurrency_races", "partial_failure", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"When HITL approval resolves external_side_effect_blocked, the approval handler emits prerequisite_resolved with wake_reason: approval_resolved and node or attempt identity; the scheduler performs an immediate event-driven wakeup pass rather than polling.\"",
+          "line_end": 6703,
+          "line_start": 6703,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Domain approval and preflight decisions bind exact mutable targets for SCM, GitHub Actions, Docker, and Kubernetes, run static policy and cheap /precondition before approval, and run execution-time /revalidate before mutation; stale preflight evidence or changed target identity invalidates reuse.\"",
+          "line_end": 6756,
+          "line_start": 6756,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "event_delivery_and_wakeup_reliability_gap",
+      "impact": "A lost, duplicated, or reordered event can strand an approved attempt or wake it more than once, and stale approval reuse may differ across domain adapters.",
+      "item_id": "M15-0008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-100", "PLANUNIT:PS-101", "PLANUNIT:PS-102", "SEMANTIC:PLANUNIT:PS-100", "SEMANTIC:PLANUNIT:PS-101", "SEMANTIC:PLANUNIT:PS-102"],
+      "statement": "Blocked identity carry-through and immediate event-driven wakeup do not define event durability, transaction boundary with approval resolution, idempotency key, duplicate and out-of-order handling, scheduler crash recovery, or measurable meaning of immediate; target-bound revalidation also lacks per-adapter freshness or conditional-mutation oracles.",
+      "title": "Approval wakeup chain has no durable exactly-once-equivalent contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["authority", "cross_document_seams", "security_privacy", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Source Control, GitHub Actions, Docker Manager, Docker Hub, and Kubernetes admin or hosted side effects use canonical permission and blocked-state guard rules when approval, capability, or auth prerequisites are missing.\"",
+          "line_end": 6823,
+          "line_start": 6823,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Provider and LLM exposure rules apply before diffs, hunks, logs, manifests, discovered URLs, screenshots, or equivalent content is sent to provider-backed features; exposure requires explicit permission, /data-class labeling, per-feature opt-in, local-only fallback, and secret-scrub before provider transmission.\"",
+          "line_end": 6932,
+          "line_start": 6932,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "guard_mapping_and_fail_closed_scrub_gap",
+      "impact": "Adapters can map the same side effect to different guards, or transmit content when classification or scrubbing is unavailable, incomplete, timed out, or unable to inspect an opaque payload.",
+      "item_id": "M15-0009",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-103", "PLANUNIT:PS-104", "PLANUNIT:PS-105", "PLANUNIT:PS-106", "SEMANTIC:PLANUNIT:PS-103", "SEMANTIC:PLANUNIT:PS-104", "SEMANTIC:PLANUNIT:PS-105", "SEMANTIC:PLANUNIT:PS-106"],
+      "statement": "Admin guard ownership and provider-exposure preprocessing lack an exhaustive action-to-guard mapping, data-class vocabulary, permission scope and expiry, scrubber success oracle, fail-closed behavior, opaque-content treatment, and redaction-profile lifecycle across view, persistence, screenshot, export, and evidence consumers.",
+      "title": "Provider exposure scrub gate lacks fail-closed and mapping contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["privacy_data_lifecycle", "security_privacy", "destructive_actions", "partial_failure", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Remote-side-effect receipts record approval_source, executing_subsystem, effective account, and credential handle for push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent actions.\"",
+          "line_end": 7047,
+          "line_start": 7047,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.\"",
+          "line_end": 7159,
+          "line_start": 7159,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "receipt_retention_and_cleanup_completeness_gap",
+      "impact": "Credential or identity provenance can outlive its valid realm, and project deletion can report success while residue remains in indexes, screenshots, exports, caches, backups, or failed asynchronous cleanup jobs.",
+      "item_id": "M15-0010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-107", "PLANUNIT:PS-108", "PLANUNIT:PS-109", "SEMANTIC:PLANUNIT:PS-107", "SEMANTIC:PLANUNIT:PS-108", "SEMANTIC:PLANUNIT:PS-109"],
+      "statement": "Receipt provenance, default masking, and delete cleanup omit handle pseudonymization and rotation, retention and access control, fuller-export authorization and audit, complete storage-class inventory, backup treatment, cleanup ordering, partial-failure retry, and a user-visible verifiable deletion outcome.",
+      "title": "Sensitive provenance and delete cleanup have no complete data lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Session-style privileged operations persist bounded metadata only for actor, target, timestamps, credential realm, transport, local bind address or port when relevant, and requested versus effective state; interactive transcript and stdin are not persisted by default.\"",
+          "line_end": 7214,
+          "line_start": 7214,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "canonical_text: \"Secret resources are never rendered back in full, indexed, or included in receipts or evidence beyond kind, name, namespace, and redacted status; ConfigMap rendering follows a separate configurable redaction policy because it may contain sensitive plaintext.\"",
+          "line_end": 7324,
+          "line_start": 7324,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "secret_enforcement_and_configmap_default_gap",
+      "impact": "Secrets may leak through subprocess arguments, process metadata, errors, caches, telemetry, or ConfigMap rendering despite compliant primary UI and receipt paths.",
+      "item_id": "M15-0011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-110", "PLANUNIT:PS-111", "PLANUNIT:PS-112", "SEMANTIC:PLANUNIT:PS-110", "SEMANTIC:PLANUNIT:PS-111", "SEMANTIC:PLANUNIT:PS-112"],
+      "statement": "Metadata minimization and no-persist/no-echo rules do not enumerate all transient and derived sinks, define enforcement at process boundaries, state retention or encryption for allowed metadata, or require a fail-closed default for ConfigMaps before configuration exists.",
+      "title": "Secret controls leave process and ConfigMap leakage surfaces open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["compatibility_migration", "ownership", "builder_discretion"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"PS-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 208 because Permissions_System-S0079 through S0082 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated PS-001 bridge, and Migration Coverage. Permissions_System-S0001 through S0078 are covered by PS-002 through PS-112 or explicit structural and split dispositions. PS-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.\"",
+          "line_end": 7374,
+          "line_start": 7374,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "none_retirement_boundary_explicit",
+      "impact": "The retired bridge has a clear non-product disposition and does not grant builders authority to recover coarse implementation coverage.",
+      "item_id": "M15-0012",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PS-001", "SEMANTIC:PLANUNIT:PS-001"],
+      "statement": "PS-001 explicitly retires the source-preserving bridge to migration-lineage compatibility and forbids it from owning product coverage, closing the otherwise dangerous residual-bridge ambiguity.",
+      "title": "PS-001 retirement boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority_boundaries", "concurrency_races", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"`approval_scope_key` has a defined schema from the runtime identity envelope over actor/lane/package/project/run/account/tool/context/mode/requested/effective identity/execution_role/approval_scope_level.\"",
+          "line_end": 7573,
+          "line_start": 7573,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "approval_scope_key_encoding_gap",
+      "impact": "Different producers can derive non-equal keys for the same authority envelope or equal keys for different envelopes, causing approval leakage or ineffective reject cascades.",
+      "item_id": "M15-0013",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-113", "SEMANTIC:PLANUNIT:PS-113"],
+      "statement": "The approval_scope_key input dimensions are enumerated, but canonical serialization, normalization, versioning, missing-value treatment, hashing or privacy representation, approval_scope_level enum and allowed boundary matrix, and cross-producer equality vectors are absent.",
+      "title": "Approval scope identity has fields but no canonical key algorithm"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["ownership", "consumers", "authority", "states_transitions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Permissions_System owns existing approval-scope, permission snapshot, approval reuse, and blocked-action payload rules consumed by Goal Runtime high-risk actions. Goal Runtime invokes approval and blocks invisible goals outside predeclared authority, but it does not redefine the permission ladder, approval-scope carryover, or blocked payload schema.",
+          "line_end": 7605,
+          "line_start": 7605,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.",
+          "line_end": 7662,
+          "line_start": 7662,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "consumer_interface_and_write_mode_transition_gap",
+      "impact": "Goal Runtime can locally reinterpret permission results, and concurrent GoalRuns can acquire or retain overlapping write authority under incompatible lease and mode-transition assumptions.",
+      "item_id": "M15-0014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-114", "PLANUNIT:PS-115", "PLANUNIT:PS-116", "SEMANTIC:PLANUNIT:PS-114", "SEMANTIC:PLANUNIT:PS-115", "SEMANTIC:PLANUNIT:PS-116"],
+      "statement": "Goal Runtime consumer ownership, GoalRun write modes, and critical external-effect policy enumerate boundaries but do not define the versioned request/response interface, authoritative record precedence, mode transition table, lease acquisition-renewal-expiry-recovery semantics, policy field types/defaults, or executable denial and escalation matrices.",
+      "title": "GoalRun authority consumers lack a versioned interface and lease state machine"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "authority_boundaries", "failures_recovery", "gui_truth", "builder_discretion", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "no silent local fallback",
+          "line_end": 7786,
+          "line_start": 7786,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "user-visible prompts or degraded states where appropriate",
+          "line_end": 7894,
+          "line_start": 7894,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "compound_planunit_and_degraded_state_discretion_gap",
+      "impact": "Adapters and GUIs can choose different authority prompts, fallback receipts, degraded states, and remote versus local behavior; missing or misleading recovery UI can result, especially for host-trust failures.",
+      "item_id": "M15-0015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-117", "PLANUNIT:PS-118", "SEMANTIC:PLANUNIT:PS-117", "SEMANTIC:PLANUNIT:PS-118"],
+      "statement": "PS-117 combines remote attachment, source control mutations, secret references, testing discovery, installation authority, and visible-artifact redaction without per-action authority or receipt matrices; PS-118 then leaves prompt versus degraded-state selection to 'where appropriate' and is marked non-GUI despite requiring user-visible states.",
+      "title": "Remote planning and discovery authority is compound and GUI-ambiguous"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "authority", "privacy_data_lifecycle", "failures_recovery", "accessibility", "localization"],
+      "evidence": [
+        {
+          "exact_quote": "  export requires an explicit evidence/redaction profile. Stale projection blocks compare/export/reopen/send-forward",
+          "line_end": 7941,
+          "line_start": 7941,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "  The popup offers choices like reject, accept, and always accept; exact wording may differ. Always accept is explicit,",
+          "line_end": 8050,
+          "line_start": 8050,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "profile_schema_and_consent_lifecycle_gap",
+      "impact": "History actions can remain indefinitely blocked or export inconsistent omissions, while image disclosure can persist too broadly across provider-family changes or present inaccessible and unlocalizable consent choices.",
+      "item_id": "M15-0016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PS-120", "PLANUNIT:PS-121", "SEMANTIC:PLANUNIT:PS-120", "SEMANTIC:PLANUNIT:PS-121"],
+      "statement": "History gates and vision disclosure define strong negative boundaries but omit currentness and freshness state schemas, rebuild failure and cancellation recovery, evidence-profile fields, redaction manifest oracle, always-accept expiry and invalidation, provider-family change semantics, and accessible/localizable consent requirements.",
+      "title": "History export and image disclosure lack profile and consent lifecycle schemas"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "authority_boundaries", "invalid_states_transitions", "concurrency_races", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "  command execution requires explicit confirmation or existing policy permission. Degraded states for permission",
+          "line_end": 8187,
+          "line_start": 8187,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        },
+        {
+          "exact_quote": "- Do not let `Do it` execute mutations without a confirmation step.",
+          "line_end": 8288,
+          "line_start": 8288,
+          "path": "Plans/Permissions_System.md",
+          "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+        }
+      ],
+      "gap_kind": "internal_confirmation_policy_conflict",
+      "impact": "One implementation can execute a Teacher mutation under existing policy without a new confirmation while another must always confirm, creating inconsistent user authority and a possible unsafe bypass.",
+      "item_id": "M15-0017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:PS-122", "SEMANTIC:PLANUNIT:PS-122"],
+      "statement": "The canonical text permits mutation under explicit confirmation or existing policy permission, while the preserved negative constraint forbids `Do it` mutations without a confirmation step; precedence, action taxonomy, remembered-policy exception, stop/cancel race, and atomic confirmation-to-execution binding are unresolved.",
+      "title": "Teacher mutation confirmation rules conflict"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [5285, 5664],
+      "covered_source_unit_refs": ["PLANUNIT:PS-075", "PLANUNIT:PS-076", "PLANUNIT:PS-077", "PLANUNIT:PS-078", "PLANUNIT:PS-079", "PLANUNIT:PS-080", "PLANUNIT:PS-081", "SEMANTIC:PLANUNIT:PS-075", "SEMANTIC:PLANUNIT:PS-076", "SEMANTIC:PLANUNIT:PS-077", "SEMANTIC:PLANUNIT:PS-078", "SEMANTIC:PLANUNIT:PS-079", "SEMANTIC:PLANUNIT:PS-080", "SEMANTIC:PLANUNIT:PS-081"],
+      "item_ids": ["M15-0001", "M15-0002"],
+      "reviewed": true,
+      "summary": "Reviewed capability gates, audit records, OpenCode boundary, PM deltas, deny cascade, deterministic resolution, and guard-default acceptance; found operational, concurrency, and falsifiability gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0015"
+    },
+    {
+      "core_range": [5665, 6037],
+      "covered_source_unit_refs": ["PLANUNIT:PS-082", "PLANUNIT:PS-083", "PLANUNIT:PS-084", "PLANUNIT:PS-085", "PLANUNIT:PS-086", "PLANUNIT:PS-087", "PLANUNIT:PS-088", "SEMANTIC:PLANUNIT:PS-082", "SEMANTIC:PLANUNIT:PS-083", "SEMANTIC:PLANUNIT:PS-084", "SEMANTIC:PLANUNIT:PS-085", "SEMANTIC:PLANUNIT:PS-086", "SEMANTIC:PLANUNIT:PS-087", "SEMANTIC:PLANUNIT:PS-088"],
+      "item_ids": ["M15-0003", "M15-0004"],
+      "reviewed": true,
+      "summary": "Reviewed approval persistence, capability audit, external publish guards, exact action UI, rejection preservation, and default additions; found lifecycle, target binding, and partial-failure gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0016"
+    },
+    {
+      "core_range": [6038, 6423],
+      "covered_source_unit_refs": ["PLANUNIT:PS-089", "PLANUNIT:PS-090", "PLANUNIT:PS-091", "PLANUNIT:PS-092", "PLANUNIT:PS-093", "PLANUNIT:PS-094", "PLANUNIT:PS-095", "SEMANTIC:PLANUNIT:PS-089", "SEMANTIC:PLANUNIT:PS-090", "SEMANTIC:PLANUNIT:PS-091", "SEMANTIC:PLANUNIT:PS-092", "SEMANTIC:PLANUNIT:PS-093", "SEMANTIC:PLANUNIT:PS-094", "SEMANTIC:PLANUNIT:PS-095"],
+      "item_ids": ["M15-0005", "M15-0006"],
+      "reviewed": true,
+      "summary": "Reviewed blocked outcomes, payload aliases, approval UI semantics, domain classes, queued preflight, distributed dedupe, and target revalidation; found schema and atomicity gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0017"
+    },
+    {
+      "core_range": [6424, 6815],
+      "covered_source_unit_refs": ["PLANUNIT:PS-096", "PLANUNIT:PS-097", "PLANUNIT:PS-098", "PLANUNIT:PS-099", "PLANUNIT:PS-100", "PLANUNIT:PS-101", "PLANUNIT:PS-102", "SEMANTIC:PLANUNIT:PS-096", "SEMANTIC:PLANUNIT:PS-097", "SEMANTIC:PLANUNIT:PS-098", "SEMANTIC:PLANUNIT:PS-099", "SEMANTIC:PLANUNIT:PS-100", "SEMANTIC:PLANUNIT:PS-101", "SEMANTIC:PLANUNIT:PS-102"],
+      "item_ids": ["M15-0007", "M15-0008"],
+      "reviewed": true,
+      "summary": "Reviewed indeterminate outcomes, snapshot lifecycle and display, blocked identity, event wakeup, and domain revalidation; found reconciliation, schema, and event-delivery gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0018"
+    },
+    {
+      "core_range": [6816, 7206],
+      "covered_source_unit_refs": ["PLANUNIT:PS-103", "PLANUNIT:PS-104", "PLANUNIT:PS-105", "PLANUNIT:PS-106", "PLANUNIT:PS-107", "PLANUNIT:PS-108", "PLANUNIT:PS-109", "SEMANTIC:PLANUNIT:PS-103", "SEMANTIC:PLANUNIT:PS-104", "SEMANTIC:PLANUNIT:PS-105", "SEMANTIC:PLANUNIT:PS-106", "SEMANTIC:PLANUNIT:PS-107", "SEMANTIC:PLANUNIT:PS-108", "SEMANTIC:PLANUNIT:PS-109"],
+      "item_ids": ["M15-0009", "M15-0010"],
+      "reviewed": true,
+      "summary": "Reviewed admin guard mappings, partial-auth disclosure, provider scrubbing, redaction profiles, receipt provenance, masking, and project cleanup; found fail-closed and data-lifecycle gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0019"
+    },
+    {
+      "core_range": [7207, 7596],
+      "covered_source_unit_refs": ["PLANUNIT:PS-001", "PLANUNIT:PS-110", "PLANUNIT:PS-111", "PLANUNIT:PS-112", "PLANUNIT:PS-113", "SEMANTIC:PLANUNIT:PS-110", "SEMANTIC:PLANUNIT:PS-111", "SEMANTIC:PLANUNIT:PS-112", "SEMANTIC:PLANUNIT:PS-001", "SEMANTIC:PLANUNIT:PS-113"],
+      "item_ids": ["M15-0011", "M15-0012", "M15-0013"],
+      "reviewed": true,
+      "summary": "Reviewed privileged-session metadata, secret handling, resource redaction, bridge retirement, and approval scope carryover; confirmed the retirement boundary and found secret-sink and key-algorithm gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0020"
+    },
+    {
+      "core_range": [7597, 7931],
+      "covered_source_unit_refs": ["PLANUNIT:PS-114", "PLANUNIT:PS-115", "PLANUNIT:PS-116", "PLANUNIT:PS-117", "PLANUNIT:PS-118", "SEMANTIC:PLANUNIT:PS-114", "SEMANTIC:PLANUNIT:PS-115", "SEMANTIC:PLANUNIT:PS-116", "SEMANTIC:PLANUNIT:PS-117", "SEMANTIC:PLANUNIT:PS-118"],
+      "item_ids": ["M15-0014", "M15-0015"],
+      "reviewed": true,
+      "summary": "Reviewed Goal Runtime permission consumption, GoalRun write authority, plans-to-code external effects, planning setup, and discovery trust; found consumer-interface, lease, compound-scope, and GUI classification gaps.",
+      "window_id": "WIN-4CB48A2AA77A-0021"
+    },
+    {
+      "core_range": [7932, 8310],
+      "covered_source_unit_refs": ["PLANUNIT:PS-120", "PLANUNIT:PS-121", "PLANUNIT:PS-122", "SEMANTIC:PLANUNIT:PS-120", "SEMANTIC:PLANUNIT:PS-121", "SEMANTIC:PLANUNIT:PS-122"],
+      "item_ids": ["M15-0016", "M15-0017"],
+      "reviewed": true,
+      "summary": "Reviewed history authority and redaction, vision image disclosure, and Teacher guided mutation gates; found profile lifecycle gaps and an internal confirmation-policy conflict.",
+      "window_id": "WIN-4CB48A2AA77A-0022"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-4CB48A2AA77A-0003",
+    "document_path": "Plans/Permissions_System.md",
+    "micro_window_ids": ["WIN-4CB48A2AA77A-0015", "WIN-4CB48A2AA77A-0016", "WIN-4CB48A2AA77A-0017", "WIN-4CB48A2AA77A-0018", "WIN-4CB48A2AA77A-0019", "WIN-4CB48A2AA77A-0020", "WIN-4CB48A2AA77A-0021", "WIN-4CB48A2AA77A-0022"],
+    "source_sha256": "2862b356bc576b08f2095a39dea8c2eef3a4dc12b6357e088d34416d95660beb"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do Contracts_V0 and storage-plan define the required field types, durability, retention, and compatibility behavior for blocked payloads, permission snapshots, approval events, and receipts?",
+      "Do Executor_Protocol and Goal_Runtime_System provide atomic lease, dedupe, preflight, wakeup, and conditional-mutation state machines consistent with these permission boundaries?",
+      "Do FinalGUISpec and assistant-chat-design define accessible, localizable, non-misleading approval, degraded, reconciliation, redaction, and revocation states for every permission consumer?",
+      "Do provider, artifact, and container owner documents define fail-closed scrubbing and complete deletion propagation across persistence, indexes, screenshots, exports, evidence, caches, and backups?"
+    ],
+    "feature_family_keys": ["permission-resolution-and-audit", "external-side-effect-approval", "blocked-recovery-and-snapshots", "distributed-mutation-authority", "provider-exposure-and-redaction", "goalrun-write-authority", "history-and-vision-disclosure", "teacher-guided-mutation"],
+    "research_queries": [
+      "durable event-driven approval wakeup idempotency transactional outbox recovery patterns",
+      "TOCTOU-safe remote mutation approval target binding and conditional update designs",
+      "privacy-preserving credential handle audit receipts retention and deletion lifecycle",
+      "accessible localized remembered-consent and revocation UI patterns for sensitive media disclosure"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000082_attempt_0015_terminal"
+}

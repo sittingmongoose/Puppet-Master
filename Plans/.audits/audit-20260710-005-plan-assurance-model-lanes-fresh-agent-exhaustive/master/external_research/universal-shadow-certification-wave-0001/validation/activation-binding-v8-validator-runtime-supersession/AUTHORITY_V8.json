@@ -1,0 +1,85 @@
+{
+  "schema_version": "universal-shadow-certification-activation-binding-validator-runtime-supersession-v8",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_LUNA_PRELAUNCH_V8_ATOMIC8",
+  "purpose": "Append-only supersession of the failed activation-binding-v6 semantic gate. This authority binds the complete Draft 2020-12 postrun validator, isolated runtime, executable substantive tests, and the already-prepared atomic8 topology without reinterpreting the v6 failure.",
+  "failed_v6_gate": {
+    "path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v6/luna-independent-prelaunch-v6.json",
+    "sha256": "03897db27ebe3be42a55939dd513146a2aea05d5a9ee171937960b085316bb1a",
+    "status": "FAIL_CLOSED",
+    "errors": [
+      "VALIDATOR_SEMANTIC_SCHEMA_BYPASS_UNRESOLVED",
+      "COMMON_MODE_V6_TEST_HARNESS_SYNTHETIC_COUNTER"
+    ],
+    "preserved_as_failure": true
+  },
+  "real_validator_binding": {
+    "validator_path": "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/validate_universal_shadow_certification_postrun_v2.py",
+    "validator_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+    "tests_path": "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/test_universal_shadow_certification_postrun_v2.py",
+    "tests_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+    "authority_path": "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/VALIDATOR_AUTHORITY_V2.json",
+    "authority_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+    "result_schema_path": "master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+    "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+    "complete_draft202012_required": true,
+    "selective_approximation_forbidden": true,
+    "bypass_reproductions_rejected": 12,
+    "schema_fuzz_rejected": 100,
+    "substantive_suite_passed": 437
+  },
+  "isolated_runtime_binding": {
+    "python": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "flags": ["-S", "-B"],
+    "pythonpath": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "distribution": "jsonschema",
+    "version": "4.26.0",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "semantic_tree_files": 152,
+    "semantic_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "cache_reconciliation_authority_sha256": "f82c8796be8802ac3735c4e24c74b48b54efe2752e0a294c2844d7f98b2a03bc",
+    "cache_reconciliation_report_sha256": "1b7b88edbcba737e81a02fc81e0b87600c58e3be300f91429c9d61dec653e88e",
+    "dependency_binding_report_sha256": "f5cb2e7cc0bb51153c606a37f2808df33a4f815270712cd1f92b427707347b37",
+    "runtime_caches_authoritative": false,
+    "global_install_forbidden": true,
+    "network_required": false
+  },
+  "atomic8_binding": {
+    "terminal_report_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v7-atomic8/terminal-preparation-report-v7-atomic8.json",
+    "terminal_report_sha256": "6a31474c4e6943e812776739cf87a7efeeba6cda1937bc0a94d645cf145839e1",
+    "assignment_count": 16,
+    "feature_count": 3888,
+    "cohorts": 2,
+    "assignments_per_cohort": 8,
+    "features_per_assignment": 243,
+    "separate_activation_required": true,
+    "atomic16_forbidden": true
+  },
+  "policies": {
+    "v25_sha256": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b",
+    "v26_sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68",
+    "frozen_source_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+    "routing_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"
+  },
+  "zero_state_required": {
+    "output_directories": 16,
+    "empty_output_directories": 16,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "activation_transactions": 0,
+    "credit": 0
+  },
+  "authorization_effect": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "fresh_luna_validation_required": true,
+    "certification_credit": 0,
+    "promotion_credit": 0,
+    "spec_credit": 0,
+    "merge_credit": 0
+  }
+}

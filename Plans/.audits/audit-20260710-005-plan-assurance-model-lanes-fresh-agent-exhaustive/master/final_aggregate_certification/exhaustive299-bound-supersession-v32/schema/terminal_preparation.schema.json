@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:puppet-master:audit005:exhaustive299:terminal-preparation:v32",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_seal_sha256",
+    "audit_id",
+    "authorizations",
+    "blocker_count",
+    "credit",
+    "exact_scope",
+    "predecessor_immutability",
+    "preparation_complete",
+    "preparation_id",
+    "ready_for_activation",
+    "schema_version",
+    "semantic_prose_reads",
+    "status",
+    "test_report",
+    "zero_state"
+  ],
+  "properties": {
+    "artifact_seal_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "authorizations": {"type": "object"},
+    "blocker_count": {"const": 7},
+    "credit": {"const": 0},
+    "exact_scope": {"type": "object"},
+    "predecessor_immutability": {"type": "object"},
+    "preparation_complete": {"const": true},
+    "preparation_id": {"const": "exhaustive299-bound-supersession-v32"},
+    "ready_for_activation": {"const": false},
+    "schema_version": {"const": "audit005-exhaustive299-terminal-preparation-v32"},
+    "semantic_prose_reads": {"const": 0},
+    "status": {"const": "PASS_PREPARATION_ONLY_BLOCKED_ZERO_CREDIT"},
+    "test_report": {"type": "object"},
+    "zero_state": {"type": "object"}
+  }
+}

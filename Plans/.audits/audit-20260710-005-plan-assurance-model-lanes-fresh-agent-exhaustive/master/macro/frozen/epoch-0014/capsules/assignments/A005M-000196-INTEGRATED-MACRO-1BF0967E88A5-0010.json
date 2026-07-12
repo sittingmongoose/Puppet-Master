@@ -1,0 +1,438 @@
+{
+  "assignment_id": "A005M-000196-INTEGRATED-MACRO-1BF0967E88A5-0010",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    25220,
+    28310
+  ],
+  "bundle_id": "MACRO-1BF0967E88A5-0010",
+  "context_ranges": [
+    [
+      25208,
+      25219
+    ],
+    [
+      28311,
+      28322
+    ]
+  ],
+  "document_path": "Plans/orchestrator-subagent-integration.md",
+  "micro_window_ids": [
+    "WIN-1BF0967E88A5-0068",
+    "WIN-1BF0967E88A5-0069",
+    "WIN-1BF0967E88A5-0070",
+    "WIN-1BF0967E88A5-0071",
+    "WIN-1BF0967E88A5-0072",
+    "WIN-1BF0967E88A5-0073",
+    "WIN-1BF0967E88A5-0074",
+    "WIN-1BF0967E88A5-0075"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        25220,
+        25611
+      ],
+      "core_sha256": "b249647954d674065701a41d7ea2bcad737cff44ea02bba780c7395cc5f36f15",
+      "plan_unit_ids": [
+        "OSI-323",
+        "OSI-324",
+        "OSI-325",
+        "OSI-326",
+        "OSI-327",
+        "OSI-328",
+        "OSI-329"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-323",
+        "PLANUNIT:OSI-324",
+        "PLANUNIT:OSI-325",
+        "PLANUNIT:OSI-326",
+        "PLANUNIT:OSI-327",
+        "PLANUNIT:OSI-328",
+        "PLANUNIT:OSI-329",
+        "SEMANTIC:PLANUNIT:OSI-323",
+        "SEMANTIC:PLANUNIT:OSI-324",
+        "SEMANTIC:PLANUNIT:OSI-325",
+        "SEMANTIC:PLANUNIT:OSI-326",
+        "SEMANTIC:PLANUNIT:OSI-327",
+        "SEMANTIC:PLANUNIT:OSI-328",
+        "SEMANTIC:PLANUNIT:OSI-329"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-323",
+        "PLANUNIT:OSI-324",
+        "PLANUNIT:OSI-325",
+        "PLANUNIT:OSI-326",
+        "PLANUNIT:OSI-327",
+        "PLANUNIT:OSI-328",
+        "PLANUNIT:OSI-329"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5253,
+      "window_id": "WIN-1BF0967E88A5-0068"
+    },
+    {
+      "core_range": [
+        25612,
+        25999
+      ],
+      "core_sha256": "6a76c79d51871163f965b4a941595ef79eb12a860876444863f8a540a0cb30d4",
+      "plan_unit_ids": [
+        "OSI-330",
+        "OSI-331",
+        "OSI-332",
+        "OSI-333",
+        "OSI-334",
+        "OSI-335",
+        "OSI-336"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-330",
+        "PLANUNIT:OSI-331",
+        "PLANUNIT:OSI-332",
+        "PLANUNIT:OSI-333",
+        "PLANUNIT:OSI-334",
+        "PLANUNIT:OSI-335",
+        "PLANUNIT:OSI-336",
+        "SEMANTIC:PLANUNIT:OSI-330",
+        "SEMANTIC:PLANUNIT:OSI-331",
+        "SEMANTIC:PLANUNIT:OSI-332",
+        "SEMANTIC:PLANUNIT:OSI-333",
+        "SEMANTIC:PLANUNIT:OSI-334",
+        "SEMANTIC:PLANUNIT:OSI-335",
+        "SEMANTIC:PLANUNIT:OSI-336"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-330",
+        "PLANUNIT:OSI-331",
+        "PLANUNIT:OSI-332",
+        "PLANUNIT:OSI-333",
+        "PLANUNIT:OSI-334",
+        "PLANUNIT:OSI-335",
+        "PLANUNIT:OSI-336"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4792,
+      "window_id": "WIN-1BF0967E88A5-0069"
+    },
+    {
+      "core_range": [
+        26000,
+        26385
+      ],
+      "core_sha256": "af65653fd944845b17457d229459f28d478cc6dc134e11fd0c8d83cbbed5c9f2",
+      "plan_unit_ids": [
+        "OSI-337",
+        "OSI-338",
+        "OSI-339",
+        "OSI-340",
+        "OSI-341",
+        "OSI-342",
+        "OSI-343"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-337",
+        "PLANUNIT:OSI-338",
+        "PLANUNIT:OSI-339",
+        "PLANUNIT:OSI-340",
+        "PLANUNIT:OSI-341",
+        "PLANUNIT:OSI-342",
+        "PLANUNIT:OSI-343",
+        "SEMANTIC:PLANUNIT:OSI-337",
+        "SEMANTIC:PLANUNIT:OSI-338",
+        "SEMANTIC:PLANUNIT:OSI-339",
+        "SEMANTIC:PLANUNIT:OSI-340",
+        "SEMANTIC:PLANUNIT:OSI-341",
+        "SEMANTIC:PLANUNIT:OSI-342",
+        "SEMANTIC:PLANUNIT:OSI-343"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-337",
+        "PLANUNIT:OSI-338",
+        "PLANUNIT:OSI-339",
+        "PLANUNIT:OSI-340",
+        "PLANUNIT:OSI-341",
+        "PLANUNIT:OSI-342",
+        "PLANUNIT:OSI-343"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4724,
+      "window_id": "WIN-1BF0967E88A5-0070"
+    },
+    {
+      "core_range": [
+        26386,
+        26751
+      ],
+      "core_sha256": "6066567ae78a4eb5947198a8d71dce03099310bc0a74a86515e13bc0ec134ae1",
+      "plan_unit_ids": [
+        "OSI-344",
+        "OSI-345",
+        "OSI-346",
+        "OSI-347",
+        "OSI-348",
+        "OSI-349",
+        "OSI-350"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-344",
+        "PLANUNIT:OSI-345",
+        "PLANUNIT:OSI-346",
+        "PLANUNIT:OSI-347",
+        "PLANUNIT:OSI-348",
+        "PLANUNIT:OSI-349",
+        "PLANUNIT:OSI-350",
+        "SEMANTIC:PLANUNIT:OSI-344",
+        "SEMANTIC:PLANUNIT:OSI-345",
+        "SEMANTIC:PLANUNIT:OSI-346",
+        "SEMANTIC:PLANUNIT:OSI-347",
+        "SEMANTIC:PLANUNIT:OSI-348",
+        "SEMANTIC:PLANUNIT:OSI-349",
+        "SEMANTIC:PLANUNIT:OSI-350"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-344",
+        "PLANUNIT:OSI-345",
+        "PLANUNIT:OSI-346",
+        "PLANUNIT:OSI-347",
+        "PLANUNIT:OSI-348",
+        "PLANUNIT:OSI-349",
+        "PLANUNIT:OSI-350"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4813,
+      "window_id": "WIN-1BF0967E88A5-0071"
+    },
+    {
+      "core_range": [
+        26752,
+        27144
+      ],
+      "core_sha256": "c25fb3c999577fca080fc107f3ea9c052126999cb929cfb47b14a3365fbfdd9b",
+      "plan_unit_ids": [
+        "OSI-351",
+        "OSI-352",
+        "OSI-353",
+        "OSI-354",
+        "OSI-355",
+        "OSI-356",
+        "OSI-357"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-351",
+        "PLANUNIT:OSI-352",
+        "PLANUNIT:OSI-353",
+        "PLANUNIT:OSI-354",
+        "PLANUNIT:OSI-355",
+        "PLANUNIT:OSI-356",
+        "PLANUNIT:OSI-357",
+        "SEMANTIC:PLANUNIT:OSI-351",
+        "SEMANTIC:PLANUNIT:OSI-352",
+        "SEMANTIC:PLANUNIT:OSI-353",
+        "SEMANTIC:PLANUNIT:OSI-354",
+        "SEMANTIC:PLANUNIT:OSI-355",
+        "SEMANTIC:PLANUNIT:OSI-356",
+        "SEMANTIC:PLANUNIT:OSI-357"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-351",
+        "PLANUNIT:OSI-352",
+        "PLANUNIT:OSI-353",
+        "PLANUNIT:OSI-354",
+        "PLANUNIT:OSI-355",
+        "PLANUNIT:OSI-356",
+        "PLANUNIT:OSI-357"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5020,
+      "window_id": "WIN-1BF0967E88A5-0072"
+    },
+    {
+      "core_range": [
+        27145,
+        27523
+      ],
+      "core_sha256": "c72cd89fef58da4b69574c68f0275eea1126af671de078e5d7fd242202b671c9",
+      "plan_unit_ids": [
+        "OSI-358",
+        "OSI-359",
+        "OSI-360",
+        "OSI-361",
+        "OSI-362",
+        "OSI-363",
+        "OSI-364"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-358",
+        "PLANUNIT:OSI-359",
+        "PLANUNIT:OSI-360",
+        "PLANUNIT:OSI-361",
+        "PLANUNIT:OSI-362",
+        "PLANUNIT:OSI-363",
+        "PLANUNIT:OSI-364",
+        "SEMANTIC:PLANUNIT:OSI-358",
+        "SEMANTIC:PLANUNIT:OSI-359",
+        "SEMANTIC:PLANUNIT:OSI-360",
+        "SEMANTIC:PLANUNIT:OSI-361",
+        "SEMANTIC:PLANUNIT:OSI-362",
+        "SEMANTIC:PLANUNIT:OSI-363",
+        "SEMANTIC:PLANUNIT:OSI-364"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-358",
+        "PLANUNIT:OSI-359",
+        "PLANUNIT:OSI-360",
+        "PLANUNIT:OSI-361",
+        "PLANUNIT:OSI-362",
+        "PLANUNIT:OSI-363",
+        "PLANUNIT:OSI-364"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4707,
+      "window_id": "WIN-1BF0967E88A5-0073"
+    },
+    {
+      "core_range": [
+        27524,
+        27911
+      ],
+      "core_sha256": "989ce7596a487c59149b8c911eadc9189eeeebc7d2ea90bcbf2a53f32d96ccee",
+      "plan_unit_ids": [
+        "OSI-365",
+        "OSI-366",
+        "OSI-367",
+        "OSI-368",
+        "OSI-369",
+        "OSI-370",
+        "OSI-371"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-365",
+        "PLANUNIT:OSI-366",
+        "PLANUNIT:OSI-367",
+        "PLANUNIT:OSI-368",
+        "PLANUNIT:OSI-369",
+        "PLANUNIT:OSI-370",
+        "PLANUNIT:OSI-371",
+        "SEMANTIC:PLANUNIT:OSI-365",
+        "SEMANTIC:PLANUNIT:OSI-366",
+        "SEMANTIC:PLANUNIT:OSI-367",
+        "SEMANTIC:PLANUNIT:OSI-368",
+        "SEMANTIC:PLANUNIT:OSI-369",
+        "SEMANTIC:PLANUNIT:OSI-370",
+        "SEMANTIC:PLANUNIT:OSI-371"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-365",
+        "PLANUNIT:OSI-366",
+        "PLANUNIT:OSI-367",
+        "PLANUNIT:OSI-368",
+        "PLANUNIT:OSI-369",
+        "PLANUNIT:OSI-370",
+        "PLANUNIT:OSI-371"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5088,
+      "window_id": "WIN-1BF0967E88A5-0074"
+    },
+    {
+      "core_range": [
+        27912,
+        28310
+      ],
+      "core_sha256": "ba6002a1cfcd19802955208508f9863adef34774a05a8882e7ad589173dd5abe",
+      "plan_unit_ids": [
+        "OSI-372",
+        "OSI-373",
+        "OSI-374",
+        "OSI-375",
+        "OSI-376",
+        "OSI-377",
+        "OSI-378"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:OSI-372",
+        "PLANUNIT:OSI-373",
+        "PLANUNIT:OSI-374",
+        "PLANUNIT:OSI-375",
+        "PLANUNIT:OSI-376",
+        "PLANUNIT:OSI-377",
+        "PLANUNIT:OSI-378",
+        "SEMANTIC:PLANUNIT:OSI-372",
+        "SEMANTIC:PLANUNIT:OSI-373",
+        "SEMANTIC:PLANUNIT:OSI-374",
+        "SEMANTIC:PLANUNIT:OSI-375",
+        "SEMANTIC:PLANUNIT:OSI-376",
+        "SEMANTIC:PLANUNIT:OSI-377",
+        "SEMANTIC:PLANUNIT:OSI-378"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:OSI-372",
+        "PLANUNIT:OSI-373",
+        "PLANUNIT:OSI-374",
+        "PLANUNIT:OSI-375",
+        "PLANUNIT:OSI-376",
+        "PLANUNIT:OSI-377",
+        "PLANUNIT:OSI-378"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5187,
+      "window_id": "WIN-1BF0967E88A5-0075"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/e0/e0b1d692a1e64c238b6aec47e2e05150b37df44e922eeeacf62b9d31a59181b1.txt",
+  "source_excerpt_sha256": "e0b1d692a1e64c238b6aec47e2e05150b37df44e922eeeacf62b9d31a59181b1",
+  "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a",
+  "token_estimate": 39584
+}

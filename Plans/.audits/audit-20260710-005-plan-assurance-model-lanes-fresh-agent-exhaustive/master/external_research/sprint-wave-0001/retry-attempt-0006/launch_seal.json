@@ -1,0 +1,64 @@
+{
+  "activation_granted": false,
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal"
+  ],
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0006",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "authority_sha256": "b0cfe8e891d4dbd463575253c827fb341bd99208cf6efb620792df33b8d213f9",
+  "blocking_condition": "fresh independent Luna prelaunch must exactly validate this immutable attempt-0006 candidate and current zero state",
+  "concurrency_policy_v9_sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+  "coverage_credit": 0,
+  "cumulative_research_credit": 0,
+  "current_activation_transaction_files": 0,
+  "current_native_capture_rows": 0,
+  "current_output_files": 0,
+  "current_receipts": 0,
+  "current_results": 0,
+  "forbidden_contract_label_in_positive_receipt": "external-research-receipt-contract-v6",
+  "future_activation_transaction_files": 4,
+  "launch_authorized": false,
+  "manifest_sha256": "cdc5acf261c8bff81790f0912b9527e9ce4ed2fb863c2c37284d89de36c88ac8",
+  "merge_credit": 0,
+  "payload_hashes": {
+    "activation_transaction.template.json": "333b5524fd44196b437299ce020c6b95e8a139cc29353040656bc530952a8d8f",
+    "architecture.json": "e750d18ccca7b5b306f34183f12546a5870d7df93bbf2241c1c3425dcd7e7eff",
+    "authority.json": "b0cfe8e891d4dbd463575253c827fb341bd99208cf6efb620792df33b8d213f9",
+    "intents": {
+      "ER-0003": "349b1546931476b1364664591659569286a0ea10d5e91c0527e4984e8c48136b",
+      "ER-0008": "344825c7391aeb25832e43401ad33b681ca5fa9138d791225f4009da0e2656c1"
+    },
+    "leaf_initial_task_contract.json": "5c9ebbe8f79e9c622bbfe9732314c41a2af9b42e86fb052ae7c0207807cf2bbb",
+    "leaf_prompt.json": "66903b770b86f7c4e8c33cdb6f2c703f22814e798bdd640ffe886e95d2059078",
+    "lineage.json": "1b432869e5181da3c8803d94ef93991034638f31e7b4670cd77ae1eb8cc967d9",
+    "manifest.json": "cdc5acf261c8bff81790f0912b9527e9ce4ed2fb863c2c37284d89de36c88ac8",
+    "native_capture_contract_v6.json": "400090ca7d049f8cc9100c1581c831ff13bd9d19c571e18513211035440eeeef",
+    "packets": {
+      "ER-0003": "2951e2b35f60ad3762d9c995fc3f306762b2d150dc7ae864b2322960ad795ead",
+      "ER-0008": "9930ce37cf3aae3253ebed745b80a562cff4ad68c68acfafa8f8dceddb883d58"
+    },
+    "receipt_contract_v6.json": "f08c61e4473b82e633babdaff36e07dad79c40b317bdcae08200423e11230763",
+    "schema/external_research_result_v6.schema.json": "3b470b6f6b75fa5bdb914cb6b1cad49d430dab69744eb8fbe4ade52a29cf8980",
+    "tools/common.py": "7e079c851f1b92b5cc90a48def047e30c004c81af333540e63f7079956b3a58b",
+    "tools/generate_activation_transaction.py": "f84c4ae5d37c44b9968670b6197f43b51b8c89bffe1d38ef51b4097d160344a3",
+    "tools/test_attempt_0006.py": "a053c34ad70b7232a84343f10ea49ac72cd421a8b54b5244b0677ec5545d92be",
+    "tools/validate_postrun.py": "ee9a6d160c65149adb2b0d21a07df7d892d205880ffb7192609422d5920e61ba",
+    "tools/verify_prelaunch.py": "7c07fba9419f55f94fb9245b97b8e64704f32db614f006220ecbf4d2f47081ec",
+    "validation/VALIDATOR_AUTHORITY_V6.json": "04ddef7ce736e02400eb987c99eb630c3b6be0fd60e945bcecb29b5a88929815"
+  },
+  "promotion_credit": 0,
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+  "retry_namespace": "retry-attempt-0006",
+  "schema_version": "external-research-recovery-launch-seal-v6",
+  "semantic_transaction_cap": 2,
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH",
+  "validator_authority_sha256": "04ddef7ce736e02400eb987c99eb630c3b6be0fd60e945bcecb29b5a88929815"
+}

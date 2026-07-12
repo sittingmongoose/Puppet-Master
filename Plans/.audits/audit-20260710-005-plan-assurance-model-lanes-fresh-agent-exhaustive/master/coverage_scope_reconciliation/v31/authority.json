@@ -1,0 +1,158 @@
+{
+  "schema_version": "audit005-coverage-scope-reconciliation-v31-authority-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "coverage-scope-reconciliation-v31-0001",
+  "status": "SEALED_TYPED_RECONCILIATION_CURRENT_LIVE_HEAD_BLOCKED",
+  "authority_role": "append_only_typed_scope_reconciliation_without_execution_authority",
+  "namespace_ref": "master/coverage_scope_reconciliation/v31",
+  "append_only": true,
+  "current_policy": {
+    "ref": "master/coordination/CONCURRENCY_POLICY_V32.json",
+    "sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "schema_version": "audit005-concurrency-policy-v32",
+    "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V31.json"
+  },
+  "prior_policy_lineage": {
+    "ref": "master/coordination/CONCURRENCY_POLICY_V31.json",
+    "sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5",
+    "mutated": false
+  },
+  "namespace_files": {
+    "report": {
+      "ref": "master/coverage_scope_reconciliation/v31/coverage_scope_report.json",
+      "sha256": "9c51da019318b0292d4e6592c7d8713c405b1edf1825035f2c84bcb65de8f81f"
+    },
+    "pointer": {
+      "ref": "master/coverage_scope_reconciliation/v31/pointer.json",
+      "sha256": "45620470eae81abdbfa2b5eb075d4d84f3f5407f485349e4d763b61d1d72cdf4"
+    },
+    "schema": {
+      "ref": "master/coverage_scope_reconciliation/v31/schemas/coverage_scope_reconciliation_v31.schema.json",
+      "sha256": "c728e1e6ec22858e308c943d790437aaf71811721e4fb44b334f20e9a936d0ba"
+    },
+    "verifier": {
+      "ref": "master/coverage_scope_reconciliation/v31/verify_coverage_scope_reconciliation_v31.py",
+      "sha256": "b5d34a6e52ed6fa108b9602071ac0a431e4ae4b4321b04d01e5d25dc8caf221e"
+    },
+    "tests": {
+      "ref": "master/coverage_scope_reconciliation/v31/test_coverage_scope_reconciliation_v31.py",
+      "sha256": "721a8eac9c97371b7404920c07f7add95ffd3ad9f56752fa2a2cd7f072e46810"
+    }
+  },
+  "protected_inputs": {
+    "legacy_coverage_snapshot": {
+      "ref": "master/live/coverage_state.snapshot-0015.json",
+      "sha256": "90de30e60f5314fb8db5eb66f3326138686021f1c06b321003700be10b0463ec"
+    },
+    "legacy_credited_registry": {
+      "ref": "master/live/credited_assignments.snapshot-0015.json",
+      "sha256": "eef8ebf279618c421691942b96abf5e647d12dc0e8bc99162f7146eaf4943304"
+    },
+    "legacy_primary_validation": {
+      "ref": "master/validation/live-coverage/snapshot-0015-primary.json",
+      "sha256": "99e6fa77d22a168bb3805f0568208ba79866201ac8942bb5d1d244f6148e937f"
+    },
+    "legacy_source_scope": {
+      "ref": "master/frozen/epoch-0013/manifests/source_scope.jsonl",
+      "sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46"
+    },
+    "legacy_window_manifest": {
+      "ref": "master/frozen/epoch-0013/manifests/window_manifest.jsonl",
+      "sha256": "90ee1d111f476141c1661c0077e65ab6127af3d07aca57f649eca78416782539"
+    },
+    "legacy_assignment_manifest": {
+      "ref": "master/frozen/epoch-0013/manifests/assignment_manifest.jsonl",
+      "sha256": "e8d9108221c59888c803d2c870d9d7eafd6dfe30bd2965ef58ad43f9b2267e68"
+    },
+    "legacy_macro_seed": {
+      "ref": "master/macro/frozen/epoch-0014/manifests/seeded_windows.jsonl",
+      "sha256": "15a69d717b2e86b058fd3dcdae24d175c9727685f5a2e41120035971c53584d3"
+    },
+    "macro_migration": {
+      "ref": "master/macro/authorities/macro-v2-migration.json",
+      "sha256": "21d89827f26225a3c87320f80c5ac55c962890c7eb5e3a66ce7d062e3776ce45"
+    },
+    "macro_active_pointer": {
+      "ref": "master/macro/live/ACTIVE.json",
+      "sha256": "a2b2365d16f5dc7c53f1a87a8a515010a25bd5cc52b7ed548f9ec9c67bc007dc"
+    },
+    "macro_batch0012_coverage": {
+      "ref": "master/macro/transactions/macro-batch-0012/coverage.snapshot-0012.json",
+      "sha256": "200d4f9ce29f35a4c29c45d056f8541e91a9cbcdd2a84e294330489981ee93f4"
+    },
+    "macro_batch0012_commit": {
+      "ref": "master/macro/transactions/macro-batch-0012/commit.json",
+      "sha256": "539fd17bbf0951e07628b74726e960c17dc8abdb4d533b29d2d0d7f765851406"
+    },
+    "macro_batch0012_independent_checkpoint": {
+      "ref": "master/macro/validation/macro-batch-0012/luna-postcheckpoint.json",
+      "sha256": "ec065ba2cae0f85867d8d7fe26f2bbe01f6a4481a4b348eb9b12105242feb311"
+    },
+    "macro_epoch0016_source_scope": {
+      "ref": "master/macro/frozen/epoch-0016/manifests/source_scope.jsonl",
+      "sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46"
+    },
+    "macro_epoch0016_window_manifest": {
+      "ref": "master/macro/frozen/epoch-0016/manifests/micro_window_manifest.jsonl",
+      "sha256": "90ee1d111f476141c1661c0077e65ab6127af3d07aca57f649eca78416782539"
+    },
+    "macro_epoch0016_coverage_seed": {
+      "ref": "master/macro/frozen/epoch-0016/lineage/coverage_seed.json",
+      "sha256": "da606256c4657b00c3bf0b6215d802cfcf1285cd8d2943649582e2e214787de4"
+    },
+    "live_head_source_binding": {
+      "ref": "master/final_live_head_delta/final-live-head-delta-0002/source_scope_binding.json",
+      "sha256": "8484922e0f96633378af3fc32dfc973dbaffd6812acbb0f5aed2d25bcd60e00e"
+    },
+    "live_head_source_binding_receipt": {
+      "ref": "master/final_live_head_delta/final-live-head-delta-0002/source_scope_binding_receipt.json",
+      "sha256": "cf8e02f95c2cf3f495ba443bb7856609ef4a5573fee9bb70b3577a61ca9877a0"
+    },
+    "live_head_failed_predecessor_prepare": {
+      "ref": "master/final_live_head_delta/final-live-head-delta-0001/prepare_final_live_head_delta_0001.py",
+      "sha256": "8cc057cdb4b7a187fde315e72aee10e565459e7fd6911d2d10db67dd13fc904b"
+    },
+    "prior_policy_v31": {
+      "ref": "master/coordination/CONCURRENCY_POLICY_V31.json",
+      "sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5"
+    },
+    "current_policy_v32": {
+      "ref": "master/coordination/CONCURRENCY_POLICY_V32.json",
+      "sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed"
+    }
+  },
+  "preservation": {
+    "old_pointer_mutation_authorized": false,
+    "old_pointer_mutation_observed": false,
+    "prior_policy_mutation_authorized": false,
+    "historical_batch0011_pointer_sha256": "e13087420a4b6e1e71e66c7a08e2629004b7e7fc5561ac16785109c028e3bf0c",
+    "historical_pointer_hash_role": "lineage_binding_only_not_current_file_hash",
+    "legacy_complete_state_preserved_false": true,
+    "macro_complete_state_preserved_frozen_scope_only": true,
+    "current_live_head_complete_state_preserved_false": true
+  },
+  "read_policy": {
+    "scope": "declared_audit_artifacts_only",
+    "canonical_prose_access_authorized": false,
+    "outside_audit_access_authorized": false
+  },
+  "permissions": {
+    "activation_authorized": false,
+    "semantic_packet_generation_authorized": false,
+    "launch_authorized": false,
+    "result_acceptance_authorized": false,
+    "receipt_acceptance_authorized": false,
+    "capture_authorized": false,
+    "coverage_credit_granted": 0,
+    "canonical_plan_writes_authorized": false
+  },
+  "zero_state": {
+    "activation": 0,
+    "semantic_packets": 0,
+    "launches": 0,
+    "results": 0,
+    "receipts": 0,
+    "capture": 0,
+    "credit": 0
+  }
+}

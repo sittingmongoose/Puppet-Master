@@ -1,0 +1,480 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "wave-0001",
+  "cohort_id": "cohort-0001",
+  "checker": "scenario_adversarial_cohort_0001_luna_preactivation_readiness_v1",
+  "status": "conditionally_ready_blocked",
+  "structural_ready": true,
+  "conditional_ready": true,
+  "gate_passed": false,
+  "activation_authorized": false,
+  "errors": [],
+  "blockers": [
+    {
+      "blocker_id": "cumulative_research_checkpoint_8_of_8_required",
+      "severity": "hard",
+      "status": "unresolved",
+      "requirement": "V5 requires a cumulative independent research checkpoint of 8 of 8 before cohort-0001 activation.",
+      "evidence_present_in_allowed_inputs": false,
+      "disposition": "do_not_activate_or_pass_through"
+    },
+    {
+      "blocker_id": "later_cohort_activation_transaction_required",
+      "severity": "hard",
+      "status": "not_yet_present",
+      "requirement": "A separate later cohort-0001 activation transaction must bind the sealed cohort controls after the research checkpoint and this readiness gate.",
+      "evidence_present_in_allowed_inputs": false,
+      "disposition": "do_not_activate_or_pass_through"
+    }
+  ],
+  "read_scope": {
+    "semantic_result_payloads_read": 0,
+    "recovery_preparation_files_read": 0,
+    "prior_lineage_files_read": 0,
+    "canonical_plans_or_product_files_read": 0,
+    "subagents_spawned": 0,
+    "activation_actions": 0,
+    "receipt_writes": 0,
+    "result_writes": 0
+  },
+  "counts": {
+    "activation_files": 0,
+    "assignments": 8,
+    "duplicate_feature_refs": 0,
+    "features": 823,
+    "intents": 8,
+    "native_captures": 0,
+    "output_directories": 8,
+    "packets": 8,
+    "receipts": 0,
+    "results": 0,
+    "unique_features": 823
+  },
+  "assignment_ids": [
+    "A005SA-0001",
+    "A005SA-0002",
+    "A005SA-0003",
+    "A005SA-0004",
+    "A005SA-0005",
+    "A005SA-0006",
+    "A005SA-0007",
+    "A005SA-0008"
+  ],
+  "owner_domain_counts": {
+    "agents_models_providers": 2,
+    "automation_scheduling_notifications": 1,
+    "collaboration_chat_communication": 1,
+    "cross_cutting_platform": 1,
+    "data_contracts_interchange": 2,
+    "gui_ux_accessibility": 1
+  },
+  "feature_partition": {
+    "feature_count": 823,
+    "unique_feature_count": 823,
+    "duplicate_feature_refs": 0,
+    "feature_refs_digest_sha256": "aead114c4e46d8bea5bf27623902f0a052d1ba969b7e1c3aad5181537e6183b5",
+    "exact_partition_verified": true
+  },
+  "assignment_bindings": {
+    "packet_rows": [
+      {
+        "assignment_id": "A005SA-0001",
+        "feature_count": 110,
+        "feature_refs_digest": "7df1207c0359555a325c9f2978cf68a9fcf40333c331629bfc2ce515bf6a7698",
+        "owner_domain": "agents_models_providers",
+        "packet_bytes": 390399,
+        "packet_id": "SAPKT-0001",
+        "packet_sha256": "965ea038a7fc33e23a0e5a1203ca3200c4138e7ff21379f20e858419a2c2cc76"
+      },
+      {
+        "assignment_id": "A005SA-0002",
+        "feature_count": 111,
+        "feature_refs_digest": "a96a5ad361dfdba1fd33d3310df565f8611c8a7b3cdefef2802480ea6d65a596",
+        "owner_domain": "agents_models_providers",
+        "packet_bytes": 394202,
+        "packet_id": "SAPKT-0002",
+        "packet_sha256": "a9944ce0acf415e222e2f05e11dcb001a4662d671725d41ece012f2380392fff"
+      },
+      {
+        "assignment_id": "A005SA-0003",
+        "feature_count": 33,
+        "feature_refs_digest": "65400c723c57e65ea01f7264ebd976c5e2289508e63db8b3759183ed483d5f4b",
+        "owner_domain": "automation_scheduling_notifications",
+        "packet_bytes": 96779,
+        "packet_id": "SAPKT-0003",
+        "packet_sha256": "43eb8a857990639884dcd0cc52e5964f757a9d003d7e01d9a13a143b4b793460"
+      },
+      {
+        "assignment_id": "A005SA-0004",
+        "feature_count": 82,
+        "feature_refs_digest": "8131a35b5496dd637a580bf16f7e3363b8a162ddb8af162e4d1ec9b1cae7fe71",
+        "owner_domain": "collaboration_chat_communication",
+        "packet_bytes": 354223,
+        "packet_id": "SAPKT-0004",
+        "packet_sha256": "b3849122127ec22115d7915701f8d461fc67ba7eb797ac8af33466b159d20575"
+      },
+      {
+        "assignment_id": "A005SA-0005",
+        "feature_count": 90,
+        "feature_refs_digest": "ee3a97a310d80af0eb74eb212834cefd3fb02d0bc7ee4b5cedc2064ff982da23",
+        "owner_domain": "cross_cutting_platform",
+        "packet_bytes": 287820,
+        "packet_id": "SAPKT-0005",
+        "packet_sha256": "9857f34e2c09ab5156def356b66758b763f6b23cf938b24a6fa3eafb046d9a88"
+      },
+      {
+        "assignment_id": "A005SA-0006",
+        "feature_count": 126,
+        "feature_refs_digest": "9c01924175fdd16b0d1fb09478ca7b7b363a05962b637f2bc4433ca4784f9287",
+        "owner_domain": "data_contracts_interchange",
+        "packet_bytes": 544069,
+        "packet_id": "SAPKT-0006",
+        "packet_sha256": "0e1462c5cbd88ed1644e2ba370a2a4943e2dee8b1a5b0ef017e8a09905885778"
+      },
+      {
+        "assignment_id": "A005SA-0007",
+        "feature_count": 126,
+        "feature_refs_digest": "59fc1990d3b45dfe21b9eaf0921b690a1ac735c10a97f3f44d1892838e77b076",
+        "owner_domain": "data_contracts_interchange",
+        "packet_bytes": 546234,
+        "packet_id": "SAPKT-0007",
+        "packet_sha256": "a7daa6d85144845b4b96343c64083ce6041b736d3b2ef84e2d1eed25fc629cf0"
+      },
+      {
+        "assignment_id": "A005SA-0008",
+        "feature_count": 145,
+        "feature_refs_digest": "d022469989c74239612a049b95dc659d0ee43b034177afdc79b8fe7650f748f1",
+        "owner_domain": "gui_ux_accessibility",
+        "packet_bytes": 559126,
+        "packet_id": "SAPKT-0008",
+        "packet_sha256": "c23e6755925d21ae255a0d6aadaa472842639c6df6075810088bc0ab1c9e672d"
+      }
+    ],
+    "intent_rows": [
+      {
+        "assignment_id": "A005SA-0001",
+        "intent_sha256": "7fcc3c8e4732eae514f73a126d6a290f73ea471d52ac7524afa30e0acccb2665",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0001_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0002",
+        "intent_sha256": "493bd18df00206792615b9ac3f63482223913fe9564d40f6dcbffa3de8638553",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0002_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0003",
+        "intent_sha256": "528bde54756ad3e1c78e6985ac19ef252f0ff1abf7d0c851877cf033a3c36885",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0003_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0004",
+        "intent_sha256": "2b44de911a4f7bab9c3adaddf01f0454534753a0217216351c742fe7f79a7e8f",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0004_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0005",
+        "intent_sha256": "6e10d920d34cf7a6388b49211223e31dc54113233589c3efaf8efa5cd08cd1fd",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0005_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0006",
+        "intent_sha256": "214eea56087f27323c7bc31565b1d476692aced6a1a8ca667a4f8f4f9d168fc6",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0006_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0007",
+        "intent_sha256": "6374ef5edf1f77e4adc0860b0c5234712b7dff13f16b736277b60d2f3a83fe97",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0007_attempt_0001_terminal"
+      },
+      {
+        "assignment_id": "A005SA-0008",
+        "intent_sha256": "a85cdfbc2686b5427b8940d0c075e77cf0fb3ee03325927af36fc40252d8f27e",
+        "prospective_agent_path": "/root/a005_scenario_adversarial_0008_attempt_0001_terminal"
+      }
+    ],
+    "output_directories": [
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0001/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0002/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0003/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0004/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0005/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0006/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0007/attempts/attempt-0001",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/scenario_adversarial_v1/A005SA-0008/attempts/attempt-0001"
+    ],
+    "receipt_paths_reserved_but_absent": [
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0001/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0002/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0003/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0004/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0005/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0006/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0007/attempt-0001/dispatch_receipt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/dispatch/A005SA-0008/attempt-0001/dispatch_receipt.json"
+    ],
+    "unique_fresh_canonical_agent_paths": [
+      "/root/a005_scenario_adversarial_0001_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0002_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0003_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0004_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0005_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0006_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0007_attempt_0001_terminal",
+      "/root/a005_scenario_adversarial_0008_attempt_0001_terminal"
+    ],
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "fork_turns": "none",
+    "fresh_child_required": true,
+    "direct_child_required": true,
+    "descendants_forbidden": true,
+    "followup_messages_forbidden": true,
+    "retries_forbidden": true,
+    "terminal_response_required": "PMR1"
+  },
+  "packet_accounting": {
+    "hard_ceiling": 650000,
+    "max_bytes": 559126,
+    "min_bytes": 96779,
+    "over_ceiling": 0,
+    "total_bytes": 3172852
+  },
+  "root_closure": {
+    "packet_root_sha256": "f94e4e0060179f8786b9de20139a74f9e3752987aa4f3ed549c90d923535163b",
+    "intent_root_sha256": "1daaecd28d57905f3ba7a71a02b4b984a88950a9664cc14e75e7b0448fa3c779",
+    "packet_hashes_match_manifest": true,
+    "intent_bindings_match_cohort_manifest": true,
+    "cohort_manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+    "cohort_authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+    "cohort_launch_seal_sha256": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310"
+  },
+  "cohort_authority": {
+    "assignment_count": 8,
+    "assignment_ids": [
+      "A005SA-0001",
+      "A005SA-0002",
+      "A005SA-0003",
+      "A005SA-0004",
+      "A005SA-0005",
+      "A005SA-0006",
+      "A005SA-0007",
+      "A005SA-0008"
+    ],
+    "atomic_all_32_spawn_required": false,
+    "certification_credit": 0,
+    "cohort_manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+    "concurrency_policy_v4_sha256": "36a4cdcc5b876538c4197096d60febffc5e6ec3ab132e93529755e6daae0ad7f",
+    "coverage_credit": 0,
+    "feature_count": 823,
+    "feature_refs_digest": "aead114c4e46d8bea5bf27623902f0a052d1ba969b7e1c3aad5181537e6183b5",
+    "intent_root_sha256": "1daaecd28d57905f3ba7a71a02b4b984a88950a9664cc14e75e7b0448fa3c779",
+    "packet_root_sha256": "f94e4e0060179f8786b9de20139a74f9e3752987aa4f3ed549c90d923535163b",
+    "receipt_contract_sha256": "9d5059d83f31780ad14958d6526ed54e1fb6402210d6060856afb0b9799c65cf",
+    "result_schema_sha256": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "separate_activation_required": true,
+    "separate_postrun_validation_required": true,
+    "separate_terminal_capture_required": true,
+    "status": "PREPARED_UNBOUND_ZERO_CREDIT_AWAITING_INDEPENDENT_GATE"
+  },
+  "cohort_launch_seal": {
+    "activation_authorized": false,
+    "assignment_count": 8,
+    "assignment_ids": [
+      "A005SA-0001",
+      "A005SA-0002",
+      "A005SA-0003",
+      "A005SA-0004",
+      "A005SA-0005",
+      "A005SA-0006",
+      "A005SA-0007",
+      "A005SA-0008"
+    ],
+    "certification_credit": 0,
+    "cohort_authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+    "coverage_credit": 0,
+    "status": "CANDIDATE_AWAITING_INDEPENDENT_COHORT_GATE"
+  },
+  "batch_cohort_binding": {
+    "assignment_ids": [
+      "A005SA-0001",
+      "A005SA-0002",
+      "A005SA-0003",
+      "A005SA-0004",
+      "A005SA-0005",
+      "A005SA-0006",
+      "A005SA-0007",
+      "A005SA-0008"
+    ],
+    "cohort_authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+    "cohort_id": "cohort-0001",
+    "cohort_launch_seal_sha256": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310",
+    "cohort_manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860"
+  },
+  "cohort_safety": {
+    "atomic_all_32_spawn_required": false,
+    "separate_activation_required": true,
+    "separate_terminal_capture_required": true,
+    "separate_postrun_validation_required": true,
+    "receipt_contract_is_cohort_scoped": true,
+    "result_schema_is_cohort_scoped": true,
+    "no_all_32_atomic_spawn_dependency": true
+  },
+  "schema_binding": {
+    "result_schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/schemas/scenario_adversarial_result.schema.json",
+    "result_schema_sha256": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "required_keys": [
+      "audit_id",
+      "schema_version",
+      "phase",
+      "cohort_id",
+      "assignment_id",
+      "attempt_id",
+      "task_thread_id",
+      "model",
+      "reasoning_effort",
+      "status",
+      "input_binding",
+      "coverage",
+      "feature_certifications",
+      "self_attestation"
+    ],
+    "additionalProperties": false,
+    "cohort_id_required": true,
+    "exact_cohort_assignment_schema": true
+  },
+  "receipt_contract_binding": {
+    "cohort_rule": "cohort_id must equal the immutable cohort in the assignment and intent; receipts may be created only for an independently activated cohort",
+    "constants": {
+      "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+      "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+      "fork_turns": "none",
+      "fresh_child": true,
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "schema_version": "scenario-adversarial-dispatch-receipt-v1",
+      "wave_id": "wave-0001"
+    },
+    "identity_rule": "agent_path and task_thread_id must equal the unique assignment prospective_agent_path",
+    "required_keys": [
+      "audit_id",
+      "schema_version",
+      "wave_id",
+      "cohort_id",
+      "assignment_id",
+      "attempt_id",
+      "controller_thread_id",
+      "agent_path",
+      "task_thread_id",
+      "model",
+      "reasoning_effort",
+      "fresh_child",
+      "fork_turns",
+      "dispatch_intent_sha256",
+      "packet_sha256",
+      "output_directory"
+    ],
+    "schema_version": "scenario-adversarial-receipt-contract-v1",
+    "sha256": "9d5059d83f31780ad14958d6526ed54e1fb6402210d6060856afb0b9799c65cf"
+  },
+  "full_wave_luna_prelaunch": {
+    "report_sha256": "ae8e493e21a6fba1408d7555c6d3ec45f65895c24b611131283c2396c931df83",
+    "expected_pinned_sha256": "ae8e493e21a6fba1408d7555c6d3ec45f65895c24b611131283c2396c931df83",
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "assignments": 32,
+      "cohort_size": 8,
+      "cohorts": 4,
+      "intents": 32,
+      "native_captures": 0,
+      "output_directories": 32,
+      "output_files": 0,
+      "owner_domains": 16,
+      "packets": 32,
+      "provisional_features": 3888,
+      "receipts": 0,
+      "results": 0,
+      "unique_features": 3888
+    },
+    "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+    "control_hash_mismatches": [],
+    "structural_consistency_verified": true
+  },
+  "prospective_policy_v5": {
+    "cohort_0001_rule": {
+      "assignment_count": 8,
+      "launch_condition": "cumulative independent research checkpoint is 8 of 8 and cohort-0001 activation gate passes",
+      "must_complete_before_rate_escalation": true,
+      "semantic_leaf_cap": 8,
+      "stage": "scenario_adversarial_cohort_0001"
+    },
+    "cumulative_checkpoint_evidence_present_in_allowed_inputs": false,
+    "effective_date": "2026-07-11",
+    "prior_policies_mutated": false,
+    "sha256": "a87927157be59c448801bbd4cec157670609c4502fb18baa0afbe8d516fdb439",
+    "status": "ACTIVE_PROSPECTIVE_POST_RESET_ACCELERATION"
+  },
+  "activation_gate_bindings_required": {
+    "activation_transaction_required": true,
+    "cohort_id": "cohort-0001",
+    "assignment_ids": [
+      "A005SA-0001",
+      "A005SA-0002",
+      "A005SA-0003",
+      "A005SA-0004",
+      "A005SA-0005",
+      "A005SA-0006",
+      "A005SA-0007",
+      "A005SA-0008"
+    ],
+    "cohort_authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+    "cohort_manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+    "cohort_launch_seal_sha256": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310",
+    "packet_root_sha256": "f94e4e0060179f8786b9de20139a74f9e3752987aa4f3ed549c90d923535163b",
+    "intent_root_sha256": "1daaecd28d57905f3ba7a71a02b4b984a88950a9664cc14e75e7b0448fa3c779",
+    "feature_refs_digest_sha256": "aead114c4e46d8bea5bf27623902f0a052d1ba969b7e1c3aad5181537e6183b5",
+    "packet_hard_ceiling_bytes": 650000,
+    "result_schema_sha256": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "receipt_contract_sha256": "9d5059d83f31780ad14958d6526ed54e1fb6402210d6060856afb0b9799c65cf",
+    "leaf_prompt_sha256": "104e1f1126e76a3d6f0e01e041e67ac7666ccbfebe7bb84ceccd17fafb5304bf",
+    "concurrency_policy_v5_sha256": "a87927157be59c448801bbd4cec157670609c4502fb18baa0afbe8d516fdb439",
+    "cumulative_research_checkpoint_required": "8/8",
+    "cumulative_research_checkpoint_verified": false,
+    "coverage_credit_before_activation": 0,
+    "certification_credit_before_activation": 0
+  },
+  "control_hashes": {
+    "master/coordination/CONCURRENCY_POLICY_V5.json": "a87927157be59c448801bbd4cec157670609c4502fb18baa0afbe8d516fdb439",
+    "master/scenario_adversarial/wave-0001/architecture.json": "8ccb832593c070f9df507513f4b7c4e95a702d617aa2c7978c66fc9a7b0e0373",
+    "master/scenario_adversarial/wave-0001/batch_authority.json": "1ef11e1e312cc0ba7d863f81d518ce3c9cd284f0f88d417ccd44aace4fed825f",
+    "master/scenario_adversarial/wave-0001/batch_manifest.jsonl": "0877e754342216bbd6a92e2d0e8fed941c9a478727fb0461775ec7da797f9863",
+    "master/scenario_adversarial/wave-0001/cohorts/cohort-0001/cohort_authority.json": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+    "master/scenario_adversarial/wave-0001/cohorts/cohort-0001/cohort_launch_seal.json": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310",
+    "master/scenario_adversarial/wave-0001/cohorts/cohort-0001/cohort_manifest.jsonl": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+    "master/scenario_adversarial/wave-0001/launch_seal.json": "4742b254ab3b8f4e95d11c2584204985aef541bca5a8876c429f90778f3a2261",
+    "master/scenario_adversarial/wave-0001/leaf_prompt.json": "104e1f1126e76a3d6f0e01e041e67ac7666ccbfebe7bb84ceccd17fafb5304bf",
+    "master/scenario_adversarial/wave-0001/packet_registry.jsonl": "558533da8cb7244e706f3033e320ae324671ce1ade3a7941ddf3edb54fe4f485",
+    "master/scenario_adversarial/wave-0001/receipt_contract.json": "9d5059d83f31780ad14958d6526ed54e1fb6402210d6060856afb0b9799c65cf",
+    "master/scenario_adversarial/wave-0001/schemas/scenario_adversarial_result.schema.json": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "master/scenario_adversarial/wave-0001/validation/luna-prelaunch.json": "ae8e493e21a6fba1408d7555c6d3ec45f65895c24b611131283c2396c931df83"
+  },
+  "zero_state": {
+    "activation_files": [],
+    "native_capture_files": [],
+    "output_directories": 8,
+    "receipt_files": [],
+    "result_files": []
+  },
+  "canonical_plan_changes": [],
+  "promotion_credit": 0,
+  "coverage_credit": 0,
+  "certification_credit": 0,
+  "report_write_contract": {
+    "only_new_file": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/validation/cohort-0001-preactivation-readiness.json",
+    "no_activation": true,
+    "no_receipts": true,
+    "no_results": true
+  }
+}
+

@@ -1,0 +1,717 @@
+{
+  "assignment_id": "A005M15-000224-INTEGRATED-MACRO15-6690C379876B-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  P1-USAGE-ANOMALY-QUOTA-GUARD (P1) is compiled as canonical Puppet Master intent for Token/cost anomalies and quota protection: Add UsageAnomalyGuard: provider_usage_null, cached_tokens_unknown, token_spike, output_spike, tool_result_spike, cache_miss_churn, spend_rate_exceeded, repeated_no_progress_cost, and budget_source attribution. The preserved PM gap/delta is: PM needs anomaly detection separate from ordinary usage collection. The observed external-repo signal remains source-lineage evidence: OpenCode had token accounting loss with multi-step tool calls; Cline reports usage null and huge token spikes; Codex reports quota/budget anomalies; Agent Zero warns of unbounded loops/tool arguments and memory/history bloat.",
+          "line_end": 6014,
+          "line_start": 6014,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "none_explicit_feature_contract",
+      "impact": "Establishes a distinct anomaly-and-quota guard and enumerates the anomaly families that must not be collapsed into ordinary usage collection.",
+      "item_id": "A005M15-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083",
+        "SEMANTIC:PLANUNIT:UF-083"
+      ],
+      "statement": "UF-083 explicitly requires a UsageAnomalyGuard that distinguishes nine named anomaly or attribution conditions from ordinary usage collection.",
+      "title": "Usage anomaly guard is a distinct canonical capability"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Provider usage null uses estimator and marks confidence.",
+          "line_end": 6022,
+          "line_start": 6022,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "none_explicit_acceptance_oracle",
+      "impact": "Prevents a missing provider usage value from being silently treated as exact or as zero.",
+      "item_id": "A005M15-I002",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083"
+      ],
+      "statement": "A null provider-usage input must take an estimator path and expose that estimate's confidence.",
+      "title": "Null provider usage has an explicit estimator oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Sudden token/cost jump pauses or confirms under policy.",
+          "line_end": 6023,
+          "line_start": 6023,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "underspecified_pause_confirmation_authority",
+      "impact": "Implementations can disagree on who may confirm, what is paused, how work is preserved, when execution resumes, and which policy wins, making quota protection unsafe or bypassable.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PLANUNIT:UF-083"
+      ],
+      "statement": "The pause-or-confirm outcome is required, but its threshold, policy precedence, authorized confirmer, pause scope, state machine, timeout, cancellation, and resume semantics are not defined.",
+      "title": "Quota pause and confirmation authority is unresolved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "proposal_or_recommendation: 'Add UsageAnomalyGuard: provider_usage_null, cached_tokens_unknown, token_spike, output_spike, tool_result_spike, cache_miss_churn, spend_rate_exceeded, repeated_no_progress_cost, and budget_source attribution.'",
+          "line_end": 6088,
+          "line_start": 6088,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_anomaly_state_and_reconciliation_contract",
+      "impact": "Delayed, duplicated, reordered, or corrected usage events can trigger false pauses, miss real overspend, or double-count cost; unbounded history can also make detection expensive.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083",
+        "SEMANTIC:PLANUNIT:UF-083"
+      ],
+      "statement": "The named anomalies lack event identities, time windows, baselines, thresholds, deduplication, ordering, late-arrival correction, offline reconciliation, bounded retention, and rollback or compensation semantics.",
+      "title": "Anomaly detection has no concurrency or reconciliation model"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "gui_truth",
+        "builder_discretion",
+        "gui_misleading_states",
+        "accessibility",
+        "localization"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "gui_related: false",
+          "line_end": 6015,
+          "line_start": 6015,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- User sees why cost was blocked/allowed.",
+          "line_end": 6024,
+          "line_start": 6024,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "gui_classification_and_presentation_gap",
+      "impact": "The required explanation can be omitted from GUI planning or presented with inaccessible, unlocalized, stale, or misleading blocked/allowed state.",
+      "item_id": "A005M15-I005",
+      "item_type": "gui_truth",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083"
+      ],
+      "statement": "UF-083 classifies itself as non-GUI while requiring a user-visible explanation, but names no presentation surface, timing, content fields, accessibility behavior, localization behavior, or stale-state handling.",
+      "title": "User-visible cost decisions conflict with non-GUI classification"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "security_privacy",
+        "authority",
+        "privacy_data_lifecycle",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- User sees why cost was blocked/allowed.",
+          "line_end": 6024,
+          "line_start": 6024,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_usage_explanation_data_boundary",
+      "impact": "Cost explanations and budget-source attribution could expose provider, account, project, prompt, tool, or organizational metadata to unauthorized viewers or retain it without bounds.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PLANUNIT:UF-083"
+      ],
+      "statement": "The user-visible cost rationale and budget-source attribution have no authorization, tenant boundary, redaction, provenance, retention, deletion, or untrusted-provider-input contract.",
+      "title": "Anomaly rationale lacks privacy and data-lifecycle boundaries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "pm_current_coverage: usage-feature has UsageRecord and context breakdown surfaces; Provider_OpenCode maps usage_update into normalized usage events; Goal Runtime exposes max_tokens and usage_limited.",
+          "line_end": 6086,
+          "line_start": 6086,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_anomaly_callers_consumers_and_propagation",
+      "impact": "The guard may be implemented but never invoked by all provider paths, or its pause, warning, confidence, and attribution results may not reach runtime enforcement and user-facing consumers consistently.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083",
+        "SEMANTIC:PLANUNIT:UF-083"
+      ],
+      "statement": "Existing usage producers and runtime fields are named, but the guard's owner, invocation point, event contract, complete provider callers, decision consumers, and cross-document propagation path are not specified.",
+      "title": "Usage guard integration path is not closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "acceptance_oracles",
+        "operations",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 6028,
+          "line_start": 6028,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+          "line_end": 6029,
+          "line_start": 6029,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_executable_guard_oracles",
+      "impact": "Plan and ledger validation can pass while estimator confidence, spike detection, pausing, confirmation, churn warnings, and no-progress cost behavior are absent or incorrect at runtime.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083"
+      ],
+      "statement": "The only named validation commands validate planning artifacts; no deterministic fixtures, thresholds, fault injections, race tests, or runtime assertions falsify the UsageAnomalyGuard behaviors.",
+      "title": "Usage anomaly acceptance is not executable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  P2-OTEL-EXPORT-OPTIONAL-ADAPTER (P2) is compiled as canonical Puppet Master intent for Observability export interoperability: Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so. The preserved PM gap/delta is: External observability should be supported without making OTLP canonical or leaking sensitive content. The observed external-repo signal remains source-lineage evidence: Pi discussion points to OpenTelemetry event streaming; OpenCode docs support external logging/analytics integrations; Codex logs/issues show trace handling problems.",
+          "line_end": 6100,
+          "line_start": 6100,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "none_explicit_export_boundary",
+      "impact": "Preserves seglog as canonical, limits adapters to redacted projections, and makes external observability optional rather than an execution prerequisite by default.",
+      "item_id": "A005M15-I009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "UF-084 explicitly confines OTLP or Helicone-style adapters to redacted seglog projections and rejects raw canonical logs as exporter input.",
+      "title": "Optional exporter has a clear canonical-source boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Exporter can be disabled globally/project.",
+          "line_end": 6108,
+          "line_start": 6108,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "underspecified_exporter_configuration_authority",
+      "impact": "A project can unintentionally override a mandatory global prohibition, or a global setting can erase a project-specific privacy requirement; configuration changes can also race with active exports.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084"
+      ],
+      "statement": "Global and project disablement is required, but precedence, inheritance, default state, authorized actors, audit trail, hot-reload semantics, and in-flight export behavior are unspecified.",
+      "title": "Exporter enablement precedence and authority are undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Export failure produces degraded status only.",
+          "line_end": 6109,
+          "line_start": 6109,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "proposal_or_recommendation: 'Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so.'",
+          "line_end": 6167,
+          "line_start": 6167,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "conflicting_failure_policy_contract",
+      "impact": "Builders can legally choose incompatible failure states: always degraded and non-blocking, or execution-blocking under an unspecified policy.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "The acceptance criterion limits export failure to degraded status, while the canonical recommendation permits policy to make export failure block execution; precedence and permitted blocking policies are not resolved.",
+      "title": "Exporter failure contract contains an unresolved policy exception"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "proposal_or_recommendation: 'Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so.'",
+          "line_end": 6167,
+          "line_start": 6167,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_export_delivery_and_recovery_semantics",
+      "impact": "A slow or offline collector can cause unbounded memory or disk growth, duplicate or reordered telemetry, silent loss, retry storms, or pressure that indirectly harms PM execution.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "Backpressure and retry are named without queue bounds, overflow behavior, batching, ordering, idempotency, retry budget, circuit breaking, persistence, offline recovery, shutdown drain, or loss accounting.",
+      "title": "Exporter delivery under backpressure and network loss is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "compatibility_migration",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Redacted projection schema is documented and validated.",
+          "line_end": 6110,
+          "line_start": 6110,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_redaction_and_export_trust_contract",
+      "impact": "Sensitive prompt, tool, identity, tenant, or credential material can leak through projections or exporter metadata; schema evolution can also reintroduce fields without a fail-closed guarantee.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "Requiring a documented redacted schema does not define field allowlists, redaction failure behavior, tenant separation, endpoint authentication, transport protection, secret handling, retention/deletion, destination trust, or versioned migration rules.",
+      "title": "Redacted projection boundary is not security-complete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "operations",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Export failure produces degraded status only.",
+          "line_end": 6109,
+          "line_start": 6109,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "gui_related: false",
+          "line_end": 6101,
+          "line_start": 6101,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_degraded_status_consumer_contract",
+      "impact": "Export can remain broken without an actionable or accessible signal, or stale status can mislead operators into believing telemetry is being delivered.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084"
+      ],
+      "statement": "The degraded status has no owner, state lifecycle, propagation channel, support diagnostic, alerting rule, user or operator consumer, GUI truth contract, accessibility behavior, or localization behavior.",
+      "title": "Exporter degraded status has no defined consumer"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "acceptance_oracles",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 6113,
+          "line_start": 6113,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+          "line_end": 6114,
+          "line_start": 6114,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "missing_runtime_exporter_oracles",
+      "impact": "Planning validators can pass while adapters emit incompatible payloads, leak fields, lose or duplicate events, exhaust resources, or block execution under fault.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "No executable conformance suite covers projection redaction, OTLP or Helicone interoperability, schema versions, disable precedence, retry faults, throughput limits, bounded resource use, or the non-blocking execution guarantee.",
+      "title": "Optional exporter acceptance is not runtime-falsifiable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Plans/usage-feature.md",
+          "line_end": 6122,
+          "line_start": 6122,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- Plans/storage-plan.md",
+          "line_end": 6123,
+          "line_start": 6123,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- Plans/Provider_OpenCode.md",
+          "line_end": 6124,
+          "line_start": 6124,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "unadjudicated_cross_document_export_ownership",
+      "impact": "Projection production, durable buffering, adapter lifecycle, configuration, and status ownership can be duplicated or omitted across the three named plan surfaces.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "Three implementation surfaces are listed without assigning which owns projection schema, storage and queueing, adapter execution, configuration authority, provider integration, or degraded-status propagation.",
+      "title": "Cross-document exporter ownership is not adjudicated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.",
+          "line_end": 6026,
+          "line_start": 6026,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.",
+          "line_end": 6111,
+          "line_start": 6111,
+          "path": "Plans/usage-feature.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "none_explicit_compile_boundary",
+      "impact": "Keeps these accepted requirements from being misrepresented as executable build artifacts or governance-seal output.",
+      "item_id": "A005M15-I017",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:UF-083",
+        "SEMANTIC:PLANUNIT:UF-083",
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "statement": "Both PlanUnits explicitly preserve the compile-only boundary and prohibit creation of runtime or generated-governance artifacts in this compile.",
+      "title": "Compile-only boundary is explicit for both PlanUnits"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        6006,
+        6169
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:UF-083",
+        "PLANUNIT:UF-084",
+        "SEMANTIC:PLANUNIT:UF-083",
+        "SEMANTIC:PLANUNIT:UF-084"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012",
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015",
+        "A005M15-I016",
+        "A005M15-I017"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for UF-083 and UF-084 and accounted for both structural and semantic source-unit refs. The requirements preserve valuable guard and exporter boundaries, but leave material runtime contracts open around authority, state transitions, concurrency, recovery, privacy, callers and consumers, GUI truth, scale, cross-document ownership, and executable acceptance.",
+      "window_id": "WIN-6690C379876B-0017"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-6690C379876B-0002",
+    "document_path": "Plans/usage-feature.md",
+    "micro_window_ids": [
+      "WIN-6690C379876B-0017"
+    ],
+    "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines UsageAnomalyGuard event identity, thresholds, policy precedence, pause state, confirmation authority, and propagation across usage, model, goal-runtime, and provider surfaces?",
+      "Which canonical owner defines redacted projection schema and lifecycle, exporter queueing, adapter execution, configuration authority, and degraded-status propagation across usage, storage, and provider surfaces?"
+    ],
+    "feature_family_keys": [
+      "usage-anomaly-quota-guard",
+      "optional-observability-exporter",
+      "usage-policy-authority",
+      "redacted-seglog-projections"
+    ],
+    "research_queries": [
+      "quota anomaly detection delayed usage reconciliation idempotency pause confirmation design",
+      "OTLP exporter bounded queue backpressure retry offline failure semantics",
+      "telemetry redaction projection schema tenant isolation data lifecycle conformance"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000224_attempt_0015_terminal"
+}

@@ -1,0 +1,753 @@
+{
+  "assignment_id": "A005M15-000005-INTEGRATED-MACRO15-3EEBF9277C57-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Compile-readiness records can preserve accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without authorizing direct code implementation.",
+          "line_end": 3987,
+          "line_start": 3987,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "line_end": 3990,
+          "line_start": 3990,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+          "line_end": 3991,
+          "line_start": 3991,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "unbound_acceptance_oracle",
+      "impact": "The owner map requires a live-repo backlink audit but binds no validation surface that demonstrates backlink completeness across the named consumer documents, so stale mirrors can survive while the listed checks pass.",
+      "item_id": "M15-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-056",
+        "SEMANTIC:PLANUNIT:0PI-056"
+      ],
+      "statement": "0PI-056 names backlink auditing as a compile-readiness requirement, but its acceptance oracles are limited to index and ledger validation and do not falsify missing or stale consumer backlinks.",
+      "title": "Backlink completeness has no executable oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - The index routes closure registry row shape and reopen policy to PLS-012.",
+          "line_end": 4130,
+          "line_start": 4130,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - The index routes deterministic finding_key/check_id, repair_required/finding_level, audit source validation, scope/impact coverage, and repair_closure_matrix validation to PDS-014.",
+          "line_end": 4133,
+          "line_start": 4133,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-audit-closure.py validate",
+          "line_end": 4138,
+          "line_start": 4138,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "none_explicit_owner_boundary",
+      "impact": "Closure schema, reopen behavior, deterministic identity, actionable-row coverage, and validation authority are separated between PLS-012 and PDS-014 and backed by a closure-specific validator.",
+      "item_id": "M15-002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-057",
+        "SEMANTIC:PLANUNIT:0PI-057"
+      ],
+      "statement": "0PI-057 provides a specific, testable owner split for semantic closure and includes a domain-specific validation command, so the index does not ambiguously re-own closure semantics.",
+      "title": "Semantic closure authority is explicitly partitioned"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "consumers",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "missing_callers_consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.",
+          "line_end": 4196,
+          "line_start": 4196,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plans-verify.py run-gates",
+          "line_end": 4224,
+          "line_start": 4224,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-shard-plans.py --check",
+          "line_end": 4225,
+          "line_start": 4225,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "reference_scan_oracle_missing",
+      "impact": "A compile can satisfy the broad plan and shard gates while leaving stale handoff terms in a consumer, index, command, or crosswalk surface, violating an explicit negative constraint.",
+      "item_id": "M15-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-058",
+        "SEMANTIC:PLANUNIT:0PI-058"
+      ],
+      "statement": "0PI-058 requires a cross-document reference scan and contradiction avoidance but does not bind either requirement to a named reference-scan result or dedicated validation surface.",
+      "title": "Plans-to-code reference scan is asserted but not bound"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Do not perform a blind filename or term replacement that preserves obsolete ownership and workflow.",
+          "line_end": 4387,
+          "line_start": 4387,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 4326,
+          "line_start": 4326,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+          "line_end": 4327,
+          "line_start": 4327,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "migration_semantics_oracle_missing",
+      "impact": "The active-name migration could leave obsolete ownership or workflow semantics under renamed files and tokens without either listed validator detecting that semantic failure.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-059",
+        "SEMANTIC:PLANUNIT:0PI-059"
+      ],
+      "statement": "0PI-059 prohibits superficial renaming while requiring a broad owner/consumer migration, but provides no acceptance oracle that distinguishes semantic workflow migration from token replacement.",
+      "title": "Wizard migration lacks a semantic-fidelity oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "failures_recovery",
+        "security_privacy",
+        "scale_performance",
+        "acceptance_oracles",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- `Plans/Tools.md` owns `DiscoveryService`, `discover_paths`, ranking/fallback/freshness behavior, ambient agent use, and the boundary between path/context discovery and content verification.",
+          "line_end": 4412,
+          "line_start": 4412,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "line_end": 4438,
+          "line_start": 4438,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plans-verify.py run-gates",
+          "line_end": 4439,
+          "line_start": 4439,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "behavioral_oracle_missing",
+      "impact": "Ranking instability, stale-cache behavior, fallback failure, offline degradation, no-leak violations, or confusion between path discovery and content verification can remain untested at this seam.",
+      "item_id": "M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-060",
+        "SEMANTIC:PLANUNIT:0PI-060"
+      ],
+      "statement": "0PI-060 assigns ranking, fallback, freshness, ambient use, and verification-boundary behavior, but its listed validators only check plan structure/governance and cannot falsify the discovery behaviors it routes.",
+      "title": "Discovery behavior is not covered by a behavioral oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Provider updates from ledger pldg-20260624-001-provider-updates route to the existing provider owner docs instead of a new owner doc. Gemini CLI and gemini_cli are retired from active provider support and preserved only as compatibility/source-lineage tokens; Gemini Direct remains the API-key-backed direct provider; Antigravity CLI replaces Gemini CLI for the active CLI-backed Google/agent route. Provider support is now Provider -> models, with same-named models allowed under multiple provider entries, direct providers and CLI-backed providers kept separate, and coding-plan/provider-media rows marked green only from route-level E2E proof or explicit capability-gated/unverified status.",
+          "line_end": 4510,
+          "line_start": 4510,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "line_end": 4520,
+          "line_start": 4520,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+          "line_end": 4521,
+          "line_start": 4521,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "route_e2e_evidence_unbound",
+      "impact": "A provider/media route can be projected green without a payload-bound route receipt if downstream owners interpret the prose differently; the two structural validators cannot establish route execution, capability gating, or unverified-state truth.",
+      "item_id": "M15-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-061",
+        "SEMANTIC:PLANUNIT:0PI-061"
+      ],
+      "statement": "0PI-061 requires route-level E2E proof or an explicit capability-gated/unverified state before green status, yet no route-evidence artifact, receipt identity, or validation command is bound to that requirement.",
+      "title": "Provider green-state proof is not bound to an oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.",
+          "line_end": 4580,
+          "line_start": 4580,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- Do not compile this requirement to canonical Plans without a future explicit compile request.",
+          "line_end": 4746,
+          "line_start": 4746,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "self_contradictory_compile_state",
+      "impact": "A validator or future compiler cannot determine whether the requirement is already accepted canonical truth or remains forbidden from canonical compilation, making its state transition and downstream authority ambiguous.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-062",
+        "SEMANTIC:PLANUNIT:0PI-062"
+      ],
+      "statement": "0PI-062 is inside an addendum that declares canonical PlanUnits were created, while its own negative constraints say not to compile the requirement to canonical Plans without a future request.",
+      "title": "0PI-062 contradicts its own canonical compile state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "compatibility_migration",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - The index identifies each compiled lane and the canonical owner-doc set.",
+          "line_end": 4811,
+          "line_start": 4811,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - Source-lineage-only materials are not treated as live product owners.",
+          "line_end": 4812,
+          "line_start": 4812,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - Do not treat Plans/newfeatures.md as a live owner for these compiled lanes.",
+          "line_end": 4848,
+          "line_start": 4848,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "none_explicit_lineage_boundary",
+      "impact": "The index limits itself to lane and owner routing and explicitly prevents historical intake material from becoming live product authority.",
+      "item_id": "M15-008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-063",
+        "SEMANTIC:PLANUNIT:0PI-063"
+      ],
+      "statement": "0PI-063 clearly distinguishes its four compiled lanes and live owner set from source-lineage-only materials, preserving the index-versus-owner authority boundary.",
+      "title": "Miscellaneous intake keeps source lineage non-authoritative"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The Free Models ledger compiles into existing owner docs rather than a new Free Models plan doc. Models_System owns provider/model wrapper identity, Auto Apply source/cadence/runtime-adapter policy, top-10 precedence, and availability reason semantics. Multi-Account owns underlying provider/account setup and shared pressure/cooldown. usage-feature owns paid/costed fallback gates, Usage receipts, and immutable request provenance. Contracts_V0 owns import, adapter, identity, and route eligibility contracts. storage-plan owns import snapshots, aliases, currentness, activation/quarantine/rollback, and diagnostics storage. Permissions_System owns source trust, credential custody, probe, and live-call authority. FileSafe owns upstream side-effect blocking. FinalGUISpec owns visible catalog/settings/top-10/setup/update UX. Runtime_Artifacts_Panel owns diagnostic and provenance projections. Executor_Protocol owns dispatch fallback, in-flight isolation, and adapter activation. Prompt_Pipeline owns requested/effective route snapshot handoff. Provider_OpenCode remains adjacent/reference-only unless a concrete OpenCode-specific Free Models hook is later accepted.",
+          "line_end": 4883,
+          "line_start": 4883,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "line_end": 4893,
+          "line_start": 4893,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - git diff --check",
+          "line_end": 4894,
+          "line_start": 4894,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "lifecycle_oracles_missing",
+      "impact": "Import activation, quarantine, rollback, cooldown, paid fallback, in-flight isolation, and requested/effective provenance can disagree across owners while the index and diff checks still pass.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-064",
+        "SEMANTIC:PLANUNIT:0PI-064"
+      ],
+      "statement": "0PI-064 routes a multi-owner lifecycle with rollback and in-flight isolation but provides only index and text-diff validation, with no cross-owner lifecycle receipt or transition oracle.",
+      "title": "Free Models lifecycle seams lack executable proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "untrusted_inputs",
+        "scale_limits",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  port_access_record, receipt, projection, cleanup, and retention records. Permissions_System and FileSafe own host",
+          "line_end": 4951,
+          "line_start": 4951,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  trust, approval, secret, mount, network, Docker socket, remote-side-effect, and FileSafe gates. Automated_Testing_System",
+          "line_end": 4952,
+          "line_start": 4952,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "line_end": 4968,
+          "line_start": 4968,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+          "line_end": 4969,
+          "line_start": 4969,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "destructive_host_lifecycle_oracle_missing",
+      "impact": "Concurrent host mutation, partial Compose failure, leaked port access, cleanup failure, stale permission snapshots, or rollback loss can cross owner boundaries without a bound end-to-end falsification surface.",
+      "item_id": "M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-065",
+        "SEMANTIC:PLANUNIT:0PI-065"
+      ],
+      "statement": "0PI-065 routes security-sensitive and destructive host lifecycle contracts across storage, permissions, FileSafe, testing, and execution owners but binds only plan/ledger/text validation, not host lifecycle failure or rollback proof.",
+      "title": "Containerized-host lifecycle lacks cross-owner failure oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- All 113 imported external repo rows and 5 import guardrails have a compiled PlanUnit or existing PlanUnit disposition.",
+          "line_end": 5051,
+          "line_start": 5051,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- The 12 rows that arrived with empty target_docs are owner-adjudicated without asking row-by-row.",
+          "line_end": 5052,
+          "line_start": 5052,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 5056,
+          "line_start": 5056,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+          "line_end": 5057,
+          "line_start": 5057,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "closed_world_coverage_oracle_unbound",
+      "impact": "The aggregate counts can be repeated in canonical prose even if a row is omitted, double-counted, mapped to the wrong owner, or lacks a guardrail disposition; neither named validator is explicitly bound here to the 113-plus-5 closed world.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-066",
+        "SEMANTIC:PLANUNIT:0PI-066"
+      ],
+      "statement": "0PI-066 asserts exhaustive dispositions for 113 imported rows and five guardrails, including adjudication of 12 empty-target rows, but does not name a validator output or manifest whose closed-world identity and counts prove those assertions.",
+      "title": "External-import completeness claim lacks closed-world proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "ownership",
+        "ambiguity_unknowns",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Plans/00-plans-index.md",
+          "line_end": 5063,
+          "line_start": 5063,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        },
+        {
+          "exact_quote": "- Plans/00-plans-index.md",
+          "line_end": 5064,
+          "line_start": 5064,
+          "path": "Plans/00-plans-index.md",
+          "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+        }
+      ],
+      "gap_kind": "duplicate_implementation_surface",
+      "impact": "The duplicate does not change authority but weakens deterministic owner-map hygiene and can produce noisy or misleading generated indexes if consumers do not deduplicate.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "low",
+      "source_unit_refs": [
+        "PLANUNIT:0PI-066",
+        "SEMANTIC:PLANUNIT:0PI-066"
+      ],
+      "statement": "0PI-066 lists Plans/00-plans-index.md twice consecutively in implementation_surfaces.",
+      "title": "0PI-066 duplicates its index implementation surface"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        3963,
+        4307
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:0PI-056",
+        "PLANUNIT:0PI-057",
+        "PLANUNIT:0PI-058",
+        "SEMANTIC:PLANUNIT:0PI-056",
+        "SEMANTIC:PLANUNIT:0PI-057",
+        "SEMANTIC:PLANUNIT:0PI-058"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the three owner maps for Goal Runtime, semantic audit closure, and Plans-to-code handoff. Authority boundaries are generally explicit; backlink and cross-document reference-scan requirements lack dedicated falsification surfaces.",
+      "window_id": "WIN-3EEBF9277C57-0014"
+    },
+    {
+      "core_range": [
+        4308,
+        4581
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:0PI-059",
+        "PLANUNIT:0PI-060",
+        "PLANUNIT:0PI-061",
+        "SEMANTIC:PLANUNIT:0PI-059",
+        "SEMANTIC:PLANUNIT:0PI-060",
+        "SEMANTIC:PLANUNIT:0PI-061"
+      ],
+      "item_ids": [
+        "M15-004",
+        "M15-005",
+        "M15-006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PRD/Planning Wizard migration, native discovery, and provider-update routing. Each map expresses substantive semantic or runtime proof requirements that are not bound to behavior-specific validation or receipts.",
+      "window_id": "WIN-3EEBF9277C57-0015"
+    },
+    {
+      "core_range": [
+        4582,
+        4937
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:0PI-062",
+        "PLANUNIT:0PI-063",
+        "PLANUNIT:0PI-064",
+        "SEMANTIC:PLANUNIT:0PI-062",
+        "SEMANTIC:PLANUNIT:0PI-063",
+        "SEMANTIC:PLANUNIT:0PI-064"
+      ],
+      "item_ids": [
+        "M15-007",
+        "M15-008",
+        "M15-009"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed miscellaneous History/Vision/Teach routing, four-lane feature intake, and Free Models routing. The History/Vision/Teach unit contradicts its compiled state, while Free Models lacks cross-owner lifecycle proof; the four-lane intake keeps lineage authority explicit.",
+      "window_id": "WIN-3EEBF9277C57-0016"
+    },
+    {
+      "core_range": [
+        4938,
+        5280
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:0PI-065",
+        "PLANUNIT:0PI-066",
+        "SEMANTIC:PLANUNIT:0PI-065",
+        "SEMANTIC:PLANUNIT:0PI-066"
+      ],
+      "item_ids": [
+        "M15-010",
+        "M15-011",
+        "M15-012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed containerized-host and external-repo import owner maps. Security-sensitive host lifecycle behavior and closed-world import completeness lack bound executable proofs, and 0PI-066 contains a duplicate implementation surface.",
+      "window_id": "WIN-3EEBF9277C57-0017"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-3EEBF9277C57-0002",
+    "document_path": "Plans/00-plans-index.md",
+    "micro_window_ids": [
+      "WIN-3EEBF9277C57-0014",
+      "WIN-3EEBF9277C57-0015",
+      "WIN-3EEBF9277C57-0016",
+      "WIN-3EEBF9277C57-0017"
+    ],
+    "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner artifact and validator prove complete backlink coverage for 0PI-056 and the reference-scan consumers in 0PI-058?",
+      "Which receipt identities and state machines prove discovery fallback/freshness, provider route green-state, Free Models rollback, and container-host partial-failure behavior across their owner docs?",
+      "What closed-world manifest binds each of the 113 imported rows and five guardrails in 0PI-066 to exactly one compiled or existing PlanUnit disposition?"
+    ],
+    "feature_family_keys": [
+      "orchestrator-goal-runtime-owner-routing",
+      "semantic-audit-closure",
+      "plans-to-code-handoff",
+      "prd-planning-wizard-migration",
+      "native-path-discovery",
+      "provider-route-proof",
+      "history-vision-teach",
+      "miscellaneous-feature-intake",
+      "free-models",
+      "containerized-hosts",
+      "external-repo-import"
+    ],
+    "research_queries": [
+      "reliable acceptance testing for cached path discovery ranking freshness fallback and offline behavior",
+      "provider capability route certification receipts and truthful degraded-state UX",
+      "container orchestration partial failure rollback port allocation concurrency and permission audit testing",
+      "closed-world traceability matrices for large requirements imports"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000005_attempt_0015_terminal"
+}

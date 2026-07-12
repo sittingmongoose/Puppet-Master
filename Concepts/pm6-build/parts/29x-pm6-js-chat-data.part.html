@@ -1,0 +1,1040 @@
+<script id="pm6-js-chat-data">
+/* PMConcept6 — unified chat thread data (data only; rendered by pm6-js-chat).
+   window.PM6_CHAT_THREADS: thread id -> display spec. Key order IS the roster
+   order shown in every mount. streamHtml blobs are ported verbatim from the
+   authored docked stream (th-main) and the legacy per-thread mocks; threads
+   with a `builder` key have no static streamHtml — 'deepPlan' is built by
+   pm6-js-chat and 'terminalDemoTpl' is read at boot from the #tplThreadTerminalDemo
+   template. footer.filesHtml is self-contained (pre-wrapped .ft-file spans). */
+window.PM6_CHAT_THREADS = {
+  'th-main': {
+    id: 'th-main',
+    title: 'Tastebook — planning chat',
+    role: 'assistant',
+    timestamp: 'now',
+    status: 'working',
+    summaryHtml: 'Main agent thread · research run live<br>Photos pipeline + import hardening',
+    mode: 'agent',
+    footer: { subagents: '1 active subagent', filesHtml: '<span class="ft-file" data-demo-action="files.open" data-demo-arg="src/services/import.rs">src/services/import.rs <span class="ft-add">+18</span> <span class="ft-del">−4</span></span><span class="ft-file" data-demo-action="files.open" data-demo-arg="migrations/0001_init.sql">migrations/0001_init.sql <span class="ft-add">+6</span> <span class="ft-del">−0</span></span><span class="ft-file" data-demo-action="files.open" data-demo-arg="src/main.rs">src/main.rs <span class="ft-add">+2</span> <span class="ft-del">−1</span></span>', problems: false },
+    suggestions: [
+      { label: 'Crawl the docs site', action: 'web.run', arg: 'webcrawl|docs.tastebook.dev|suggestion_chip', title: 'cmd.chat.web.crawl — approval card first: scope https://docs.tastebook.dev/* (visible origin/root) · max 25 pages · depth 3' },
+      { label: 'Map tastebook.dev', action: 'web.run', arg: 'webmap|tastebook.dev|suggestion_chip', title: 'cmd.chat.web.map — compact route tree, with a provider-fallback showcase mid-run' },
+      { label: 'Extract the recipe schema', action: 'web.run', arg: 'webextract|https://tastebook.dev/recipes/pad-thai|suggestion_chip', title: 'cmd.chat.web.extract — 3-row structured preview; the full extraction stays in the Runtime Artifact' }
+    ],
+    composerChips: ['src/services/import.rs'],
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
+      '<button class="thread-action-btn" title="More..." data-demo-action="demo.toast" data-demo-arg="Rename, duplicate and export live here in the full build."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>'
+    ],
+    streamHtml: `
+                  <div class="message system pm6-chat-sys"><span class="pm6-ico" data-pm6-ico="info"></span> Thread created from Dashboard · injected context: run <b>pcr-47</b> · seam-content · worktree feat/dashboard-v2</div>
+
+                  <div class="message user pm6-chat-msg" data-pm6-role="user">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
+                      I want recipe photos to stop looking terrible, and imports from blogs keep breaking.
+                      <div class="msg-controls">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                        <button class="msg-control-btn pm6-chat-disabled" title="Edit is only available on your most recent message — recovery: edit the newest message below." data-demo-action="demo.reason" data-demo-arg="already_done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="message assistant pm6-chat-msg" data-pm6-role="assistant">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
+                      Both are structural: photos need an <b>image-processing package</b> (resize ladder + EXIF strip) and imports need a hardened worker with retries and sanitization. That is bigger than a chat patch — it spans the data model, the API, the frontend and deployment.
+                      <div class="msg-controls">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pm6-chat-card pm6-chat-wizardrec pm-sheen">
+                    <div class="pm6-chat-card-head">
+                      <span class="pm6-ico pm-hover-icon" data-pm6-ico="wand"></span>
+                      <span class="pm6-chat-card-title">This looks like a feature, not a chat fix</span>
+                    </div>
+                    <div class="pm6-chat-card-body">Multi-lane change with a storage decision attached. The Planning Wizard scopes it into topics, audits the plan, and hands you one <b>Approve And Build</b> button at the end.</div>
+                    <div class="pm6-chat-card-actions">
+                      <button class="pm6-chat-btn pm6-chat-btn-primary" data-demo-action="page.go" data-demo-arg="wizard" title="Opens Planning Wizard intake with this conversation imported">Add a new Feature or Enhancement</button>
+                      <button class="pm6-chat-btn" data-demo-action="demo.toast" data-demo-arg="Staying in chat — say the word when you want the wizard.">Stay in Chat</button>
+                    </div>
+                  </div>
+
+                  <div class="message assistant pm6-chat-msg" data-pm6-role="assistant">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
+                      Before proposing scope I checked how recipe sites actually mark things up. 3 of 5 sources read; the full list is in the sources drawer.
+                    </div>
+                  </div>
+
+                  <div class="pm6-opcard" data-pm6-opid="op-web-s1" data-op-state="completed">
+                    <div class="pm6-opcard-head">
+                      <span class="pm6-ico" data-pm6-ico="search"></span>
+                      <span class="pm6-opcard-label">Searching Web: schema.org Recipe markup coverage 2026</span>
+                      <span class="pm6-opcard-chip pm6-opcard-chip-completed">completed ✓</span>
+                    </div>
+                    <div class="pm6-opcard-prov"><span class="pm6-ico" data-pm6-ico="robot"></span> Agent searched web because freshness was required for import coverage claims.</div>
+                    <div class="pm6-opcard-meta">
+                      <span class="pm6-opcard-krow"><b>Command</b> cmd.chat.web.search</span>
+                      <span class="pm6-opcard-krow"><b>Provider</b> model-native · effective adapter model-native</span>
+                      <span class="pm6-opcard-krow"><b>Cache</b> miss</span>
+                      <span class="pm6-opcard-krow"><b>Permission</b> websearch scope * · granted</span>
+                      <span class="pm6-opcard-krow"><b>Cost</b> included in plan</span>
+                      <span class="pm6-opcard-krow"><b>operation_input</b> <code>{ query: "schema.org Recipe markup coverage 2026" }</code></span>
+                    </div>
+                    <div class="pm6-opcard-actions">
+                      <button class="pm6-chat-btn pm6-opcard-srcbtn" data-demo-action="web.sources" data-demo-arg="op-web-s1" onclick="var d=this.closest('.pm6-opcard').querySelector('.pm6-opcard-sources'); if(d) d.classList.toggle('open');">/sources · 5</button>
+                      <button class="pm6-chat-btn" data-demo-action="web.artifact_open" data-demo-arg="art-op-web-s1" title="Payload stays in the Runtime Artifact — it is loaded on demand, never dumped into the transcript">Runtime Artifact ↳ art-op-web-s1</button>
+                    </div>
+                    <div class="pm6-opcard-sources">
+                      <div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-high">high</span><span class="pm6-src-title">Google Search Central — Recipe structured data</span><span class="pm6-src-read">✓ read</span></div>
+                      <div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-high">high</span><span class="pm6-src-title">schema.org/Recipe</span><span class="pm6-src-read">✓ read</span></div>
+                      <div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-medium">medium</span><span class="pm6-src-title">Web Almanac 2025 — structured data chapter</span><span class="pm6-src-read">✓ read</span></div>
+                      <div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-low">low</span><span class="pm6-src-title">RecipeKit blog — JSON-LD in the wild</span><span class="pm6-src-skip">not read</span></div>
+                      <div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-unknown">unknown</span><span class="pm6-src-title">MDN — microdata</span><span class="pm6-src-skip">not read</span></div>
+                    </div>
+                  </div>
+
+                  <div class="pm6-opcard pm6-opcard-research" data-pm6-opid="op-web-r1" data-op-state="running">
+                    <div class="pm6-opcard-head">
+                      <span class="pm6-ico" data-pm6-ico="telescope"></span>
+                      <span class="pm6-opcard-label">Researching Web: import-from-URL hardening practices</span>
+                      <span class="pm6-opcard-chip pm6-opcard-chip-running pm6-chat-r1-chip">running</span>
+                    </div>
+                    <div class="pm6-opcard-prov"><span class="pm6-ico" data-pm6-ico="info"></span> ResearchRun rr-47-web · invoked by /web research · backs the import worker audit findings.</div>
+                    <div class="pm6-opcard-progress">
+                      <div class="pm6-opcard-progressbar"><div class="pm6-opcard-progressfill pm6-chat-r1-fill" style="width:50%;"></div></div>
+                      <span class="pm6-opcard-progresstext pm6-chat-r1-text">reading source 3/6</span>
+                    </div>
+                    <div class="pm6-opcard-meta">
+                      <span class="pm6-opcard-krow"><b>Command</b> cmd.chat.web.research</span>
+                      <span class="pm6-opcard-krow"><b>Provider</b> PM-composed · effective adapter Site Reader · fallback Site Reader → model-native</span>
+                      <span class="pm6-opcard-krow"><b>Cache</b> cold</span>
+                      <span class="pm6-opcard-krow"><b>Permission</b> webresearch scope * · granted</span>
+                      <span class="pm6-opcard-krow"><b>operation_input</b> <code>{ task: "How do production recipe importers survive messy blog markup?" }</code></span>
+                    </div>
+                    <div class="pm6-chat-r1-cites pm6-opcard-cites">
+                      <div class="pm6-opcard-citehead">Citations — from actually-read sources only</div>
+                      <div class="pm6-opcard-citebody"></div>
+                    </div>
+                    <div class="pm6-opcard-actions">
+                      <button class="pm6-chat-btn pm6-chat-r1-cancel">Cancel — keep partial evidence</button>
+                      <button class="pm6-chat-btn" data-demo-action="web.artifact_open" data-demo-arg="art-op-web-r1" title="Written when the run completes">Runtime Artifact ↳ pending</button>
+                    </div>
+                  </div>
+
+                  <div class="pm6-opcard" data-pm6-opid="op-web-f1" data-op-state="completed">
+                    <div class="pm6-opcard-head">
+                      <span class="pm6-ico" data-pm6-ico="globe"></span>
+                      <span class="pm6-opcard-label">Reading Site: seriouseats.com/engineering/quantity-parsing</span>
+                      <span class="pm6-opcard-chip pm6-opcard-chip-completed">completed ✓</span>
+                    </div>
+                    <div class="pm6-opcard-prov"><span class="pm6-ico" data-pm6-ico="robot"></span> Agent fetched this URL for source grounding.</div>
+                    <div class="pm6-opcard-meta">
+                      <span class="pm6-opcard-krow"><b>Command</b> cmd.chat.web.fetch</span>
+                      <span class="pm6-opcard-krow"><b>Provider</b> Site Reader (primary) · no fallback used</span>
+                      <span class="pm6-opcard-krow"><b>Cache</b> hit · served from page cache</span>
+                      <span class="pm6-opcard-krow"><b>Permission</b> webfetch host-scoped https://seriouseats.com/* · granted</span>
+                    </div>
+                    <div class="pm6-opcard-actions">
+                      <button class="pm6-chat-btn" data-demo-action="demo.toast" data-demo-arg="Browser evidence drawer opens in the bottom panel: Page / Actions / Console / Network / Screenshots / Sources.">Open evidence</button>
+                      <button class="pm6-chat-btn" data-demo-action="web.artifact_open" data-demo-arg="">Runtime Artifact ↳ view</button>
+                    </div>
+                  </div>
+
+                  <div class="pm6-opcard pm6-opcard-approval" data-pm6-opid="op-web-x1" data-op-state="awaiting-approval">
+                    <div class="pm6-opcard-head">
+                      <span class="pm6-ico" data-pm6-ico="shield"></span>
+                      <span class="pm6-opcard-label">Extracting Site: bonappetit.com/recipes/import-test-set</span>
+                      <span class="pm6-opcard-chip pm6-opcard-chip-waiting pm6-chat-x1-chip">awaiting approval</span>
+                    </div>
+                    <div class="pm6-opcard-prov"><span class="pm6-ico" data-pm6-ico="info"></span> webextract is host-scoped: this grant covers <code>https://bonappetit.com/*</code> only, nothing wider.</div>
+                    <div class="pm6-opcard-meta">
+                      <span class="pm6-opcard-krow"><b>Command</b> cmd.chat.web.extract</span>
+                      <span class="pm6-opcard-krow"><b>Provider</b> Site Reader · fallback model-native</span>
+                      <span class="pm6-opcard-krow"><b>operation_input</b> <code>{ url: "bonappetit.com/recipes/import-test-set", schema: "recipe" }</code></span>
+                    </div>
+                    <div class="pm6-opcard-actions pm6-chat-x1-actions">
+                      <button class="pm6-chat-btn pm6-chat-btn-primary pm6-chat-x1-approve">Approve for this host</button>
+                      <button class="pm6-chat-btn pm6-chat-x1-deny">Deny</button>
+                      <button class="pm6-chat-btn" data-demo-action="demo.toast" data-demo-arg="Permissions page shows the exact rule this approval would create.">View rule…</button>
+                    </div>
+                    <div class="pm6-chat-x1-denied pm6-opcard-denied">
+                      <span class="pm6-opcard-chip pm6-opcard-chip-failed">denied</span> blocked_reason_code: <code>permission_denied</code> · allowed actions: <b>request_again</b>, <b>open_permissions</b>
+                    </div>
+                  </div>
+
+                  <div class="message assistant pm6-chat-msg" data-pm6-role="assistant">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
+                      While research runs, I asked a subagent to reproduce the import failure so we have evidence, not vibes:
+                      <div class="pm6-subagent-card">
+                        <div class="pm6-subagent-row" onclick="this.parentElement.classList.toggle('expanded')">
+                          <span class="pm6-subagent-status pm6-subagent-status-running"></span>
+                          <span class="pm6-subagent-name">Test Sleuth</span>
+                          <span class="pm6-subagent-task">reproduce import failure</span>
+                          <span class="pm6-subagent-state">running · 38s</span>
+                          <span class="pm6-subagent-caret">▾</span>
+                        </div>
+                        <div class="pm6-subagent-detail">
+                          <div class="pm6-subagent-sec"><b>Work stream</b>
+                            <div class="pm6-subagent-line">↳ cargo test -p import-worker — 13 passed, 1 failed</div>
+                            <div class="pm6-subagent-line">↳ narrowing: normalize_units_mixed_fraction</div>
+                            <div class="pm6-subagent-line">↳ fixture: "1 1/2 cup" parses as 11/2</div>
+                          </div>
+                          <div class="pm6-subagent-sec"><b>Thought stream</b>
+                            <div class="pm6-subagent-line pm6-subagent-thought">Mixed fractions hit the integer fast-path before the fraction branch — quantities explode by 7x.</div>
+                          </div>
+                          <div class="pm6-subagent-sec"><b>Context</b> child scope · escalates to parent · parent asks you in this thread</div>
+                          <div class="pm6-subagent-sec"><b>Result</b> pending — log capped at 50 lines, full trail in Runtime Artifacts</div>
+                        </div>
+                      </div>
+                      <div class="files-touched-strip pm6-chat-files">
+                        <span class="ft-file" data-demo-action="files.open" data-demo-arg="src/services/import.rs" title="Open in editor">src/services/import.rs <span class="ft-add">+18</span> <span class="ft-del">−4</span></span>
+                        <span class="ft-file" data-demo-action="files.open" data-demo-arg="migrations/0001_init.sql" title="Open in editor">migrations/0001_init.sql <span class="ft-add">+6</span> <span class="ft-del">−0</span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pm6-chat-notice pm6-chat-notice-warn">
+                    <span class="pm6-ico" data-pm6-ico="warning"></span>
+                    <span><b>Provider fallback:</b> requested Opus 4.6 was unavailable (rate_limited) — this turn ran on <b>Sonnet 4.6</b>. Requested vs effective is recorded on the message. Recovery: wait out the cooldown on the Usage page or switch the effective account.</span>
+                  </div>
+
+                  <div class="message user pm6-chat-msg pm6-chat-lastuser" data-pm6-role="user">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
+                      Where should the resized images live long-term?
+                      <div class="msg-controls">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                        <button class="msg-control-btn" title="Edit — supersedes this message (tombstone kept)" data-demo-action="demo.toast" data-demo-arg="Edit soft-supersedes the turn — the original stays as a tombstone."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                        <button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resent — the earlier turn is soft-superseded, never deleted."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="message assistant pm6-chat-msg" data-pm6-role="assistant">
+                    <div class="msg-body">
+                      <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
+                      That is a product decision, so the wizard will ask you directly: <b>AWS S3</b>, <b>Cloudflare R2</b> or a <b>local volume</b>. R2 is the cheap default for image-heavy reads. Everything else I can resolve from evidence and record as assumptions.
+                      <div class="msg-controls">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                    </div>
+                  </div>
+`
+  },
+  'th-deepplan': {
+    id: 'th-deepplan',
+    title: 'Deep Plan: Image pipeline',
+    role: 'doc',
+    timestamp: '14m',
+    status: 'draft',
+    summaryHtml: 'Plan doc draft &middot; TODO 2/5 done<br>states: approved &middot; executing step 3',
+    mode: 'deep-plan',
+    footer: { subagents: null, filesHtml: '<span class="ft-file" data-demo-action="files.open" data-demo-arg="PRD.md">PRD.md <span class="ft-add">+124</span> <span class="ft-del">−0</span></span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Open plan doc in editor" data-demo-action="files.open" data-demo-arg="PRD.md"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></button>'
+    ],
+    builder: 'deepPlan'
+  },
+  'thread-debug1': {
+    id: 'thread-debug1',
+    title: 'Debug: Login 401 Loop',
+    titleHtml: '<span style="width:6px; height:6px; border-radius:50%; background:var(--accent-orange); display:inline-block;"></span> Debug: Login 401 Loop',
+    role: 'assistant',
+    timestamp: '8m',
+    status: 'working',
+    summaryHtml: 'Debug investigation · evidence-first<br>Step: Root Cause &middot; DAP attached',
+    mode: 'debug',
+    footer: { subagents: '1 active subagent', filesHtml: '<span class="ft-file">auth/token_refresh.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span> (inspecting)</span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Promote investigation" data-demo-action="demo.toast" data-demo-arg="cmd.chat.debug_investigation.promote — investigation promoted to a tracked concern."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>',
+      '<button class="thread-action-btn" title="Dismiss investigation" data-demo-action="demo.toast" data-demo-arg="cmd.chat.debug_investigation.dismiss — investigation dismissed with its evidence bundle kept."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>'
+    ],
+    streamHtml: `
+<div class="debug-thread-header">
+  <div class="debug-target">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+    Login 401 Loop &mdash; auth/token_refresh.rs
+    <span class="debug-stage-badge">Root Cause</span>
+  </div>
+  <div class="debug-meta-row">
+    <span><b>Target:</b> POST /api/auth/refresh &rarr; 401</span>
+    <span><b>DAP:</b> <span class="debug-dap-status">Attached</span> (pid 48201)</span>
+    <span><b>Profile:</b> Debug Automation &middot; breakpoint-on-panic</span>
+    <span><b>Duration:</b> 8m 12s</span>
+  </div>
+</div>
+
+<div class="debug-investigation-ctx">
+  <div class="ctx-title">Investigation Context</div>
+  <div class="ctx-item"><span class="ctx-type">breakpoint</span> auth/token_refresh.rs:142 &mdash; refresh_token() entry</div>
+  <div class="ctx-item"><span class="ctx-type">variable</span> token.expires_at = 1711209600 (expired 2h ago)</div>
+  <div class="ctx-item"><span class="ctx-type">network</span> POST /api/auth/refresh &rarr; 401 Unauthorized (3 occurrences)</div>
+  <div class="ctx-item"><span class="ctx-type">log</span> WARN token_store: refresh token blacklisted after rotation race</div>
+  <div class="ctx-item"><span class="ctx-type">browser</span> Screenshot: login page redirect loop (browser.context_captured &middot; Site Reader session)</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  I've attached the DAP debugger to the auth service and set breakpoints around the token refresh flow. Here's what I've found so far:
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Debug] Set breakpoint</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.1s</span>
+    </div>
+    <div class="activity-card-body">auth/token_refresh.rs:142 &mdash; refresh_token() entry point</div>
+  </div>
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Debug] Inspect variable</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.2s</span>
+    </div>
+    <div class="activity-card-body">token.expires_at = 1711209600 (2024-03-23T12:00:00Z) &mdash; expired 2 hours ago<br>token.refresh_token = "rt_9f8a...3b2c" &mdash; blacklisted after rotation race</div>
+  </div>
+
+  <div class="activity-card web">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Browser] Site Reader session capture</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.8s</span>
+    </div>
+    <div class="activity-card-body">Navigated to /dashboard &rarr; redirected to /login &rarr; auto-refresh &rarr; /login (loop detected after 3 cycles)</div>
+  </div>
+
+  <b>Root cause identified:</b> The token rotation logic in <code>rotate_refresh_token()</code> has a race condition. When two concurrent requests both attempt to rotate the refresh token, the second rotation blacklists the first rotated token, causing both to fail. The client then falls into a redirect loop between the login page and the dashboard.
+
+  <div style="margin-top: var(--sm); padding: var(--sm) var(--md); background: var(--surface); border-radius: var(--border-radius); border: 1px solid var(--border-light); font-size: 11px;">
+    <b>Suggested fix:</b> Add a mutex lock on the token rotation path, or use a grace period for recently-rotated tokens (e.g., accept the previous refresh token for 30s after rotation).
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span style="color:var(--accent-orange);">Debug</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>8m</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value" style="color:var(--accent-orange);">Debug</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Debug Profile</span><span class="popover-value">breakpoint-on-panic</span></div><div class="popover-row"><span class="popover-label">Stage</span><span class="popover-value">Root Cause Analysis</span></div><div class="popover-row"><span class="popover-label">Evidence Items</span><span class="popover-value">5</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">12,840</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.6k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.08</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div style="display:flex; gap:var(--sm); padding:var(--sm) 0; align-items:center; flex-wrap:wrap;">
+  <button class="debug-export-btn" onclick="toast('cmd.chat.export_investigation_bundle &rarr; Exporting 5 evidence items...')">Export Investigation Bundle</button>
+  <div class="debug-reopen-controls">
+    <button onclick="toast('Reopening investigation with fresh context...')">Reopen</button>
+    <button onclick="toast('Retrying from last breakpoint...')">Retry</button>
+    <button onclick="toast('Superseding with new investigation...')">Supersede</button>
+    <button onclick="toast('Closing investigation. Evidence archived.')" style="color:var(--accent-magenta);">Close</button>
+  </div>
+</div>
+`
+  },
+  'thread-terminal-demo': {
+    id: 'thread-terminal-demo',
+    title: 'Demo: Terminal &amp; dev loop',
+    role: 'assistant',
+    timestamp: '20m',
+    status: 'read',
+    summaryHtml: 'Shell-first model · command cards · bottom runtime',
+    mode: 'agent',
+    footer: { subagents: null, filesHtml: null, problems: true },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
+    ],
+    builder: 'terminalDemoTpl'
+  },
+  'thread-subagents': {
+    id: 'thread-subagents',
+    title: 'Refactor: Auth Module',
+    role: 'assistant',
+    timestamp: '2m',
+    status: 'working',
+    summaryHtml: '<svg class="thread-wt-glyph wt-clean" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>3 subagents: OAuth2, session adapter, tests<br>feat/oauth2-pkce &middot; 2 running',
+    mode: 'agent',
+    footer: { subagents: '3 active subagents', filesHtml: '<span class="ft-file">auth/oauth2.rs <span class="ft-add">+86</span> <span class="ft-del">−0</span></span><span class="ft-file">auth/session.rs <span class="ft-add">+24</span> <span class="ft-del">−8</span></span><span class="ft-file">auth/mod.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
+    ],
+    streamHtml: `
+<div class="message user">
+  <div class="msg-body">Refactor the auth module to support OAuth2 PKCE flow alongside the existing session-based auth. Keep backward compatibility.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  I'll split this into three parallel workstreams. Spawning subagents now&hellip;
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span>Spawn 3 subagents</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.3s</span>
+    </div>
+    <div class="activity-card-body">oauth2-specialist &middot; session-migrator &middot; test-writer</div>
+  </div>
+
+  <!-- Subagent 1: OAuth2 Specialist (expanded, running) -->
+  <div class="subagent-card expanded" data-sa-id='sa-oauth2'>
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-blue);">OAuth2 Specialist</span>
+      <span class="sa-task-summary">Implement PKCE flow in auth/oauth2.rs</span>
+      <span class="sa-status-badge running">running</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:65%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read auth/session.rs</span><span style="font-size:9px; color:var(--text-muted);">0.4s</span></div>
+            <div class="activity-card-body">Analyzed SessionManager trait &mdash; 142 lines, 6 public methods</div>
+          </div>
+          <div class="activity-card bash" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Grep "impl OAuth"</span><span style="font-size:9px; color:var(--text-muted);">0.2s</span></div>
+            <div class="activity-card-body">No existing OAuth implementation found &mdash; clean slate</div>
+          </div>
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span style="color:var(--accent-lime);">Edit auth/oauth2.rs</span><span style="font-size:9px; color:var(--text-muted);">2.1s</span></div>
+            <div class="activity-card-body">+86 lines &mdash; PKCE challenge generation, token exchange, callback handler</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Thought Stream</div>
+        <div class="sa-thought-stream">The existing SessionManager trait needs an abstraction layer. I&rsquo;ll create an AuthProvider trait that both OAuth2 and Session can implement. The PKCE verifier must be stored server-side in a short-lived cache &mdash; using the existing Redis connection for this. Code challenge method will be S256 per RFC 7636 best practice.</div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Context</div>
+        <div class="sa-context-state">
+          <span>14.2k / 128k tokens (11%)</span>
+          <span>&middot;</span>
+          <span>Elapsed: 1m 42s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 2: Session Migrator (collapsed, running) -->
+  <div class="subagent-card" data-sa-id='sa-session-migrator'>
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-lime);">Session Migrator</span>
+      <span class="sa-task-summary">Create backward-compatible session adapter</span>
+      <span class="sa-status-badge running">running</span>
+      <span class="sa-model-badge">Haiku 4.5</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:40%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read auth/session.rs</span><span style="font-size:9px; color:var(--text-muted);">0.3s</span></div>
+            <div class="activity-card-body">Mapping existing session API surface for adapter layer</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Thought Stream</div>
+        <div class="sa-thought-stream">The SessionAdapter needs to wrap both providers transparently. Existing callers use session.authenticate() &mdash; I&rsquo;ll keep that as the unified entry point with a provider discriminator.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 3: Test Writer (collapsed, queued) -->
+  <div class="subagent-card" data-sa-id='sa-test-writer'>
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-magenta);">Test Writer</span>
+      <span class="sa-task-summary">Write integration tests for dual auth pathways</span>
+      <span class="sa-status-badge queued">queued</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Status</div>
+        <div class="sa-thought-stream">Waiting for OAuth2 Specialist and Session Migrator to complete before generating test harness.</div>
+      </div>
+    </div>
+  </div>
+
+  All three subagents are active. The OAuth2 Specialist is making good progress on the PKCE implementation. Once the Session Migrator finishes the adapter layer, the Test Writer will generate integration tests covering both auth flows.
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>1m 42s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">3 (2 running, 1 queued)</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">28,400</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">42.1k / 200k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.24</span></div></div>
+    </div>
+  </div>
+</div>
+`
+  },
+  'thread-crew': {
+    id: 'thread-crew',
+    title: 'Crew: API Design Review',
+    role: 'assistant',
+    timestamp: '3m',
+    status: 'working',
+    summaryHtml: '3-model crew deliberation<br>Architect + Security + API &middot; consensus reached',
+    mode: 'agent',
+    footer: { subagents: '3 crew members active', filesHtml: null, problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
+    ],
+    streamHtml: `
+<div class="sa-crew-confirmation" style="margin-bottom:var(--md);">
+  <div style="font-weight:600; font-size:12px; margin-bottom:var(--sm);">Crew Assembled &mdash; 3 Members</div>
+  <div style="display:flex; gap:var(--sm); flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-blue);"></span>
+      <b>Lead Architect</b>
+      <span style="color:var(--text-muted);">Claude Opus 4.6 / PM Runtime</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-magenta);"></span>
+      <b>Security Expert</b>
+      <span style="color:var(--text-muted);">Claude Sonnet 4.6 / PM Runtime</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-lime);"></span>
+      <b>API Specialist</b>
+      <span style="color:var(--text-muted);">GPT-5.2 / Codex CLI</span>
+    </div>
+  </div>
+</div>
+
+<div class="message user">
+  <div class="msg-body">Design the REST API for our multi-tenant workspace management. We need endpoints for workspace CRUD, member management, and role-based access control.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  The crew is deliberating. Here is the debate board:
+
+  <div class="sa-crew-board">
+    <div class="sa-crew-header">
+      <span style="font-weight:600;">Crew Debate</span>
+      <div class="sa-crew-members-bar">
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-blue);">Architect</span>
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-magenta);">Security</span>
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-lime);">API</span>
+      </div>
+    </div>
+    <div class="sa-crew-debate">
+      <div class="sa-crew-msg from-architect">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-blue);">Lead Architect</div>
+        I propose a resource-oriented REST design. Top-level resource is <code>/v1/workspaces</code>, with nested sub-resources for members and roles:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">GET    /v1/workspaces
+POST   /v1/workspaces
+GET    /v1/workspaces/{id}
+PATCH  /v1/workspaces/{id}
+DELETE /v1/workspaces/{id}
+GET    /v1/workspaces/{id}/members
+POST   /v1/workspaces/{id}/members
+DELETE /v1/workspaces/{id}/members/{uid}</div>
+        URL-based versioning (<code>/v1/</code>) gives us clean deprecation paths. Each workspace is a tenant boundary.
+      </div>
+
+      <div class="sa-crew-msg from-security">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-magenta);">Security Expert</div>
+        RBAC needs scoped tokens. I recommend workspace-level JWTs with embedded role claims rather than API keys for member management. The token payload should include:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "sub": "user_id",
+  "wid": "workspace_id",
+  "role": "admin|editor|viewer",
+  "scope": ["ws:read","ws:write","members:manage"] }</div>
+        API keys should be restricted to machine-to-machine integrations only, never for member management. Also: all DELETE endpoints need <code>X-Confirm-Delete</code> header to prevent accidental removal.
+      </div>
+
+      <div class="sa-crew-msg from-api">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-lime);">API Specialist</div>
+        Agreed on resource structure. For pagination, I strongly recommend cursor-based over offset-based &mdash; workspace member lists can grow large and offset pagination breaks with concurrent writes. Proposed response envelope:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "data": [...],
+  "cursor": { "next": "eyJ...", "has_more": true },
+  "meta": { "total_estimate": 1284 } }</div>
+        Rate limiting should be per-workspace, not per-user. Suggest <code>X-RateLimit-Workspace</code> headers.
+      </div>
+
+      <div class="sa-crew-msg from-architect">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-blue);">Lead Architect</div>
+        Excellent points from both. Synthesizing positions now&hellip;
+      </div>
+    </div>
+  </div>
+
+  <div class="sa-crew-synthesis">
+    <div style="font-weight:600; font-size:11px; margin-bottom:var(--sm);">Synthesis &mdash; Unified API Design</div>
+    <div style="font-size:11px; line-height:1.6;">
+      <b>Endpoints:</b> Resource-oriented REST at <code>/v1/workspaces</code> with nested <code>/members</code> and <code>/roles</code> sub-resources.<br>
+      <b>Auth:</b> Workspace-scoped JWTs with embedded role claims. API keys restricted to M2M integrations. <code>X-Confirm-Delete</code> required on destructive operations.<br>
+      <b>Pagination:</b> Cursor-based with <code>next</code> token and <code>total_estimate</code> in meta. Default page size 50, max 200.<br>
+      <b>Rate Limiting:</b> Per-workspace quotas. Headers: <code>X-RateLimit-Workspace</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code>.<br>
+      <b>Versioning:</b> URL-based (<code>/v1/</code>, <code>/v2/</code>) with 6-month deprecation windows.
+    </div>
+  </div>
+
+  The crew has reached consensus. Would you like me to generate the OpenAPI spec or start implementing the endpoint handlers?
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Crew</span><span class="sep">&middot;</span><span>3 models</span><span class="sep">&middot;</span><span>2m 18s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Crew</span></div><div class="popover-row"><span class="popover-label">Members</span><span class="popover-value">3</span></div><div class="popover-row"><span class="popover-label">Debate Rounds</span><span class="popover-value">4</span></div><div class="popover-row"><span class="popover-label">Consensus</span><span class="popover-value" style="color:var(--accent-lime);">Reached</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">34,200</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.41</span></div></div>
+    </div>
+  </div>
+</div>
+`
+  },
+  'thread-batch-fanout': {
+    id: 'thread-batch-fanout',
+    title: 'Test Suite Parallelization',
+    role: 'assistant',
+    timestamp: '4m',
+    status: 'working',
+    summaryHtml: '25 subagents: 8 done, 11 running, 2 failed<br>~2 min remaining',
+    mode: 'agent',
+    footer: { subagents: '25 subagents (11 running)', filesHtml: '<span class="ft-file">tests/**/*.rs (read-only analysis)</span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
+    ],
+    streamHtml: `
+<div class="message user">
+  <div class="msg-body">Run the full integration test suite in parallel. Each test module should get its own subagent.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Spawning 25 subagents for parallel test execution.
+
+  <div class="sa-batch-card">
+    <div class="sa-batch-header" onclick="this.closest('.sa-batch-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span style="font-weight:600;">Integration Test Suite</span>
+      <span style="color:var(--text-muted); font-size:10px;">&mdash; 25 subagents</span>
+    </div>
+    <div class="sa-batch-summary">
+      <span class="sa-status-badge complete" style="font-size:9px;">8 complete</span>
+      <span class="sa-status-badge running" style="font-size:9px;">11 running</span>
+      <span class="sa-status-badge queued" style="font-size:9px;">3 queued</span>
+      <span class="sa-status-badge failed" style="font-size:9px;">2 failed</span>
+      <span class="sa-status-badge blocked" style="font-size:9px;">1 blocked</span>
+    </div>
+
+    <!-- Subgroup 1 (1-10) EXPANDED -->
+    <div class="sa-batch-group expanded">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 1 (1&ndash;10)</span>
+        <span style="color:var(--text-muted); font-size:10px;">7 complete &middot; 2 running &middot; 1 failed</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">auth_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">34s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">user_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">28s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">workspace_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">45s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">permission_tests</span>
+            <span class="sa-status-badge running" style="font-size:8px;">running</span>
+            <span style="font-size:9px; color:var(--text-muted);">62%</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+            <div class="sa-progress-bar" style="width:60px;"><div class="sa-progress-fill" style="width:62%"></div></div>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">billing_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">22s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">notification_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">31s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px; color:var(--accent-error);">search_tests</span>
+            <span class="sa-status-badge failed" style="font-size:8px;">failed</span>
+            <span style="font-size:9px; color:var(--accent-error);">Timeout after 120s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">storage_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">19s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">migration_tests</span>
+            <span class="sa-status-badge running" style="font-size:8px;">running</span>
+            <span style="font-size:9px; color:var(--text-muted);">80%</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+            <div class="sa-progress-bar" style="width:60px;"><div class="sa-progress-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">api_rate_limit_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">15s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subgroup 2 (11-20) collapsed -->
+    <div class="sa-batch-group">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 2 (11&ndash;20)</span>
+        <span style="color:var(--text-muted); font-size:10px;">1 complete &middot; 7 running &middot; 1 failed &middot; 1 blocked</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">webhook_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">45%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">email_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">33%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">audit_log_tests</span><span class="sa-status-badge complete" style="font-size:8px;">complete</span><span style="font-size:9px; color:var(--text-muted);">41s</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">export_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">58%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">import_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">22%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px; color:var(--accent-error);">realtime_tests</span><span class="sa-status-badge failed" style="font-size:8px;">failed</span><span style="font-size:9px; color:var(--accent-error);">Connection refused</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">scheduler_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">71%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">cache_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">55%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">queue_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">10%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">tenant_isolation_tests</span><span class="sa-status-badge blocked" style="font-size:8px;">blocked</span><span style="font-size:9px; color:var(--text-muted);">needs migration_tests</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+      </div>
+    </div>
+
+    <!-- Subgroup 3 (21-25) collapsed -->
+    <div class="sa-batch-group">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 3 (21&ndash;25)</span>
+        <span style="color:var(--text-muted); font-size:10px;">2 running &middot; 3 queued</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">graphql_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">38%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">analytics_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">12%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">backup_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">compliance_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">e2e_smoke_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+      </div>
+    </div>
+
+    <div style="padding:var(--sm) var(--md); font-size:10px; color:var(--text-muted); border-top:1px solid var(--border-light);">
+      Estimated completion: ~2 min remaining &middot; 2 failures need attention
+    </div>
+  </div>
+
+  The test suite is running across 25 parallel subagents. Group 1 is nearly complete with 1 failure in <code>search_tests</code> (timeout). I&rsquo;ll investigate once the full run finishes.
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>3m 45s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent (Batch)</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">25 total</span></div><div class="popover-row"><span class="popover-label">Running</span><span class="popover-value">11</span></div><div class="popover-row"><span class="popover-label">Failed</span><span class="popover-value" style="color:var(--accent-error);">2</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">86,400</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.92</span></div></div>
+    </div>
+  </div>
+</div>
+`
+  },
+  'thread-worktree-merge': {
+    id: 'thread-worktree-merge',
+    title: 'Multi-Tenant Migration',
+    role: 'assistant',
+    timestamp: '5m',
+    status: 'unread',
+    summaryHtml: '<svg class="thread-wt-glyph wt-dirty" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>Merge pending &middot; 1 test failing<br>feat/multi-tenant &middot; squash to main',
+    mode: 'agent',
+    footer: { subagents: null, filesHtml: '<span class="ft-file">migrations/20260318_tenants.sql <span class="ft-add">+54</span> <span class="ft-del">−0</span></span><span class="ft-file">src/tenant/mod.rs <span class="ft-add">+38</span> <span class="ft-del">−4</span></span><span class="ft-file">src/tenant/rls.rs <span class="ft-add">+38</span> <span class="ft-del">−0</span></span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
+      '<button class="thread-action-btn" title="More..." data-demo-action="demo.toast" data-demo-arg="Rename, duplicate and export live here in the full build."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>'
+    ],
+    streamHtml: `
+<div class="message user">
+  <div class="msg-body">Implement the multi-tenant database schema migration with row-level security.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Working on the tenant isolation migration. I&rsquo;ve created the schema and RLS policies.
+
+  <div class="activity-card file">
+    <div class="activity-card-header">
+      <span>Read src/schema/tenant.rs</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.6s</span>
+    </div>
+    <div class="activity-card-body">Existing single-tenant schema &mdash; 4 tables, no tenant_id column</div>
+  </div>
+
+  <div class="activity-card file">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-lime);">Edit migrations/20260318_tenants.sql</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.8s</span>
+    </div>
+    <div class="activity-card-body">+54 lines &mdash; ALTER TABLE ADD tenant_id, CREATE POLICY tenant_isolation, CREATE INDEX idx_tenant_created</div>
+  </div>
+
+  <div class="activity-card file">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-lime);">Edit src/tenant/rls.rs</span>
+      <span style="font-size:9px; color:var(--text-muted);">2.4s</span>
+    </div>
+    <div class="activity-card-body">+38 lines &mdash; RLS policy enforcement middleware, tenant context propagation</div>
+  </div>
+
+  Migration is ready. Here are the pre-merge results:
+
+  <!-- Merge UI -->
+  <div class="wt-merge-modal" style="position:relative; display:block; background:transparent;">
+    <div class="wt-merge-inner" style="position:relative; transform:none; max-width:100%;">
+      <div style="font-weight:600; font-size:12px; margin-bottom:var(--sm);">Merge to main</div>
+      <div style="display:flex; gap:2px; margin-bottom:var(--sm);">
+        <button class="seg-btn active" onclick="selectMergeStrategy(this,'squash')">Squash</button>
+        <button class="seg-btn" onclick="selectMergeStrategy(this,'merge')">Merge</button>
+        <button class="seg-btn" onclick="selectMergeStrategy(this,'rebase')">Rebase</button>
+      </div>
+      <div style="font-size:10px; color:var(--text-muted); margin-bottom:var(--xs);">Target: <b>main</b></div>
+      <textarea class="wt-merge-commit-msg" rows="3">feat(tenant): add multi-tenant schema with RLS policies
+
+Add tenant_id to all tables, create row-level security
+policies for tenant isolation, and add migration script.</textarea>
+
+      <div style="margin:var(--sm) 0; padding:var(--xs) var(--sm); background:rgba(255,179,0,0.1); border:1px solid var(--accent-warning); border-radius:var(--border-radius); font-size:10px; color:var(--accent-warning);">
+        Warning: 1 uncommitted file in worktree (src/tenant/rls.rs has unstaged changes)
+      </div>
+
+      <!-- Test output -->
+      <div class="wt-test-output">
+        <div style="font-weight:600; font-size:10px; margin-bottom:var(--xs);">Pre-Merge Tests</div>
+        <div class="wt-test-pass">test tenant::isolation_test ... ok <span style="color:var(--text-muted);">(0.8s)</span></div>
+        <div class="wt-test-fail">test tenant::rls_policy_test ... FAILED <span style="color:var(--text-muted);">(1.2s)</span></div>
+        <div class="wt-test-pass">test tenant::migration_test ... ok <span style="color:var(--text-muted);">(0.3s)</span></div>
+        <div style="margin-top:var(--xs); padding-top:var(--xs); border-top:1px solid var(--border-light); font-size:10px;">
+          <span style="color:var(--accent-error);">failures:</span><br>
+          <span style="padding-left:12px; color:var(--text-secondary);">tenant::rls_policy_test &mdash; assertion failed: expected admin role to bypass RLS</span>
+        </div>
+        <div style="margin-top:var(--xs); font-size:10px; font-weight:600;">
+          test result: <span style="color:var(--accent-error);">FAILED</span>. 2 passed; 1 failed
+        </div>
+      </div>
+
+      <div style="display:flex; gap:var(--sm); margin-top:var(--sm);">
+        <button class="wizard-btn" style="background:var(--accent-error); color:#fff; border:none;" onclick="toast('Merging with 1 failure...')">Merge Anyway</button>
+        <button class="wizard-btn" onclick="toast('Merge cancelled')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-merge banner -->
+  <div class="wt-post-merge-banner" style="margin-top:var(--sm);">
+    <span>Branch <b>feat/multi-tenant</b> merged into <b>main</b> via squash.</span>
+    <div style="display:flex; gap:var(--sm);">
+      <button class="wizard-btn" style="font-size:10px;" onclick="toast('Worktree retained for follow-up work')">Keep Worktree</button>
+      <button class="wizard-btn" style="font-size:10px; color:var(--accent-error);" onclick="toast('Removing worktree feat/multi-tenant...')">Remove Worktree</button>
+    </div>
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>4m 12s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Worktree</span><span class="popover-value">feat/multi-tenant</span></div><div class="popover-row"><span class="popover-label">Merge Status</span><span class="popover-value" style="color:var(--accent-warning);">Tests Failing</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">22,100</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.18</span></div></div>
+    </div>
+  </div>
+</div>
+`
+  },
+  'thread-escalation': {
+    id: 'thread-escalation',
+    title: 'Database Optimization',
+    role: 'assistant',
+    timestamp: '2m',
+    status: 'unread',
+    summaryHtml: '<svg class="thread-wt-glyph wt-clean" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>2 subagents: 1 awaiting, 1 blocked<br>perf/analytics-opt &middot; needs guidance',
+    mode: 'agent',
+    footer: { subagents: '2 subagents (0 running)', filesHtml: '<span class="ft-file">src/analytics/queries.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span></span><span class="ft-file">src/analytics/schema.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span></span>', problems: false },
+    suggestions: null,
+    composerChips: null,
+    hoverActions: [
+      '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
+      '<button class="thread-action-btn" title="More..." data-demo-action="demo.toast" data-demo-arg="Rename, duplicate and export live here in the full build."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>'
+    ],
+    streamHtml: `
+<div class="message user">
+  <div class="msg-body">Optimize the slow queries in the analytics dashboard. The P95 latency is 4.2s, target is under 500ms.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Spawning two subagents to analyze the query performance and schema.
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span>Spawn 2 subagents</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.2s</span>
+    </div>
+    <div class="activity-card-body">query-analyzer &middot; schema-reviewer</div>
+  </div>
+
+  <!-- Subagent 1: Query Analyzer (awaiting parent) -->
+  <div class="subagent-card expanded" data-sa-id='sa-query-analyzer'>
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-orange);">Query Analyzer</span>
+      <span class="sa-task-summary">Analyze slow analytics queries</span>
+      <span class="sa-status-badge awaiting">awaiting parent</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:55%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card bash" style="margin:4px 0;">
+            <div class="activity-card-header"><span>EXPLAIN ANALYZE on dashboard_metrics</span><span style="font-size:9px; color:var(--text-muted);">0.8s</span></div>
+            <div class="activity-card-body">Seq Scan on events (cost=0.00..48291.12 rows=1284000) &mdash; missing index on tenant_id + created_at</div>
+          </div>
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read src/analytics/queries.rs</span><span style="font-size:9px; color:var(--text-muted);">0.3s</span></div>
+            <div class="activity-card-body">Found 3 queries with full table scans, 2 with N+1 patterns</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Escalation</div>
+        <div class="sa-state-block">
+          <div style="font-weight:600; color:var(--accent-warning); font-size:10px; margin-bottom:4px;">Needs Clarification</div>
+          <div style="font-size:11px;">Should I add composite indexes on <code>tenant_id + created_at</code>, or restructure to materialized views? Both approaches have trade-offs:</div>
+          <ul style="font-size:10px; margin:4px 0 0 16px; color:var(--text-secondary);">
+            <li><b>Composite indexes:</b> Fast to implement, ~60% latency reduction, but increases write overhead by ~15%</li>
+            <li><b>Materialized views:</b> Best read performance (sub-100ms), but adds refresh lag and storage cost</li>
+          </ul>
+          <div style="font-size:10px; color:var(--accent-warning); margin-top:var(--xs);">Waiting for parent to decide approach&hellip;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 2: Schema Reviewer (blocked) -->
+  <div class="subagent-card expanded" data-sa-id='sa-schema-reviewer'>
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-error);">Schema Reviewer</span>
+      <span class="sa-task-summary">Review schema for optimization opportunities</span>
+      <span class="sa-status-badge blocked">blocked</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:20%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read src/analytics/schema.rs</span><span style="font-size:9px; color:var(--text-muted);">0.4s</span></div>
+            <div class="activity-card-body">Schema has 12 tables, identified 3 candidates for denormalization</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Blocked</div>
+        <div class="sa-state-block">
+          <div style="font-weight:600; color:var(--accent-error); font-size:10px; margin-bottom:4px;">Policy Denial</div>
+          <div style="font-size:11px;">Cannot modify production schema without admin approval.</div>
+          <div style="font-size:10px; color:var(--text-muted); margin-top:4px;">
+            Policy: <code>policy.schema_modification_requires_approval</code><br>
+            Required: <code>role:db-admin</code> or explicit user override
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:var(--md); padding:var(--sm) var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+    <b>Parent mediation:</b> The Query Analyzer needs guidance on approach. Given our read-heavy workload (95% reads, 5% writes), I recommend <b>composite indexes</b> as the safer first step &mdash; the 15% write overhead is acceptable given our traffic pattern. Materialized views can be a follow-up package once we validate the index approach in staging.
+    <div style="margin-top:var(--sm); display:flex; gap:var(--sm);">
+      <button class="wizard-btn" onclick="toast('Directing Query Analyzer: use composite indexes')">Approve Indexes</button>
+      <button class="wizard-btn" onclick="toast('Directing Query Analyzer: use materialized views')">Use Mat. Views</button>
+      <button class="wizard-btn" onclick="toast('Granting schema-reviewer db-admin role for this session')">Override Policy</button>
+    </div>
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>2m 06s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">2 (0 running)</span></div><div class="popover-row"><span class="popover-label">Escalations</span><span class="popover-value" style="color:var(--accent-warning);">1 awaiting</span></div><div class="popover-row"><span class="popover-label">Blocks</span><span class="popover-value" style="color:var(--accent-error);">1 policy</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">18,600</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.16</span></div></div>
+    </div>
+  </div>
+</div>
+`
+  }
+};
+</script>

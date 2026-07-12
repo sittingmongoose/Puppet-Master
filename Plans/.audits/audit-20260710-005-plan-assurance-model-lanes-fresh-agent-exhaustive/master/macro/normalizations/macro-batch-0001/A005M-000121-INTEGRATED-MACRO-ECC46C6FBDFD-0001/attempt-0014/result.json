@@ -1,0 +1,1712 @@
+{
+  "assignment_id": "A005M-000121-INTEGRATED-MACRO-ECC46C6FBDFD-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "This document is the **single canonical SSOT** for the Puppet Master **Skills** subsystem: skill identity, on-disk format (`SKILL.md`), discovery roots and ordering, search order, deduplication/shadowing rules, permissions integration (`skill` key), how skills are surfaced to runs (Persona `default_skill_refs`, context compiler bundling, and the `skill` tool), runtime surface ownership, and GUI ownership/requirements.",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Builders have a clear primary owner and are forbidden to duplicate the subsystem schema elsewhere.",
+      "item_id": "MAC-001",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001"
+      ],
+      "statement": "Skills_System is declared the sole canonical owner for identity, SKILL.md, discovery, permissions integration, runtime surfacing, and GUI requirements, while adjacent documents are consumers or owners reached by anchors and ContractRefs.",
+      "title": "Skills SSOT and subsystem boundary are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Discovery MUST walk roots in this canonical order (first match wins for a given Skill ID):",
+          "line_end": 116,
+          "line_start": 116,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Invalid skills MUST NOT be loadable by ID, but MUST be listed in the GUI with their validation errors.",
+          "line_end": 140,
+          "line_start": 140,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The principal success, collision, and invalid-input paths are stated.",
+      "item_id": "MAC-002",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001"
+      ],
+      "statement": "Discovery searches six roots in a fixed root order, resolves equal Skill IDs first-wins, marks later entries shadowed, validates frontmatter and folder identity, excludes invalid skills from lookup, and keeps invalid and shadowed rows visible in management UI.",
+      "title": "Discovery, shadowing, and invalid-skill behavior are concrete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "operations",
+        "scale_performance",
+        "ambiguity_unknowns",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: Project-local discovery MUST resolve relative to the active project root (walk up from CWD to git worktree root, or use the app's selected project path).",
+          "line_end": 108,
+          "line_start": 108,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Discovery MUST walk roots in this canonical order (first match wins for a given Skill ID):",
+          "line_end": 116,
+          "line_start": 116,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "determinism_and_identity",
+      "impact": "The canonical skill for one Skill ID can change across platforms, rescans, or invocation surfaces, making permissions and provenance unstable.",
+      "item_id": "MAC-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-006",
+        "PLANUNIT:SS-007",
+        "SEMANTIC:PLANUNIT:SS-006",
+        "SEMANTIC:PLANUNIT:SS-007"
+      ],
+      "statement": "The contract fixes precedence between six roots but does not order multiple matching paths inside the same `**` root. It also offers CWD-derived git root and selected project path as alternatives without defining which wins when they differ. First-wins can therefore vary by filesystem enumeration or caller entry point.",
+      "title": "Discovery is not deterministic within one recursive root or between root-selection inputs"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- The shared `invoke_skill` payload carries `skill_id`, `input`, optional `context`, and optional `timeout`; when context is supplied it includes `project_root`, optional `active_file`, optional `selection`, and `conversation_id` so invocation is tied to the active thread and workspace scope.",
+          "line_end": 161,
+          "line_start": 161,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Skill defines its own `input` schema via manifest, and PM validates that schema before invocation.",
+          "line_end": 164,
+          "line_start": 164,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- slash and Natural language (`/natural-language`) invocation both resolve to the same `invoke_skill` / `skill_id / arguments? / context?` runtime contract",
+          "line_end": 371,
+          "line_start": 371,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "input_contract_ambiguity",
+      "impact": "GUI, slash, natural-language, and tool callers can serialize different payloads or validate against incompatible schemas.",
+      "item_id": "MAC-004",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-015",
+        "PLANUNIT:SS-030",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-015",
+        "SEMANTIC:PLANUNIT:SS-030"
+      ],
+      "statement": "The shared payload names `input`, while slash/NL routing names `arguments?`; no normalization, precedence, type, or serialization rule connects them. The skill-defined input schema is said to live in a manifest, but the only canonical file is SKILL.md and its frontmatter schema never names the input-schema field or dialect.",
+      "title": "Invocation input has two unjoined field vocabularies and an undefined manifest schema slot"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- `timeout` is measured in milliseconds. When omitted, `invoke_skill` uses `timeout_ms = 120000`; callers may lower it, and may raise it only up to `max_timeout_ms = 600000` when the active runtime policy permits. Timeout expiry emits `skill.invocation_timed_out`, cancels any outstanding skill-owned work, and returns a non-success result without retrying automatically.",
+          "line_end": 162,
+          "line_start": 162,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.",
+          "line_end": 165,
+          "line_start": 165,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- \"`invoke_skill.timeout` is milliseconds, defaults to 120000, caps at 600000, and expires with cancellation plus `skill.invocation_timed_out`.\"",
+          "line_end": 2511,
+          "line_start": 2511,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "runtime_lifecycle_incomplete",
+      "impact": "Callers cannot reliably distinguish success, blocked, timed out, cancelled, or late completion, and retries may repeat skill-triggered side effects.",
+      "item_id": "MAC-005",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-012",
+        "PLANUNIT:SS-013",
+        "PLANUNIT:SS-014",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-012",
+        "SEMANTIC:PLANUNIT:SS-013",
+        "SEMANTIC:PLANUNIT:SS-014",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "The source defines timeout and permission-blocked outcomes but the result envelope has no invocation ID, success/error discriminator, error-code union, cancellation acknowledgement, retry/idempotency contract, or rule for suppressing a result that races timeout cancellation.",
+      "title": "Invocation has no operation identity, terminal result union, or late-completion rule"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "contracts",
+        "gui_truth",
+        "gui_misleading_states",
+        "compatibility_migration",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Compatibility projection/export policy is explicit and target-based: the default posture is `import/discover yes` and `export/project no`; any projection row records a target such as `.claude/skills` or `.agents/skills`, not an implicit provider-wide install into per-account sandboxes. OpenCode repo `/docs` compatibility import/discovery accepts the exact provider-native path forms `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `claude/skills/*/SKILL.md`, and `agents/skills/*/SKILL.md` as external compatibility roots, while PM still resolves them through the canonical registry. Projection state values are `not_projected`, `projected_in_sync`, `projection_failed`, and `drifted`; methods may include `copy` by default and `symlink` only where platform/filesystem support is proven.",
+          "line_end": 234,
+          "line_start": 234,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`; these five values are the complete readiness vocabulary and no sixth readiness state is canonical",
+          "line_end": 300,
+          "line_start": 300,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Canonical readiness records are split into `skill_record` and `skill_runtime_readiness`. `skill_record` carries `skill_id`, `label`, `source_kind = pm_bundled | imported_disk | catalog | github`, `source_url?`, `location_path`, `validation_state = valid | invalid`, and `projection_state = not_projected | projected | projection_failed | drifted`. `skill_runtime_readiness` carries `skill_id`, `runtime_platform_id`, `account_id?`, `connection_profile_id?`, `readiness_state = ready | needs_setup | needs_permission | has_problems | warning`, `reason_codes[]`, `missing_required_tool_refs[]`, `missing_optional_tool_refs[]`, and `last_evaluated_at`. PM resolves `required_tool_refs[]` and `optional_tool_refs[]` against the canonical tool registry, not a provider-local skill system.",
+          "line_end": 326,
+          "line_start": 326,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "state_vocabulary_conflict",
+      "impact": "Persistence, filters, badges, runtime gates, exports, and tool envelopes can disagree about the same skill and show misleading states.",
+      "item_id": "MAC-006",
+      "item_type": "state_transition",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-018",
+        "PLANUNIT:SS-019",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-025",
+        "PLANUNIT:SS-026",
+        "PLANUNIT:SS-027",
+        "SEMANTIC:PLANUNIT:SS-018",
+        "SEMANTIC:PLANUNIT:SS-019",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-025",
+        "SEMANTIC:PLANUNIT:SS-026",
+        "SEMANTIC:PLANUNIT:SS-027"
+      ],
+      "statement": "The document declares a complete five-value readiness vocabulary, separately defines five runtime-facing readiness values, and uses different source and projection enums in management, result, compatibility, and record contracts. In particular, `projected_in_sync` conflicts with `projected`, and `bundled` conflicts with `pm_bundled` without a normative translation table.",
+      "title": "Readiness, source, and projection state vocabularies lack a canonical mapping"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.",
+          "line_end": 288,
+          "line_start": 288,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "The Skills tab owns import/manage actions (`/edit/manage`, `/install/manage`, `/management`, `/disable/remove/revalidate/reimport`) for installed or active skills. The Skill Store is `/install-only`: it is a GUI `/module` for browsing and `/installing` catalog skills and returns installed rows to Agent Config > Skills for inspect/preview, inspection, enable/disable, edit source, source edit, revalidate, reimport, remove/uninstall, open source location, permissions/risk level review (`/risk`), module/source provenance (`/module`), and readiness/state (`/readiness/state`).",
+          "line_end": 293,
+          "line_start": 293,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The visible information architecture and owner handoffs are materially specified.",
+      "item_id": "MAC-007",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-023",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-025",
+        "SEMANTIC:PLANUNIT:SS-023",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-025"
+      ],
+      "statement": "Agent Config > Skills owns skill management; Settings owns system dependencies; Skill Store is install-only; management rows expose provenance, readiness, warnings, validation, permissions, and actions with dependency deep-links back to the owning Settings surfaces.",
+      "title": "GUI ownership and management/store separation are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "untrusted_inputs",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "3. Enforce directory-name match: the enclosing folder name MUST equal the Skill ID (`name`).",
+          "line_end": 138,
+          "line_start": 138,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- name collisions resolve by stable `skill_id`: same id and same content hash is idempotent, same id with different content requires Replace, Keep Both with generated suffix, or Cancel, and a case-only collision is rejected on all platforms",
+          "line_end": 342,
+          "line_start": 342,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "identity_collision_transition",
+      "impact": "Keep Both can create an invalid skill, mutate portable content unexpectedly, or produce different IDs across imports.",
+      "item_id": "MAC-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-003",
+        "PLANUNIT:SS-009",
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-003",
+        "SEMANTIC:PLANUNIT:SS-009",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "A Skill ID is the frontmatter `name`, and the folder must equal that ID, but Keep Both is specified only as a generated suffix. The contract does not say whether it rewrites `name`, directory, references, content hash, or provenance, nor how the suffix is chosen deterministically.",
+      "title": "Keep Both collision handling conflicts with Skill ID and folder-name invariants"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "untrusted_inputs",
+        "scale_limits",
+        "compatibility_migration",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- archive import rejects zip-slip/path traversal, absolute paths, symlink or hardlink escape, duplicate canonical paths after case normalization, nested archive recursion beyond depth 2, package bytes above `max_skill_package_bytes = 52428800`, and expanded bytes above `max_skill_expanded_bytes = 209715200`",
+          "line_end": 341,
+          "line_start": 341,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The plan closes several common archive extraction and cross-platform collision vulnerabilities with numeric limits.",
+      "item_id": "MAC-009",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "Archive import explicitly rejects traversal, absolute paths, link escapes, case-normalized duplicate paths, deep nested archives, package-size overflow, and expanded-size overflow; case-only Skill ID collisions are rejected on every platform.",
+      "title": "Archive import has concrete hostile-package limits"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "accessibility",
+        "localization",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "GUI skill rows/cards use plain-language primary states instead of leaking internal `/error` or `/telemetry` categories. User-facing primary states are `Ready`, `Needs setup`, `Needs permission`, `Has problems`, and `Warning`; technical reasons remain secondary text. Each skill row/card shows name, short description, provenance/source, the primary user-facing state, one-line remediation text when not `Ready`, and a primary action button matched to the issue.",
+          "line_end": 309,
+          "line_start": 309,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Expanded skill inspectors show required tools and current status of each, optional tools and current status of each, projection/export status, validation details, shadowed/duplicate info, and exact provider/runtime-specific blockers where relevant. The GUI must show source/provenance, validation `/readiness`, shadowed status, projected `/exported` status, and runtime requirement gaps in the skills surface rather than hiding projection results in logs. Internal GUI trace labels may include `/card`, `/source`, `/action`, `/export`, `/duplicate`, `/runtime-specific`, and `skill-file`, but every non-ready state still exposes an obvious next step in the same surface.",
+          "line_end": 324,
+          "line_start": 324,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "accessible_localized_gui_unspecified",
+      "impact": "The management surface can be functionally complete yet unusable to keyboard/screen-reader users or break under translated and long technical text.",
+      "item_id": "MAC-010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-023",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-025",
+        "PLANUNIT:SS-026",
+        "SEMANTIC:PLANUNIT:SS-023",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-025",
+        "SEMANTIC:PLANUNIT:SS-026"
+      ],
+      "statement": "The GUI requires badges, filters, links, technical IDs, remediation text, and issue-specific buttons, but the assigned core supplies no keyboard, focus, screen-reader, non-color, reduced-motion, truncation, pluralization, locale, or text-expansion behavior.",
+      "title": "Dense skill-state UI has no accessibility or localization contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "failures_recovery",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "**AC-SK01:** Skills MUST be discovered from the canonical roots and in the canonical order defined in \u00a73.2.",
+          "line_end": 399,
+          "line_start": 399,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "**AC-SK02:** Duplicate Skill IDs MUST be resolved first-wins, and shadowed duplicates MUST be visible in the GUI.",
+          "line_end": 404,
+          "line_start": 404,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "**AC-SK03:** The `skill` tool MUST enforce that explicit file paths are under allowed discovery roots.",
+          "line_end": 409,
+          "line_start": 409,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "acceptance_surface_incomplete",
+      "impact": "Most of the normative contract can drift while the only explicit Skills acceptance criteria still pass.",
+      "item_id": "MAC-011",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-032",
+        "PLANUNIT:SS-033",
+        "PLANUNIT:SS-034",
+        "SEMANTIC:PLANUNIT:SS-032",
+        "SEMANTIC:PLANUNIT:SS-033",
+        "SEMANTIC:PLANUNIT:SS-034"
+      ],
+      "statement": "The acceptance section tests discovery order, duplicate shadowing visibility, and explicit-path roots. It provides no document-level oracles for invocation schemas/results, timeouts, permission recovery, readiness mappings, projection, child inheritance, imports, catalog flows, lifecycle races, or GUI remediation.",
+      "title": "Document-level acceptance covers only three early behaviors"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Skills_System.md is the single canonical SSOT for Puppet Master Skills, preserving compliance, deterministic defaults, anchor-reference rule, and adjacent SSOT references without redefining owner documents.",
+          "line_end": 428,
+          "line_start": 428,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins, treating later duplicates as shadowed.",
+          "line_end": 718,
+          "line_start": 718,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All thirteen required refs in this segment are represented by fine-grained planning units and semantic mirrors.",
+      "item_id": "MAC-012",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-002",
+        "PLANUNIT:SS-003",
+        "PLANUNIT:SS-004",
+        "PLANUNIT:SS-005",
+        "PLANUNIT:SS-006",
+        "PLANUNIT:SS-007",
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-002",
+        "SEMANTIC:PLANUNIT:SS-002",
+        "SEMANTIC:PLANUNIT:SS-003",
+        "SEMANTIC:PLANUNIT:SS-004",
+        "SEMANTIC:PLANUNIT:SS-005",
+        "SEMANTIC:PLANUNIT:SS-006",
+        "SEMANTIC:PLANUNIT:SS-007"
+      ],
+      "statement": "The segment atomizes the prologue into accepted, non-executable PlanUnits for SSOT authority, Skill ID rules, SKILL.md frontmatter, verbatim body loading, project/global roots, and first-wins discovery, with exact tokens, source lineage, owner hints, and explicit no-WorkNode boundaries.",
+      "title": "SS-002 through SS-007 preserve authority, identity, format, body, roots, and shadowing"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "builder_discretion",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- SS-002 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.",
+          "line_end": 442,
+          "line_start": 442,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "line_end": 446,
+          "line_start": 446,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "planunit_oracle_generic",
+      "impact": "A PlanUnit may remain syntactically valid and lineage-complete while its behavioral implementation contract is incomplete or contradictory.",
+      "item_id": "MAC-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SS-002",
+        "PLANUNIT:SS-003",
+        "PLANUNIT:SS-004",
+        "PLANUNIT:SS-005",
+        "PLANUNIT:SS-006",
+        "PLANUNIT:SS-007",
+        "SEMANTIC:PLANUNIT:SS-002",
+        "SEMANTIC:PLANUNIT:SS-003",
+        "SEMANTIC:PLANUNIT:SS-004",
+        "SEMANTIC:PLANUNIT:SS-005",
+        "SEMANTIC:PLANUNIT:SS-006",
+        "SEMANTIC:PLANUNIT:SS-007"
+      ],
+      "statement": "The standard PlanUnit template checks addressability, source-span preservation, and absence of executable artifacts, then names only migration/index validators. It does not state executable or falsifiable behavior-specific oracles for the unit's canonical_text.",
+      "title": "Most PlanUnit acceptance criteria certify preservation rather than behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: During discovery the loader parses YAML frontmatter, validates name and description, enforces directory-name equals Skill ID, marks invalid skills, and prevents invalid lookup by ID.",
+          "line_end": 826,
+          "line_start": 826,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: The skill result is a structured skill-content envelope with source_type, resource_base_dir?, resource_entries_sample?, metadata?, compatibility display aliases, and FileSafe-constrained relative resource guidance.",
+          "line_end": 997,
+          "line_start": 997,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Assistant auto-invocation is limited to runtime-ready, eligible, permission-allowed, auto_invokable skills; warning, invalid, disabled, shadowed, and blocked entries require explicit selection while the tool description exposes the live runtime-ready roster.",
+          "line_end": 1061,
+          "line_start": 1061,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All twelve required refs are directly accounted for and the major runtime concerns are separated by ownership.",
+      "item_id": "MAC-014",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-008",
+        "PLANUNIT:SS-009",
+        "PLANUNIT:SS-010",
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-012",
+        "PLANUNIT:SS-013",
+        "SEMANTIC:PLANUNIT:SS-008",
+        "SEMANTIC:PLANUNIT:SS-009",
+        "SEMANTIC:PLANUNIT:SS-010",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-012",
+        "SEMANTIC:PLANUNIT:SS-013"
+      ],
+      "statement": "This segment creates distinct accepted PlanUnits for invalid/shadowed GUI visibility, discovery validation, provider-agnostic registry resolution, invocation payload, safe result envelope, and runtime readiness/auto-invoke gating.",
+      "title": "SS-008 through SS-013 split GUI invalidity, loader validation, registry, payload, result, and readiness"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "propagation",
+        "ownership",
+        "builder_discretion",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.",
+          "line_end": 977,
+          "line_start": 977,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.",
+          "line_end": 1041,
+          "line_start": 1041,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.",
+          "line_end": 1106,
+          "line_start": 1106,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "misplaced_repeated_constraint",
+      "impact": "Builders may implement the constraint multiple inconsistent ways or treat repetition as proof that the actual worktree-aware contract is complete.",
+      "item_id": "MAC-015",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-012",
+        "PLANUNIT:SS-013",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-012",
+        "SEMANTIC:PLANUNIT:SS-013"
+      ],
+      "statement": "The same file-tree/restore/revert negative constraint appears in the invocation payload, result-envelope, and readiness units even when their canonical_text does not own those flows. This creates apparent coverage without identifying the precise operation, state, or oracle that each unit must enforce.",
+      "title": "Active-worktree constraint is mechanically copied into unrelated PlanUnits"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority_boundaries",
+        "compatibility_migration",
+        "consumers",
+        "gui_truth",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Skill discovery and invocation converge through GUI panel, /skill, and natural language on the same invoke_skill runtime contract without an MVP subcommand family.",
+          "line_end": 1194,
+          "line_start": 1194,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Projection/export policy defaults to import/discover yes and export/project no, records explicit targets, accepts compatibility roots through the canonical registry, and uses copy by default with symlink only as validated explicit behavior.",
+          "line_end": 1377,
+          "line_start": 1377,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: The GUI surfaces projection results, drift, override behavior, provider/runtime blockers, source/provenance labels, source links, exported status, and source/location distinctions for skills.",
+          "line_end": 1444,
+          "line_start": 1444,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All twelve required refs are accounted for and the canonical path is protected from provider-specific takeover.",
+      "item_id": "MAC-016",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-014",
+        "PLANUNIT:SS-015",
+        "PLANUNIT:SS-016",
+        "PLANUNIT:SS-017",
+        "PLANUNIT:SS-018",
+        "PLANUNIT:SS-019",
+        "SEMANTIC:PLANUNIT:SS-014",
+        "SEMANTIC:PLANUNIT:SS-015",
+        "SEMANTIC:PLANUNIT:SS-016",
+        "SEMANTIC:PLANUNIT:SS-017",
+        "SEMANTIC:PLANUNIT:SS-018",
+        "SEMANTIC:PLANUNIT:SS-019"
+      ],
+      "statement": "The segment preserves tool/Terminal authority, three converged invocation surfaces, one-SKILL.md delivery, provider-native non-goal, opt-in projection with copy-first portability, and visible projection/provenance state.",
+      "title": "SS-014 through SS-019 preserve execution, invocation, package, provider, projection, and GUI boundaries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "compatibility_migration",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The skill tool does not create hidden nested-task work or own shell/PTX execution; skill-triggered tool work remains under tool permission, Terminal, audit, route-target, project/worktree context, and blocked/recovery contracts.",
+          "line_end": 1128,
+          "line_start": 1128,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- PTY",
+          "line_end": 1162,
+          "line_start": 1162,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "exact_token_fidelity",
+      "impact": "A builder could miss the intended PTY boundary or treat PTX as a separate surface.",
+      "item_id": "MAC-017",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SS-014",
+        "SEMANTIC:PLANUNIT:SS-014"
+      ],
+      "statement": "The accepted canonical_text says the skill tool does not own shell/PTX execution, while the source contract and preserved token say PTY. PTX is undefined and breaks exact source fidelity in an authority-boundary requirement.",
+      "title": "SS-014 canonical_text changes PTY to PTX"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "operations",
+        "partial_failure",
+        "recovery_rollback",
+        "security_privacy",
+        "destructive_actions",
+        "concurrency_races",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Projection/export path handling uses canonical path APIs and OS-native separators on Windows/macOS/Linux; PM must never hand-roll slash assumptions for interoperability paths. `copy` remains the default projection method because `symlink` is less portable and more failure-prone across Windows/macOS/Linux, especially where Windows privilege/policy variance applies. Projection into workspace/global convention roots is safer than projection into provider-account sandboxes. Skill ID collision and shadowing are resolved by logical-name identity, not path-string identity, and discovery/projection bookkeeping must account for Windows case-normalization before treating two skills as distinct.",
+          "line_end": 238,
+          "line_start": 238,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "The GUI surfaces projection state, drift, override behavior, and provider/runtime blockers for skills, but PM-bundled skills and the PM `skill` tool remain usable through the canonical registry even when provider-native projection is absent, disabled, or failed.",
+          "line_end": 240,
+          "line_start": 240,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "projection_transaction_unspecified",
+      "impact": "Projection can leave partial or stale provider files, destroy user changes, or follow a swapped symlink outside the intended target.",
+      "item_id": "MAC-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SS-017",
+        "PLANUNIT:SS-018",
+        "PLANUNIT:SS-019",
+        "SEMANTIC:PLANUNIT:SS-017",
+        "SEMANTIC:PLANUNIT:SS-018",
+        "SEMANTIC:PLANUNIT:SS-019"
+      ],
+      "statement": "Projection defines targets, states, copy/symlink defaults, drift, and portability, but not staging/atomic replacement, existing-target conflicts, permission failures, rollback after partial copy, symlink target revalidation, uninstall ownership, or whether user edits may be overwritten.",
+      "title": "Projection lacks atomicity, overwrite, rollback, and destructive-action semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "gui_truth",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Child runs receive only the effective compatible subset of parent-allowed skills, cannot exceed the parent ceiling, and discovered global roots are canonicalized allowed roots while symlink escapes are rejected.",
+          "line_end": 1613,
+          "line_start": 1613,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Agent Config > Skills owns skill management while Settings keeps system-level dependencies; legacy Settings > Skills redirects/focuses to Agent Config and dependencies deep-link back to Settings where appropriate.",
+          "line_end": 1678,
+          "line_start": 1678,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Skill rows/cards distinguish source from location, preserve origin labels and URLs, and show plain-language primary states with remediation text and matched action buttons.",
+          "line_end": 1806,
+          "line_start": 1806,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All twelve required refs are covered and principal authority handoffs are named.",
+      "item_id": "MAC-019",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-020",
+        "PLANUNIT:SS-021",
+        "PLANUNIT:SS-022",
+        "PLANUNIT:SS-023",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-025",
+        "SEMANTIC:PLANUNIT:SS-020",
+        "SEMANTIC:PLANUNIT:SS-021",
+        "SEMANTIC:PLANUNIT:SS-022",
+        "SEMANTIC:PLANUNIT:SS-023",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-025"
+      ],
+      "statement": "The segment gives canonical Skill-ID grants to Permissions, raw-path/resource enforcement to FileSafe, parent ceilings to child runs, and management/remediation consumption to Agent Config, Settings, Personas, and FinalGUISpec.",
+      "title": "SS-020 through SS-025 connect permission, FileSafe, child runs, and GUI consumers"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "propagation",
+        "concurrency_races",
+        "partial_failure",
+        "security_privacy",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Skills do not blindly copy into child runs. A child receives only the effective compatible subset of the parent-allowed skill universe.",
+          "line_end": 259,
+          "line_start": 259,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- a child must not gain skill-powered capability that exceeds the parent ceiling.",
+          "line_end": 268,
+          "line_start": 268,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "authority_snapshot_race",
+      "impact": "A child may retain revoked capability, switch to a different shadow winner, or be terminated inconsistently during a live permission change.",
+      "item_id": "MAC-020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SS-022",
+        "SEMANTIC:PLANUNIT:SS-022"
+      ],
+      "statement": "The child must receive an effective compatible subset below the parent ceiling, but the source does not define evaluation time, permission/registry snapshot identity, behavior after parent revocation or skill replacement, or treatment of an already-running child invocation.",
+      "title": "Child-run skill inheritance has no snapshot or revocation propagation contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority_boundaries",
+        "security_privacy",
+        "untrusted_inputs",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Skill permission grants operate over canonical skill IDs, NOT raw filesystem paths. Skill resource paths may be disclosed to the model only when they resolve within allowed roots; attempts to access resources outside the FileSafe allowlist or external-directory policy return normal blocked-action recovery rather than exposing the path. Underlying file operations performed by a skill still pass through FileSafe, even when the `skill` permission itself is allowed.",
+          "line_end": 255,
+          "line_start": 255,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Rule: Discovered skill roots MUST be treated as allowed roots for the `skill` tool path checks and for `external_directory` guard evaluation, but they are not auto-whitelisted by raw path string alone: PM canonicalizes the skill root before allowlisting it and rejects symlinked roots that resolve outside the permitted root set.",
+          "line_end": 274,
+          "line_start": 274,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Granting a skill does not itself grant arbitrary filesystem access.",
+      "item_id": "MAC-021",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-020",
+        "PLANUNIT:SS-021",
+        "PLANUNIT:SS-022",
+        "SEMANTIC:PLANUNIT:SS-020",
+        "SEMANTIC:PLANUNIT:SS-021",
+        "SEMANTIC:PLANUNIT:SS-022"
+      ],
+      "statement": "Skill grants apply to logical Skill IDs, resource disclosure is confined to allowed roots, underlying file operations still pass through FileSafe, global roots are canonicalized, and symlinked roots escaping the permitted set are rejected.",
+      "title": "Skill permission never bypasses FileSafe and roots are canonicalized"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "compatibility_migration",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GUI readiness distinguishes schema invalid, unknown tool ref, and known-but-unavailable tool refs, mapping them to Invalid, Missing Requirement, or Permission Blocked style outcomes without hiding exact reasons.",
+          "line_end": 1870,
+          "line_start": 1870,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: Import and install flows preserve one SKILL.md per skill while supporting file-browser import, drag-and-drop folders/files, single SKILL.md, zip/tar packages, generated enclosing folders, catalog/store install, validation, and auto-populated catalog metadata.",
+          "line_end": 1993,
+          "line_start": 1993,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: OpenCode skill tests and baseline notes are reference inputs only; Puppet Master rejects .opencode/skills roots, uses first-wins discovery with shadowing visibility, and keeps remote URL discovery out of v1 in favor of Catalog distribution.",
+          "line_end": 2176,
+          "line_start": 2176,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All twelve required refs are directly represented and the imported-skill and invocation boundary is broadly covered.",
+      "item_id": "MAC-022",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-026",
+        "PLANUNIT:SS-027",
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-029",
+        "PLANUNIT:SS-030",
+        "PLANUNIT:SS-031",
+        "SEMANTIC:PLANUNIT:SS-026",
+        "SEMANTIC:PLANUNIT:SS-027",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-029",
+        "SEMANTIC:PLANUNIT:SS-030",
+        "SEMANTIC:PLANUNIT:SS-031"
+      ],
+      "statement": "The segment separates GUI readiness taxonomy, persisted readiness records, package import UI, warning/NL routing, slash grammar, and OpenCode reference-only constraints into accepted PlanUnits.",
+      "title": "SS-026 through SS-031 cover readiness records, import, runtime routing, and baseline deltas"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "ownership",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Imported packages default to portable, warning states remain discoverable but not auto-invoked, imported resources stay FileSafe-constrained, and natural-language skill examples route through registry-backed invoke_skill.",
+          "line_end": 2054,
+          "line_start": 2054,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "gui_related: false",
+          "line_end": 2055,
+          "line_start": 2055,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "gui_classification_mismatch",
+      "impact": "GUI-related indexing and downstream task compilation can omit the chat surface from visual and interaction review.",
+      "item_id": "MAC-023",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SS-029",
+        "SEMANTIC:PLANUNIT:SS-029"
+      ],
+      "statement": "SS-029 includes user-visible natural-language examples and routing behavior but declares `gui_related: false`. Under the document's own classification rationale, chat invocation and visible discovery are user-facing surfaces and should not be silently classified as backend-only.",
+      "title": "SS-029 is marked non-GUI despite owning natural-language chat behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "untrusted_inputs",
+        "partial_failure",
+        "recovery_rollback",
+        "concurrency_races",
+        "destructive_actions",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- archive import rejects zip-slip/path traversal, absolute paths, symlink or hardlink escape, duplicate canonical paths after case normalization, nested archive recursion beyond depth 2, package bytes above `max_skill_package_bytes = 52428800`, and expanded bytes above `max_skill_expanded_bytes = 209715200`",
+          "line_end": 341,
+          "line_start": 341,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Archive import rejects zip-slip, absolute paths, symlink/hardlink escape, case-normalized duplicate paths, nested archive recursion above 2, package bytes above 52428800, and expanded bytes above 209715200.",
+          "line_end": 2515,
+          "line_start": 2515,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "import_transaction_unspecified",
+      "impact": "A rejected or racing archive can leave partial skills, overwrite managed content, or exploit a time-of-check/time-of-use window.",
+      "item_id": "MAC-024",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "The source gives strong preconditions and size limits but does not require quarantine/staging, atomic commit, cleanup of partial extraction, revalidation after copy, behavior when validation fails after some skills import, or protection against link/path changes between validation and write.",
+      "title": "Archive import rejection rules lack transactional cleanup and race handling"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "failures_recovery",
+        "security_privacy",
+        "gui_truth",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: AC-SK01 requires Skills to be discovered from the canonical roots and in the canonical order defined in Skills_System \u00a73.2.",
+          "line_end": 2241,
+          "line_start": 2241,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: AC-SK03 requires the skill tool to enforce that explicit file paths are under allowed discovery roots.",
+          "line_end": 2342,
+          "line_start": 2342,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "canonical_text: >-\n  Skill invocation uses a millisecond timeout with default 120000 and max 600000, reports timeout as\n  skill.invocation_timed_out, and routes missing-permission invocation through the canonical Permissions ask\n  flow using blocked_reason_code, approval_scope_key, permission_snapshot_id, and ordered allowed_action_ids.\n  Remediation buttons resolve to stable command refs rather than prose-only labels. Manual archive import rejects\n  path traversal, symlink escape, package-size overflow, expanded-size overflow, archive recursion overflow, and\n  deterministic skill id/name collisions.",
+          "line_end": 2505,
+          "line_start": 2499,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All eight required refs are represented by explicit acceptance-oriented PlanUnits.",
+      "item_id": "MAC-025",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-032",
+        "PLANUNIT:SS-033",
+        "PLANUNIT:SS-034",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-032",
+        "SEMANTIC:PLANUNIT:SS-033",
+        "SEMANTIC:PLANUNIT:SS-034",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "The segment atomizes discovery-order, shadowing-GUI, and allowed-root acceptance, then adds concrete invocation timeout, permission-blocked, remediation-command, archive-limit, and collision oracles in SS-035.",
+      "title": "SS-032 through SS-035 preserve the three original ACs and the FABLE residual contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "compatibility_migration",
+        "acceptance_oracles",
+        "unknown_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "### SS-001 - Skills System Retired Source-Preserving Bridge",
+          "line_end": 2388,
+          "line_start": 2388,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "## Migration Coverage",
+          "line_end": 2476,
+          "line_start": 2476,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+          "line_end": 2556,
+          "line_start": 2556,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "source_unit_mapping_incomplete",
+      "impact": "Review can truthfully cover every core line yet still be unable to bind findings or coverage credit to the omitted semantic units.",
+      "item_id": "MAC-026",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SS-032",
+        "PLANUNIT:SS-033",
+        "PLANUNIT:SS-034",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-032",
+        "SEMANTIC:PLANUNIT:SS-033",
+        "SEMANTIC:PLANUNIT:SS-034",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "The core range includes the retired SS-001 PlanUnit, Migration Coverage, and the start of a second FABLE addendum, while the segment's required-source roster identifies only SS-032 through SS-035. Those reviewed lines have no dedicated required source-unit identity, so attribution and downstream coverage credit are structurally ambiguous.",
+      "title": "Final core segment contains unrepresented semantic content"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "authority_boundaries",
+        "security_privacy",
+        "acceptance_oracles",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Missing permissions produce a blocked payload with `blocked_reason_code = permission_required`, `approval_scope_key`, optional `permission_snapshot_id`, and ordered `allowed_action_ids[]`.\n  - \"`Review permissions` routes to `cmd.permissions.review_request`; Skills does not define a local consent dialog.\"\n  - Remediation commands are `cmd.skills.setup_dependency`, `cmd.permissions.review_request`, `cmd.skills.open_source_for_edit`, and `cmd.skills.review_tool_requirement`.\n  - Archive import rejects zip-slip, absolute paths, symlink/hardlink escape, case-normalized duplicate paths, nested archive recursion above 2, package bytes above 52428800, and expanded bytes above 209715200.\n  - Skill id/name collisions resolve as idempotent same-hash import, explicit Replace, explicit Keep Both with generated suffix, or Cancel; case-only collisions are rejected.",
+          "line_end": 2516,
+          "line_start": 2512,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Do not treat this Skills repair as a UI wiring repair, runtime certification, implementation readiness, or buildability proof.\n  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.",
+          "line_end": 2550,
+          "line_start": 2549,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The repair remains a bounded plan contract and does not overclaim implementation or certification.",
+      "item_id": "MAC-027",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "SS-035 fixes timeout units/default/max/event, blocked permission fields, canonical remediation command refs, archive limits, and collision outcomes, while explicitly prohibiting UI wiring, runtime certification, buildability proof, and executable/governance artifacts.",
+      "title": "SS-035 closes exact timeout, permission, remediation, and archive fields without claiming runtime proof"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "scale_performance",
+        "scale_limits",
+        "untrusted_inputs",
+        "operations",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The SKILL.md MUST begin with YAML frontmatter containing at minimum:",
+          "line_end": 64,
+          "line_start": 64,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "The Markdown body following the frontmatter is the Skill content. The loader preserves the body verbatim (no templating in v1).",
+          "line_end": 84,
+          "line_start": 84,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "Skills are discovered from deterministic on-disk roots.",
+          "line_end": 96,
+          "line_start": 96,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "discovery_resource_bounds_missing",
+      "impact": "A large or adversarial root can exhaust memory/CPU, stall the GUI, or make dynamic roster updates unbounded.",
+      "item_id": "MAC-028",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-004",
+        "PLANUNIT:SS-005",
+        "PLANUNIT:SS-006",
+        "PLANUNIT:SS-009",
+        "SEMANTIC:PLANUNIT:SS-004",
+        "SEMANTIC:PLANUNIT:SS-005",
+        "SEMANTIC:PLANUNIT:SS-006",
+        "SEMANTIC:PLANUNIT:SS-009"
+      ],
+      "statement": "The contract recursively scans roots and preserves arbitrary Markdown bodies but specifies no maximum skill count, directory depth, file/body/frontmatter bytes, YAML alias expansion, scan deadline, cancellation, incremental index, or rescan backpressure. Archive limits do not cover already-present project/global skills.",
+      "title": "Discovery and SKILL.md parsing have no scale or resource limits"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- The shared `invoke_skill` payload carries `skill_id`, `input`, optional `context`, and optional `timeout`; when context is supplied it includes `project_root`, optional `active_file`, optional `selection`, and `conversation_id` so invocation is tied to the active thread and workspace scope.",
+          "line_end": 161,
+          "line_start": 161,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.",
+          "line_end": 165,
+          "line_start": 165,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "privacy_lifecycle_missing",
+      "impact": "Sensitive workspace or conversation data can be retained or disclosed inconsistently across providers, logs, and skill results.",
+      "item_id": "MAC-029",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-012",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-012"
+      ],
+      "statement": "Invocation may carry active file, selection, conversation ID, content, resource samples, and arbitrary metadata, but the assigned core does not define minimization, user visibility, redaction, persistence, retention, deletion, telemetry exclusion, or provider disclosure for those fields.",
+      "title": "Invocation context and output lack privacy lifecycle rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "observability_support",
+        "operations",
+        "concurrency_races",
+        "failures_recovery",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- `timeout` is measured in milliseconds. When omitted, `invoke_skill` uses `timeout_ms = 120000`; callers may lower it, and may raise it only up to `max_timeout_ms = 600000` when the active runtime policy permits. Timeout expiry emits `skill.invocation_timed_out`, cancels any outstanding skill-owned work, and returns a non-success result without retrying automatically.",
+          "line_end": 162,
+          "line_start": 162,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- The `skill` tool-description is dynamic: when PM presents the tool to a model, it exposes the live roster of currently runtime-ready skill names and descriptions from manifests, and it updates after registry changes such as import, enable, disable, or revalidate.",
+          "line_end": 167,
+          "line_start": 167,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "observability_contract_missing",
+      "impact": "Support cannot reconstruct which skill version, permission state, or registry roster produced a failure or late result.",
+      "item_id": "MAC-030",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-013",
+        "PLANUNIT:SS-014",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-013",
+        "SEMANTIC:PLANUNIT:SS-014",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "statement": "The source names a timeout event and dynamic roster updates but no invocation-start/success/failure/cancel events, registry revision, roster-change cause, correlation ID, duration, source hash, permission snapshot binding, audit retention, or support-facing diagnostic bundle.",
+      "title": "Registry and invocation observability are incomplete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "offline_network_loss",
+        "failures_recovery",
+        "partial_failure",
+        "operations",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- remote git clone URL import remains out of v1; URL provenance may be displayed for catalog-installed or GitHub-installed skills, but ad-hoc remote URL pulls do not bypass the Catalog system",
+          "line_end": 343,
+          "line_start": 343,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        },
+        {
+          "exact_quote": "- Remote skill discovery (URLs) is out of scope for v1; remote distribution should flow through the Catalog system (\u00a77.4.3 in `Plans/FinalGUISpec.md`) rather than ad-hoc URL pulls.",
+          "line_end": 388,
+          "line_start": 388,
+          "path": "Plans/Skills_System.md",
+          "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+        }
+      ],
+      "gap_kind": "offline_network_contract_missing",
+      "impact": "Catalog and provenance UI can show stale success, strand partial installs, or offer dead actions without recovery guidance.",
+      "item_id": "MAC-031",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001",
+        "PLANUNIT:SS-019",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-031",
+        "SEMANTIC:PLANUNIT:SS-019",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-031"
+      ],
+      "statement": "Remote ad-hoc import is correctly excluded in favor of Catalog distribution, and catalog/GitHub origin URLs are displayed, but the source does not define offline browsing, cached metadata, interrupted install, retry/backoff, stale catalog state, link unavailability, or rollback after network loss.",
+      "title": "Catalog and origin-linked flows have no offline or network-loss behavior"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        399
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-001"
+      ],
+      "item_ids": [
+        "MAC-001",
+        "MAC-002",
+        "MAC-003",
+        "MAC-004",
+        "MAC-005",
+        "MAC-006",
+        "MAC-007",
+        "MAC-008",
+        "MAC-009",
+        "MAC-010",
+        "MAC-011",
+        "MAC-021",
+        "MAC-028",
+        "MAC-029",
+        "MAC-030",
+        "MAC-031"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0001; evidence is carried by item_ids MAC-001, MAC-002, MAC-003, MAC-004, MAC-005, MAC-006, MAC-007, MAC-008, MAC-009, MAC-010, MAC-011, MAC-021, MAC-028, MAC-029, MAC-030, MAC-031.",
+      "window_id": "WIN-ECC46C6FBDFD-0001"
+    },
+    {
+      "core_range": [
+        400,
+        763
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-002",
+        "PLANUNIT:SS-003",
+        "PLANUNIT:SS-004",
+        "PLANUNIT:SS-005",
+        "PLANUNIT:SS-006",
+        "PLANUNIT:SS-007",
+        "SEMANTIC:PROLOGUE:Plans/Skills_System.md:CONT-002",
+        "SEMANTIC:PLANUNIT:SS-002",
+        "SEMANTIC:PLANUNIT:SS-003",
+        "SEMANTIC:PLANUNIT:SS-004",
+        "SEMANTIC:PLANUNIT:SS-005",
+        "SEMANTIC:PLANUNIT:SS-006",
+        "SEMANTIC:PLANUNIT:SS-007"
+      ],
+      "item_ids": [
+        "MAC-012",
+        "MAC-013"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0002; evidence is carried by item_ids MAC-012, MAC-013.",
+      "window_id": "WIN-ECC46C6FBDFD-0002"
+    },
+    {
+      "core_range": [
+        764,
+        1120
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-008",
+        "PLANUNIT:SS-009",
+        "PLANUNIT:SS-010",
+        "PLANUNIT:SS-011",
+        "PLANUNIT:SS-012",
+        "PLANUNIT:SS-013",
+        "SEMANTIC:PLANUNIT:SS-008",
+        "SEMANTIC:PLANUNIT:SS-009",
+        "SEMANTIC:PLANUNIT:SS-010",
+        "SEMANTIC:PLANUNIT:SS-011",
+        "SEMANTIC:PLANUNIT:SS-012",
+        "SEMANTIC:PLANUNIT:SS-013"
+      ],
+      "item_ids": [
+        "MAC-004",
+        "MAC-005",
+        "MAC-006",
+        "MAC-014",
+        "MAC-015",
+        "MAC-030"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0003; evidence is carried by item_ids MAC-004, MAC-005, MAC-006, MAC-014, MAC-015, MAC-030.",
+      "window_id": "WIN-ECC46C6FBDFD-0003"
+    },
+    {
+      "core_range": [
+        1121,
+        1503
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-014",
+        "PLANUNIT:SS-015",
+        "PLANUNIT:SS-016",
+        "PLANUNIT:SS-017",
+        "PLANUNIT:SS-018",
+        "PLANUNIT:SS-019",
+        "SEMANTIC:PLANUNIT:SS-014",
+        "SEMANTIC:PLANUNIT:SS-015",
+        "SEMANTIC:PLANUNIT:SS-016",
+        "SEMANTIC:PLANUNIT:SS-017",
+        "SEMANTIC:PLANUNIT:SS-018",
+        "SEMANTIC:PLANUNIT:SS-019"
+      ],
+      "item_ids": [
+        "MAC-006",
+        "MAC-016",
+        "MAC-017",
+        "MAC-018"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0004; evidence is carried by item_ids MAC-006, MAC-016, MAC-017, MAC-018.",
+      "window_id": "WIN-ECC46C6FBDFD-0004"
+    },
+    {
+      "core_range": [
+        1504,
+        1862
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-020",
+        "PLANUNIT:SS-021",
+        "PLANUNIT:SS-022",
+        "PLANUNIT:SS-023",
+        "PLANUNIT:SS-024",
+        "PLANUNIT:SS-025",
+        "SEMANTIC:PLANUNIT:SS-020",
+        "SEMANTIC:PLANUNIT:SS-021",
+        "SEMANTIC:PLANUNIT:SS-022",
+        "SEMANTIC:PLANUNIT:SS-023",
+        "SEMANTIC:PLANUNIT:SS-024",
+        "SEMANTIC:PLANUNIT:SS-025"
+      ],
+      "item_ids": [
+        "MAC-007",
+        "MAC-010",
+        "MAC-019",
+        "MAC-020",
+        "MAC-021"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0005; evidence is carried by item_ids MAC-007, MAC-010, MAC-019, MAC-020, MAC-021.",
+      "window_id": "WIN-ECC46C6FBDFD-0005"
+    },
+    {
+      "core_range": [
+        1863,
+        2233
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-026",
+        "PLANUNIT:SS-027",
+        "PLANUNIT:SS-028",
+        "PLANUNIT:SS-029",
+        "PLANUNIT:SS-030",
+        "PLANUNIT:SS-031",
+        "SEMANTIC:PLANUNIT:SS-026",
+        "SEMANTIC:PLANUNIT:SS-027",
+        "SEMANTIC:PLANUNIT:SS-028",
+        "SEMANTIC:PLANUNIT:SS-029",
+        "SEMANTIC:PLANUNIT:SS-030",
+        "SEMANTIC:PLANUNIT:SS-031"
+      ],
+      "item_ids": [
+        "MAC-006",
+        "MAC-008",
+        "MAC-009",
+        "MAC-022",
+        "MAC-023",
+        "MAC-024",
+        "MAC-031"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0006; evidence is carried by item_ids MAC-006, MAC-008, MAC-009, MAC-022, MAC-023, MAC-024, MAC-031.",
+      "window_id": "WIN-ECC46C6FBDFD-0006"
+    },
+    {
+      "core_range": [
+        2234,
+        2560
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SS-032",
+        "PLANUNIT:SS-033",
+        "PLANUNIT:SS-034",
+        "PLANUNIT:SS-035",
+        "SEMANTIC:PLANUNIT:SS-032",
+        "SEMANTIC:PLANUNIT:SS-033",
+        "SEMANTIC:PLANUNIT:SS-034",
+        "SEMANTIC:PLANUNIT:SS-035"
+      ],
+      "item_ids": [
+        "MAC-005",
+        "MAC-024",
+        "MAC-025",
+        "MAC-026",
+        "MAC-027"
+      ],
+      "reviewed": true,
+      "summary": "Integrated exact and adversarial review completed for WIN-ECC46C6FBDFD-0007; evidence is carried by item_ids MAC-005, MAC-024, MAC-025, MAC-026, MAC-027.",
+      "window_id": "WIN-ECC46C6FBDFD-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO-ECC46C6FBDFD-0001",
+    "document_path": "Plans/Skills_System.md",
+    "micro_window_ids": [
+      "WIN-ECC46C6FBDFD-0001",
+      "WIN-ECC46C6FBDFD-0002",
+      "WIN-ECC46C6FBDFD-0003",
+      "WIN-ECC46C6FBDFD-0004",
+      "WIN-ECC46C6FBDFD-0005",
+      "WIN-ECC46C6FBDFD-0006",
+      "WIN-ECC46C6FBDFD-0007"
+    ],
+    "source_sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [],
+    "feature_family_keys": [],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m_000121_attempt_0014_terminal"
+}

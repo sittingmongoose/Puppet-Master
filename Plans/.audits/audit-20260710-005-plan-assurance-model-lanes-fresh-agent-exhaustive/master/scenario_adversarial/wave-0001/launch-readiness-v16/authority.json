@@ -1,0 +1,84 @@
+{
+  "activation_files": 0,
+  "atomic16_forbidden": true,
+  "atomic_cap": 8,
+  "certification_credit": 0,
+  "cohorts": [
+    {
+      "assignment_count": 8,
+      "assignments": [
+        "A005SA-0001",
+        "A005SA-0002",
+        "A005SA-0003",
+        "A005SA-0004",
+        "A005SA-0005",
+        "A005SA-0006",
+        "A005SA-0007",
+        "A005SA-0008"
+      ],
+      "authority_sha256": "f963c3499987446426861d446b09632e2faf7eabe0bbfe3262d25814e94a77a0",
+      "cohort_id": "cohort-0001",
+      "feature_count": 823,
+      "feature_digest": "ed8d7c533deb48bd9e04480a6ba7d124641407fa2aedd80cec79ffeca8b9512e",
+      "launch_seal_sha256": "6f3dcfe7adc9dc301238f60f1bb347d6d6e102851b663f58dc98abb7b220a310",
+      "manifest_sha256": "7cef85ea13b20c39ce9071fc75a70a786248e4d7eecd27b250560c5017721860",
+      "preparation_authority_sha256": "a74d46ea02ba3e0f6ef4c465cfa1c969b72fc4dafa1437143ee31e9536081f49",
+      "preparation_readiness_sha256": "a13ed1b4e0129b6d086d1b9c566f8f4a51a595bac38805d1497d14a0bb1c3f39"
+    },
+    {
+      "assignment_count": 8,
+      "assignments": [
+        "A005SA-0009",
+        "A005SA-0010",
+        "A005SA-0011",
+        "A005SA-0012",
+        "A005SA-0013",
+        "A005SA-0014",
+        "A005SA-0015",
+        "A005SA-0016"
+      ],
+      "authority_sha256": "44b0dfd2a61d050f33e95818874a2762695eb653be3f901a93b545a244310bd9",
+      "cohort_id": "cohort-0002",
+      "feature_count": 817,
+      "feature_digest": "0df0a8b1b35ae50570b295c0fec29ab07c2f3b8688916db5617ad763bcadd6e2",
+      "launch_seal_sha256": "2422de024eb8543bdc8efa121e537e1fe89c069368fde57ba6ca13238080badf",
+      "manifest_sha256": "641d1af2ad7a5238f2c15f787fb046e299eb3480d6cfd18301b472e14e006592",
+      "preparation_authority_sha256": "f9ac772b6fb7490848b69f280bde8a63d3ce1dca0f03e8a69923efccc519c1a6",
+      "preparation_readiness_sha256": "aa7b2aabac273445c64c9c9127168542c4dc17c565f6e507ba0da0c8a3ad5df9"
+    }
+  ],
+  "combined_assignment_count": 16,
+  "combined_feature_count": 1640,
+  "combined_feature_digest": "3499c01bab941d97b09f0164b7bded80096eea7c66a927d1cce63963ec0bedda",
+  "concurrency_policy_v16_sha256": "76a0c7b3a3559f18cab4f03e84ddc6382b3bc8d6719c8e263c642c96dc8efa72",
+  "coverage_credit": 0,
+  "disjoint": true,
+  "full_wave_luna_prelaunch_sha256": "ae8e493e21a6fba1408d7555c6d3ec45f65895c24b611131283c2396c931df83",
+  "future_research_checkpoint_contract": {
+    "checkpoint_path": null,
+    "checkpoint_sha256": null,
+    "eligible_count": 8,
+    "rejected_count": 0,
+    "unresolved_count": 0
+  },
+  "outputs_empty": 16,
+  "receipts": 0,
+  "results": 0,
+  "rolling_max": 16,
+  "schema_version": "scenario-adversarial-v16-launch-readiness-authority",
+  "status": "BLOCKED_AWAITING_CROSS_CUTTING_RESEARCH_CHECKPOINT_EXACT8_OF8",
+  "tests_sha256": "e99a3554c1961d44328318d28ee07cd9fc7406f42e760daf35f7afe9dab0d104",
+  "transactions": [
+    {
+      "atomic_size": 8,
+      "cohort_id": "cohort-0001",
+      "transaction_id": "SCENARIO-V16-COHORT-0001-ATOMIC8"
+    },
+    {
+      "atomic_size": 8,
+      "cohort_id": "cohort-0002",
+      "transaction_id": "SCENARIO-V16-COHORT-0002-ATOMIC8"
+    }
+  ],
+  "verifier_sha256": "640815d50f0f1b21590080586dd2df36b554a5167a3c787721ad535623199f86"
+}

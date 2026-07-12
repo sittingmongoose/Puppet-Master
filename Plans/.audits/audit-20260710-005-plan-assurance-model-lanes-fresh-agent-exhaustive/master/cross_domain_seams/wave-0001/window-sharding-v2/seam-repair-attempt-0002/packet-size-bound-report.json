@@ -1,0 +1,26 @@
+{
+  "assignment_count": 3,
+  "bound_bytes_inclusive": 2000000,
+  "complete_immutable_failed_result_preserved_per_packet": true,
+  "packet_count": 3,
+  "packets": [
+    {
+      "assignment_id": "A005CDSV2-0002",
+      "bytes": 1762019,
+      "sha256": "81f073e1bb3963d4547f36db6244609f9a40a2eb0a66d1da8bddf7eaf7eeffb2"
+    },
+    {
+      "assignment_id": "A005CDSV2-0006",
+      "bytes": 1688567,
+      "sha256": "ec480852081fb93c7f6ad02bfb1f3f27fc7402df11b124f6d68c07ebd9756354"
+    },
+    {
+      "assignment_id": "A005CDSV2-0039",
+      "bytes": 1124852,
+      "sha256": "37ecc1c3d9ad7aab4cab48cfe8dcc13e8f0207ec26e0cde0f289c301d0b03f2b"
+    }
+  ],
+  "schema_version": "cross-domain-seam-repair-packet-size-bound-report-v1",
+  "status": "pass",
+  "within_bound": true
+}

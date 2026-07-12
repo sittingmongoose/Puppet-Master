@@ -1,0 +1,800 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-result-v1",
+  "phase": "cross_shard_reverse_orientation_shadow_candidate_discovery",
+  "assignment_id": "A005CSS-0040",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0040_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSSPKT-0040",
+    "packet_sha256": "7cac40c9b7fb62009653085e9bf99d9513517b55f6723a18a503992975fdda28",
+    "anchor_refs_digest": "eeb53baeb7015f93e57795450654813b8aadcdc1c52fbb08f786fc2c2367f7ca",
+    "comparator_refs_digest": "ff0237b3dc0efca7054708105e170f269bb01673d6eeb533ae444ce581ee2a15",
+    "orientation": "primary_right_as_shadow_anchor",
+    "anchor_owner_assignment_id": "A005OM-0019",
+    "comparator_owner_assignment_id": "A005OM-0018"
+  },
+  "coverage": {
+    "anchor_count": 48,
+    "anchor_refs": [
+      "OPF::A005OM-0019::PF-0098",
+      "OPF::A005OM-0019::PF-0099",
+      "OPF::A005OM-0019::PF-0100",
+      "OPF::A005OM-0019::PF-0101",
+      "OPF::A005OM-0019::PF-0102",
+      "OPF::A005OM-0019::PF-0103",
+      "OPF::A005OM-0019::PF-0104",
+      "OPF::A005OM-0019::PF-0105",
+      "OPF::A005OM-0019::PF-0106",
+      "OPF::A005OM-0019::PF-0107",
+      "OPF::A005OM-0019::PF-0108",
+      "OPF::A005OM-0019::PF-0109",
+      "OPF::A005OM-0019::PF-0110",
+      "OPF::A005OM-0019::PF-0111",
+      "OPF::A005OM-0019::PF-0112",
+      "OPF::A005OM-0019::PF-0113",
+      "OPF::A005OM-0019::PF-0114",
+      "OPF::A005OM-0019::PF-0115",
+      "OPF::A005OM-0019::PF-0116",
+      "OPF::A005OM-0019::PF-0117",
+      "OPF::A005OM-0019::PF-0118",
+      "OPF::A005OM-0019::PF-0119",
+      "OPF::A005OM-0019::PF-0120",
+      "OPF::A005OM-0019::PF-0121",
+      "OPF::A005OM-0019::PF-0122",
+      "OPF::A005OM-0019::PF-0123",
+      "OPF::A005OM-0019::PF-0124",
+      "OPF::A005OM-0019::PF-0125",
+      "OPF::A005OM-0019::PF-0126",
+      "OPF::A005OM-0019::PF-0127",
+      "OPF::A005OM-0019::PF-0128",
+      "OPF::A005OM-0019::PF-0129",
+      "OPF::A005OM-0019::PF-0130",
+      "OPF::A005OM-0019::PF-0131",
+      "OPF::A005OM-0019::PF-0132",
+      "OPF::A005OM-0019::PF-0133",
+      "OPF::A005OM-0019::PF-0134",
+      "OPF::A005OM-0019::PF-0135",
+      "OPF::A005OM-0019::PF-0136",
+      "OPF::A005OM-0019::PF-0137",
+      "OPF::A005OM-0019::PF-0138",
+      "OPF::A005OM-0019::PF-0139",
+      "OPF::A005OM-0019::PF-0140",
+      "OPF::A005OM-0019::PF-0141",
+      "OPF::A005OM-0019::PF-0142",
+      "OPF::A005OM-0019::PF-0143",
+      "OPF::A005OM-0019::PF-0144",
+      "OPF::A005OM-0019::PF-0145"
+    ],
+    "comparator_count": 142,
+    "comparator_refs": [
+      "OPF::A005OM-0018::PF-0001",
+      "OPF::A005OM-0018::PF-0002",
+      "OPF::A005OM-0018::PF-0003",
+      "OPF::A005OM-0018::PF-0004",
+      "OPF::A005OM-0018::PF-0005",
+      "OPF::A005OM-0018::PF-0006",
+      "OPF::A005OM-0018::PF-0007",
+      "OPF::A005OM-0018::PF-0008",
+      "OPF::A005OM-0018::PF-0009",
+      "OPF::A005OM-0018::PF-0010",
+      "OPF::A005OM-0018::PF-0011",
+      "OPF::A005OM-0018::PF-0012",
+      "OPF::A005OM-0018::PF-0013",
+      "OPF::A005OM-0018::PF-0014",
+      "OPF::A005OM-0018::PF-0015",
+      "OPF::A005OM-0018::PF-0016",
+      "OPF::A005OM-0018::PF-0017",
+      "OPF::A005OM-0018::PF-0018",
+      "OPF::A005OM-0018::PF-0019",
+      "OPF::A005OM-0018::PF-0020",
+      "OPF::A005OM-0018::PF-0021",
+      "OPF::A005OM-0018::PF-0022",
+      "OPF::A005OM-0018::PF-0023",
+      "OPF::A005OM-0018::PF-0024",
+      "OPF::A005OM-0018::PF-0025",
+      "OPF::A005OM-0018::PF-0026",
+      "OPF::A005OM-0018::PF-0027",
+      "OPF::A005OM-0018::PF-0028",
+      "OPF::A005OM-0018::PF-0029",
+      "OPF::A005OM-0018::PF-0030",
+      "OPF::A005OM-0018::PF-0031",
+      "OPF::A005OM-0018::PF-0032",
+      "OPF::A005OM-0018::PF-0033",
+      "OPF::A005OM-0018::PF-0034",
+      "OPF::A005OM-0018::PF-0035",
+      "OPF::A005OM-0018::PF-0036",
+      "OPF::A005OM-0018::PF-0037",
+      "OPF::A005OM-0018::PF-0038",
+      "OPF::A005OM-0018::PF-0039",
+      "OPF::A005OM-0018::PF-0040",
+      "OPF::A005OM-0018::PF-0041",
+      "OPF::A005OM-0018::PF-0042",
+      "OPF::A005OM-0018::PF-0043",
+      "OPF::A005OM-0018::PF-0044",
+      "OPF::A005OM-0018::PF-0045",
+      "OPF::A005OM-0018::PF-0046",
+      "OPF::A005OM-0018::PF-0047",
+      "OPF::A005OM-0018::PF-0048",
+      "OPF::A005OM-0018::PF-0049",
+      "OPF::A005OM-0018::PF-0050",
+      "OPF::A005OM-0018::PF-0051",
+      "OPF::A005OM-0018::PF-0052",
+      "OPF::A005OM-0018::PF-0053",
+      "OPF::A005OM-0018::PF-0054",
+      "OPF::A005OM-0018::PF-0055",
+      "OPF::A005OM-0018::PF-0056",
+      "OPF::A005OM-0018::PF-0057",
+      "OPF::A005OM-0018::PF-0058",
+      "OPF::A005OM-0018::PF-0059",
+      "OPF::A005OM-0018::PF-0060",
+      "OPF::A005OM-0018::PF-0061",
+      "OPF::A005OM-0018::PF-0062",
+      "OPF::A005OM-0018::PF-0063",
+      "OPF::A005OM-0018::PF-0064",
+      "OPF::A005OM-0018::PF-0065",
+      "OPF::A005OM-0018::PF-0066",
+      "OPF::A005OM-0018::PF-0067",
+      "OPF::A005OM-0018::PF-0068",
+      "OPF::A005OM-0018::PF-0069",
+      "OPF::A005OM-0018::PF-0070",
+      "OPF::A005OM-0018::PF-0071",
+      "OPF::A005OM-0018::PF-0072",
+      "OPF::A005OM-0018::PF-0073",
+      "OPF::A005OM-0018::PF-0074",
+      "OPF::A005OM-0018::PF-0075",
+      "OPF::A005OM-0018::PF-0076",
+      "OPF::A005OM-0018::PF-0077",
+      "OPF::A005OM-0018::PF-0078",
+      "OPF::A005OM-0018::PF-0079",
+      "OPF::A005OM-0018::PF-0080",
+      "OPF::A005OM-0018::PF-0081",
+      "OPF::A005OM-0018::PF-0082",
+      "OPF::A005OM-0018::PF-0083",
+      "OPF::A005OM-0018::PF-0084",
+      "OPF::A005OM-0018::PF-0085",
+      "OPF::A005OM-0018::PF-0086",
+      "OPF::A005OM-0018::PF-0087",
+      "OPF::A005OM-0018::PF-0088",
+      "OPF::A005OM-0018::PF-0089",
+      "OPF::A005OM-0018::PF-0090",
+      "OPF::A005OM-0018::PF-0091",
+      "OPF::A005OM-0018::PF-0092",
+      "OPF::A005OM-0018::PF-0093",
+      "OPF::A005OM-0018::PF-0094",
+      "OPF::A005OM-0018::PF-0095",
+      "OPF::A005OM-0018::PF-0096",
+      "OPF::A005OM-0018::PF-0097",
+      "OPF::A005OM-0018::PF-0098",
+      "OPF::A005OM-0018::PF-0099",
+      "OPF::A005OM-0018::PF-0100",
+      "OPF::A005OM-0018::PF-0101",
+      "OPF::A005OM-0018::PF-0102",
+      "OPF::A005OM-0018::PF-0103",
+      "OPF::A005OM-0018::PF-0104",
+      "OPF::A005OM-0018::PF-0105",
+      "OPF::A005OM-0018::PF-0106",
+      "OPF::A005OM-0018::PF-0107",
+      "OPF::A005OM-0018::PF-0108",
+      "OPF::A005OM-0018::PF-0109",
+      "OPF::A005OM-0018::PF-0110",
+      "OPF::A005OM-0018::PF-0111",
+      "OPF::A005OM-0018::PF-0112",
+      "OPF::A005OM-0018::PF-0113",
+      "OPF::A005OM-0018::PF-0114",
+      "OPF::A005OM-0018::PF-0115",
+      "OPF::A005OM-0018::PF-0116",
+      "OPF::A005OM-0018::PF-0117",
+      "OPF::A005OM-0018::PF-0118",
+      "OPF::A005OM-0018::PF-0119",
+      "OPF::A005OM-0018::PF-0120",
+      "OPF::A005OM-0018::PF-0121",
+      "OPF::A005OM-0018::PF-0122",
+      "OPF::A005OM-0018::PF-0123",
+      "OPF::A005OM-0018::PF-0124",
+      "OPF::A005OM-0018::PF-0125",
+      "OPF::A005OM-0018::PF-0126",
+      "OPF::A005OM-0018::PF-0127",
+      "OPF::A005OM-0018::PF-0128",
+      "OPF::A005OM-0018::PF-0129",
+      "OPF::A005OM-0018::PF-0130",
+      "OPF::A005OM-0018::PF-0131",
+      "OPF::A005OM-0018::PF-0132",
+      "OPF::A005OM-0018::PF-0133",
+      "OPF::A005OM-0018::PF-0134",
+      "OPF::A005OM-0018::PF-0135",
+      "OPF::A005OM-0018::PF-0136",
+      "OPF::A005OM-0018::PF-0137",
+      "OPF::A005OM-0018::PF-0138",
+      "OPF::A005OM-0018::PF-0139",
+      "OPF::A005OM-0018::PF-0140",
+      "OPF::A005OM-0018::PF-0141",
+      "OPF::A005OM-0018::PF-0142"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0098",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0044",
+        "OPF::A005OM-0018::PF-0016",
+        "OPF::A005OM-0018::PF-0130",
+        "OPF::A005OM-0018::PF-0081"
+      ],
+      "rationale": "All 142 comparators were reviewed. File Manager handoff, general Source Control operations, wired diff actions, and hunk/conflict launch policy are adjacent routing or command authorities, but none reproduces this conflict-entry command, user outcome, state boundary, and failure semantics.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0099",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0081",
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134"
+      ],
+      "rationale": "All 142 comparators were reviewed. Conflict-action policy and destructive merge safety are plausible neighbors, but they govern command eligibility or merge lifecycle rather than explicit approval for assistant-proposed semantic conflict resolution.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0100",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0137"
+      ],
+      "rationale": "All 142 comparators were reviewed. The merge-safety and branch-transition comparators are broader or adjacent controls; none has the same rebase-conflict auto-abort, test-skip, dialog-failure, and lock-release lifecycle.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0101",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0106",
+        "OPF::A005OM-0018::PF-0107",
+        "OPF::A005OM-0018::PF-0122"
+      ],
+      "rationale": "All 142 comparators were reviewed. GitHub surface ownership and optional promotion handoffs are related, but none is the same consumer handoff that opens the existing PR panel with thread-derived prefilled fields.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0102",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0136"
+      ],
+      "rationale": "All 142 comparators were reviewed. Merge safety, concept-only merge controls, and authority-unbound Git operations are neighboring concerns, but none defines the assistant-only structured merge action plus mandatory user-confirmed dialog and bash prohibition.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0103",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0025",
+        "OPF::A005OM-0018::PF-0004"
+      ],
+      "rationale": "All 142 comparators were reviewed. Executor binding and frozen-cwd staleness are closely related context safeguards, but this anchor specifically scopes assistant preflight tool execution to the bound worktree and therefore has a different caller and lifecycle.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0104",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0124",
+        "OPF::A005OM-0018::PF-0134"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree merge safety, workspace cleanup policy, and unresolved merge/worktree controls are related, but none addresses approval sequencing for a single assistant exchange that chains commit, merge, and cleanup.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0105",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0137"
+      ],
+      "rationale": "All 142 comparators were reviewed. The listed neighbors govern merge safety, generic merge/worktree controls, or branch transitions; none is the enablement-command-timeout-target configuration authority for the pre-merge test gate.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0106",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0134"
+      ],
+      "rationale": "All 142 comparators were reviewed. The generic merge/worktree control gap is adjacent, but no comparator shares the persisted-command override, detection priority, clear-and-redetect lifecycle, and resulting state semantics.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0107",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134"
+      ],
+      "rationale": "All 142 comparators were reviewed. Merge safety and generic merge controls are related umbrellas, but neither captures the enabled-without-command state that visibly skips testing without blocking merge.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0108",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0137"
+      ],
+      "rationale": "All 142 comparators were reviewed. Merge gates and branch-transition contracts are neighbors, but none defines the same uncommitted merged-result state, test execution, success-only commit boundary, and strategy-wide failure semantics.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0109",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0137"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree merge safety and branch-transition concerns are related, but none defines branch-only testing before any mutation with failure blocking and an explicit override path.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0110",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0094",
+        "OPF::A005OM-0018::PF-0010"
+      ],
+      "rationale": "All 142 comparators were reviewed. Formatter subprocess cancellation and merge safety expose similar process or cleanup hazards, but they have different authorities, state boundaries, outputs, and failure recovery from the pre-merge test dialog.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0111",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0134",
+        "OPF::A005OM-0018::PF-0137",
+        "OPF::A005OM-0018::PF-0124"
+      ],
+      "rationale": "All 142 comparators were reviewed. Merge safety, generic controls, branch transitions, and cleanup policy are adjacent, but none defines the strategy-specific reset-or-abort cleanup after a failed pre-merge test.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0112",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0094",
+        "OPF::A005OM-0018::PF-0102"
+      ],
+      "rationale": "All 142 comparators were reviewed. Subprocess output limits and formatter-event redaction are plausible shared-infrastructure neighbors, but they cover different event families and authorities from pre-merge test output privacy, retention, and secret handling.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0113",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0124",
+        "OPF::A005OM-0018::PF-0134"
+      ],
+      "rationale": "All 142 comparators were reviewed. Merge safety, cleanup policy, and generic merge controls are related, but none shares the post-crash transitional merge/rebase reconciliation boundary, orphan-process handling, and preservation policy gap.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0114",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0102",
+        "OPF::A005OM-0018::PF-0122",
+        "OPF::A005OM-0018::PF-0024"
+      ],
+      "rationale": "All 142 comparators were reviewed. Formatter event schema, optional PR promotion receipts, and generic event deduplication are related schema concerns, but none covers the merged, merge-failed, PR-created, and PR-failed family with this ordering, redaction, retry, and compatibility boundary.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0115",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0024",
+        "OPF::A005OM-0018::PF-0102",
+        "OPF::A005OM-0018::PF-0012"
+      ],
+      "rationale": "All 142 comparators were reviewed. Event deduplication, formatter evidence, and safe-point receipt completeness are neighboring evidence contracts, but none is the pre-merge test seglog family whose failure records retain override state.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0116",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0002",
+        "OPF::A005OM-0018::PF-0030",
+        "OPF::A005OM-0018::PF-0035",
+        "OPF::A005OM-0018::PF-0025"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree handoff, tab binding, compare identity, and executor context are plausible neighbors, but none reproduces the File Manager follow-thread root projection, temporary swap/reset behavior, breadcrumb identity, and accessible label outcome.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0117",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0033",
+        "OPF::A005OM-0018::PF-0058",
+        "OPF::A005OM-0018::PF-0056"
+      ],
+      "rationale": "All 142 comparators were reviewed. LSP ownership, symbol-index status, and breadcrumb fallback are related consumers, but none defines distinct LSP root identity reuse keyed by distinct worktree paths.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0118",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0017",
+        "OPF::A005OM-0018::PF-0115",
+        "OPF::A005OM-0018::PF-0129"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree commands, operational worktree UI, and mock action lineage are umbrella or implementation neighbors; none is the exact MVP negative-scope contract excluding emoji, Bind Existing, inline history, scoped Changes, and export metadata.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0119",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0005",
+        "OPF::A005OM-0018::PF-0018",
+        "OPF::A005OM-0018::PF-0124"
+      ],
+      "rationale": "All 142 comparators were reviewed. Owner separation, Source Control versus Orchestrator context, and cleanup policy are related boundaries, but none carries this backend non-goal set for orchestrator, submodule, undo, cleanup, terminal, and transfer behavior.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0120",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0071"
+      ],
+      "rationale": "All 142 comparators were reviewed. Exact revert identity is the only plausible neighbor, but it governs target identity and stale-operation safety while this anchor governs the empty-revert no-op outcome and absolute side-effect boundary; they are member-level distinct.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0121",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0076",
+        "OPF::A005OM-0018::PF-0111"
+      ],
+      "rationale": "All 142 comparators were reviewed. File-operation conflict transitions and GitHub readiness transitions are structurally similar state machines, but their authorities, state vocabularies, user outcomes, and failures differ from assistant operation cards.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0122",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0005",
+        "OPF::A005OM-0018::PF-0107"
+      ],
+      "rationale": "All 142 comparators were reviewed. The owner map and Source Control/Actions surface contract overlap shell vocabulary, but they do not define the same tab composition, sole widget-hosting tab, Seams vocabulary, and narrow Source Control shell outcome.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0123",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0005",
+        "OPF::A005OM-0018::PF-0106",
+        "OPF::A005OM-0018::PF-0107"
+      ],
+      "rationale": "All 142 comparators were reviewed. Owner reconciliation and GitHub surface contracts are plausible neighbors, but this anchor uniquely groups Source Control, Actions, and Docker panels under shared lineage and centralized recovery rather than panel-local semantics.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0124",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0026",
+        "OPF::A005OM-0018::PF-0106",
+        "OPF::A005OM-0018::PF-0013"
+      ],
+      "rationale": "All 142 comparators were reviewed. Object-shaped route identity, owner/consumer reconciliation, and package-aware projections support this concern, but none requires visible run-to-repository lineage and pivots across every named operational panel and rollout surface.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0125",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0072",
+        "OPF::A005OM-0018::PF-0044"
+      ],
+      "rationale": "All 142 comparators were reviewed. Artifact opening and File Manager Source Control handoff are plausible adjacent consumers, but neither owns the unresolved nineteen-artifact enumeration plus implement-or-defer multi-repository Source Control decision.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0126",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0005"
+      ],
+      "rationale": "All 142 comparators were reviewed. The cross-system owner map is related because it names Docker ownership, but no comparator defines per-action Docker prerequisites or their composition for Build, Run, and Publish.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0127",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 142 comparators were reviewed. No comparator shares Docker publish result authority, per-tag or platform delivery state, partial-success semantics, idempotent retry, rollback, or sanitized-log lifecycle; vocabulary-level matches were rejected.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0128",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0053",
+        "OPF::A005OM-0018::PF-0076"
+      ],
+      "rationale": "All 142 comparators were reviewed. Token-composition and file-operation transition gaps are state-model neighbors, but neither governs the Unraid result enum cross-product, terminality, persistence, recovery, and repository-mutation behavior.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0129",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0013",
+        "OPF::A005OM-0018::PF-0018",
+        "OPF::A005OM-0018::PF-0005"
+      ],
+      "rationale": "All 142 comparators were reviewed. Package-aware projections, Source Control versus Orchestrator ownership, and the global owner map are closely related, but they are projections or owner boundaries rather than the DAG ready-set scheduler, lane-capacity authority, and package-worktree allocation lifecycle.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0130",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0067",
+        "OPF::A005OM-0018::PF-0033"
+      ],
+      "rationale": "All 142 comparators were reviewed. Discovery type-ahead and Search/LSP ownership are plausible consumers, but they do not share ambient discovery trust and data boundaries or its safe non-executable commit-example outcome.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0131",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0076",
+        "OPF::A005OM-0018::PF-0059",
+        "OPF::A005OM-0018::PF-0024"
+      ],
+      "rationale": "All 142 comparators were reviewed. File-operation conflict transitions and event delivery/deduplication are neighboring mechanics, but none owns atomic conflict admission plus degraded event ingestion and observability for the orchestrator path.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0132",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0135",
+        "OPF::A005OM-0018::PF-0008",
+        "OPF::A005OM-0018::PF-0125"
+      ],
+      "rationale": "All 142 comparators were reviewed. Generic concurrency settings, worktree allocation races, and binding actions are plausible neighbors, but none has the same atomic parallel-admission, cap enforcement, merge/schema-migration, and rollback boundary.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0133",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0013",
+        "OPF::A005OM-0018::PF-0008",
+        "OPF::A005OM-0018::PF-0025",
+        "OPF::A005OM-0018::PF-0125"
+      ],
+      "rationale": "All 142 comparators were reviewed. Package-aware runtime binding, worktree allocation, executor context, and UI binding are adjacent dependencies; none defines parallel dependency execution, cycle/partial-failure policy, resource rollback, and stale-agent timing.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0134",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0139",
+        "OPF::A005OM-0018::PF-0013",
+        "OPF::A005OM-0018::PF-0089"
+      ],
+      "rationale": "All 142 comparators were reviewed. Plans-to-code receipt packaging and other handoff contracts are related, but this anchor owns the eighteen-row handoff matrix identity and typed retry/rollback routing rather than receipt packaging or runtime handoff projection.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0135",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0012",
+        "OPF::A005OM-0018::PF-0139",
+        "OPF::A005OM-0018::PF-0102"
+      ],
+      "rationale": "All 142 comparators were reviewed. Safe-point receipt proof, plans-to-code receipt packaging, and evidence event schemas are member or adjacent families; none is coextensive with source-control, WorkNode-completion, and goal-certification receipt invariants.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0136",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0010",
+        "OPF::A005OM-0018::PF-0029",
+        "OPF::A005OM-0018::PF-0081",
+        "OPF::A005OM-0018::PF-0131",
+        "OPF::A005OM-0018::PF-0125"
+      ],
+      "rationale": "All 142 comparators were reviewed. Destructive merge gates, mandatory-stop policy, hunk safety, and worktree binding are plausible members or consumers, but none shares the source-control-context authority mapping, dirty/head vocabulary normalization, and rollback-route consistency boundary.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0137",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0018::PF-0025"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0004",
+        "OPF::A005OM-0018::PF-0002",
+        "OPF::A005OM-0018::PF-0075"
+      ],
+      "rationale": "All 142 comparators were reviewed. Comparator PF-0025 describes the same fail-closed worktree-context authority, execution lifecycle, mutation target, project-root fallback, and absent or stale binding failure as this background-routing anchor. Frozen-cwd races, handoff staleness, and shared-context propagation remain related but distinct.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0138",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0050",
+        "OPF::A005OM-0018::PF-0061",
+        "OPF::A005OM-0018::PF-0085"
+      ],
+      "rationale": "All 142 comparators were reviewed. Tab identity synchronization, adjunct-session restore, and route/open normalization are plausible members, but none covers the combined workspace, window, browser, terminal, branch, and command-block ID scope and lifecycle.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0139",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0118",
+        "OPF::A005OM-0018::PF-0119",
+        "OPF::A005OM-0018::PF-0038",
+        "OPF::A005OM-0018::PF-0001"
+      ],
+      "rationale": "All 142 comparators were reviewed. GitHub remote path/reconnect, remote mutation, offline UI, and remote editor recovery are adjacent consumers, but none owns storage-level Git/submodule cache collision, path-escape, trust, and dirty-file completeness.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0140",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0118",
+        "OPF::A005OM-0018::PF-0119"
+      ],
+      "rationale": "All 142 comparators were reviewed. Remote path verification and remote mutation transactions are related consumers, but neither defines crash-atomic generation publication and durability for the remote cache.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0141",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0012",
+        "OPF::A005OM-0018::PF-0042",
+        "OPF::A005OM-0018::PF-0139"
+      ],
+      "rationale": "All 142 comparators were reviewed. Safe-point proof fields, multi-file mutation receipts, and plans-to-code receipt packaging are adjacent receipt families, but none requires the same host/repository/worktree identity and authority on file-mutation receipts.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0142",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0008",
+        "OPF::A005OM-0018::PF-0025",
+        "OPF::A005OM-0018::PF-0035",
+        "OPF::A005OM-0018::PF-0125"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree allocation, executor binding, compare identity, and UI binding use related identities, but none is the canonical repository/worktree identity derivation plus tombstone lifecycle that prevents same-name rebinding.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0143",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0117",
+        "OPF::A005OM-0018::PF-0122",
+        "OPF::A005OM-0018::PF-0073"
+      ],
+      "rationale": "All 142 comparators were reviewed. Approval concurrency, optional PR promotion, and approval-scoped visibility are plausible neighbors, but none governs authenticated bundle-review approval lineage and the resulting auto-merge gate.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0144",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0033",
+        "OPF::A005OM-0018::PF-0058",
+        "OPF::A005OM-0018::PF-0056",
+        "OPF::A005OM-0018::PF-0118",
+        "OPF::A005OM-0018::PF-0013"
+      ],
+      "rationale": "All 142 comparators were reviewed. File Manager ownership, symbol-index and breadcrumb projections, remote recovery, and package projections are related consumers or umbrellas, but none combines host-aware Search, Source Control, and LSP projection freshness with stale-state write denial.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0019::PF-0145",
+      "compared_against_count": 142,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0018::PF-0008",
+        "OPF::A005OM-0018::PF-0027",
+        "OPF::A005OM-0018::PF-0045",
+        "OPF::A005OM-0018::PF-0132",
+        "OPF::A005OM-0018::PF-0012"
+      ],
+      "rationale": "All 142 comparators were reviewed. Worktree identity, general accessibility, symbol-only Git names, and receipt proof are member concerns, but none is coextensive with provider-neutral SCM identity, restart-stable side-effect lineage, tombstones, live-list anchors, and accessible review heat-map state.",
+      "confidence": 0.94
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "strict_merge_equivalence_applied": true,
+    "umbrella_member_and_adjacency_kept_distinct": true,
+    "reverse_orientation_verified": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}
+

@@ -1,0 +1,1108 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0008",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0008_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0008",
+    "packet_sha256": "da8e4b2d702614d934b04069691e2adaf9fbe0fba05fdb9538f7eedc3de6a99d",
+    "anchor_refs_digest": "33c43a333da49319132d2927dd22f412cb261150ef7848118c4511efde662c2a",
+    "comparator_refs_digest": "657e8b07c3d40dd30566447194ccbbfe14aa8895026ad8201fd5b0dfe32210c5"
+  },
+  "coverage": {
+    "anchor_count": 73,
+    "anchor_refs": [
+      "OPF::A005OM-0012::PF-0074",
+      "OPF::A005OM-0012::PF-0075",
+      "OPF::A005OM-0012::PF-0076",
+      "OPF::A005OM-0012::PF-0077",
+      "OPF::A005OM-0012::PF-0078",
+      "OPF::A005OM-0012::PF-0079",
+      "OPF::A005OM-0012::PF-0080",
+      "OPF::A005OM-0012::PF-0081",
+      "OPF::A005OM-0012::PF-0082",
+      "OPF::A005OM-0012::PF-0083",
+      "OPF::A005OM-0012::PF-0084",
+      "OPF::A005OM-0012::PF-0085",
+      "OPF::A005OM-0012::PF-0086",
+      "OPF::A005OM-0012::PF-0087",
+      "OPF::A005OM-0012::PF-0088",
+      "OPF::A005OM-0012::PF-0089",
+      "OPF::A005OM-0012::PF-0090",
+      "OPF::A005OM-0012::PF-0091",
+      "OPF::A005OM-0012::PF-0092",
+      "OPF::A005OM-0012::PF-0093",
+      "OPF::A005OM-0012::PF-0094",
+      "OPF::A005OM-0012::PF-0095",
+      "OPF::A005OM-0012::PF-0096",
+      "OPF::A005OM-0012::PF-0097",
+      "OPF::A005OM-0012::PF-0098",
+      "OPF::A005OM-0012::PF-0099",
+      "OPF::A005OM-0012::PF-0100",
+      "OPF::A005OM-0012::PF-0101",
+      "OPF::A005OM-0012::PF-0102",
+      "OPF::A005OM-0012::PF-0103",
+      "OPF::A005OM-0012::PF-0104",
+      "OPF::A005OM-0012::PF-0105",
+      "OPF::A005OM-0012::PF-0106",
+      "OPF::A005OM-0012::PF-0107",
+      "OPF::A005OM-0012::PF-0108",
+      "OPF::A005OM-0012::PF-0109",
+      "OPF::A005OM-0012::PF-0110",
+      "OPF::A005OM-0012::PF-0111",
+      "OPF::A005OM-0012::PF-0112",
+      "OPF::A005OM-0012::PF-0113",
+      "OPF::A005OM-0012::PF-0114",
+      "OPF::A005OM-0012::PF-0115",
+      "OPF::A005OM-0012::PF-0116",
+      "OPF::A005OM-0012::PF-0117",
+      "OPF::A005OM-0012::PF-0118",
+      "OPF::A005OM-0012::PF-0119",
+      "OPF::A005OM-0012::PF-0120",
+      "OPF::A005OM-0012::PF-0121",
+      "OPF::A005OM-0012::PF-0122",
+      "OPF::A005OM-0012::PF-0123",
+      "OPF::A005OM-0012::PF-0124",
+      "OPF::A005OM-0012::PF-0125",
+      "OPF::A005OM-0012::PF-0126",
+      "OPF::A005OM-0012::PF-0127",
+      "OPF::A005OM-0012::PF-0128",
+      "OPF::A005OM-0012::PF-0129",
+      "OPF::A005OM-0012::PF-0130",
+      "OPF::A005OM-0012::PF-0131",
+      "OPF::A005OM-0012::PF-0132",
+      "OPF::A005OM-0012::PF-0133",
+      "OPF::A005OM-0012::PF-0134",
+      "OPF::A005OM-0012::PF-0135",
+      "OPF::A005OM-0012::PF-0136",
+      "OPF::A005OM-0012::PF-0137",
+      "OPF::A005OM-0012::PF-0138",
+      "OPF::A005OM-0012::PF-0139",
+      "OPF::A005OM-0012::PF-0140",
+      "OPF::A005OM-0012::PF-0141",
+      "OPF::A005OM-0012::PF-0142",
+      "OPF::A005OM-0012::PF-0143",
+      "OPF::A005OM-0012::PF-0144",
+      "OPF::A005OM-0012::PF-0145",
+      "OPF::A005OM-0012::PF-0146"
+    ],
+    "comparator_count": 212,
+    "comparator_refs": [
+      "OPF::A005OM-0013::PF-0001",
+      "OPF::A005OM-0013::PF-0002",
+      "OPF::A005OM-0013::PF-0003",
+      "OPF::A005OM-0013::PF-0004",
+      "OPF::A005OM-0013::PF-0005",
+      "OPF::A005OM-0013::PF-0006",
+      "OPF::A005OM-0013::PF-0007",
+      "OPF::A005OM-0013::PF-0008",
+      "OPF::A005OM-0013::PF-0009",
+      "OPF::A005OM-0013::PF-0010",
+      "OPF::A005OM-0013::PF-0011",
+      "OPF::A005OM-0013::PF-0012",
+      "OPF::A005OM-0013::PF-0013",
+      "OPF::A005OM-0013::PF-0014",
+      "OPF::A005OM-0013::PF-0015",
+      "OPF::A005OM-0013::PF-0016",
+      "OPF::A005OM-0013::PF-0017",
+      "OPF::A005OM-0013::PF-0018",
+      "OPF::A005OM-0013::PF-0019",
+      "OPF::A005OM-0013::PF-0020",
+      "OPF::A005OM-0013::PF-0021",
+      "OPF::A005OM-0013::PF-0022",
+      "OPF::A005OM-0013::PF-0023",
+      "OPF::A005OM-0013::PF-0024",
+      "OPF::A005OM-0013::PF-0025",
+      "OPF::A005OM-0013::PF-0026",
+      "OPF::A005OM-0013::PF-0027",
+      "OPF::A005OM-0013::PF-0028",
+      "OPF::A005OM-0013::PF-0029",
+      "OPF::A005OM-0013::PF-0030",
+      "OPF::A005OM-0013::PF-0031",
+      "OPF::A005OM-0013::PF-0032",
+      "OPF::A005OM-0013::PF-0033",
+      "OPF::A005OM-0013::PF-0034",
+      "OPF::A005OM-0013::PF-0035",
+      "OPF::A005OM-0013::PF-0036",
+      "OPF::A005OM-0013::PF-0037",
+      "OPF::A005OM-0013::PF-0038",
+      "OPF::A005OM-0013::PF-0039",
+      "OPF::A005OM-0013::PF-0040",
+      "OPF::A005OM-0013::PF-0041",
+      "OPF::A005OM-0013::PF-0042",
+      "OPF::A005OM-0013::PF-0043",
+      "OPF::A005OM-0013::PF-0044",
+      "OPF::A005OM-0013::PF-0045",
+      "OPF::A005OM-0013::PF-0046",
+      "OPF::A005OM-0013::PF-0047",
+      "OPF::A005OM-0013::PF-0048",
+      "OPF::A005OM-0013::PF-0049",
+      "OPF::A005OM-0013::PF-0050",
+      "OPF::A005OM-0013::PF-0051",
+      "OPF::A005OM-0013::PF-0052",
+      "OPF::A005OM-0013::PF-0053",
+      "OPF::A005OM-0013::PF-0054",
+      "OPF::A005OM-0013::PF-0055",
+      "OPF::A005OM-0013::PF-0056",
+      "OPF::A005OM-0013::PF-0057",
+      "OPF::A005OM-0013::PF-0058",
+      "OPF::A005OM-0013::PF-0059",
+      "OPF::A005OM-0013::PF-0060",
+      "OPF::A005OM-0013::PF-0061",
+      "OPF::A005OM-0013::PF-0062",
+      "OPF::A005OM-0013::PF-0063",
+      "OPF::A005OM-0013::PF-0064",
+      "OPF::A005OM-0013::PF-0065",
+      "OPF::A005OM-0013::PF-0066",
+      "OPF::A005OM-0013::PF-0067",
+      "OPF::A005OM-0013::PF-0068",
+      "OPF::A005OM-0013::PF-0069",
+      "OPF::A005OM-0013::PF-0070",
+      "OPF::A005OM-0013::PF-0071",
+      "OPF::A005OM-0013::PF-0072",
+      "OPF::A005OM-0013::PF-0073",
+      "OPF::A005OM-0013::PF-0074",
+      "OPF::A005OM-0013::PF-0075",
+      "OPF::A005OM-0013::PF-0076",
+      "OPF::A005OM-0013::PF-0077",
+      "OPF::A005OM-0013::PF-0078",
+      "OPF::A005OM-0013::PF-0079",
+      "OPF::A005OM-0013::PF-0080",
+      "OPF::A005OM-0013::PF-0081",
+      "OPF::A005OM-0013::PF-0082",
+      "OPF::A005OM-0013::PF-0083",
+      "OPF::A005OM-0013::PF-0084",
+      "OPF::A005OM-0013::PF-0085",
+      "OPF::A005OM-0013::PF-0086",
+      "OPF::A005OM-0013::PF-0087",
+      "OPF::A005OM-0013::PF-0088",
+      "OPF::A005OM-0013::PF-0089",
+      "OPF::A005OM-0013::PF-0090",
+      "OPF::A005OM-0013::PF-0091",
+      "OPF::A005OM-0013::PF-0092",
+      "OPF::A005OM-0013::PF-0093",
+      "OPF::A005OM-0013::PF-0094",
+      "OPF::A005OM-0013::PF-0095",
+      "OPF::A005OM-0013::PF-0096",
+      "OPF::A005OM-0013::PF-0097",
+      "OPF::A005OM-0013::PF-0098",
+      "OPF::A005OM-0013::PF-0099",
+      "OPF::A005OM-0013::PF-0100",
+      "OPF::A005OM-0013::PF-0101",
+      "OPF::A005OM-0013::PF-0102",
+      "OPF::A005OM-0013::PF-0103",
+      "OPF::A005OM-0013::PF-0104",
+      "OPF::A005OM-0013::PF-0105",
+      "OPF::A005OM-0013::PF-0106",
+      "OPF::A005OM-0013::PF-0107",
+      "OPF::A005OM-0013::PF-0108",
+      "OPF::A005OM-0013::PF-0109",
+      "OPF::A005OM-0013::PF-0110",
+      "OPF::A005OM-0013::PF-0111",
+      "OPF::A005OM-0013::PF-0112",
+      "OPF::A005OM-0013::PF-0113",
+      "OPF::A005OM-0013::PF-0114",
+      "OPF::A005OM-0013::PF-0115",
+      "OPF::A005OM-0013::PF-0116",
+      "OPF::A005OM-0013::PF-0117",
+      "OPF::A005OM-0013::PF-0118",
+      "OPF::A005OM-0013::PF-0119",
+      "OPF::A005OM-0013::PF-0120",
+      "OPF::A005OM-0013::PF-0121",
+      "OPF::A005OM-0013::PF-0122",
+      "OPF::A005OM-0013::PF-0123",
+      "OPF::A005OM-0013::PF-0124",
+      "OPF::A005OM-0013::PF-0125",
+      "OPF::A005OM-0013::PF-0126",
+      "OPF::A005OM-0013::PF-0127",
+      "OPF::A005OM-0013::PF-0128",
+      "OPF::A005OM-0013::PF-0129",
+      "OPF::A005OM-0013::PF-0130",
+      "OPF::A005OM-0013::PF-0131",
+      "OPF::A005OM-0013::PF-0132",
+      "OPF::A005OM-0013::PF-0133",
+      "OPF::A005OM-0013::PF-0134",
+      "OPF::A005OM-0013::PF-0135",
+      "OPF::A005OM-0013::PF-0136",
+      "OPF::A005OM-0013::PF-0137",
+      "OPF::A005OM-0013::PF-0138",
+      "OPF::A005OM-0013::PF-0139",
+      "OPF::A005OM-0013::PF-0140",
+      "OPF::A005OM-0013::PF-0141",
+      "OPF::A005OM-0013::PF-0142",
+      "OPF::A005OM-0013::PF-0143",
+      "OPF::A005OM-0013::PF-0144",
+      "OPF::A005OM-0013::PF-0145",
+      "OPF::A005OM-0013::PF-0146",
+      "OPF::A005OM-0013::PF-0147",
+      "OPF::A005OM-0013::PF-0148",
+      "OPF::A005OM-0013::PF-0149",
+      "OPF::A005OM-0013::PF-0150",
+      "OPF::A005OM-0013::PF-0151",
+      "OPF::A005OM-0013::PF-0152",
+      "OPF::A005OM-0013::PF-0153",
+      "OPF::A005OM-0013::PF-0154",
+      "OPF::A005OM-0013::PF-0155",
+      "OPF::A005OM-0013::PF-0156",
+      "OPF::A005OM-0013::PF-0157",
+      "OPF::A005OM-0013::PF-0158",
+      "OPF::A005OM-0013::PF-0159",
+      "OPF::A005OM-0013::PF-0160",
+      "OPF::A005OM-0013::PF-0161",
+      "OPF::A005OM-0013::PF-0162",
+      "OPF::A005OM-0013::PF-0163",
+      "OPF::A005OM-0013::PF-0164",
+      "OPF::A005OM-0013::PF-0165",
+      "OPF::A005OM-0013::PF-0166",
+      "OPF::A005OM-0013::PF-0167",
+      "OPF::A005OM-0013::PF-0168",
+      "OPF::A005OM-0013::PF-0169",
+      "OPF::A005OM-0013::PF-0170",
+      "OPF::A005OM-0013::PF-0171",
+      "OPF::A005OM-0013::PF-0172",
+      "OPF::A005OM-0013::PF-0173",
+      "OPF::A005OM-0013::PF-0174",
+      "OPF::A005OM-0013::PF-0175",
+      "OPF::A005OM-0013::PF-0176",
+      "OPF::A005OM-0013::PF-0177",
+      "OPF::A005OM-0013::PF-0178",
+      "OPF::A005OM-0013::PF-0179",
+      "OPF::A005OM-0013::PF-0180",
+      "OPF::A005OM-0013::PF-0181",
+      "OPF::A005OM-0013::PF-0182",
+      "OPF::A005OM-0013::PF-0183",
+      "OPF::A005OM-0013::PF-0184",
+      "OPF::A005OM-0013::PF-0185",
+      "OPF::A005OM-0013::PF-0186",
+      "OPF::A005OM-0013::PF-0187",
+      "OPF::A005OM-0013::PF-0188",
+      "OPF::A005OM-0013::PF-0189",
+      "OPF::A005OM-0013::PF-0190",
+      "OPF::A005OM-0013::PF-0191",
+      "OPF::A005OM-0013::PF-0192",
+      "OPF::A005OM-0013::PF-0193",
+      "OPF::A005OM-0013::PF-0194",
+      "OPF::A005OM-0013::PF-0195",
+      "OPF::A005OM-0013::PF-0196",
+      "OPF::A005OM-0013::PF-0197",
+      "OPF::A005OM-0013::PF-0198",
+      "OPF::A005OM-0013::PF-0199",
+      "OPF::A005OM-0013::PF-0200",
+      "OPF::A005OM-0013::PF-0201",
+      "OPF::A005OM-0013::PF-0202",
+      "OPF::A005OM-0013::PF-0203",
+      "OPF::A005OM-0013::PF-0204",
+      "OPF::A005OM-0013::PF-0205",
+      "OPF::A005OM-0013::PF-0206",
+      "OPF::A005OM-0013::PF-0207",
+      "OPF::A005OM-0013::PF-0208",
+      "OPF::A005OM-0013::PF-0209",
+      "OPF::A005OM-0013::PF-0210",
+      "OPF::A005OM-0013::PF-0211",
+      "OPF::A005OM-0013::PF-0212"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0074",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/00-plans-index.md authority and lifecycle as \"Slash and chat SSOT boundary is explicit\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0075",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0011",
+        "OPF::A005OM-0013::PF-0002",
+        "OPF::A005OM-0013::PF-0125"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/.implementation_readiness/pnc019_certification_receipt.schema.json authority and lifecycle. The listed near-neighbors address Artifact envelope traversal has no precedence, cycle, or stale-reference rules; Execution context privacy lifecycle lacks oracles; Concrete identity surfaces lack privacy and retention rules, but their Plans/FileManager.md, Plans/Executor_Protocol.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0076",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0207",
+        "OPF::A005OM-0013::PF-0047",
+        "OPF::A005OM-0013::PF-0211"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Architecture_Invariants.md authority and lifecycle. The listed near-neighbors address Credential-store outage behavior is undefined; RedactionSettlement is not yet a closed end-to-end barrier; Stable identity lacks lifecycle rules, but their Plans/GitHub_API_Auth_and_Flows.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0077",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"User Commands ownership is explicit and bounded\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0078",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"User Commands and UICommands are not conflated\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0079",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0132",
+        "OPF::A005OM-0013::PF-0166"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Command guard checks a lossy reconstruction; Whitespace collapse is not a shell-aware command identity, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0080",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0009",
+        "OPF::A005OM-0013::PF-0066"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Symlink and path containment rules permit unresolved escape and race cases; Path and attachment encoding create cross-provider bypass risk, but their Plans/FileManager.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0081",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0004",
+        "OPF::A005OM-0013::PF-0166"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Host action intake lacks enforceable sandbox semantics; Whitespace collapse is not a shell-aware command identity, but their Plans/Executor_Protocol.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0082",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0003",
+        "OPF::A005OM-0013::PF-0098",
+        "OPF::A005OM-0013::PF-0202"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Carried authority has no revocation transition; Child and plugin authority freshness is underspecified; Approval cards cannot mutate Persona profiles, but their Plans/Executor_Protocol.md, Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0083",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0067",
+        "OPF::A005OM-0013::PF-0091",
+        "OPF::A005OM-0013::PF-0104"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Audit-write failure and command-preview lifecycle remain ambiguous; DRY and exact approved-command rules are testable; Host-side-effect quarantine and cleanup transitions are incomplete, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0084",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"The locked reserved-command set contradicts its own Goal entries\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0085",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"Core execution, permissions, GUI, reserved commands, dispatch, baseline, and acceptance surfaces are enumerated\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0086",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0080",
+        "OPF::A005OM-0013::PF-0110"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Dispatch authority and adjacent runtime-input boundaries; Route input normalization is owner-derived, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0087",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0015",
+        "OPF::A005OM-0013::PF-0137"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address F-002 through F-006 acceptance criteria validate migration form, not product behavior; Tests do not falsify critical bypass paths, but their Plans/FileManager.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0088",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0117",
+        "OPF::A005OM-0013::PF-0145"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Worktree path gap closed; Request-local worktree scope, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0089",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0044",
+        "OPF::A005OM-0013::PF-0098",
+        "OPF::A005OM-0013::PF-0191"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Requested and effective runtime states stay visually distinct; Child and plugin authority freshness is underspecified; Catalog Availability Risk, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0090",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0012"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Mention picker does not explicitly inherit worktree and approval visibility filters, but their Plans/FileManager.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0091",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0006",
+        "OPF::A005OM-0013::PF-0191",
+        "OPF::A005OM-0013::PF-0204"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Capability-pack activation lacks a lifecycle and authority model; Catalog Availability Risk; Third-party visualizer libraries require curated records, but their Plans/FileManager.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0092",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0014",
+        "OPF::A005OM-0013::PF-0097",
+        "OPF::A005OM-0013::PF-0124"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Operational failures lack correlation, redaction, and support diagnostics; FileSafe event correlation incomplete; Canonical event, diagnostic, and verification surfaces, but their Plans/FileManager.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0093",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"Reserved override authority is explicit\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0094",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"OpenCode reference authority is correctly bounded\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0095",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Commands_System.md authority and lifecycle as \"OpenCode override behavior remains reference-only\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0096",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0098",
+        "OPF::A005OM-0013::PF-0149"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Child and plugin authority freshness is underspecified; Provider coverage has no adapter-level conformance oracle, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0097",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0178"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Commands_System.md authority and lifecycle. The listed near-neighbors address Retired bridge authority is unambiguous, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0098",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0209"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address OAuth callback security stops at loopback binding, but their Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0099",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0013",
+        "OPF::A005OM-0013::PF-0053",
+        "OPF::A005OM-0013::PF-0066"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Rendered preview inputs lack sandbox and resource-access requirements; Prompt extraction can panic on Unicode input; Path and attachment encoding create cross-provider bypass risk, but their Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0100",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0047",
+        "OPF::A005OM-0013::PF-0094",
+        "OPF::A005OM-0013::PF-0137"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address RedactionSettlement is not yet a closed end-to-end barrier; Credential-bearing runtime snapshots lack a data-lifecycle contract; Tests do not falsify critical bypass paths, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0101",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0207",
+        "OPF::A005OM-0013::PF-0209",
+        "OPF::A005OM-0013::PF-0211",
+        "OPF::A005OM-0013::PF-0212"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Credential-store outage behavior is undefined; OAuth callback security stops at loopback binding; Stable identity lacks lifecycle rules; Account-switch disclosure has no testable UI contract, but their Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0102",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0002",
+        "OPF::A005OM-0013::PF-0094",
+        "OPF::A005OM-0013::PF-0171"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Execution context privacy lifecycle lacks oracles; Credential-bearing runtime snapshots lack a data-lifecycle contract; Shared guards and per-request scope need isolation semantics, but their Plans/Executor_Protocol.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0103",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0037",
+        "OPF::A005OM-0013::PF-0058",
+        "OPF::A005OM-0013::PF-0099",
+        "OPF::A005OM-0013::PF-0154"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Persistent blocked episodes lack concurrency-safe resolution transitions; Approval card lifecycle underspecified; Mutation session and safe-point receipts are not yet fully executable; Blocked action mapping lacks eligibility and persistence rules, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0104",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0043",
+        "OPF::A005OM-0013::PF-0096"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Mutation and recovery controls lack adversarial transition oracles; Local-work preservation safety decision is underspecified, but their Plans/FinalGUISpec.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0105",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0208"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Git and GitHub authority domains are separated, but their Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0106",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Containers_Registry_and_Unraid.md authority and lifecycle as \"PAT remains mandatory alongside browser login\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0107",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0047",
+        "OPF::A005OM-0013::PF-0094",
+        "OPF::A005OM-0013::PF-0207"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address RedactionSettlement is not yet a closed end-to-end barrier; Credential-bearing runtime snapshots lack a data-lifecycle contract; Credential-store outage behavior is undefined, but their Plans/FileSafe.md, Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0108",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0098",
+        "OPF::A005OM-0013::PF-0103"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Child and plugin authority freshness is underspecified; Projection trust context has no freshness or denial contract, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0109",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0208"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Git and GitHub authority domains are separated, but their Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0110",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0141",
+        "OPF::A005OM-0013::PF-0183"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Destructive Git pattern coverage; Approval and clipboard safety stop short of immutable authority and lifecycle rules, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0111",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0208"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Git and GitHub authority domains are separated, but their Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0112",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0110"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Route input normalization is owner-derived, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0113",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0103",
+        "OPF::A005OM-0013::PF-0210"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Projection trust context has no freshness or denial contract; GitHub host policy is not actually selected, but their Plans/FileSafe.md, Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0114",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0103",
+        "OPF::A005OM-0013::PF-0210"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Projection trust context has no freshness or denial contract; GitHub host policy is not actually selected, but their Plans/FileSafe.md, Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0115",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0183",
+        "OPF::A005OM-0013::PF-0201",
+        "OPF::A005OM-0013::PF-0209"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Approval and clipboard safety stop short of immutable authority and lifecycle rules; Web session approvals lack race and stale-card semantics; OAuth callback security stops at loopback binding, but their Plans/FinalGUISpec.md, Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0116",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0041",
+        "OPF::A005OM-0013::PF-0096"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Fail-closed scope and initialization contract is explicit; Local-work preservation safety decision is underspecified, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0117",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0076",
+        "OPF::A005OM-0013::PF-0124"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Canonical event authority is singular; Canonical event, diagnostic, and verification surfaces, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0118",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0034",
+        "OPF::A005OM-0013::PF-0089",
+        "OPF::A005OM-0013::PF-0183"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Persistent approved commands lack lifecycle and scope; Exact normalized approval identity; Approval and clipboard safety stop short of immutable authority and lifecycle rules, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0119",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0034",
+        "OPF::A005OM-0013::PF-0035",
+        "OPF::A005OM-0013::PF-0089"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Persistent approved commands lack lifecycle and scope; Approve And Build has explicit single-launch authority; Exact normalized approval identity, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0120",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0061",
+        "OPF::A005OM-0013::PF-0096",
+        "OPF::A005OM-0013::PF-0154"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Blocked payload spells preserved local work inconsistently; Local-work preservation safety decision is underspecified; Blocked action mapping lacks eligibility and persistence rules, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0121",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0053",
+        "OPF::A005OM-0013::PF-0066",
+        "OPF::A005OM-0013::PF-0147"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Prompt extraction can panic on Unicode input; Path and attachment encoding create cross-provider bypass risk; Multi-platform parser matrix missing, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0122",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Containers_Registry_and_Unraid.md authority and lifecycle as \"Config mapping names rules without complete field semantics\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0123",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0025",
+        "OPF::A005OM-0013::PF-0027",
+        "OPF::A005OM-0013::PF-0038"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Atomic rename durability and janitor race closure are incomplete; Canonical-path atomic mutation and CAS state machine; Canonicalize-before-write cannot validate a new leaf path, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0124",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0039",
+        "OPF::A005OM-0013::PF-0111"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Trusted-daemon authority has no in-flight revocation contract; Disabled state requires deliberate authenticated authority, but their Plans/FinalGUISpec.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0125",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0009",
+        "OPF::A005OM-0013::PF-0038",
+        "OPF::A005OM-0013::PF-0120"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Symlink and path containment rules permit unresolved escape and race cases; Canonicalize-before-write cannot validate a new leaf path; Conflicting write-scope identities have no precedence rule, but their Plans/FileManager.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0126",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0096",
+        "OPF::A005OM-0013::PF-0114",
+        "OPF::A005OM-0013::PF-0120"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Local-work preservation safety decision is underspecified; Planning setup authority and non-Git rollback need sharper boundaries; Conflicting write-scope identities have no precedence rule, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0127",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0001",
+        "OPF::A005OM-0013::PF-0022",
+        "OPF::A005OM-0013::PF-0027"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Worktree path races remain unspecified; Optimistic concurrency outcome is explicit; Canonical-path atomic mutation and CAS state machine, but their Plans/Executor_Protocol.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0128",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0114",
+        "OPF::A005OM-0013::PF-0183"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Planning setup authority and non-Git rollback need sharper boundaries; Approval and clipboard safety stop short of immutable authority and lifecycle rules, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0129",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0013",
+        "OPF::A005OM-0013::PF-0125",
+        "OPF::A005OM-0013::PF-0177"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Rendered preview inputs lack sandbox and resource-access requirements; Concrete identity surfaces lack privacy and retention rules; Vision image ingestion lacks a complete permission protocol, but their Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0130",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0044",
+        "OPF::A005OM-0013::PF-0125",
+        "OPF::A005OM-0013::PF-0211"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Requested and effective runtime states stay visually distinct; Concrete identity surfaces lack privacy and retention rules; Stable identity lacks lifecycle rules, but their Plans/FileSafe.md, Plans/FinalGUISpec.md, Plans/GitHub_API_Auth_and_Flows.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0131",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0097",
+        "OPF::A005OM-0013::PF-0124",
+        "OPF::A005OM-0013::PF-0129"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address FileSafe event correlation incomplete; Canonical event, diagnostic, and verification surfaces; FileSafe event persistence failure is dropped, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0132",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0002",
+        "OPF::A005OM-0013::PF-0047",
+        "OPF::A005OM-0013::PF-0094",
+        "OPF::A005OM-0013::PF-0137"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Execution context privacy lifecycle lacks oracles; RedactionSettlement is not yet a closed end-to-end barrier; Credential-bearing runtime snapshots lack a data-lifecycle contract; Tests do not falsify critical bypass paths, but their Plans/Executor_Protocol.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0133",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0037",
+        "OPF::A005OM-0013::PF-0043",
+        "OPF::A005OM-0013::PF-0058",
+        "OPF::A005OM-0013::PF-0099"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Persistent blocked episodes lack concurrency-safe resolution transitions; Mutation and recovery controls lack adversarial transition oracles; Approval card lifecycle underspecified; Mutation session and safe-point receipts are not yet fully executable, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0134",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0098",
+        "OPF::A005OM-0013::PF-0103",
+        "OPF::A005OM-0013::PF-0134"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Child and plugin authority freshness is underspecified; Projection trust context has no freshness or denial contract; Projection trust does not deterministically select an action gate, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0135",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0110"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Route input normalization is owner-derived, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0136",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Containers_Registry_and_Unraid.md authority and lifecycle as \"Coasts source-lineage boundary is explicit\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0137",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0149"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Provider coverage has no adapter-level conformance oracle, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0138",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0092",
+        "OPF::A005OM-0013::PF-0103",
+        "OPF::A005OM-0013::PF-0110"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Containers_Registry_and_Unraid.md authority and lifecycle. The listed near-neighbors address Remote mounted-project identity lacks fail-closed semantics; Projection trust context has no freshness or denial contract; Route input normalization is owner-derived, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0139",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0037",
+        "OPF::A005OM-0013::PF-0154",
+        "OPF::A005OM-0013::PF-0162"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Contracts_V0.md authority and lifecycle. The listed near-neighbors address Persistent blocked episodes lack concurrency-safe resolution transitions; Blocked action mapping lacks eligibility and persistence rules; Blocked identity and decision authority cannot compete, but their Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0140",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Contracts_V0.md authority and lifecycle as \"Concern merge, split, and supersession authority is deliberately withheld\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0141",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Contracts_V0.md authority and lifecycle as \"Unsupported concern mutation requests lack typed failure behavior\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0142",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0042",
+        "OPF::A005OM-0013::PF-0125"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Contracts_V0.md authority and lifecycle. The listed near-neighbors address ObservabilityEnvelope and TracePersistencePolicy remain explicitly non-buildable; Concrete identity surfaces lack privacy and retention rules, but their Plans/FileSafe.md, Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0143",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0011",
+        "OPF::A005OM-0013::PF-0031",
+        "OPF::A005OM-0013::PF-0110"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Contracts_V0.md authority and lifecycle. The listed near-neighbors address Artifact envelope traversal has no precedence, cycle, or stale-reference rules; Routing reconciliation fails on missing owner structure; Route input normalization is owner-derived, but their Plans/FileManager.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0144",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0200"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Contracts_V0.md authority and lifecycle. The listed near-neighbors address Permission policy authority is explicit, but their Plans/FinalGUISpec.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0145",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison against all 212 comparators found no feature under the same Plans/Contracts_V0.md authority and lifecycle as \"Plans-to-code schema branch authority and compatibility aliases are bounded\"; any shared terms were generic, adjacent, or dependency-level only.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0146",
+      "compared_against_count": 212,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0013::PF-0035",
+        "OPF::A005OM-0013::PF-0044",
+        "OPF::A005OM-0013::PF-0183"
+      ],
+      "rationale": "Exhaustive comparison against all 212 comparators found no same-feature candidate under the Plans/Contracts_V0.md authority and lifecycle. The listed near-neighbors address Approve And Build has explicit single-launch authority; Requested and effective runtime states stay visually distinct; Approval and clipboard safety stop short of immutable authority and lifecycle rules, but their Plans/FinalGUISpec.md, Plans/FileSafe.md authorities, consumers, or state lifecycles remain distinct.",
+      "confidence": 0.94
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}
+

@@ -1,0 +1,43 @@
+{
+  "activation_authorized": false,
+  "authority_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/CACHE_RECONCILIATION_AUTHORITY_V2.json",
+  "authority_sha256": "e04b1d8e2b903e1a03b48f2b7cdecf740a4d0687fb29400ee16b1d712d52e855",
+  "cache_file_count": 39,
+  "cache_tree_sha256": "b7262c3dd93051aaa7c3278c2a24ae9c1e4ee1c49a050e17554f18fc589e7ba5",
+  "cache_validation": {
+    "all_cpython_312": true,
+    "all_magic_valid": true,
+    "all_regular_direct_pycache_pyc": true,
+    "all_sources_exist": true,
+    "all_timestamp_and_size_match": true,
+    "path_escape_count": 0,
+    "symlink_count": 0
+  },
+  "credits": 0,
+  "errors": [],
+  "launch_authorized": false,
+  "runtime_probe": {
+    "cache_tag": "cpython-312",
+    "jsonschema": "4.26.0",
+    "machine": "arm64",
+    "python": "3.12.13",
+    "validator": "Draft202012Validator"
+  },
+  "runtime_tree_file_count": 191,
+  "runtime_tree_sha256": "37e2762646b7c6c49af370b5ecf35b03b0d70258536fdb9faa953953b6ac4517",
+  "schema_version": "audit005-jsonschema-cache-reconciliation-terminal-report-v2",
+  "semantic_tree_file_count": 152,
+  "semantic_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+  "status": "PASS",
+  "tests": {
+    "counts": {
+      "failed": 0,
+      "passed": 562,
+      "total": 562
+    },
+    "failed_tests": [],
+    "schema_version": "jsonschema-cache-reconciliation-v2-tests-v1",
+    "status": "pass",
+    "test_digest": "18fc5553f0ca3f29572c0027e0c1e68ac81a4e749486af144a11b197635a4b48"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:puppet-master:audit005:exhaustive299:blocker-inventory:v32",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "audit_id",
+    "blocker_count",
+    "blocker_ids",
+    "blockers",
+    "credit",
+    "schema_version",
+    "status"
+  ],
+  "properties": {
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "blocker_count": {"const": 7},
+    "blocker_ids": {
+      "const": [
+        "A005-AGG-B001",
+        "A005-AGG-B002",
+        "A005-AGG-B003",
+        "A005-AGG-B004",
+        "A005-AGG-B005",
+        "A005-AGG-B006",
+        "A005-AGG-B007"
+      ]
+    },
+    "blockers": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "blocker_id",
+          "current_evidence",
+          "current_facts",
+          "current_state_note",
+          "lane_id",
+          "legacy_evidence",
+          "legacy_facts",
+          "legacy_object_sha256",
+          "satisfaction_condition",
+          "state",
+          "status"
+        ],
+        "properties": {
+          "blocker_id": {"pattern": "^A005-AGG-B00[1-7]$"},
+          "current_evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/evidence"}
+          },
+          "current_facts": {"type": "object"},
+          "current_state_note": {"type": "string", "minLength": 1},
+          "lane_id": {"type": "string", "minLength": 1},
+          "legacy_evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/evidence"}
+          },
+          "legacy_facts": {"type": "object"},
+          "legacy_object_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "satisfaction_condition": {"type": "string", "minLength": 1},
+          "state": {"type": "string", "minLength": 1},
+          "status": {"const": "OPEN_PRESERVED_NO_CREDIT"}
+        }
+      }
+    },
+    "credit": {"const": 0},
+    "schema_version": {"const": "audit005-exhaustive299-blocker-inventory-v32"},
+    "status": {"const": "BLOCKED_EXACT_SEVEN_PRESERVED"}
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": {"type": "string", "pattern": "^Plans/\\.audits/"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

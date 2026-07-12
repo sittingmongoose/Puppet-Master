@@ -1566,6 +1566,139 @@
     }
     .editor-tabs .tab .dot { color: var(--accent-orange); }
 
+    /* ---- Editor tab lifecycle chrome (tab close X, pane tabbar actions,
+       overflow chip + picker, empty state). The overflow chip/menu pair is
+       cloned from .pm-term-overflow / .pm-term-overflow-menu above under new
+       class names so editor chrome is decoupled from terminal CSS churn. ---- */
+    .editor-tabs .tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .editor-tabs .tab .tab-close-btn {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      opacity: 0;
+      flex-shrink: 0;
+    }
+    .editor-tabs .tab:hover .tab-close-btn,
+    .editor-tabs .tab.active .tab-close-btn { opacity: 1; }
+    .editor-tabs .tab .tab-close-btn:hover {
+      background: var(--surface);
+      color: var(--text-primary);
+    }
+    .pane-tabbar-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .pane-close-btn {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .pane-close-btn:hover {
+      background: var(--surface);
+      color: var(--text-primary);
+      opacity: 1;
+    }
+    .pm-ed-overflow {
+      padding: 2px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
+      font-size: 10px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .pm-ed-overflow.active {
+      border-color: var(--accent-lime);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--accent-lime) 25%, transparent);
+    }
+    .pm-ed-overflow-menu {
+      position: fixed;
+      z-index: 12000;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 6px;
+      min-width: 160px;
+      max-width: 280px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.25));
+    }
+    .pm-ed-overflow-menu button {
+      text-align: left;
+      padding: 6px 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pm-ed-overflow-menu button:hover { background: var(--border-light); }
+    .pm-ed-overflow-menu .pm-ed-overflow-label {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pm-ed-overflow-menu .pm-ed-overflow-x {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      color: var(--text-muted);
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .pm-ed-overflow-menu .pm-ed-overflow-x:hover {
+      background: var(--surface);
+      color: var(--text-primary);
+      opacity: 1;
+    }
+    .editor-empty-state {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: var(--lg);
+    }
+
     /* Dashboard tabs — pills for glass themes */
     [data-theme^="glass"] .dashboard-tabs .tab {
       border-radius: 12px !important;

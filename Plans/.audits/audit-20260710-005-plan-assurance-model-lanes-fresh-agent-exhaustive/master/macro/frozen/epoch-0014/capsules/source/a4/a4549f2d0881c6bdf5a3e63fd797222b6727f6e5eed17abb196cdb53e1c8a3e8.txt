@@ -1,0 +1,2264 @@
+L00007031	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007032	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007033	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007034	compatibility_only_notes: []
+L00007035	stale_retired_dispositions: []
+L00007036	owner_hints:
+L00007037	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007038	- Plans/storage-plan.md
+L00007039	- Plans/Permissions_System.md
+L00007040	- Plans/Tools.md
+L00007041	```
+L00007042	
+L00007043	### SMPFS-107 - Terminal And Dev Restore Verification
+L00007044	
+L00007045	```yaml
+L00007046	plan_unit_id: SMPFS-107
+L00007047	unit_type: requirement
+L00007048	status: accepted
+L00007049	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007050	canonical_text: Terminal sessions and dev sessions have explicit restore eligibility; running processes are never assumed alive after restart, and terminal restart or replacement creates a new terminal_session_id.
+L00007051	gui_related: false
+L00007052	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007053	split_recommended: false
+L00007054	depends_on:
+L00007055	- PDS-003
+L00007056	- PDS-004
+L00007057	- PDS-005
+L00007058	- PNC-001
+L00007059	- SP-001
+L00007060	- RM-025
+L00007061	unblocks: []
+L00007062	acceptance_criteria:
+L00007063	- SMPFS-107 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007064	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007065	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007066	validation_surfaces:
+L00007067	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007068	- python3 scripts/pm-plan-index.py validate
+L00007069	risk_class: section15_tail_drift
+L00007070	reasoning_tier: standard
+L00007071	context_scope: section15_tail
+L00007072	implementation_surfaces:
+L00007073	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007074	node_compile_hint:
+L00007075	  mode: terminal_dev_restore_verification
+L00007076	  create_worknodes: false
+L00007077	source_lineage:
+L00007078	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007079	preserved_exact_tokens:
+L00007080	- terminal sessions
+L00007081	- dev sessions
+L00007082	- explicit restore eligibility
+L00007083	- running process
+L00007084	- restart
+L00007085	- terminal_session_id
+L00007086	negative_constraints:
+L00007087	- A running process is never assumed alive after restart without verification.
+L00007088	preserved_contractrefs:
+L00007089	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007090	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007091	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007092	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007093	compatibility_only_notes: []
+L00007094	stale_retired_dispositions: []
+L00007095	owner_hints:
+L00007096	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007097	- Plans/storage-plan.md
+L00007098	- Plans/Run_Modes.md
+L00007099	```
+L00007100	
+L00007101	### SMPFS-108 - Terminal Durable Presentation Metadata
+L00007102	
+L00007103	```yaml
+L00007104	plan_unit_id: SMPFS-108
+L00007105	unit_type: requirement
+L00007106	status: accepted
+L00007107	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007108	canonical_text: Terminal section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are guaranteed_durable presentation metadata.
+L00007109	gui_related: true
+L00007110	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007111	split_recommended: false
+L00007112	depends_on:
+L00007113	- PDS-003
+L00007114	- PDS-004
+L00007115	- PDS-005
+L00007116	- PNC-001
+L00007117	- SP-001
+L00007118	- UCC-001
+L00007119	unblocks: []
+L00007120	acceptance_criteria:
+L00007121	- SMPFS-108 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007122	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007123	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007124	validation_surfaces:
+L00007125	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007126	- python3 scripts/pm-plan-index.py validate
+L00007127	risk_class: section15_tail_drift
+L00007128	reasoning_tier: standard
+L00007129	context_scope: section15_tail
+L00007130	implementation_surfaces:
+L00007131	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007132	node_compile_hint:
+L00007133	  mode: terminal_durable_presentation_metadata
+L00007134	  create_worknodes: false
+L00007135	source_lineage:
+L00007136	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007137	preserved_exact_tokens:
+L00007138	- section
+L00007139	- tab
+L00007140	- pane
+L00007141	- selection-of-active-pane
+L00007142	- labels
+L00007143	- pin state
+L00007144	- dock/detach placement
+L00007145	- linked dev-session references
+L00007146	- guaranteed_durable
+L00007147	negative_constraints: []
+L00007148	preserved_contractrefs:
+L00007149	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007150	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007151	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007152	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007153	compatibility_only_notes: []
+L00007154	stale_retired_dispositions: []
+L00007155	owner_hints:
+L00007156	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007157	- Plans/storage-plan.md
+L00007158	- Plans/UI_Command_Catalog.md
+L00007159	```
+L00007160	
+L00007161	### SMPFS-109 - Terminal Transcript And Runtime Persistence Tiers
+L00007162	
+L00007163	```yaml
+L00007164	plan_unit_id: SMPFS-109
+L00007165	unit_type: requirement
+L00007166	status: accepted
+L00007167	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007168	canonical_text: Terminal transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and Output/Ports linkage are best_effort_durable, while live PTY continuity, unlimited scrollback, TUI alternate-screen content, live selections, and in-flight search highlights are transient_only.
+L00007169	gui_related: false
+L00007170	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007171	split_recommended: false
+L00007172	depends_on:
+L00007173	- PDS-003
+L00007174	- PDS-004
+L00007175	- PDS-005
+L00007176	- PNC-001
+L00007177	- SP-001
+L00007178	- CV-215
+L00007179	unblocks: []
+L00007180	acceptance_criteria:
+L00007181	- SMPFS-109 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007182	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007183	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007184	validation_surfaces:
+L00007185	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007186	- python3 scripts/pm-plan-index.py validate
+L00007187	risk_class: section15_tail_drift
+L00007188	reasoning_tier: standard
+L00007189	context_scope: section15_tail
+L00007190	implementation_surfaces:
+L00007191	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007192	node_compile_hint:
+L00007193	  mode: terminal_transcript_runtime_persistence_tiers
+L00007194	  create_worknodes: false
+L00007195	source_lineage:
+L00007196	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007197	preserved_exact_tokens:
+L00007198	- bounded transcript snapshots
+L00007199	- command-block metadata
+L00007200	- cwd snapshots
+L00007201	- shell-integration hints
+L00007202	- best_effort_durable
+L00007203	- live PTY continuity
+L00007204	- unlimited scrollback
+L00007205	- active TUI alternate-screen content
+L00007206	- live selections
+L00007207	- in-flight search highlights
+L00007208	- transient_only
+L00007209	negative_constraints:
+L00007210	- transient_only runtime state MUST NOT be faked after restart.
+L00007211	preserved_contractrefs:
+L00007212	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007213	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007214	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007215	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007216	compatibility_only_notes: []
+L00007217	stale_retired_dispositions: []
+L00007218	owner_hints:
+L00007219	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007220	- Plans/storage-plan.md
+L00007221	- Plans/Contracts_V0.md
+L00007222	```
+L00007223	
+L00007224	### SMPFS-110 - Canonical Restore Outcome Vocabulary
+L00007225	
+L00007226	```yaml
+L00007227	plan_unit_id: SMPFS-110
+L00007228	unit_type: requirement
+L00007229	status: accepted
+L00007230	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007231	canonical_text: Canonical restore outcomes are exactly restored_live, restored_exited, restored_disconnected, and restored_without_history.
+L00007232	gui_related: true
+L00007233	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007234	split_recommended: false
+L00007235	depends_on:
+L00007236	- PDS-003
+L00007237	- PDS-004
+L00007238	- PDS-005
+L00007239	- PNC-001
+L00007240	- SP-001
+L00007241	- ACD-008
+L00007242	unblocks: []
+L00007243	acceptance_criteria:
+L00007244	- SMPFS-110 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007245	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007246	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007247	validation_surfaces:
+L00007248	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007249	- python3 scripts/pm-plan-index.py validate
+L00007250	risk_class: section15_tail_drift
+L00007251	reasoning_tier: standard
+L00007252	context_scope: section15_tail
+L00007253	implementation_surfaces:
+L00007254	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007255	node_compile_hint:
+L00007256	  mode: canonical_restore_outcome_vocabulary
+L00007257	  create_worknodes: false
+L00007258	source_lineage:
+L00007259	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007260	preserved_exact_tokens:
+L00007261	- restored_live
+L00007262	- restored_exited
+L00007263	- restored_disconnected
+L00007264	- restored_without_history
+L00007265	negative_constraints: []
+L00007266	preserved_contractrefs:
+L00007267	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007268	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007269	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007270	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007271	compatibility_only_notes: []
+L00007272	stale_retired_dispositions: []
+L00007273	owner_hints:
+L00007274	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007275	- Plans/storage-plan.md
+L00007276	- Plans/assistant-chat-design.md
+L00007277	```
+L00007278	
+L00007279	### SMPFS-111 - Automation Promotion To Normal Browsing
+L00007280	
+L00007281	```yaml
+L00007282	plan_unit_id: SMPFS-111
+L00007283	unit_type: requirement
+L00007284	status: accepted
+L00007285	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007286	canonical_text: Promotion from paused automation into normal browsing is an explicit user-confirmed action that may copy or promote eligible browser state, reclassifies the visible automation browser as normal, and is never a hidden side effect.
+L00007287	gui_related: true
+L00007288	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007289	split_recommended: false
+L00007290	depends_on:
+L00007291	- PDS-003
+L00007292	- PDS-004
+L00007293	- PDS-005
+L00007294	- PNC-001
+L00007295	- SP-001
+L00007296	- T-001
+L00007297	- PS-001
+L00007298	unblocks: []
+L00007299	acceptance_criteria:
+L00007300	- SMPFS-111 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007301	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007302	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007303	validation_surfaces:
+L00007304	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007305	- python3 scripts/pm-plan-index.py validate
+L00007306	risk_class: section15_tail_drift
+L00007307	reasoning_tier: standard
+L00007308	context_scope: section15_tail
+L00007309	implementation_surfaces:
+L00007310	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007311	node_compile_hint:
+L00007312	  mode: automation_promotion_normal_browsing
+L00007313	  create_worknodes: false
+L00007314	source_lineage:
+L00007315	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007316	preserved_exact_tokens:
+L00007317	- user-confirmed promotion
+L00007318	- paused automation
+L00007319	- normal browsing
+L00007320	- normal persistent profile/store
+L00007321	- visible automation browser
+L00007322	- hidden side effect
+L00007323	negative_constraints:
+L00007324	- Promotion or state copy must be an explicit user action, never a hidden side effect.
+L00007325	preserved_contractrefs:
+L00007326	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007327	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007328	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007329	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007330	compatibility_only_notes: []
+L00007331	stale_retired_dispositions: []
+L00007332	owner_hints:
+L00007333	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007334	- Plans/storage-plan.md
+L00007335	- Plans/Tools.md
+L00007336	- Plans/Permissions_System.md
+L00007337	```
+L00007338	
+L00007339	### SMPFS-112 - Frozen Browser Runtime History And Crash Evidence
+L00007340	
+L00007341	```yaml
+L00007342	plan_unit_id: SMPFS-112
+L00007343	unit_type: requirement
+L00007344	status: accepted
+L00007345	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007346	canonical_text: Browser requested/effective runtime and capability state is stored as frozen runtime history instead of recomputed heuristically, and crash recovery preserves recoverable metadata and completed evidence artifacts when possible.
+L00007347	gui_related: false
+L00007348	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007349	split_recommended: false
+L00007350	depends_on:
+L00007351	- PDS-003
+L00007352	- PDS-004
+L00007353	- PDS-005
+L00007354	- PNC-001
+L00007355	- SP-001
+L00007356	- RAP-024
+L00007357	- CV-215
+L00007358	unblocks: []
+L00007359	acceptance_criteria:
+L00007360	- SMPFS-112 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007361	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007362	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007363	validation_surfaces:
+L00007364	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007365	- python3 scripts/pm-plan-index.py validate
+L00007366	risk_class: section15_tail_drift
+L00007367	reasoning_tier: standard
+L00007368	context_scope: section15_tail
+L00007369	implementation_surfaces:
+L00007370	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007371	node_compile_hint:
+L00007372	  mode: frozen_browser_runtime_history_crash_evidence
+L00007373	  create_worknodes: false
+L00007374	source_lineage:
+L00007375	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007376	preserved_exact_tokens:
+L00007377	- browser requested/effective runtime
+L00007378	- capability state
+L00007379	- frozen runtime history
+L00007380	- recomputed heuristically
+L00007381	- crash recovery
+L00007382	- recoverable metadata
+L00007383	- completed evidence artifacts
+L00007384	negative_constraints: []
+L00007385	preserved_contractrefs:
+L00007386	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007387	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007388	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007389	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007390	compatibility_only_notes: []
+L00007391	stale_retired_dispositions: []
+L00007392	owner_hints:
+L00007393	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007394	- Plans/storage-plan.md
+L00007395	- Plans/Runtime_Artifacts_Panel.md
+L00007396	- Plans/Contracts_V0.md
+L00007397	```
+L00007398	
+L00007399	### SMPFS-113 - Profile Scope Isolation And SaveChanges
+L00007400	
+L00007401	```yaml
+L00007402	plan_unit_id: SMPFS-113
+L00007403	unit_type: requirement
+L00007404	status: accepted
+L00007405	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007406	canonical_text: Browser or terminal session classes must not silently bleed storage into another profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while disabled saveChanges keeps the session isolated.
+L00007407	gui_related: false
+L00007408	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007409	split_recommended: false
+L00007410	depends_on:
+L00007411	- PDS-003
+L00007412	- PDS-004
+L00007413	- PDS-005
+L00007414	- PNC-001
+L00007415	- SP-001
+L00007416	- PS-001
+L00007417	unblocks: []
+L00007418	acceptance_criteria:
+L00007419	- SMPFS-113 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007420	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007421	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007422	validation_surfaces:
+L00007423	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007424	- python3 scripts/pm-plan-index.py validate
+L00007425	risk_class: section15_tail_drift
+L00007426	reasoning_tier: standard
+L00007427	context_scope: section15_tail
+L00007428	implementation_surfaces:
+L00007429	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007430	node_compile_hint:
+L00007431	  mode: profile_scope_isolation_savechanges
+L00007432	  create_worknodes: false
+L00007433	source_lineage:
+L00007434	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007435	preserved_exact_tokens:
+L00007436	- 'profile: { name: string, saveChanges: boolean }'
+L00007437	- cookies
+L00007438	- localStorage
+L00007439	- profile name
+L00007440	- project
+L00007441	- saveChanges
+L00007442	- isolated
+L00007443	- storage bleed
+L00007444	negative_constraints:
+L00007445	- No browser or terminal session class may silently bleed storage into another profile scope.
+L00007446	preserved_contractrefs:
+L00007447	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007448	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007449	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007450	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007451	compatibility_only_notes: []
+L00007452	stale_retired_dispositions: []
+L00007453	owner_hints:
+L00007454	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007455	- Plans/storage-plan.md
+L00007456	- Plans/Permissions_System.md
+L00007457	```
+L00007458	
+L00007459	### SMPFS-114 - Retired Shell Navigation And Usage Surfaces
+L00007460	
+L00007461	```yaml
+L00007462	plan_unit_id: SMPFS-114
+L00007463	unit_type: requirement
+L00007464	status: accepted
+L00007465	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007466	canonical_text: The title-bar project bar, floating thread-selector overlay, and detached usage pop-out are explicitly non-canonical promoted shell, thread navigation, and per-thread usage models.
+L00007467	gui_related: true
+L00007468	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007469	split_recommended: false
+L00007470	depends_on:
+L00007471	- PDS-003
+L00007472	- PDS-004
+L00007473	- PDS-005
+L00007474	- PNC-001
+L00007475	- UCC-001
+L00007476	- UF-001
+L00007477	- ACD-008
+L00007478	unblocks: []
+L00007479	acceptance_criteria:
+L00007480	- SMPFS-114 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007481	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007482	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007483	validation_surfaces:
+L00007484	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007485	- python3 scripts/pm-plan-index.py validate
+L00007486	risk_class: section15_tail_drift
+L00007487	reasoning_tier: standard
+L00007488	context_scope: section15_tail
+L00007489	implementation_surfaces:
+L00007490	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007491	node_compile_hint:
+L00007492	  mode: retired_shell_navigation_usage_surfaces
+L00007493	  create_worknodes: false
+L00007494	source_lineage:
+L00007495	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007496	preserved_exact_tokens:
+L00007497	- title-bar project bar
+L00007498	- floating thread-selector overlay
+L00007499	- detached usage pop-out
+L00007500	- non-canonical
+L00007501	negative_constraints: []
+L00007502	preserved_contractrefs:
+L00007503	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007504	compatibility_only_notes: []
+L00007505	stale_retired_dispositions:
+L00007506	- These surfaces are explicitly non-canonical after promotion.
+L00007507	owner_hints:
+L00007508	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007509	- Plans/UI_Command_Catalog.md
+L00007510	- Plans/usage-feature.md
+L00007511	- Plans/assistant-chat-design.md
+L00007512	```
+L00007513	
+L00007514	### SMPFS-115 - Browser Instance Reuse Non Goal
+L00007515	
+L00007516	```yaml
+L00007517	plan_unit_id: SMPFS-115
+L00007518	unit_type: requirement
+L00007519	status: accepted
+L00007520	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007521	canonical_text: One broad browser-instance model with LRU reuse is not the core browser contract.
+L00007522	gui_related: false
+L00007523	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007524	split_recommended: false
+L00007525	depends_on:
+L00007526	- PDS-003
+L00007527	- PDS-004
+L00007528	- PDS-005
+L00007529	- PNC-001
+L00007530	- T-001
+L00007531	- SP-001
+L00007532	unblocks: []
+L00007533	acceptance_criteria:
+L00007534	- SMPFS-115 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007535	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007536	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007537	validation_surfaces:
+L00007538	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007539	- python3 scripts/pm-plan-index.py validate
+L00007540	risk_class: section15_tail_drift
+L00007541	reasoning_tier: standard
+L00007542	context_scope: section15_tail
+L00007543	implementation_surfaces:
+L00007544	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007545	node_compile_hint:
+L00007546	  mode: browser_instance_reuse_non_goal
+L00007547	  create_worknodes: false
+L00007548	source_lineage:
+L00007549	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007550	preserved_exact_tokens:
+L00007551	- one broad browser-instance model
+L00007552	- LRU reuse
+L00007553	- browser contract
+L00007554	negative_constraints:
+L00007555	- One broad browser-instance model with LRU reuse is not the core browser contract.
+L00007556	preserved_contractrefs:
+L00007557	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007558	compatibility_only_notes: []
+L00007559	stale_retired_dispositions:
+L00007560	- This model is explicitly non-canonical after promotion.
+L00007561	owner_hints:
+L00007562	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007563	- Plans/Tools.md
+L00007564	- Plans/storage-plan.md
+L00007565	```
+L00007566	
+L00007567	### SMPFS-116 - Browser Host Placement Non Goal
+L00007568	
+L00007569	```yaml
+L00007570	plan_unit_id: SMPFS-116
+L00007571	unit_type: requirement
+L00007572	status: accepted
+L00007573	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007574	canonical_text: The bottom panel is not the primary browser host for the promoted browser model.
+L00007575	gui_related: true
+L00007576	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007577	split_recommended: false
+L00007578	depends_on:
+L00007579	- PDS-003
+L00007580	- PDS-004
+L00007581	- PDS-005
+L00007582	- PNC-001
+L00007583	- UCC-001
+L00007584	- WM-001
+L00007585	unblocks: []
+L00007586	acceptance_criteria:
+L00007587	- SMPFS-116 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007588	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007589	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007590	validation_surfaces:
+L00007591	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007592	- python3 scripts/pm-plan-index.py validate
+L00007593	risk_class: section15_tail_drift
+L00007594	reasoning_tier: standard
+L00007595	context_scope: section15_tail
+L00007596	implementation_surfaces:
+L00007597	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007598	node_compile_hint:
+L00007599	  mode: browser_host_placement_non_goal
+L00007600	  create_worknodes: false
+L00007601	source_lineage:
+L00007602	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007603	preserved_exact_tokens:
+L00007604	- bottom panel
+L00007605	- primary browser host
+L00007606	negative_constraints:
+L00007607	- The bottom panel is not the primary browser host.
+L00007608	preserved_contractrefs:
+L00007609	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007610	compatibility_only_notes: []
+L00007611	stale_retired_dispositions:
+L00007612	- Bottom-panel-as-primary-browser-host is explicitly non-canonical after promotion.
+L00007613	owner_hints:
+L00007614	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007615	- Plans/UI_Command_Catalog.md
+L00007616	- Plans/Wiring_Matrix.md
+L00007617	```
+L00007618	
+L00007619	### SMPFS-117 - Silent Browser Context Injection Prohibition
+L00007620	
+L00007621	```yaml
+L00007622	plan_unit_id: SMPFS-117
+L00007623	unit_type: requirement
+L00007624	status: accepted
+L00007625	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007626	canonical_text: Ordinary browser clicks or text selection must not silently inject context into assistant prompts or runtime state.
+L00007627	gui_related: false
+L00007628	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007629	split_recommended: false
+L00007630	depends_on:
+L00007631	- PDS-003
+L00007632	- PDS-004
+L00007633	- PDS-005
+L00007634	- PNC-001
+L00007635	- T-001
+L00007636	- PS-001
+L00007637	unblocks: []
+L00007638	acceptance_criteria:
+L00007639	- SMPFS-117 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007640	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007641	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007642	validation_surfaces:
+L00007643	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007644	- python3 scripts/pm-plan-index.py validate
+L00007645	risk_class: section15_tail_drift
+L00007646	reasoning_tier: standard
+L00007647	context_scope: section15_tail
+L00007648	implementation_surfaces:
+L00007649	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007650	node_compile_hint:
+L00007651	  mode: silent_browser_context_injection_prohibition
+L00007652	  create_worknodes: false
+L00007653	source_lineage:
+L00007654	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007655	preserved_exact_tokens:
+L00007656	- silent automatic context injection
+L00007657	- ordinary browser clicks
+L00007658	- text selection
+L00007659	negative_constraints:
+L00007660	- Silent automatic context injection from ordinary browser clicks or text selection is non-canonical.
+L00007661	preserved_contractrefs:
+L00007662	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007663	compatibility_only_notes: []
+L00007664	stale_retired_dispositions:
+L00007665	- Silent browser context injection is explicitly non-canonical after promotion.
+L00007666	owner_hints:
+L00007667	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007668	- Plans/Tools.md
+L00007669	- Plans/Permissions_System.md
+L00007670	```
+L00007671	
+L00007672	### SMPFS-118 - Storage Bleed Non Goal
+L00007673	
+L00007674	```yaml
+L00007675	plan_unit_id: SMPFS-118
+L00007676	unit_type: requirement
+L00007677	status: accepted
+L00007678	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007679	canonical_text: Silent storage bleed between browser session classes or profile scopes is non-canonical.
+L00007680	gui_related: false
+L00007681	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007682	split_recommended: false
+L00007683	depends_on:
+L00007684	- PDS-003
+L00007685	- PDS-004
+L00007686	- PDS-005
+L00007687	- PNC-001
+L00007688	- SP-001
+L00007689	- PS-001
+L00007690	unblocks: []
+L00007691	acceptance_criteria:
+L00007692	- SMPFS-118 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007693	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007694	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007695	validation_surfaces:
+L00007696	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007697	- python3 scripts/pm-plan-index.py validate
+L00007698	risk_class: section15_tail_drift
+L00007699	reasoning_tier: standard
+L00007700	context_scope: section15_tail
+L00007701	implementation_surfaces:
+L00007702	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007703	node_compile_hint:
+L00007704	  mode: storage_bleed_non_goal
+L00007705	  create_worknodes: false
+L00007706	source_lineage:
+L00007707	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007708	preserved_exact_tokens:
+L00007709	- silent storage bleed
+L00007710	- browser session classes
+L00007711	- profile scopes
+L00007712	negative_constraints:
+L00007713	- Silent storage bleed between browser session classes or profile scopes is non-canonical.
+L00007714	preserved_contractrefs:
+L00007715	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007716	compatibility_only_notes: []
+L00007717	stale_retired_dispositions:
+L00007718	- Silent storage bleed is explicitly non-canonical after promotion.
+L00007719	owner_hints:
+L00007720	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007721	- Plans/storage-plan.md
+L00007722	- Plans/Permissions_System.md
+L00007723	```
+L00007724	
+L00007725	### SMPFS-119 - Low Level Browser Execution Non Goal
+L00007726	
+L00007727	```yaml
+L00007728	plan_unit_id: SMPFS-119
+L00007729	unit_type: requirement
+L00007730	status: accepted
+L00007731	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007732	canonical_text: Raw CDP or arbitrary browser code execution is not the guaranteed core browser contract.
+L00007733	gui_related: false
+L00007734	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007735	split_recommended: false
+L00007736	depends_on:
+L00007737	- PDS-003
+L00007738	- PDS-004
+L00007739	- PDS-005
+L00007740	- PNC-001
+L00007741	- T-001
+L00007742	- PS-001
+L00007743	unblocks: []
+L00007744	acceptance_criteria:
+L00007745	- SMPFS-119 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007746	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007747	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007748	validation_surfaces:
+L00007749	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007750	- python3 scripts/pm-plan-index.py validate
+L00007751	risk_class: section15_tail_drift
+L00007752	reasoning_tier: standard
+L00007753	context_scope: section15_tail
+L00007754	implementation_surfaces:
+L00007755	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007756	node_compile_hint:
+L00007757	  mode: low_level_browser_execution_non_goal
+L00007758	  create_worknodes: false
+L00007759	source_lineage:
+L00007760	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007761	preserved_exact_tokens:
+L00007762	- raw CDP
+L00007763	- arbitrary browser code execution
+L00007764	- guaranteed core browser contract
+L00007765	negative_constraints:
+L00007766	- Raw CDP or arbitrary browser code execution is not the guaranteed core browser contract.
+L00007767	preserved_contractrefs:
+L00007768	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007769	compatibility_only_notes: []
+L00007770	stale_retired_dispositions:
+L00007771	- Raw CDP/code execution as core browser contract is explicitly non-canonical after promotion.
+L00007772	owner_hints:
+L00007773	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007774	- Plans/Tools.md
+L00007775	- Plans/Permissions_System.md
+L00007776	```
+L00007777	
+L00007778	### SMPFS-120 - Generic Watch Mode Non Goal
+L00007779	
+L00007780	```yaml
+L00007781	plan_unit_id: SMPFS-120
+L00007782	unit_type: requirement
+L00007783	status: accepted
+L00007784	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007785	canonical_text: Generic watch mode is not the primary dev-loop model.
+L00007786	gui_related: false
+L00007787	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007788	split_recommended: false
+L00007789	depends_on:
+L00007790	- PDS-003
+L00007791	- PDS-004
+L00007792	- PDS-005
+L00007793	- PNC-001
+L00007794	- RM-025
+L00007795	- SP-001
+L00007796	unblocks: []
+L00007797	acceptance_criteria:
+L00007798	- SMPFS-120 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007799	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007800	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007801	validation_surfaces:
+L00007802	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007803	- python3 scripts/pm-plan-index.py validate
+L00007804	risk_class: section15_tail_drift
+L00007805	reasoning_tier: standard
+L00007806	context_scope: section15_tail
+L00007807	implementation_surfaces:
+L00007808	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007809	node_compile_hint:
+L00007810	  mode: generic_watch_mode_non_goal
+L00007811	  create_worknodes: false
+L00007812	source_lineage:
+L00007813	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007814	preserved_exact_tokens:
+L00007815	- generic watch mode
+L00007816	- primary dev-loop model
+L00007817	negative_constraints:
+L00007818	- Generic watch mode is not the primary dev-loop model.
+L00007819	preserved_contractrefs:
+L00007820	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007821	compatibility_only_notes: []
+L00007822	stale_retired_dispositions:
+L00007823	- Generic watch mode as primary dev-loop model is explicitly non-canonical after promotion.
+L00007824	owner_hints:
+L00007825	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007826	- Plans/Run_Modes.md
+L00007827	- Plans/storage-plan.md
+L00007828	```
+L00007829	
+L00007830	### SMPFS-121 - MCP Config Passthrough Non Goal
+L00007831	
+L00007832	```yaml
+L00007833	plan_unit_id: SMPFS-121
+L00007834	unit_type: requirement
+L00007835	status: accepted
+L00007836	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007837	canonical_text: MCP is not config-and-passthrough only; Section 15 consumers rely on host-managed MCP capability resolution.
+L00007838	gui_related: false
+L00007839	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007840	split_recommended: false
+L00007841	depends_on:
+L00007842	- PDS-003
+L00007843	- PDS-004
+L00007844	- PDS-005
+L00007845	- PNC-001
+L00007846	- T-001
+L00007847	unblocks: []
+L00007848	acceptance_criteria:
+L00007849	- SMPFS-121 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007850	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007851	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007852	validation_surfaces:
+L00007853	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007854	- python3 scripts/pm-plan-index.py validate
+L00007855	risk_class: section15_tail_drift
+L00007856	reasoning_tier: standard
+L00007857	context_scope: section15_tail
+L00007858	implementation_surfaces:
+L00007859	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007860	node_compile_hint:
+L00007861	  mode: mcp_config_passthrough_non_goal
+L00007862	  create_worknodes: false
+L00007863	source_lineage:
+L00007864	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007865	preserved_exact_tokens:
+L00007866	- MCP
+L00007867	- config-and-passthrough only
+L00007868	negative_constraints:
+L00007869	- MCP as config-and-passthrough only is non-canonical.
+L00007870	preserved_contractrefs:
+L00007871	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007872	compatibility_only_notes: []
+L00007873	stale_retired_dispositions:
+L00007874	- MCP config-only framing is explicitly non-canonical after promotion.
+L00007875	owner_hints:
+L00007876	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007877	- Plans/Tools.md
+L00007878	```
+L00007879	
+L00007880	### SMPFS-122 - Tool Permission Scope Non Goal
+L00007881	
+L00007882	```yaml
+L00007883	plan_unit_id: SMPFS-122
+L00007884	unit_type: requirement
+L00007885	status: accepted
+L00007886	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007887	canonical_text: App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and browser model.
+L00007888	gui_related: false
+L00007889	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007890	split_recommended: false
+L00007891	depends_on:
+L00007892	- PDS-003
+L00007893	- PDS-004
+L00007894	- PDS-005
+L00007895	- PNC-001
+L00007896	- PS-001
+L00007897	- T-001
+L00007898	unblocks: []
+L00007899	acceptance_criteria:
+L00007900	- SMPFS-122 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007901	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007902	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007903	validation_surfaces:
+L00007904	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007905	- python3 scripts/pm-plan-index.py validate
+L00007906	risk_class: section15_tail_drift
+L00007907	reasoning_tier: standard
+L00007908	context_scope: section15_tail
+L00007909	implementation_surfaces:
+L00007910	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007911	node_compile_hint:
+L00007912	  mode: tool_permission_scope_non_goal
+L00007913	  create_worknodes: false
+L00007914	source_lineage:
+L00007915	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007916	preserved_exact_tokens:
+L00007917	- app-level-only tool permission scope
+L00007918	- project-switch
+L00007919	- MCP
+L00007920	- browser model
+L00007921	negative_constraints:
+L00007922	- App-level-only tool permission scope is insufficient for the promoted project-switch/MCP/browser model.
+L00007923	preserved_contractrefs:
+L00007924	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007925	compatibility_only_notes: []
+L00007926	stale_retired_dispositions:
+L00007927	- App-level-only permission scope is explicitly non-canonical after promotion.
+L00007928	owner_hints:
+L00007929	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007930	- Plans/Permissions_System.md
+L00007931	- Plans/Tools.md
+L00007932	```
+L00007933	
+L00007934	### SMPFS-123 - Persona Tier Selector Stale Disposition
+L00007935	
+L00007936	```yaml
+L00007937	plan_unit_id: SMPFS-123
+L00007938	unit_type: requirement
+L00007939	status: accepted
+L00007940	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007941	canonical_text: Stale Persona/tier selectors from Personas.md, Contracts_V0, and Contracts_V0.md, including _persona_id and select_for_tier(), are not canonical promoted-shell fields; Section 15 consumers use requested/effective Persona identity and runtime owner scope instead.
+L00007942	gui_related: false
+L00007943	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007944	split_recommended: false
+L00007945	depends_on:
+L00007946	- PDS-003
+L00007947	- PDS-004
+L00007948	- PDS-005
+L00007949	- PNC-001
+L00007950	- CV-215
+L00007951	unblocks: []
+L00007952	acceptance_criteria:
+L00007953	- SMPFS-123 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007954	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007955	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007956	validation_surfaces:
+L00007957	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007958	- python3 scripts/pm-plan-index.py validate
+L00007959	risk_class: section15_tail_drift
+L00007960	reasoning_tier: standard
+L00007961	context_scope: section15_tail
+L00007962	implementation_surfaces:
+L00007963	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007964	node_compile_hint:
+L00007965	  mode: persona_tier_selector_stale_disposition
+L00007966	  create_worknodes: false
+L00007967	source_lineage:
+L00007968	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007969	preserved_exact_tokens:
+L00007970	- Persona/tier selectors
+L00007971	- Personas.md
+L00007972	- Contracts_V0
+L00007973	- _persona_id
+L00007974	- select_for_tier()
+L00007975	- requested/effective Persona identity
+L00007976	- runtime owner scope
+L00007977	negative_constraints:
+L00007978	- Stale Persona/tier selectors are not canonical promoted-shell fields.
+L00007979	preserved_contractrefs:
+L00007980	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007981	compatibility_only_notes: []
+L00007982	stale_retired_dispositions:
+L00007983	- _persona_id and select_for_tier() are stale/retired promoted-shell fields.
+L00007984	owner_hints:
+L00007985	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007986	- Plans/Contracts_V0.md
+L00007987	```
+L00007988	
+L00007989	### SMPFS-001 - Section 15 Retired Source-Preserving Bridge
+L00007990	
+L00007991	```yaml
+L00007992	plan_unit_id: SMPFS-001
+L00007993	unit_type: compatibility_disposition
+L00007994	status: retired
+L00007995	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007996	canonical_text: SMPFS-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 170. Section15_MVP_Promoted_Features_Spec-S0001 through S0050 are covered by fine-grained PlanUnits SMPFS-002 through SMPFS-123 or explicit structural coverage, while S0051, S0052, and S0054 are generated structural/audit dispositions and S0053 is retired bridge lineage. SMPFS-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.
+L00007997	gui_related: false
+L00007998	gui_classification_reason: The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.
+L00007999	split_recommended: false
+L00008000	depends_on:
+L00008001	- SMPFS-002
+L00008002	- SMPFS-003
+L00008003	- SMPFS-004
+L00008004	- SMPFS-005
+L00008005	- SMPFS-006
+L00008006	- SMPFS-007
+L00008007	- SMPFS-008
+L00008008	- SMPFS-009
+L00008009	- SMPFS-010
+L00008010	- SMPFS-011
+L00008011	- SMPFS-012
+L00008012	- SMPFS-013
+L00008013	- SMPFS-014
+L00008014	- SMPFS-015
+L00008015	- SMPFS-016
+L00008016	- SMPFS-017
+L00008017	- SMPFS-018
+L00008018	- SMPFS-019
+L00008019	- SMPFS-020
+L00008020	- SMPFS-021
+L00008021	- SMPFS-022
+L00008022	- SMPFS-023
+L00008023	- SMPFS-024
+L00008024	- SMPFS-025
+L00008025	- SMPFS-026
+L00008026	- SMPFS-027
+L00008027	- SMPFS-028
+L00008028	- SMPFS-029
+L00008029	- SMPFS-030
+L00008030	- SMPFS-031
+L00008031	- SMPFS-032
+L00008032	- SMPFS-033
+L00008033	- SMPFS-034
+L00008034	- SMPFS-035
+L00008035	- SMPFS-036
+L00008036	- SMPFS-037
+L00008037	- SMPFS-038
+L00008038	- SMPFS-039
+L00008039	- SMPFS-040
+L00008040	- SMPFS-041
+L00008041	- SMPFS-042
+L00008042	- SMPFS-043
+L00008043	- SMPFS-044
+L00008044	- SMPFS-045
+L00008045	- SMPFS-046
+L00008046	- SMPFS-047
+L00008047	- SMPFS-048
+L00008048	- SMPFS-049
+L00008049	- SMPFS-050
+L00008050	- SMPFS-051
+L00008051	- SMPFS-052
+L00008052	- SMPFS-053
+L00008053	- SMPFS-054
+L00008054	- SMPFS-055
+L00008055	- SMPFS-056
+L00008056	- SMPFS-057
+L00008057	- SMPFS-058
+L00008058	- SMPFS-059
+L00008059	- SMPFS-060
+L00008060	- SMPFS-061
+L00008061	- SMPFS-062
+L00008062	- SMPFS-063
+L00008063	- SMPFS-064
+L00008064	- SMPFS-065
+L00008065	- SMPFS-066
+L00008066	- SMPFS-067
+L00008067	- SMPFS-068
+L00008068	- SMPFS-069
+L00008069	- SMPFS-070
+L00008070	- SMPFS-071
+L00008071	- SMPFS-072
+L00008072	- SMPFS-073
+L00008073	- SMPFS-074
+L00008074	- SMPFS-075
+L00008075	- SMPFS-076
+L00008076	- SMPFS-077
+L00008077	- SMPFS-078
+L00008078	- SMPFS-079
+L00008079	- SMPFS-080
+L00008080	- SMPFS-081
+L00008081	- SMPFS-082
+L00008082	- SMPFS-083
+L00008083	- SMPFS-084
+L00008084	- SMPFS-085
+L00008085	- SMPFS-086
+L00008086	- SMPFS-087
+L00008087	- SMPFS-088
+L00008088	- SMPFS-089
+L00008089	- SMPFS-090
+L00008090	- SMPFS-091
+L00008091	- SMPFS-092
+L00008092	- SMPFS-093
+L00008093	- SMPFS-094
+L00008094	- SMPFS-095
+L00008095	- SMPFS-096
+L00008096	- SMPFS-097
+L00008097	- SMPFS-098
+L00008098	- SMPFS-099
+L00008099	- SMPFS-100
+L00008100	- SMPFS-101
+L00008101	- SMPFS-102
+L00008102	- SMPFS-103
+L00008103	- SMPFS-104
+L00008104	- SMPFS-105
+L00008105	- SMPFS-106
+L00008106	- SMPFS-107
+L00008107	- SMPFS-108
+L00008108	- SMPFS-109
+L00008109	- SMPFS-110
+L00008110	- SMPFS-111
+L00008111	- SMPFS-112
+L00008112	- SMPFS-113
+L00008113	- SMPFS-114
+L00008114	- SMPFS-115
+L00008115	- SMPFS-116
+L00008116	- SMPFS-117
+L00008117	- SMPFS-118
+L00008118	- SMPFS-119
+L00008119	- SMPFS-120
+L00008120	- SMPFS-121
+L00008121	- SMPFS-122
+L00008122	- SMPFS-123
+L00008123	unblocks: []
+L00008124	acceptance_criteria:
+L00008125	- Section15_MVP_Promoted_Features_Spec-S0001 through S0050 remain mapped to fine-grained PlanUnits SMPFS-002 through SMPFS-123 or structural coverage rather than SMPFS-001.
+L00008126	- Section15_MVP_Promoted_Features_Spec-S0051, S0052, and S0054 are structurally dispositioned as generated migration metadata.
+L00008127	- Section15_MVP_Promoted_Features_Spec-S0053 is explicitly dispositioned as retired generated bridge lineage.
+L00008128	- SMPFS-001 no longer uses node_compile_hint.mode=source_preserving_planunit.
+L00008129	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00008130	validation_surfaces:
+L00008131	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008132	- python3 scripts/pm-plan-index.py validate
+L00008133	risk_class: residual_bridge_overreach
+L00008134	reasoning_tier: standard
+L00008135	context_scope: section15_retired_bridge
+L00008136	implementation_surfaces:
+L00008137	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008138	node_compile_hint:
+L00008139	  mode: retired_migration_bridge
+L00008140	  create_worknodes: false
+L00008141	source_lineage:
+L00008142	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0051
+L00008143	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0052
+L00008144	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0053
+L00008145	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0054
+L00008146	preserved_exact_tokens:
+L00008147	- Owner / Consumer Map
+L00008148	- PlanUnits
+L00008149	- Migration Coverage
+L00008150	- SMPFS-001
+L00008151	- source_preserving_planunit
+L00008152	- retired_migration_bridge
+L00008153	- Section15_MVP_Promoted_Features_Spec-S0051
+L00008154	- Section15_MVP_Promoted_Features_Spec-S0054
+L00008155	negative_constraints:
+L00008156	- SMPFS-001 must not provide product implementation coverage for Section15_MVP_Promoted_Features_Spec-S0001 through S0050.
+L00008157	- SMPFS-001 must not override SMPFS-002 through SMPFS-123 or structural dispositions.
+L00008158	- SMPFS-001 must not use source_preserving_planunit compile mode after Phase 2B batch 170.
+L00008159	preserved_contractrefs:
+L00008160	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00008161	compatibility_only_notes:
+L00008162	- The retired bridge remains only as migration-lineage compatibility metadata; historical ContractRefs, negative constraints, compatibility notes, stale/retired evidence, and GUI-related bridge markers remain preserved in span_map and coverage_map.
+L00008163	stale_retired_dispositions:
+L00008164	- source_preserving_planunit retired for Section 15 after Phase 2B batch 170.
+L00008165	owner_hints:
+L00008166	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008167	```
+L00008168	
+L00008169	## Migration Coverage
+L00008170	
+L00008171	Original hash: `8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf`.
+L00008172	
+L00008173	Run-scoped proof artifacts:
+L00008174	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00008175	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00008176	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00008177	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00008178	
+L00008179	Phase 2B batch 168 atomized `Section15_MVP_Promoted_Features_Spec-S0001` through `Section15_MVP_Promoted_Features_Spec-S0020` into fine-grained PlanUnits `SMPFS-002` through `SMPFS-028`. Phase 2B batch 169 atomized `Section15_MVP_Promoted_Features_Spec-S0021` through `Section15_MVP_Promoted_Features_Spec-S0048` into fine-grained PlanUnits `SMPFS-029` through `SMPFS-102` with `Section15_MVP_Promoted_Features_Spec-S0023` retained as structural section organization. Phase 2B batch 170 atomized `Section15_MVP_Promoted_Features_Spec-S0049` and `Section15_MVP_Promoted_Features_Spec-S0050` into fine-grained PlanUnits `SMPFS-103` through `SMPFS-123`, structurally dispositioned generated tail spans `Section15_MVP_Promoted_Features_Spec-S0051`, `S0052`, and `S0054`, and retired `Section15_MVP_Promoted_Features_Spec-S0053` as the `SMPFS-001` bridge lineage. `SMPFS-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00008180	
+L00008181	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00008182	
+L00008183	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00008184	
+L00008185	### SMPFS-124 - P0-TERMINAL-PROTOCOL-MATRIX
+L00008186	
+L00008187	```yaml
+L00008188	plan_unit_id: SMPFS-124
+L00008189	unit_type: requirement
+L00008190	status: accepted
+L00008191	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008192	canonical_text: >-
+L00008193	  P0-TERMINAL-PROTOCOL-MATRIX (P0) is compiled as canonical Puppet Master intent for Built-in GUI terminal protocol coverage: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements. The preserved PM gap/delta is: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation. The observed external-repo signal remains source-lineage evidence: Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy
+L00008194	  fixes.
+L00008195	gui_related: true
+L00008196	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008197	depends_on:
+L00008198	- PDS-003
+L00008199	- PNC-001
+L00008200	unblocks: []
+L00008201	acceptance_criteria:
+L00008202	- VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.
+L00008203	- Parser output is deterministic across macOS/Linux/Windows/WSL fixtures.
+L00008204	- Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.
+L00008205	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008206	validation_surfaces:
+L00008207	- python3 scripts/pm-plan-index.py validate
+L00008208	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008209	- VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.
+L00008210	- Parser output is deterministic across macOS/Linux/Windows/WSL fixtures.
+L00008211	- Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.
+L00008212	risk_class: p0_terminal_runtime_hardening
+L00008213	reasoning_tier: high
+L00008214	context_scope: terminal_runtime
+L00008215	implementation_surfaces:
+L00008216	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008217	- Plans/FinalGUISpec.md
+L00008218	- Plans/storage-plan.md
+L00008219	- Plans/Automated_Testing_System.md
+L00008220	node_compile_hint:
+L00008221	  mode: p0_terminal_protocol_matrix
+L00008222	  create_worknodes: false
+L00008223	  create_nodeseeds: false
+L00008224	source_lineage:
+L00008225	- pldg-20260703-001-feature-intake:atom-0005
+L00008226	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0005
+L00008227	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0001/P0-TERMINAL-PROTOCOL-MATRIX@line=1
+L00008228	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0001/P0-TERMINAL-PROTOCOL-MATRIX
+L00008229	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008230	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008231	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:1
+L00008232	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00008233	source_atom_ids:
+L00008234	- atom-0005
+L00008235	external_atom_id: extrepo-20260703-0001
+L00008236	source_row_id: P0-TERMINAL-PROTOCOL-MATRIX
+L00008237	priority: P0
+L00008238	finding_family: Built-in GUI terminal protocol coverage
+L00008239	source_repos:
+L00008240	- ghostty-org/ghostty
+L00008241	- tmux/tmux
+L00008242	- warpdotdev/warp
+L00008243	target_docs:
+L00008244	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008245	- Plans/FinalGUISpec.md
+L00008246	- Plans/storage-plan.md
+L00008247	- Plans/Automated_Testing_System.md
+L00008248	owner_hints:
+L00008249	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008250	- Plans/FinalGUISpec.md
+L00008251	- Plans/storage-plan.md
+L00008252	- Plans/Automated_Testing_System.md
+L00008253	preserved_exact_tokens:
+L00008254	- extrepo-20260703-0001
+L00008255	- P0-TERMINAL-PROTOCOL-MATRIX
+L00008256	- P0
+L00008257	- Built-in GUI terminal protocol coverage
+L00008258	- ghostty-org/ghostty
+L00008259	- tmux/tmux
+L00008260	- warpdotdev/warp
+L00008261	negative_constraints: []
+L00008262	observed_signal: Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy fixes.
+L00008263	pm_current_coverage: PM Section15 has strong identity/lifecycle/interaction model, shell-integration tiers, cross-platform matrix, and parser-engine gates.
+L00008264	pm_gap_or_delta: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation.
+L00008265	proposal_or_recommendation: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements.
+L00008266	compile_disposition: create_new_planunit
+L00008267	```
+L00008268	
+L00008269	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00008270	
+L00008271	This addendum is canonical promoted-feature/browser-terminal spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00008272	
+L00008273	### Browser Action Table And Timeouts
+L00008274	
+L00008275	Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sfk-ed92df2325332306b2463b50`, and `sfk-47f354a1222d2abb62b4a9a9`.
+L00008276	
+L00008277	| action_id | bucket | default_timeout_ms | output fields |
+L00008278	| --- | --- | ---: | --- |
+L00008279	| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` |
+L00008280	| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` |
+L00008281	| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` |
+L00008282	| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` |
+L00008283	| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` |
+L00008284	
+L00008285	The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+L00008286	
+L00008287	`BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
+L00008288	
+L00008289	### Tab-Cap Policy And Restore Identity
+L00008290	
+L00008291	Repairs rows `sfk-2fe1c569e11d92dd4dbc7c76` and `sfk-7a6ddaeaa377096558537bb1`.
+L00008292	
+L00008293	- Default tab cap per project is `32` attached browser tabs. Warning threshold is `24`.
+L00008294	- Outcomes: `prompt` at threshold crossing, `block` when creating tab 33 without override, `close_oldest_detached` when the user chooses cleanup, and `detach_without_agent_access` when a tab is kept only for human inspection.
+L00008295	- Dialog copy at cap: `This project already has 32 browser tabs. Close an older detached tab, detach this tab without agent access, or cancel.`
+L00008296	- Restore identity ordering is `browser_session_id`, then `project_id + origin + normalized_url_hash`, then `last_visible_title_hash`.
+L00008297	- If two tabs claim the same `project_id` and normalized URL hash, PM keeps the tab with the newest `last_user_interaction_at_utc` as attached and marks the other `restore_conflict_detached`.
+L00008298	
+L00008299	### Pane Layout Family Transform
+L00008300	
+L00008301	Repairs row `sfk-821a87baaf08f064a2b71c15`.
+L00008302	
+L00008303	`nearest_valid_family` is deterministic:
+L00008304	
+L00008305	1. Preserve the active pane if its current size is at least 160px by 120px.
+L00008306	2. Prefer same orientation (`row` or `column`) when the target family supports it.
+L00008307	3. Collapse the smallest non-active pane first.
+L00008308	4. If two panes have equal area, collapse the one with older `last_focus_at_utc`.
+L00008309	5. If still tied, collapse lexical `pane_id`.
+L00008310	
+L00008311	The transform result records `from_family`, `to_family`, `collapsed_pane_ids[]`, `active_pane_id`, and `reason_code`.
+L00008312	
+L00008313	### Streaming Usage Payload
+L00008314	
+L00008315	Repairs row `sfk-d8a758adf1c768de6e1410a9`.
+L00008316	
+L00008317	Legacy compatibility event name: `browser.streaming_usage_reported`.
+L00008318	
+L00008319	This browser payload is a pre-UF-085 compatibility/import shape only. It may be accepted at the browser boundary for migration or adapter interop, but it MUST map into a canonical UsageRecord before persistence, GUI display, Ledger/Usage drill-through, rollups, accounting checks, or runtime-artifact export.
+L00008320	
+L00008321	Compatibility fields are `event_id`, `browser_session_id`, `project_id`, `provider_id?`, `model_id?`, `input_tokens?`, `output_tokens?`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars?`, `usage_source`, `created_at_utc`, and `schema_version`. The mapper emits or joins `usage_record_id`, `usage_event_ref`, provider/runtime refs, `source_class`, `source_confidence`, `source_authority`, `settlement_status`, `cost_status`, canonical UF-085 buckets, `counting_semantics`, and cost/quota packets. `input_tokens` maps to `input_total`, `output_tokens` maps to `output_total`, `cache_read_tokens` maps to `cache_read`, `cache_write_tokens` maps to `cache_write` plus `cache_write_1h` or provider TTL-specific `cache_write_ttl` only when exposed, and `estimated_cost_microdollars` maps to canonical cost fields with `cost_status = estimated` unless settlement evidence supersedes it.
+L00008322	
+L00008323	Legacy `usage_source` values `provider_reported`, `estimated`, `corrected`, and `unavailable` are source labels only. They normalize to UF-085 `source_class`, `source_confidence`, `source_authority`, and settlement/cost status before any UsageRecord/accounting/display authority is created.
+L00008324	
+L00008325	### Terminal Fixture Matrix And Record Minima
+L00008326	
+L00008327	Repairs rows `sfk-c5ad7b33fa51846ef1c86c49` and `sfk-e9cc3bc253470d324d189932`.
+L00008328	
+L00008329	Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`.
+L00008330	
+L00008331	Required record minima:
+L00008332	
+L00008333	- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `created_at_utc`.
+L00008334	- `TerminalBackpressureState`: `terminal_session_id`, `queue_depth`, `dropped_frame_count`, `throttle_state`, `last_transition_at_utc`.
+L00008335	- `TerminalRenderFrame`: `frame_id`, `terminal_session_id`, `dirty_region_refs[]`, `screen_hash`, `rendered_at_utc`.
+L00008336	- `TerminalInputEvent`: `event_id`, `terminal_session_id`, `input_kind`, `payload_ref`, `permission_snapshot_id?`, `created_at_utc`.
+L00008337	- `TerminalPasteReceipt`: `receipt_id`, `terminal_session_id`, `paste_kind`, `byte_count`, `sanitized`, `created_at_utc`.
+L00008338	- `TerminalOscEvent`: `event_id`, `terminal_session_id`, `osc_code`, `payload_ref`, `allowed`, `blocked_reason_code?`.
+L00008339	- `TerminalScrollbackAnchor`: `anchor_id`, `terminal_session_id`, `line_offset`, `screen_hash`, `created_at_utc`.
+L00008340	- `TerminalProfileResolution`: `resolution_id`, `profile_id`, `shell_path`, `cwd`, `env_summary_ref`, `created_at_utc`.
+L00008341	- `TerminalSessionRestoreDecision`: `decision_id`, `terminal_session_id`, `restore_state`, `reason_code`, `created_at_utc`.
+L00008342	- `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
+L00008343	- `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
+L00008344	
+L00008345	### Browser Runtime Packaging Boundary
+L00008346	
+L00008347	Repairs row `sfk-72b2ee82fedf09de17854db0`.
+L00008348	
+L00008349	CEF via `wef/cargo-wef` is a candidate packaging strategy, not a locked runtime dependency. The canonical packaging decision fields are `browser_runtime_id`, `crate_or_bundle_ref`, `supported_platforms[]`, `install_source`, `license_ref`, `sandbox_profile_ref`, `update_policy`, and `fallback_runtime_id?`. A release may enable browser runtime only after these fields are filled for the target platform.
+L00008350	
+L00008351	### SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE
+L00008352	
+L00008353	```yaml
+L00008354	plan_unit_id: SMPFS-125
+L00008355	unit_type: requirement
+L00008356	status: accepted
+L00008357	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008358	canonical_text: >-
+L00008359	  P0-TERMINAL-OUTPUT-BACKPRESSURE (P0) is compiled as canonical Puppet Master intent for No silent terminal output loss: Add TerminalIngestionReceipt and TerminalBackpressureState. Differentiate accepted-by-PTY, parsed-to-grid, appended-to-transcript, flushed-to-storage, painted, pruned, redacted, and diagnostic-exported. The preserved PM gap/delta is: PM needs explicit loss accounting: when bytes are accepted by PTY reader, parsed, painted, persisted, pruned, redacted, or dropped/deferred, there must be receipts and user-visible status. The observed external-repo signal remains source-lineage evidence: tmux history includes backpressure/control-mode buffering design; older issue families report output lines missing when terminal/client can't keep up; Warp/Ghostty issue streams include huge output, rendering, and persisted block edge cases.
+L00008360	gui_related: true
+L00008361	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008362	depends_on:
+L00008363	- PDS-003
+L00008364	- PNC-001
+L00008365	unblocks: []
+L00008366	acceptance_criteria:
+L00008367	- A fast-output fixture records byte counts and no silent loss.
+L00008368	- If retention cap prunes, transcript chunk references prove what remains and what was pruned.
+L00008369	- UI thread never blocks on raw PTY ingestion.
+L00008370	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008371	validation_surfaces:
+L00008372	- python3 scripts/pm-plan-index.py validate
+L00008373	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008374	- A fast-output fixture records byte counts and no silent loss.
+L00008375	- If retention cap prunes, transcript chunk references prove what remains and what was pruned.
+L00008376	- UI thread never blocks on raw PTY ingestion.
+L00008377	risk_class: p0_terminal_runtime_hardening
+L00008378	reasoning_tier: high
+L00008379	context_scope: terminal_runtime
+L00008380	implementation_surfaces:
+L00008381	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008382	- Plans/storage-plan.md
+L00008383	- Plans/Runtime_Artifacts_Panel.md
+L00008384	node_compile_hint:
+L00008385	  mode: p0_terminal_output_backpressure
+L00008386	  create_worknodes: false
+L00008387	  create_nodeseeds: false
+L00008388	source_lineage:
+L00008389	- pldg-20260703-001-feature-intake:atom-0006
+L00008390	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0006
+L00008391	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0002/P0-TERMINAL-OUTPUT-BACKPRESSURE@line=2
+L00008392	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0002/P0-TERMINAL-OUTPUT-BACKPRESSURE
+L00008393	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008394	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008395	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:2
+L00008396	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00008397	source_atom_ids:
+L00008398	- atom-0006
+L00008399	external_atom_id: extrepo-20260703-0002
+L00008400	source_row_id: P0-TERMINAL-OUTPUT-BACKPRESSURE
+L00008401	priority: P0
+L00008402	finding_family: No silent terminal output loss
+L00008403	source_repos:
+L00008404	- tmux/tmux
+L00008405	- ghostty-org/ghostty
+L00008406	- warpdotdev/warp
+L00008407	target_docs:
+L00008408	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008409	- Plans/storage-plan.md
+L00008410	- Plans/Runtime_Artifacts_Panel.md
+L00008411	owner_hints:
+L00008412	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008413	- Plans/storage-plan.md
+L00008414	- Plans/Runtime_Artifacts_Panel.md
+L00008415	preserved_exact_tokens:
+L00008416	- extrepo-20260703-0002
+L00008417	- P0-TERMINAL-OUTPUT-BACKPRESSURE
+L00008418	- P0
+L00008419	- No silent terminal output loss
+L00008420	- tmux/tmux
+L00008421	- ghostty-org/ghostty
+L00008422	- warpdotdev/warp
+L00008423	negative_constraints: []
+L00008424	observed_signal: tmux history includes backpressure/control-mode buffering design; older issue families report output lines missing when terminal/client can't keep up; Warp/Ghostty issue streams include huge output, rendering, and persisted block edge cases.
+L00008425	pm_current_coverage: PM says retention/pruning are honest and high-output sessions must not stall UI; parser-engine gates include huge output fixtures.
+L00008426	pm_gap_or_delta: 'PM needs explicit loss accounting: when bytes are accepted by PTY reader, parsed, painted, persisted, pruned, redacted, or dropped/deferred, there must be receipts and user-visible status.'
+L00008427	proposal_or_recommendation: Add TerminalIngestionReceipt and TerminalBackpressureState. Differentiate accepted-by-PTY, parsed-to-grid, appended-to-transcript, flushed-to-storage, painted, pruned, redacted, and diagnostic-exported.
+L00008428	compile_disposition: create_new_planunit
+L00008429	```
+L00008430	
+L00008431	### SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR
+L00008432	
+L00008433	```yaml
+L00008434	plan_unit_id: SMPFS-126
+L00008435	unit_type: requirement
+L00008436	status: accepted
+L00008437	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008438	canonical_text: >-
+L00008439	  P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR (P0) is compiled as canonical Puppet Master intent for Accessible terminal text model separate from renderer: Add TerminalAccessibleBuffer projection from canonical grid/transcript state, with cursor navigation, line/selection reading, output announcement modes, and long-output silence/throttle controls. The preserved PM gap/delta is: PM still needs an explicit terminal accessibility text mirror and speech/event throttling model; labels alone are insufficient for a terminal grid. The observed external-repo signal remains source-lineage evidence: Ghostty screen-reader discussion notes GPU rendering prevents screen readers from extracting terminal state and calls for direct screen-reader output, terminal-state exposure, cursor navigation support, and spam silencing.
+L00008440	gui_related: true
+L00008441	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008442	depends_on:
+L00008443	- PDS-003
+L00008444	- PNC-001
+L00008445	unblocks: []
+L00008446	acceptance_criteria:
+L00008447	- Screen reader projection can read current line, selection, prompt/command boundaries, and latest output without scraping GPU pixels.
+L00008448	- Long-running spam commands throttle announcements without hiding state.
+L00008449	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008450	validation_surfaces:
+L00008451	- python3 scripts/pm-plan-index.py validate
+L00008452	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008453	- Screen reader projection can read current line, selection, prompt/command boundaries, and latest output without scraping GPU pixels.
+L00008454	- Long-running spam commands throttle announcements without hiding state.
+L00008455	risk_class: p0_terminal_runtime_hardening
+L00008456	reasoning_tier: high
+L00008457	context_scope: terminal_runtime
+L00008458	implementation_surfaces:
+L00008459	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008460	- Plans/FinalGUISpec.md
+L00008461	node_compile_hint:
+L00008462	  mode: p0_terminal_accessibility_text_mirror
+L00008463	  create_worknodes: false
+L00008464	  create_nodeseeds: false
+L00008465	source_lineage:
+L00008466	- pldg-20260703-001-feature-intake:atom-0007
+L00008467	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0007
+L00008468	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0003/P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR@line=3
+L00008469	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0003/P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR
+L00008470	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008471	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008472	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:3
+L00008473	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00008474	source_atom_ids:
+L00008475	- atom-0007
+L00008476	external_atom_id: extrepo-20260703-0003
+L00008477	source_row_id: P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR
+L00008478	priority: P0
+L00008479	finding_family: Accessible terminal text model separate from renderer
+L00008480	source_repos:
+L00008481	- ghostty-org/ghostty
+L00008482	target_docs:
+L00008483	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008484	- Plans/FinalGUISpec.md
+L00008485	owner_hints:
+L00008486	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008487	- Plans/FinalGUISpec.md
+L00008488	preserved_exact_tokens:
+L00008489	- extrepo-20260703-0003
+L00008490	- P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR
+L00008491	- P0
+L00008492	- Accessible terminal text model separate from renderer
+L00008493	- ghostty-org/ghostty
+L00008494	negative_constraints: []
+L00008495	observed_signal: Ghostty screen-reader discussion notes GPU rendering prevents screen readers from extracting terminal state and calls for direct screen-reader output, terminal-state exposure, cursor navigation support, and spam silencing.
+L00008496	pm_current_coverage: PM has accessibility requirements and screen-reader-readable labels, plus requested-vs-effective disclosure for accessibility support.
+L00008497	pm_gap_or_delta: PM still needs an explicit terminal accessibility text mirror and speech/event throttling model; labels alone are insufficient for a terminal grid.
+L00008498	proposal_or_recommendation: Add TerminalAccessibleBuffer projection from canonical grid/transcript state, with cursor navigation, line/selection reading, output announcement modes, and long-output silence/throttle controls.
+L00008499	compile_disposition: create_new_planunit
+L00008500	```
+L00008501	
+L00008502	### SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY
+L00008503	
+L00008504	```yaml
+L00008505	plan_unit_id: SMPFS-127
+L00008506	unit_type: requirement
+L00008507	status: accepted
+L00008508	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008509	canonical_text: >-
+L00008510	  P1-TERMINAL-CLIPBOARD-PASTE-SAFETY (P1) is compiled as canonical Puppet Master intent for Clipboard, pasteboard, bracketed paste, OSC 52: Add TerminalClipboardPolicy: plain text preference, URI/file types explicit, control-character confirmation, bracketed paste support state, OSC 52 allow/ask/deny, local/remote/container clipboard scope. The preserved PM gap/delta is: Need explicit paste-source priority and pasted-control-character handling, bracketed-paste negotiation, OSC 52 policy, and cross-context clipboard isolation. The observed external-repo signal remains source-lineage evidence: Ghostty issue list includes paste preferring NSURL over plain text; Ghostty 1.3.0 fixed a paste/drag command-execution CVE; tmux CHANGES include OSC 52 clipboard support; Warp issues include copy/paste isolation.
+L00008511	gui_related: true
+L00008512	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008513	depends_on:
+L00008514	- PDS-003
+L00008515	- PNC-001
+L00008516	unblocks: []
+L00008517	acceptance_criteria:
+L00008518	- Pasting mixed URL/plain text chooses plain text unless user selects URI action.
+L00008519	- Pasted Ctrl+C/control chars cannot execute without warning/normalization.
+L00008520	- OSC 52 read/write respects policy and remote trust.
+L00008521	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008522	validation_surfaces:
+L00008523	- python3 scripts/pm-plan-index.py validate
+L00008524	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008525	- Pasting mixed URL/plain text chooses plain text unless user selects URI action.
+L00008526	- Pasted Ctrl+C/control chars cannot execute without warning/normalization.
+L00008527	- OSC 52 read/write respects policy and remote trust.
+L00008528	risk_class: p1_terminal_runtime_hardening
+L00008529	reasoning_tier: standard
+L00008530	context_scope: terminal_runtime
+L00008531	implementation_surfaces:
+L00008532	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008533	- Plans/Permissions_System.md
+L00008534	- Plans/FileSafe.md
+L00008535	node_compile_hint:
+L00008536	  mode: p1_terminal_clipboard_paste_safety
+L00008537	  create_worknodes: false
+L00008538	  create_nodeseeds: false
+L00008539	source_lineage:
+L00008540	- pldg-20260703-001-feature-intake:atom-0013
+L00008541	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0013
+L00008542	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0009/P1-TERMINAL-CLIPBOARD-PASTE-SAFETY@line=9
+L00008543	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0009/P1-TERMINAL-CLIPBOARD-PASTE-SAFETY
+L00008544	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008545	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008546	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:9
+L00008547	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00008548	source_atom_ids:
+L00008549	- atom-0013
+L00008550	external_atom_id: extrepo-20260703-0009
+L00008551	source_row_id: P1-TERMINAL-CLIPBOARD-PASTE-SAFETY
+L00008552	priority: P1
+L00008553	finding_family: Clipboard, pasteboard, bracketed paste, OSC 52
+L00008554	source_repos:
+L00008555	- ghostty-org/ghostty
+L00008556	- warpdotdev/warp
+L00008557	- tmux/tmux
+L00008558	target_docs:
+L00008559	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008560	- Plans/Permissions_System.md
+L00008561	- Plans/FileSafe.md
+L00008562	owner_hints:
+L00008563	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008564	- Plans/Permissions_System.md
+L00008565	- Plans/FileSafe.md
+L00008566	preserved_exact_tokens:
+L00008567	- extrepo-20260703-0009
+L00008568	- P1-TERMINAL-CLIPBOARD-PASTE-SAFETY
+L00008569	- P1
+L00008570	- Clipboard, pasteboard, bracketed paste, OSC 52
+L00008571	- ghostty-org/ghostty
+L00008572	- warpdotdev/warp
+L00008573	- tmux/tmux
+L00008574	negative_constraints: []
+L00008575	observed_signal: Ghostty issue list includes paste preferring NSURL over plain text; Ghostty 1.3.0 fixed a paste/drag command-execution CVE; tmux CHANGES include OSC 52 clipboard support; Warp issues include copy/paste isolation.
+L00008576	pm_current_coverage: PM has copy/paste/selection semantics and default copy-on-select disabled.
+L00008577	pm_gap_or_delta: Need explicit paste-source priority and pasted-control-character handling, bracketed-paste negotiation, OSC 52 policy, and cross-context clipboard isolation.
+L00008578	proposal_or_recommendation: 'Add TerminalClipboardPolicy: plain text preference, URI/file types explicit, control-character confirmation, bracketed paste support state, OSC 52 allow/ask/deny, local/remote/container clipboard scope.'
+L00008579	compile_disposition: create_new_planunit
+L00008580	```
+L00008581	
+L00008582	### SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE
+L00008583	
+L00008584	```yaml
+L00008585	plan_unit_id: SMPFS-128
+L00008586	unit_type: requirement
+L00008587	status: accepted
+L00008588	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008589	canonical_text: >-
+L00008590	  P1-TERMINAL-SESSION-PRESERVE-UPDATE (P1) is compiled as canonical Puppet Master intent for Terminal session continuity across relaunch/update: Add TerminalSessionRestorePolicy by platform/runtime: local PTY, WSL, SSH, container, devcontainer. Define reconnect tokens, when impossible, and exact banners/actions. The preserved PM gap/delta is: Need a concrete platform matrix for live session survival/reconnect and a UX flow for when only historical review can be restored. The observed external-repo signal remains source-lineage evidence: Warp issue requests terminal/agent sessions alive across relaunch/app updates; Warp changelog includes reopen closed sessions and restored WSL PWD; tmux's mature value is session/window/pane durability.
+L00008591	gui_related: true
+L00008592	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008593	depends_on:
+L00008594	- PDS-003
+L00008595	- PNC-001
+L00008596	unblocks: []
+L00008597	acceptance_criteria:
+L00008598	- Relaunch fixtures prove PWD/profile/layout/transcript restoration.
+L00008599	- If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity.
+L00008600	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008601	validation_surfaces:
+L00008602	- python3 scripts/pm-plan-index.py validate
+L00008603	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008604	- Relaunch fixtures prove PWD/profile/layout/transcript restoration.
+L00008605	- If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity.
+L00008606	risk_class: p1_terminal_runtime_hardening
+L00008607	reasoning_tier: standard
+L00008608	context_scope: terminal_runtime
+L00008609	implementation_surfaces:
+L00008610	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008611	- Plans/storage-plan.md
+L00008612	- Plans/FinalGUISpec.md
+L00008613	node_compile_hint:
+L00008614	  mode: p1_terminal_session_preserve_update
+L00008615	  create_worknodes: false
+L00008616	  create_nodeseeds: false
+L00008617	source_lineage:
+L00008618	- pldg-20260703-001-feature-intake:atom-0015
+L00008619	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0015
+L00008620	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0011/P1-TERMINAL-SESSION-PRESERVE-UPDATE@line=11
+L00008621	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0011/P1-TERMINAL-SESSION-PRESERVE-UPDATE
+L00008622	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008623	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008624	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:11
+L00008625	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00008626	source_atom_ids:
+L00008627	- atom-0015
+L00008628	external_atom_id: extrepo-20260703-0011
+L00008629	source_row_id: P1-TERMINAL-SESSION-PRESERVE-UPDATE
+L00008630	priority: P1
+L00008631	finding_family: Terminal session continuity across relaunch/update
+L00008632	source_repos:
+L00008633	- warpdotdev/warp
+L00008634	- tmux/tmux
+L00008635	- ghostty-org/ghostty
+L00008636	target_docs:
+L00008637	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008638	- Plans/storage-plan.md
+L00008639	- Plans/FinalGUISpec.md
+L00008640	owner_hints:
+L00008641	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008642	- Plans/storage-plan.md
+L00008643	- Plans/FinalGUISpec.md
+L00008644	preserved_exact_tokens:
+L00008645	- extrepo-20260703-0011
+L00008646	- P1-TERMINAL-SESSION-PRESERVE-UPDATE
+L00008647	- P1
+L00008648	- Terminal session continuity across relaunch/update
+L00008649	- warpdotdev/warp
+L00008650	- tmux/tmux
+L00008651	- ghostty-org/ghostty
+L00008652	negative_constraints: []
+L00008653	observed_signal: Warp issue requests terminal/agent sessions alive across relaunch/app updates; Warp changelog includes reopen closed sessions and restored WSL PWD; tmux's mature value is session/window/pane durability.
+L00008654	pm_current_coverage: PM says live continuity after app restart is best-effort and explicit when unavailable; historical state is not fake live shell.
+L00008655	pm_gap_or_delta: Need a concrete platform matrix for live session survival/reconnect and a UX flow for when only historical review can be restored.
+L00008656	proposal_or_recommendation: 'Add TerminalSessionRestorePolicy by platform/runtime: local PTY, WSL, SSH, container, devcontainer. Define reconnect tokens, when impossible, and exact banners/actions.'
+L00008657	compile_disposition: create_new_planunit
+L00008658	```
+L00008659	
+L00008660	### SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER
+L00008661	
+L00008662	```yaml
+L00008663	plan_unit_id: SMPFS-129
+L00008664	unit_type: requirement
+L00008665	status: accepted
+L00008666	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008667	canonical_text: >-
+L00008668	  P1-TERMINAL-SEMANTIC-MARKER-PARSER (P1) is compiled as canonical Puppet Master intent for OSC133/633 semantic prompt parser confidence tiers: Imported external-repo finding extrepo-20260703-0029 / P1-TERMINAL-SEMANTIC-MARKER-PARSER (P1). The preserved PM gap/delta is: Add region/pane-aware TerminalSemanticMarkerParser with malformed-param tolerance and confidence tiers: native, shell-integrated, tmux-forwarded, passthrough-unverified, heuristic-only. The observed external-repo signal remains source-lineage evidence: tmux OSC133 forwarding issue needs pane/visibility scoping; Ghostty parser failed on bare key; row-based markers and over-clearing flags are fragile.
+L00008669	gui_related: true
+L00008670	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008671	depends_on:
+L00008672	- PDS-003
+L00008673	- PNC-001
+L00008674	unblocks: []
+L00008675	acceptance_criteria:
+L00008676	- OSC133 markers spanning multi-row prompt produce one region
+L00008677	- Bare key param does not crash parser
+L00008678	- tmux passthrough marks command-block confidence degraded when unverified
+L00008679	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008680	validation_surfaces:
+L00008681	- python3 scripts/pm-plan-index.py validate
+L00008682	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008683	- OSC133 markers spanning multi-row prompt produce one region
+L00008684	- Bare key param does not crash parser
+L00008685	- tmux passthrough marks command-block confidence degraded when unverified
+L00008686	risk_class: p1_terminal_runtime_hardening
+L00008687	reasoning_tier: standard
+L00008688	context_scope: terminal_runtime
+L00008689	implementation_surfaces:
+L00008690	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008691	- Plans/FinalGUISpec.md
+L00008692	- Plans/storage-plan.md
+L00008693	node_compile_hint:
+L00008694	  mode: p1_terminal_semantic_marker_parser
+L00008695	  create_worknodes: false
+L00008696	  create_nodeseeds: false
+L00008697	source_lineage:
+L00008698	- pldg-20260703-001-feature-intake:atom-0033
+L00008699	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00008700	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0029/P1-TERMINAL-SEMANTIC-MARKER-PARSER@line=29
+L00008701	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0029/P1-TERMINAL-SEMANTIC-MARKER-PARSER
+L00008702	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008703	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008704	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:9
+L00008705	source_atom_ids:
+L00008706	- atom-0033
+L00008707	external_atom_id: extrepo-20260703-0029
+L00008708	source_row_id: P1-TERMINAL-SEMANTIC-MARKER-PARSER
+L00008709	priority: P1
+L00008710	finding_family: OSC133/633 semantic prompt parser confidence tiers
+L00008711	source_repos:
+L00008712	- ghostty-org/ghostty
+L00008713	- tmux/tmux
+L00008714	target_docs:
+L00008715	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008716	- Plans/FinalGUISpec.md
+L00008717	- Plans/storage-plan.md
+L00008718	owner_hints:
+L00008719	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008720	- Plans/FinalGUISpec.md
+L00008721	- Plans/storage-plan.md
+L00008722	preserved_exact_tokens:
+L00008723	- extrepo-20260703-0029
+L00008724	- P1-TERMINAL-SEMANTIC-MARKER-PARSER
+L00008725	- P1
+L00008726	- OSC133/633 semantic prompt parser confidence tiers
+L00008727	- ghostty-org/ghostty
+L00008728	- tmux/tmux
+L00008729	negative_constraints: []
+L00008730	observed_signal: tmux OSC133 forwarding issue needs pane/visibility scoping; Ghostty parser failed on bare key; row-based markers and over-clearing flags are fragile.
+L00008731	pm_current_coverage: PM terminal identity/session model and native core are strong; previous backlog included broad protocol matrix.
+L00008732	pm_gap_or_delta: 'Add region/pane-aware TerminalSemanticMarkerParser with malformed-param tolerance and confidence tiers: native, shell-integrated, tmux-forwarded, passthrough-unverified, heuristic-only.'
+L00008733	compile_disposition: create_new_planunit
+L00008734	```
+L00008735	
+L00008736	### SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER
+L00008737	
+L00008738	```yaml
+L00008739	plan_unit_id: SMPFS-130
+L00008740	unit_type: requirement
+L00008741	status: accepted
+L00008742	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008743	canonical_text: >-
+L00008744	  P1-TERMINAL-CHUNK-SPANNING-PARSER (P1) is compiled as canonical Puppet Master intent for Terminal parser state spans arbitrary PTY reads: Imported external-repo finding extrepo-20260703-0030 / P1-TERMINAL-CHUNK-SPANNING-PARSER (P1). The preserved PM gap/delta is: Add parser invariant and byte-boundary fuzz fixtures for OSC/DCS/CSI/bracketed paste/sync updates/hyperlinks/shell markers split at every byte boundary. The observed external-repo signal remains source-lineage evidence: tmux DEC 2026 synchronized update bug leaked structural commands when begin/end pair spanned pane reads.
+L00008745	gui_related: true
+L00008746	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008747	depends_on:
+L00008748	- PDS-003
+L00008749	- PNC-001
+L00008750	unblocks: []
+L00008751	acceptance_criteria:
+L00008752	- No control sequence bytes leak to visible grid when split across reads
+L00008753	- Synchronized update state closes correctly after arbitrary chunking
+L00008754	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008755	validation_surfaces:
+L00008756	- python3 scripts/pm-plan-index.py validate
+L00008757	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008758	- No control sequence bytes leak to visible grid when split across reads
+L00008759	- Synchronized update state closes correctly after arbitrary chunking
+L00008760	risk_class: p1_terminal_runtime_hardening
+L00008761	reasoning_tier: standard
+L00008762	context_scope: terminal_runtime
+L00008763	implementation_surfaces:
+L00008764	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008765	- Plans/FinalGUISpec.md
+L00008766	- Plans/Executor_Protocol.md
+L00008767	node_compile_hint:
+L00008768	  mode: p1_terminal_chunk_spanning_parser
+L00008769	  create_worknodes: false
+L00008770	  create_nodeseeds: false
+L00008771	source_lineage:
+L00008772	- pldg-20260703-001-feature-intake:atom-0034
+L00008773	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00008774	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0030/P1-TERMINAL-CHUNK-SPANNING-PARSER@line=30
+L00008775	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0030/P1-TERMINAL-CHUNK-SPANNING-PARSER
+L00008776	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008777	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008778	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:10
+L00008779	source_atom_ids:
+L00008780	- atom-0034
+L00008781	external_atom_id: extrepo-20260703-0030
+L00008782	source_row_id: P1-TERMINAL-CHUNK-SPANNING-PARSER
+L00008783	priority: P1
+L00008784	finding_family: Terminal parser state spans arbitrary PTY reads
+L00008785	source_repos:
+L00008786	- tmux/tmux
+L00008787	target_docs:
+L00008788	- Plans/FinalGUISpec.md
+L00008789	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008790	- Plans/Executor_Protocol.md
+L00008791	owner_hints:
+L00008792	- Plans/FinalGUISpec.md
+L00008793	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008794	- Plans/Executor_Protocol.md
+L00008795	preserved_exact_tokens:
+L00008796	- extrepo-20260703-0030
+L00008797	- P1-TERMINAL-CHUNK-SPANNING-PARSER
+L00008798	- P1
+L00008799	- Terminal parser state spans arbitrary PTY reads
+L00008800	- tmux/tmux
+L00008801	negative_constraints: []
+L00008802	observed_signal: tmux DEC 2026 synchronized update bug leaked structural commands when begin/end pair spanned pane reads.
+L00008803	pm_current_coverage: PM has off-UI-thread PTY ingestion and ring-buffer projections.
+L00008804	pm_gap_or_delta: Add parser invariant and byte-boundary fuzz fixtures for OSC/DCS/CSI/bracketed paste/sync updates/hyperlinks/shell markers split at every byte boundary.
+L00008805	compile_disposition: create_new_planunit
+L00008806	```
+L00008807	
+L00008808	### SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR
+L00008809	
+L00008810	```yaml
+L00008811	plan_unit_id: SMPFS-131
+L00008812	unit_type: requirement
+L00008813	status: accepted
+L00008814	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008815	canonical_text: >-
+L00008816	  P1-TERMINAL-A11Y-RANGE-MIRROR (P1) is compiled as canonical Puppet Master intent for Terminal accessibility range mirror: Imported external-repo finding extrepo-20260703-0031 / P1-TERMINAL-A11Y-RANGE-MIRROR (P1). The preserved PM gap/delta is: Refine to visible-range, range-for-position, bounds-for-range, latest command region, redaction-aware projection; no full scrollback blob per query. The observed external-repo signal remains source-lineage evidence: Ghostty AXVisibleCharacterRange returned whole scrollback, making accessibility query take seconds; range-for-position/bounds APIs missing.
+L00008817	gui_related: true
+L00008818	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008819	depends_on:
+L00008820	- PDS-003
+L00008821	- PNC-001
+L00008822	unblocks: []
+L00008823	acceptance_criteria:
+L00008824	- Accessibility visible range returns viewport, not full scrollback
+L00008825	- Position/bounds queries are O(viewport) and redaction-aware
+L00008826	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008827	validation_surfaces:
+L00008828	- python3 scripts/pm-plan-index.py validate
+L00008829	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008830	- Accessibility visible range returns viewport, not full scrollback
+L00008831	- Position/bounds queries are O(viewport) and redaction-aware
+L00008832	risk_class: p1_terminal_runtime_hardening
+L00008833	reasoning_tier: standard
+L00008834	context_scope: terminal_runtime
+L00008835	implementation_surfaces:
+L00008836	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008837	- Plans/FinalGUISpec.md
+L00008838	- Plans/storage-plan.md
+L00008839	node_compile_hint:
+L00008840	  mode: p1_terminal_a11y_range_mirror
+L00008841	  create_worknodes: false
+L00008842	  create_nodeseeds: false
+L00008843	source_lineage:
+L00008844	- pldg-20260703-001-feature-intake:atom-0035
+L00008845	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0035
+L00008846	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0031/P1-TERMINAL-A11Y-RANGE-MIRROR@line=31
+L00008847	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0031/P1-TERMINAL-A11Y-RANGE-MIRROR
+L00008848	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008849	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008850	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:11
+L00008851	source_atom_ids:
+L00008852	- atom-0035
+L00008853	external_atom_id: extrepo-20260703-0031
+L00008854	source_row_id: P1-TERMINAL-A11Y-RANGE-MIRROR
+L00008855	priority: P1
+L00008856	finding_family: Terminal accessibility range mirror
+L00008857	source_repos:
+L00008858	- ghostty-org/ghostty
+L00008859	target_docs:
+L00008860	- Plans/FinalGUISpec.md
+L00008861	- Plans/storage-plan.md
+L00008862	owner_hints:
+L00008863	- Plans/FinalGUISpec.md
+L00008864	- Plans/storage-plan.md
+L00008865	preserved_exact_tokens:
+L00008866	- extrepo-20260703-0031
+L00008867	- P1-TERMINAL-A11Y-RANGE-MIRROR
+L00008868	- P1
+L00008869	- Terminal accessibility range mirror
+L00008870	- ghostty-org/ghostty
+L00008871	negative_constraints: []
+L00008872	observed_signal: Ghostty AXVisibleCharacterRange returned whole scrollback, making accessibility query take seconds; range-for-position/bounds APIs missing.
+L00008873	pm_current_coverage: Previous backlog recommended an accessibility mirror; PM has labels and GUI a11y principles.
+L00008874	pm_gap_or_delta: Refine to visible-range, range-for-position, bounds-for-range, latest command region, redaction-aware projection; no full scrollback blob per query.
+L00008875	compile_disposition: create_new_planunit
+L00008876	```
+L00008877	
+L00008878	### SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR
+L00008879	
+L00008880	```yaml
+L00008881	plan_unit_id: SMPFS-132
+L00008882	unit_type: requirement
+L00008883	status: accepted
+L00008884	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008885	canonical_text: >-
+L00008886	  P1-TERMINAL-HOST-PROVENANCE-DOCTOR (P1) is compiled as canonical Puppet Master intent for Terminal host/mediator provenance and diagnostics: Imported external-repo finding extrepo-20260703-0032 / P1-TERMINAL-HOST-PROVENANCE-DOCTOR (P1). The preserved PM gap/delta is: Add TerminalHostProvenance: shell, PTY backend, ConPTY/OpenConsole/conhost version, tmux/mosh/ssh nesting, TERM/features, OSC52 clipboard path, degraded reason. The observed external-repo signal remains source-lineage evidence: Warp clipboard/OSC52 failures across SSH/tmux, ConPTY version breaking PowerShell, and Codex Windows sandbox helper issues show host layer diagnostics matter.
+L00008887	gui_related: true
+L00008888	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008889	depends_on:
+L00008890	- PDS-003
+L00008891	- PNC-001
+L00008892	unblocks: []
+L00008893	acceptance_criteria:
+L00008894	- Doctor detects incompatible ConPTY pair
+L00008895	- OSC52 failure identifies local/remote/tmux/policy path
+L00008896	- Prompt markers degrade when tmux passthrough is unverified
+L00008897	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008898	validation_surfaces:
+L00008899	- python3 scripts/pm-plan-index.py validate
+L00008900	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008901	- Doctor detects incompatible ConPTY pair
+L00008902	- OSC52 failure identifies local/remote/tmux/policy path
+L00008903	- Prompt markers degrade when tmux passthrough is unverified
+L00008904	risk_class: p1_terminal_runtime_hardening
+L00008905	reasoning_tier: standard
+L00008906	context_scope: terminal_runtime
+L00008907	implementation_surfaces:
+L00008908	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008909	- Plans/FinalGUISpec.md
+L00008910	- Plans/Automated_Testing_System.md
+L00008911	node_compile_hint:
+L00008912	  mode: p1_terminal_host_provenance_doctor
+L00008913	  create_worknodes: false
+L00008914	  create_nodeseeds: false
+L00008915	source_lineage:
+L00008916	- pldg-20260703-001-feature-intake:atom-0036
+L00008917	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00008918	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0032/P1-TERMINAL-HOST-PROVENANCE-DOCTOR@line=32
+L00008919	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0032/P1-TERMINAL-HOST-PROVENANCE-DOCTOR
+L00008920	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008921	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008922	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:12
+L00008923	source_atom_ids:
+L00008924	- atom-0036
+L00008925	external_atom_id: extrepo-20260703-0032
+L00008926	source_row_id: P1-TERMINAL-HOST-PROVENANCE-DOCTOR
+L00008927	priority: P1
+L00008928	finding_family: Terminal host/mediator provenance and diagnostics
+L00008929	source_repos:
+L00008930	- warpdotdev/warp
+L00008931	- tmux/tmux
+L00008932	- openai/codex
+L00008933	target_docs:
+L00008934	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008935	- Plans/FinalGUISpec.md
+L00008936	- Plans/Automated_Testing_System.md
+L00008937	owner_hints:
+L00008938	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008939	- Plans/FinalGUISpec.md
+L00008940	- Plans/Automated_Testing_System.md
+L00008941	preserved_exact_tokens:
+L00008942	- extrepo-20260703-0032
+L00008943	- P1-TERMINAL-HOST-PROVENANCE-DOCTOR
+L00008944	- P1
+L00008945	- Terminal host/mediator provenance and diagnostics
+L00008946	- warpdotdev/warp
+L00008947	- tmux/tmux
+L00008948	- openai/codex
+L00008949	negative_constraints: []
+L00008950	observed_signal: Warp clipboard/OSC52 failures across SSH/tmux, ConPTY version breaking PowerShell, and Codex Windows sandbox helper issues show host layer diagnostics matter.
+L00008951	pm_current_coverage: PM has terminal IDs/actions/restore outcomes.
+L00008952	pm_gap_or_delta: 'Add TerminalHostProvenance: shell, PTY backend, ConPTY/OpenConsole/conhost version, tmux/mosh/ssh nesting, TERM/features, OSC52 clipboard path, degraded reason.'
+L00008953	compile_disposition: create_new_planunit
+L00008954	```
+L00008955	
+L00008956	### SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT
+L00008957	
+L00008958	```yaml
+L00008959	plan_unit_id: SMPFS-133
+L00008960	unit_type: requirement
+L00008961	status: accepted
+L00008962	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008963	canonical_text: >-
+L00008964	  P1-TERMINAL-PTY-STREAM-CONTRACT (P1) is compiled as canonical Puppet Master intent for Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts: Terminal byte stream preserves parser state across chunks; scrollback is not model context; WebSocket, if used, is UI transport not terminal engine.
+L00008965	gui_related: true
+L00008966	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008967	depends_on:
+L00008968	- PDS-003
+L00008969	- PNC-001
+L00008970	unblocks: []
+L00008971	acceptance_criteria:
+L00008972	- Terminal byte stream preserves parser state across chunks
+L00008973	- scrollback is not model context
+L00008974	- WebSocket, if used, is UI transport not terminal engine.
+L00008975	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008976	validation_surfaces:
+L00008977	- python3 scripts/pm-plan-index.py validate
+L00008978	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008979	- Terminal byte stream preserves parser state across chunks
+L00008980	- scrollback is not model context
+L00008981	- WebSocket, if used, is UI transport not terminal engine.
+L00008982	risk_class: p1_terminal_runtime_hardening
+L00008983	reasoning_tier: standard
+L00008984	context_scope: terminal_runtime
+L00008985	implementation_surfaces:
+L00008986	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008987	- Plans/FinalGUISpec.md
+L00008988	- Plans/Runtime_Artifacts_Panel.md
+L00008989	node_compile_hint:
+L00008990	  mode: p1_terminal_pty_stream_contract
+L00008991	  create_worknodes: false
+L00008992	  create_nodeseeds: false
+L00008993	source_lineage:
+L00008994	- pldg-20260703-001-feature-intake:atom-0054
+L00008995	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0054
+L00008996	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0050/P1-TERMINAL-PTY-STREAM-CONTRACT@line=50
+L00008997	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0050/P1-TERMINAL-PTY-STREAM-CONTRACT
+L00008998	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008999	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009000	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:14
+L00009001	source_atom_ids:
+L00009002	- atom-0054
+L00009003	external_atom_id: extrepo-20260703-0050
+L00009004	source_row_id: P1-TERMINAL-PTY-STREAM-CONTRACT
+L00009005	priority: P1
+L00009006	finding_family: Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts
+L00009007	target_docs:
+L00009008	- Plans/FinalGUISpec.md
+L00009009	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009010	- Plans/Runtime_Artifacts_Panel.md
+L00009011	owner_hints:
+L00009012	- Plans/FinalGUISpec.md
+L00009013	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009014	- Plans/Runtime_Artifacts_Panel.md
+L00009015	preserved_exact_tokens:
+L00009016	- extrepo-20260703-0050
+L00009017	- P1-TERMINAL-PTY-STREAM-CONTRACT
+L00009018	- P1
+L00009019	- Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts
+L00009020	negative_constraints: []
+L00009021	proposal_or_recommendation: Terminal byte stream preserves parser state across chunks; scrollback is not model context; WebSocket, if used, is UI transport not terminal engine.
+L00009022	compile_disposition: create_new_planunit
+L00009023	```
+L00009024	
+L00009025	### SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009026	
+L00009027	```yaml
+L00009028	plan_unit_id: SMPFS-134
+L00009029	unit_type: requirement
+L00009030	status: accepted
+L00009031	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009032	canonical_text: >-
+L00009033	  P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS (P1) is compiled as canonical Puppet Master intent for Terminal-bound agent output storms and UI safety: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and per-agent log suppression. The preserved PM gap/delta is: PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs. The observed external-repo signal remains source-lineage evidence: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
+L00009034	gui_related: true
+L00009035	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009036	depends_on:
+L00009037	- PDS-003
+L00009038	- PNC-001
+L00009039	unblocks: []
+L00009040	acceptance_criteria:
+L00009041	- Running a high-output TUI agent does not freeze GUI or explode logs.
+L00009042	- OSC 133/633 marker loss/degradation is visible.
+L00009043	- PM never interprets terminal agent text as PM-native tool receipt without adapter proof.
+L00009044	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009045	validation_surfaces:
+L00009046	- python3 scripts/pm-plan-index.py validate
+L00009047	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009048	- Running a high-output TUI agent does not freeze GUI or explode logs.
+L00009049	- OSC 133/633 marker loss/degradation is visible.
+L00009050	- PM never interprets terminal agent text as PM-native tool receipt without adapter proof.
+L00009051	risk_class: p1_terminal_runtime_hardening
+L00009052	reasoning_tier: standard
+L00009053	context_scope: terminal_runtime
+L00009054	implementation_surfaces:
+L00009055	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009056	- Plans/FinalGUISpec.md
+L00009057	- Plans/storage-plan.md
+L00009058	- Plans/Executor_Protocol.md
+L00009059	node_compile_hint:
+L00009060	  mode: p1_terminal_agent_output_storm_controls
+L00009061	  create_worknodes: false
+L00009062	  create_nodeseeds: false
+L00009063	source_lineage:
+L00009064	- pldg-20260703-001-feature-intake:atom-0073
+L00009065	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00009066	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0069/P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS@line=69
+L00009067	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0069/P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009068	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009069	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009070	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:15
+L00009071	source_atom_ids:
+L00009072	- atom-0073
+L00009073	external_atom_id: extrepo-20260703-0069
+L00009074	source_row_id: P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009075	priority: P1
+L00009076	finding_family: Terminal-bound agent output storms and UI safety
+L00009077	source_repos:
+L00009078	- Warp
+L00009079	- Ghostty
+L00009080	- tmux
+L00009081	- Codex
+L00009082	target_docs:
+L00009083	- Plans/FinalGUISpec.md
+L00009084	- Plans/storage-plan.md
+L00009085	- Plans/Executor_Protocol.md
+L00009086	owner_hints:
+L00009087	- Plans/FinalGUISpec.md
+L00009088	- Plans/storage-plan.md
+L00009089	- Plans/Executor_Protocol.md
+L00009090	preserved_exact_tokens:
+L00009091	- extrepo-20260703-0069
+L00009092	- P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009093	- P1
+L00009094	- Terminal-bound agent output storms and UI safety
+L00009095	- Warp
+L00009096	- Ghostty
+L00009097	- tmux
+L00009098	- Codex
+L00009099	negative_constraints: []
+L00009100	observed_signal: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
+L00009101	pm_current_coverage: PM has terminal protocol, persistence, projection throttling, ring buffers, and output retention honesty.
+L00009102	pm_gap_or_delta: 'PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs.'
+L00009103	proposal_or_recommendation: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and per-agent log suppression.
+L00009104	compile_disposition: create_new_planunit
+L00009105	```
+L00009106	
+L00009107	### SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009108	
+L00009109	```yaml
+L00009110	plan_unit_id: SMPFS-135
+L00009111	unit_type: requirement
+L00009112	status: accepted
+L00009113	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009114	canonical_text: >-
+L00009115	  P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD (P1) is compiled as canonical Puppet Master intent for Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill: Imported external-repo finding extrepo-20260703-0081 / P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD (P1). The preserved PM gap/delta is: Paste safety and OSC52 were covered; OS autofill/OTP/pasteboard/file URL side channels were not called out enough. The observed external-repo signal remains source-lineage evidence: Ghostty 1.3.0 fixed control-character paste/drag command execution; 1.3.1 notes one-time-code inputs no longer appearing in terminal and mac pasteboard/file-url handling issues. | Warp continues to fix profile switcher input clearing, file links, and command confirmation/rejection crashes.
+L00009116	gui_related: true
+L00009117	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009118	depends_on:
+L00009119	- PDS-003
+L00009120	- PNC-001
+L00009121	unblocks: []
+L00009122	acceptance_criteria:
+L00009123	- Terminal paste/drop/autofill inputs pass through TerminalInputSanitizer with control-code stripping/escaping policy and user-visible preview for dangerous content.
+L00009124	- OTP/autofill/system pasteboard data is blocked from terminal echo/model context unless explicitly approved.
+L00009125	- File URL paste/drag opens are FileSafe checked and do not implicitly execute or read files.
+L00009126	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009127	validation_surfaces:
+L00009128	- python3 scripts/pm-plan-index.py validate
+L00009129	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009130	- Terminal paste/drop/autofill inputs pass through TerminalInputSanitizer with control-code stripping/escaping policy and user-visible preview for dangerous content.
+L00009131	- OTP/autofill/system pasteboard data is blocked from terminal echo/model context unless explicitly approved.
+L00009132	- File URL paste/drag opens are FileSafe checked and do not implicitly execute or read files.
+L00009133	risk_class: p1_terminal_runtime_hardening
+L00009134	reasoning_tier: standard
+L00009135	context_scope: terminal_runtime
+L00009136	implementation_surfaces:
+L00009137	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009138	node_compile_hint:
+L00009139	  mode: p1_terminal_sensitive_os_channel_guard
+L00009140	  create_worknodes: false
+L00009141	  create_nodeseeds: false
+L00009142	source_lineage:
+L00009143	- pldg-20260703-001-feature-intake:atom-0085
+L00009144	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0085
+L00009145	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0081/P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD@line=81
+L00009146	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0081/P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009147	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009148	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009149	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:8
+L00009150	source_atom_ids:
+L00009151	- atom-0085
+L00009152	external_atom_id: extrepo-20260703-0081
+L00009153	source_row_id: P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009154	priority: P1
+L00009155	finding_family: 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
+L00009156	target_docs:
+L00009157	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009158	- FinalGUISpec.md
+L00009159	- Permissions_System.md
+L00009160	- FileSafe.md
+L00009161	owner_hints:
+L00009162	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009163	- FinalGUISpec.md
+L00009164	- Permissions_System.md
+L00009165	- FileSafe.md
+L00009166	preserved_exact_tokens:
+L00009167	- extrepo-20260703-0081
+L00009168	- P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009169	- P1
+L00009170	- 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
+L00009171	negative_constraints: []
+L00009172	observed_signal: Ghostty 1.3.0 fixed control-character paste/drag command execution; 1.3.1 notes one-time-code inputs no longer appearing in terminal and mac pasteboard/file-url handling issues. | Warp continues to fix profile switcher input clearing, file links, and command confirmation/rejection crashes.
+L00009173	pm_gap_or_delta: Paste safety and OSC52 were covered; OS autofill/OTP/pasteboard/file URL side channels were not called out enough.
+L00009174	relationship_to_prior_reports: Extends terminal paste/protocol safety.
+L00009175	compile_disposition: create_new_planunit
+L00009176	```
+L00009177	
+L00009178	### SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009179	
+L00009180	```yaml
+L00009181	plan_unit_id: SMPFS-136
+L00009182	unit_type: requirement
+L00009183	status: accepted
+L00009184	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009185	canonical_text: >-
+L00009186	  P1-TERMINAL-INPUT-PASTEBOARD-MATRIX (P1) is compiled as canonical Puppet Master intent for Terminal input, IME, Unicode, pasteboard matrix: Imported external-repo finding extrepo-20260703-0096 / P1-TERMINAL-INPUT-PASTEBOARD-MATRIX (P1). The preserved PM gap/delta is: Terminal tests need input-method and pasteboard channel policies in addition to ANSI/OSC parsing. The observed external-repo signal remains source-lineage evidence: IME candidate window positioning, key repeat/global keybind, macOS pasteboard URL priority, prompt viewport regressions.
+L00009187	gui_related: true
+L00009188	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009189	depends_on:
+L00009190	- PDS-003
+L00009191	- PNC-001
+L00009192	unblocks: []
+L00009193	acceptance_criteria:
+L00009194	- IME candidate follows cursor cell
+L00009195	- Plain text paste is preferred over URL/file flavors unless explicit
+L00009196	- clear/cls preserves visible prompt/viewport invariants
+L00009197	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009198	validation_surfaces:
+L00009199	- python3 scripts/pm-plan-index.py validate
+L00009200	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009201	- IME candidate follows cursor cell
+L00009202	- Plain text paste is preferred over URL/file flavors unless explicit
+L00009203	- clear/cls preserves visible prompt/viewport invariants
+L00009204	risk_class: p1_terminal_runtime_hardening
+L00009205	reasoning_tier: standard
+L00009206	context_scope: terminal_runtime
+L00009207	implementation_surfaces:
+L00009208	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009209	node_compile_hint:
+L00009210	  mode: p1_terminal_input_pasteboard_matrix
+L00009211	  create_worknodes: false
+L00009212	  create_nodeseeds: false
+L00009213	source_lineage:
+L00009214	- pldg-20260703-001-feature-intake:atom-0100
+L00009215	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0100
+L00009216	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0096/P1-TERMINAL-INPUT-PASTEBOARD-MATRIX@line=96
+L00009217	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0096/P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009218	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009219	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009220	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:9
+L00009221	source_atom_ids:
+L00009222	- atom-0100
+L00009223	external_atom_id: extrepo-20260703-0096
+L00009224	source_row_id: P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009225	priority: P1
+L00009226	finding_family: Terminal input, IME, Unicode, pasteboard matrix
+L00009227	source_repos:
+L00009228	- Pi
+L00009229	- Ghostty
+L00009230	- Warp
+L00009231	preserved_exact_tokens:
+L00009232	- extrepo-20260703-0096
+L00009233	- P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009234	- P1
+L00009235	- Terminal input, IME, Unicode, pasteboard matrix
+L00009236	- Pi
+L00009237	- Ghostty
+L00009238	- Warp
+L00009239	negative_constraints: []
+L00009240	observed_signal: IME candidate window positioning, key repeat/global keybind, macOS pasteboard URL priority, prompt viewport regressions.
+L00009241	pm_gap_or_delta: Terminal tests need input-method and pasteboard channel policies in addition to ANSI/OSC parsing.
+L00009242	compile_disposition: create_new_planunit
+L00009243	```
+L00009244	
+L00009245	### SMPFS-137 - SMPFS-137
+L00009246	
+L00009247	```yaml
+L00009248	plan_unit_id: SMPFS-137
+L00009249	unit_type: constraint
+L00009250	status: accepted
+L00009251	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009252	canonical_text: >-
+L00009253	  Terminal lessons from Ghostty, Warp, tmux, and CLI tools apply only to Puppet Master built-in GUI terminal/runtime contracts. They must not create a PM CLI product, make terminal the PM control plane, or mint pseudo-terminals outside terminal_session_id ownership.
+L00009254	gui_related: true
+L00009255	gui_classification_reason: Guardrail affects GUI/user-visible terminal/control surfaces.
+L00009256	depends_on:
+L00009257	- PDS-003
+L00009258	- PNC-001
+L00009259	unblocks: []
+L00009260	acceptance_criteria:
+L00009261	- atom-0118 source details remain traceable through source_lineage and preserved source fields.
+L00009262	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009263	validation_surfaces:
+L00009264	- python3 scripts/pm-plan-index.py validate
+L00009265	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009266	risk_class: external_repo_guardrail
+L00009267	reasoning_tier: standard
+L00009268	context_scope: import_guardrail
+L00009269	implementation_surfaces:
+L00009270	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009271	node_compile_hint:
+L00009272	  mode: atom_0118
+L00009273	  create_worknodes: false
+L00009274	  create_nodeseeds: false
+L00009275	source_lineage:
+L00009276	- pldg-20260703-001-feature-intake:atom-0118
+L00009277	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0118
+L00009278	- subagent:019f297e-fcd6-71f1-a6f2-e410e13a3c38
+L00009279	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/00_CODEX_LEDGER_IMPORT_PROMPT.md
+L00009280	source_atom_ids:
+L00009281	- atom-0118
+L00009282	owner_hints:
+L00009283	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/parallel_agent_synthesis_20260703.json
+L00009284	preserved_exact_tokens:
+L00009285	- Do not create a PM CLI product
+L00009286	- Do not make terminal the PM control plane
+L00009287	- terminal_session_id
+L00009288	- Terminal lessons are GUI-terminal only
+L00009289	negative_constraints:
+L00009290	- Do not create a PM CLI product.
+L00009291	- Do not make terminal the PM control plane.
+L00009292	- Do not mint pseudo-terminals outside terminal_session_id ownership.
+L00009293	compile_disposition: create_new_planunit
+L00009294	```

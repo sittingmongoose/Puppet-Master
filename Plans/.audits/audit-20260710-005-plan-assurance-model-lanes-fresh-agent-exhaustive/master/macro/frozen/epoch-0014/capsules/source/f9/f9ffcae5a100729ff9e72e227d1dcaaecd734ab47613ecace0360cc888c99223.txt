@@ -1,0 +1,2276 @@
+L00000001	# Models System (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Coverage blocker provider/model precedence owner section
+L00000009	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000010	
+L00000011	## 0. Scope and SSOT status
+L00000012	
+L00000013	This document is the **single canonical source of truth** for the Puppet Master model selection, configuration, and variant system — how models are identified, selected, overridden per Persona, and cycled via variants. All other plan documents MUST reference this document by anchor (e.g., `Plans/Models_System.md#MODEL-ID`) rather than restating model selection rules or variant definitions.
+L00000014	
+L00000015	Models_System also owns live provider/model capability snapshot fields used by chat, prompt assembly, runtime routing, and settings surfaces, including context-window and max-token limits, fallback-chain eligibility, capability provenance, and requested/effective model disclosure. Legacy `platform_specs` / `platform_specs.rs` references from the removed Rust/Iced implementation are source-lineage only; they are not an active provider/model capability SSOT and must not be called as `platform_specs::context_window(provider)` or `platform_specs::fallback_model_ids(platform)`.
+L00000016	
+L00000017	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000018	
+L00000019	### SSOT references (DRY)
+L00000020	- Locked decisions: `Plans/Spec_Lock.json`
+L00000021	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000022	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000023	- Canonical terms: `Plans/Glossary.md`
+L00000024	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000025	- CLI-bridged providers: `Plans/CLI_Bridged_Providers.md`
+L00000026	- Provider OpenCode: `Plans/Provider_OpenCode.md`
+L00000027	- Persona system: `Plans/Personas.md`
+L00000028	- Run modes: `Plans/Run_Modes.md`
+L00000029	- OpenCode baseline (models): `Plans/OpenCode_Deep_Extraction.md` §7H
+L00000030	- GUI specification: `Plans/FinalGUISpec.md`
+L00000031	
+L00000032	---
+L00000033	
+L00000034	## Provider/model precedence and settings resolution
+L00000035	
+L00000036	
+L00000037	### Scope and owner boundaries
+L00000038	
+L00000039	This section is the single owner section for provider/model precedence across run, seam, package, node, overseer, and delegated-subagent scope.
+L00000040	
+L00000041	- Parallel-node worktree assignment may narrow the allowed provider/model surface for a node, but it does not replace the requested-versus-effective resolver record.
+L00000042	- Ownership transitions between overseer and delegated-subagent levels must stay in this owner section so later addenda elaborate the policy without replacing the canonical resolver contract.
+L00000043	
+L00000044	### Three-axis settings model
+L00000045	
+L00000046	Settings resolution is always described on three axes:
+L00000047	- `source`: where a candidate value came from (`manual_override`, `persona_preference`, `surface_default`, `scope_policy`, `config_default`, `provider_default`).
+L00000048	- `request`: the value explicitly requested for this run or child run.
+L00000049	- `execution`: the value actually handed to the selected provider/runtime after capability checks, worktree assignment, and policy gating.
+L00000050	
+L00000051	The display grammar MUST preserve the distinction between requested and effective values for provider, model, variant, effort, auth mode, and account identity.
+L00000052	
+L00000053	### Deterministic precedence by scope
+L00000054	
+L00000055	The canonical precedence chain is:
+L00000056	1. explicit run-envelope override
+L00000057	2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
+L00000058	3. Persona preference
+L00000059	4. surface or stage default
+L00000060	5. project or global config default
+L00000061	6. last-used state where the surface explicitly permits it
+L00000062	7. provider default
+L00000063	
+L00000064	Rules:
+L00000065	- the same inputs and availability set MUST produce the same effective result
+L00000066	- scope-specific policy MAY narrow or pin provider/model choices, but it MUST still emit requested versus effective values
+L00000067	- parallel-node worktree assignment participates in precedence when a worktree owner constrains the allowed provider/model surface for that node
+L00000068	- ownership transitions between overseer and delegated-subagent levels MUST emit a fresh resolver record instead of silently inheriting stale effective state
+L00000069	
+L00000070	### Resolver inputs and emit shape
+L00000071	
+L00000072	Resolver inputs MUST include:
+L00000073	- requested Persona and run-envelope overrides
+L00000074	- surface/stage defaults
+L00000075	- scope owner policy (`run`, `seam`, `package`, `node`, `overseer`, delegated-subagent)
+L00000076	- capability snapshot and model metadata
+L00000077	- account/profile availability
+L00000078	- worktree assignment and execution-role context
+L00000079	- permission ceiling and mutation policy
+L00000080	
+L00000081	The resolver MUST emit one shared record containing at least:
+L00000082	- `requested_platform`, `effective_platform`
+L00000083	- `requested_model`, `effective_model`
+L00000084	- `requested_variant`, `effective_variant`
+L00000085	- `requested_auth_mode`, `effective_auth_mode`
+L00000086	- `requested_account_id?`, `effective_account_id?`
+L00000087	- `execution_role`
+L00000088	- `selection_reason`
+L00000089	- `resolver_matrix_entry`
+L00000090	- `worker_policy_display`
+L00000091	- `skipped_persona_controls[]`
+L00000092	
+L00000093	That emit shape is consumed by runtime snapshots, inspectors, and owner transitions; later sections in this document elaborate, but do not replace, this owner section.
+L00000094	
+L00000095	Provider/model concern surfaces share the concern lifecycle vocabulary used by runtime owners: `active`, `acknowledged`, `resolved`, and `dismissed` remain separate states; `resolution_kind` includes `accepted_risk`; and any concern-action confirmation matrix must disclose whether model/provider selection may proceed, block, retry, or require user confirmation. `Plans/GUI_Rebuild_Requirements_Checklist.md` consumes those first-class concern lifecycle and lineage requirements without becoming the provider/model owner.
+L00000096	
+L00000097	Dispatch context and worktree precedence are part of this owner section. `DispatchContext.provider_id`, `model_id`, and provider/model precedence must cover run, seam, package, node, overseer, delegated-subagent, parallel-node worktree assignment, and ownership transitions. `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/orchestrator-subagent-integration.md`, and `Plans/Crosswalk.md` consume this policy, including `/persona/surface/default` compatibility wording, but do not replace it.
+L00000098	
+L00000099	Node execution settings use requested-vs-effective disclosure across `/model/effort/persona`, `/model/effort`, `/settings`, `/type`, runtime-model policy, node-worker policy, and per-node execution. `feature seam`, `work package`, node, work-package overseers, and overseer-spawned subagents may each carry provider/model/effort defaults and overrideability; auto-selected defaults may use `/easiest` policy only when it is explicit in the resolver record. package-based worktrees require `/ordering` and lane rules for dependent-node execution, and safe-point-like state handoff must remain tied to the canonical safe-point contract.
+L00000100	
+L00000101	Run Graph consumers must map worker and /verifier identity back to the requested/effective snapshot. `Plans/Run_Graph_View.md` / `/Run_Graph_View.md` may display `Provider / Model`, `worker_provider`, `worker_model`, `verifier_provider`, and `verifier_model`, but those are compatibility labels over the canonical `/effective` provider/model record.
+L00000102	
+L00000103	GitHub and project account context are separate selection inputs: `GitHub_Integration`, `GitHub_Integration.md`, `storage-plan`, and `storage-plan.md` consume current-repo, current-account, selected_repo_id, and project-scoped account policy state without moving the provider/model precedence owner out of this document.
+L00000104	
+L00000105	Adjacent owner references repeatedly implicated in provider/model cleanup include `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/Multi-Account.md`, `Plans/Widget_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Executor_Protocol.md`, `Plans/Orchestrator_Page.md`, `Plans/Provider_OpenCode.md`, `Plans/UI_Command_Catalog.md`, `Plans/Permissions_System.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/assistant-chat-design.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, `Plans/Tools.md`, `Plans/Glossary.md`, and `Plans/Personas.md`; they are consumers or adjacent owners, not substitutes for this provider/model precedence section.
+L00000106	
+L00000107	Runtime/storage identity fields must keep `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`, `/Contracts_V0.md`, and `/Orchestrator_Page.md` aligned: `requested_persona` and `effective_persona` are canonical, `_id` variants are compatibility labels, and `/runtime/storage` account fallback fields must not disappear from requested/effective disclosure.
+L00000108	
+L00000109	Owner-of-owners cleanup is implementation-relevant: 00-plans-index.md, plans-index, Decision_Log, Decision_Log.md, rewrite-tie-in-memo, rewrite-tie-in-memo.md, feature-list, feature-list.md, newfeatures.md, addendum-to-plan-map, SSOT rows, highest-value owner-of-owners routing, promoted-feature phasing, `/packages/lanes/overseers`, `/tab`, tier-era execution, `/effective` identity, and rewrite-critical contracts must not amplify drift for provider/model selection.
+L00000110	
+L00000111	Run Graph event-update vocabulary is historical input only. `Plans/Run_Graph_View.md` / `/Run_Graph_View.md` event-update rows such as `TierChanged`, `IterationStart`, `GateStart`, `GateComplete`, `UserInteractionRequired`, and `EvidenceStored` must be mapped to current execution-unit and requested/effective model events before they drive provider/model UI.
+L00000112	
+L00000113	Provider account snapshots are runtime-wide. `storage-plan` and `storage-plan.md` must model durable provider account snapshots for runs and for other actor classes that use the same provider runtime, not only the run actor class.
+L00000114	
+L00000115	Resolver selection reason text is concise but structured. Standard explanation snippets include `Package overseer default`, `Seam integration default`, `Node implementation match: Rust + backend`, `Review pass default`, `Recovery actor default`, and `Provider fallback from preferred persona model`.
+L00000116	
+L00000117	Requested/effective runtime identity uses the `requested_*` and `effective_*` field families as canonical cross-system IDs. `Contracts_V0`, `Contracts_V0.md`, `_id` compatibility fields, and `/runtime` consumers may expose those IDs, but they must not collapse requested, effective, account, provider, model, execution role, or operational identity into one value.
+L00000118	
+L00000119	Provider IDs and model IDs remain explicit in effective snapshots: `anthropic/` namespace prefixes, `provider_id: cursor`, `provider_id`, `model_id`, and `/effective` values are retained as data, not rewritten into display-only names.
+L00000120	
+L00000121	Pre-run chain configuration keeps isolation explicit. `Plans/chain-wizard-flexibility.md` / `/chain-wizard-flexibility.md` consumers may expose `pre-run` setup, but `/isolation` remains part of the model/runtime selection record when it affects provider or execution behavior.
+L00000122	
+L00000123	Storage-backed model selections are canonical-record entries. `Plans/storage-plan.md` / `/storage-plan.md` must preserve the durable selection record rather than treating model choice as transient UI text.
+L00000124	
+L00000125	Model selection surfaces expose `Workers`, `Providers & Models`, `Execution Identity`, and `HITL` as first-class labels. `/model`, multi-account context, orchestrator-only recovery, `Recovery`, and `Governance` states may drive those surfaces, but the labels must stay tied to the shared model owner contract.
+L00000126	
+L00000127	Node and package settings must preserve `node-effective` and `overseer-effective` snapshots when graph-patch-triggered work changes provider behavior. `/package/node`, provider-model, overseer-controlled, `/model`, `/config`, `/review`, and delegated-subagent records all resolve through the same requested/effective model contract.
+L00000128	
+L00000129	Execution object copies are execution-object-level records, not loose GUI hints. The GUI must not-forget node-worker and `/model` ownership when it renders or copies provider/model state for execution objects.
+L00000130	
+L00000131	Legacy tier-scoped references from `Plans/feature-list.md`, `Plans/00-plans-index.md`, `/feature-list.md`, `/00-plans-index.md`, and feature-list material are compatibility inputs only and cannot override the current provider/model owner contract.
+L00000132	
+L00000133	Resolution receipts may preserve exact explanatory labels such as `Requested model: claude/sonnet`, `Effective model: claude/sonnet`, `Reasoning effort: requested high -> skipped`, `/sonnet`, `Inherited from Project policy`, `Overridden by Package override`, and `Reason: provider does not support effort on this model`; those labels describe the /source of a requested/effective decision rather than becoming a separate resolver schema.
+L00000134	
+L00000135	Provider integration references across `Plans/Provider_OpenCode.md`, `Plans/Permissions_System.md`, `Plans/CLI_Bridged_Providers.md`, `/Provider_OpenCode.md`, `/Permissions_System.md`, and `/CLI_Bridged_Providers.md` remain adjacent implementation surfaces for model/provider execution.
+L00000136	
+L00000137	Cross-system account rows marked already-canonical must keep `Models_System`, `Models_System.md`, `/account`, and cross-system provider/account behavior aligned with this owner contract.
+L00000138	
+L00000139	Adjacent UI and persona compatibility references preserve both full paths and legacy aliases for `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/Orchestrator_Page.md`, `Plans/Personas.md`, `/FinalGUISpec.md`, `/storage-plan.md`, `/Orchestrator_Page.md`, and `/Personas.md`.
+L00000140	
+L00000141	Blocked model/runtime state records preserve `blocked_reason_code = waiting_approval` without losing `tier_id`, `tier_type`, `request_id`, `blocked_sequence`, `waiting_approval`, `human-in-the-loop`, `blocked_reason_code`, `human-in-the-loop.md`, or blocked-episode context.
+L00000142	
+L00000143	Selection and execution receipts keep three trace axes distinct: execution/result axis, source axis, and request axis. For example, `/result`, `/attempt`, `/runtime`, and `/skipped/clamped` values describe the receipt location and skip/clamp outcome rather than redefining model identity.
+L00000144	
+L00000145	Multi-account and persona compatibility references preserve `Plans/Multi-Account.md`, `Plans/Orchestrator_Page.md`, `Plans/Personas.md`, `/Multi-Account.md`, `/Orchestrator_Page.md`, and `/Personas.md` when provider/account context is displayed beside model selection.
+L00000146	
+L00000147	Runtime artifact panels may expose `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, `Show in Usage`, and `Show in Ledger`, but those labels are views over the provider/model snapshot and receipt state.
+L00000148	
+L00000149	Help and explanation copy must preserve copy-depth and concept-governance metadata. `Personas.md`, `Models_System`, `Models_System.md`, `FinalGUISpec.md`, `/help`, authored-copy, `Expert`, and `ELI5` outputs may simplify presentation, but they must not simplify the underlying provider/model contract.
+L00000150	
+L00000151	Executor integration requires execution-scoped provider/model context. `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `/runtime`, `/executor`, and execution-unit identity are the minimum anchors for dispatch, retry, blocked handling, and receipts.
+L00000152	
+L00000153	Cost and receipt views must remain canonical. `/Ledger`, deep-link targets, `cost_usage`, and artifact-local UI state must resolve to shared Usage/Ledger identity instead of creating artifact-local cost or receipt models.
+L00000154	
+L00000155	Repository-wide catalog references may cite `Plans/*.md`, top-level plan coverage, and the current `61` plan-file inventory, but those references do not move provider/model ownership out of this document.
+L00000156	
+L00000157	Execution settings preserve distinct execution-settings defaults and overrides for run/global context, feature seams, work packages, nodes, work-package overseers, feature-seam overseers, and overseer-delegated node workers. `/model`, `/global`, and `/override` values all remain visible as requested/effective provider/model state.
+L00000158	
+L00000159	Node worker policy is dynamic-by-default from node scope and `/type`. node-worker, `/package/node`, per-node, and `/model/effort` settings are configuration inputs, not ad hoc per-node manual model names.
+L00000160	
+L00000161	Delegation policy remains explicit. delegation-policy settings decide whether overseers may use subagents for node work and, if allowed, which provider/model policy governs delegated node workers.
+L00000162	
+L00000163	Lifecycle transitions require an event model: the event that causes each state transition must be represented with the execution-unit, provider/model snapshot, blocked-state, and receipt identity that made the transition valid.
+L00000164	
+L00000165	The legacy four-tier hierarchy from newfeatures.md and the canonical chain-wizard-flexibility / chain-wizard-flexibility.md node-graph model are incompatible execution models; compatibility text must name four-tier and node-graph explicitly instead of blending them.
+L00000166	
+L00000167	Simple help must simplify explanation, not rename the model: canonical names stay stable, ELI5 mode explains them more plainly, and friendly labels cannot create parallel object names that drift away from contracts.
+L00000168	
+L00000169	Interview routing keys must reject duplicated phase words: interview-phase-phase and interview-phase-phase-* are routing-key bugs, not alternate model identifiers.
+L00000170	
+L00000171	Route-target records must make resume_url concrete. A route-target may point back to a resume_url, but the resolver still records the target owner and route reason.
+L00000172	
+L00000173	Tab identity is scoped. `tab_id` must not be reused for side-panel subviews, browser tab IDs, workspace tab IDs, widget slots, or compare-target variants.
+L00000174	
+L00000175	Runtime-control support receipts use explicit support chips or rows: `Temperature: 0.2 -> Honored`, `Top-p: 1.0 -> Clamped to 0.9`, and `Reasoning effort: High -> Skipped` are display labels over the requested/effective model capability check.
+L00000176	
+L00000177	Artifact-opening surfaces consume the same subject-open resolver. Runtime_Artifacts_Panel, Runtime_Artifacts_Panel.md, subject-open, artifact-bearing, and artifact-opening state do not create bespoke provider/model opening rules.
+L00000178	
+L00000179	Model selection can be lane-aware when lane policy requires it. lane-level, security-focused, lane-aware, package-level, and `/graph` constraints must be represented in the model binding if a lane enforces a provider/model.
+L00000180	
+L00000181	Worktree visibility records may expose `/worktree/branch/tier` and `/lane`, but package/lane ownership, contamination, restore eligibility, and promotion posture must not stop at legacy tier status.
+L00000182	
+L00000183	Scope labels must distinguish app, project, surface, role, seam, package, node, manual, turn, session, run, task, and subagent sources. `/session/run/task/subagent` and `/package/node` are explicit override scopes.
+L00000184	
+L00000185	Provider/model settings are never single-project by assumption: runtime-affecting overrides may be app, project, `/per-package`, seam, `/package/seam/node`, overseer, or delegated-subagent scoped, and the resolver must preserve the scope that selected or constrained the value.
+L00000186	
+L00000187	The owner-doc cleanup rule is strict: if anchor tables, `/body` prose, addenda, or compatibility examples leave old and new provider/model models both canonical in the same surface, this document must collapse the split-brain rule into one requested/effective resolver statement instead of treating audit value-add wording as product canon.
+L00000188	
+L00000189	Concern and `/corroboration` state for provider/model selection is operational, not surface-level decoration. Execution-core owners must record whether concern evidence changes selection, blocks execution, permits accepted risk, or only annotates the requested/effective receipt.
+L00000190	
+L00000191	Routing, `/registry/governance`, and provider/model ownership contradictions stay with this owner-doc until resolved; adjacent docs may consume registry or routing outcomes, but they cannot define a second provider/model authority.
+L00000192	
+L00000193	Planning and `/output` surfaces consume the same subject-open model as artifact-opening flows. file-opening documentation may realize a chosen subject, but it must not replace the shared subject-open resolver or create provider/model-specific open rules.
+L00000194	
+L00000195	Transport-vs-upstream identity remains visible: vs-upstream provider/runtime examples must disclose whether `/runtime` identity belongs to the transport wrapper or the upstream provider.
+L00000196	
+L00000197	Executor compatibility keeps `Executor_Protocol`, `Executor_Protocol.md`, `/seam`, `/execution`, execution-unit, and TierContext references mapped to the current execution-unit context and package/seam overseer governance model.
+L00000198	
+L00000199	GUI/help labels keep expert and canonical terms stable. GUI, `/Expert`, `/help`, `/loaded`, and `/canonical` views may simplify loaded terms, but canonical names remain the source of truth.
+L00000200	
+L00000201	Tier-native ingestion and active-agent tracking are legacy compatibility inputs. tier-native, active-agent, lane-aware scheduling, and worktree tracking must resolve through package/lane ownership rather than reviving tier-native execution semantics.
+L00000202	
+L00000203	## 1. Canonical model identifier
+L00000204	<a id="MODEL-ID"></a>
+L00000205	
+L00000206	### 1.1 Format
+L00000207	
+L00000208	A model is identified canonically by `provider_id/model_id`.
+L00000209	
+L00000210	Rules:
+L00000211	- split on the first `/` only.
+L00000212	- `provider_id/model_id` remains the stored and runtime-canonical model identifier.
+L00000213	- label cleanup, grouping, family pooling, and runtime-platform grouping must never rewrite the canonical identifier.
+L00000214	- GUI indexing and grouping may use a normalized internal key for `/collision-safe` behavior, but user-facing dropdowns/cards still display the cosmetic label and never rewrite the stored canonical model id.
+L00000215	- Canonical model IDs align with persisted vocabulary in `Plans/Contracts_V0.md` (`/Contracts_V0.md` in legacy path references); contracts may cite the model provider namespace, but they do not redefine this identifier grammar.
+L00000216	
+L00000217	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md
+L00000218	
+L00000219	### 1.2 Runtime-platform distinction
+L00000220	
+L00000221	Model identity and runtime-platform identity are separate concerns.
+L00000222	
+L00000223	Required fields:
+L00000224	- `requested_model` / `effective_model` keep the canonical model id
+L00000225	- `requested_runtime_platform_id` / `effective_runtime_platform_id` disclose the concrete runtime surface
+L00000226	- `requested_model_provider_id` / `effective_model_provider_id` disclose the model vendor namespace when that differs from the runtime surface label
+L00000227	- `source_class?`, `source_confidence?`, and `source_authority?` record the usage-evidence authority for the selected runtime surface
+L00000228	- when model/runtime selection is shown beside usage data, legacy `provider_usage_source_kind?` maps through Usage/Contracts aliases into `source_class` / `source_authority` and preserves whether the evidence is project-local, provider/API-backed (`/API-backed`), API-key-derived, OAuth-quota-derived, or estimated instead of flattening all model rows into one source label
+L00000229	- legacy `provider_signal_confidence?` records confidence for provider-derived signals only until normalized into `source_confidence`; it is a migration/display alias and not a competing model-row authority field
+L00000230	- `model_id_raw`, `effort`, `compact_threshold`, `auth_family`, `pool_scope`, `effective_runtime`, and `effective_runtime_snapshot` remain inspectable runtime/model fields when they affect selection, compatibility, or requested/effective disclosure.
+L00000231	- In `/OpenCode-era` multi-platform availability, platform-mapping is additive: raw IDs and `provider_id/model_id` stay exact, while runtime-platform fields distinguish active surfaces such as `gemini_direct`, `antigravity_cli`, OpenCode bridges, and Cursor CLI without renaming the canonical model ID. The legacy `gemini_cli` surface remains retired/source-lineage vocabulary only.
+L00000232	
+L00000233	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+L00000234	
+L00000235	### 1.3 Display-name policy
+L00000236	
+L00000237	GUI labels may clean spacing or casing for readability, but they must preserve meaningful tokens such as version, `mini`, `pro`, `flash`, `thinking`, and coding-plan suffixes.
+L00000238	
+L00000239	Duplicate runtime availability remains runtime-qualified. If the same canonical model appears through multiple runtime surfaces, the UI disambiguates with secondary runtime-platform context instead of minting a fake new canonical model id.
+L00000240	
+L00000241	GUI `/disambiguation` uses secondary text such as `/runtime/auth-family/billing` context when a `cleaned-label` collision occurs. Cosmetic display labels, normalized internal keys, and collision-safe grouping must not mutate the stored `provider_id/model_id`.
+L00000242	
+L00000243	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+L00000244	## 2. Model and runtime selection priority
+L00000245	<a id="SELECTION-PRIORITY"></a>
+L00000246	
+L00000247	Model and runtime selection remains deterministic and follows the same requested/effective runtime pipeline used elsewhere.
+L00000248	
+L00000249	| Priority | Source | Description |
+L00000250	|---|---|---|
+L00000251	| 1 | explicit override | run envelope, manual picker, tier override, or surface-level override |
+L00000252	| 2 | Persona runtime preferences | per-Persona defaults for provider entry, model, variant, and supported controls |
+L00000253	| 3 | surface defaults | Chat, Interview, Builder, Orchestrator, or profile defaults |
+L00000254	| 4 | project/global defaults | configuration defaults including preferred runtime family or model |
+L00000255	| 5 | last used | previous user choice when still valid |
+L00000256	| 6 | internal/provider fallback | provider/runtime default chosen after capability filtering |
+L00000257	
+L00000258	ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000259	
+L00000260	Selection rules:
+L00000261	- the runtime first resolves the concrete provider entry/runtime surface, then the effective model within that surface.
+L00000262	- `provider_family_id` may influence pooling or fallback, but it does not replace the concrete provider entry selection.
+L00000263	- if the runtime internally reroutes to another effective model or model variant, that deviation is captured as runtime evidence; it does not rewrite the frozen requested selection.
+L00000264	- model availability and capability checks must consider the concrete runtime surface, not just the vendor model namespace.
+L00000265	- Retired Gemini CLI deterministic selection precedence (`--model`, `GEMINI_MODEL`, `settings.json` `model.name`, local model router, provider default, and `general.plan.modelRouting`) is retained only as source-lineage. Active CLI-runtime selection in this lane belongs to Antigravity CLI (`agy`, `agy models`, `--model`) and must record requested/effective model evidence without treating Gemini CLI as an active provider.
+L00000266	
+L00000267	Fallback resolution emits a `fallback_chain[]` in the requested/effective model snapshot. Each entry carries `rank`, `provider_entry_id`, `model_id`, `candidate_source`, `eligibility_state`, `capability_delta_refs[]`, `rejection_reason?`, and `selected`. `fallback_model_ids[]` may appear only as a compatibility projection over `fallback_chain[]` for historical consumers; it is not an owner source and must not be populated from legacy `platform_specs`.
+L00000268	
+L00000269	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+L00000270	## 3. Model options configuration
+L00000271	
+L00000272	<a id="MODEL-OPTIONS"></a>
+L00000273	
+L00000274	### 3.1 Per-provider options
+L00000275	
+L00000276	
+L00000277	Provider-specific options are configured under `config.provider.<provider_id>.options`:
+L00000278	
+L00000279	```toml
+L00000280	[provider.anthropic.options]
+L00000281	max_output_tokens = 64000
+L00000282	
+L00000283	[provider.openai.options]
+L00000284	max_output_tokens = 32000
+L00000285	```
+L00000286	
+L00000287	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00000288	
+L00000289	This addendum compiles accepted provider-update ledger atoms into canonical model/provider registry requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00000290	
+L00000291	### MS-113 - Provider-Owned Model Catalog And Evidence States
+L00000292	
+L00000293	```yaml
+L00000294	plan_unit_id: MS-113
+L00000295	unit_type: requirement
+L00000296	status: accepted
+L00000297	owner_doc: Plans/Models_System.md
+L00000298	canonical_text: >-
+L00000299	  The model registry is provider-owned: PM stores concrete Provider -> models rows by runtime/account/billing/transport route, then optionally groups rows by provider family for display. The same upstream model may appear under multiple providers, and each row must carry support_state, verification_state, media_input, media_output, generated_media_routes, account_profile requirements, requested/effective provider/model/effort fields, and source_lineage. Public Antigravity `agy` rows must be stored as explicit model rows for `Gemini 3.5 Flash (Medium)`, `Gemini 3.5 Flash (High)`, `Gemini 3.5 Flash (Low)`, `Gemini 3.1 Pro (Low)`, `Gemini 3.1 Pro (High)`, `Claude Sonnet 4.6 (Thinking)`, `Claude Opus 4.6 (Thinking)`, and `GPT-OSS 120B (Medium)` with text output, image input, PDF input, generated image, generated video, generated audio/TTS, music, artifact output, effort label, verification state, and source provenance fields; generated-media flags stay false unless row-specific artifact proof exists. Antigravity OAuth/internal `gemini-3.1-flash-image` is a separate capability-gated generated-image route, not a public `agy` CLI model row and not Gemini Direct. Catalog presence, OpenCode server routing, Models.dev visibility, or OpenCode Go availability is not end-to-end proof for PM-baked direct providers.
+L00000300	gui_related: false
+L00000301	gui_classification_reason: Backend provider/model registry and evidence semantics rather than visual presentation.
+L00000302	depends_on: [CV-094]
+L00000303	unblocks: [MA-062, F3-400, MGAC-094, UF-074]
+L00000304	acceptance_criteria:
+L00000305	  - Provider rows are keyed by concrete runtime/account/billing/transport route, not only vendor family.
+L00000306	  - Provider family grouping remains display/policy metadata and does not collapse distinct providers that offer overlapping models.
+L00000307	  - Every row can expose support_state, verification_state, media capability fields, account-profile requirements, requested/effective identity, and source refs.
+L00000308	  - Catalog presence alone cannot mark a row green or implementation-ready.
+L00000309	  - Public `agy` text/coding rows appear in Settings/model capability data with generated-media flags false unless exact generated-artifact proof exists.
+L00000310	  - Settings image-generation support rows expose OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Gemini Direct where verified, Antigravity OAuth/internal `gemini-3.1-flash-image`, and gated/disabled/unverified providers as route-specific entries rather than a Gemini-primary list.
+L00000311	validation_surfaces:
+L00000312	  - python3 scripts/pm-plan-index.py validate
+L00000313	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000314	risk_class: provider_catalog_drift
+L00000315	reasoning_tier: high
+L00000316	context_scope: provider_model_registry
+L00000317	implementation_surfaces: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md]
+L00000318	node_compile_hint: {mode: provider_owned_model_catalog, create_worknodes: false, create_nodeseeds: false}
+L00000319	source_lineage:
+L00000320	  - pldg-20260624-001-provider-updates:atom-0009
+L00000321	  - pldg-20260624-001-provider-updates:atom-0016
+L00000322	  - pldg-20260624-001-provider-updates:atom-0027
+L00000323	  - pldg-20260624-001-provider-updates:atom-0048
+L00000324	  - pldg-20260624-001-provider-updates:atom-0049
+L00000325	  - pldg-20260624-001-provider-updates:atom-0107
+L00000326	  - pldg-20260624-001-provider-updates:atom-0112
+L00000327	  - pldg-20260624-001-provider-updates:atom-0140
+L00000328	  - pldg-20260624-001-provider-updates:atom-0142
+L00000329	  - pldg-20260624-001-provider-updates:atom-0143
+L00000330	  - pldg-20260624-001-provider-updates:atom-0144
+L00000331	source_atom_ids: [atom-0009, atom-0016, atom-0027, atom-0035, atom-0046, atom-0048, atom-0049, atom-0050, atom-0051, atom-0059, atom-0060, atom-0071, atom-0074, atom-0091, atom-0092, atom-0098, atom-0100, atom-0101, atom-0102, atom-0103, atom-0104, atom-0105, atom-0107, atom-0109, atom-0112, atom-0117, atom-0118, atom-0119, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140, atom-0142, atom-0143, atom-0144]
+L00000332	preserved_exact_tokens: ["Provider -> models", "Provider -> models, Provider -> models", "OpenCode", "Models.dev", "support_state", "verification_state", "media_input", "media_output", "generated_media_routes", "requested_model_profile", "effective_model_profile", "fallback_used", "capability_checks", "agy models", "Gemini 3.5 Flash (Medium)", "Gemini 3.5 Flash (High)", "Gemini 3.5 Flash (Low)", "Gemini 3.1 Pro (Low)", "Gemini 3.1 Pro (High)", "Claude Sonnet 4.6 (Thinking)", "Claude Opus 4.6 (Thinking)", "GPT-OSS 120B (Medium)", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "verification state", "source provenance", "gemini-3.1-flash-image", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "image-01"]
+L00000333	negative_constraints:
+L00000334	  - Do not collapse providers that offer the same model into one vendor-family account row.
+L00000335	  - Do not treat Models.dev catalog presence or OpenCode server routing as PM direct-provider E2E proof.
+L00000336	  - Do not keep Gemini CLI as an active provider row; preserve `gemini_cli` only as retired/source-lineage vocabulary.
+L00000337	  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+L00000338	  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
+L00000339	owner_hints: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Media_Generation_and_Capabilities.md]
+L00000340	```
+L00000341	
+L00000342	### MS-114 - Direct Coding-Plan Provider Route Matrix
+L00000343	
+L00000344	```yaml
+L00000345	plan_unit_id: MS-114
+L00000346	unit_type: requirement
+L00000347	status: accepted
+L00000348	owner_doc: Plans/Models_System.md
+L00000349	canonical_text: >-
+L00000350	  Direct coding-plan providers are first-class Provider -> models routes in PM. Kimi For Coding, MiniMax Coding Plan global, Z.AI/Zhipu coding-plan routes, GitHub Copilot direct hosted API, Alibaba/Qwen Coding Plan global and CN rows, and other OpenCode/Models.dev coding-plan families must be represented as separate provider entries with route-specific base URLs, credential/profile requirements, model ids, media support, support-state, and verification-state. Rows without local end-to-end prompt proof remain disabled, capability-gated, unverified, or separate-profile rather than purchase blockers.
+L00000351	gui_related: false
+L00000352	gui_classification_reason: Backend model/provider catalog and provider-route metadata rather than visual presentation.
+L00000353	depends_on: [MS-113]
+L00000354	unblocks: [MA-062, MGAC-097, UF-075]
+L00000355	acceptance_criteria:
+L00000356	  - Kimi For Coding is green only for tested text, thinking, and image-input routes and is not marked as image generation.
+L00000357	  - MiniMax global coding plan is green for tested text, thinking, image input, and separate `image-01` generation; MiniMax CN remains separate/unverified with a global key.
+L00000358	  - Z.AI/Zhipu rows preserve standard, coding-plan, Anthropic, and Zhipu base-route distinctions and mark overload, plan-not-included, balance, and resource-package states accurately.
+L00000359	  - GitHub Copilot direct hosted API uses `https://api.githubcopilot.com` with `/models` and `/chat/completions`, no `/v1`, and no native image-generation route.
+L00000360	  - Unpurchased or unverified coding-plan families do not block compile and are not marked green.
+L00000361	validation_surfaces:
+L00000362	  - python3 scripts/pm-plan-index.py validate
+L00000363	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000364	risk_class: coding_plan_route_drift
+L00000365	reasoning_tier: high
+L00000366	context_scope: direct_coding_plan_providers
+L00000367	implementation_surfaces: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/usage-feature.md]
+L00000368	node_compile_hint: {mode: direct_coding_plan_provider_matrix, create_worknodes: false, create_nodeseeds: false}
+L00000369	source_lineage:
+L00000370	  - pldg-20260624-001-provider-updates:atom-0107
+L00000371	  - pldg-20260624-001-provider-updates:atom-0126
+L00000372	  - pldg-20260624-001-provider-updates:atom-0127
+L00000373	  - pldg-20260624-001-provider-updates:atom-0128
+L00000374	  - pldg-20260624-001-provider-updates:atom-0129
+L00000375	  - pldg-20260624-001-provider-updates:atom-0140
+L00000376	source_atom_ids: [atom-0107, atom-0108, atom-0109, atom-0110, atom-0111, atom-0112, atom-0124, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140]
+L00000377	preserved_exact_tokens: ["Kimi For Coding", "MiniMax Coding Plan", "MiniMax CN", "Z.AI", "Zhipu", "GitHub Copilot", "Alibaba Coding Plan", "Qwen", "alibaba-coding-plan", "alibaba-coding-plan-cn", "kuae-cloud-coding-plan", "minimax-coding-plan", "minimax-cn-coding-plan", "tencent-coding-plan", "umans-ai-coding-plan", "zai-coding-plan", "zhipuai-coding-plan", "https://api.githubcopilot.com", "/models", "/chat/completions", "/v1"]
+L00000378	negative_constraints:
+L00000379	  - Do not require Jared to buy additional subscription plans to finish provider planning.
+L00000380	  - Do not mark untested or inaccessible coding-plan rows green from catalog presence alone.
+L00000381	  - Do not prepend `/v1` to GitHub Copilot direct hosted routes.
+L00000382	  - Do not collapse global and CN/regioned provider IDs into one credential/profile row.
+L00000383	owner_hints: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/usage-feature.md, Plans/FinalGUISpec.md]
+L00000384	```
+L00000385	
+L00000386	### MS-115 - Provider-Specific Thinking Effort And Transform Defaults
+L00000387	
+L00000388	```yaml
+L00000389	plan_unit_id: MS-115
+L00000390	unit_type: requirement
+L00000391	status: accepted
+L00000392	owner_doc: Plans/Models_System.md
+L00000393	canonical_text: >-
+L00000394	  Thinking effort is a global user-selectable intent that resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
+L00000395	gui_related: false
+L00000396	gui_classification_reason: Provider/model transform and effective-wire behavior; GUI consumes the state but does not own it.
+L00000397	depends_on: [MS-113]
+L00000398	unblocks: [F3-400, ACD-424, CV-293]
+L00000399	acceptance_criteria:
+L00000400	  - Requested effort and effective provider wire value are both recorded for every provider attempt.
+L00000401	  - Unsupported or clamped effort requests do not silently become successful support claims.
+L00000402	  - OpenCode/Models.dev defaults are treated as source-lineage for PM-owned transforms, not copied adapter code.
+L00000403	  - Qwen/Alibaba `enable_thinking` is not assumed for coding-plan rows until PM verifies or maps it explicitly.
+L00000404	validation_surfaces:
+L00000405	  - python3 scripts/pm-plan-index.py validate
+L00000406	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000407	risk_class: effort_transform_drift
+L00000408	reasoning_tier: high
+L00000409	context_scope: provider_effort_mapping
+L00000410	implementation_surfaces: [Plans/Models_System.md, Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+L00000411	node_compile_hint: {mode: provider_specific_effort_mapping, create_worknodes: false, create_nodeseeds: false}
+L00000412	source_lineage:
+L00000413	  - pldg-20260624-001-provider-updates:atom-0017
+L00000414	  - pldg-20260624-001-provider-updates:atom-0052
+L00000415	  - pldg-20260624-001-provider-updates:atom-0113
+L00000416	  - pldg-20260624-001-provider-updates:atom-0114
+L00000417	  - pldg-20260624-001-provider-updates:atom-0139
+L00000418	source_atom_ids: [atom-0017, atom-0018, atom-0052, atom-0069, atom-0086, atom-0088, atom-0089, atom-0090, atom-0106, atom-0113, atom-0114, atom-0126, atom-0127, atom-0128, atom-0129, atom-0131, atom-0139, atom-0140]
+L00000419	preserved_exact_tokens: ["thinking effort", "reasoning_effort", "model_reasoning_effort", "thinking", "reasoningEffort", "xhigh|max -> high", "high", "max", "none", "thinking", "enable_thinking", "clear_thinking", "reasoning_content", "temperature", "topP", "topK", "toolStreaming=false"]
+L00000420	negative_constraints:
+L00000421	  - Do not expose generic low/medium/high effort variants for provider/model rows where current evidence excludes them.
+L00000422	  - Do not clear Z.AI/Zhipu thinking content when preserved-thinking semantics are required.
+L00000423	  - Do not assume Alibaba coding-plan rows receive `enable_thinking` just because OpenCode applies it to `alibaba-cn`.
+L00000424	owner_hints: [Plans/Models_System.md, Plans/Contracts_V0.md, Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Plans/FinalGUISpec.md]
+L00000425	```
+L00000426	
+L00000427	### 3.2 Per-model options
+L00000428	
+L00000429	Model-specific options override provider defaults:
+L00000430	
+L00000431	```toml
+L00000432	[provider.anthropic.models."claude-sonnet-4"]
+L00000433	max_output_tokens = 128000
+L00000434	temperature = 0.7
+L00000435	```
+L00000436	
+L00000437	### 3.3 Standard option fields
+L00000438	
+L00000439	#### 3.3.1 Runtime and pricing capability fields
+L00000440	
+L00000441	The capability matrix includes transport-shaping and billing-shaping fields that are consumed by provider adapters, prompt assembly, and usage attribution.
+L00000442	
+L00000443	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
+L00000444	
+L00000445	| Field | Type | Meaning |
+L00000446	|---|---|---|
+L00000447	| `system_role_name` | string | Role name used for system-level instructions (`system` or `developer`) |
+L00000448	| `streaming` | bool | Provider supports incremental stream delivery |
+L00000449	| `tool_use` | bool | Provider/runtime surface supports tool calls |
+L00000450	| `context_window_tokens` | integer | Provider/model advertised total context window for the concrete runtime surface |
+L00000451	| `max_input_tokens` | integer? | Maximum input budget when the provider distinguishes input from total context |
+L00000452	| `max_output_tokens` | integer? | Maximum output/generation budget for the concrete provider/model entry |
+L00000453	| `effective_context_window_tokens` | integer | Runtime-safe context limit after route, account, model variant, and policy clamps |
+L00000454	| `fallback_chain[]` | array | Ordered fallback candidates with rank, provider/model identity, eligibility, capability deltas, rejection reason, and selected marker |
+L00000455	| `thinking_blocks` | bool | Provider can emit or replay reasoning/thinking blocks |
+L00000456	| `cache_control` | enum/string | Cache strategy family supported by the provider surface |
+L00000457	| `cache_with_oauth` | bool | Cache markers remain valid when this surface is authenticated with OAuth |
+L00000458	| `assistant_prefill` | bool | Assistant-prefill semantics are supported |
+L00000459	| `parallel_tool_calls` | bool | Provider supports true parallel tool-call issuance |
+L00000460	| `image_input` | bool | Image payloads accepted |
+L00000461	| `max_payload_bytes` | integer | Hard payload ceiling |
+L00000462	| `pricing_version` | string | Versioned pricing metadata key used for cost calculation |
+L00000463	| `billing_entity_mode` | enum | whether billing attribution is account-only or requires billing-entity keying |
+L00000464	| `billing_entity` | string? | Billable quota or tenant dimension used in `(model_id, provider_id, billing_entity)` cost keys when applicable |
+L00000465	| `billing_source` | string? | Display/evidence label for the pricing source, including free-tier, server-authoritative, user override, or estimate-only paths |
+L00000466	
+L00000467	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+L00000468	
+L00000469	Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Antigravity CLI keep distinct active capability entries; retired Gemini CLI capability tokens remain compatibility/source-lineage only. Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
+L00000470	
+L00000471	Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
+L00000472	
+L00000473	Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.
+L00000474	
+L00000475	#### 3.3.2 `system_role_name` values
+L00000476	
+L00000477	Role-mapping is data-driven through `system_role_name`. OpenAI reasoning surfaces use developer-role semantics by setting `system_role_name = "developer"`, and bridged-provider adapters must stay aligned with `Plans/CLI_Bridged_Providers.md` rather than inventing local role names.
+L00000478	
+L00000479	| Provider family | `system_role_name` |
+L00000480	|---|---|
+L00000481	| Anthropic | `system` |
+L00000482	| OpenAI standard | `system` |
+L00000483	| OpenAI reasoning family | `developer` |
+L00000484	| Gemini Direct | `system` |
+L00000485	| Antigravity CLI | `system` |
+L00000486	| Gemini CLI (retired/source-lineage only) | `system` |
+L00000487	| Other providers | `system` by default |
+L00000488	
+L00000489	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+L00000490	
+L00000491	#### 3.3.3 Compaction threshold defaults
+L00000492	
+L00000493	Per-model defaults are part of the model metadata and MAY be overridden by model-specific config:
+L00000494	- `pressure_start_pct = 70`
+L00000495	- `pressure_aggressive_pct = 85`
+L00000496	- `large_block_threshold = 1200`
+L00000497	- per-model `compact-threshold` override when defined; unknown capability state must be shown explicitly rather than guessed.
+L00000498	
+L00000499	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000500	
+L00000501	### 3.4 Provider transform layer
+L00000502	
+L00000503	Per-provider normalization and options injection is handled by the provider transform layer (`Plans/CLI_Bridged_Providers.md`). This includes:
+L00000504	- Message normalization (e.g., Anthropic rejects empty content).
+L00000505	- Provider-specific headers and features (e.g., Anthropic beta headers).
+L00000506	- Schema transformation for tool definitions.
+L00000507	- Max output token enforcement.
+L00000508	
+L00000509	Provider-side context caching, cache-key / cache-TTL support, and large-context / 1M beta handling are model/runtime capability facts, not PM web-content-cache behavior. When a provider SDK exposes `setCacheKey` or an equivalent cache-key hook, PM records the provider-side cache semantics in provider capability and request metadata so reuse, billing, and debugging remain tied to the effective runtime surface.
+L00000510	
+L00000511	Provider cache-config remains internal `/automatic` behavior for MVP: PM may surface raw/debug evidence for reuse, billing, and troubleshooting, but it does not expose provider-cache controls as a general user-facing settings surface.
+L00000512	
+L00000513	Provider cache marker names are provider/runtime-specific and must stay explicit in capability evidence. Anthropic and `/OpenRouter` surfaces may expose `cacheControl`, Bedrock may expose `cachePoint`, OpenAI-compatible surfaces may expose `cache_control`, and Copilot-style surfaces may expose provider-native variants such as `copilot_cache_control`; PM maps those names into the canonical `cache_control` capability/billing vocabulary without pretending the upstream wire fields are identical.
+L00000514	
+L00000515	Compatibility evidence that labels a Google Vertex AI/Google AI cache-marker gap as `cachePoint` is treated as a `cache_control`/`cachedContent` capability issue; PM must emit the native cache marker for the selected route or repeated 5-15K-token prompt spans may be BILLED again instead of reusing cache.
+L00000516	
+L00000517	Anthropic/Bedrock cache support must preserve message/cache marker placement and provider metadata support such as `metadata.user_id` where available; OpenCode issue evidence `#11083`, `#11276`, and `#8138` remains reference evidence for deployments where that support affects cache behavior.
+L00000518	
+L00000519	Provider-specific request shaping remains capability evidence rather than generic runtime logic. OpenCode-discovered Alibaba entries such as `alibaba-cn` may require `enable_thinking=true` for reasoning models, so PM records `enable_thinking` as provider-specific request metadata for that runtime surface instead of treating it as a universal model option.
+L00000520	
+L00000521	Google Vertex Anthropic 1M-context support is runtime-path-specific. PM must not hardcode one universal 1M-context signal because implementation-reference issues disagree on whether the correct signal is a header or a body field depending on endpoint and /runtime path (`#14003`, `#17494`, `#14055`). The capability snapshot must keep the endpoint/runtime-path evidence, effective context window, and any required model-id suffix, shadow variant, or model-id rewrite rules explicit.
+L00000522	
+L00000523	Reasoning/effort controls must be resolved per runtime surface across direct providers, bridged CLIs, and subagents because OpenCode evidence shows provider-specific behavior across OpenAI, Copilot, Anthropic, Bedrock, Gemini, Groq, Azure, OpenRouter, Venice, Alibaba-compatible, and ZAI-compatible surfaces.
+L00000524	
+L00000525	OpenAI/Azure-family API-family selection and API path selection are per-model and `/per-provider` model/runtime compatibility facts. Azure loaders that switch between `responses()` and `chat()` based on `useCompletionUrls` must preserve that choice in provider capability and request metadata; non-OpenAI Azure-hosted models must not be forced down the wrong OpenAI API path because upstream hangs have been observed when `useCompletionUrls` selects an incompatible route (`#12949`, `#17552`).
+L00000526	
+L00000527	OpenCode reference evidence prefers the Responses API for OpenAI, while Chat-Completions-only proxies have known compatibility issues (`#15016`, `#7793`); PM records the selected OpenAI/Azure API family per model/runtime instead of assuming a universal route.
+L00000528	
+L00000529	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+L00000530	
+L00000531	---
+L00000532	
+L00000533	<a id="MODEL-ERRORS"></a>
+L00000534	
+L00000535	## 4. Model availability and error handling
+L00000536	
+L00000537	### 4.1 Availability and runtime-surface checks
+L00000538	
+L00000539	A model is available only when its provider/runtime surface is registered, authenticated, reachable, and compatible with the requested run posture.
+L00000540	
+L00000541	Model catalog entries carry `model_lifecycle_state` with closed values `active | deprecated | sunset_pending | sunset | removed`. Deprecated models may continue for compatible existing work with a `deprecation_notice_ref?`; `/sunset` or `sunset` models require `sunset_at_utc?` and `replacement_model_id?` when known and are not eligible for new dispatch unless an explicit compatibility policy permits them. Removed models are retained only for history, receipts, and migration lineage.
+L00000542	
+L00000543	Provider stop reasons and finish-reason normalization rules are not sufficient tool-loop completion evidence. Gemini and OpenAI-compatible providers can emit tool calls while also reporting `finish_reason = stop`; PM's `/control-flow` logic must continue through tool execution, tool-result ingestion, and response continuation checks instead of treating `finish_reason` or `finish_reason = stop` as final by itself (`#14972`).
+L00000544	
+L00000545	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
+L00000546	
+L00000547	<a id="MODEL-OVERFLOW-DETECTION"></a>
+L00000548	<a id="OVERFLOW-DETECTION"></a>
+L00000549	
+L00000550	### 4.1A Overflow detection owner anchor
+L00000551	
+L00000552	Model overflow detection is a model/runtime capability question before it becomes a retry or compaction decision. The model capability snapshot owns `context_window`, `effective_context_window`, `max_input_tokens`, `max_output_tokens`, `supports_truncation_signal`, and provider-specific overflow signal evidence. An adapter or provider may report overflow, length truncation, context-window exhaustion, or equivalent status, but it must preserve the provider signal and requested/effective model snapshot instead of converting it into a generic retry reason. Prompt compaction and context assembly consume these fields through `Plans/Prompt_Pipeline.md#COMPACTION` and `#COMPACTION-THRESHOLDS`; runtime retry policy consumes the classified outcome after model overflow has been attributed.
+L00000553	
+L00000554	ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/CLI_Bridged_Providers.md#ERROR-CLASSIFICATION
+L00000555	
+L00000556	### 4.2 Pricing metadata and stale-pricing behavior
+L00000557	
+L00000558	Pricing metadata is versioned. `pricing_version` identifies the pricing table used for cost calculation. User-supplied overrides are applied before warnings. Doctor integration warns when stored pricing metadata is stale relative to the current provider metadata snapshot.
+L00000559	
+L00000560	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+L00000561	
+L00000562	Cost attribution is keyed by `(model_id, provider_id, billing_entity)` when the provider's quota semantics depend on a billing entity; persisted records may expose a stable `billing_entity_id` or alias, but `billing_entity` is the canonical dimension for model pricing. Free-tier rows show `$0` with a `billing_source` label so cost displays do not flatten provider/runtime billing provenance.
+L00000563	
+L00000564	AWS Bedrock pricing uses the same `pricing_version`, stale-pricing warning, and user-override path as other providers; AWS-specific region-prefix or price-drift evidence is handled by the Bedrock lookup below rather than hardcoded price branches.
+L00000565	
+L00000566	OpenCode product pricing is a reference formula, not an authoritative PM cost source. PM may cite `packages/opencode/src/session/index.ts:getUsage` and `/opencode/src/session/index.ts:getUsage` when explaining the baseline estimate: normalize `/input` and `/output/reasoning/cache` buckets, then apply `input_rate`, `output_rate`, `cache_read_rate`, and `cache_write_rate` to `cache_read`, `cache_write`, and output/reasoning token buckets, using `over-200k` tiers when pricing metadata provides them. Provider-sensitive cache heuristics and provider caveats such as OpenRouter cache/input reporting differences remain visible in raw/debug cost evidence.
+L00000567	
+L00000568	The explanatory formula is per 1M token pricing units: `input * input_rate`, `output * output_rate`, `cache_read * cache_read_rate`, `cache_write * cache_write_rate`, and `reasoning * output_rate`; the estimate may still be inaccurate for some providers such as OpenRouter because of cache/input reporting differences.
+L00000569	
+L00000570	Provider-sensitive token counting uses `token_counting_adapter_id`, `token_counting_basis`, and `counting_semantics` before cost or budget enforcement reads canonical UF-085 token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` remain compatibility import/export aliases only.
+L00000571	
+L00000572	Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.
+L00000573	
+L00000574	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+L00000575	
+L00000576	### 4.3 Bedrock region prefix lookup
+L00000577	
+L00000578	Region-prefix mapping MUST use an explicit lookup table rather than string slicing.
+L00000579	
+L00000580	For Bedrock, region and `/model-id` rewrite rules are deterministic provider-runtime compatibility facts: PM may add the required regional prefix only through the table below and must honor no-rewrite exemptions for ARNs and provider-native ids that are already canonical.
+L00000581	
+L00000582	| Region family | Prefix |
+L00000583	|---|---|
+L00000584	| `us-east-*`, `us-west-*` | `us` |
+L00000585	| `eu-*` | `eu` |
+L00000586	| `ap-*` | `ap` |
+L00000587	| `sa-*` | `sa` |
+L00000588	| unknown/new region | no implicit prefix; require explicit mapping update |
+L00000589	
+L00000590	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+L00000591	
+L00000592	### 4.4 Two Gemini providers
+L00000593	
+L00000594	
+L00000595	### 4.5 Web tool provider capability alignment
+L00000596	
+L00000597	This consumer-capability section mirrors the linked owner contract and stays aligned with it.
+L00000598	
+L00000599	Core rules:
+L00000600	- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+L00000601	- Site Reader is the DEFAULT and PRIMARY webfetch routing path; Firecrawl, Tavily, Exa, and other provider routes remain fallback/alternative paths that require explicit configuration, Site Reader failure, or an operation-specific override.
+L00000602	- Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.
+L00000603	- The two-class provider model, model-native vs backend/API, is a DESIGN PRINCIPLE for provider settings and routing disclosure, not just a display classification.
+L00000604	- DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
+L00000605	- Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
+L00000606	- The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
+L00000607	- The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
+L00000608	- Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
+L00000609	- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl; deployment mode, requested/effective adapter identity, and capability differences remain visible before fallback or recovery.
+L00000610	- Tavily heavy-mode settings are never defaults: `search_depth: "advanced"`, `include_raw_content: true`, and high `chunks_per_source` values are reserved for precision needs or fallback scenarios. Default runtime behavior uses lighter Tavily modes such as `search_depth: "basic"` or `"fast"` and lets PM's search-then-read heuristic handle depth through native Site Reader; heavier provider-side retrieval activates only after an insufficient lighter pass or an explicit user request.
+L00000611	- DuckDuckGo / DDG remains the enabled-by-default best-effort `/no-key` fallback. It has no official API, uses HTML scraping only, and is poor for JavaScript-heavy SPAs, so provider-capability disclosure must show the fallback/partial nature instead of presenting it as equivalent to API-backed providers.
+L00000612	- When Exa is primary but the user specifically wants keyword search, `adapter_hint: "firecrawl"` or `adapter_hint: "google"` may override the selected adapter for that operation. This hint is per-operation routing input, not a global provider-stack reorder.
+L00000613	- Models_System mirrors the web-operation input/capability surface without owning payload validation: `websearch` includes `sources` and `categories` for multi-source routing; `webfetch` exposes `pdf_mode: fast|auto|ocr` with default `auto`; `webextract` accepts JSON Schema draft-07 `schema` with a 50KB maximum and no external `$id` references; and webfetch/webcrawl change detection reports diff status on re-fetch.
+L00000614	- `webresearch` defaults `autonomous` to false and has three support tiers: PM-composed default, enhanced PM recipe, and provider-native agent. The research-session variant of `automation_session` follows the browser capability and three-tier permission model in `Plans/Section15_MVP_Promoted_Features_Spec.md` and `Plans/Tools.md`.
+L00000615	
+L00000616	Fields:
+L00000617	- proxy_mode
+L00000618	- basic
+L00000619	- enhanced
+L00000620	- auto
+L00000621	- Fire Engine
+L00000622	- enabled
+L00000623	- api_key
+L00000624	- base_url
+L00000625	- timeout_ms
+L00000626	- cache_enabled
+L00000627	- Firecrawl is disabled by default until explicitly enabled in Settings
+L00000628	
+L00000629	Labels and values:
+L00000630	- websearch
+L00000631	- webfetch
+L00000632	- webextract
+L00000633	- webresearch
+L00000634	- webcrawl
+L00000635	- webmap
+L00000636	
+L00000637	Rules:
+L00000638	- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+L00000639	- Tavily `webfetch` capability is not erased by Site Reader primacy
+L00000640	- Exa `webfetch` capability is not erased by Site Reader primacy
+L00000641	- Firecrawl webfetch capability is not erased by Site Reader primacy
+L00000642	- Tavily webfetch capability is not erased by Site Reader primacy
+L00000643	- Exa webfetch capability is not erased by Site Reader primacy
+L00000644	- fallback-only
+L00000645	- Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
+L00000646	- native (model)
+L00000647	- pm-composed
+L00000648	- DuckDuckGo `websearch` is `native-ish`
+L00000649	- DuckDuckGo `webresearch` is `pm-composed`
+L00000650	- DuckDuckGo `webfetch` / `webextract` remain PM-composed or partial rather than flattened to `unsupported`
+L00000651	- DuckDuckGo partial crawl behavior must not disappear
+L00000652	- display label `Google`
+L00000653	- Google is a pluggable adapter slot
+L00000654	- Google official search is not a strategic backend
+L00000655	- Google `webfetch` keeps the pm-composed support semantics from the ledger
+L00000656	- Provider ID
+L00000657	- `firecrawl`
+L00000658	- Display name
+L00000659	- `Firecrawl`
+L00000660	- Default priority
+L00000661	- below Exa, Tavily; above DDG (user-adjustable)
+L00000662	- Default state
+L00000663	- disabled (requires API key or self-hosted URL)
+L00000664	## 5. Per-Persona runtime preferences
+L00000665	
+L00000666	<a id="PERSONA-MODEL-OVERRIDES"></a>
+L00000667	
+L00000668	A Persona MAY specify preferred runtime settings in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
+L00000669	
+L00000670	```yaml
+L00000671	---
+L00000672	id: "rust-engineer"
+L00000673	name: "Rust Engineer"
+L00000674	description: "Expert Rust developer."
+L00000675	default_platform: "anthropic"
+L00000676	default_model: "anthropic/claude-sonnet-4"
+L00000677	default_variant: "powerful"
+L00000678	temperature: 0.2
+L00000679	top_p: null
+L00000680	reasoning_effort: "high"
+L00000681	---
+L00000682	```
+L00000683	
+L00000684	| Field | Required | Type | Description |
+L00000685	|-------|----------|------|-------------|
+L00000686	| `default_platform` | Optional | `string` or `null` | Preferred provider/platform. `null` or absent means inherit from the selection chain (§2). |
+L00000687	| `default_model` | Optional | `string` or `null` | Model identifier in `provider_id/model_id` format. `null` or absent means inherit from selection priority (§2). |
+L00000688	| `default_variant` | Optional | `string` or `null` | Preferred variant preset. `null` or absent means inherit from the selection chain (§2). |
+L00000689	| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when supported by the active provider transport. |
+L00000690	| `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported. |
+L00000691	| `reasoning_effort` | Optional | `string` or `null` | Preferred effort/reasoning level when the provider transport exposes it. |
+L00000692	
+L00000693	Rule: Persona runtime preferences participate at priority 2 in the selection chain (§2). They are overridden by explicit run-envelope or surface-level overrides (priority 1) but override surface defaults, config defaults, last-used state, and internal defaults.
+L00000694	
+L00000695	Rule: If a Persona specifies a preferred platform/model/variant that is not available, the system logs a warning and falls through to the next priority level. The run is NOT blocked.
+L00000696	
+L00000697	Rule: If a Persona specifies runtime controls (`temperature`, `top_p`, `reasoning_effort`) that the active provider transport does not support, those controls MUST be recorded as skipped and excluded from the effective runtime state rather than silently ignored.
+L00000698	
+L00000699	ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_Policy.md§2, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
+L00000700	
+L00000701	---
+L00000702	
+L00000703	## 6. Variants system
+L00000704	
+L00000705	
+L00000706	<a id="VARIANTS"></a>
+L00000707	
+L00000708	### 6.1 Definition
+L00000709	
+L00000710	A **Variant** is a named model preset that the user can quickly switch between. Variants provide a fast way to cycle through models without editing config.
+L00000711	
+L00000712	### 6.2 Built-in variants
+L00000713	
+L00000714	Puppet Master ships with a set of built-in variants based on available providers:
+L00000715	
+L00000716	| Variant name | Target model | Description |
+L00000717	|-------------|-------------|-------------|
+L00000718	| `default` | Per selection priority (§2) | The system-selected model. Always available. |
+L00000719	| `fast` | Smallest/cheapest available model | Optimized for speed and cost. |
+L00000720	| `powerful` | Largest/most capable available model | Optimized for quality. |
+L00000721	
+L00000722	Built-in variants are resolved dynamically based on available providers at runtime. If a variant's target model is unavailable, the variant falls back to the `default` variant.
+L00000723	
+L00000724	### 6.3 Custom variants
+L00000725	
+L00000726	Users can define custom variants in config:
+L00000727	
+L00000728	```toml
+L00000729	[[variants]]
+L00000730	name = "my-variant"
+L00000731	model = "anthropic/claude-sonnet-4"
+L00000732	description = "My preferred model for code review."
+L00000733	
+L00000734	[[variants]]
+L00000735	name = "cheap"
+L00000736	model = "openai/gpt-5-mini"
+L00000737	description = "Budget-friendly option."
+L00000738	```
+L00000739	
+L00000740	| Field | Required | Type | Description |
+L00000741	|-------|----------|------|-------------|
+L00000742	| `name` | **Required** | `string` | Unique variant name. Regex: `^[a-z][a-z0-9-]{0,30}[a-z0-9]$`. |
+L00000743	| `model` | **Required** | `string` | Model identifier in `provider_id/model_id` format. |
+L00000744	| `description` | Optional | `string` | Max 200 characters. |
+L00000745	
+L00000746	### 6.4 Disabling variants
+L00000747	
+L00000748	Built-in and custom variants can be disabled:
+L00000749	
+L00000750	```toml
+L00000751	[variants_disabled]
+L00000752	"fast" = true
+L00000753	```
+L00000754	
+L00000755	Disabled variants do not appear in the model picker or variant cycling UI.
+L00000756	
+L00000757	### 6.5 Variant cycling
+L00000758	
+L00000759	The user can cycle through enabled variants via:
+L00000760	- A keybind (configurable, default unbound).
+L00000761	- The model picker dropdown in the Chat panel.
+L00000762	- The command palette.
+L00000763	
+L00000764	When a variant is selected, its `model` field is used as the active model for subsequent runs (priority 3 in §2). The active variant is persisted per session (not across restarts unless `config.default_variant` is set).
+L00000765	
+L00000766	### 6.6 Per-Persona variant overrides
+L00000767	
+L00000768	
+L00000769	A Persona MAY specify a preferred variant via a `default_variant` field in PERSONA.md frontmatter:
+L00000770	
+L00000771	```yaml
+L00000772	default_variant: "powerful"
+L00000773	```
+L00000774	
+L00000775	When set, this variant is pre-selected when the Persona is active. The user can still cycle to another variant during the session.
+L00000776	
+L00000777	ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
+L00000778	
+L00000779	### 6.7 Model aliases (friendly names)
+L00000780	
+L00000781	
+L00000782	Model aliases are optional friendly names that resolve to canonical model identifiers (`provider_id/model_id`) during model override parsing (for example, natural-language `model_override` in media generation).
+L00000783	
+L00000784	Deterministic alias resolution requirements:
+L00000785	- Alias keys MUST be normalized by lowercasing and collapsing spaces/underscores/hyphens.
+L00000786	- Resolution order for user-provided model text is: alias → exact model id → exact display name.
+L00000787	- If no match is found, the caller receives a model-unavailable result from the requesting subsystem.
+L00000788	
+L00000789	Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
+L00000790	
+L00000791	### 6.8 Canonical media model alias table
+L00000792	
+L00000793	
+L00000794	<a id="MEDIA-ALIASES"></a>
+L00000795	
+L00000796	The following aliases are registered by default for media-generation models. They are resolved by `media.generate` `model_override` (§2.3 of `Plans/Media_Generation_and_Capabilities.md`) and by any other model-override surface that uses alias resolution. Alias registration is not provider availability proof: the resolved provider/model route must still appear in the selected provider catalog and satisfy media artifact E2E proof before the route is green. Current Antigravity CLI proof does not list Nano Banana/Nanobanana media models; arbitrary `--model "Nano Banana"` prompt success falls back and is not support evidence.
+L00000797	
+L00000798	| Alias (normalized key) | Canonical model ID | Kind(s) |
+L00000799	|------------------------|--------------------|---------|
+L00000800	| `nano banana` | `gemini-2.5-flash-image` | image |
+L00000801	| `nano banana pro` | `gemini-3-pro-image-preview` | image |
+L00000802	| `veo fast` | `veo-3.1-fast-generate-preview` | video |
+L00000803	| `tts flash` | `gemini-2.5-flash-preview-tts` | tts |
+L00000804	| `tts pro` | `gemini-2.5-pro-preview-tts` | tts |
+L00000805	
+L00000806	Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.
+L00000807	
+L00000808	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+L00000809	
+L00000810	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+L00000811	
+L00000812	---
+L00000813	
+L00000814	## 7. GUI requirements
+L00000815	<a id="GUI-MODELS"></a>
+L00000816	
+L00000817	Model selection surfaces must distinguish human-friendly labels from canonical stored ids.
+L00000818	
+L00000819	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md
+L00000820	
+L00000821	### 7.1 Model picker (Chat panel)
+L00000822	
+L00000823	The chat model picker shows:
+L00000824	- primary label: cleaned model name for readability
+L00000825	- secondary label: runtime platform when needed for disambiguation
+L00000826	- capability indicators where available
+L00000827	
+L00000828	Rules:
+L00000829	- selecting a model creates a priority-1 requested override.
+L00000830	- if two runtime surfaces expose the same canonical model id, the picker must show the concrete runtime surface on the secondary line.
+L00000831	- the detailed inspector must always expose the exact raw canonical model id.
+L00000832	
+L00000833	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
+L00000834	
+L00000835	### 7.2 Settings > Models
+L00000836	
+L00000837	Settings must show:
+L00000838	- provider/runtime grouping
+L00000839	- concrete runtime surface availability
+L00000840	- current defaults and their source
+L00000841	- supported image-generation model/route rows with support state, verification state, proof or gated reason, and engine-picker eligibility
+L00000842	- availability or capability gaps without inferring unsupported when discovery is merely silent or stale
+L00000843	- model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.
+L00000844	- explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.
+L00000845	- `Edit Threshold` opens the most-local applicable override and discloses whether that value overrides the provider default or model default.
+L00000846	
+L00000847	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+L00000848	
+L00000849	Settings image-generation rows are route-specific rather than Gemini-primary. The selectable engine list includes OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct generated-image routes where verified, and disabled/capability-gated/unverified rows where proof or entitlement is missing. Public text-only `agy` rows remain visible in capability metadata and model details, but not as selectable image-generation engines unless the exact row later proves generated-media output.
+L00000850	
+L00000851	### 7.3 Variant and effort controls
+L00000852	
+L00000853	Variant and effort controls remain runtime-qualified capability data.
+L00000854	
+L00000855	Rules:
+L00000856	- effort support is never inferred solely from model-name similarity.
+L00000857	- unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.
+L00000858	- the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.
+L00000859	- Provider/model `/features` metadata may expose thinking-related controls as provider-specific option names. Active providers must declare those names per provider/model; retired Gemini CLI `thinkingLevel` and `thinkingBudget` terms remain source-lineage examples only. PM records thinking effort as runtime-qualified capability data rather than hardcoding a universal effort enum.
+L00000860	- Any legacy consumer wording in `Plans/assistant-chat-design.md` or `/assistant-chat-design.md` that treats Gemini effort or Cursor effort as universally unsupported is superseded by this runtime-qualified capability rule.
+L00000861	
+L00000862	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000863	
+L00000864	
+L00000865	### 7.4 Detailed inspectors
+L00000866	
+L00000867	Detailed inspectors show the exact raw canonical model id, concrete runtime surface, and any effective reroute or clamp the provider performed.
+L00000868	
+L00000869	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+L00000870	## 8. OpenCode baseline and Puppet Master deltas
+L00000871	
+L00000872	<a id="BASELINE-DELTAS"></a>
+L00000873	
+L00000874	Per `Plans/OpenCode_Deep_Extraction.md` §7H and §9H:
+L00000875	
+L00000876	### 8.1 Baseline
+L00000877	
+L00000878	OpenCode uses `provider_id/model_id` format with `parseModel()` splitting on the first `/`. Default model selection: config `model` field → last used (`model.json`) → internal priority sort. Model options via `config.provider.<id>.options` and provider-specific loaders. Variants are built-in + custom, cycling via keybind. Per-agent model overrides via `agent.<name>.model`. Provider transform layer handles per-provider normalization. Overflow detection via regex patterns on error messages.
+L00000879	
+L00000880	### 8.2 Puppet Master deltas
+L00000881	
+L00000882	1. **Model identifier format:** Same as OpenCode (`provider_id/model_id`). No delta needed.
+L00000883	2. **Configurable priority list:** OpenCode hardcodes the priority list. Puppet Master makes it configurable via `config.model_priority`.
+L00000884	3. **Per-Persona overrides:** OpenCode uses `agent.<name>.model`. Puppet Master stores model overrides in the Persona file (`default_model` in PERSONA.md frontmatter) for file-based management and GUI editing.
+L00000885	4. **Variant persistence:** OpenCode persists the active variant per session. Puppet Master adds `config.default_variant` for cross-session persistence.
+L00000886	5. **Provider transform in Rust:** OpenCode's transform layer is TypeScript. Puppet Master implements equivalent normalization in the Rust provider facade.
+L00000887	6. **GUI model picker:** OpenCode's TUI has a basic model selector. Puppet Master provides a full model picker dropdown in Chat, a dedicated Models settings tab, and per-Persona override editing.
+L00000888	7. **Overflow detection:** OpenCode uses regex-based detection across 12+ providers. Puppet Master ports these patterns to Rust and integrates with auto-compaction.
+L00000889	
+L00000890	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000891	
+L00000892	---
+L00000893	
+L00000894	## 9. Acceptance criteria
+L00000895	
+L00000896	<a id="ACCEPTANCE"></a>
+L00000897	
+L00000898	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000899	
+L00000900	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression_Gates.md
+L00000901	
+L00000902	<a id="AC-MOD01"></a>
+L00000903	**AC-MOD01:** Model identifiers MUST use the `provider_id/model_id` format. `parseModel()` MUST split on the first `/` only.
+L00000904	
+L00000905	<a id="AC-MOD02"></a>
+L00000906	**AC-MOD02:** Model selection MUST follow the priority chain in §2 deterministically. Given identical inputs, the same model MUST be selected.
+L00000907	
+L00000908	<a id="AC-MOD03"></a>
+L00000909	**AC-MOD03:** Per-Persona `default_model` (§5) MUST override config defaults, last-used, and internal defaults, but MUST be overridden by explicit run-envelope or tier-config model settings.
+L00000910	
+L00000911	<a id="AC-MOD04"></a>
+L00000912	**AC-MOD04:** If a Persona specifies an unavailable model, the system MUST log a warning and fall through to the next priority level. The run MUST NOT be blocked.
+L00000913	
+L00000914	<a id="AC-MOD05"></a>
+L00000915	**AC-MOD05:** Built-in variants MUST resolve dynamically based on available providers. An unavailable variant MUST fall back to `default`.
+L00000916	
+L00000917	<a id="AC-MOD06"></a>
+L00000918	**AC-MOD06:** Custom variants MUST be validated: unique name, valid model identifier, model available at definition time or warning logged.
+L00000919	
+L00000920	<a id="AC-MOD07"></a>
+L00000921	**AC-MOD07:** The Chat panel model picker MUST display all available models grouped by provider and support variant quick-switch.
+L00000922	
+L00000923	<a id="AC-MOD08"></a>
+L00000924	**AC-MOD08:** The Settings Models tab MUST support per-model option editing and variant management (add/edit/disable/remove).
+L00000925	
+L00000926	---
+L00000927	
+L00000928	*Document created for planning only; no code changes.*
+L00000929	## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)
+L00000930	
+L00000931	
+L00000932	This addendum expands the Models system so Persona-driven runtime control is explicit, provider-aware, and visible to the user.
+L00000933	
+L00000934	### 10.1 Persona-driven model/runtime control principle
+L00000935	
+L00000936	A Persona may request:
+L00000937	- platform/provider,
+L00000938	- model,
+L00000939	- variant,
+L00000940	- temperature,
+L00000941	- top_p,
+L00000942	- reasoning_effort,
+L00000943	- and provider-specific runtime options.
+L00000944	
+L00000945	These Persona preferences participate in effective run assembly but MUST pass through a provider capability matrix before being applied.
+L00000946	
+L00000947	### 10.2 Effective selection fields (cross-system runtime contract)
+L00000948	
+L00000949	
+L00000950	Effective model/runtime selection is part of the shared requested/effective identity contract.
+L00000951	
+L00000952	Required cross-system fields are:
+L00000953	- `requested_platform`
+L00000954	- `effective_platform`
+L00000955	- `requested_model`
+L00000956	- `effective_model`
+L00000957	- `model_id_raw`
+L00000958	- `requested_variant`
+L00000959	- `effective_variant`
+L00000960	- `effort`
+L00000961	- `requested_auth_mode`
+L00000962	- `effective_auth_mode`
+L00000963	- `auth_family`
+L00000964	- `compact_threshold`
+L00000965	- `pool_scope`
+L00000966	- `effective_runtime`
+L00000967	- `effective_runtime_snapshot`
+L00000968	- `requested_account_policy`
+L00000969	- `requested_account_id?`
+L00000970	- `requested_account_binding?`
+L00000971	- `effective_account_id?`
+L00000972	- `effective_provider_identity?`
+L00000973	- `account_switch_reason?`
+L00000974	- `execution_role`
+L00000975	- `selection_reason`
+L00000976	
+L00000977	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md
+L00000978	
+L00000979	Rules:
+L00000980	- model selection does not collapse provider/account identity, execution role, and operational identity into one field
+L00000981	- support and disclosure must show whether a requested control was honored, skipped, or clamped
+L00000982	- same-provider accounts are not interchangeable for selection or history purposes
+L00000983	
+L00000984	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
+L00000985	### 10.3 Selection precedence (expanded)
+L00000986	
+L00000987	The effective model/runtime selection chain is:
+L00000988	
+L00000989	1. **Explicit run-envelope override**
+L00000990	   Manual surface selection or structured run override for platform/model/variant/runtime controls.
+L00000991	2. **Persona preference**
+L00000992	   Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.
+L00000993	3. **Surface/tier/phase defaults**
+L00000994	   Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.
+L00000995	4. **Global/project config defaults**
+L00000996	5. **Last-used state** where supported
+L00000997	6. **Internal/provider defaults**
+L00000998	
+L00000999	Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
+L00001000	
+L00001001	### 10.3A Direct coding-plan provider surfaces
+L00001002	
+L00001003	`Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are direct-provider architectural surfaces in PM's provider/model selection model.
+L00001004	
+L00001005	Rules:
+L00001006	- direct-provider architectural direction for `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` is strong enough to model now by using OpenCode as the implementation reference while confirmatory post-build verification remains pending
+L00001007	- these are coding-plan-branded products, so PM must preserve the product label such as `Alibaba Coding Plan` as a selectable/runtime-facing surface instead of collapsing it into an unbranded vendor family
+L00001008	- if the same provider family offers both coding-plan and pay-as-you-go products, GUI recommendation and picker surfaces must keep both products visible as separate selectable/runtime-facing account or provider entries rather than smoothing them into one vendor label
+L00001009	- each surface still resolves through requested/effective runtime, model, effort, account, and capability disclosure rather than through a loose vendor-family `platform` label
+L00001010	- implementation-reference status does not make OpenCode session identity, provider discovery, or provider-specific request shaping the PM canonical runtime identity
+L00001011	- direct-provider implementation follow-up must collect official primary-source auth and `/usage/quota` docs for Alibaba direct, MiniMax direct, and Z.AI direct; this confirmatory follow-up refines provider detail but does not block the core direct-provider architecture.
+L00001012	- `Z.AI Coding Plan` readiness validates both API key state and provider reachability/model-discovery readiness (`/model-discovery`) before PM treats the surface as ready.
+L00001013	
+L00001014	ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md
+L00001015	
+L00001016	### 10.3.1 Interview GUI/UI/UX Gemini preference (surface default)
+L00001017	
+L00001018	The Gemini preference for Interview is a **surface/stage default**, not a Persona-wide default.
+L00001019	
+L00001020	Trigger conditions:
+L00001021	- active surface = `interview`
+L00001022	- current Interview phase is `product_ux` **or** the Interview state has `has_gui = true`
+L00001023	- active stage is one of `questioning`, `research`, `drafting`, or `review`
+L00001024	- no explicit run-envelope or stage override already selected a different platform/model
+L00001025	
+L00001026	Behavior:
+L00001027	- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 ("Surface/tier/phase defaults")
+L00001028	- validation stages do **not** auto-switch to Gemini unless the user or a stage override explicitly requests it
+L00001029	- if Gemini is unavailable or fails capability checks, selection falls back to the normal precedence chain with no special-case retry loop
+L00001030	
+L00001031	Persistence / visibility:
+L00001032	- the resolved selection reason MUST mention the Interview GUI/UI/UX preference when it wins (for example: `Interview GUI stage default: Gemini`)
+L00001033	- when the preference is skipped, the reason MUST record why (for example: `Gemini unavailable` or `explicit user override`)
+L00001034	
+L00001035	<a id="PERSONA-CAPABILITY-MATRIX"></a>
+L00001036	### 10.4 Provider Persona Capability Matrix (canonical support states)
+L00001037	
+L00001038	
+L00001039	Capability and effort evaluation must be performed per runtime surface, not by loose provider-family assumptions.
+L00001040	
+L00001041	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
+L00001042	
+L00001043	Day-one supported runtime/API-family surfaces for this change set:
+L00001044	
+L00001045	| Surface | Class | Key notes |
+L00001046	|---|---|---|
+L00001047	| `codex` direct | direct-provider | Explicit API-family selection may be required. |
+L00001048	| `copilot` direct | direct-provider | Native subagent billing/routing behavior is special and not freely mixed from non-Copilot parents. |
+L00001049	| `opencode` server | server-bridged | PM child runs map to OpenCode session lineage additively. |
+L00001050	| `alibaba-coding-plan` direct | direct-provider | Effort and API-family behavior must be treated as provider-specific, not assumed OpenAI-equivalent. |
+L00001051	| `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; `zai-coding-plan` is the product label while `zai_coding_plan` is the family mapping token. |
+L00001052	| `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`. |
+L00001053	| `gemini` direct | direct-provider | Active Gemini Direct API runtime surface. |
+L00001054	| `antigravity-cli` | CLI-bridged | Active multi-model Google-owned CLI-runtime surface replacing Gemini CLI. |
+L00001055	| `gemini-cli` | retired/source-lineage | Not an active runtime surface; retained only for migration/currentness audit. |
+L00001056	| `claude-code-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
+L00001057	| `cursor-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
+L00001058	
+L00001059	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Commands_System.md, ContractName:Plans/FinalGUISpec.md
+L00001060	
+L00001061	Matrix rules:
+L00001062	- `gemini` direct and `antigravity-cli` are separate active surfaces even when grouped by a higher-level provider family; retired `gemini-cli` must not be selected.
+L00001063	- effort support is evaluated per surface.
+L00001064	- tool-schema normalization and loop-control behavior may vary by surface.
+L00001065	- provider-native agent or session files are not PM runtime canon.
+L00001066	- Copilot-native subagent routing remains a special policy path, not a general per-member crew mixing behavior.
+L00001067	
+L00001068	ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00001069	### 10.4.1 Capability evaluation granularity
+L00001070	
+L00001071	The matrix in §10.4 defines the **transport-level baseline** only. Effective Persona-control support for a specific run MUST be computed as the intersection of:
+L00001072	
+L00001073	1. **transport support** from the Provider Persona Capability Matrix,
+L00001074	2. **model-level support** from discovered model metadata / provider capability metadata,
+L00001075	3. **runtime constraint support** from the selected variant or provider runtime path.
+L00001076	
+L00001077	This is required because a control may be supported by a provider transport in general but unavailable for a specific model.
+L00001078	
+L00001079	Provider-family transforms, provider-specific API-shape mismatch handling, and API routing follow the same granularity:
+L00001080	- PM must keep adapter policy explicit and must not assume one generic direct-provider loop is sufficient for all model families; OpenAI-like providers therefore use per-surface API-family routing, including explicit `responses` vs `chat` vs `model-language` / plain language model primitive selection, rather than one universal OpenAI-compatible surface.
+L00001081	- `Gemini/Vertex` surfaces need stricter `tool-schema` normalization and schema sanitization requirements than generic JSON Schema before PM treats tool calls as equivalent across transports; sanitizer evidence must preserve `anyOf`/combiners and numeric enums with issue refs `#14788`, `#12908`, `#12827`, and `#12911`.
+L00001082	- upstream provider identity remains explicit where relevant; examples include `google`, `anthropic`, and `openai-compatible`, and bridge/runtime adapters freeze that identity in effective disclosure instead of collapsing it into the PM runtime platform label.
+L00001083	- for Antigravity CLI and other active provider-side routers, PM should prefer explicit model selection, disable or constrain provider-side routing where feasible, tolerate/observe any remaining internal routing, and surface any `/observe` state rather than allowing silent provider-side model changes without requested/effective model disclosure. Gemini CLI router wording is retired/source-lineage only.
+L00001084	
+L00001085	Direct coding-plan provider identities:
+L00001086	- `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are user-visible provider names in the same direct-provider `/runtime` bucket as `GitHub Copilot`, `Codex`, and `Gemini`; they are not CLI-bridged surfaces merely because they use provider SDK adapters.
+L00001087	- `MiniMax` direct coding-plan entries `minimax-coding-plan` and `minimax-cn-coding-plan` use env `MINIMAX_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/anthropic` through the `/anthropic` adapter family.
+L00001088	- `Z.AI`/Zhipu direct coding-plan entry `zhipuai-coding-plan` uses env `ZHIPU_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/openai-compatible` through the `/openai-compatible` adapter family.
+L00001089	- The Z.AI base API is `https://api.z.ai/api/coding/paas/v4`; historical source spelling `//api.z.ai/api/coding/paas/v4` normalizes to that HTTPS URL. Z.AI Coding Plan also has a coding-plan-specific endpoint and plan-dependent quota/reset behavior, so `/reset` timing and quota displays must be treated as provider-plan facts rather than generic OpenAI-compatible defaults.
+L00001090	- Provider-family mappings include `zai_coding_plan` / `zai-coding-plan` -> `direct_api` family `zai`, `gemini_direct` -> family `gemini`, `alibaba_coding_plan` -> `direct_api` family `alibaba`, and `minimax_coding_plan` -> `direct_api` family `minimax`; MiniMax Coding Plan source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`.
+L00001091	
+L00001092	Examples:
+L00001093	- `reasoning_effort` may be supported by a provider transport but unavailable for the selected model.
+L00001094	- `temperature` may be supported for direct API calls but unavailable through a narrowed CLI transport path.
+L00001095	- a variant may force a model switch that changes effective support.
+L00001096	
+L00001097	### 10.4.2 Derived control rule: `talkativeness`
+L00001098	
+L00001099	`talkativeness` controls how verbose or concise the model's responses should be at the instruction layer.
+L00001100	
+L00001101	Scale:
+L00001102	- `1` = terse, code-only, minimal explanation,
+L00001103	- `2` = concise with light explanation,
+L00001104	- `3` = balanced default,
+L00001105	- `4` = detailed and explanatory,
+L00001106	- `5` = verbose, teaching-oriented, high-context explanation.
+L00001107	
+L00001108	Default:
+L00001109	- the system default is `3` (`balanced`).
+L00001110	
+L00001111	Derivation rule:
+L00001112	1. user preference setting,
+L00001113	2. mode overlay,
+L00001114	3. explicit per-thread override.
+L00001115	
+L00001116	Mode overlay defaults:
+L00001117	- plan mode → `4`
+L00001118	- ask mode → `3`
+L00001119	- agent mode → `2`
+L00001120	
+L00001121	Rules:
+L00001122	- the effective `talkativeness` value is derived after applying the mode overlay and then any explicit per-thread override,
+L00001123	- `talkativeness` maps to system-prompt instructions that control response length, amount of explanation, and expected detail level,
+L00001124	- some model families follow terse instructions more reliably than others, so PM MAY adjust the instruction mapping per model family while preserving the same user-visible scale.
+L00001125	
+L00001126	`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
+L00001127	
+L00001128	Canonical implications:
+L00001129	- `persona_talkativeness` does **not** require its own transport matrix row.
+L00001130	- it is always expressed through prompt construction and response-style instructions, not through provider-native temperature/top-p semantics.
+L00001131	
+L00001132	### 10.4.3 Canonical capability snapshot source
+L00001133	
+L00001134	The Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.
+L00001135	
+L00001136	Canonical snapshot shape:
+L00001137	```json
+L00001138	{
+L00001139	  "provider_id": "cursor",
+L00001140	  "transport": "CliBridge",
+L00001141	  "model_id": "anthropic/claude-sonnet-4",
+L00001142	  "variant": null,
+L00001143	  "context_window_tokens": 200000,
+L00001144	  "max_input_tokens": 180000,
+L00001145	  "max_output_tokens": 64000,
+L00001146	  "effective_context_window_tokens": 180000,
+L00001147	  "fallback_chain": [
+L00001148	    {
+L00001149	      "rank": 1,
+L00001150	      "provider_entry_id": "cursor",
+L00001151	      "model_id": "anthropic/claude-sonnet-4",
+L00001152	      "candidate_source": "persona_preference",
+L00001153	      "eligibility_state": "eligible",
+L00001154	      "capability_delta_refs": [],
+L00001155	      "selected": true
+L00001156	    }
+L00001157	  ],
+L00001158	  "controls": {
+L00001159	    "persona_prompt_body": {
+L00001160	      "state": "supported",
+L00001161	      "reason": "provider accepts system/rules prompt injection",
+L00001162	      "source": "documented"
+L00001163	    },
+L00001164	    "persona_reasoning_effort": {
+L00001165	      "state": "unsupported",
+L00001166	      "reason": "transport does not expose an effort knob",
+L00001167	      "source": "documented"
+L00001168	    }
+L00001169	  }
+L00001170	}
+L00001171	```
+L00001172	
+L00001173	Rules:
+L00001174	- The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
+L00001175	- Provider/model catalog snapshots carry `boot_refresh_enabled`, `model_catalog_status`, `last_model_refresh_at`, and `selectable_unit_ids[]` / `selectable_unit_ids` so boot-time refresh, stale catalog state, and the selectable units tied to a catalog entry remain inspectable.
+L00001176	- Capability resolution records may include `resolved_capability_deltas[]`, `pool_scope`, and `provider_entry`; `pool_scope` can be `provider_entry` when capability differences must be pinned to the concrete runtime surface rather than a provider family.
+L00001177	- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
+L00001178	- A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
+L00001179	- Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
+L00001180	- `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
+L00001181	
+L00001182	Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:
+L00001183	- `supports_multi_account`
+L00001184	- `account_identity_kind`
+L00001185	- `quota_signal_sources[]`
+L00001186	- `quota_signal_confidence`
+L00001187	- `supports_threshold_switch`
+L00001188	- `supports_hard_exhaustion_detection`
+L00001189	- `supports_rate_limit_detection`
+L00001190	- `supports_reset_countdown`
+L00001191	- `supports_manual_set_active`
+L00001192	- `supports_cooldown`
+L00001193	- `supports_retry_budget`
+L00001194	- `supports_role_scoped_account_pools`
+L00001195	- `switch_boundary`
+L00001196	- `provider_limit_notes?`
+L00001197	
+L00001198	The generic signal axes remain `signal_source_kinds[]` and `signal_confidence` for signal sources/confidence. `quota_signal_sources[]` plus `quota_signal_confidence` are the quota/account-pressure specialization of those axes for account-pressure interpretation. The resolver treats these as provider capability metadata, not account state. `retry_budget?`, `cooldown_until?`, and `reset_at?` may appear on account-health records only when the capability snapshot says the provider path supports or can infer those facts. A provider path that lacks cooldown/retry-budget support or reset countdown support MUST disclose `unsupported`, `opaque`, `inferred`, or `stale` rather than pretending the provider account pool is safely switchable.
+L00001199	
+L00001200	Bridge note:
+L00001201	- `talkativeness` remains governed by the derived-control rule in §10.4.2 and therefore only appears in the snapshot when a concrete prompt-construction policy records the effective value for disclosure/debugging.
+L00001202	- its effective support is derived from `persona_prompt_body`.
+L00001203	- if a provider path can apply Persona prompt-body instructions, it can apply `talkativeness`.
+L00001204	- if Persona prompt-body injection is bypassed or unavailable, `talkativeness` MUST be recorded as skipped with the same provider/model disclosure rules as other Persona controls.
+L00001205	
+L00001206	GUI gating and runtime disclosure MUST use this derived rule rather than inventing a second inconsistent source.
+L00001207	
+L00001208	### 10.5 Unsupported control disclosure rules
+L00001209	
+L00001210	If a Persona requests a control the active provider cannot honor:
+L00001211	- do not silently ignore it,
+L00001212	- do not show it as applied,
+L00001213	- record it in `skipped_persona_controls[]`,
+L00001214	- record the reason and provider,
+L00001215	- and expose that status in UI.
+L00001216	
+L00001217	Example skipped control records:
+L00001218	- `temperature`: `unsupported by Claude Code transport`
+L00001219	- `top_p`: `unsupported by Cursor CLI transport`
+L00001220	- `reasoning_effort`: `provider does not expose effort knob`
+L00001221	
+L00001222	### 10.6 GUI disclosure requirements
+L00001223	
+L00001224	Persona-related model/runtime controls shown in GUI MUST reflect provider support state:
+L00001225	
+L00001226	- **supported:** editable normally
+L00001227	- **partially_supported:** editable with warning badge and explanatory tooltip
+L00001228	- **unsupported:** disabled with explanatory text
+L00001229	
+L00001230	Example UI copy patterns:
+L00001231	- `Reasoning effort` -> disabled on Cursor CLI with note `Cursor CLI does not expose a documented effort control.`
+L00001232	- `Temperature` -> disabled on Claude Code with note `Not exposed in official Claude Code CLI settings.`
+L00001233	
+L00001234	### 10.7 Runtime display requirements
+L00001235	
+L00001236	All run surfaces must display effective runtime choices, not only raw configured values.
+L00001237	
+L00001238	Minimum display requirements:
+L00001239	- Persona name
+L00001240	- selection reason
+L00001241	- effective platform
+L00001242	- effective model
+L00001243	- effective variant/effort when present
+L00001244	- indication of skipped controls when relevant
+L00001245	
+L00001246	Example display:
+L00001247	- `Persona: Rust Engineer (Auto: Rust repo + code task)`
+L00001248	- `Model: Codex GPT-5.3 (Persona preferred)`
+L00001249	- `Platform: Codex (Available)`
+L00001250	- `Skipped controls: temperature unsupported by provider`
+L00001251	
+L00001252	### 10.8 OpenCode baseline note
+L00001253	
+L00001254	OpenCode demonstrates the integrated runtime shape Puppet Master is adopting:
+L00001255	- role object carries prompt, model, variant, temperature, topP, permission, and options,
+L00001256	- selected role is resolved by name,
+L00001257	- role prompt is injected into system prompt assembly,
+L00001258	- role model and runtime options are applied before model call.
+L00001259	
+L00001260	Puppet Master follows that structure conceptually, but uses Persona as the canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+L00001261	
+L00001262	### 10.9 Acceptance criteria addendum
+L00001263	
+L00001264	- Effective runtime state must distinguish requested vs effective vs skipped Persona controls.
+L00001265	- Runtime support outcomes must preserve the `requested_runtime` alongside whether the request was `substituted`, `clamped`, `blocked`, or `retried_on_fallback`.
+L00001266	- Unsupported controls must be visible in both editor UI and runtime UI.
+L00001267	- Provider capability matrix must be the shared source for editor gating and runtime disclosure.
+L00001268	- Chat/Interview/Builder/Orchestrator history/event views must show effective Persona/model/platform rather than only stored preferences.
+L00001269	
+L00001270	<a id="MODEL-RETRY-POLICY"></a>
+L00001271	<a id="RETRY-POLICY"></a>
+L00001272	
+L00001273	## Provider Failure-Class Alignment Addendum (2026-03-08)
+L00001274	
+L00001275	Model/provider selection fallback remains separate from runtime retry classification.
+L00001276	
+L00001277	Required clarifications:
+L00001278	- unavailable Persona-preferred models continue to fall through the normal selection chain and do not create a blocked state by themselves
+L00001279	- provider execution failures that occur after selection must map into the shared runtime taxonomy, most notably `provider_transient` or terminal provider failure classes
+L00001280	- provider-level retry defaults must not silently override the shared runtime retry/backoff matrix
+L00001281	## Runtime Retry / Fallback Ownership Addendum (2026-03-09)
+L00001282	
+L00001283	Model fallback and runtime retry are separate concerns.
+L00001284	
+L00001285	### Ownership split
+L00001286	- model selection decides requested/effective provider/model before execution begins
+L00001287	- runtime policy decides whether an attempt is retried, remediated, blocked, or escalated after a classified outcome
+L00001288	- providers and adapters may not invent model-local retry loops that bypass runtime policy
+L00001289	
+L00001290	### Required attempt snapshots
+L00001291	
+L00001292	
+L00001293	Each attempt MUST retain requested and effective model/provider identifiers so users can later explain why a blocked or failed attempt ran under a specific effective configuration.
+L00001294	
+L00001295	### Fallback rule
+L00001296	Model fallback may change the effective model only through the shared model-selection contract, never as an implicit side effect of provider transient handling inside an already-running attempt.
+L00001297	## Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)
+L00001298	
+L00001299	Requested/effective model resolution remains separate from runtime retry policy.
+L00001300	
+L00001301	Rules:
+L00001302	- model/provider fallback may change the effective model only through the shared selection contract before execution begins
+L00001303	- runtime retries, remediation, and prerequisite-resumed work always occur as new attempts with new attempt snapshots
+L00001304	- providers/adapters must not hide model-local retry loops inside an already-running attempt
+L00001305	## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)
+L00001306	
+L00001307	
+L00001308	Model selection and retry ownership remain separate concerns.
+L00001309	
+L00001310	Rules:
+L00001311	- attempt start persists stable requested/effective model snapshot identifiers
+L00001312	- retries and resumes do not silently change model identity unless the canonical runtime policy explicitly creates a new attempt with new snapshot IDs
+L00001313	- model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics
+L00001314	- UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
+L00001315	## Requested / Effective Model Snapshot Alignment
+L00001316	
+L00001317	
+L00001318	Requested and effective model/runtime fields must stay visible for child runs, crew members, and surfaced planning/runtime decisions.
+L00001319	
+L00001320	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+L00001321	
+L00001322	Child effort resolution order:
+L00001323	1. explicit child effort request
+L00001324	2. child Persona or task preference
+L00001325	3. weak parent hint
+L00001326	4. target-surface default
+L00001327	
+L00001328	Rules:
+L00001329	- PM resolves canonical effort intent first, then translates it per target surface.
+L00001330	- remapped effort values remain visible as requested versus effective.
+L00001331	- explicit runtime surface requests do not silently fallback.
+L00001332	- implicit orchestrator-selected runtime surfaces may fallback, but the fallback reason must be visible.
+L00001333	
+L00001334	Default Crew configuration belongs under the model/runtime settings surface.
+L00001335	
+L00001336	Minimum Default Crew settings model:
+L00001337	- enable or disable Default Crew
+L00001338	- ordered list of crew members
+L00001339	- per-member model selector
+L00001340	- per-member provider/runtime surface selector
+L00001341	- immediate normalization of the whole crew to `Copilot` when any member selects Copilot, because Copilot is a crew-level provider selection constraint and is not a per-member freely mixed provider in the default crew editor
+L00001342	
+L00001343	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00001344	
+L00001345	## Provider/model selection policy and audit addendum
+L00001346	
+L00001347	This addendum elaborates how the canonical provider/model precedence owner section is surfaced through user-facing policy, capability gating, and audit trail details.
+L00001348	
+L00001349	### Persona, execution-unit, and scope policy inputs
+L00001350	
+L00001351	
+L00001352	1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
+L00001353	2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
+L00001354	3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
+L00001355	
+L00001356	### Precedence chain for provider/model selection
+L00001357	
+L00001358	When a unit needs to select a provider and model, resolve in this order:
+L00001359	
+L00001360	1. **Explicit run-envelope override**: If the run was launched with `--provider=X --model=Y`, use those.
+L00001361	2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
+L00001362	3. **Persona preference**: Use the active Persona's default model and provider.
+L00001363	4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
+L00001364	5. **Project or global config default**: Fallback to project-wide or global settings.
+L00001365	6. **Last-used state**: If permitted by settings, use the model/provider from the previous run of the same type.
+L00001366	7. **Provider default**: Use the provider's canonical default model.
+L00001367	
+L00001368	### Settings resolution and override semantics
+L00001369	
+L00001370	
+L00001371	- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
+L00001372	- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
+L00001373	- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+L00001374	
+L00001375	### Provider capability and cost gating
+L00001376	
+L00001377	- **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
+L00001378	- **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
+L00001379	- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+L00001380	- **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
+L00001381	
+L00001382	Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.
+L00001383	
+L00001384	Required `clamp/substitution` reason codes:
+L00001385	- `model_unavailable`
+L00001386	- `model_routed_by_provider`
+L00001387	- `model_substituted`
+L00001388	- `effort_unsupported`
+L00001389	- `effort_clamped`
+L00001390	- `auth_family_capability_clamped`
+L00001391	- `capability_unknown`
+L00001392	- `instruction_projection_partial`
+L00001393	- `skill_projection_partial`
+L00001394	
+L00001395	Rules:
+L00001396	- `model_unavailable` and `model_routed_by_provider` distinguish PM inability to select a requested model from provider-side rerouting after PM dispatch.
+L00001397	- `model_substituted`, `effort_clamped`, and `auth_family_capability_clamped` are explicit `/substitution` evidence for requested/effective differences caused by model fallback, narrowed effort, or auth-family capability limits.
+L00001398	- `effort_unsupported` and `effort_clamped` distinguish unsupported effort controls from accepted-but-narrowed effort controls.
+L00001399	- `capability_unknown`, `instruction_projection_partial`, and `skill_projection_partial` remain inspectable so the UI does not present a fully honored model/capability/instruction state when PM only has partial or unknown evidence.
+L00001400	
+L00001401	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
+L00001402	
+L00001403	### Selection reason and audit trail
+L00001404	
+L00001405	
+L00001406	When a provider and model are selected, emit a `selection_reason` object:
+L00001407	```typescript
+L00001408	selection_reason {
+L00001409	  selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
+L00001410	  selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
+L00001411	  precedence_tier: number,             // 1-7 indicating which tier was applied
+L00001412	  fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
+L00001413	  alternatives: Array,                 // Other models that were considered and why they were skipped
+L00001414	  selection_time_utc: string,          // When the decision was made
+L00001415	  execution_unit_id: string,           // Tied to the unit making the selection
+L00001416	}
+L00001417	```
+L00001418	
+L00001419	This metadata is logged so inspectors and auditors can trace why a particular model was chosen and what constraints were active.
+L00001420	
+L00001421	ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md
+L00001422	
+L00001423	## Owner / Consumer Map
+L00001424	
+L00001425	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Models_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001426	
+L00001427	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001428	
+L00001429	## PlanUnits
+L00001430	
+L00001431	### MS-002 - Models SSOT And DRY Compliance Boundary
+L00001432	
+L00001433	```yaml
+L00001434	plan_unit_id: MS-002
+L00001435	unit_type: requirement
+L00001436	status: accepted
+L00001437	owner_doc: Plans/Models_System.md
+L00001438	canonical_text: Models_System.md is the SSOT for model selection, configuration, and variants. Consumers reference anchors
+L00001439	  such as Plans/Models_System.md#MODEL-ID instead of restating model selection rules or variant definitions.
+L00001440	gui_related: false
+L00001441	gui_classification_reason: The unit covers SSOT scope and governance references rather than direct GUI presentation.
+L00001442	split_recommended: false
+L00001443	depends_on: []
+L00001444	unblocks: []
+L00001445	acceptance_criteria:
+L00001446	- Covered source spans remain losslessly available for exact-text audit.
+L00001447	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001448	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001449	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001450	validation_surfaces:
+L00001451	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001452	- python3 scripts/pm-plan-index.py validate
+L00001453	risk_class: models_ssot_dry_boundary
+L00001454	reasoning_tier: standard
+L00001455	context_scope: models_system_standardization
+L00001456	implementation_surfaces:
+L00001457	- Plans/Models_System.md
+L00001458	node_compile_hint:
+L00001459	  mode: models_ssot_dry_boundary
+L00001460	  create_worknodes: false
+L00001461	source_lineage:
+L00001462	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0001
+L00001463	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0003
+L00001464	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0004
+L00001465	preserved_exact_tokens:
+L00001466	- Models System (Canonical SSOT)
+L00001467	- Puppet Master
+L00001468	- Plans/Models_System.md#MODEL-ID
+L00001469	- single canonical source of truth
+L00001470	negative_constraints:
+L00001471	- Default aliases must not be treated as provider availability proof.
+L00001472	- Antigravity `--model` prompt success with an unlisted alias must not mark that alias green because the CLI can fall back to a default model.
+L00001473	compatibility_only_notes:
+L00001474	- Nano Banana aliases remain valid media lookup aliases, but current Antigravity CLI verification does not prove Antigravity media-generation support for them.
+L00001475	stale_retired_dispositions: []
+L00001476	owner_boundary_notes:
+L00001477	- Plans/Models_System.md is the single canonical source for model selection, configuration, and variant rules.
+L00001478	owner_hints:
+L00001479	- Plans/Models_System.md
+L00001480	preserved_contractrefs:
+L00001481	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+L00001482	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001483	  where safe.
+L00001484	```
+L00001485	
+L00001486	### MS-003 - Owner Section Requirements And Reference Inventory
+L00001487	
+L00001488	```yaml
+L00001489	plan_unit_id: MS-003
+L00001490	unit_type: requirement
+L00001491	status: accepted
+L00001492	owner_doc: Plans/Models_System.md
+L00001493	canonical_text: Canonical owner-section requirements preserve product, runtime, storage, UI, and governance details, while
+L00001494	  SSOT references remain exact inventory pointers and do not replace their owner docs.
+L00001495	gui_related: true
+L00001496	gui_classification_reason: The unit preserves UI/governance reference posture and references Plans/FinalGUISpec.md.
+L00001497	split_recommended: false
+L00001498	depends_on:
+L00001499	- MS-002
+L00001500	unblocks: []
+L00001501	acceptance_criteria:
+L00001502	- Covered source spans remain losslessly available for exact-text audit.
+L00001503	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001504	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001505	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001506	validation_surfaces:
+L00001507	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001508	- python3 scripts/pm-plan-index.py validate
+L00001509	risk_class: owner_section_reference_inventory
+L00001510	reasoning_tier: standard
+L00001511	context_scope: models_system_standardization
+L00001512	implementation_surfaces:
+L00001513	- Plans/Models_System.md
+L00001514	node_compile_hint:
+L00001515	  mode: owner_section_reference_inventory
+L00001516	  create_worknodes: false
+L00001517	source_lineage:
+L00001518	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0002
+L00001519	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0005
+L00001520	preserved_exact_tokens:
+L00001521	- Canonical owner-section requirements
+L00001522	- SSOT references (DRY)
+L00001523	- Plans/Spec_Lock.json
+L00001524	- Plans/auto_decisions.jsonl
+L00001525	- Plans/FinalGUISpec.md
+L00001526	negative_constraints:
+L00001527	- Default media aliases are lookup aliases, not provider availability proof.
+L00001528	- Do not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other generated-media aliases green through Antigravity unless the selected provider catalog lists the media model and an E2E generated artifact proof succeeds.
+L00001529	compatibility_only_notes:
+L00001530	- Nano Banana aliases remain valid lookup aliases, but current Antigravity CLI proof does not verify Antigravity generated-media support for them.
+L00001531	stale_retired_dispositions:
+L00001532	- Arbitrary successful `agy --model "Nano Banana"` prompt output is not support evidence because the current Antigravity CLI logs the model as unrecognized and falls back.
+L00001533	owner_boundary_notes:
+L00001534	- This unit preserves reference inventory only; referenced owner docs keep their own contracts.
+L00001535	owner_hints:
+L00001536	- Plans/Models_System.md
+L00001537	preserved_contractrefs: []
+L00001538	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001539	  where safe.
+L00001540	```
+L00001541	
+L00001542	### MS-004 - Provider Model Precedence Owner Boundary
+L00001543	
+L00001544	```yaml
+L00001545	plan_unit_id: MS-004
+L00001546	unit_type: requirement
+L00001547	status: accepted
+L00001548	owner_doc: Plans/Models_System.md
+L00001549	canonical_text: Models_System.md owns provider/model precedence across run, seam, package, node, overseer, delegated-subagent,
+L00001550	  and worktree-narrowed surfaces without replacing requested/effective resolver records.
+L00001551	gui_related: false
+L00001552	gui_classification_reason: The unit covers backend/runtime owner boundaries rather than GUI presentation.
+L00001553	split_recommended: false
+L00001554	depends_on:
+L00001555	- MS-002
+L00001556	unblocks: []
+L00001557	acceptance_criteria:
+L00001558	- Covered source spans remain losslessly available for exact-text audit.
+L00001559	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001560	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001561	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001562	validation_surfaces:
+L00001563	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001564	- python3 scripts/pm-plan-index.py validate
+L00001565	risk_class: provider_model_precedence_owner_boundary
+L00001566	reasoning_tier: standard
+L00001567	context_scope: models_system_standardization
+L00001568	implementation_surfaces:
+L00001569	- Plans/Models_System.md
+L00001570	node_compile_hint:
+L00001571	  mode: provider_model_precedence_owner_boundary
+L00001572	  create_worknodes: false
+L00001573	source_lineage:
+L00001574	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0006
+L00001575	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0007
+L00001576	preserved_exact_tokens:
+L00001577	- Provider/model precedence and settings resolution
+L00001578	- Scope and owner boundaries
+L00001579	- run
+L00001580	- seam
+L00001581	- package
+L00001582	- node
+L00001583	- overseer
+L00001584	- delegated-subagent
+L00001585	negative_constraints: []
+L00001586	compatibility_only_notes: []
+L00001587	stale_retired_dispositions: []
+L00001588	owner_boundary_notes:
+L00001589	- Adjacent docs consume this owner section and must not replace its provider/model precedence policy.
+L00001590	owner_hints:
+L00001591	- Plans/Models_System.md
+L00001592	preserved_contractrefs: []
+L00001593	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001594	  where safe.
+L00001595	```
+L00001596	
+L00001597	### MS-005 - Three Axis Settings And Deterministic Precedence
+L00001598	
+L00001599	```yaml
+L00001600	plan_unit_id: MS-005
+L00001601	unit_type: requirement
+L00001602	status: accepted
+L00001603	owner_doc: Plans/Models_System.md
+L00001604	canonical_text: Settings resolve on source, request, and execution axes. Deterministic precedence is explicit override, scoped
+L00001605	  policy, Persona preference, surface or stage default, project or global default, last-used when permitted, and provider
+L00001606	  default.
+L00001607	gui_related: false
+L00001608	gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
+L00001609	split_recommended: false
+L00001610	depends_on:
+L00001611	- MS-004
+L00001612	unblocks: []
+L00001613	acceptance_criteria:
+L00001614	- Covered source spans remain losslessly available for exact-text audit.
+L00001615	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001616	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001617	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001618	validation_surfaces:
+L00001619	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001620	- python3 scripts/pm-plan-index.py validate
+L00001621	risk_class: three_axis_settings_precedence
+L00001622	reasoning_tier: standard
+L00001623	context_scope: models_system_standardization
+L00001624	implementation_surfaces:
+L00001625	- Plans/Models_System.md
+L00001626	node_compile_hint:
+L00001627	  mode: three_axis_settings_precedence
+L00001628	  create_worknodes: false
+L00001629	source_lineage:
+L00001630	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0008
+L00001631	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0009
+L00001632	preserved_exact_tokens:
+L00001633	- manual_override
+L00001634	- persona_preference
+L00001635	- scope_policy
+L00001636	- provider_default
+L00001637	- last-used
+L00001638	- requested/effective
+L00001639	negative_constraints: []
+L00001640	compatibility_only_notes: []
+L00001641	stale_retired_dispositions:
+L00001642	- Ownership transitions between overseer and delegated-subagent levels MUST emit a fresh resolver record instead of silently
+L00001643	  inheriting stale effective state.
+L00001644	owner_boundary_notes:
+L00001645	- Policy remains in the Models owner section and produces requested/effective resolver state.
+L00001646	owner_hints:
+L00001647	- Plans/Models_System.md
+L00001648	preserved_contractrefs: []
+L00001649	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001650	  where safe.
+L00001651	```
+L00001652	
+L00001653	### MS-006 - Resolver Input And Emit Shape
+L00001654	
+L00001655	```yaml
+L00001656	plan_unit_id: MS-006
+L00001657	unit_type: requirement
+L00001658	status: accepted
+L00001659	owner_doc: Plans/Models_System.md
+L00001660	canonical_text: The resolver accepts overrides, defaults, policy, capability, account, worktree, and permission context, then
+L00001661	  emits requested and effective platform, model, variant, auth, account, execution_role, selection_reason, resolver_matrix_entry,
+L00001662	  worker_policy_display, and skipped_persona_controls.
+L00001663	gui_related: false
+L00001664	gui_classification_reason: The unit covers backend resolver input and output shape rather than direct GUI presentation.
+L00001665	split_recommended: false
+L00001666	depends_on:
+L00001667	- MS-005
+L00001668	unblocks: []
+L00001669	acceptance_criteria:
+L00001670	- Covered source spans remain losslessly available for exact-text audit.
+L00001671	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001672	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001673	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001674	validation_surfaces:
+L00001675	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001676	- python3 scripts/pm-plan-index.py validate
+L00001677	risk_class: resolver_input_emit_shape
+L00001678	reasoning_tier: standard
+L00001679	context_scope: models_system_standardization
+L00001680	implementation_surfaces:
+L00001681	- Plans/Models_System.md
+L00001682	node_compile_hint:
+L00001683	  mode: resolver_input_emit_shape
+L00001684	  create_worknodes: false
+L00001685	source_lineage:
+L00001686	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001687	preserved_exact_tokens:
+L00001688	- requested_platform
+L00001689	- effective_model
+L00001690	- skipped_persona_controls[]
+L00001691	- selection_reason
+L00001692	- resolver_matrix_entry
+L00001693	- worker_policy_display
+L00001694	negative_constraints: []
+L00001695	compatibility_only_notes: []
+L00001696	stale_retired_dispositions: []
+L00001697	owner_boundary_notes:
+L00001698	- Runtime snapshots, inspectors, and owner transitions consume the emit shape; later sections elaborate but do not replace
+L00001699	  it.
+L00001700	owner_hints:
+L00001701	- Plans/Models_System.md
+L00001702	preserved_contractrefs: []
+L00001703	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001704	  where safe.
+L00001705	```
+L00001706	
+L00001707	### MS-007 - Concern Lifecycle And Consumer Boundaries
+L00001708	
+L00001709	```yaml
+L00001710	plan_unit_id: MS-007
+L00001711	unit_type: requirement
+L00001712	status: accepted
+L00001713	owner_doc: Plans/Models_System.md
+L00001714	canonical_text: Provider/model concerns use active, acknowledged, resolved, dismissed, resolution_kind, and accepted_risk.
+L00001715	  Consumers may disclose proceed, block, retry, and confirmation semantics but do not own selection policy.
+L00001716	gui_related: true
+L00001717	gui_classification_reason: The unit includes user confirmation and concern disclosure behavior that can surface in GUI flows.
+L00001718	split_recommended: false
+L00001719	depends_on:
+L00001720	- MS-006
+L00001721	unblocks: []
+L00001722	acceptance_criteria:
+L00001723	- Covered source spans remain losslessly available for exact-text audit.
+L00001724	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001725	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001726	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001727	validation_surfaces:
+L00001728	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001729	- python3 scripts/pm-plan-index.py validate
+L00001730	risk_class: concern_lifecycle_consumer_boundaries
+L00001731	reasoning_tier: standard
+L00001732	context_scope: models_system_standardization
+L00001733	implementation_surfaces:
+L00001734	- Plans/Models_System.md
+L00001735	node_compile_hint:
+L00001736	  mode: concern_lifecycle_consumer_boundaries
+L00001737	  create_worknodes: false
+L00001738	source_lineage:
+L00001739	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001740	preserved_exact_tokens:
+L00001741	- active
+L00001742	- acknowledged
+L00001743	- resolved
+L00001744	- dismissed
+L00001745	- accepted_risk
+L00001746	- DispatchContext.provider_id
+L00001747	- Provider / Model
+L00001748	- worker_provider
+L00001749	negative_constraints:
+L00001750	- Consumers may disclose concern state but must not replace Models_System.md as provider/model selection owner.
+L00001751	compatibility_only_notes:
+L00001752	- DispatchContext and Run Graph provider/model labels are compatibility labels over the canonical requested/effective snapshot.
+L00001753	stale_retired_dispositions: []
+L00001754	owner_boundary_notes:
+L00001755	- Plans/GUI_Rebuild_Requirements_Checklist.md, Executor, Worktree, Run Graph, and Crosswalk consume this policy.
+L00001756	owner_hints:
+L00001757	- Plans/Models_System.md
+L00001758	preserved_contractrefs: []
+L00001759	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001760	  where safe.
+L00001761	```
+L00001762	
+L00001763	### MS-008 - Requested Effective Identity And Storage Account Continuity
+L00001764	
+L00001765	```yaml
+L00001766	plan_unit_id: MS-008
+L00001767	unit_type: requirement
+L00001768	status: accepted
+L00001769	owner_doc: Plans/Models_System.md
+L00001770	canonical_text: Requested/effective persona, provider, model, account, runtime, execution-role, and operational identities
+L00001771	  remain distinct, durable, and explicit across storage, contracts, project account context, and provider snapshots.
+L00001772	gui_related: false
+L00001773	gui_classification_reason: The unit covers storage/account/runtime identity fields rather than direct GUI presentation.
+L00001774	split_recommended: false
+L00001775	depends_on:
+L00001776	- MS-006
+L00001777	unblocks: []
+L00001778	acceptance_criteria:
+L00001779	- Covered source spans remain losslessly available for exact-text audit.
+L00001780	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001781	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001782	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001783	validation_surfaces:
+L00001784	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001785	- python3 scripts/pm-plan-index.py validate
+L00001786	risk_class: requested_effective_identity_account_continuity
+L00001787	reasoning_tier: standard
+L00001788	context_scope: models_system_standardization
+L00001789	implementation_surfaces:
+L00001790	- Plans/Models_System.md
+L00001791	node_compile_hint:
+L00001792	  mode: requested_effective_identity_account_continuity
+L00001793	  create_worknodes: false
+L00001794	source_lineage:
+L00001795	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001796	preserved_exact_tokens:
+L00001797	- requested_persona
+L00001798	- effective_persona
+L00001799	- _id
+L00001800	- 'provider_id: cursor'
+L00001801	- selected_repo_id
+L00001802	- requested_*
+L00001803	- effective_*
+L00001804	negative_constraints:
+L00001805	- Compatibility _id fields must not collapse requested, effective, account, provider, model, execution role, or operational
+L00001806	  identity into one value.
+L00001807	- Runtime/storage account fallback fields must not disappear from requested/effective disclosure.
+L00001808	compatibility_only_notes:
+L00001809	- _id variants and legacy path references are compatibility labels, not replacement canonical IDs.
+L00001810	stale_retired_dispositions: []
+L00001811	owner_boundary_notes:
+L00001812	- Contracts, storage, GitHub, project-account, and orchestrator docs consume this identity model without re-owning it.
+L00001813	owner_hints:
+L00001814	- Plans/Models_System.md
+L00001815	preserved_contractrefs: []
+L00001816	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001817	  where safe.
+L00001818	```
+L00001819	
+L00001820	### MS-009 - Execution Unit Defaults Worker Policy And Delegation
+L00001821	
+L00001822	```yaml
+L00001823	plan_unit_id: MS-009
+L00001824	unit_type: requirement
+L00001825	status: accepted
+L00001826	owner_doc: Plans/Models_System.md
+L00001827	canonical_text: Run, seam, package, node, overseer, and delegated-subagent settings resolve through requested/effective snapshots.
+L00001828	  Easiest, lane-aware, worktree, node-worker, and delegation policies are explicit resolver inputs.
+L00001829	gui_related: false
+L00001830	gui_classification_reason: The unit covers execution-unit settings and delegation policy rather than direct GUI presentation.
+L00001831	split_recommended: false
+L00001832	depends_on:
+L00001833	- MS-006
+L00001834	unblocks: []
+L00001835	acceptance_criteria:
+L00001836	- Covered source spans remain losslessly available for exact-text audit.
+L00001837	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001838	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001839	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001840	validation_surfaces:
+L00001841	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001842	- python3 scripts/pm-plan-index.py validate
+L00001843	risk_class: execution_unit_defaults_worker_delegation
+L00001844	reasoning_tier: standard
+L00001845	context_scope: models_system_standardization
+L00001846	implementation_surfaces:
+L00001847	- Plans/Models_System.md
+L00001848	node_compile_hint:
+L00001849	  mode: execution_unit_defaults_worker_delegation
+L00001850	  create_worknodes: false
+L00001851	source_lineage:
+L00001852	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001853	preserved_exact_tokens:
+L00001854	- /model/effort/persona
+L00001855	- /package/node
+L00001856	- /easiest
+L00001857	- node-effective
+L00001858	- overseer-effective
+L00001859	- lane-aware
+L00001860	negative_constraints:
+L00001861	- Provider/model defaults must not become ad hoc per-node manual model names outside the resolver record.
+L00001862	compatibility_only_notes:
+L00001863	- Lifecycle events carry the execution-unit provider/model snapshot that made each transition valid.
+L00001864	stale_retired_dispositions: []
+L00001865	owner_boundary_notes:
+L00001866	- Execution settings remain model-owner inputs while package, lane, and worktree docs consume the resolved snapshot.
+L00001867	owner_hints:
+L00001868	- Plans/Models_System.md
+L00001869	preserved_contractrefs: []
+L00001870	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001871	  where safe.
+L00001872	```
+L00001873	
+L00001874	### MS-010 - Compatibility Cleanup And Stale Tier Routing
+L00001875	
+L00001876	```yaml
+L00001877	plan_unit_id: MS-010
+L00001878	unit_type: constraint
+L00001879	status: accepted
+L00001880	owner_doc: Plans/Models_System.md
+L00001881	canonical_text: Legacy tier, event, four-tier, TierContext, tier-native, and active-agent vocabulary maps to current execution-unit,
+L00001882	  package/lane, and requested/effective resolver semantics.
+L00001883	gui_related: false
+L00001884	gui_classification_reason: The unit covers compatibility vocabulary and cleanup constraints rather than direct GUI presentation.
+L00001885	split_recommended: false
+L00001886	depends_on:
+L00001887	- MS-006
+L00001888	unblocks: []
+L00001889	acceptance_criteria:
+L00001890	- Covered source spans remain losslessly available for exact-text audit.
+L00001891	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001892	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001894	validation_surfaces:
+L00001895	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001896	- python3 scripts/pm-plan-index.py validate
+L00001897	risk_class: compatibility_cleanup_stale_tier_routing
+L00001898	reasoning_tier: standard
+L00001899	context_scope: models_system_standardization
+L00001900	implementation_surfaces:
+L00001901	- Plans/Models_System.md
+L00001902	node_compile_hint:
+L00001903	  mode: compatibility_cleanup_stale_tier_routing
+L00001904	  create_worknodes: false
+L00001905	source_lineage:
+L00001906	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001907	preserved_exact_tokens:
+L00001908	- TierChanged
+L00001909	- GateStart
+L00001910	- four-tier
+L00001911	- node-graph
+L00001912	- TierContext
+L00001913	- tier-native
+L00001914	negative_constraints:
+L00001915	- Old and new provider/model models cannot remain peer canon in the same surface.
+L00001916	- Owner-of-owners cleanup must not amplify provider/model drift.
+L00001917	compatibility_only_notes:
+L00001918	- Legacy tier, executor, and active-agent terms are compatibility inputs only.
+L00001919	stale_retired_dispositions:
+L00001920	- Legacy tier semantics remain compatibility-only and do not revive tier-native execution semantics.
+L00001921	owner_boundary_notes:
+L00001922	- Models_System.md resolves provider/model wording contradictions into one requested/effective resolver statement.
+L00001923	owner_hints:
+L00001924	- Plans/Models_System.md
+L00001925	preserved_contractrefs: []
+L00001926	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001927	  where safe.
+L00001928	```
+L00001929	
+L00001930	### MS-011 - GUI Help Labels Receipts And Subject Open Presentation
+L00001931	
+L00001932	```yaml
+L00001933	plan_unit_id: MS-011
+L00001934	unit_type: requirement
+L00001935	status: accepted
+L00001936	owner_doc: Plans/Models_System.md
+L00001937	canonical_text: Visible labels, help text, receipts, and subject-open presentation may simplify display but remain views over
+L00001938	  canonical requested/effective model state and shared cost, ledger, and artifact-opening identity.
+L00001939	gui_related: true
+L00001940	gui_classification_reason: The unit covers GUI labels, help copy, receipts, tabs, and user-visible subject-open behavior.
+L00001941	split_recommended: false
+L00001942	depends_on:
+L00001943	- MS-006
+L00001944	unblocks: []
+L00001945	acceptance_criteria:
+L00001946	- Covered source spans remain losslessly available for exact-text audit.
+L00001947	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001948	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001949	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001950	validation_surfaces:
+L00001951	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001952	- python3 scripts/pm-plan-index.py validate
+L00001953	risk_class: gui_help_receipts_subject_open_presentation
+L00001954	reasoning_tier: standard
+L00001955	context_scope: models_system_standardization
+L00001956	implementation_surfaces:
+L00001957	- Plans/Models_System.md
+L00001958	node_compile_hint:
+L00001959	  mode: gui_help_receipts_subject_open_presentation
+L00001960	  create_worknodes: false
+L00001961	source_lineage:
+L00001962	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001963	preserved_exact_tokens:
+L00001964	- Workers
+L00001965	- Providers & Models
+L00001966	- Execution Identity
+L00001967	- HITL
+L00001968	- 'Temperature: 0.2 -> Honored'
+L00001969	- Show in Usage
+L00001970	- tab_id
+L00001971	negative_constraints:
+L00001972	- Execution copies are not loose GUI hints.
+L00001973	- tab_id must not be reused for side-panel subviews, browser tab IDs, workspace tab IDs, widget slots, or compare-target variants.
+L00001974	- Planning and /output surfaces must not replace the shared subject-open resolver.
+L00001975	compatibility_only_notes:
+L00001976	- UI aliases and simplified labels are presentation compatibility only.
+L00001977	stale_retired_dispositions: []
+L00001978	owner_boundary_notes:
+L00001979	- GUI surfaces consume the model contract and do not create alternate object names.
+L00001980	owner_hints:
+L00001981	- Plans/Models_System.md
+L00001982	preserved_contractrefs: []
+L00001983	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001984	  where safe.
+L00001985	```
+L00001986	
+L00001987	### MS-012 - Canonical Model ID Grammar And Persistence Boundary
+L00001988	
+L00001989	```yaml
+L00001990	plan_unit_id: MS-012
+L00001991	unit_type: requirement
+L00001992	status: accepted
+L00001993	owner_doc: Plans/Models_System.md
+L00001994	canonical_text: Stored and runtime model IDs use provider_id/model_id, split only on the first slash, and cannot be rewritten
+L00001995	  by labels, grouping, pooling, or runtime-platform grouping.
+L00001996	gui_related: false
+L00001997	gui_classification_reason: The unit covers stored/runtime identifier grammar rather than direct GUI presentation.
+L00001998	split_recommended: false
+L00001999	depends_on:
+L00002000	- MS-002
+L00002001	unblocks: []
+L00002002	acceptance_criteria:
+L00002003	- Covered source spans remain losslessly available for exact-text audit.
+L00002004	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002005	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002006	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002007	validation_surfaces:
+L00002008	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002009	- python3 scripts/pm-plan-index.py validate
+L00002010	risk_class: canonical_model_id_grammar
+L00002011	reasoning_tier: standard
+L00002012	context_scope: models_system_standardization
+L00002013	implementation_surfaces:
+L00002014	- Plans/Models_System.md
+L00002015	node_compile_hint:
+L00002016	  mode: canonical_model_id_grammar
+L00002017	  create_worknodes: false
+L00002018	source_lineage:
+L00002019	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0011
+L00002020	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0012
+L00002021	preserved_exact_tokens:
+L00002022	- MODEL-ID
+L00002023	- provider_id/model_id
+L00002024	- /collision-safe
+L00002025	- split on the first /
+L00002026	negative_constraints:
+L00002027	- Canonical model identifiers must never be rewritten by labels, grouping, family pooling, or runtime-platform grouping.
+L00002028	compatibility_only_notes:
+L00002029	- Contracts may cite the model provider namespace but do not redefine this identifier grammar.
+L00002030	stale_retired_dispositions: []
+L00002031	owner_boundary_notes:
+L00002032	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002033	owner_hints:
+L00002034	- Plans/Models_System.md
+L00002035	preserved_contractrefs:
+L00002036	- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md'
+L00002037	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002038	  where safe.
+L00002039	```
+L00002040	
+L00002041	### MS-013 - Collision Safe GUI Indexing And Display Name Policy
+L00002042	
+L00002043	```yaml
+L00002044	plan_unit_id: MS-013
+L00002045	unit_type: requirement
+L00002046	status: accepted
+L00002047	owner_doc: Plans/Models_System.md
+L00002048	canonical_text: GUI may clean labels and use normalized collision-safe internal keys, but meaningful tokens and stored IDs
+L00002049	  remain intact. Duplicate runtime availability is disambiguated with runtime, auth, and billing context.
+L00002050	gui_related: true
+L00002051	gui_classification_reason: The unit covers model picker and display-name behavior.
+L00002052	split_recommended: false
+L00002053	depends_on:
+L00002054	- MS-012
+L00002055	unblocks: []
+L00002056	acceptance_criteria:
+L00002057	- Covered source spans remain losslessly available for exact-text audit.
+L00002058	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002059	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002060	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002061	validation_surfaces:
+L00002062	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002063	- python3 scripts/pm-plan-index.py validate
+L00002064	risk_class: collision_safe_gui_display_names
+L00002065	reasoning_tier: standard
+L00002066	context_scope: models_system_standardization
+L00002067	implementation_surfaces:
+L00002068	- Plans/Models_System.md
+L00002069	node_compile_hint:
+L00002070	  mode: collision_safe_gui_display_names
+L00002071	  create_worknodes: false
+L00002072	source_lineage:
+L00002073	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0012
+L00002074	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0014
+L00002075	preserved_exact_tokens:
+L00002076	- mini
+L00002077	- pro
+L00002078	- flash
+L00002079	- thinking
+L00002080	- cleaned-label
+L00002081	- /runtime/auth-family/billing
+L00002082	negative_constraints:
+L00002083	- GUI disambiguation must not mutate the stored provider_id/model_id.
+L00002084	compatibility_only_notes: []
+L00002085	stale_retired_dispositions: []
+L00002086	owner_boundary_notes:
+L00002087	- FinalGUISpec consumes display policy while Models_System.md owns identifier meaning.
+L00002088	owner_hints:
+L00002089	- Plans/Models_System.md
+L00002090	preserved_contractrefs:
+L00002091	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md'
+L00002092	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002093	  where safe.
+L00002094	```
+L00002095	
+L00002096	### MS-014 - Runtime Platform Distinction And Usage Evidence Fields
+L00002097	
+L00002098	```yaml
+L00002099	plan_unit_id: MS-014
+L00002100	unit_type: requirement
+L00002101	status: accepted
+L00002102	owner_doc: Plans/Models_System.md
+L00002103	canonical_text: Model identity and runtime-platform identity are separate. Requested/effective runtime platform, model provider,
+L00002104	  usage source kind, signal confidence, raw model ID, effort, auth family, pool scope, and snapshots remain inspectable.
+L00002105	gui_related: false
+L00002106	gui_classification_reason: The unit covers runtime/platform identity and usage evidence fields rather than direct GUI presentation.
+L00002107	split_recommended: false
+L00002108	depends_on:
+L00002109	- MS-012
+L00002110	unblocks: []
+L00002111	acceptance_criteria:
+L00002112	- Covered source spans remain losslessly available for exact-text audit.
+L00002113	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002114	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002115	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002116	validation_surfaces:
+L00002117	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002118	- python3 scripts/pm-plan-index.py validate
+L00002119	risk_class: runtime_platform_usage_evidence_fields
+L00002120	reasoning_tier: standard
+L00002121	context_scope: models_system_standardization
+L00002122	implementation_surfaces:
+L00002123	- Plans/Models_System.md
+L00002124	node_compile_hint:
+L00002125	  mode: runtime_platform_usage_evidence_fields
+L00002126	  create_worknodes: false
+L00002127	source_lineage:
+L00002128	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0013
+L00002129	preserved_exact_tokens:
+L00002130	- requested_runtime_platform_id
+L00002131	- provider_usage_source_kind?
+L00002132	- /API-backed
+L00002133	- gemini_direct
+L00002134	- gemini_cli
+L00002135	- model_id_raw
+L00002136	- effective_runtime_snapshot
+L00002137	negative_constraints: []
+L00002138	compatibility_only_notes:
+L00002139	- model_id_raw, effort, compact_threshold, auth_family, pool_scope, effective_runtime, and effective_runtime_snapshot remain
+L00002140	  inspectable when they affect selection or disclosure.
+L00002141	stale_retired_dispositions: []
+L00002142	owner_boundary_notes:
+L00002143	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002144	owner_hints:
+L00002145	- Plans/Models_System.md
+L00002146	preserved_contractrefs:
+L00002147	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md'
+L00002148	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002149	  where safe.
+L00002150	```
+L00002151	
+L00002152	### MS-015 - Selection Priority And Retired Gemini CLI Evidence
+L00002153	
+L00002154	```yaml
+L00002155	plan_unit_id: MS-015
+L00002156	unit_type: requirement
+L00002157	status: accepted
+L00002158	owner_doc: Plans/Models_System.md
+L00002159	canonical_text: Selection follows the deterministic requested/effective pipeline and priority table. Concrete provider entries
+L00002160	  resolve before provider families. Gemini CLI precedence and general.plan.modelRouting are retained only as retired
+L00002161	  source-lineage evidence; active CLI-runtime model selection for this lane belongs to Antigravity CLI and other verified
+L00002162	  active provider entries.
+L00002163	gui_related: false
+L00002164	gui_classification_reason: The unit covers resolver selection priority rather than direct GUI presentation.
+L00002165	split_recommended: false
+L00002166	depends_on:
+L00002167	- MS-005
+L00002168	- MS-014
+L00002169	unblocks: []
+L00002170	acceptance_criteria:
+L00002171	- Covered source spans remain losslessly available for exact-text audit.
+L00002172	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002173	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002174	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002175	validation_surfaces:
+L00002176	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002177	- python3 scripts/pm-plan-index.py validate
+L00002178	risk_class: selection_priority_retired_gemini_cli_evidence
+L00002179	reasoning_tier: standard
+L00002180	context_scope: models_system_standardization
+L00002181	implementation_surfaces:
+L00002182	- Plans/Models_System.md
+L00002183	node_compile_hint:
+L00002184	  mode: selection_priority_retired_gemini_cli_evidence
+L00002185	  create_worknodes: false
+L00002186	source_lineage:
+L00002187	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0015
+L00002188	preserved_exact_tokens:
+L00002189	- SELECTION-PRIORITY
+L00002190	- --model
+L00002191	- GEMINI_MODEL
+L00002192	- settings.json
+L00002193	- general.plan.modelRouting
+L00002194	negative_constraints:
+L00002195	- Provider family cannot replace a concrete provider entry when the concrete provider is specified.
+L00002196	compatibility_only_notes:
+L00002197	- Gemini CLI precedence tokens are retained only for migration/currentness lineage.
+L00002198	stale_retired_dispositions:
+L00002199	- Gemini CLI selection precedence is not active implementation guidance after CBP-019/CBP-020.
+L00002200	owner_boundary_notes:
+L00002201	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002202	owner_hints:
+L00002203	- Plans/Models_System.md
+L00002204	preserved_contractrefs:
+L00002205	- 'ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002206	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md'
+L00002207	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002208	  where safe.
+L00002209	```
+L00002210	
+L00002211	### MS-016 - Provider And Model Option Scopes
+L00002212	
+L00002213	```yaml
+L00002214	plan_unit_id: MS-016
+L00002215	unit_type: requirement
+L00002216	status: accepted
+L00002217	owner_doc: Plans/Models_System.md
+L00002218	canonical_text: Provider options live under config.provider.<provider_id>.options. Model options override provider defaults,
+L00002219	  and the standard option field section remains canonical for shared model option metadata.
+L00002220	gui_related: false
+L00002221	gui_classification_reason: The unit covers configuration schema rather than direct GUI presentation.
+L00002222	split_recommended: false
+L00002223	depends_on:
+L00002224	- MS-012
+L00002225	unblocks: []
+L00002226	acceptance_criteria:
+L00002227	- Covered source spans remain losslessly available for exact-text audit.
+L00002228	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002229	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002230	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002231	validation_surfaces:
+L00002232	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002233	- python3 scripts/pm-plan-index.py validate
+L00002234	risk_class: provider_model_option_scopes
+L00002235	reasoning_tier: standard
+L00002236	context_scope: models_system_standardization
+L00002237	implementation_surfaces:
+L00002238	- Plans/Models_System.md
+L00002239	node_compile_hint:
+L00002240	  mode: provider_model_option_scopes
+L00002241	  create_worknodes: false
+L00002242	source_lineage:
+L00002243	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0016
+L00002244	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0017
+L00002245	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0018
+L00002246	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0019
+L00002247	preserved_exact_tokens:
+L00002248	- MODEL-OPTIONS
+L00002249	- '[provider.anthropic.options]'
+L00002250	- '[provider.anthropic.models."claude-sonnet-4"]'
+L00002251	- max_output_tokens
+L00002252	- temperature
+L00002253	negative_constraints: []
+L00002254	compatibility_only_notes: []
+L00002255	stale_retired_dispositions: []
+L00002256	owner_boundary_notes:
+L00002257	- Models_System.md owns provider and model option scope.
+L00002258	owner_hints:
+L00002259	- Plans/Models_System.md
+L00002260	preserved_contractrefs: []
+L00002261	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002262	  where safe.
+L00002263	```
+L00002264	
+L00002265	### MS-017 - Capability Matrix Fields And Data Driven Checks
+L00002266	
+L00002267	```yaml
+L00002268	plan_unit_id: MS-017
+L00002269	unit_type: requirement
+L00002270	status: accepted
+L00002271	owner_doc: Plans/Models_System.md
+L00002272	canonical_text: Capability metadata covers transport, tool, context-window, max-token, fallback-chain, cache, payload,
+L00002273	  pricing, billing, provenance, and source fields. Checks are data-driven, Gemini Direct and Antigravity CLI remain
+L00002274	  distinct active entries, retired Gemini CLI and platform_specs capability tokens remain source-lineage only, and
+L00002275	  disableCache maps through cache capability fields.
+L00002276	gui_related: false

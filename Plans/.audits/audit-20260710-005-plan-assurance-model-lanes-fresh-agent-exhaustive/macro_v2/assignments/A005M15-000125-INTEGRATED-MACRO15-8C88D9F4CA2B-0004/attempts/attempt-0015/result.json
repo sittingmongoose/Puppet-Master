@@ -1,0 +1,669 @@
+{
+  "assignment_id": "A005M15-000125-INTEGRATED-MACRO15-8C88D9F4CA2B-0004",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "gui_truth", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_required\": \"Production wiring contract for cmd.chat.web.help; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+          "line_end": 5730,
+          "line_start": 5730,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This is a concrete production-certification gate rather than an implementation hint: dispatcher, typed-contract, state, effect, accessibility, and regression evidence are all mandatory.",
+      "item_id": "A005M15-016-C01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-016", "STRUCTURAL:$.entries"],
+      "statement": "The chat-web and chat-worktree entries consistently bind visible controls to command IDs, handlers, availability selectors, disabled-reason projections, receipt effects, and named certification evidence.",
+      "title": "Chat command wiring has an explicit certification envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "accessibility", "states_transitions", "failures_recovery", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "        \"role_or_semantics\": \"catalog.chat_web_help exposes a stable role/name/description matching cmd.chat.web.help.\",",
+          "line_end": 5741,
+          "line_start": 5741,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"disabled_announcement\": \"catalog.chat_web_help surfaces state.commands.chat_web_help.disabled_reason to assistive technology when unavailable.\"",
+          "line_end": 5744,
+          "line_start": 5744,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The GUI cannot be certified solely from command reachability; semantic naming and unavailable-state announcement are separately falsifiable.",
+      "item_id": "A005M15-016-G01",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-016", "STRUCTURAL:$.entries"],
+      "statement": "Each reviewed chat control defines stable assistive semantics, keyboard activation, deterministic focus return after dispatch or error, and projection of its disabled reason.",
+      "title": "Chat controls carry explicit accessibility and disabled-state truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "security_privacy", "scale_performance", "ambiguity_unknowns", "partial_failure", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_required\": \"Production wiring contract for cmd.chat.web.research; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+          "line_end": 5840,
+          "line_start": 5840,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.web.research has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 5845,
+          "line_start": 5845,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_network_and_data_lifecycle_contract",
+      "impact": "Implementations can disagree on whether a failed or late response is displayed, retried, cached, logged, or discarded, and can expose user prompts, queries, sources, or fetched content without a specified retention or trust boundary.",
+      "item_id": "A005M15-016-X01",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-016", "STRUCTURAL:$.entries"],
+      "statement": "The web help/map/research/search entries require a typed result and generic regression evidence but do not define request/result shapes, URL or content trust rules, permission checks, timeout/cancellation/retry behavior, stale-result suppression, offline behavior, size limits, or privacy and retention semantics.",
+      "title": "Web commands lack network, untrusted-input, and privacy semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "compatibility_migration", "builder_discretion", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.worktree.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 6065,
+          "line_start": 6065,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "stateful_side_effect_modeled_as_no_persist_receipt",
+      "impact": "A worktree may be created or bound while projected state, audit history, and recovery disagree; duplicate dispatch, concurrent creation, process failure, or later restart has no defined reconciliation oracle.",
+      "item_id": "A005M15-016-X02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-016", "STRUCTURAL:$.entries"],
+      "statement": "Create and bind-existing are externally stateful repository operations, yet these entries declare no persisted domain event and specify only a no-persist receipt or disposition; they omit target identity, authorization, idempotency, collision handling, partial-success cleanup, rollback, and restart reconciliation.",
+      "title": "Worktree creation and binding have no durable lifecycle contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "consumers", "operations", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.chat.worktree.merge must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 6164,
+          "line_start": 6164,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The surface-to-dispatch-to-handler chain is explicit and testable for each operation.",
+      "item_id": "A005M15-017-B01",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-017", "STRUCTURAL:$.entries"],
+      "statement": "The segment exposes worktree information, merge, pull-request, remove, and unbind commands and then concern assignment and creation, with a named handler and typed dispatcher requirement for each.",
+      "title": "Worktree and concern actions are wired to named handlers"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "propagation", "observability_support", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Assert cmd.concern.create emits concern.created with command_id, origin, correlation_id, and handler target.\"",
+          "line_end": 6494,
+          "line_start": 6494,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The emitted event is correlated to the originating command and handler, providing a minimum observable propagation oracle.",
+      "item_id": "A005M15-017-E01",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-017", "STRUCTURAL:$.entries"],
+      "statement": "Concern assignment and creation explicitly use canonical domain events and require tests that bind the event to command_id, origin, correlation_id, and handler target rather than fabricated command-applied events.",
+      "title": "Concern creation has an explicit correlated event oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "authority", "ownership", "failures_recovery", "operations", "builder_discretion", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "offline_network_loss", "destructive_actions", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.worktree.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 6285,
+          "line_start": 6285,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_destructive_and_external_operation_contract",
+      "impact": "The builder must invent safety prompts, credential and remote behavior, conflict handling, retry semantics, and recovery, so the same receipt can mask a no-op, partial mutation, or destructive success.",
+      "item_id": "A005M15-017-X01",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-017", "STRUCTURAL:$.entries"],
+      "statement": "Merge, pull-request, remove, and unbind are mutating or external operations but define neither target/revision identity nor authorization, confirmation, idempotency, conflict state, cancellation, partial-success outcome, rollback, or durable state transition; all are represented only by no-persist receipts.",
+      "title": "Worktree mutation commands omit destructive, authority, and recovery semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "propagation", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Assert cmd.concern.create emits concern.created with command_id, origin, correlation_id, and handler target.\"",
+          "line_end": 6494,
+          "line_start": 6494,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "event_payload_and_command_preconditions_undefined",
+      "impact": "A test can pass by observing only an event name and correlation metadata while accepting invalid assignees, duplicate concern creation, unauthorized updates, or an event whose payload cannot rebuild projected concern state.",
+      "item_id": "A005M15-017-X02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-017", "STRUCTURAL:$.entries"],
+      "statement": "The concern assign/create event oracle does not specify command payload fields, result/error variants, authorization owner, assignee validity, duplicate/idempotency rules, event payload schema/version, persistence ordering, or the consumers that must project the event.",
+      "title": "Concern events are named but not semantically sufficient"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "propagation", "operations", "acceptance_oracles", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.concern.promote is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.\",",
+          "line_end": 6572,
+          "line_start": 6572,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.concern.promote emits the declared domain event(s) and records dispatch correlation evidence.\",",
+          "line_end": 6583,
+          "line_start": 6583,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The command boundary and its externally observable event effect are both required, preventing handler reachability alone from certifying the concern action.",
+      "item_id": "A005M15-018-C01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-018", "STRUCTURAL:$.entries"],
+      "statement": "Link-evidence, promote, reopen, resolve, update, and dashboard add-widget entries require typed payload/result/error/UICommandResponse contracts and correlated canonical event assertions.",
+      "title": "Concern transitions and widget addition are event-backed commands"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "states_transitions", "failures_recovery", "acceptance_oracles", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"role_or_semantics\": \"catalog.concern_link_evidence exposes a stable role/name/description matching cmd.concern.link_evidence.\",",
+          "line_end": 6527,
+          "line_start": 6527,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"focus_management\": \"catalog.concern_link_evidence preserves visible focus and returns focus deterministically after dispatch or error.\",",
+          "line_end": 6529,
+          "line_start": 6529,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The visible and assistive behavior of controls remains testable in both success and error paths.",
+      "item_id": "A005M15-018-G01",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-018", "STRUCTURAL:$.entries"],
+      "statement": "The concern and dashboard controls require stable semantic naming, keyboard reachability, deterministic focus restoration, and disabled-reason announcement.",
+      "title": "Concern and dashboard controls define accessibility behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"Assert cmd.concern.reopen emits concern.reopened with command_id, origin, correlation_id, and handler target.\"",
+          "line_end": 6684,
+          "line_start": 6684,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_concern_state_machine_and_race_policy",
+      "impact": "Concurrent or stale promote/reopen/resolve/update attempts can all appear dispatch-valid even when their source state is illegal; event names alone cannot prove that exactly one valid transition won or that projection recovered from partial failure.",
+      "item_id": "A005M15-018-X01",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-018", "STRUCTURAL:$.entries"],
+      "statement": "The concern lifecycle commands name emitted events but do not define legal source and destination states, transition preconditions, actor authority, optimistic-concurrency/version checks, idempotency, conflicting-command ordering, event-then-projection atomicity, or rollback/reconciliation behavior.",
+      "title": "Concern lifecycle events lack a legal transition model"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "failures_recovery", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "scale_limits", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.dashboard.add_widget emits the declared domain event(s) and records dispatch correlation evidence.\",",
+          "line_end": 6831,
+          "line_start": 6831,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "          \"requirement\": \"Assert cmd.dashboard.add_widget emits dashboard.widget_added with command_id, origin, correlation_id, and handler target.\"",
+          "line_end": 6866,
+          "line_start": 6866,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "widget_invariants_and_limits_undefined",
+      "impact": "Builders may accept unknown widgets, duplicates, invalid placement, or unbounded counts and still satisfy the named-event test; partial persistence can leave dashboard layout and emitted history inconsistent.",
+      "item_id": "A005M15-018-X02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-018", "STRUCTURAL:$.entries"],
+      "statement": "Dashboard add-widget does not define widget identity/schema, catalog membership, duplicate policy, layout placement, per-dashboard limits, authority, concurrent edits, idempotency, persistence atomicity, or rollback despite requiring dashboard.widget_added.",
+      "title": "Widget addition lacks dashboard invariants and scale limits"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.dashboard.catalog records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.\",",
+          "line_end": 6891,
+          "line_start": 6891,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.dashboard.catalog records dispatch receipt cmd.dashboard.catalog.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 6925,
+          "line_start": 6925,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A catalog-opening command has a precise negative oracle: a receipt or route disposition is required and unexpected persisted events fail certification.",
+      "item_id": "A005M15-019-E01",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "statement": "Dashboard catalog explicitly distinguishes a no-persist navigation/receipt action from a domain mutation and forbids fabricated or unexpected persisted events.",
+      "title": "Dashboard catalog has a falsifiable no-persist effect"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "states_transitions", "failures_recovery", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"role_or_semantics\": \"catalog.debug_clear_breakpoints exposes a stable role/name/description matching cmd.debug.clear_breakpoints.\",",
+          "line_end": 7007,
+          "line_start": 7007,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Visible debug controls have a minimum semantic and availability contract independent of backend success.",
+      "item_id": "A005M15-019-G01",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "statement": "The reviewed debug controls expose command-specific availability and disabled-reason selectors plus stable accessible naming, keyboard activation, and deterministic focus handling.",
+      "title": "Debug controls define projected availability and accessibility"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "ownership", "consumers", "failures_recovery", "operations", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.debug.clear_breakpoints has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7001,
+          "line_start": 7001,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.debug.pause records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 7145,
+          "line_start": 7145,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "debug_runtime_state_machine_missing",
+      "impact": "Receipts can certify dispatch while the UI and debugger disagree about breakpoint sets or execution state; rapid pause/resume/remove sequences have no ordering, rejection, or reconciliation oracle.",
+      "item_id": "A005M15-019-X01",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "statement": "Add/remove/clear breakpoint and pause/resume materially change debugger runtime state, but the entries define only no-persist receipts and availability selectors; they omit session/process/thread/frame identity, legal source states, transition results, command ordering, duplicate behavior, and reconnect/restart reconciliation.",
+      "title": "Debugger mutations are not modeled as state transitions"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "failures_recovery", "security_privacy", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "partial_failure", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "scale_limits", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.debug.collect_snapshot must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 7045,
+          "line_start": 7045,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.debug.collect_snapshot has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7056,
+          "line_start": 7056,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "snapshot_security_privacy_and_lifecycle_missing",
+      "impact": "A snapshot can capture secrets or large process memory and leave an artifact even when dispatch reports failure; without an owner and lifecycle, access, cleanup, support export, and quota behavior are implementation-defined.",
+      "item_id": "A005M15-019-X02",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "statement": "Collect-snapshot does not specify target identity, capture scope, consent/authority, redaction, secret handling, artifact location, encryption, retention/deletion, size/quota limits, progress/cancellation, offline behavior, partial-file cleanup, or who may consume or export the evidence.",
+      "title": "Debug snapshots have no privacy or artifact-lifecycle contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "states_transitions", "authority", "gui_truth", "failures_recovery", "builder_discretion", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.debug.clear_breakpoints must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 6990,
+          "line_start": 6990,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "destructive_confirmation_and_undo_missing",
+      "impact": "An accidental activation can irreversibly remove breakpoints, and the disabled-state selector alone cannot tell the user scope, count, or recoverability.",
+      "item_id": "A005M15-019-X03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "statement": "Clear-breakpoints has no declared scope, affected-count preview, confirmation threshold, undo/restore mechanism, atomicity rule, or partial-clear recovery despite being a destructive bulk action.",
+      "title": "Clear Breakpoints lacks scope, confirmation, and undo"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "operations", "acceptance_oracles", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.debug.start must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 7265,
+          "line_start": 7265,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"cmd.dev.show_output must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 7540,
+          "line_start": 7540,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The surface, dispatcher, and handler boundaries are individually nameable and fixture-testable for runtime controls.",
+      "item_id": "A005M15-020-B01",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-020", "STRUCTURAL:$.entries"],
+      "statement": "This segment wires debug start/step/stop/view-evidence and developer restart-session/show-output/show-ports controls to typed dispatcher contracts, command-specific handlers, projections, receipts, and regression evidence.",
+      "title": "Debug lifecycle and developer panels have command wiring"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "gui_truth", "failures_recovery", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.\"",
+          "line_end": 7306,
+          "line_start": 7306,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Certification requires rendered control evidence, preventing a dispatcher-only implementation from satisfying the GUI contract.",
+      "item_id": "A005M15-020-O01",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-020", "STRUCTURAL:$.entries"],
+      "statement": "Every reviewed runtime control includes an accessibility regression requirement covering semantic role/name, keyboard activation, focus behavior, and disabled-state announcement.",
+      "title": "Runtime-control accessibility is a rendered acceptance oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "ownership", "consumers", "failures_recovery", "operations", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "offline_network_loss", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.debug.start has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7276,
+          "line_start": 7276,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.debug.stop has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7386,
+          "line_start": 7386,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "debug_lifecycle_transition_contract_missing",
+      "impact": "Start and stop can race, step can target the wrong execution context, and process exit or disconnect can leave the GUI presenting a false state while all dispatch-receipt tests pass.",
+      "item_id": "A005M15-020-X01",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-020", "STRUCTURAL:$.entries"],
+      "statement": "Start, step, and stop do not define session/process/thread/frame targets, launch configuration, step mode, legal source/destination states, in-flight exclusivity, cancellation, timeout, crash/disconnect handling, exit result, or projection reconciliation; each only guarantees a no-persist receipt.",
+      "title": "Debug start/step/stop lack an executable lifecycle state machine"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "ownership", "consumers", "failures_recovery", "security_privacy", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.dev.restart_session has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7496,
+          "line_start": 7496,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.dev.show_ports has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 7606,
+          "line_start": 7606,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "runtime_authority_privacy_and_destructive_policy_missing",
+      "impact": "Restart can terminate active work without a recoverable handoff, while evidence/output/port views can reveal secrets, host topology, or untrusted terminal content to unauthorized consumers; receipts provide no lifecycle or disclosure proof.",
+      "item_id": "A005M15-020-X02",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-020", "STRUCTURAL:$.entries"],
+      "statement": "Restart-session, view-evidence, show-output, and show-ports omit actor and target authority, destructive confirmation, active-job handling, graceful shutdown and rollback, output redaction/escaping, secret and port-visibility policy, pagination/size limits, retention, and consumer/export boundaries.",
+      "title": "Developer runtime controls lack authority, destructive, and disclosure safeguards"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [5717, 6101],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-016", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-016-C01", "A005M15-016-G01", "A005M15-016-X01", "A005M15-016-X02"],
+      "reviewed": true,
+      "summary": "Chat web and worktree controls have uniform typed-dispatch, projected-state, receipt, accessibility, and certification contracts, but web/network privacy semantics and durable worktree mutation/recovery semantics remain undefined.",
+      "window_id": "WIN-8C88D9F4CA2B-0016"
+    },
+    {
+      "core_range": [6102, 6500],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-017", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-017-B01", "A005M15-017-E01", "A005M15-017-X01", "A005M15-017-X02"],
+      "reviewed": true,
+      "summary": "Worktree operations and concern assign/create have named command-handler paths; concern events gain correlated event oracles, while mutating worktree safety and concern payload/precondition semantics are not specified.",
+      "window_id": "WIN-8C88D9F4CA2B-0017"
+    },
+    {
+      "core_range": [6501, 6872],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-018", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-018-C01", "A005M15-018-G01", "A005M15-018-X01", "A005M15-018-X02"],
+      "reviewed": true,
+      "summary": "Concern lifecycle and dashboard widget commands are event-backed, correlated, and accessibility-tested, but concern state legality/concurrency and dashboard widget invariants/limits are absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0018"
+    },
+    {
+      "core_range": [6873, 7257],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-019", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-019-E01", "A005M15-019-G01", "A005M15-019-X01", "A005M15-019-X02", "A005M15-019-X03"],
+      "reviewed": true,
+      "summary": "Dashboard catalog has a precise no-persist oracle and debug controls have accessibility projections, but debugger state transitions, snapshot privacy/lifecycle, and bulk-breakpoint destruction safeguards are unspecified.",
+      "window_id": "WIN-8C88D9F4CA2B-0019"
+    },
+    {
+      "core_range": [7258, 7642],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-020", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-020-B01", "A005M15-020-O01", "A005M15-020-X01", "A005M15-020-X02"],
+      "reviewed": true,
+      "summary": "Debug lifecycle and developer-panel commands have typed command wiring and rendered accessibility oracles, but lifecycle state, concurrency/recovery, authority, destructive confirmation, and sensitive-output policies are absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0020"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0004",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": ["WIN-8C88D9F4CA2B-0016", "WIN-8C88D9F4CA2B-0017", "WIN-8C88D9F4CA2B-0018", "WIN-8C88D9F4CA2B-0019", "WIN-8C88D9F4CA2B-0020"],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical runtime state-machine contract owns debug session, execution, breakpoint, and reconnect transitions consumed by these wiring entries?",
+      "Where are worktree target identity, authorization, destructive confirmation, idempotency, external Git failure, and rollback semantics defined?",
+      "Which canonical concern model defines legal lifecycle transitions, event payload versions, actor authority, concurrency control, and projection consumers?",
+      "Which policy owns redaction, retention, access, export, and deletion for debug evidence, snapshots, terminal output, and port disclosures?",
+      "Where are dashboard widget identity, catalog membership, duplicate/layout rules, limits, concurrent-edit behavior, and persistence atomicity specified?"
+    ],
+    "feature_family_keys": ["assistant_chat_web_commands", "chat_worktree_operations", "concern_lifecycle", "dashboard_catalog_and_widgets", "debugger_runtime_controls", "developer_runtime_panels"],
+    "research_queries": [
+      "debug adapter protocol lifecycle state machine pause resume step disconnect race handling",
+      "secure diagnostic snapshot redaction retention access control size limits partial failure cleanup",
+      "Git worktree create bind merge remove idempotency rollback conflict and crash recovery UX",
+      "event sourced workflow legal transitions optimistic concurrency idempotent command handling",
+      "terminal output and local port disclosure UI security redaction untrusted content accessibility"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000125_attempt_0015_terminal"
+}

@@ -1,0 +1,104 @@
+{
+  "activation_granted": false,
+  "activation_transaction_design": {
+    "core_written_first": true,
+    "envelope_written_last": true,
+    "no_circular_hash_dependency": true,
+    "one_authorization_per_assignment": true,
+    "stale_intents_lineage_only_after_authorization": true
+  },
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal"
+  ],
+  "append_only_retry": true,
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_0005_native_capture_sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+  "attempt_0005_primary_cumulative_report_sha256": "3e5de5018a3e419fe3e3c85d0bf4598c2af92a8479c926dd0778bdf058a8a20d",
+  "attempt_0005_rejected_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0006",
+  "attempt_level_veto": true,
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "concurrency_policy_v9_sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+  "contract_document_schema_version": "external-research-receipt-contract-v6",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "counts": {
+    "activation_transaction_files": 0,
+    "assignments": 2,
+    "empty_outputs": 2,
+    "intents": 2,
+    "native_capture_rows": 0,
+    "output_files": 0,
+    "packets": 2,
+    "receipts": 0,
+    "results": 0
+  },
+  "coverage_credit": 0,
+  "cumulative_research_credit": 0,
+  "descendants_forbidden": true,
+  "followup_messages_forbidden": true,
+  "fork_turns": "none",
+  "fresh_direct_leaves": 2,
+  "identity_contract": "result canonical agent_path only; positive receipt owns native thread; independent capture owns native thread and turn",
+  "independent_prelaunch_path": null,
+  "independent_prelaunch_sha256": null,
+  "launch_authorized": false,
+  "merge_credit": 0,
+  "model": "gpt-5.6-luna",
+  "no_evidence_zero_reference_semantics": true,
+  "payload_hashes": {
+    "activation_transaction.template.json": "333b5524fd44196b437299ce020c6b95e8a139cc29353040656bc530952a8d8f",
+    "architecture.json": "e750d18ccca7b5b306f34183f12546a5870d7df93bbf2241c1c3425dcd7e7eff",
+    "intents": {
+      "ER-0003": "349b1546931476b1364664591659569286a0ea10d5e91c0527e4984e8c48136b",
+      "ER-0008": "344825c7391aeb25832e43401ad33b681ca5fa9138d791225f4009da0e2656c1"
+    },
+    "leaf_initial_task_contract.json": "5c9ebbe8f79e9c622bbfe9732314c41a2af9b42e86fb052ae7c0207807cf2bbb",
+    "leaf_prompt.json": "66903b770b86f7c4e8c33cdb6f2c703f22814e798bdd640ffe886e95d2059078",
+    "lineage.json": "1b432869e5181da3c8803d94ef93991034638f31e7b4670cd77ae1eb8cc967d9",
+    "manifest.json": "cdc5acf261c8bff81790f0912b9527e9ce4ed2fb863c2c37284d89de36c88ac8",
+    "native_capture_contract_v6.json": "400090ca7d049f8cc9100c1581c831ff13bd9d19c571e18513211035440eeeef",
+    "packets": {
+      "ER-0003": "2951e2b35f60ad3762d9c995fc3f306762b2d150dc7ae864b2322960ad795ead",
+      "ER-0008": "9930ce37cf3aae3253ebed745b80a562cff4ad68c68acfafa8f8dceddb883d58"
+    },
+    "receipt_contract_v6.json": "f08c61e4473b82e633babdaff36e07dad79c40b317bdcae08200423e11230763",
+    "schema/external_research_result_v6.schema.json": "3b470b6f6b75fa5bdb914cb6b1cad49d430dab69744eb8fbe4ade52a29cf8980",
+    "tools/common.py": "7e079c851f1b92b5cc90a48def047e30c004c81af333540e63f7079956b3a58b",
+    "tools/generate_activation_transaction.py": "f84c4ae5d37c44b9968670b6197f43b51b8c89bffe1d38ef51b4097d160344a3",
+    "tools/test_attempt_0006.py": "a053c34ad70b7232a84343f10ea49ac72cd421a8b54b5244b0677ec5545d92be",
+    "tools/validate_postrun.py": "ee9a6d160c65149adb2b0d21a07df7d892d205880ffb7192609422d5920e61ba",
+    "tools/verify_prelaunch.py": "7c07fba9419f55f94fb9245b97b8e64704f32db614f006220ecbf4d2f47081ec"
+  },
+  "pmr1_without_result_disposition": "terminal_zero_credit_failure",
+  "preserved_cumulative_floor_count": 6,
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "promotion_credit": 0,
+  "question_coverage_required": true,
+  "reasoning_effort": "max",
+  "receipt_contract_separation_is_attempt_veto": true,
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+  "result_required_before_pmr1": true,
+  "retries_forbidden": true,
+  "retry_namespace": "retry-attempt-0006",
+  "schema_version": "external-research-recovery-authority-v6",
+  "semantic_transaction_cap": 2,
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH"
+}

@@ -1,0 +1,806 @@
+L00000001	# Contracts V0 (Canonical)
+L00000002	
+L00000003	
+L00000004	  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+L00000005	  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.
+L00000006	  - active_subview
+L00000007	  - `focus_thread_usage`
+L00000008	  - focus_thread_usage
+L00000009	  - `navigation_wrapper`
+L00000010	  - navigation_wrapper
+L00000011	  - `domain_action`
+L00000012	  - domain_action
+L00000013	  - contracts own canonical route identity
+L00000014	  - `backing_document_id`
+L00000015	  - backing_document_id
+L00000016	  - `last_saved_path`
+L00000017	  - last_saved_path
+L00000018	  - Those fields belong elsewhere:
+L00000019	  - The narrow scope-restoration fields are:
+L00000020	  - The narrow focus-refinement fields are:
+L00000021	  - Good serialized fields
+L00000022	  - Bad serialized fields
+L00000023	  - `object_kind = blocked_episode`
+L00000024	  - object_kind = blocked_episode
+L00000025	  - `focused_run_id = run_id`
+L00000026	  - focused_run_id = run_id
+L00000027	  - `object_id = blocked_sequence`
+L00000028	  - object_id = blocked_sequence
+L00000029	  - It must stay small.
+L00000030	  - `object_kind = usage_event`
+L00000031	  - `agent-rules-context.md` still under-enumerates callers, omits execution-role input, conflicts with Personas/Prompt_Pipeline on bundle ordering, and has weaker disclosure/help contracts than adjacent systems.
+L00000032	  - agent-rules-context.md
+L00000033	  - `project_id = <project_id>`
+L00000034	  - project_id = <project_id>
+L00000035	  - `thread_id = <thread_id>`
+L00000036	  - thread_id = <thread_id>
+L00000037	  - `focused_run_id = <run_id>`
+L00000038	  - focused_run_id = <run_id>
+L00000039	  - `object_id = <attempt_id>`
+L00000040	  - object_id = <attempt_id>
+L00000041	  - `object_id = <blocked_sequence>`
+L00000042	  - object_id = <blocked_sequence>
+L00000043	  - `object_kind = scheduler_pass`
+L00000044	  - object_kind = scheduler_pass
+L00000045	  - `object_id = <scheduler_pass_id>`
+L00000046	  - object_id = <scheduler_pass_id>
+L00000047	  - `object_id = <safe_point_id>`
+L00000048	  - object_id = <safe_point_id>
+L00000049	  - `object_id = <remediation_root_id>`
+L00000050	  - object_id = <remediation_root_id>
+L00000051	  - `object_kind = graph_generation`
+L00000052	  - object_kind = graph_generation
+L00000053	  - `object_id = <graph_generation_id>`
+L00000054	  - object_id = <graph_generation_id>
+L00000055	  - `object_kind = graph_patch`
+L00000056	  - object_kind = graph_patch
+L00000057	  - `object_id = <graph_patch_id>`
+L00000058	  - object_id = <graph_patch_id>
+L00000059	  - `object_id = <worktree_id>`
+L00000060	  - object_id = <worktree_id>
+L00000061	  - `object_id = <lane_id>`
+L00000062	  - object_id = <lane_id>
+L00000063	  - `object_kind = feature_seam`
+L00000064	  - object_kind = feature_seam
+L00000065	  - `object_id = <feature_seam_id>`
+L00000066	  - object_id = <feature_seam_id>
+L00000067	  - `object_kind = work_package`
+L00000068	  - object_kind = work_package
+L00000069	  - `object_id = <work_package_id>`
+L00000070	  - object_id = <work_package_id>
+L00000071	  - `object_id = <concern_id>`
+L00000072	  - object_id = <concern_id>
+L00000073	  - `object_id = <promotion_id>`
+L00000074	  - object_id = <promotion_id>
+L00000075	  - `seams`
+L00000076	  - seams
+L00000077	  - `node_graph`
+L00000078	  - node_graph
+L00000079	  - `object_id = scheduler_pass_id`
+L00000080	  - object_id = scheduler_pass_id
+L00000081	  - `object_id = safe_point_id`
+L00000082	  - object_id = safe_point_id
+L00000083	  - `object_id = remediation_root_id`
+L00000084	  - object_id = remediation_root_id
+L00000085	  - `object_id = attempt_id`
+L00000086	  - object_id = attempt_id
+L00000087	  - Stratum 1: owner docs
+L00000088	  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.
+L00000089	  - subsection `7.2 WiringEntry`
+L00000090	  - 7.2 WiringEntry
+L00000091	  - `handler_location`
+L00000092	  - handler_location
+L00000093	  - `expected_event_types`
+L00000094	  - expected_event_types
+L00000095	  - unknown-command rejection
+L00000096	  - report/evidence refs
+L00000097	  - `workflow_refs`
+L00000098	  - workflow_refs
+L00000099	  - `docker_refs`
+L00000100	  - docker_refs
+L00000101	  - `kubernetes_refs`
+L00000102	  - kubernetes_refs
+L00000103	  - `attempt_record` with scheduler/safe-point/remediation/runtime identity fields
+L00000104	  - they correctly carry blocked/wizard state
+L00000105	  - wizard-blocked keeps wizard-specific clarification/report fields
+L00000106	  - usage_record
+L00000107	  - tier-adjacent `evidence_record`
+L00000108	  - `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`
+L00000109	  - resume_url?
+L00000110	  - exact command-arg mismatches
+L00000111	  - `requested_platform`
+L00000112	  - requested_platform
+L00000113	  - `effective_platform`
+L00000114	  - effective_platform
+L00000115	  - `requested_model`
+L00000116	  - requested_model
+L00000117	  - `effective_model`
+L00000118	  - effective_model
+L00000119	  - `worker_provider`
+L00000120	  - worker_provider
+L00000121	  - `worker_model`
+L00000122	  - worker_model
+L00000123	  - `verifier_provider`
+L00000124	  - verifier_provider
+L00000125	  - `verifier_model`
+L00000126	  - verifier_model
+L00000127	  - `request_id`
+L00000128	  - request_id
+L00000129	  - `request_kind = tier_boundary_approval`
+L00000130	  - request_kind = tier_boundary_approval
+L00000131	  - Strong aligned owner:
+L00000132	  - with `request_id` args
+L00000133	  - `PuppetMasterEvent::TierChanged`
+L00000134	  - PuppetMasterEvent::TierChanged
+L00000135	  - `PuppetMasterEvent::IterationStart`
+L00000136	  - PuppetMasterEvent::IterationStart
+L00000137	  - `PuppetMasterEvent::EvidenceStored`
+L00000138	  - PuppetMasterEvent::EvidenceStored
+L00000139	  - `IterationStart`
+L00000140	  - `GateStart`
+L00000141	  - GateStart
+L00000142	  - `GateComplete`
+L00000143	  - GateComplete
+L00000144	  - `EvidenceStored`
+L00000145	  - EvidenceStored
+L00000146	  - Strong owner docs:
+L00000147	  - `hitl_request_id`
+L00000148	  - hitl_request_id
+L00000149	  - Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.
+L00000150	  - GraphNode
+L00000151	  - GraphNodeUI
+L00000152	  - `Orchestrator_Page.md`
+L00000153	  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+L00000154	  - 39
+L00000155	  - 22
+L00000156	  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+L00000157	  - 61
+L00000158	  - `3.13` appears twice
+L00000159	  - 3.13
+L00000160	  - `3.14` appears twice
+L00000161	  - 3.14
+L00000162	  - `3.15` appears twice
+L00000163	  - 3.15
+L00000164	  - `DRY_Rules.md` second
+L00000165	  - DRY_Rules.md
+L00000166	  - `Decision_Log.md` third
+L00000167	  - Decision_Log.md
+L00000168	  - `DRY_Rules.md` needs:
+L00000169	  - `Decision_Log.md` needs:
+L00000170	  - `plan_or_tier_default`
+L00000171	  - plan_or_tier_default
+L00000172	  - `Orchestrator_Page.md` needs:
+L00000173	  - mixed-canon owner docs
+L00000174	  - MUST RECONCILE
+L00000175	  - MUST VERIFY
+L00000176	  ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
+L00000177	  - `Plans/_shards/**`
+L00000178	  - Plans/_shards/**
+L00000179	  - Plans/storage-plan.md
+L00000180	  - Plans/FinalGUISpec.md
+L00000181	  - Plans/UI_Command_Catalog.md
+L00000182	  - 1. Reconcile owner contracts and schemas first.
+L00000183	  - Plans/Decision_Policy.md
+L00000184	  - The rerun confirms that these were not just vague "help gaps", but concrete missing contracts:
+L00000185	  - pressure-summary field
+L00000186	  - Plans/Crosswalk.md
+L00000187	  - Plans/Wiring_Matrix.md
+L00000188	  - Plans/Progression_Gates.md
+L00000189	  - Plans/FileManager.md
+L00000190	  - Plans/Project_Output_Artifacts.md
+L00000191	  - Plans/Executor_Protocol.md
+L00000192	  - execution_unit_context
+L00000193	  - ### 5.1B Persona/Runtime Snapshot Payload Contract
+L00000194	  - gap-001
+L00000195	  - requested_account_binding
+L00000196	  - requested_account_policy
+L00000197	  - operational_identity
+L00000198	  - cov-034
+L00000199	  - obl-016
+L00000200	  - active
+L00000201	  - acknowledged
+L00000202	  - resolved
+L00000203	  - dismissed
+L00000204	  - resolution_kind
+L00000205	  - accepted_risk
+L00000206	  - `working_ledger.md:L806`
+L00000207	  - working_ledger.md:L806
+L00000208	  - `working_ledger.md:L1030`
+L00000209	  - working_ledger.md:L1030
+L00000210	  - `working_ledger.md:L1035-L1036`
+L00000211	  - working_ledger.md:L1035-L1036
+L00000212	  - `working_ledger.md:L1283-L1290`
+L00000213	  - working_ledger.md:L1283-L1290
+L00000214	  - `working_ledger.md:L1539`
+L00000215	  - working_ledger.md:L1539
+L00000216	  - `working_ledger.md:L3070-L3092`
+L00000217	  - working_ledger.md:L3070-L3092
+L00000218	  - `working_ledger.md:L3170-L3182`
+L00000219	  - working_ledger.md:L3170-L3182
+L00000220	  - `working_ledger.md:L5990-L6015`
+L00000221	  - working_ledger.md:L5990-L6015
+L00000222	  - `working_ledger.md:L6442-L6490`
+L00000223	  - working_ledger.md:L6442-L6490
+L00000224	## Canonical owner-section requirements
+L00000225	
+L00000226	
+L00000227	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000228	
+L00000229	### Owner-first canonicalization order
+L00000230	
+L00000231	Contracts_V0 owns only stable cross-surface record envelopes, shared primitive names, and typed payload minima. Domain-specific docs own their behavior and may reference these contracts without copying them. When an owner-specific section and a consumer note disagree, the owner section wins; compatibility/source-lineage tokens remain traceable but do not create peer canon.
+L00000232	
+L00000233	### Requested/effective account identity contract
+L00000234	
+L00000235	
+L00000236	- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+L00000237	- Account-bearing envelopes use `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `effective_provider_identity`, `execution_role`, and `operational_identity`. Provider-native labels such as login names or provider account ids are display/audit metadata and never replace the stable PM identity.
+L00000238	### Shared governance/runtime record envelope
+L00000239	
+L00000240	Shared governance/runtime records carry `record_id`, `record_kind`, `schema_version`, `created_at`, `updated_at`, `owner_ref`, `source_event_refs[]`, `subject_ref`, `status`, `visibility_level`, `redaction_profile`, and `evidence_refs[]`. Records may project into multiple UI or audit surfaces, but the persisted record remains one typed family.
+L00000241	
+L00000242	### Concern record family definition
+L00000243	
+L00000244	`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`.
+L00000245	
+L00000246	### Concern lifecycle and resolution kinds
+L00000247	
+L00000248	Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.
+L00000249	
+L00000250	### Concern action policy and authority model
+L00000251	
+L00000252	Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly.
+L00000253	
+L00000254	### Concern linkage to adjacent families
+L00000255	
+L00000256	Concern records may link to EventRecord, AuditFinding, AuditClosure, AuthEvent, UICommandResponse, RuntimeArtifact, PlanUnit, and storage projection refs through `linked_record_refs[]`. A linked record is evidence or routing context, not a second owner for the concern lifecycle.
+L00000257	
+L00000258	### Promotion classes and gate evidence
+L00000259	
+L00000260	Promotion classes are `informational`, `attention_required`, `blocking`, `security_blocking`, and `governance_blocking`. Promotion to any blocking class requires `gate_id`, `blocked_subject_ref`, `blocking_effect`, `owner_ref`, and at least one evidence ref. A projection may display a promoted concern only after these fields exist.
+L00000261	
+L00000262	### Historical semantic consistency
+L00000263	
+L00000264	Historical concerns preserve the original `summary`, `source_event_refs[]`, and source-lineage tokens. Later owner corrections append updates instead of rewriting history, and projections must display the current resolved state without erasing the prior concern id.
+L00000265	
+L00000266	### Coverage blocker concern lifecycle owner section
+L00000267	
+L00000268	Coverage blockers are concerns whose `concern_category = coverage_blocker`. They carry `missing_owner_ref?`, `missing_contract_ref?`, `blocked_validation_surface`, and `reopen_condition`. Closing a coverage blocker requires either a repaired owner section or an explicit source-lineage-only disposition.
+L00000269	
+L00000270	### Concern owner vs creator vs resolver separation
+L00000271	
+L00000272	`creator_ref` is the actor or validator that raised the concern. `owner_ref` is the accountable owner doc or runtime authority. `resolver_ref` is the actor or tool that changed the concern to a terminal state. These fields must not collapse into a single user label.
+L00000273	
+L00000274	### Concern source-event vs record vs projection split
+L00000275	
+L00000276	`source_event_refs[]` cite the events that caused or justified the concern. The `ConcernRecord` is the durable record. UI, ledger, audit, and history rows are projections of that record and may not invent fields not present in the durable family.
+L00000277	
+L00000278	### Runtime attribution ownership split
+L00000279	
+L00000280	Runtime attribution uses `package_id`, `run_id`, `node_id`, `attempt_id`, `execution_unit_context_ref`, and `provider_account_ref` where applicable. `package_id` is canonical; `work_package_id` is import/export compatibility only and must normalize before persistence.
+L00000281	
+L00000282	### Approval scope key and approver identity
+L00000283	
+L00000284	`approval_scope_key` is a stable string composed as `scope_kind:scope_id:action_family:normalized_subject_hash`. The approver identity is stored as `approver_ref`, with optional `approval_lease_id`, `permission_snapshot_id`, and `expires_at`. Approval keys are not reusable across different normalized command identities, projects, worktrees, or purpose strings.
+L00000285	
+L00000286	### Concern update heuristics
+L00000287	
+L00000288	Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend the existing concern while it is active or acknowledged. A terminal concern may be reopened only when its reopen condition is met or when owner/evidence hashes change. Otherwise a new concern id is required.
+L00000289	
+L00000290	### Route/open compatibility-only fallback marking
+L00000291	
+L00000292	
+L00000293	  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+L00000294	  - allowed_actions[]
+L00000295	  - Base route/open primitives landed, but missing:
+L00000296	  - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
+L00000297	### Recommended minimum concern record shape
+L00000298	
+L00000299	The minimum serialized shape is:
+L00000300	
+L00000301	```json
+L00000302	{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+L00000303	```
+L00000304	
+L00000305	### Concern ownership / authority direction
+L00000306	
+L00000307	Concern ownership flows from source event to durable record to projections. Projections may request actions, but record mutation must go through the owning command/contract path and return a typed UICommandResponse or validator closure receipt.
+L00000308	
+L00000309	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000310	
+L00000311	<!--
+L00000312	PUPPET MASTER -- CANONICAL CONTRACTS
+L00000313	
+L00000314	Purpose:
+L00000315	- This file is the single source of truth for core, cross-cutting **contracts** referenced by other plan documents.
+L00000316	- Keep it DRY: define only stable envelopes + type contracts; other plans reference these contracts instead of redefining.
+L00000317	
+L00000318	ABSOLUTE NAMING RULE:
+L00000319	- Platform name is "Puppet Master" only.
+L00000320	- Use "Puppet Master" naming consistently throughout this document.
+L00000321	-->
+L00000322	
+L00000323	## 0. Scope
+L00000324	This document defines the canonical contracts for:
+L00000325	- Persisted event envelopes (`EventRecord`, schema `pm.event.v0`)
+L00000326	- A minimal compatibility envelope (`EventEnvelopeV1`) used by early-phase writers/readers
+L00000327	- Provider normalized stream (CLI-bridged, server-bridged, and direct-provider transports)
+L00000328	- UI commands (`UICommand`)
+L00000329	- Auth state + events (`AuthState`, `AuthPolicy`, `AuthEvent`)
+L00000330	
+L00000331	Other plans MUST reference these contracts rather than redefining them.
+L00000332	
+L00000333	ContractRef: ContractName:Plans/Contracts_V0.md
+L00000334	
+L00000335	## Cross-surface runtime, concern, and route/open contracts
+L00000336	
+L00000337	
+L00000338	This section is the single canonical owner for runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics across all surfaces and execution contexts.
+L00000339	
+L00000340	### Canonicalization order
+L00000341	- Apply owner-doc corrections before consumer and mirror cleanup.
+L00000342	- Rerun fidelity audit only after owner and consumer corrections are in place.
+L00000343	- The canonicalization sequence in this owner section is strict: canonical owner repairs first, dependent consumer updates second, mirror cleanup third, and final verification evidence last.
+L00000344	- Owner-before-consumer rule: when the canonicalization map calls for same-heading replacement or stale-residue retirement, owner-doc correction remains mandatory before consumer cleanup.
+L00000345	- The owner-doc integrity stack is ordered, not three isolated docs: `Crosswalk.md` first for primitive/term routing, `DRY_Rules.md` second for duplication and SSOT discipline, and `Decision_Log.md` third for durable decision trace. Contract repairs that touch those owners must preserve that order.
+L00000346	- When a verification `re-check` cannot be trusted as one end-to-end read because owner or `/consumer` documents are too large, split it into smaller bounded reviewer slices and reconcile their findings back into this owner-before-consumer sequence before declaring closure.
+L00000347	- For partial-doc verification work, a cleared model-specific tail does not close the owner-correction pass. Continue the ordered later-model sequence, and do not treat the first pass boundary as coverage holes unless reconciled owner and consumer slices prove an omitted contract obligation.
+L00000348	
+L00000349	### Shared governance and runtime record envelope
+L00000350	
+L00000351	Required shared envelope fields:
+L00000352	- `record_id`
+L00000353	- `record_kind`
+L00000354	- `project_id`
+L00000355	- `scope_ref?`
+L00000356	- `source_refs[]?`
+L00000357	- `artifact_refs[]?`
+L00000358	- `evidence_refs[]?`
+L00000359	- `supersedes_record_id?`
+L00000360	- `superseded_by_record_id?`
+L00000361	- `status`
+L00000362	- `created_at_utc`
+L00000363	- `updated_at_utc?`
+L00000364	
+L00000365	Shared actor envelope fields:
+L00000366	- `actor_kind`
+L00000367	- `actor_ref?`
+L00000368	- `execution_role?`
+L00000369	
+L00000370	Rules:
+L00000371	- `record_id` and `record_kind` identify the durable governance or runtime record; they are not artifact ids, receipt ids, rendered summary ids, or process report ids.
+L00000372	- `source_refs[]`, `artifact_refs[]`, and `evidence_refs[]` preserve lineage without copying raw source material into the record body.
+L00000373	- Supersession fields preserve historical lineage and do not delete or rewrite the superseded record.
+L00000374	- `actor_kind` is required wherever a record action is attributable; `actor_ref?` stays sparse when the actor is anonymous, external, or intentionally redacted, while `execution_role?` carries runtime role when the actor participated through execution.
+L00000375	- New first-class Orchestrator object families reuse this envelope and the shared status/lineage conventions; `feature_seam`, `work_package`, `lane`, `promotion`, `review`, `resolution_thread`, `concern`, `graph_patch`, and `worktree` remain canonical records rather than adapter-local summaries.
+L00000376	- Family-specific payloads specialize under the shared envelope; they must not invent one-off top-level shapes when a subordinate payload block can carry the family-specific fields under the canonical record identity, status, provenance, and lineage fields.
+L00000377	
+L00000378	
+L00000379	- Define one shared record envelope with canonical lineage refs and artifact/evidence refs.
+L00000380	- Keep record objects distinct from artifacts and rendered summaries.
+L00000381	- Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
+L00000382	- Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict.
+L00000383	- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+L00000384	- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.
+L00000385	- Let Contracts_V0 own cross-family attribution packet shape.
+L00000386	- Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins.
+L00000387	- Temporal records that affect receipts, blocked states, stream sessions, or recovery MUST carry typed wait/timeout fields in the shared envelope rather than burying them in rendered summaries. The shared envelope admits `timeout_class?`, `wait_state_class?`, `observation_state?`, `source_timer_ref?`, `retention_anchor_kind?`, and `retention_anchor_at_utc?` when applicable.
+L00000388	- Let storage-plan own the persistence mechanics for crash-critical active receipt/session lifecycle, blocked episode creation/resolution, follow-mode intent, last inspected run/node/log context, and retention anchors for receipts, log tails, watch buffers, explorer snapshots, and stale caches.
+L00000389	
+L00000390	### Requested/effective account and execution identity
+L00000391	
+L00000392	
+L00000393	  ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, Primitive:RuntimeIdentity
+L00000394	
+L00000395	### Requested/effective runtime identity field split
+L00000396	
+L00000397	Required rules:
+L00000398	- Preserve `requested_persona` and `effective_persona` as canonical shared runtime identity fields.
+L00000399	- Add requested_account_id alongside requested_account_policy
+L00000400	- Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata
+L00000401	- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+L00000402	- Model requested_account_id separately from requested_account_policy
+L00000403	- Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason
+L00000404	- Carry execution_role plus requested/effective operational identity in shared runtime identity
+L00000405	- Project them into effective-resolution, attempt, usage, and inspector surfaces
+L00000406	
+L00000407	Canonical field split:
+L00000408	- `requested_persona` and `effective_persona` are persisted core runtime identity fields. `_id` variants such as `requested_persona_id` and `effective_persona_id` are retired from canonical contracts and may survive only as migration/source-lineage aliases.
+L00000409	- `requested_account_id` is the explicit requested account anchor; `requested_account_policy` remains the policy selector used before effective resolution and MUST NOT replace the concrete requested account field.
+L00000410	  ContractRef: Primitive:RuntimeIdentity
+L00000411	  ContractRef: ContractName:Plans/Contracts_V0.md
+L00000412	- `requested_account_binding` is the canonical binding posture with `none | preferred | required` semantics.
+L00000413	- `effective_account_id` and `effective_provider_identity` disclose the resolved runtime account without rewriting the requested selection.
+L00000414	- `provider_account_id` is retired as canonical/live identity vocabulary and may survive only as subordinate provider-native metadata inside bridged-provider envelopes.
+L00000415	
+L00000416	Projection/display rules:
+L00000417	- Runtime, effective-resolution, permission, attempt, usage, and inspector surfaces all project Requested account / Requested binding / Effective account / Switch reason from the same shared runtime identity snapshot.
+L00000418	- Shared runtime identity carries `execution_role` / `actor-role` together with requested/effective operational identity so downstream audit, approval, and attribution joins keep the same intent-versus-effective split; the actor envelope is not `run-centric` and must follow the shared runtime/governance record envelope across attempt, usage, approval, and inspector consumers.
+L00000419	- Bridged-provider and permission envelopes preserve the same requested/effective account pair instead of collapsing them into provider-native identifiers or policy-only selectors.
+L00000420	- orchestrator-related docs and payloads that consume this contract must preserve requested/effective provider/model/effort/persona/account wording, including the compact `/model/effort/persona/account` disclosure shape where a UI surface needs a single grouped label.
+L00000421	- Gemini account resolution uses the same shared requested-vs-effective identity contract: the compact `/model/auth` display shorthand must still preserve account selection, switch reason, concrete auth mode, and `vs-effective` differences. A Gemini family may contain multiple API-key accounts and multiple OAuth accounts simultaneously; OAuth-backed Gemini entries may require `project-context` and `/project` quota resolution beyond token presence. Provider grouping may expose one Gemini family surface or `/provider` card for mixed accounts, but it must not mint fake API-key/OAuth `pseudo-providers` that compete with the real runtime entries.
+L00000422	- Usage/account pressure that blocks execution carries `monthly_plan_or_billing_cycle` and any provider `cooldown_until` facts in the runtime identity/pressure envelope rather than hiding the reset horizon in prose.
+L00000423	- `requested_provider_family_id`, `effective_provider_family_id`, and connection-profile fields are additive requested/effective runtime fields; they do not replace `requested_account_id`, `effective_account_id`, or account terminology in cross-provider contracts.
+L00000424	- `selectable_unit_id` is resolver/debug identity for the chosen runtime candidate. It MUST NOT replace `account_id` in user-facing copy or persisted canonical auth/routing fields; `/routing` payloads keep account identity stable and may add selectable-unit evidence only as subordinate resolution detail.
+L00000425	- OpenCode UI may label server-backed configuration as `Server Profiles`, but cross-provider requested/effective runtime records keep `account` for account-backed subjects and add connection-profile fields for server/profile-backed subjects instead of globally renaming account vocabulary.
+L00000426	- Agent/runtime account isolation uses fresh `XDG_` / `XDG_*` roots where the platform supports them; `CURSOR_USER_DATA_DIR` alone is not sufficient evidence that a Cursor-backed agent account is isolated or that `cursor-agent` will report a different logged-in identity.
+L00000427	- Runtime routing and execution consumers must retain the same `object-family`, lane/package/seam `execution-model`, `route_target`, `UICommand`, `OpenSubject`, blocked-episode, and `HITL` anchors when they project the shared identity envelope into owner and consumer docs.
+L00000428	
+L00000429	### Runtime lineage, route, and blocked-state closure
+L00000430	
+L00000431	Wizard, interview, Source Control, and worktree handoff payloads are high-risk runtime lineage consumers. `GitHub_Integration.md`, `GitHub_Integration`, `WorktreeGitImprovement.md`, `chain-wizard-flexibility`, `chain-wizard-flexibility.md`, `interview-subagent-integration`, and `interview-subagent-integration.md` consume the shared contract rather than owning alternate identity. Interview and wizard payloads must not reintroduce `tier_id = None`, `interview-phase-*`, `pseudo-tier`, or `tier_id` as canonical routing keys; these are migration/source-lineage aliases only. Pre-run `/CUP` and `/quality` correction must not leave the downstream payload `lineage-thin`, self-contradictory about `Contribute(PR)`, or dependent on `stable-branch`, `base_branch`, `git-hook`, filesystem rediscovery, or ad hoc state files in place of `project_id`, thread `/report` identity, `/account`, `/runtime`, `/effective`, `/projection`, `worktree_record`, and `worktree_projection` lineage.
+L00000432	
+L00000433	Priority-1 cleanup docs that cannot safely coexist with the new model unless aligned to this shared runtime contract are `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`), `Plans/Executor_Protocol.md` (`/Executor_Protocol.md`), `Plans/Contracts_V0.md` (`/Contracts_V0.md`), `Plans/human-in-the-loop.md` (`/human-in-the-loop.md`), `Plans/WorktreeGitImprovement.md` (`/WorktreeGitImprovement.md`), `Plans/plan_graph.schema.json` (`/plan_graph.schema.json`), and `Plans/project_plan_node.schema.json` (`/project_plan_node.schema.json`).
+L00000434	
+L00000435	Graph and runtime object schemas must carry explicit package/seam/lane IDs before they are used for execution recovery or promotion decisions. `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/project_plan_graph_index.schema.json`, `/plan_graph.schema.json`, `/project_plan_node.schema.json`, and `/project_plan_graph_index.schema.json` must not remain node-only or `/seam/lane`-blind when representing `/contaminated/restore-required`, safe-point, contamination, promotion, and requested `/effective` execution identity. Schema constants that cannot express package/seam/lane/worktree/account IDs are compatibility fields, not the canonical runtime object family.
+L00000436	
+L00000437	When older audit notes ask for `/node/seam` IDs, the canonical owner shape is explicit node/package/seam/lane IDs plus `/package/seam` lineage, so node-local execution and seam governance can be joined without reviving tier-shaped identifiers.
+L00000438	
+L00000439	Runtime event rows that affect execution, usage, or recovery must carry the shared identity snapshot rather than a compatibility-era subset. `run.started`, `usage.event`, `/Run`, `/UI`, `/attempt`, and `/effective` consumers in `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, and `storage-plan.md` must preserve `/runtime/auth/account`, requested/effective persona/runtime/auth/account, and snapshot references for `/consumers`; enumerated event tables may point to a `requested_effective_snapshot_ref?` only when that referenced record is the canonical complete snapshot.
+L00000440	
+L00000441	`EventRecord` / runtime alignment claims are incomplete unless the schema carries project/thread/run/attempt/account identity directly or by canonical snapshot ref; owner docs must not claim runtime alignment while omitting those join keys.
+L00000442	
+L00000443	Orchestrator and Source Control projections preserve requested/effective identity across `Orchestrator_Page`, `Orchestrator_Page.md`, `live-status`, `/switch`, `/model`, `/account`, `project_id`, cross-surface, and multi-project routing. Legacy `requested_persona_id` and `effective_persona_id` names are forbidden canonical names and may appear only as migration aliases to `requested_persona` and `effective_persona`; account policy, account selection, switch reason, and project-scoped derivation must remain visible when live-status or command pivots resolve identity.
+L00000444	
+L00000445	Artifact, HITL, and tool-denial surfaces must converge on the same blocked episode and runtime action contract. `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, `Tools.md`, `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, `human-in-the-loop`, and `human-in-the-loop.md` must preserve `attempt_id`, `tool.denied`, `HITL`, `human-in-the-loop`, `allowed_action_ids`, and `allowed_action_ids[]`; `allowed_actions` and `allowed_actions[]` are compatibility aliases only where a legacy consumer still maps them into ordered canonical action IDs. Any self-contradiction in those surfaces is scheduler-impacting when it changes pending approval, denial, blocked episode creation, or recovery routing.
+L00000446	
+L00000447	Project artifact, validation, and file-management routes use object identity before paths or page-local links. `validation_pass_report` must support pass-level `skipped` outcomes instead of `/fail-only` pass/fail assumptions; `project_id` is not a nice-to-have because per-project `/search`, `/runtime`, `/worktree`, and `/evidence` indexing depend on it. `OpenFile { path }`, `OpenFile`, `path-open`, page-local links, and `/alias` wrappers must normalize to open-by-identity, `route-target`, `route_target`, `OpenSubject`, `command_kind`, `target_kind`, `object_kind`, `object_kind = usage_event`, `inspector_target`, route validation, scoped-resolver rules, and `normalizes_to_contract` before any runtime/generated artifact becomes addressable. Owner-doc consumers include `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/UI_Command_Catalog.md`, `Plans/assistant-chat-design.md`, `Plans/Crosswalk.md`, `Plans/FileManager.md`, `/FinalGUISpec.md`, `/storage-plan.md`, `/usage-feature.md`, `/UI_Command_Catalog.md`, `/assistant-chat-design.md`, `/Crosswalk.md`, and `/FileManager.md`.
+L00000448	
+L00000449	`Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `Plans/Contracts_V0.md`, and `/Contracts_V0.md` are the practical runtime/UI SSOT for execution, blocked states, `/handoff`, `/recovery`, terminals, and event families. `AttemptJournal` and handoff payloads must not remain `/iteration-shaped`; `/package/seam/lane/promotion`, `/lane-aware`, first-class package/seam/lane identity, package overseer authority, seam overseer authority, `/UI`, `/effective`, and `HITL` scope must replace tier-boundary ancestry when these docs project execution identity.
+L00000450	
+L00000451	The package/seam/lane/promotion object family is defined canonically through those runtime object records and route object kinds. `GPT` audit attribution surfaced this owner gap, but live canon is the package/seam/lane/promotion object family plus its package-overseer, seam-overseer, lane, promotion, and status/lineage fields.
+L00000452	
+L00000453	`package-overseer-only` responsibility is bounded local execution supervision, package-level worker dispatch / review cadence, and package-local remediation recommendations. Cross-package promotion, seam governance, durable route identity, and global remediation policy stay outside package-local authority unless the package overseer receives an explicit higher-scope decision.
+L00000454	
+L00000455	Blocked-state GUI commands map from canonical action identity, not local button vocabulary. `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `cmd.runtime`, `cmd.runtime.*`, `blocked-state`, `GUI`, chat, graph, and orchestrator consumers must derive buttons from `allowed_action_ids` and `allowed_action_ids[]` and keep `/gating/fallback`, `account_pressure_episode`, `requested_account_binding`, requested_account_id, `operational_identity`, `account_switch_event`, `projection_freshness`, and `projection_health` in the `/detail` or inspector payload when those facts explain why an action is available, blocked, or degraded.
+L00000456	
+L00000457	Canonical record/help anchors are part of route and runtime identity. `Plans/storage-plan.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md#Canonical records`, `Plans/Glossary.md`, `Plans/Glossary.md#Orchestrator rewrite terms`, `/storage-plan.md`, `/Orchestrator_Page.md`, `/Glossary.md`, `/help`, `/open`, `help-entry`, blocked-action, blocked-episode, runtime-identity, `/receipt/account-history`, `wave-one`, `exact_items`, `Canonical records for this feature set`, `Canonical records`, `canonical_record.v1:{project_id}:{record_id}`, `canonical_record`, `record_id`, `gap-003`, `gap-006`, and `projection-health` are canonical anchor/consumer obligations, not optional prose labels. Broken consumer references to those anchors must resolve through owner headings or equivalent route/open aliases before history, concern, receipt, or help surfaces claim the records are discoverable.
+L00000458	
+L00000459	Glossary/Crosswalk routing and `/term` ownership provide the stable landing place for later reconciliations: `/Crosswalk` names the owner primitive or contract route, while Glossary term entries define vocabulary without becoming alternate runtime, route, or record owners.
+L00000460	
+L00000461	Storage and projection backbones are package-aware and must not retain `/tier/session/thread` as their primary runtime scope. `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/assistant-memory-subsystem.md`, `/storage-plan.md`, `/usage-feature.md`, `/assistant-memory-subsystem.md`, `/package`, `/seam`, `/worktree`, `/projection`, and `AutoRunBoundary` consumers carry package/seam namespaces, lane/worktree state, contamination events, package-aware usage attribution, and node/package execution semantics before any storage or projection record falls back to tier, session, or thread scope.
+L00000462	
+L00000463	Storage families must not stay attempt/block/usage-centric when the rewrite depends on lane/worktree/concern/project-attention-centric objects; attempt, blocked, and usage projections remain valid only when they join to lane/worktree/concern/project-attention identity rather than hiding it.
+L00000464	
+L00000465	Compatibility adoption is explicit: `HITLRequest`, `request_id`, `run.tier_`, `run.tier_*`, `/compatibility`, and `/navigation` are lineage or lookup metadata, not peer canonical approval or runtime snapshot identity. `route_target` and `OpenSubject` own navigation identity; `wizard.blocked` and `remediation.resolved` reconcile to one field contract each; `selection_rule`, `tier-rooted` graph-schema breadcrumbs, `/event/envelope`, `/seam/lane/worktree/account`, safe-point, and blocked-payload contracts must carry package/seam/lane/worktree/account identity before producers persist runtime or recovery events.
+L00000466	
+L00000467	Worktree/lane binding and requested/effective account/runtime identity are mandatory parts of canonical execution context, not optional downstream embellishments. Runtime records that carry `/lane`, `/runtime`, or `/effective` facts must preserve worktree/lane binding beside requested/effective account and runtime identity.
+L00000468	
+L00000469	Operational surfaces consume this contract across `Plans/FinalGUISpec.md`, `Plans/Run_Graph_View.md`, `Plans/assistant-chat-design.md`, `/FinalGUISpec.md`, `/Run_Graph_View.md`, and `/assistant-chat-design.md`. `phase-grouped` layouts, `/tier` actions, or one-current-task assumptions must not obscure `/worktree/thread` context, blocked episodes, safe-point restore, requested `/effective` identity, or cross-surface attention routing. GitHub auth consumers, including `Plans/GitHub_Integration.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `/GitHub_Integration.md`, and `/GitHub_API_Auth_and_Flows.md`, use per-realm stable account identity and degraded-capability disclosure instead of mutable provider identity alone.
+L00000470	
+L00000471	Graph readability is a route/runtime projection contract before it is a local drawing preference. `Plans/Run_Graph_View.md` consumes zoom-dependent label density: far zoom shows structure/state only, medium zoom shows abbreviated/local labels, near zoom shows full labels and richer local annotations, and selected objects still expose strong detail in the right-side inspector regardless of zoom.
+L00000472	
+L00000473	Canonical persona and account field names must be traceable end to end. `Contracts_V0`, `Contracts_V0.md`, `attempt.started`, usage, storage, auth, and `/effective/provider/account` surfaces must not normatively revive `requested_persona_id` or `effective_persona_id` after this contract forbids them; those names are field-name compatibility aliases only. Provider/runtime/account seams for `OpenCode_Deep_Extraction`, `OpenCode_Coverage_Matrix`, `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, `Media_Generation_and_Capabilities`, `Media_Generation_and_Capabilities.md`, OpenCode, `media.generate`, mid-run, `/effective`, `session-scoped`, disabled-state, `/stream-owner`, `/observe`, server-global, source-verifies, dual-auth-realm, under-specified `/runtime/account`, concurrent-client, capability-change, runtime-correlation, and `GUI` must preserve requested/effective account disclosure and cannot pretend an unobservable server-global stream is a reconnectable, account-owned runtime without explicit evidence.
+L00000474	
+L00000475	Dispatcher and projection safety are runtime contract concerns. `/domain`, `cmd.runtime`, `cmd.runtime.*`, `correlation_id`, `allowed_action_ids`, and `allowed_action_ids[]` require a trace-through into persisted dispatch/domain events; recovery actions are admitted only when the current blocked episode exposes the corresponding ordered actions. `stale-projection` safety uses a canonical revalidation handshake and disable-with-reason `GUI` behavior before mutation, rather than trusting a stale projection or omitting the disable reason.
+L00000476	
+L00000477	If a stale or degraded blocked-flow projection previously displayed `allowed_action_ids[]`, the `GUI` must not guess that the old action set is still valid; it revalidates against canonical/current runtime state before execution or disables the action with an explicit projection-health reason.
+L00000478	
+L00000479	Child/orchestrator lineage consumers must retire tier-era side files and selectors. `Plans/orchestrator-subagent-integration.md`, `/orchestrator-subagent-integration.md`, `TierContext`, `TierType`, `select_for_tier`, `tier_id`, `active-agents`, `active-agents.json`, `/effective-runtime`, node-adjacent addenda, tier-canonical body text, tier-rooted execution, and split-brain state files are compatibility/source-lineage only once child-run and execution-unit identity are canonical. `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`, `/Contracts_V0.md`, and `/Orchestrator_Page.md` consumers must align persona field names before account identity is layered on top.
+L00000480	
+L00000481	`Plans/Orchestrator_Page.md` may describe newer blocked/remediation lineage only through the canonical blocked/remediation and route contracts; `TierChanged` and `active tier` are tier-era compatibility labels, not route identity, remediation identity, or runtime ownership.
+L00000482	
+L00000483	Widget and ledger projections consume provider-account storage families rather than owning account state. `widget.multi_account`, `settings/multi_account.*`, `/multi_account`, `/account/receipt-aware`, `/account/trust`, `provider_accounts`, `provider_accounts.*`, `tier-era`, `/effective`, switch-history, projection-trust, attempt/account/receipt-aware routing, and receipt-aware filters must route through the canonical provider_accounts family, requested/effective account envelope, and projection-trust contract before a widget, ledger, or Orchestrator summary displays account health or filters history.
+L00000484	
+L00000485	Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `work_package_id`, `feature_seam_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity`. Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.
+L00000486	
+L00000487	Runtime attribution packets are carried by immutable prompt handoff bundles, `attempt.started`, `attempt_record`, `/dispatch`, and usage/worker-inspection projections when relevant. `tool.invoked` and `tool.denied` are both first-class runtime trace records; `tool.invoked` must not remain under-attributed analytics exhaust when it affects execution, artifacts, receipts, usage, or operational identity.
+L00000488	
+L00000489	Wizard and interview handoffs inherit the runtime identity grammar before they emit artifacts. `Plans/chain-wizard-flexibility.md`, `/chain-wizard-flexibility.md`, `pre-run`, and `/artifact` payloads must not stay `under-keyed` relative to the adjacent event/artifact contracts. `interview-subagent-integration`, `interview-subagent-integration.md`, `/effective`, and `/provenance` records keep `source_stage`, `source_phase_ids`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, `execution_role`, requested/effective account fields, and `execution-governance` evidence together so downstream handoff consumers do not lose runtime authority context.
+L00000490	
+L00000491	Route/open and command metadata use the shared route primitive instead of path or panel-local targeting. `Crosswalk.md`, `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, `route-target`, `subject-open`, `navigation-related`, `route_target`, `OpenSubject`, `OpenFile`, `file-open`, `path-based`, and `resume_url` define how persisted navigation refs normalize to canonical route identity. `Plans/UI_Command_Catalog.md`, `/UI_Command_Catalog.md`, `/open`, `shell_view`, `shell-facing`, `domain_action`, and `navigation_wrapper` consumers classify `cmd.panel.switch` as a pure shell-facing `shell_view` command; object/thread/worktree focus and open commands route through normalized `navigation_wrapper` arguments, while mutating subject commands remain `domain_action`s.
+L00000492	
+L00000493	Tier-era event names and cleanup priorities are explicit compatibility obligations. `Plans/storage-plan.md` and `/storage-plan.md` may retain `run.tier_started`, `run.tier_completed`, `run.verification_result`, `run.persona_stage_changed`, `run.qa_cycle_started`, and `run.qa_cycle_completed` as `tier-era` aliases only when the payload resolves into the package/seam/lane execution model. Cleanup work prioritizes exact `ContractRef`, `section-anchor`, and `duplicate-number` repair in owner docs, then `promoted-shell` `command-family` completeness and `persistence-scope` normalization, then `DAE` and `/FileSafe/recovery` canon cleanup, then `OpenCode` `provider-native` SSE correlation with `requested-effective` disclosure.
+L00000494	
+L00000495	Concern projections share one record family across operational and audit surfaces. `/governance`, `Seams`, `History`, `Progress`, `Evidence`, and `Ledger` views project the same `concern-record`: `Progress` owns operational attention, `Seams` owns integration and governance routing, `Evidence` owns the `proof-backed` projection, `History` owns lifecycle chronology, and `Ledger` owns exact structured concern projection.
+L00000496	
+L00000497	Storage, telemetry, terminology, and event schemas anchor runtime identity with package/seam/lane/account scope before legacy scopes. `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/Glossary.md`, `Plans/Crosswalk.md`, `/storage-plan.md`, `/usage-feature.md`, `/Glossary.md`, and `/Crosswalk.md` define `/safe-point/promotion`, `/seam/lane/attempt/work-package`, `/event/envelope/schema`, and `/seam/lane/worktree/account` as canonical ownership surfaces. `/tier/session/thread` and `/model/platform` are compatibility or partial identity lenses; `/effective` execution identity covers account as well as persona/model/platform before runtime, recovery, storage, or telemetry consumers persist the event.
+L00000498	
+L00000499	Provider/model controls are execution identity controls, not page-local preferences. `Plans/newtools.md`, `Plans/assistant-chat-design.md`, `/newtools.md`, `/assistant-chat-design.md`, `/model`, `per-run`, `per-thread`, and `/effective` consumers must expose requested/effective execution identity across package, seam, node, and delegated subagent layers rather than reducing the envelope to thread or run settings. `Personas.md`, `Models_System`, `Models_System.md`, `Prompt_Pipeline`, `Prompt_Pipeline.md`, `Contracts_V0`, and `Contracts_V0.md` preserve `requested_account_policy`; when a user pins a `concrete-account`, the requested side is canonical and `bridged-provider` contracts must not treat `/model/persona` as the complete identity envelope.
+L00000500	
+L00000501	`Plans/Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, and storage; scope drift in that owner contract must not leak weaker requested/effective runtime fields into downstream projections.
+L00000502	
+L00000503	Bridged provider and transport contracts disclose account authority across the bridge. `CLI_Bridged_Providers`, `CLI_Bridged_Providers.md`, `Provider_OpenCode`, `Provider_OpenCode.md`, `Provider_Stream_Mapping_External_Reference_A2A`, `Provider_Stream_Mapping_External_Reference_A2A.md`, `/account`, `/effective`, and `effective-account` consumers must carry requested/effective auth and account fields in request, persistence, usage, diagnostic, and stream-mapping envelopes. `Permissions_System`, `Permissions_System.md`, `/runtime`, `multi-lane`, `/multi-actor`, `server-global`, `always`, `reject-cascades`, and `account-switch` rules must scope approvals, rejection cascades, and server-global streams to the active lane/actor/account snapshot and invalidate permission snapshots when account changes can alter tool availability.
+L00000504	
+L00000505	Event-schema precision is mandatory wherever runtime identity appears in tables or examples. `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, `run.started`, `usage.event`, `hitl.*`, `config-validation`, `safe_point`, `safe_point.created`, `scheduler.pass`, and `remediation.resolved` rows must not `under-specify`, `mis-key`, or preserve `multi-addendum` field drift for runtime identity or execution anchors. Every `event-table` either inlines the canonical runtime snapshot fields or normatively references the shared snapshot object so table readers cannot `under-implement` package/seam/lane/account requirements.
+L00000506	
+L00000507	Gate/evidence contracts align the evidence schema with actual gate outputs expected by `GATE-011` and `/GATE-012`; a `GATE` claim is valid only when the schema can encode the produced gate output, otherwise the claim is reduced to the encodable result.
+L00000508	
+L00000509	Resume, run-graph, and command consumers keep account trust and worker identity visible. `Plans/GitHub_Integration.md`, `/GitHub_Integration.md`, `/account`, and `trust-state` flows normalize commands and bind resumed flows to project/account trust before rehydrating state. `/Run`, `/use`, `/receipts`, `/verifier`, `attempt_id`, `usage_event_ref`, `/skipped`, `tier_id`, and `_persona_id` consumers must replace stale worker identity names with auth mode, account, project context, switch reason, and applied/skipped control visibility before graph/use pivots or verifier projections claim runtime identity is complete.
+L00000510	
+L00000511	HITL and tool-event contracts retire request-local and analytics-only eras into compatibility language. `HITL`, `HITLRequest`, `request-local`, `tier_id`, `tier_type`, `allowed_actions`, `allowed_actions[]`, and `approve_continue` are legacy approval vocabulary unless mapped to the `runtime-facing` blocked overlay: `waiting_approval`, canonical `allowed_action_ids`, `allowed_action_ids[]`, `cmd.runtime`, and `cmd.runtime.*`. Tool event tables similarly treat `analytics-oriented` fields such as `tool_name`, `run_id`, `thread_id`, `latency_ms`, `success`, `error`, and `reason` as minimum compatibility metadata, while the `runtime-oriented` `tool.invoked` and `tool.denied` records add `blocked_reason_code`, `failure_class`, ordered `allowed_action_ids[]`, `headless_denied`, and effective permission snapshot evidence whenever scheduler state is affected.
+L00000512	
+L00000513	Legacy `HITLRequest` / blocked-flow examples that lean on `tier_id` or `tier_type` are compatibility references only; runtime-facing records use `node_id`, `blocked_sequence`, and attempt-scoped records as canonical execution anchors.
+L00000514	
+L00000515	Adjacent command, route, evidence, usage, and storage schemas consume this same identity contract. `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/evidence.schema.json`, `/UI_Command_Catalog.md`, `/Crosswalk.md`, and `/evidence.schema.json` must not define incompatible target or proof records outside the route/open and evidence identity primitives. `Plans/storage-plan.md`, `/storage-plan.md`, `usage_record`, `evidence_record`, `tier-keyed`, and `tier_id` families are compatibility surfaces only until they resolve to package/seam/lane/account execution identity and the canonical record/projection contracts above.
+L00000516	
+L00000517	`Plans/storage-plan.md` and `/storage-plan.md` maintain an explicit `same-file` split between early `event-table` / `writer-facing` guidance and later runtime-recovery / `canonical-record` addenda. Readers must treat the latter as the governing canonical record and recovery contract whenever the early table examples still carry legacy tier or writer shorthand.
+L00000518	
+L00000519	HITL request identity is compatibility vocabulary unless it resolves to blocked runtime action identity. `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, `request_id`, `tier_id`, `tier_type`, `request_kind`, `request_kind = tier_boundary_approval`, `tier_boundary_approval`, and `tier-boundary` restore state are lineage terms only after the runtime contract binds approval state to `blocked_sequence`, `allowed_action_ids`, and `allowed_action_ids[]`. `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `/recovery`, and `HITL` consumers must present the mixed model as a migration bridge, not as a second approval authority.
+L00000520	
+L00000521	Scheduling and handoff schemas use package/seam/lane execution identity before tier or task framing. `Plans/orchestrator-subagent-integration.md`, `/orchestrator-subagent-integration.md`, `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `/seam/lane/package-overseer/seam-overseer`, `package-safe`, `ready-set`, `/effective`, `/task/subtask`, `tier-rooted`, and `tier-centric` consumers preserve package-overseer and seam-overseer authority, scored ready-set scheduling, requested/effective account identity, and package-safe remediation lineage. Graph and prompt handoff schemas must not keep `selection_rule = "lexicographic_node_id"` as a `hard-coded` owner rule; `lexicographic_node_id` is only the final tiebreak after the scored tuple, and `selection_rule`, `HandoffMessage`, `ProviderRequestEnvelope`, `prompt-handoff`, `/attempt/safe-point`, `phase_id`, `task_id`, and `/package/seam` payloads must carry node/package/seam identity before recovery or provider handoff.
+L00000522	
+L00000523	Graph-native runtime surfaces expose the same identity and governance drill-down. `Plans/Run_Graph_View.md`, `/Run_Graph_View.md`, `/effective`, `graph-native`, `drill-in`, `trust-state`, and `governance-record` contracts must let operators inspect requested/effective identity, account trust, and governance records from the graph rather than relying on distant owner docs. Historical runtime semantics remain durable: `/runtime`, `stale_historical`, `fixed`, `superseded`, `abandoned`, and `replan_required` states keep older attempts, blocked projections, and remediation lineage visible even after the live target disappears or resolution changes the active projection.
+L00000524	
+L00000525	Requested identity is carried beside verified/effective identity across downstream integrations. `GitHub_API_Auth_and_Flows`, `GitHub_API_Auth_and_Flows.md`, `GitHub_Integration`, `GitHub_Integration.md`, `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, `Contracts_V0`, `Contracts_V0.md`, `Run_Graph_View`, `Run_Graph_View.md`, `/runtime`, `/effective`, and `requested identity` consumers must not rely on canonical effective identity alone when the user or scheduler asked for a different provider/account/runtime binding.
+L00000526	
+L00000527	One shared requested/effective identity disclosure contract is reusable across graph detail, artifacts, GitHub/auth surfaces, and usage/account-pressure surfaces; consumers may narrow display, but they must not fork the requested/effective identity grammar.
+L00000528	
+L00000529	Provider account snapshots use actor envelopes broader than `run_id`. `storage-plan`, `storage-plan.md`, `/account`, `provider_accounts`, `provider_accounts.run_snapshot.{run_id}.{provider_id}`, `run_snapshot`, `project_id`, `actor_kind`, `/chat/interview/wizard/non-run`, `run_id`, `attempt_id`, `thread_id`, `wizard_id`, `interview_id`, `provider_id`, and `/effective` records form a sparse actor envelope for requested/effective runtime and account resolution across run, chat, interview, wizard, and non-run actors.
+L00000530	
+L00000531	Account-health and pressure projection is a distinct runtime family, not an overloaded auth-state. `GPT` lineage that identified this pressure resolves canonically into `CLI_Bridged_Providers`, `CLI_Bridged_Providers.md`, `/Orchestrator`, `/runtime`, `auth-state`, `account-health`, `account-pressure`, `/degraded-trust`, `/availability/pressure/cooldown`, and `confidence-aware` records that expose configuration, availability, pressure, cooldown, and confidence without conflating them with login/auth lifecycle alone. `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `/Contracts_V0.md`, `/storage-plan.md`, `/approval`, and `/switch` own canonical blocked/approval identity linkage plus pressure and switch projection families.
+L00000532	
+L00000533	Operational identity can be displayed beside provider or account identity, but `/account` ownership remains with the auth/account contract. A UI may show operational identity for clarity, yet it must not imply the same owner, token source, or authority as provider/account identity unless the owning auth contract explicitly says so.
+L00000534	
+L00000535	`TierContext` is not a valid dumping ground for execution identity. `orchestrator-subagent-integration`, `orchestrator-subagent-integration.md`, `/view`, `tier_id`, `tier_type`, `title`, `description`, `workspace`, `worktree_path`, `/domain/framework`, `code-review`, `/testing/error`, `/effective`, and `/platform/model` fields must be separated into decomposition/view identity, workspace binding, project heuristics, live execution hints, and requested/effective runtime state before a child run or worker view claims canonical identity.
+L00000536	
+L00000537	Tool denial and approval projections use the scheduler-impacting payload, not thinner compatibility rows. `Tools.md`, `Contracts_V0`, `Contracts_V0.md`, `storage-plan`, `storage-plan.md`, and `tool.denied` consumers must not publish thin payloads as sufficient canon when scheduler state changes. `/event` approval records, storage blocked projections, and runtime action routes stay consistent on `blocked_sequence`, `allowed_action_ids`, `allowed_action_ids[]`, and canonical runtime action routing; when applicable, canonical field names include `safe_point_id`, `remediation_root_id`, `remediation_parent_attempt_id`, `blocked_sequence`, `failure_class`, and `blocked_reason_code`.
+L00000538	
+L00000539	Output, route, and artifact surfaces inherit runtime/account lineage and route identity instead of local shortcuts. `Plans/Project_Output_Artifacts.md`, `/Project_Output_Artifacts.md`, and `/runtime/account` outputs must carry modern event/runtime/account lineage. `/open`, `route_target`, `OpenSubject`, `OpenFile`, `cmd.nav`, and `cmd.nav.*` share one canonical route target object consumed by specialized focus/open wrapper commands. Runtime artifact attribution remains anchored by `cost_usage`, `usage.event`, `Show in Usage`, and `Show in Ledger`; `/B/C` placement alternatives are historical placement language, not a replacement for usage identity.
+L00000540	
+L00000541	Storage, usage, evidence, and summary families stay node-native and execution-context first. `storage-plan`, `storage-plan.md`, `/runtime`, `rewrite-era`, `node-native`, `execution-context`, `tier_runtime_record`, `tier_id`, `cross-surface`, `usage_record`, `/summary`, and `tier-correlated` records must demote stale tier runtime framing to derived compatibility state and stop using tier IDs as the primary cross-surface key for runtime, usage, evidence, summary, Run Graph, or Orchestrator projections.
+L00000542	
+L00000543	Subject-first preview and rewrite identity are already canonical enough to consume. `Plans/rewrite-tie-in-memo.md`, `/rewrite-tie-in-memo.md`, `/redb/Tantivy`, `/runtime`, `/account`, `/effective`, `subject-first`, `doc:<document_id>`, `artifact:<artifact_id>`, `document_id`, and `artifact_id` establish preview subject identity and provider/runtime account terminology for downstream Project Output and artifact consumers.
+L00000544	
+L00000545	False-positive exclusions stay closed, while operational trust gating remains owned here. `re-open`, `false-positive`, and `already-correct` findings must not reopen existing `route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, `inspector_target`, `projection_freshness`, `projection_health`, `account-pressure`, and `account-switch` coverage. The missing transfer is `/gating/fallback` operational trust UI plus schema/contract ownership, including requested/effective account fields in `/storage/schema` contracts where `GPT` lineage surfaced multi-account UX ahead of runtime modeling.
+L00000546	
+L00000547	Approval action identity uses one canonical action-ID family. `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`, `/Contracts_V0.md`, and `/human-in-the-loop.md` consumers must not wire blocked action IDs from both `allowed_actions[]` and `allowed_action_ids[]` as coequal canon; `allowed_actions[]` is compatibility vocabulary, while ordered `allowed_action_ids[]`, `allowed_action_ids`, `blocked_sequence`, and `detail_ref?` are the runtime action source. Event tables, GUI button rows, and `*_ref` fields must use explicit identity fields and canonical event fields rather than GUI-only aliases.
+L00000548	
+L00000549	Usage, storage, widget, and Orchestrator projections consume provider-account sourcing from the shared runtime contract. `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/Widget_System.md`, `Plans/Orchestrator_Page.md`, `/usage-feature.md`, `/storage-plan.md`, `/Widget_System.md`, and `/Orchestrator_Page.md` must not leave lane/package/remediation or `/package/remediation` dimensions `under-modeled`; concern, review, promotion, corroboration, graph-patch, and recovery records resolve through one `governance-record` envelope for `/reviews/promotions/corroboration/graph-patch/recovery`. `provider_account_id` is a `shadow-identity` risk unless it resolves through canonical `provider_accounts.*`, `project-scoped` account sourcing, requested/effective linkage, switch-history, `projection-health`, `trust-state`, and projection-trust rules rather than page-local heuristics or widget-era tab assumptions with incomplete account identity.
+L00000550	
+L00000551	Event-envelope and projected-record families use the same `governance-record` template for concerns, reviews, promotions, corroboration, graph patches, and recovery so those first-class durable objects do not drift into separate summary-only projections.
+L00000552	
+L00000553	Route payloads are a first-class internal contract. `route_payload`, `primary_route_payload`, `secondary_route_payload?`, `resume_url`, URL deep links, and in-app command dispatch all decode into the same route model; stored `resume_url` fields are serialized transport forms for portability and must not imply a separate routing ontology. `Plans/Orchestrator_Page.md` may project route-open pivots, but it must not mint forbidden canonical names or panel-local route semantics outside the shared route payload and route target objects.
+L00000554	
+L00000555	Widget/page drill contracts use typed route payloads tied to canonical identity/trust/linkage fields, including `/trust/linkage` refs when a drill path depends on trust, account, linkage, or route provenance rather than page-local chrome.
+L00000556	
+L00000557	The Orchestrator/Usage/GitHub deep-link story uses route payload/trust contracts before page chrome: `Plans/Orchestrator_Page.md`, `Plans/usage-feature.md`, `Plans/GitHub_Integration.md`, and GitHub/auth consumers must carry route payload, projection-trust, and linkage facts instead of relying on local chrome to make deep links trustworthy.
+L00000558	
+L00000559	Runtime identity carries role and operational identity beside provider account identity. Role-scoped pools from storage and `Plans/Multi-Account.md` become auditably explainable only when effective runtime records, usage records, page projections, and graph identity projections preserve `execution_role`, `actor_role`, role-based choice rationale, and role-scoped provenance trace. `Multi-Account.md` lineage, `/namespace`, `/cluster`, and `operational-identity` records distinguish provider account identity from operational identity classes such as GitHub API identity, registry/namespace identity, Kubernetes context/cluster identity, and the normalized kinds `github_api_account`, `registry_namespace`, `kubernetes_context`, plus future provider `/surface-specific` kinds where externally scoped authority matters.
+L00000560	
+L00000561	The shared runtime snapshot is the explicit replacement for `TierContext`. Any execution-unit refs, lane/worktree refs, requested/effective runtime identity, execution role, governance lineage, remediation generation, or `/replan` generation formerly packed into tier context must resolve into the package/seam/lane/account runtime snapshot, with compatibility references to `TierContext`, `tier_id`, and tier-era execution kept only as historical trace.
+L00000562	
+L00000563	Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and the closed `wake_reason` enum `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`; old HITL request examples are compatibility references only when they resolve into that family.
+L00000564	
+L00000565	`blocked_sequence` is monotonic per `{ run_id, node_id }`, starts at `1`, and increments only when the node transitions from non-blocked to a new blocked episode.
+L00000566	
+L00000567	Execution-core and handoff consumers must align on the shared runtime identity envelope before local structs claim ownership. `WorktreeGitImprovement.md`, `Executor_Protocol`, `Executor_Protocol.md`, `chain-wizard-flexibility`, `chain-wizard-flexibility.md`, `interview-subagent-integration`, `interview-subagent-integration.md`, `orchestrator-subagent-integration`, `orchestrator-subagent-integration.md`, `/PR`, `/source-control`, `/lifecycle`, `/role`, `/subtask`, `/corroboration`, `wizard_id`, `run_id`, `tier_id`, `extract_tier_id`, `wake-reason`, `execution-core`, `load-bearing`, `blocked-handoff`, and `/node-named` records must resolve reviewer/corroboration actor lifecycles and lane/package/seam/account/role identity through `/package/seam/account/role` and `/effective` rather than through tier-shaped crew structs or incomplete wake-reason sets.
+L00000568	
+L00000569	Effective runtime identity ownership is split by field family, not by whichever feature emits first. `orchestrator-subagent-integration`, `orchestrator-subagent-integration.md`, `/view`, `tier_id`, `tier_type`, `has_errors`, `needs_testing`, `execution-state`, `workspace`, `/domain/framework`, `/platform/model`, and requested/effective persona/platform/model hints remain decomposition, workspace, and live execution-state inputs until the `Plans/Prompt_Pipeline.md` and `/Prompt_Pipeline.md` effective-resolution field family defines which requested/effective runtime identity fields exist and what they mean. `newtools.md`, `assistant-memory-subsystem`, `assistant-memory-subsystem.md`, and `/event` producers may emit supporting command or event families only after the canonical owner registers the shared event/runtime fields.
+L00000570	
+L00000571	Runtime artifact and navigation contracts share common fields without overloading route identity. `Runtime_Artifacts_Panel`, `Runtime_Artifacts_Panel.md`, and `runtime-artifact` use one common field contract for artifact envelopes. `cmd.nav`, `cmd.nav.*`, and equivalent wrappers route through `route_target` without forcing every consumer doc to restate the route model. Destination-only state such as `/view-state`, `active_subview`, `surface-local` tabs, `line`, and `range` belongs to persisted shell/view state or `OpenFile`, not to `route_target`; `OpenFile` may carry `line` and `range`, while base route identity stays limited to selector and scope fields.
+L00000572	
+L00000573	Runtime artifact envelopes keep artifact-family distinctions while consuming the shared attribution packet instead of artifact-local identity alone. Artifact payload metadata includes `created_at_utc`, `summary?`, `detail_ref?`, `content_ref?`, and `source_surface?`; surviving `task_id` language in an artifact packet is compatibility metadata unless it is bound through node/package/seam/lane-native execution context.
+L00000574	
+L00000575	The bounded `route_target` selector rule is explicit. `Contracts_V0`, `Contracts_V0.md`, `route_target`, `subject_id`, `object_kind`, `object_id`, and `target_kind` define target selection and host-surface routing as separate concerns: a route target selects by `subject_id` or by `object_kind` plus `object_id`, never both as independent primary selectors for the same target. `target_kind` is not object identity and not shell persistence state; it tells the router what class of surface must host the target after scope restoration and target selection are applied.
+L00000576	
+L00000577	Stable target kinds are required for rewrite-era object families even when older Orchestrator, FileManager, or path-opening docs still pivot by `run_id`, `tier_id`, or file path. `node`, `attempt`, `scheduler_pass`, `blocked_episode`, and other rewrite-era objects are first-class navigation targets through `object_kind` + `object_id`; stale `tier_id`, run-only, or file-path pivots are compatibility inputs only when they normalize into `route_target`.
+L00000578	
+L00000579	Chapter 7 owns the route/open collapse before wiring tables consume it. `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `route_target`, and `OpenSubject` must be canonical sections before `WiringEntry` references them. `Contracts_V0`, `Contracts_V0.md`, `/open`, `HITL`, request-centric HITL identity, `allowed_actions`, and `allowed_actions[]` collapse into blocked runtime identity: ordered `allowed_action_ids`, `allowed_action_ids[]`, named `route_target`, `OpenSubject`, and one remediation resolution enum family are the shared runtime canon.
+L00000580	
+L00000581	Attempt, preview, and receipt identity remain subject-first and attempt-native. `preview_subject_id` supplies restore identity; `orchestrator.receipt.{run_id}.{attempt_id}` and `orchestrator.receipt` are `attempt-native`; provider-account policy plus requested/effective `/effective` identity fields are the governing runtime snapshot for receipts, previews, and downstream consumer docs.
+L00000582	
+L00000583	Command catalogs and graph projections consume contract-owned runtime and route primitives. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `/UI`, `Progress`, graph-local `HITL` approval commands, `layout/UI state only` pivots, per-command `command_kind`, normalization metadata, and `navigation-family` rules must demote graph-local or layout-only behavior unless it maps to runtime commands, route targets, or Orchestrator-hosted `Progress` widgets. `Plans/UI_Command_Catalog.md` and `/UI_Command_Catalog.md` entries carry per-command `command_kind` and normalization metadata before a command family is treated as canonical navigation.
+L00000584	
+L00000585	Run graph and event projections expose the same runtime state without stale tier or persona field drift. `Run_Graph_View`, `Run_Graph_View.md`, graph detail, usage pivots, `/attempt/runtime`, `/verifier`, stale `hitl_request_id`, `View in Tiers`, `tier_id`, worker/verifier identity, `Contracts_V0`, `Contracts_V0.md`, `Orchestrator_Page`, `Orchestrator_Page.md`, `_persona_id`, and runtime-facing worker identity fields resolve through requested/effective disclosure and the allowed persona field names. `Progress` may show compact requested/effective live context, while `History` and `Ledger` keep the exact audit trail of requested/effective identity, reason, and source snapshot refs.
+L00000586	
+L00000587	`View in Usage` links from `Orchestrator_Page.md` may keep a `run_id` filter as compatibility narrowing, but canonical usage pivots carry richer route context and resolve through `object_kind = usage_event`, canonical usage event `object_id`, project/thread/run scope, and requested/effective runtime lineage rather than a run-only link.
+L00000588	
+L00000589	Event naming is shared across runtime and UI projections. Scheduling, execution, review/verification, contamination/recovery, remediation/replan, promotion, `HITL`/escalation, worktree/lane, `/lane`, `/replan`, `/recovery`, `/escalation`, `/verification`, and effective-resolution events must be registered in the owner event model before Dashboard, `/Orchestrator/chat`, Orchestrator, or chat surfaces project them. Events may be `runtime-internal` or `operator-visible`, but Orchestrator must not invent a shadow event language outside the shared event family.
+L00000590	
+L00000591	Shared record envelopes carry enough refs for audit and projection joins. Good base records include `record_id`, `record_kind`, `schema_version`, `project_id`, `run_id?`, `scope_type`, `scope_id`, `status`, `created_at_utc`, `updated_at_utc?`, `summary`, `summary_kind?`, `detail_ref?`, `source_refs`, `source_refs[]`, `artifact_refs`, `artifact_refs[]`, `related_record_refs`, `related_record_refs[]`, `lineage_refs`, `lineage_refs[]`, `actor_ref`, and `requested_effective_snapshot_refs`; shorter projection summaries may reference the shared envelope but must not silently drop these join fields when the user opens detail.
+L00000592	
+L00000593	Worktree cleanup and concern operations preserve runtime ownership. `recover`, `prune`, `/remove`, `active-run`, `safe-point`, remediation lineage, `dirty_worktree`, and `worktree_conflict` are runtime actions or blocked reasons, not trivial delete affordances. Concern operations from `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`, and the graph inspector share the same action policy so UI density changes do not weaken confirmation, authority, or auditability.
+L00000594	
+L00000595	Concern-action reversibility is a controlled audit field. Each concern action records actor authority, confirmation, rationale, and one reversibility class from `immediate_undo`, `compensating_action_only`, or `non_reversible`; `compensating_action_only` and `non_reversible` require consequence-specific confirmation before execution.
+L00000596	
+L00000597	Provider, stream, and route payload adapters round-trip the same runtime snapshot. `Plans/CLI_Bridged_Providers.md`, `/CLI_Bridged_Providers.md`, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, OpenCode, `/account`, `/effective`, `/permission`, `GPT` lineage, model `IDs`, auth/account fields, upstream provider identity ownership, switch attribution, execution-role scoping, lane `/worktree` attribution, `projection-ready` usage signals, and the `dispatch-boundary` all resolve to the shared requested/effective provider-account and operational identity envelope. Stream adapters must preserve canonical requested/effective identity and `blocked-owner` payloads on `round-trip`, including the OpenCode transport-platform versus upstream-provider split.
+L00000598	
+L00000599	Scheduler, safe-point, and remediation records use one canonical payload block. `Contracts_V0`, `Contracts_V0.md`, `safe-point`, scheduler payload shapes, remediation lineage, remediation resolution enums, `intra-doc` conflicts, and downstream storage/UI consumers must resolve to one `obviously-canonical` scheduler/safe-point/remediation contract instead of local partial shapes. Approval and recovery schemas use one key strategy: `/recovery`, retained `request_id` values must map explicitly to `blocked_sequence`, and ordered `allowed_action_ids` / `allowed_action_ids[]` remain the runtime action family.
+L00000600	
+L00000601	Attention rows, deep links, search, and palette results share the internal route payload. URLs, in-app actions, `/search/palette` results, deep links, and `resume_url` decode to the same route payload rather than separate link semantics. The canonical internal route payload is separate from command `IDs` and may carry `target_kind`, `project_id?`, `workspace_tab_id?`, `destination_surface`, `destination_tab?`, `focused_run_id?`, `historical_mode?`, `thread_id?`, `wizard_id?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, and `focus_behavior?`.
+L00000602	
+L00000603	Runtime storage and persistence records carry execution context before tier compatibility. `attempt_record`, `tier_runtime_record`, run-start/runtime snapshot events, `/runtime`, `/persistence`, `auth-account`, `/account/role`, `shared-runtime`, provider-account identity, and `operational_identity` blocks must retain requested/effective auth/account/role fields where those fields become auditable. The canonical replacement execution-context object is the Executor-owned `execution_unit_context` contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; Contracts_V0 consumes that schema for envelope and join behavior instead of redefining node-native keys or required fields.
+L00000604	
+L00000605	Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority.
+L00000606	
+L00000607	That execution context is strict enough to support scheduler dispatch, worker spawn, safe-point creation/restore, retry/remediation lineage, approval/recovery targeting, and UI inspection/audit without reconstructing those guarantees from loose prose.
+L00000608	
+L00000609	Schema-level runtime promises require the shared identity fields to be present, not implied. Any UI/runtime promise that depends on `/runtime`, `attempt_id`, `blocked_sequence`, account identity, execution-role, or shared-runtime persistence must reference the canonical snapshot fields directly, including provider-account identity, operational identity, `/account/role`, and the execution-context object, so later implementations do not reconstruct those fields from prose.
+L00000610	
+L00000611	Validation and artifact attribution inherit the shared runtime identity envelope. Validation-pass reports require at least `provider` and `model` for compatibility, but provider-using artifacts must still expose the fuller requested/effective `/effective` runtime identity when the artifact participates in account, usage, or routing audit. `Contracts_V0`, `Contracts_V0.md`, `tool.denied`, `tool.invoked`, and `runtime-artifact` records share one attribution family whenever scheduler state, runtime action state, or generated artifact state is affected; a stricter `tool.denied` payload must not coexist with thinner `tool.invoked` or runtime-artifact projections that drop node, attempt, actor, account, or runtime snapshot joins.
+L00000612	
+L00000613	Route activation uses the same canonical target model across search, attention, artifacts, and opens. A `search-result`, `attention-item`, artifact `Show in *` action, usage pivot, and wrapper `/open` command normalize through `route-target` / `route_target` rather than through ad hoc surface behavior. `OpenSubject` is the identity-native open contract: it requires `subject_id`, resolves through canonical subject/open rules, and may realize as a workspace document, transient `generated://` buffer, or routed non-editor surface. Initial `subject_id` families must remain narrow and explicit, while the `object_kind` enum family is controlled contract vocabulary with room for later governed extension.
+L00000614	
+L00000615	Persisted destination state is subordinate to the requested route target. `/view-state` owns `active_subview`, filters, compare targets, pinned selections, destination tabs, and similar surface-local state, but those fields must be overridden when reuse would land on the wrong object, hide the requested target behind the wrong tab or `/subview`, or silently keep the user on a stale run `/thread/project` context. `cmd.orchestrator.open_in_source_control` must land in Source Control with the relevant run `/worktree/repo` context available; it may reuse a remembered Source Control subview only when that subview still clearly exposes the requested target.
+L00000616	
+L00000617	The route/open split is structural. `route_target` gets the user to the correct app surface, project `/run/thread` scope, object, and focus context, and may reference `subject_id`, `object_kind/object_id`, `object_kind`, `/object_id`, `tab_id`, `inspector_target`, and related scope fields. `OpenSubject` takes the canonical `subject_id` and resolves it to a workspace-backed file or `/document` open, a transient `generated://<artifact_id>` source buffer keyed by `artifact_id`, or another subject-native preview/open path defined by the subject contract; it does not own broad shell routing, panel selection, or the whole `/open` route envelope. When run scope or exact resumption matters, route payloads carry `focused_run_id` plus narrow anchor details such as wizard-step focus rather than relying on remembered shell state.
+L00000618	
+L00000619	Usage deep links are object routes, not top-level route aliases. Cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`; `usage_event_ref` may remain a storage/projection reference, but it must not survive as a top-level route field that bypasses the canonical `object_kind` and `object_id` selector model.
+L00000620	
+L00000621	Route validation rejects invalid-combination payloads before any surface-specific open behavior runs. `route_target` requires `project_id` and one primary selector; it must reject a missing primary selector, competing `subject_id` and `object_kind/object_id` selectors, `object_kind` without `object_id`, `object_id` without `object_kind`, `inspector_target` without an object selector, `tab_id` that conflicts with `target_kind`, `line` or `range` inside `route_target`, and any per-surface state inside `route_target`. `/object_id`, `subject_id`, `object_kind`, `object_id`, `target_kind`, `tab_id`, and `inspector_target` are route contract fields only when these selector rules are satisfied.
+L00000622	
+L00000623	Runtime record compatibility must not keep stale tier keys as structural canon. `tier_runtime_record` keyed by `run_id` and `tier_id`, `usage_record` keyed by `run_id`, `tier_id`, `attempt_id?`, and `usage_sequence`, and `evidence_record` keyed by `run_id`, `tier_id`, and `evidence_id` are compatibility shapes that must resolve through the node-native execution-context object before projection. Earlier event examples that center `tier_id` remain historical examples only. Likewise, `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `/recovery`, and `HITL` preserve the split between ordered `allowed_action_ids[]` / `allowed_action_ids` recovery actions and request-era `request_id`, `allowed_actions`, and `allowed_actions[]` records; `HITL` request-era identity is lineage/compatibility metadata, not a peer runtime action key.
+L00000624	
+L00000625	Rewrite-root and Crosswalk routing guidance must consume contract-owned primitives instead of under-route ownership. `00-plans-index.md`, `plans-index`, `Decision_Log.md`, `Decision_Log`, `rewrite-tie-in-memo.md`, `rewrite-tie-in-memo`, `/effective`, `rewrite-era`, and `/Packages/Overseers` decisions must record Seams, Packages, Overseers, requested/effective identity scope, operational identity classes, and Crosswalk-based owner precedence without treating those index or decision docs as route owners. `Plans/Crosswalk.md` and `/Crosswalk.md` may publish top-level primitive guidance only when it points back to contract-owned `route_target` and `OpenSubject`; stale `Primitive:WidgetCatalog` / `WidgetCatalog` claims about `Orchestrator widget tabs`, stale `Primitive:OrchestratorPage` / `OrchestratorPage` claims about six tabs with `Tiers`, duplicate `3.13`, `3.14`, or `3.15` anchors, and headings after `## References` must not be used as deterministic ownership anchors.
+L00000626	
+L00000627	Tool, usage, and page projections must not shadow runtime contract ownership. `Plans/Tools.md`, `/Tools.md`, and `tool.invoked` records are analytics-thin unless they carry the richer attribution packet from the shared runtime contract. Usage already preserves canonical `account_id`; the remaining usage-side `account-history` gap is requested/effective `/effective` identity and runtime-role carry-through, not account identity wholesale. Orchestrator page `live-status` mappings and concrete event sources are projections of canonical runtime contracts; the page layer must consume them without redefining event ownership.
+L00000628	
+L00000629	Persisted object and graph schemas use first-class runtime objects instead of tier-shaped shortcuts. The most important persisted object shapes include `attempt`, `lane`, `promotion`, `review`, and `resolution_thread`; graph projections from `Plans/Run_Graph_View.md` and `/Run_Graph_View.md` must replace `TierTree`, `View in Tiers`, `tier_type`, and phase `/task/subtask` grouping with first-class seam `/package/lane` nodes, promotion-class badges, requested/effective `/effective` execution identity, and unified blocked `/recovery` actions. `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`, and `/Project_Output_Artifacts.md` must resolve the `HITL` contradiction between tier-boundary approval and mid-tier approval nodes through this shared runtime object model.
+L00000630	
+L00000631	Provider, projection, and identity owner docs deconflict shared runtime fields before consumers persist them. `usage-feature`, `usage-feature.md`, `storage-plan`, and `storage-plan.md` may carry `provider_account_id` only under the canonical provider/account ownership and `/deconfliction` rule; they must not mint a second account key beside the requested/effective identity model. `Plans/Multi-Account.md`, `/Multi-Account.md`, `Plans/Models_System.md`, `/Models_System.md`, `Plans/Prompt_Pipeline.md`, and `/Prompt_Pipeline.md` are companion owners for account, model, and requested/effective naming, while `Contracts_V0` / `Contracts_V0.md` rejects persisted `requested_persona_id` and `effective_persona_id` aliases as noncanonical historical names.
+L00000632	
+L00000633	Projection health states use one rebuild/scan vocabulary. `/rebuild`, `/scan`, and `/sections` projections use `current` when caught up enough for normal use, `refreshing` when an old committed projection remains visible while refresh or rebuild runs, `stale` when usable for context but not guaranteed to reflect current runtime truth, `degraded` when a projector or scan partially failed or a dependency signal is missing and some fields/sections are less trustworthy, and `unavailable` when the surface contract cannot currently be answered. `Plans/storage-plan.md` and `/storage-plan.md` table-vs-prose conflicts for runtime identity, usage attribution, receipt ownership, and `/projection` ownership resolve to these contract fields rather than to contradictory local tables.
+L00000634	
+L00000635	Projection-health / trust-state records are built from committed projection state, checkpoint refs, and last-updated metadata; mutation gating reads those facts instead of inferring safety from page-local timestamps.
+L00000636	
+L00000637	GitHub, stream, and multi-account projections carry account and blocked-owner context across boundaries. `Plans/GitHub_Integration.md` and `/GitHub_Integration.md` bind project-scoped repo/account selection, `/account`, `project-scoped` trust, `degraded-trust` signaling, and `blocked-episode` recovery linkage to the shared concern and runtime model. Stream `usage` events must carry account attribution; `auth_state` carries pool-member account context for failover rotation; `input_required` and `input_provided` distinguish node `HITL`, corroboration pause, and conversational user-input pause. `Plans/Multi-Account.md`, `/Multi-Account.md`, `/failover`, and per-interaction attribution preserve switch/failover reasoning so streams do not erase multi-account provenance.
+L00000638	
+L00000639	Normalized provider streams disclose actor class and governance transitions. Stream envelopes include `actor_kind`, actor-class, package `/seam/lane` context, and `/overseer` relationships when handoff or speaker selection affects governance. `handoff` events must not use bare agent names without package/seam/lane context, and `SelectSpeakerEvent` must not be demoted to `raw_observation` when it carries governance-relevant speaker or overseer transitions for downstream projections.
+L00000640	
+L00000641	Project and model projections stay deterministic outside raw shell UI state. `projects:v1` owns the canonical `project-summary` projection alongside project records rather than embedding that summary inside raw shell UI state. `Plans/Models_System.md`, `/Models_System.md`, `/effective`, transport naming, and `/upstream` naming must distinguish transport platform from upstream model/provider identity so requested/effective identity remains deterministic.
+L00000642	
+L00000643	Model, provider, and permission snapshots must split transport identity from upstream provider identity before any requested/effective renderer persists the result. `Models_System` and `Models_System.md` use `provider_id` only after distinguishing transport host identity, upstream provider identity, and model/provider naming; `/effective` renderers must not collapse those vocabularies. Rewrite-era permission snapshots under the `SSOT` carry requested/effective capability truth, requested state, downgrade reason, effective account, and actor `/surface` context, not only resolved or effective values.
+L00000644	
+L00000645	Account binding and actor-role projections preserve the runtime choice that produced an effective account. Account `/routing` binding values are `none` when no concrete account is requested and policy routing chooses from the eligible pool, `preferred` when a concrete account is requested as a preference and fallback remains allowed, and `required` when a concrete account is pinned and fallback must surface a blocked or explicit override failure. Runtime snapshots, usage records, and surface payloads carry `/role`, `execution_role`, `actor_kind`, role-scoped pools, and requested/effective account decisions so account selection remains auditable.
+L00000646	
+L00000647	Usage and provider health records keep switch lineage without turning current state into durable episode history. `UsageRecord` includes `account_switch_reason` plus a durable switch `/signal` pointer so switch explanations can join History and `/Ledger`; `account_switch_reason` also remains on effective `/runtime` snapshots as `current-run` disclosure. `provider_accounts.health` and `provider_accounts` describe `current-state` health, not durable episode history.
+L00000648	
+L00000649	Runtime replacement and worktree projections inherit the canonical snapshot contract. Replacements must not create a parallel `runtime-resolution` schema when existing runtime snapshots already define the contract. `WorktreeGitImprovement.md` and Git `/PR` operations treat `extract_tier_id` and `extract_tier_id()` as migration tripwires, preserve `/node-named` lane worktrees during restart repopulation, and carry the lane lifecycle model, shared worktree projection object, and account identity through Git and PR contexts.
+L00000650	
+L00000651	Orchestrator UI and command contracts consume shared runtime primitives instead of minting surface-local owners. `Plans/FinalGUISpec.md` and `/FinalGUISpec.md` consume Orchestrator-page ownership, concern-model UI, historical-run-mode behavior, projection-freshness, and `/health` language from contract health and projection rules. Canonical command families cover account operations, concern operations, and promotion operations, mapping `HITL` `allowed_action_ids` into stable `cmd.*` handlers.
+L00000652	
+L00000653	Subagent integration docs are consumers of runtime identity, not identity owners. `Plans/interview-subagent-integration.md` and `/interview-subagent-integration.md` must not claim shared runtime alignment while dropping auth `/account` identity or reintroducing pseudo-tier execution keys. `Plans/orchestrator-subagent-integration.md` and `/orchestrator-subagent-integration.md` likewise may describe active coordination and context construction only as projections; those surfaces cannot be trusted as canonical runtime identity without the shared account, actor, route, and execution-context contracts.
+L00000654	
+L00000655	Tool events are shared runtime/audit records before they are Usage widgets. `Tools.md` tool events must explain scheduler blocking, permission `/HITL` behavior, receipts, evidence, cross-surface audit, and why a run used or failed to use a tool under a specific account and `/runtime` context; widget input summaries cannot be the only durable meaning of tool execution.
+L00000656	
+L00000657	Worktree and lane lifecycle state is a first-class storage family. Durable contracts include a worktree record, a lane/worktree projection for current state, historical lineage retention after archive/remove, and conflict `/suspect/restoring/archive/remove` lifecycle support. Project UI state such as `selected_worktree_id?` or `selected_worktree_id` is only a selection pointer and is not a substitute for that durable worktree record family.
+L00000658	
+L00000659	Approval and restart semantics preserve blocked-state identity across the Contracts, Executor Protocol, and HITL owners. `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, and `/human-in-the-loop.md` jointly own the rule that a `waiting_approval` blocked episode exists first-class in `/state`; when an approval prompt surface needs a stable `request_id`, that `request_id` maps 1:1 to the underlying `{ run_id, node_id, blocked_sequence }`. If restart determines an in-flight attempt cannot resume, that attempt transitions to `stale_historical`; if a blocked prerequisite still exists, the existing unresolved blocked episode remains the actionable state.
+L00000660	
+L00000661	Startup recovery handshakes, DAE restart `/intercept` routing, and blocked-owner attribution use the same blocked-episode contract: `/rules` decide whether recovery resumes, retries, or waits, while the owning blocked episode keeps attribution and restart intent visible to Executor, HITL, and stream consumers.
+L00000662	
+L00000663	Supporting subsystems register event and command families in canonical owners instead of stranding them in support docs. Memory and live-preview `/build` event families, doctor checks, `ToolIDs`, and `/tool/command` identities belong in the canonical storage, tool, and command contracts. `Run_Graph_View` / `Run_Graph_View.md` projections must not keep `tier_id` as the main per-node correlation key for output filtering, verification event filtering, usage links, copy/open `/open` actions, or event drill-in; they must join through first-class per-node runtime identity. Payload contracts reject route-local `line` / `range`, raw provider/account disclosure fields, and arbitrary per-feature payload blobs unless they are normalized by the shared route, `/account`, and per-feature schema rules.
+L00000664	
+L00000665	Navigation and command migration normalize payload semantics without requiring a hard flag day. Existing user-facing wrapper commands may remain during migration, but their payloads normalize through `route_target` and `OpenSubject`; older payload shapes may be accepted, while new producers and `/docs` emit the canonical normalized target model. Route overrides MUST override target object identity, explicit destination surface when the action names a different surface, and scope required to make the target meaningful, including `project_id`, `thread_id`, `focused_run_id`, an explicitly requested panel, and `/tab`.
+L00000666	
+L00000667	Route activation may legitimately name which major surface, `/tab/panel`, and project/workspace context should become visible. It must not encode panel widths, floating window coordinates, icon order, or full project-state snapshots; `/workspace` and project context are routing scope, while layout realization stays shell state.
+L00000668	
+L00000669	Usage, catalog, and wrapper commands declare route intent instead of hiding object identity in layout state. `cmd.artifacts.show_in_usage` must open/focus Usage in the correct project `/thread/run` scope and may reuse current layout or `/filter` chrome only when the requested usage target is still revealed. `UI_Command_Catalog.md`, `UI_Command_Catalog`, and `/UI` split shell or layout commands from object-targeting navigation commands when payloads carry object identity. Stable domain-facing wrapper and `/open/focus` commands normalize internally to canonical route semantics while the contract layer owns `route_target` and `OpenSubject`.
+L00000670	
+L00000671	Alias and resume-url contracts keep migration metadata separate from canonical routing. `alias_of_command_id` belongs to migration `/deprecation` alias handling only; stable wrappers declare `normalizes_to`, `canonical_target_contract`, and `canonical_route_kind` instead of pretending to be deprecated aliases. `storage-plan` / `storage-plan.md` may persist `resume_url`, but Contracts defines it as transport serialization: `resume_url` serializes enough transport/open realization for a resolver to execute `OpenSubject`, while `route_target` remains canonical identity and serialization stays narrower than the internal route model. Shell and scope belong to `route_target`; persistence and `/provenance` belong to storage records and projections.
+L00000672	
+L00000673	Inspector and page-focus fields are closed route-contract fields, not arbitrary UI tab names or message anchors. `Contracts_V0` / `Contracts_V0.md` own the closed `inspector_target` enum and keep message-step-line-range style anchors out of `inspector_target`. `tab_id` is a routed page-focus field, not a generic any-tab-anywhere value. The base route contract stays small; resolver context comes from existing scope fields such as `project_id`, `focused_run_id`, and the destination's canonical object store.
+L00000674	
+L00000675	Usage deep-links and open contracts resolve through canonical route identity. Usage deep-links normalize through `object_kind = usage_event` and `object_id = canonical usage event id`; consumers must not infer Usage targets from local filters alone. Contract placement keeps `7.1 UICommand envelope`, adds `route_target` and `OpenSubject` as sibling route/open contract sections, and keeps `WiringEntry` after those sections so the wiring layer consumes rather than owns route/open semantics. `Plans/UI_Command_Catalog.md` and `/UI_Command_Catalog.md` remain adjacent consumers of this route/open contract.
+L00000676	
+L00000677	Run graph and recovery projections use attempt-native runtime identity instead of node-through-tier routing. `Plans/Run_Graph_View.md` and `/Run_Graph_View.md` must not route Usage by node-through-tier or treat `tier_id` as the Usage correlation key; they join through first-class runtime and usage-event identity. Canonical runtime event families include `scheduler.pass`, `node.blocked`, `safe_point.*`, and `remediation.*`; canonical projection keys include `blocked_projection`, `attempt_record`, and `scheduler_pass_record`, with attempt-native projection rules and blocked projections preserving runtime recovery lineage.
+L00000678	
+L00000679	Runtime-core docs that still depend on tier-rooted live coordination objects must normalize those objects to attempt-native keys before `/history`, recovery, or restart views consume them. Tier-rooted labels may remain compatibility annotations only after the durable history contract can join through attempt-native runtime identity.
+L00000680	
+L00000681	Legacy HITL and EventRecord canon is compatibility lineage, not a peer runtime model. Section `6. HITLRequest` / `HITLRequest` examples that center `request_id`, `tier_id`, `tier_type`, `request_kind`, `request_kind = tier_boundary_approval`, `allowed_actions`, and `allowed_actions[]` remain compatibility records resolved through the shared blocked-state model. Section `1.1 EventRecord` / `EventRecord` examples such as `run.tier_started` and `run.tier_completed` are historical event shapes, not current runtime snapshot ownership.
+L00000682	
+L00000683	Runtime identity packets carry execution role, blocked minima, and parent scope without reviving older field families. `requested_persona` ownership is about scope, not renaming it back into older fields. `Plans/Contracts_V0.md` and `/Contracts_V0.md` attempt/runtime packet families include `execution_role`, blocked-family minimums, and ref-family separation. Minimal parent object shapes cover `project`, `run`, `feature_seam`, and `work_package` so projections can reference stable parents without stale tier shortcuts.
+L00000684	
+L00000685	Requested/effective account identity extends existing persona/model patterns instead of creating an account-only parallel system. Container and Docker auth fields such as `requested_auth_mode`, `effective_capabilities`, `effective_capabilities[]`, and `effective_account_identity` are the shared execution identity shape, not isolated container-only fields. Existing `/persona`, `/model`, and `/effective` rules remain the base and extend to account identity rather than being replaced by a parallel account-only model. `Plans/chain-wizard-flexibility.md`, `/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`, and `/FinalGUISpec.md` treat `resume_url` as derived transport only, not as a primary routing primitive.
+L00000686	
+L00000687	Docker auth is the clearest requested/effective example and must generalize into the shared execution identity pattern instead of remaining a domain-specific one-off. Domain-specific auth examples may illustrate requested/effective identity, but they do not own a separate identity grammar.
+L00000688	
+L00000689	Downstream identity consumers reconcile to one requested/effective account block owned by `Contracts_V0` / `Contracts_V0.md`, with `Plans/Multi-Account.md` and `/Multi-Account.md` as companion account-policy consumers. That block must expose `/fallback`, `/effective`, and account-switch disclosures, preserve `requested_account_policy`, and define a requested-side concrete account anchor so downstream docs do not improvise requested account selection semantics. `effective_provider_identity` and `/display` labels are audit/display fields, not routing keys, and must not override the canonical account or route identity.
+L00000690	
+L00000691	The requested-side account anchor is required for durable historical requested-vs-effective analysis, not just for live UI explanation. Historical run, usage, approval, and recovery records preserve the requested-side concrete account or binding/policy evidence beside the effective account chosen for execution.
+L00000692	
+L00000693	Inspector `/detail` presentations for requested/effective runtime identity use a two-column requested/effective block when both sides are material; controls carry support-status chips, and reason text below the control explains why a requested value was honored, changed, unsupported, or blocked.
+L00000694	
+L00000695	`HITL` request/resolution events carry actor/lane/account identity and approver provenance. The `/lane/account` scope and `/resolution` outcome must explain which actor requested approval, which lane/account context would execute, and which approver accepted, rejected, or modified the action.
+L00000696	
+L00000697	Runtime history and recovery consumers preserve distinct outcome meanings instead of flattening them into a generic failure. `superseded` and `replan_required` remain graph patch and generation-lineage states, `abandoned` is not the same as simple `failed`, and a generic `failed` outcome cannot erase the reason needed to explain the historical projection.
+L00000698	
+L00000699	Executor, HITL, and stream consumers share blocked-owner and audit vocabulary from Contracts. `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, and `/human-in-the-loop.md` depend on `blocked-owner` and audit-scope semantics richer than a provider stream can expose by itself. The normalized A2A stream layer must not productize `tier_boundary` or tier-audit as current `/runtime` canon, and it must carry normalized paths for account-switch, pressure `/confidence`, and actor-class disclosure. `SelectSpeakerEvent` must not remain only `raw_observation` when speaker selection or conversational actor changes affect durable runtime lineage.
+L00000700	
+L00000701	Widget and permission projections inherit shared account and blocked-state scope. Widget multi-account and `/account-pressure` contracts bind to canonical `provider_accounts` and `provider_accounts.*` projections, inherit trust and `/scope` from the host surface, and cannot create a local account-pressure identity. Permission approval caches use runtime-overlay and `/blocked-state` terminology instead of stale tier-boundary phrasing, and cache keys include actor plus `/run/lane/account` context.
+L00000702	
+L00000703	Project attention records are first-class projection records with the field family `project_attention_item`. Required fields are `attention_item_id`, `project_id`, `severity`, `owner_kind`, `reason_code`, `source_kind`, `source_object_ref`, either `primary_route_payload_ref` or an inline route payload, optional `secondary_route_payload`, `projection_trust_state`, `dismissibility_kind`, optional `quiet_until_utc`, `active`, `created_at_utc`, `updated_at_utc`, and optional `resolved_at_utc`.
+L00000704	
+L00000705	Account switch records use a durable `account_switch_event` shape. Fields include `switch_event_id`, `project_id`, `provider_id`, optional `execution_role?`, optional `requested_account_id?`, optional `requested_account_binding?`, optional `from_account_id?`, optional `to_account_id?`, `switch_reason`, `decision_kind`, optional `source_episode_id?`, optional `run_id?`, optional `attempt_id?`, optional `thread_id?`, and `ts`; `decision_kind` is closed to `switched | stayed | blocked_no_backup | blocked_required_account | failed` so blocked no-backup and required-account outcomes survive audit and display.
+L00000706	
+L00000707	Concern, corroboration, and promotion governance use durable object families rather than loose remediation notes. `Executor_Protocol` / `Executor_Protocol.md` and `orchestrator-subagent-integration` / `orchestrator-subagent-integration.md` consume concern model, `/corroboration` lifecycle, wake reasons for concern, `/promotion/governance` boundaries, `/corroboration/promotion` lineage, and a dual-overseer actor model from Contracts-owned concern and governance records.
+L00000708	
+L00000709	Storage-owned projection records define generic health and freshness fields. `storage-plan` / `storage-plan.md` owns `/health`, `/refresh`, `/projection`, `project_summary`, `project_attention_item`, account pressure/switch episode records, projector refresh semantics, and fallback rules; Contracts keeps the shared field grammar while storage owns persistence and projection mechanics.
+L00000710	
+L00000711	Runtime receipts and run graph projections are attempt-native. `orchestrator.receipt.{run_id}.{attempt_id}` and `orchestrator.receipt` records are keyed by `run_id` and `attempt_id`, `usage_record` carries `attempt_id?`, run-graph and `/orchestrator` projections require attempt-level resolution, and `/tool`, `/runtime`, `/attempt`, and blocked/runtime records assume node/attempt identity rather than a tier-only shortcut.
+L00000712	
+L00000713	Wizard, interview, and runtime artifact handoffs preserve runtime identity into later attempts. `/interview` and wizard handoff payloads carry requested/effective account disclosure, `execution_role`, `operational_identity`, permission posture, and a durable link from handoff into later run/attempt lineage. `Plans/Runtime_Artifacts_Panel.md`, `/Runtime_Artifacts_Panel.md`, `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, `Plans/Executor_Protocol.md`, and `/Executor_Protocol.md` are consumers of this runtime identity envelope.
+L00000714	
+L00000715	Blocked episodes are the canonical unit for waiting and recovery. A blocked episode covers approval waiting, clarification waiting, auth `/prerequisite` waiting, permission `/FileSafe/external-side-effect` blocks, and worktree conflict or dirty-worktree blocks without replacing the underlying concern, receipt, or runtime object.
+L00000716	
+L00000717	The runtime packet set requires `execution_role`, and receipt-style operation bridges are where `operational_identity` belongs. One shared attribution family is available to `tool.invoked`, `tool.denied`, `runtime_artifact.*`, `runtime_artifact`, runtime receipts, `usage_record` / `cost_usage`, and relevant evidence or trace views so tool, receipt, usage, artifact, and evidence pivots do not fork attribution semantics.
+L00000718	
+L00000719	Usage routing treats `usage_event_ref` as canonical when present. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as the preferred routing path when canonical usage identity exists.
+L00000720	
+L00000721	Runtime open contracts include attempt-scoped and generated-object opens. Evidence opens by `attempt_id`, safe-point manifests or restore logs by `safe_point_id`, remediation lineage summaries by `remediation_root_id`, generated non-repo drafts, and runtime artifacts by `artifact_id` are valid second-category opens distinct from repository file opens.
+L00000722	
+L00000723	Workspace file opens and identity-native opens remain layered under the same higher-level routing model. `FinalGUISpec.md` keeps `OpenFile` true for workspace files, while identity-native opens route through `OpenSubject`; `Contracts_V0` / `Contracts_V0.md` own concrete `route_target` and `OpenSubject` shapes, and `FileManager.md` narrows `OpenFile` to a workspace-document path operation rather than the universal object-open primitive.
+L00000724	
+L00000725	`OpenSubject` subject kinds include `doc:<document_id>` and `artifact:<artifact_id>`. Resolution may end in a workspace-backed source opening, a transient `generated://<artifact_id>` buffer, or a routed non-editor surface. `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source when one exists, otherwise it resolves to transient `generated://<artifact_id>` source opening.
+L00000726	
+L00000727	For non-persisted drafts, transient `generated://<artifact_id>` buffers are valid; deep-plan plus embedded-document flows expect source, `/preview/editor`, and editor surfaces to work before final persist. `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, and `Plans/FinalGUISpec.md` consume this staged/non-persisted bundle rule when opens must work before stable workspace paths exist. `inspector_target` is valid only when the field is a detail-pane selection, not the main identity.
+L00000728	
+L00000729	`resume_url` is a serialized transport of the canonical route-target / `route_target` model, not the owner contract or a parallel stronger primitive. Internally the canonical model is `route_target`; external or persisted transport is a narrowed serializable form that decodes into `route_target`, and `resume_url` is one concrete transport instance of that form. Scope restorers such as `focused_run_id` and `thread_id` remain route fields because they restore meaningful route context, not because they are object metadata.
+L00000730	
+L00000731	The near-term command migration keeps domain-facing wrapper commands public and stable while adding canonical `route_target` / `OpenSubject` semantics underneath them. Wrappers normalize internally to the shared navigation primitive so public command stability does not fork a second route/open contract.
+L00000732	
+L00000733	Route detail and blocked-episode identity stay closed contract vocabulary. `inspector_target` is allowed as reusable detail-focus, not per-surface noise; its controlled values are `summary`, `evidence`, `artifacts`, `history`, `reviews`, `usage`, `lineage`, and `details`. Blocked-episode routes identify `object_kind = blocked_episode`, `project_id`, `focused_run_id = run_id`, `object_id = blocked_sequence`, and object scope = node_id within run, preserving `run_id`, `node_id`, `object_id`, `object_kind`, `focused_run_id`, `blocked-episode`, `blocked_episode`, and `blocked_sequence` as route/open identity facts rather than UI-local metadata.
+L00000734	
+L00000735	Tier boundaries are not approval scope anchors. Approval and recovery pivots normalize to `/node/blocked` runtime scope with blocked-episode identity anchored by run/node/blocked sequence, so tier boundary, tier type, and page-local approval grouping cannot replace `run_id`, `node_id`, and `blocked_sequence`.
+L00000736	
+L00000737	Route/open ownership must not leak into consumers or wiring. `WiringEntry` consumes route/open contracts and `/open` behavior; it is not their surrogate owner. Direct command dispatch verification must also encode wrapper normalization, deprecated alias mapping, route/open contract consumption, and command classification such as `shell_view` versus `navigation_wrapper`.
+L00000738	
+L00000739	Route transport and adjacent consumers follow the owner-doc split. `resume_url` is serialized transport of `route_target`, remains narrower than the internal route contract, and must not act as a shadow routing primitive. `Plans/Runtime_Artifacts_Panel.md` and `/Runtime_Artifacts_Panel.md` are the strong implicated and strong aligned adjacent consumer for runtime-artifact surfaces; `Plans/assistant-chat-design.md` and `/assistant-chat-design.md` are strong aligned adjacent consumers for assistant-chat surfaces; `Plans/Run_Modes.md` and `/Run_Modes.md` are strong adjacent owners for run-mode surfaces. This seam is an owner-doc gap: `storage-plan` / `storage-plan.md` is ahead of `Contracts_V0` / `Contracts_V0.md` and `Crosswalk.md` on it, while route/open ownership stays in Contracts unless later evidence retargets it.
+L00000740	
+L00000741	Approval and wizard-blocked identity collapse older aliases into route/runtime primitives. `human-in-the-loop.md` and `human-in-the-loop` may retain historical request-centric tier-boundary approval language, but the canonical flow is the blocked/runtime overlay: `waiting_approval`, `/blocked`, `blocked_sequence`, ordered `allowed_action_ids[]` / `allowed_action_ids`, `/runtime`, canonical runtime commands, and primary approval action identity from the blocked episode rather than `request_id`. A surviving `request_id` is lineage or compatibility metadata for historical replay, not the primary approval action target.
+L00000742	
+L00000743	Wizard blocked routing and remediation resolution must not keep competing canonical vocabularies. `wizard.blocked` is grounded in named `route_target`; `resume_url` and `resume_url?` are serialized transport forms only, never a shadow primitive. `remediation.resolved` owns one `resolution` reconciliation: legacy `success | failed | ceiling_exceeded` and current `fixed | superseded | abandoned | replan_required` values must be represented through an explicit compatibility mapping, with `ceiling_exceeded` and `replan_required` retained as named outcomes instead of presenting both lists as independent canonical sets.
+L00000744	
+L00000745	The early thin `wizard.blocked` definition is reconciled through the `route_target` owner contract: `report_ref` remains an inspection/report reference, `resume_url` remains transport-only, and runtime recovery uses blocked/remediation identity rather than treating the wizard event as a standalone navigation model.
+L00000746	
+L00000747	Storage identity, key registration, and auth/usage disclosure follow the same owner split. Usage and Evidence must not recreate `tier_id` drift in Usage, Graph, and Orchestrator consumers; `storage-plan` / `storage-plan.md` normalizes around attempt-native runtime records, blocked projections keyed by blocked episode identity, subject-first restore identity, and receipt records for cross-surface joins. Every storage or key registration requires a field schema / value-shape contract. `Authentication` / `Usage` and `/auth` records carry effective account/auth emphasis with `project-policy` and `manual-preferred-account` source disclosure where relevant.
+L00000748	
+L00000749	Record/search/routing and route-field contracts preserve actor/run distinctions. `/run`, `/search/routing`, and runtime-identity disclosure reuse one grammar across record, search, and routing surfaces without collapsing distinct actor kinds, run kinds, or lifecycle models. Not every route uses every field, but the contract makes route fields composable rather than reinvented surface by surface.
+L00000750	
+L00000751	Resolution and account identity contracts use richer lineage-aware envelopes. Remediation should use one canonical resolution family, and the lineage-aware form is preferred over a coarse `success` / `/failed` enum when replay or repair lineage matters. Shared `/effective/provider/account` disclosure is reusable across auth events, usage records, graph details, artifacts, and blocked `/recovery` records; wherever user-selected account pinning must be represented, the contract requires a requested-side concrete account field or equivalent explicit rule.
+L00000752	
+L00000753	Runtime actor and account payloads preserve provider and realm boundaries. A canonical actor envelope is shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry. Stable account identity normalization must preserve the hard realm split between `github_api` and `copilot_github`; model/provider contracts and downstream projection payloads must also split transport host identity from upstream `/provider` identity.
+L00000754	
+L00000755	Requested-side account switching and pre-run governance have durable linkage. Canonical requested-side fields include `requested_account_id?`, `requested_account_binding?`, and a usage record extension with `account_switch_reason?` plus `switch_event_ref?` or equivalent durable linkage. Wizard docs carry explicit CUP governance and handoff fields including `execution_role`, requested `/effective` account identity, `/worktree` isolation/worktree mode, `thread_id`, `project_id`, validation `/report` lineage, `/interview`, and wizard/interview pre-run governance payload identity.
+L00000756	
+L00000757	Scheduler-impacting approval and tool-denial states are blocked-runtime episodes. Pending approvals, `/pending` state, and any scheduler-impacting `tool.denied` outcome must resolve to the blocked episode contract instead of a weak standalone tool-denial path. Relevant `tool.invoked`, `tool.denied`, runtime artifact payloads, operational receipt records, and `/bridge` records carry `operational_identity?` whenever side effects occur, so provider/account/permission posture remains attributable across attempts.
+L00000758	
+L00000759	Tier-shaped progress displays are compatibility overlays over attempt-shaped truth. `tier_runtime_record` may survive only as a derived current-view/runtime-overlay projection, represented as compatibility `/runtime-overlay` or `/overlay` display state for a tier-shaped UI grouping; it is not the canonical owner of execution identity. Progress tree, compact terminal, and high-level tab badges answer visible progress, latest active attempt, and blocked episode pointer questions by reading `attempt_record`, blocked/runtime records, and attempt-shaped context first, while `usage_record` and evidence joins retire old `tier_id` primary joins rather than keeping tier-shaped records alive as execution truth.
+L00000760	
+L00000761	Executor-facing runtime dispatch contracts must be stricter than compatibility event envelopes. `EventEnvelopeV1` may retain historical "should include `run_id` / `thread_id`" wording for broad event compatibility, but executor-facing docs and dispatch payloads require the runtime attribution packet: `run_id`, `thread_id?`, `node_id?`, `attempt_id?`, `execution_role?`, `provider_attempt_ref?`, and `usage_event_ref?`. `Tools.md` owns tool-specific semantics only and references this shared runtime attribution packet instead of treating tool events as analytics-only.
+L00000762	
+L00000763	Open contracts keep workspace-file opens separate from identity-native object opens. `OpenFile { path... }` remains the canonical workspace-file open shape, while identity-native objects use the section 7.4 `OpenSubject` contract with `subject_id` and `open_intent`. Compatibility shorthand such as `OpenSubject { subject_id, target_group?, open_mode?, location? }` normalizes `target_group?`, `open_mode?`, and `location?` through `route_target`, `open_intent`, or owner-defined route recipes rather than defining a second `OpenSubject` schema. `OpenArtifact` is a compatibility or convenience name only when it normalizes to `OpenSubject` with an artifact subject. Command contracts follow the same alias `/migration` pattern as event contracts: legacy wrappers and aliases remain recognizable during migration, but command execution and routing normalize to the canonical route/open contract rather than inventing a parallel command-owned target model.
+L00000764	
+L00000765	The legacy `open_subject` command or payload name is accepted only as a compatibility alias for the identity-based target; new producers emit `OpenSubject` with `subject_id` and `open_intent`, while `target_group?`, `open_mode?`, and `location?` resolve through route or open-intent rules.
+L00000766	
+L00000767	Generated artifact source transports never become canonical identity. `generated://<artifact_id>` is ephemeral source-buffer transport; canonical persisted identity remains `artifact:<artifact_id>` / `artifact_id`. The base `route_target` target object stays small: it uses `subject_id` or `object_kind` + `object_id`; `path`, `line`, `range`, and `/line/range` selectors stay outside base route identity and belong to `OpenFile` or specialized open/operation contracts. `OpenFile` owns `path`, `line`, and `range`; `OpenSubject` owns `subject_id` and source realization; `object-specific` / object-family commands may carry `family-specific` or `object-family-specific` anchors only when truly `domain-local` and not reusable.
+L00000768	
+L00000769	`route_target` owns main identity and `/scope`; sub-selection goes to `OpenFile` line/range, `inspector_target` for reusable detail-surface focus, or domain-local object-family-specific anchors. The internal `route_target` model can be richer than serialized `URL` form. `resume_url` is serialized route-target transport, not a stronger navigation-like primitive; `wizard-blocked` and clarification flows may carry `resume_url`, but they still decode to the general `route_target` / UI command contract. Route activation may reuse persisted project `/surface` state only when the route omits a destination-local override and reuse still reveals the requested target. Panel docking `/floating`, destination-local subview, and `/sort/layout` filters or layout are shell state that must not hide or distort the requested target. The route model must be precise enough to get the user where they asked to go and restrained enough not to trash unrelated remembered shell state.
+L00000770	
+L00000771	The command-definition layer carries minimal command-classification and normalization metadata without restating route payload structure: `command_kind` plus optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`. Stable wrappers set `normalizes_to_contract`; deprecated aliases set `alias_of_command_id`; command execution normalizes to the canonical route/open contract rather than a command-local target model.
+L00000772	
+L00000773	Route serialization and source opening stay separate from destination semantics. `resume_url` is a derived serialization of `route_target` with decoding rules anchored back to `Contracts_V0.md`; `Contracts_V0` owns the route/object contract, and canonical route/object identity remains primary over `/object` transport links. `OpenSubject` is identity plus open intent, not storage metadata and not shell routing. If `OpenSubject` carries panel/tab/shell destination semantics or `/tab/shell` state, it collapses into a second route contract; destination class stays in required `target_kind`, while transport/open realization detail and shell/view persistence detail stay outside `route_target`.
+L00000774	
+L00000775	Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Usage routes normalize `usage_event_ref` into `object_kind = usage_event` with the canonical usage event as `object_id`. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.
+L00000776	
+L00000777	`artifact_id` and `document_id` normalize into `subject_id`; `document_id` or `artifact_id` prose in navigation should name `subject_id` directly when the target is a content subject. `wizard_id`, `message_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, and similar domain/runtime identities normalize into `object_kind` + `object_id`. `subject_id` wins for openable/renderable content subjects; `object_kind` + `object_id` wins for domain/runtime/governance objects.
+L00000778	
+L00000779	`subject-first` behavior is one normalized identity rule, not a set of special-case prose pockets: openable/renderable content starts at `subject_id`, while domain runtime and governance records start at `object_kind` + `object_id` and then resolve through the same route/open contract.
+L00000780	
+L00000781	Do not add `thread:`, `run:`, `wizard:`, `safe_point:`, or similar runtime/governance families as new `subject_id` prefixes. Those identities are modeled as `object_kind/object_id`, with `thread`, `run`, `wizard`, and `safe_point` values carried through route object identity.
+L00000782	
+L00000783	Inspection and usage refs do not become route identity. `Orchestrator_Page.md` may use `evidence_ref` for summary/evidence surfaces because that is record inspection, not routing; `resume_url` remains serialized transport derived from canonical route identity. Usage may keep `usage_event_ref` as canonical usage identity for accounting and evidence joins, while `tier_id` cross-surface node usage is compatibility or projection context rather than the primary usage route key.
+L00000784	
+L00000785	Approval and dispatch proof stay runtime-command aware. `allowed_action_ids[]` has won at the runtime-command layer, so approval targeting resolves through `blocked_sequence` while any retained `request_id` is lineage or lookup metadata. `GATE-010` must eventually validate more than flat wiring coverage: command wrapper normalization, `route_target` pass-through, `OpenSubject` subject-open binding, and deprecated alias versus stable wrapper semantics are part of the Contracts-owned proof shape.
+L00000786	
+L00000787	The highest-risk reconciliation seams stay ordered by owner responsibility. DAE `/FileSafe` enforcement, promoted-shell command ownership, execution-role / requested-effective disclosure, OpenCode provider-native identity mapping, and rewrite-root owner routing are owner-doc issues before mirror cleanup. `Crosswalk.md` cleanup requires corrected section numbering, stale `Tiers` and widgetized-Orchestrator wording removal, and explicit primitive ownership for `route_target` and `OpenSubject`. Rewrite seam cleanup runs `rewrite-tie-in-memo.md` first as rewrite-root routing, `UI_Command_Catalog.md` second for command-family cleanup, and `FinalGUISpec.md` third for visible shell/view cleanup. Feature-list tranche cleanup runs upstream owner docs first, `GUI_Rebuild_Requirements_Checklist.md` second as status repair, `feature-list.md` and `newfeatures.md` third as summary cleanup, and `Section15_MVP_Promoted_Features_Spec.md` last as verification against corrected upstream owners.
+L00000788	
+L00000789	Runtime identity, handoff, and stewardship records preserve their concrete keys. An effective-resolution record must carry `execution_role`, operational identity / side-effect target identity, and requested concrete account binding fields rather than relying on nearby runtime prose. Each attempt handoff records what was attempted, what changed or which artifacts were produced, checks/tests/review outcome including `/tests/review`, why it failed/blocked including `/blocked`, contamination / restore state when relevant, recommended next action, and reusable learnings or `/patterns`. Stewardship refreshes preserve `status`, `run_prefix`, `next_run_seq`, and `run_id`.
+L00000790	
+L00000791	### Concern record family, lifecycle, and deferred visibility
+L00000792	
+L00000793	`degraded-trust` is represented as a cross-surface concern/projection-trust state. Contracts consumers MUST route degraded-trust/account-health concern escalation through the shared concern record, blocked-owner, and escalation-ladder model instead of inventing surface-local warning aliases.
+L00000794	
+L00000795	
+L00000796	- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
+L00000797	- Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.
+L00000798	- Use active/acknowledged/resolved/dismissed as concern lifecycle states.
+L00000799	- Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values.
+L00000800	- Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions.
+L00000801	- Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions.
+L00000802	- Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns.
+L00000803	- Allow blocked episodes to reference concerns without replacing concern identity.
+L00000804	- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.
+L00000805	- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.
+L00000806	- Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority.

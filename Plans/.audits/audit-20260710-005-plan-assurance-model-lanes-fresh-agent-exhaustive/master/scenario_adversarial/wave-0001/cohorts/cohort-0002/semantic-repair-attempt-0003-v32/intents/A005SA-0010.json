@@ -1,0 +1,82 @@
+{
+  "activation": false,
+  "assignment_id": "A005SA-0010",
+  "attempt_id": "attempt-0003",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "bindings": {
+    "feature_template": {
+      "byte_count": 2585,
+      "canonical_sha256": "ed5836f04e016da5272f54edf43183b4075c26e4b99b1d5bd3158ee331ae2237",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/templates/feature-certification.template.json",
+      "raw_sha256": "4d37e8a0d1cff5172844da4c4bf6a310f0862c1469f53d101f51cd3c0a753b30"
+    },
+    "frozen_validator": {
+      "byte_count": 35920,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/verify_gate_v31_1.py",
+      "raw_sha256": "8f5ada680fb86dbd96e3d5e12ca84f59d7ab58d528b640891a1975e01cbd723a"
+    },
+    "leaf_prompt": {
+      "byte_count": 3157,
+      "canonical_sha256": "35e37874d0157c67959b9111e1ed9b254af25abf4aa1274b11772c88d0fb4de6",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/leaf_prompt.json",
+      "raw_sha256": "dc73507aed26493bf6581ef71d5cde8253080590e4e6716611eb47f8d58a4dd0"
+    },
+    "obligation_packet": {
+      "byte_count": 348801,
+      "canonical_sha256": "01c58ec91db155df787a13b4a3f1a9b1e0f4af4c1cbb901c9e1c57f2cba8748f",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/packets/A005SA-0010.json",
+      "raw_sha256": "a2d8939383e763b7e0eaf9287cc017f7f5004c2bb504cb52f53cd4da1e706e0c"
+    },
+    "preflight": {
+      "byte_count": 9544,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/preflight_attempt3_v32.py",
+      "raw_sha256": "882568bba4f626a9589d4526b18458508d6fe8f6251399fa42a8ec79ba6ab340"
+    },
+    "result_schema": {
+      "byte_count": 17498,
+      "canonical_sha256": "d704376b3a6b73bffcb31031c9171663398d73e936d1127be41c4742c0b897bf",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/schema/result.schema.json",
+      "raw_sha256": "4404c3c7096da354b569c933ef6f77be7ecff184106b3bcad5b04a8bb900172f"
+    },
+    "source_packet": {
+      "byte_count": 566736,
+      "canonical_sha256": "cb1b04fb40f284631392f00a0b3cbe48c9fa7ca6d46f30ed9e545d6e77c55310",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/packets/SAPKT-0010.json",
+      "raw_sha256": "e366b9a476e18852e6c4afa2fee311a3d0fa40930bdcfe67581b8e1e596c2f90"
+    }
+  },
+  "cohort_id": "cohort-0002",
+  "coverage": {
+    "feature_count": 127,
+    "feature_refs_digest": "b739205537a9bfa33f9cd25a893dc3b2f5fe022846174c0fd0dbe0db8cdd73cd"
+  },
+  "credit": 0,
+  "future_gates": {
+    "controller_native_capture_required": true,
+    "fresh_luna_prelaunch_required": true,
+    "separate_activation_required": true
+  },
+  "gate_id": "SCENARIO-COHORT-0002-SEMANTIC-REPAIR-ATTEMPT-0003-V32",
+  "identity": {
+    "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0010_semantic_repair_attempt_0003_ultra_v32",
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct_required": true,
+    "model": "gpt-5.6-sol",
+    "native_child_thread_id": null,
+    "reasoning_effort": "ultra",
+    "retries": 0,
+    "state": "reserved_unallocated"
+  },
+  "launch": false,
+  "output": {
+    "expected_file_count": 0,
+    "inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0010/attempt-0003"
+  },
+  "preflight_command": "PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B preflight_attempt3_v32.py --assignment-id A005SA-0010 --candidate {ABSOLUTE_CANDIDATE_JSON} --exclusive-write",
+  "schema_version": "scenario-adversarial-attempt3-intent-v32-v1",
+  "terminal_response_after_success": "PMR1",
+  "wave_id": "wave-0001"
+}

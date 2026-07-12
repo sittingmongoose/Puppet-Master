@@ -1,0 +1,39 @@
+{
+  "schema_version": "reverse-shadow-targeted-research-intent-v31-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "reverse-shadow-five-edge-0001",
+  "assignment_id": "A005RSR-0001",
+  "attempt_id": "attempt-0001",
+  "packet_id": "RSRPKT-0001",
+  "packet_ref": "research/packets/RSRPKT-0001.json",
+  "packet_sha256": "625cb22d6b3da51aa7ee7fe8f50d0acc0b0272fbc821a087e7c6dc77ce87e5b5",
+  "result_schema_ref": "research/targeted_research_result.schema.json",
+  "result_schema_sha256": "1712c96d77e9121bb69fd182c99a1cab0b53a3e7e71e3c91940fcb3f024f2704",
+  "future_output_path": "future_outputs/A005RSR-0001/attempt-0001/result.json",
+  "runtime": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "fork_turns": "none",
+    "fresh_identity_path": "/root/sol_controller_v29/a005_reverse_shadow_targeted_research_07514_ultra_v31",
+    "fresh_identity_state": "reserved_unallocated",
+    "native_child_thread_id": null,
+    "native_turn_id": null
+  },
+  "constraints": {
+    "single_initial_task": true,
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "retries_forbidden": true,
+    "result_required_before_pmr1": true,
+    "return_exactly": "PMR1"
+  },
+  "activation": {
+    "enabled": false,
+    "authorized": false,
+    "future_policy_ref": "master/coordination/CONCURRENCY_POLICY_V32.json",
+    "future_policy_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "fresh_luna_prelaunch_required": true,
+    "fresh_luna_prelaunch_present": false
+  },
+  "zero_state": {"launches":0,"results":0,"receipts":0,"native_capture_rows":0,"promotion_actions":0,"spec_edits":0,"merge_actions":0,"credit":0}
+}

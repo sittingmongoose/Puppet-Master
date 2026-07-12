@@ -1,0 +1,92 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v14",
+  "status": "ACTIVE_POST_RESET_CALIBRATION_32",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V13.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "usage reset to one hundred percent; resume productive Audit 005 work immediately",
+  "quota_snapshot": {
+    "remaining_percent": 100,
+    "window_hours": 5,
+    "target_end_remaining_percent": 2,
+    "target_average_used_percent_per_hour": 19.6
+  },
+  "operating_target": {
+    "maximum_active_semantic_leaves": 32,
+    "preferred_active_range": [
+      16,
+      32
+    ],
+    "atomic_transaction_cap": 16,
+    "calibration_minutes": 30,
+    "single_atomic_32_launch_forbidden": true,
+    "reset_pause": false,
+    "never_interrupt_valid_in_flight_work": true
+  },
+  "recomputed_durable_frontier": {
+    "seam_cohorts_0001_0002_0003": {
+      "terminal_results": 48,
+      "terminal_pmr1": 48,
+      "receipts": 48,
+      "postrun_credit": 0,
+      "action": "native capture plus primary and independent postrun"
+    },
+    "seam_cohort_0004": {
+      "assignments": 16,
+      "activation_exists": false,
+      "results": 0,
+      "receipts": 0,
+      "action": "separately activate and launch exact sixteen under the already-terminal all-sixty-four readiness gate"
+    },
+    "cross_cutting_recovery_attempt_0007": {
+      "results": 2,
+      "result_file_sha256": {
+        "ER-0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+        "ER-0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+      },
+      "receipts": 0,
+      "postrun_credit": 0,
+      "action": "reconstruct prior native identities, write sealed receipts without rerunning leaves, then primary and fresh independent cumulative postrun"
+    },
+    "certification_binding_v5": {
+      "partial_script_files": 3,
+      "terminal_report_exists": false,
+      "activation_exists": false,
+      "action": "finish append-only deterministic preparation and fresh independent prelaunch after higher-priority postrun work"
+    }
+  },
+  "priority_order": [
+    "close exact two attempt-0007 receipts from existing results without rerun",
+    "primary and fresh independent attempt-0007 cumulative postrun to reach eight of eight",
+    "launch untouched seam cohort-0004 exact sixteen",
+    "primary and fresh independent seam postrun for all terminal cohorts",
+    "launch scenario cohorts only after cumulative research eight of eight",
+    "complete and independently gate certification binding-v5"
+  ],
+  "pipeline": {
+    "seam_cohort_0004_may_overlap_postrun_reviewers": true,
+    "primary_and_independent_reviewers_must_be_distinct": true,
+    "candidate_outputs_remain_zero_credit_until_independently_validated": true,
+    "retry_only_invalid_or_unlaunched_assignments_with_fresh_identities": true,
+    "no_duplicate_completed_leaf": true,
+    "no_synthetic_usage_work": true,
+    "recompute_live_activity_before_every_spawn": true
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "bound_policies": {
+    "concurrent_canonical_change_policy_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+    "model_lane_routing_policy_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

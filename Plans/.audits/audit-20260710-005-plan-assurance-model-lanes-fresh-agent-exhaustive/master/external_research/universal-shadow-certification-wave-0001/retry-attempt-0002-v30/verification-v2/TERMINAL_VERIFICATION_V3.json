@@ -1,0 +1,76 @@
+{
+  "schema_version": "universal-shadow-certification-retry-terminal-verification-v30-attempt-0002-v3",
+  "status": "PASS_PREPARATION_ONLY_BLOCKED_NO_ACTIVATION",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "attempt_id": "attempt-0002",
+  "payload_authority_sha256": "b8c9f5a21b4dce2163c6eb91194da43c5391718e64b275322f19d960fd236fc0",
+  "payload_terminal_preparation_report_sha256": "92dfa5855fbd98092f9af527c3923ba515d4edbf729b7aaa2b746eec6d7053e4",
+  "verifier_supersession_authority_sha256": "c93a30ea1a8b162ee095261640cd381c16370d635c9e1ef7e0cafa56cf0910ed",
+  "verifier_v2_sha256": "0c6c2c9ad2a5f79c371d80ed329480dd7b2637742e1300eccfb586d900017b77",
+  "verifier_v2_preparation_stdout_sha256": "1779da632e75c578ae554fd8bea92ee98606f0805d62dc5fc3de5a7bdc04ffcb",
+  "verifier_v2_preparation_status": "pass_preparation_only",
+  "verifier_v2_preparation_tests": {
+    "passed": 807,
+    "failed": 0,
+    "total": 807,
+    "corrected_positive_documents": 16,
+    "new_negative_schema_cases": 68,
+    "v2_replacement_checks": 20,
+    "v8_substantive_cases": 437,
+    "v8_bypass_reproductions_rejected": 12,
+    "v8_schema_fuzz_rejected": 100
+  },
+  "test_v2_sha256": "0405bfdcd34bf1cf49e78be5d6c2404a738f94bf0f69662a8a553e8c5d114e8d",
+  "test_v2_failed_stdout_sha256": "839b89367b7dc03e1cc5fe98a226b08da473e9b437c4c2788108e6ad69d43298",
+  "test_v2_failure_preserved": "expected four file-level missing-gate errors but retained v1 correctly added the aggregate four-fresh-identities blocker",
+  "test_v3_sha256": "849cf07ccedaf868f43e28cf79a50ad9a1007b35d14575bc802eeae1e2784350",
+  "test_v3_stdout_sha256": "2533adc1664f4b1a9d3680626351cb1e6ea339dd7654ea3a373837821de4a343",
+  "test_v3_status": "pass",
+  "test_v3_counts": {
+    "passed": 825,
+    "failed": 0,
+    "total": 825,
+    "wrapped_cases": 807,
+    "wrapper_cases": 18
+  },
+  "prelaunch_negative_status": "fail_closed",
+  "prelaunch_negative_blockers": [
+    "gate-missing:cohort-0001:atomic8-prelaunch",
+    "gate-missing:cohort-0001:primary-rejected-set",
+    "gate-missing:cohort-0002:atomic8-prelaunch",
+    "gate-missing:cohort-0002:primary-rejected-set",
+    "gates:four-fresh-identities"
+  ],
+  "runtime": {
+    "python": "3.12.13",
+    "jsonschema": "4.26.0",
+    "validator": "jsonschema.Draft202012Validator",
+    "isolated": true
+  },
+  "counts": {
+    "cohorts": 2,
+    "atomic_size": 8,
+    "assignments": 16,
+    "features": 3888,
+    "empty_attempt_0002_output_directories": 16,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "activation_transactions": 0,
+    "credit": 0
+  },
+  "primary_attempt_0001_shas": {
+    "cohort-0001": "45bec51e3bedc80f9ca2af7bb10d0fdecf581021a803eae723bc0d699084f214",
+    "cohort-0002": "c756c049c3ae93c518b155d69c64b595e05c2ae04b62f82226c4dd7d89c60454"
+  },
+  "source_transaction_digest": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+  "payloads_or_attempt_0001_artifacts_mutated": false,
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "spawn": "none",
+  "spawn_count": 0,
+  "fresh_luna_primary_rejected_set_validations_required": 2,
+  "fresh_luna_atomic8_prelaunch_gates_required": 2,
+  "credit": 0
+}

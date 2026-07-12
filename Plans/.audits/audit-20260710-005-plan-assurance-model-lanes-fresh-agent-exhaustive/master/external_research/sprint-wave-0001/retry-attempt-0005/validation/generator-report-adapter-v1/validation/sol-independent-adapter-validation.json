@@ -1,0 +1,964 @@
+{
+  "adapter_artifact_hashes": {
+    "authority": "2c1bf65f92aa7ab89b74d4bf33897bb1412b84c96e9b187a55fbb5fa14636aa2",
+    "invocation_2_authority": "da9dfc6e8e91e041be373210edfafb7779ead200e248b6f012deed5570455337",
+    "projection_file": "1b5bc84461051340f9fdb62894677f37d9bedaa655b28fba2995fc4661d891b5",
+    "projection_manifest": "07c60909ebfad17299d6d4e1f2c35921e0122e0fd7b06f1cc4fca36a30d5b9f7",
+    "schema": "3fa2a6c75e59179653d2da07dcf905ac92876e5cedf27a60f1c92798243ca921",
+    "tests": "475dbf29e57eac0e9be32e80347a93d210f32224fc2cd8457d583264ea5280bd",
+    "tool": "d8bb84563d5207bd01cec041b8c92d695fbf48a2bfa3d4f63de7875b901b3024",
+    "verifier": "3c5b4f9733019938d9b9aeeffa40b9795fec21f86c6b7986bb12aee2ae5df362"
+  },
+  "adapter_test_results": {
+    "historical_pre_emit": {
+      "count": 89,
+      "digest": "e470e51c236095496b1668bf9c85100148fa7cc9717628c89205fa86054ef26c",
+      "failed": 0,
+      "passed": 89,
+      "source": "tools/test_generator_report_adapter.py"
+    },
+    "live_post_emit": {
+      "digest": "1fd944f9e9ccad1d1ef46e64ec6857f7357ddef3a67223a5674c751b27aeddac",
+      "errors": [
+        "projection_candidate_path_absent_before_emit"
+      ],
+      "failed": 1,
+      "passed": 88,
+      "status": "fail_closed",
+      "total": 89
+    },
+    "live_verifier": {
+      "errors": [],
+      "status": "pass"
+    }
+  },
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "captured_sources": {
+    "adapter_authority": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/authority.json",
+      "sha256": "2c1bf65f92aa7ab89b74d4bf33897bb1412b84c96e9b187a55fbb5fa14636aa2"
+    },
+    "attempt4_failure": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+      "sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d"
+    },
+    "authority": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/authority.json",
+      "sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081"
+    },
+    "generator": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/generate_activation_transaction.py",
+      "sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a"
+    },
+    "invocation2": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/invocation-2-authority.json",
+      "sha256": "da9dfc6e8e91e041be373210edfafb7779ead200e248b6f012deed5570455337"
+    },
+    "launch_seal": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/launch_seal.json",
+      "sha256": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8"
+    },
+    "lineage": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/lineage.json",
+      "sha256": "2755d29236fbb3776615c2bdeb00f9ac480950002dbe6ee8f596b115a8df398e"
+    },
+    "local_report": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/local-prelaunch-candidate.json",
+      "sha256": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+    },
+    "luna": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/luna-prelaunch.json",
+      "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+    },
+    "manifest": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/manifest.json",
+      "sha256": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483"
+    },
+    "projection": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/projected-generator-report.json",
+      "sha256": "1b5bc84461051340f9fdb62894677f37d9bedaa655b28fba2995fc4661d891b5"
+    },
+    "projection_manifest": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/projection-manifest.json",
+      "sha256": "07c60909ebfad17299d6d4e1f2c35921e0122e0fd7b06f1cc4fca36a30d5b9f7"
+    },
+    "schema": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/schema/generator_report_projection_v1.schema.json",
+      "sha256": "3fa2a6c75e59179653d2da07dcf905ac92876e5cedf27a60f1c92798243ca921"
+    },
+    "tests": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/tools/test_generator_report_adapter.py",
+      "sha256": "475dbf29e57eac0e9be32e80347a93d210f32224fc2cd8457d583264ea5280bd"
+    },
+    "tool": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/tools/project_generator_report.py",
+      "sha256": "d8bb84563d5207bd01cec041b8c92d695fbf48a2bfa3d4f63de7875b901b3024"
+    },
+    "v6": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V6.json",
+      "sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0"
+    },
+    "verifier": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/tools/verify_generator_report_adapter.py",
+      "sha256": "3c5b4f9733019938d9b9aeeffa40b9795fec21f86c6b7986bb12aee2ae5df362"
+    }
+  },
+  "checker": "sol-independent-adapter-validation-v1",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "decision": {
+    "generator_invocation_authorized": false,
+    "next_action_now": "NONE_FAIL_CLOSED",
+    "sole_permitted_next_action_if_pass": "A separate Luna turn may invoke the unchanged generator exactly once with the projected report path and SHA under invocation-2 authority."
+  },
+  "errors": [
+    "adapter_live_test_harness_not_post_emit_stable:projection_candidate_path_absent_before_emit",
+    "derived_hardcoded_alias_not_exact_copy:attempt_0004_outputs_empty",
+    "derived_hardcoded_alias_not_exact_copy:attempt_0005_outputs_empty",
+    "duplicate_source_location:luna_report:$.gate_passed:gate_passed,independent",
+    "inferred_alias_without_distinct_authority:independent<-gate_passed"
+  ],
+  "frozen_generator_inspection": {
+    "contract_shape_verified": true,
+    "mode": "AST_ONLY_NO_IMPORT_NO_INVOCATION",
+    "required_field_count": 40,
+    "required_fields": [
+      "audit_id",
+      "sprint_id",
+      "retry_namespace",
+      "attempt_id",
+      "status",
+      "gate_passed",
+      "independent",
+      "activation_transaction_authorized",
+      "assignment_count",
+      "assignment_ids",
+      "agent_paths",
+      "controller_thread_id",
+      "model",
+      "reasoning_effort",
+      "fresh_direct_leaves",
+      "fork_turns",
+      "descendants_forbidden",
+      "followups_forbidden",
+      "retries_forbidden",
+      "concurrency_policy_v6_sha256",
+      "preserved_cumulative_floor_ids",
+      "preserved_cumulative_floor_digest",
+      "cumulative_floor_count",
+      "attempt_0004_failure_lineage_sha256",
+      "attempt_0004_outputs_empty",
+      "attempt_0004_receipts",
+      "attempt_0004_results",
+      "attempt_0004_credit",
+      "attempt_0005_outputs_empty",
+      "attempt_0005_receipts",
+      "attempt_0005_results",
+      "attempt_0005_native_capture_rows",
+      "attempt_0005_activation_transaction_files",
+      "payload_hashes",
+      "errors",
+      "coverage_credit",
+      "research_credit",
+      "promotion_credit",
+      "spec_credit",
+      "merge_credit"
+    ],
+    "sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a"
+  },
+  "independent_negative_probes": {
+    "execution": "ephemeral_temporary_space",
+    "failed": [],
+    "passed": 16,
+    "results": {
+      "altered_candidate_hashes": true,
+      "altered_errors": true,
+      "altered_model": true,
+      "altered_policy": true,
+      "altered_scope": true,
+      "altered_source_hash": true,
+      "altered_source_path": true,
+      "altered_status": true,
+      "altered_test_count": true,
+      "altered_zero_state": true,
+      "candidate_hash_tamper": true,
+      "duplicate_source_locations": true,
+      "extra_projected_keys": true,
+      "payload_digest_tamper": true,
+      "replay_wrong_manifest_sha": true,
+      "wrong_generator_field_set": true
+    },
+    "total": 16
+  },
+  "projection_closure": {
+    "additional_properties": false,
+    "canonical_payload_digest": "7d51b2190d7487cbfca712232741ed4b70000d404e1a3428455e510b3fd7cb08",
+    "field_origins": [
+      {
+        "equality": true,
+        "field": "audit_id",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.audit_id",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "13434dca11e2c2ed1f9def2f540a65e07b9df26cff95876ec0cdaea98710c102",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "sprint_id",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.sprint_id",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "10f2e6470cb1f1f85784e01abc82d5e28b3b0b33aa199b8a482e3f8452c34ee4",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "retry_namespace",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.retry_namespace",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "381c081a3b69ee55bbb15e32b1c9c26aa86b568d2957082847b1b8a07590e311",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_id",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.attempt_id",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "df246fc0e1145f77a311536518b8b7a8b3e38b4a609612568f3b2c8d495540f7",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "status",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.status",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "8bffdbba29d91f2ed39a8b60f612970ef99d4d314f7fcc408e4e7e8e20ed6088",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "gate_passed",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.gate_passed",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": false
+      },
+      {
+        "equality": true,
+        "field": "independent",
+        "inference_free": false,
+        "operator": "exact_alias_of_independent_gate_pass",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.gate_passed",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": false
+      },
+      {
+        "equality": true,
+        "field": "activation_transaction_authorized",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.transaction_contract.activation_core_contract.activation_granted",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "assignment_count",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.assignment_count",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "assignment_ids",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.assignment_ids",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "6dc27def1f540d0cc4ade87f3ac2aceeba5074c9417ea9e0b6466bbf4933310d",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "agent_paths",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.identity_separation.current_agent_paths",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "556d5987951e024fa9468ae4549f33e1a797010056d068eecb0754a5d6491662",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "controller_thread_id",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.controller_thread_id",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "63d7db7a6994ffd6445df4a739d8bf8f83e1b064beed989854ebdcaa6254dec3",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "model",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.model",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "7827fafa6c7737dae4c94a7a798dd434e4819129c9b38158ee885b3d32dbae7f",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "reasoning_effort",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.reasoning_effort",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "fb30f29613041beb06e125958580c7d6d2a0760ac49b81a7e8911a92a059b342",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "fresh_direct_leaves",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.fresh_direct_leaf_count",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "fork_turns",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.fork_turns",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "b9ca9244fa4639a7ad1b0be4d9ffbf905e7ddea75162e98611b5f0f6f1e168a8",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "descendants_forbidden",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.descendants_forbidden",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "followups_forbidden",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.followups_forbidden",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "retries_forbidden",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.scope.retries_forbidden",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "concurrency_policy_v6_sha256",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.lineage_and_policy.concurrency_policy_v6_sha256",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "7b4c3244c5e9b8ed26a09b068269f6fc49a4588d6aff699e503af40e11d8f52e",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "preserved_cumulative_floor_ids",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.lineage_and_policy.preserved_cumulative_floor_ids",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "12de9469e112f46f51a11cdd6010be9671d4dbfe8e2814121d73d9375c729f3f",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "preserved_cumulative_floor_digest",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.lineage_and_policy.preserved_cumulative_floor_digest",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "0c3e9302b0888e5eadb18e7e2055c29445890d004ccafa02f9d332360c6bfb7a",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "cumulative_floor_count",
+        "inference_free": true,
+        "operator": "exact_bound_control_copy",
+        "origins": [
+          {
+            "artifact": "manifest.json",
+            "path": "$.preserved_cumulative_floor_count",
+            "sha256": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483"
+          }
+        ],
+        "projected_value_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0004_failure_lineage_sha256",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.lineage_and_policy.attempt_0004_failure_lineage_sha256",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "6329570e6c07a86e0609752cd9696a9ebd31446edabeb29bddf89638597e6302",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0004_outputs_empty",
+        "inference_free": false,
+        "operator": "verified_zero_state_alias",
+        "origins": [
+          {
+            "artifact": "attempt-0004-failure-lineage.json",
+            "path": "$.assignments",
+            "sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d"
+          },
+          {
+            "artifact": "filesystem_inventory",
+            "path": "attempt-0004 outputs",
+            "sha256": "c36efebe74ef09afffec11772f418f3670163bee5b4c14ccacf342a245345a26"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0004_receipts",
+        "inference_free": true,
+        "operator": "exact_bound_control_copy",
+        "origins": [
+          {
+            "artifact": "authority.json",
+            "path": "$.attempt_0004_receipt_count",
+            "sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0004_results",
+        "inference_free": true,
+        "operator": "exact_bound_control_copy",
+        "origins": [
+          {
+            "artifact": "authority.json",
+            "path": "$.attempt_0004_result_count",
+            "sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0004_credit",
+        "inference_free": true,
+        "operator": "exact_bound_control_copy",
+        "origins": [
+          {
+            "artifact": "authority.json",
+            "path": "$.attempt_0004_credit",
+            "sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0005_outputs_empty",
+        "inference_free": false,
+        "operator": "verified_zero_state_alias",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.zero_state.output_files+output_inventory",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          },
+          {
+            "artifact": "filesystem_inventory",
+            "path": "attempt-0005 outputs",
+            "sha256": "c36efebe74ef09afffec11772f418f3670163bee5b4c14ccacf342a245345a26"
+          }
+        ],
+        "projected_value_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0005_receipts",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.zero_state.receipt_files",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0005_results",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.zero_state.result_files",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0005_native_capture_rows",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.zero_state.native_capture_rows",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "attempt_0005_activation_transaction_files",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.zero_state.activation_transaction_files",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "payload_hashes",
+        "inference_free": true,
+        "operator": "bound_hash_rekey",
+        "origins": [
+          {
+            "artifact": "candidate_artifact_set",
+            "path": "18 exact generator bindings",
+            "sha256": "08f44948f152be64b5a6060fc26cd121bfe922776fe51993c4a28e3669cf5ed1"
+          }
+        ],
+        "projected_value_sha256": "08f44948f152be64b5a6060fc26cd121bfe922776fe51993c4a28e3669cf5ed1",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "errors",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.errors",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "coverage_credit",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.credits.coverage_credit",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "research_credit",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.credits.research_credit",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "promotion_credit",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.credits.promotion_credit",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "spec_credit",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.credits.spec_credit",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      },
+      {
+        "equality": true,
+        "field": "merge_credit",
+        "inference_free": true,
+        "operator": "exact_copy",
+        "origins": [
+          {
+            "artifact": "luna_report",
+            "path": "$.credits.merge_credit",
+            "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+          }
+        ],
+        "projected_value_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "unique_authoritative_origin": true
+      }
+    ],
+    "key_count": 40,
+    "manifest_declared_payload_digest": "7d51b2190d7487cbfca712232741ed4b70000d404e1a3428455e510b3fd7cb08",
+    "payload_hashes_digest": "08f44948f152be64b5a6060fc26cd121bfe922776fe51993c4a28e3669cf5ed1",
+    "projected_file_sha256": "1b5bc84461051340f9fdb62894677f37d9bedaa655b28fba2995fc4661d891b5",
+    "schema_property_count": 40,
+    "schema_required_count": 40
+  },
+  "schema_version": "external-research-generator-report-adapter-sol-independent-validation-v1",
+  "scope_and_state": {
+    "activation_granted": false,
+    "agent_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+    ],
+    "assignment_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+    "credit": 0,
+    "cumulative_floor_count": 6,
+    "cumulative_floor_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "generator_invocation_performed": false,
+    "invocation_2_authority": {
+      "activation_granted": false,
+      "attempt_id": "attempt-0005",
+      "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+      "credits": {
+        "coverage_credit": 0,
+        "merge_credit": 0,
+        "promotion_credit": 0,
+        "research_credit": 0,
+        "spec_credit": 0
+      },
+      "frozen_generator_sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "generator_invocation_performed": false,
+      "invocation_allowed_now": false,
+      "invocation_number": 2,
+      "launch_authorized": false,
+      "prior_invocation": {
+        "activation_transaction_files": 0,
+        "artifacts_written": 0,
+        "credit": 0,
+        "error_class": "missing_legacy_top_level_independent_authorization_aliases",
+        "exit_code": 1,
+        "invocation_number": 1,
+        "native_capture_rows": 0,
+        "receipts": 0,
+        "results": 0,
+        "status": "FAILED_BEFORE_WRITES"
+      },
+      "required_before_any_future_invocation": [
+        "independent adapter validation pass",
+        "exact source report SHA and pinned candidate hashes",
+        "exact projected generator schema with no extra authority fields",
+        "projection payload and manifest hash closure",
+        "live zero activation/result/receipt/capture state"
+      ],
+      "retry_namespace": "retry-attempt-0005",
+      "schema_version": "external-research-generator-invocation-2-authority-v1",
+      "source_report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/luna-prelaunch.json",
+      "source_report_sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+      "sprint_id": "sprint-wave-0001",
+      "status": "READY_FOR_INDEPENDENT_ADAPTER_VALIDATION"
+    },
+    "launch_authorized": false,
+    "live_zero_state": {
+      "activation_json_present": false,
+      "activation_transaction_files": 0,
+      "credit": 0,
+      "native_capture_rows": 0,
+      "output_files": 0,
+      "receipts": 0,
+      "results": 0
+    },
+    "model": "gpt-5.6-luna",
+    "prior_invocation": {
+      "activation_transaction_files_after": 0,
+      "activation_transaction_files_before": 0,
+      "artifacts_written": 0,
+      "credit": 0,
+      "error_class": "missing_legacy_top_level_independent_authorization_aliases",
+      "exit_code": 1,
+      "generator_sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "invocation_number": 1,
+      "native_capture_rows": 0,
+      "receipts": 0,
+      "results": 0,
+      "source_report_sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+      "status": "FAILED_BEFORE_WRITES"
+    },
+    "reasoning_effort": "max"
+  },
+  "source_report_semantics": {
+    "credits": {
+      "coverage_credit": 0,
+      "merge_credit": 0,
+      "promotion_credit": 0,
+      "research_credit": 0,
+      "spec_credit": 0
+    },
+    "errors": [],
+    "frozen_tests": {
+      "digest": "0bb6e2a985fd273aedf4fc12930d5f7071ec27face30c7f5d21852f5d97ab0d5",
+      "failed": 0,
+      "passed": 114,
+      "total": 114
+    },
+    "independent_structural_checks": {
+      "errors": [],
+      "passed": 117,
+      "total": 117
+    },
+    "scope": {
+      "assignment_count": 2,
+      "assignment_ids": [
+        "ER-0003",
+        "ER-0008"
+      ],
+      "attempt_id": "attempt-0005",
+      "descendants_forbidden": true,
+      "followups_forbidden": true,
+      "fork_turns": "none",
+      "fresh_direct_leaf_count": 2,
+      "intent_count": 2,
+      "model": "gpt-5.6-luna",
+      "packet_count": 2,
+      "reasoning_effort": "max",
+      "retries_forbidden": true,
+      "retry_namespace": "retry-attempt-0005",
+      "sprint_id": "sprint-wave-0001"
+    },
+    "status": "pass"
+  },
+  "status": "fail",
+  "terminal_stability": {
+    "adapter_file_count": 8,
+    "adapter_snapshot_digest": "ec924748d4d100e9a711c5f2e557acd0e90cc75f1a7149a5fcf3cbcaaba5a2b9",
+    "luna_controller_state": "idle",
+    "luna_turn_status": "completed",
+    "stable_before_and_after_tests": true
+  },
+  "toctou_and_tamper": {
+    "adapter_snapshot_digest": "ec924748d4d100e9a711c5f2e557acd0e90cc75f1a7149a5fcf3cbcaaba5a2b9",
+    "candidate_payload_digest_verified": true,
+    "project_from_captured_does_not_reread_source": true,
+    "source_read_once_by_adapter_contract": true,
+    "source_report_full_buffer_sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+  },
+  "validated_controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41"
+}

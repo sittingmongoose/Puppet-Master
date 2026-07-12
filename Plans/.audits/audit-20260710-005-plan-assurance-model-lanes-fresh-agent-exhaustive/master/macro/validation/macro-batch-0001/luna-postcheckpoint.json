@@ -1,0 +1,35 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "macro_live_luna_controller_v1",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "transaction_count": 1,
+    "outcomes": 24,
+    "credited_macro_assignments": 20,
+    "quarantined_zero_credit": 4,
+    "covered_micro_windows": 157,
+    "pending_micro_windows": 1112,
+    "unique_native_child_ids": 24,
+    "unique_agent_paths": 24,
+    "normalization_receipt_hashes_recomputed": 20,
+    "normalization_receipts_expected_missing_for_quarantines": 4,
+    "primary_eligible": 20,
+    "primary_rejected": 4,
+    "independent_eligible": 20,
+    "independent_rejected": 4
+  },
+  "coverage_sha256": "a361d7c194e1ca50d0da5723a7e4cf9c1bf1950054783e13bfa59e4c91f2adce",
+  "transaction_commit_sha256": "04d0c3bca6036ffca87cc26e1f244497e223498c6a9d55ae51d4a1516f7c65e7",
+  "covered_window_ids_digest": "bd0ba412a7d90f33ce4f8fbd10e34c1389f50b68a44a8018a80b016252f7b865",
+  "pending_window_ids_digest": "7a5d62214997890fb972918cfe7541673ec3252d42ae3466d73f0b954cdd48b6",
+  "canonical_source_root_sha256": "5405af6270bd0c708484685f368462de1cd91fb6e48e224a69214472c2db0ccf",
+  "canonical_source_root_unchanged": true,
+  "validation_reports": {
+    "primary": "partial_expected_for_20_credited_4_rejected",
+    "independent": "partial_expected_for_20_credited_4_rejected"
+  }
+}

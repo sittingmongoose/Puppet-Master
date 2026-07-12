@@ -1,0 +1,150 @@
+{
+  "assignment_id": "A005M-000122-INTEGRATED-MACRO-74C788D8A63C-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    803,
+    2235
+  ],
+  "bundle_id": "MACRO-74C788D8A63C-0001",
+  "context_ranges": [
+    [
+      791,
+      802
+    ],
+    [
+      2236,
+      2247
+    ]
+  ],
+  "document_path": "Plans/Tools.md",
+  "micro_window_ids": [
+    "WIN-74C788D8A63C-0004",
+    "WIN-74C788D8A63C-0005",
+    "WIN-74C788D8A63C-0006",
+    "WIN-74C788D8A63C-0007"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        803,
+        1119
+      ],
+      "core_sha256": "d95e33386f1c26b7defe000281039395a6f82bd6eda2daed82a5833bc357b5c8",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Tools.md:CONT-004"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Tools.md:CONT-004"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11823,
+      "window_id": "WIN-74C788D8A63C-0004"
+    },
+    {
+      "core_range": [
+        1120,
+        1482
+      ],
+      "core_sha256": "ab40fd591630398aaaf655832ea6887187bd3892bdeb779559d3f764fdea4911",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Tools.md:CONT-005"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Tools.md:CONT-005"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11975,
+      "window_id": "WIN-74C788D8A63C-0005"
+    },
+    {
+      "core_range": [
+        1483,
+        1880
+      ],
+      "core_sha256": "15199f385ee6cb317f5fdcf8a21a3357b4592482e235d4ffe23b58199d39421f",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Tools.md:CONT-006"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Tools.md:CONT-006"
+      ],
+      "structural_paths": [],
+      "token_estimate": 9735,
+      "window_id": "WIN-74C788D8A63C-0006"
+    },
+    {
+      "core_range": [
+        1881,
+        2235
+      ],
+      "core_sha256": "e24951aa91b9b990ef038a3ae5eab7585f73ad5ae16e956bb30d6574faac8319",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Tools.md:CONT-007"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Tools.md:CONT-007"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11762,
+      "window_id": "WIN-74C788D8A63C-0007"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/60/605a2510499911485698a526c7c9609c5ab4e11c0ef12d9c5f7b8bfe2876222e.txt",
+  "source_excerpt_sha256": "605a2510499911485698a526c7c9609c5ab4e11c0ef12d9c5f7b8bfe2876222e",
+  "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+  "token_estimate": 45295
+}

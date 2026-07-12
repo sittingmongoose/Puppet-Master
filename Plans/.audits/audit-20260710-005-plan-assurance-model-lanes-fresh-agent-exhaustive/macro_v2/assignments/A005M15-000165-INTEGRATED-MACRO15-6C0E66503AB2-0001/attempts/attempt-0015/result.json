@@ -1,0 +1,900 @@
+{
+  "assignment_id": "A005M15-000165-INTEGRATED-MACRO15-6C0E66503AB2-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Deterministic Contract Unification requires explicit conflict-resolution authority and `/rules` for contradictory upstream phase outputs. When those rules cannot resolve a contradiction, the interview handoff records an unresolved conflict instead of silently choosing one phase output.",
+          "line_end": 40,
+          "line_start": 40,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Contradictory phase outputs have an explicit authority path and a fail-visible unresolved outcome rather than an implicit winner.",
+      "item_id": "A005M15-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/interview-subagent-integration.md"
+      ],
+      "statement": "The owner prose explicitly forbids silently selecting among unresolved contradictory upstream outputs and requires the handoff to preserve the conflict.",
+      "title": "Unresolved contract conflicts remain visible"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When offering media options, the Interview agent must call capabilities.get, honor enabled/disabled media-generation gating, and may propose media generation but only execute it when enabled by the Media Generation and Capabilities SSOT.",
+          "line_end": 71,
+          "line_start": 71,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "capability_lookup_failure_and_staleness_unspecified",
+      "impact": "A timeout, unavailable capability service, stale enabled result, or enablement change between offer and execution can produce inconsistent UI or unauthorized media execution unless builders invent policy.",
+      "item_id": "A005M15-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-002",
+        "SEMANTIC:PLANUNIT:ISI-002"
+      ],
+      "statement": "ISI-002 defines the enabled/disabled gate but does not define fail-closed behavior, cache freshness, revalidation at execution, or recovery when capabilities.get fails.",
+      "title": "Media capability gate lacks failure and race semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "gui_truth",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: For GUI projects, Interview outputs include UI wiring artifacts ui/wiring_matrix.json and ui/ui_command_catalog.json, update Phase 3 Product/UX subagent responsibilities, preserve section 5.2 wiring/completeness requirements, and feed Contract Layer outputs under the UI wiring SSOTs.",
+          "line_end": 120,
+          "line_start": 120,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "artifact_publication_atomicity_unspecified",
+      "impact": "One wiring artifact can be accepted while its companion is absent, invalid, or from another revision, leaving GUI completeness and command wiring misleading.",
+      "item_id": "A005M15-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-003",
+        "SEMANTIC:PLANUNIT:ISI-003"
+      ],
+      "statement": "ISI-003 names both GUI wiring outputs but does not locally define their shared revision identity, atomic publication rule, validation-failure state, or rollback behavior.",
+      "title": "GUI wiring pair has no atomic publication contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The Interviewer/Wizard emits a sharded-only plan graph under .puppet-master/project/plan_graph as canonical output persisted canonically in seglog; plan_graph/exports/plan_graph.monolithic.json is an optional derived export only.",
+          "line_end": 170,
+          "line_start": 170,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "sharded_graph_commit_protocol_unspecified",
+      "impact": "Readers may observe a mixed-generation or incomplete canonical graph, and seglog persistence may disagree with filesystem shards after interruption or concurrent publication.",
+      "item_id": "A005M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-004",
+        "SEMANTIC:PLANUNIT:ISI-004"
+      ],
+      "statement": "ISI-004 establishes sharded canon and derived monolithic status but leaves generation identity, atomic commit, partial-write recovery, and concurrent writer arbitration unspecified in this owner contract.",
+      "title": "Canonical sharded graph lacks commit and recovery semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "scale_performance",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The requirements-quality-reviewer persona belongs to the Quality Review category, uses deterministic two-trigger invocation order, a two-iteration autofill loop cap, and the Autofill-First Rule, and its quality report verdict gates the Contract Unification Pass.",
+          "line_end": 219,
+          "line_start": 219,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "review_gate_state_contract_not_locally_closed",
+      "impact": "Without locally testable trigger conditions, verdict mapping, and behavior after the autofill cap, distinct implementations can advance, block, or loop differently at the Contract Unification gate.",
+      "item_id": "A005M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-005",
+        "SEMANTIC:PLANUNIT:ISI-005"
+      ],
+      "statement": "ISI-005 fixes ordering and a two-iteration cap but delegates the concrete trigger predicates and verdict-to-transition table, and does not state the terminal outcome when quality still fails after the cap.",
+      "title": "Quality reviewer gate lacks a closed transition oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "authority",
+        "ownership",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The Interview phase manager is responsible for intent-driven adaptive phase selection through a phase plan and for producing Contract Layer outputs via contract fragments plus a deterministic Contract Unification Pass.",
+          "line_end": 271,
+          "line_start": 271,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The phase manager has explicit ownership for both phase selection and deterministic assembly of Contract Layer outputs.",
+      "item_id": "A005M15-006",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-006",
+        "SEMANTIC:PLANUNIT:ISI-006"
+      ],
+      "statement": "ISI-006 binds adaptive phase planning and contract-fragment unification to the Interview phase manager instead of leaving either responsibility implicit.",
+      "title": "Phase manager owns adaptive planning and unification"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Interview-phase launches share the runtime identity packet with Orchestrator and preserve requested/effective runtime identity, requested/effective account identity, execution_role, operational_identity, and launched child-run reference.",
+          "line_end": 320,
+          "line_start": 320,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "identity_packet_data_lifecycle_unspecified",
+      "impact": "Account and operational identity may be overexposed, retained indefinitely, or propagated to consumers lacking authority because field preservation is specified without minimization or redaction rules.",
+      "item_id": "A005M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-007",
+        "SEMANTIC:PLANUNIT:ISI-007"
+      ],
+      "statement": "ISI-007 defines the identity fields that cross the handoff but does not define field classification, consumer-specific redaction, retention, deletion, or authorization to observe requested and effective account identity.",
+      "title": "Shared identity packet lacks privacy lifecycle controls"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "authority_boundaries",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Assistant, chat, interview, and builder actors share provider/runtime identity semantics with Orchestrator while remaining distinct actor/run kinds rather than package, seam, or node execution objects, and shared packets must not relabel the interview actor as a graph node or worktree lane.",
+          "line_end": 370,
+          "line_start": 370,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Shared provider identity cannot erase the actor/run-kind boundary or create false graph-node and worktree-lane semantics.",
+      "item_id": "A005M15-008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-008",
+        "SEMANTIC:PLANUNIT:ISI-008"
+      ],
+      "statement": "ISI-008 gives an explicit negative type boundary for interview actors despite shared runtime identity semantics.",
+      "title": "Actor identity cannot be relabeled as execution topology"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "gui_truth",
+        "security_privacy",
+        "untrusted_inputs",
+        "accessibility",
+        "localization",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Interview clarification and questionnaire flows consume the shared question/questionnaire contract and QuestionItem shape, preserving question_id, question, options, required, multi_select, allow_freeform, default_values, and per-question display text in question while reserving prompt for envelope or header copy.",
+          "line_end": 420,
+          "line_start": 420,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "question_input_constraints_unspecified",
+      "impact": "Unbounded or hostile question text, options, and freeform/default values can create rendering, storage, injection, localization, and accessibility failures that the local contract cannot falsify.",
+      "item_id": "A005M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-009",
+        "SEMANTIC:PLANUNIT:ISI-009"
+      ],
+      "statement": "ISI-009 preserves shared QuestionItem fields and display-copy placement but does not define size limits, normalization, trust handling, localization identity, accessible option semantics, or behavior for invalid defaults.",
+      "title": "Shared question shape lacks hostile and globalized input rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Required interview questions gate submit through the shared question-card flow, and draft, pause, resume, and submitted outcomes use PM-managed draft_value, response, and validation state rather than interview-only status names.",
+          "line_end": 473,
+          "line_start": 473,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "question_state_machine_and_concurrency_unspecified",
+      "impact": "Concurrent submit, pause, autosave, and resume attempts or network loss can overwrite accepted answers, submit stale validation, or display a submitted state that does not match persisted state.",
+      "item_id": "A005M15-010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-010",
+        "SEMANTIC:PLANUNIT:ISI-010"
+      ],
+      "statement": "ISI-010 names shared draft, response, validation, pause, resume, and submit outcomes but provides no transition table, idempotency key, revision check, conflict resolution, or offline recovery rule.",
+      "title": "Question submit flow lacks a concurrency-safe state machine"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Interview question cards, validation reports, and handoff packets display the same requested/effective runtime and account identity fields as the shared runtime boundary, may summarize those fields for display, and preserve canonical field names in persisted records and downstream handoffs.",
+          "line_end": 527,
+          "line_start": 527,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "identity_summary_presentation_rules_unspecified",
+      "impact": "A summary can hide a requested/effective mismatch, expose sensitive account identity, or present unlabeled runtime facts that are inaccessible or misleading.",
+      "item_id": "A005M15-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-011",
+        "SEMANTIC:PLANUNIT:ISI-011"
+      ],
+      "statement": "ISI-011 permits display summarization without defining mandatory mismatch indicators, field labels, redaction, accessible names, localization behavior, or stale-data signaling.",
+      "title": "Runtime identity summaries can obscure effective truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "invalid_states_transitions",
+        "partial_failure",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Interview-specific runtime packets align requested values, effective values, and launched-run lineage before execution starts, and execution-affecting handoffs carry the requested/effective runtime and account fields needed by Orchestrator, storage, permissions, and usage consumers.",
+          "line_end": 578,
+          "line_start": 578,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "prelaunch_identity_mismatch_failure_unspecified",
+      "impact": "Consumers can disagree about runtime, account, or launched-run identity and still initiate execution if alignment is checked differently or treated as advisory.",
+      "item_id": "A005M15-012",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-012",
+        "SEMANTIC:PLANUNIT:ISI-012"
+      ],
+      "statement": "ISI-012 requires pre-execution alignment but does not define the equality/integrity oracle, authoritative resolver, fail-closed error, or repair path when requested, effective, consumer, and launched-run fields disagree.",
+      "title": "Prelaunch identity alignment lacks a fail-closed oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "operations",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Deterministic Contract Unification requires explicit conflict-resolution authority and rules for contradictory upstream phase outputs; when rules cannot resolve a contradiction, the interview handoff records an unresolved conflict instead of silently choosing one phase output.",
+          "line_end": 629,
+          "line_start": 629,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "unresolved_conflict_lifecycle_unspecified",
+      "impact": "An unresolved conflict can persist indefinitely, be lost on resume, or be cleared by an unauthorized actor because its state shape and resolution transition are undefined locally.",
+      "item_id": "A005M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-013",
+        "SEMANTIC:PLANUNIT:ISI-013"
+      ],
+      "statement": "ISI-013 correctly prevents silent choice but does not define conflict identifiers, competing values and provenance, blocking scope, authorized resolver, resume persistence, or the resolved transition and audit record.",
+      "title": "Unresolved conflicts lack a durable resolution lifecycle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "compatibility_migration",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The canonical wizard/interview handoff packet carries project_id, thread_id, wizard_id, interview_session_id, requested/effective runtime identity, requested/effective account identity, execution_role, and explicit launched_run_id/launched_run_ref bridge fields.",
+          "line_end": 678,
+          "line_start": 678,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "handoff_packet_schema_and_integrity_unspecified",
+      "impact": "Malformed, mixed-project, stale, or forged identifiers can be accepted differently by consumers, with no local versioning or integrity oracle for the canonical packet.",
+      "item_id": "A005M15-014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-014",
+        "SEMANTIC:PLANUNIT:ISI-014"
+      ],
+      "statement": "ISI-014 lists canonical handoff fields but does not specify types, requiredness, packet version, referential consistency, signature or trust boundary, replay handling, or validation error codes.",
+      "title": "Canonical handoff field list is not a closed packet schema"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Example handoff payloads must not normalize missing thread linkage as thread_id: None; that value is a concrete drift signal, and if no thread exists the packet records a typed absence reason without letting thread_id masquerade as a nullable placeholder.'",
+          "line_end": 729,
+          "line_start": 729,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "typed_absence_reason_domain_unspecified",
+      "impact": "Producers can invent incompatible absence reasons or represent the reason in different locations, preventing deterministic consumer behavior and migration checks.",
+      "item_id": "A005M15-015",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-015",
+        "SEMANTIC:PLANUNIT:ISI-015"
+      ],
+      "statement": "ISI-015 rejects thread_id: None and requires typed absence, but does not define the absence field name, reason enum, allowed state combinations, or consumer response for each reason.",
+      "title": "Typed thread absence has no declared type domain"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "security_privacy",
+        "compatibility_migration",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider-native delegation syntax, provider-native exports/imports, and /imports remain interoperability-only; direct-provider and child-run canon still apply, and the canonical handoff is the Puppet Master child-run packet.",
+          "line_end": 776,
+          "line_start": 776,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "provider_import_trust_boundary_unspecified",
+      "impact": "Provider-native payloads can inject conflicting identity, authority, paths, or handoff data into canon unless import validation, normalization, and rejection behavior are explicit.",
+      "item_id": "A005M15-016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-016",
+        "SEMANTIC:PLANUNIT:ISI-016"
+      ],
+      "statement": "ISI-016 correctly limits provider-native forms to interoperability, but does not define their trust level, schema validation, canonical-field precedence, path sanitization, signature checks, or quarantine and error behavior.",
+      "title": "Provider-native imports lack an explicit trust boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Interview reviewer-cap limits consume the Orchestrator concurrency SSOT, and the requirements-quality-reviewer autofill cap is reviewer-only and must not redefine global spawn, nesting, shell-isolation, or child timeout ceilings.",
+          "line_end": 826,
+          "line_start": 826,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "reviewer_capacity_exhaustion_behavior_unspecified",
+      "impact": "Concurrent interviews may oversubscribe the shared cap or diverge between queue, reject, degrade, and retry outcomes, with no stable user-visible or support-visible state.",
+      "item_id": "A005M15-017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-017",
+        "SEMANTIC:PLANUNIT:ISI-017"
+      ],
+      "statement": "ISI-017 preserves the Orchestrator concurrency authority but leaves reservation atomicity, cap-exhaustion outcome, fairness, retry timing, cancellation release, and observable reason unspecified.",
+      "title": "Reviewer cap has no exhaustion or reservation protocol"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: auditor_cycle_report includes planning/governance lineage and an explicit launched-run bridge with phase_plan_ref, requirements_quality_report_ref, workflow_run_id, pass_verdict, wizard_snapshot_ref, launched_run_id, and launched_run_ref, and preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.",
+          "line_end": 877,
+          "line_start": 877,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "report_bridge_integrity_and_lifecycle_unspecified",
+      "impact": "A bridge may resolve to missing, mismatched, deleted, or unauthorized artifacts; compatibility mirrors can become stale without a declared integrity and retention contract.",
+      "item_id": "A005M15-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-018",
+        "SEMANTIC:PLANUNIT:ISI-018"
+      ],
+      "statement": "ISI-018 specifies bridge fields and prohibits heuristic joins but does not define referential integrity, project/run consistency, deletion and retention, access control, stale-target handling, or compatibility-mirror freshness.",
+      "title": "Auditor bridge lacks referential and lifecycle guarantees"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The former interview-subagent-integration doc-level source-preserving bridge is retired after Phase 2B atomized interview-subagent-integration-S0004 through S0011 into ISI-002 through ISI-018 and structurally dispositioned S0001, S0002, S0003, S0012, S0013, and S0015. ISI-001 remains only as migration lineage for interview-subagent-integration-S0014 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.",
+          "line_end": 935,
+          "line_start": 935,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Migration lineage remains auditable without allowing the retired bridge to compete with atomized product owners or generate executable work.",
+      "item_id": "A005M15-019",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-001",
+        "SEMANTIC:PLANUNIT:ISI-001"
+      ],
+      "statement": "ISI-001 has an explicit retired status, bounded lineage purpose, prohibited prior compile mode, and clear non-ownership of atomized product coverage.",
+      "title": "Retired bridge cannot reclaim product coverage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Context. Interview does not define a separate DRY prompt model, local DRY prose, or route-local effective-state enum.",
+          "line_end": 1010,
+          "line_start": 1010,
+          "path": "Plans/interview-subagent-integration.md",
+          "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+        }
+      ],
+      "gap_kind": "shared_dry_receipt_contract_not_locally_falsifiable",
+      "impact": "Interview implementations can preserve different receipt subsets or map degraded, disabled, blocked, and caveated states differently while still claiming to consume the shared route.",
+      "item_id": "A005M15-020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ISI-019",
+        "SEMANTIC:PLANUNIT:ISI-019"
+      ],
+      "statement": "ISI-019 correctly forbids a route-local DRY model, but this owner unit does not enumerate the required CV-299 receipt fields, state invariants, invalid combinations, failure propagation, or conformance oracle.",
+      "title": "Interview DRY consumer contract depends on an unexposed receipt oracle"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        362
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ISI-002",
+        "PLANUNIT:ISI-003",
+        "PLANUNIT:ISI-004",
+        "PLANUNIT:ISI-005",
+        "PLANUNIT:ISI-006",
+        "PLANUNIT:ISI-007",
+        "SEMANTIC:PROLOGUE:Plans/interview-subagent-integration.md",
+        "SEMANTIC:PLANUNIT:ISI-002",
+        "SEMANTIC:PLANUNIT:ISI-003",
+        "SEMANTIC:PLANUNIT:ISI-004",
+        "SEMANTIC:PLANUNIT:ISI-005",
+        "SEMANTIC:PLANUNIT:ISI-006",
+        "SEMANTIC:PLANUNIT:ISI-007"
+      ],
+      "item_ids": [
+        "A005M15-001",
+        "A005M15-002",
+        "A005M15-003",
+        "A005M15-004",
+        "A005M15-005",
+        "A005M15-006",
+        "A005M15-007"
+      ],
+      "reviewed": true,
+      "summary": "The first window establishes shared runtime and question boundaries plus media, GUI wiring, sharded graph, quality-review, phase-planning, and identity responsibilities. It is strongest on ownership and negative boundaries; its principal adversarial gaps are failure, atomicity, race, privacy-lifecycle, and locally falsifiable gate semantics.",
+      "window_id": "WIN-6C0E66503AB2-0001"
+    },
+    {
+      "core_range": [
+        363,
+        721
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ISI-008",
+        "PLANUNIT:ISI-009",
+        "PLANUNIT:ISI-010",
+        "PLANUNIT:ISI-011",
+        "PLANUNIT:ISI-012",
+        "PLANUNIT:ISI-013",
+        "PLANUNIT:ISI-014",
+        "SEMANTIC:PLANUNIT:ISI-008",
+        "SEMANTIC:PLANUNIT:ISI-009",
+        "SEMANTIC:PLANUNIT:ISI-010",
+        "SEMANTIC:PLANUNIT:ISI-011",
+        "SEMANTIC:PLANUNIT:ISI-012",
+        "SEMANTIC:PLANUNIT:ISI-013",
+        "SEMANTIC:PLANUNIT:ISI-014"
+      ],
+      "item_ids": [
+        "A005M15-008",
+        "A005M15-009",
+        "A005M15-010",
+        "A005M15-011",
+        "A005M15-012",
+        "A005M15-013",
+        "A005M15-014"
+      ],
+      "reviewed": true,
+      "summary": "The second window preserves actor-kind boundaries, shared question fields, visible runtime identity, requested/effective alignment, conflict handling, and handoff identifiers. Its main risks are absent hostile-input constraints, an incomplete question state machine, misleading identity summaries, unresolved-conflict lifecycle gaps, and no closed handoff schema or prelaunch integrity oracle.",
+      "window_id": "WIN-6C0E66503AB2-0002"
+    },
+    {
+      "core_range": [
+        722,
+        1072
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ISI-001",
+        "PLANUNIT:ISI-015",
+        "PLANUNIT:ISI-016",
+        "PLANUNIT:ISI-017",
+        "PLANUNIT:ISI-018",
+        "PLANUNIT:ISI-019",
+        "SEMANTIC:PLANUNIT:ISI-015",
+        "SEMANTIC:PLANUNIT:ISI-016",
+        "SEMANTIC:PLANUNIT:ISI-017",
+        "SEMANTIC:PLANUNIT:ISI-018",
+        "SEMANTIC:PLANUNIT:ISI-001",
+        "SEMANTIC:PLANUNIT:ISI-019"
+      ],
+      "item_ids": [
+        "A005M15-015",
+        "A005M15-016",
+        "A005M15-017",
+        "A005M15-018",
+        "A005M15-019",
+        "A005M15-020"
+      ],
+      "reviewed": true,
+      "summary": "The third window defines typed thread absence, provider interoperability boundaries, reviewer-cap authority, report lineage, retired migration coverage, and shared DRY consumption. The retirement boundary is explicit, while typed absence domains, import trust, capacity exhaustion, bridge integrity, and shared DRY receipt falsifiability remain underspecified.",
+      "window_id": "WIN-6C0E66503AB2-0003"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-6C0E66503AB2-0001",
+    "document_path": "Plans/interview-subagent-integration.md",
+    "micro_window_ids": [
+      "WIN-6C0E66503AB2-0001",
+      "WIN-6C0E66503AB2-0002",
+      "WIN-6C0E66503AB2-0003"
+    ],
+    "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do Plans/Media_Generation_and_Capabilities.md and the capabilities.get contract define fail-closed lookup, freshness, and execution-time revalidation semantics consumed by ISI-002?",
+      "Do Plans/UI_Wiring_Rules.md and Plans/Wiring_Matrix.schema.json require atomic same-revision publication and rollback of the wiring matrix and UI command catalog?",
+      "Where is the transaction and recovery protocol that keeps canonical sharded plan-graph files and seglog persistence at one generation?",
+      "Does the shared QuestionItem contract define hostile-input limits, localization identity, accessible option semantics, and revision-safe draft and submit transitions?",
+      "Which SSOT defines integrity, redaction, retention, and authorization for requested/effective runtime and account identity across Interview consumers?",
+      "What canonical schema defines wizard/interview handoff packet versioning, typed thread absence reasons, referential consistency, trust, replay protection, and validation errors?",
+      "Does the Orchestrator concurrency SSOT define atomic reviewer reservations, exhaustion outcomes, fairness, cancellation release, and observable retry state?",
+      "Does CV-299 enumerate the exact DRY receipt fields, valid effective-state combinations, failure propagation, and Interview route conformance fixtures required by ISI-019?"
+    ],
+    "feature_family_keys": [
+      "interview-capability-gating",
+      "interview-contract-unification",
+      "interview-question-runtime",
+      "interview-runtime-identity",
+      "interview-handoff-lineage",
+      "interview-provider-interoperability",
+      "interview-reviewer-concurrency",
+      "interview-dry-consumer",
+      "interview-migration-lineage"
+    ],
+    "research_queries": [
+      "capability gating stale authorization TOCTOU fail closed media generation patterns",
+      "atomic publication protocol multi-file sharded graph append-only log crash recovery",
+      "accessible localized dynamic questionnaire validation draft resume concurrency patterns",
+      "requested versus effective identity UI disclosure redaction and mismatch signaling patterns",
+      "signed replay-resistant child-run handoff packet schema and typed absence design",
+      "concurrency quota reservation fairness cancellation retry observability patterns",
+      "referential integrity and retention for audit lineage bridge records"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000165_attempt_0015_terminal"
+}

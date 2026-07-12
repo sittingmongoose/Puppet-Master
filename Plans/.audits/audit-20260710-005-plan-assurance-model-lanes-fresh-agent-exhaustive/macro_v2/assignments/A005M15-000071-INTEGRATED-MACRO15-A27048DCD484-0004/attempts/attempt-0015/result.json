@@ -1,0 +1,966 @@
+{
+  "assignment_id": "A005M15-000071-INTEGRATED-MACRO15-A27048DCD484-0004",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "propagation",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"receipt_or_event_effect\": \"planning.approval_cas_receipt.written, planning.plan_approved, plan_compile.run_created_or_bound\",",
+          "line_end": 9032,
+          "line_start": 9032,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "Approval is bound to durable CAS, PlanApproved, and PlanCompileRun effects, preventing a GUI-only success state from serving as implementation evidence.",
+      "item_id": "M15-000071-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-024",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Approve And Build has an explicit production command, handler, enabled and disabled selectors, durable approval effects, accessibility semantics, and a regression-evidence requirement.",
+      "title": "Final approval has a durable production-wiring contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"accessibility_gaps\": [\n        \"custom_click_target_missing_role\",\n        \"click_handler_without_keyboard_parity\"\n      ],",
+          "line_end": 8931,
+          "line_start": 8928,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "concept_fixture_accessibility_and_state_truth",
+      "impact": "READY-looking compile and manifest pills could mislead users and exclude keyboard users if promoted without a real state contract and semantic-control replacement.",
+      "item_id": "M15-000071-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-024",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The compile-state and handoff-manifest READY pills are click-only custom targets explicitly marked as concept fixtures, so their displayed readiness is not acceptable state or accessibility evidence.",
+      "title": "READY pills are non-authoritative and lack keyboard parity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"route_payload_contract\": \"target_surface=orchestrator, page_tab=plan_compile, planning_run_id?, plan_compile_run_id?, source_surface, correlation_id\"",
+          "line_end": 9451,
+          "line_start": 9451,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "The route can be tested against explicit target and correlation identity instead of relying on label text or implicit tab state.",
+      "item_id": "M15-000071-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-025",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Open Plan Compile is a route-only production command with explicit target surface, target tab, optional run identities, source surface, correlation id, disabled reasons, and a route receipt requirement.",
+      "title": "Plan Compile routing is identity-bound"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"tabindex\": \"0\",\n        \"aria-selected\": \"false\",\n        \"aria-controls\": \"orch-panel-node_graph\",\n        \"data-tab\": \"node_graph\"",
+          "line_end": 9233,
+          "line_start": 9230,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "tab_focus_state_inconsistency",
+      "impact": "Multiple non-selected tabs can remain in the tab order, undermining a predictable roving-tabindex model and allowing focus semantics to diverge from selected state.",
+      "item_id": "M15-000071-I004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-025",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The inactive Node Graph tab is declared aria-selected false while retaining tabindex 0; the same pattern appears on other inactive orchestrator tabs and lacks a production focus-transition oracle.",
+      "title": "Inactive orchestrator tabs expose inconsistent focus state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "propagation",
+        "partial_failure",
+        "authority_boundaries",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"payload_contract\": \"hitl_request_id, step_id or blocked_sequence, attempt_id, approval_scope_key, actor_ref, correlation_id\"",
+          "line_end": 9655,
+          "line_start": 9655,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "A HITL approval is scoped to one current request and cannot silently become authority to launch a second ordinary build.",
+      "item_id": "M15-000071-I005",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-026",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Approve Step is explicitly constrained to scoped HITL recovery, with request, step or blocked-sequence, attempt, scope, actor, and correlation identities plus stale, wrong-scope, disabled, and already-resolved rejection states.",
+      "title": "HITL approval authority is narrowly scoped"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\",\n        \"No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.\",",
+          "line_end": 9942,
+          "line_start": 9941,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "production_looking_runtime_state_without_authority",
+      "impact": "Running and Done labels, counts, and hierarchy can appear operational even though no production selector, event source, freshness rule, or receipt proves them.",
+      "item_id": "M15-000071-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-026",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Plan Compile hierarchy presents production-looking progress states but is intentionally unpromoted concept lineage, leaving its state producer, stale-data behavior, consumers, and acceptance evidence unresolved in the canonical owners.",
+      "title": "Plan Compile progress can overstate runtime truth"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "gui_truth",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 10105,
+          "line_start": 10105,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "The source correctly prevents graph placeholders, sample run identities, and visual state from being mistaken for production implementation evidence.",
+      "item_id": "M15-000071-I007",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-027",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Node Graph surface and all of its layout, zoom, fit, filter, search, and visibility controls are consistently owner-adjudicated as concept lineage rather than production evidence.",
+      "title": "Node Graph concept status is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "operations",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Start Run\",",
+          "line_end": 10116,
+          "line_start": 10116,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 10123,
+          "line_start": 10123,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "run_start_authority_and_idempotency_missing",
+      "impact": "Promoting the control without an owner contract could duplicate runs, start against stale planning state, or show a run before durable creation succeeds.",
+      "item_id": "M15-000071-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-027",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Start Run is a high-authority operation with no command, payload, authorization, idempotency, concurrent-start, partial-creation, rollback, receipt, or disabled-state contract in this control inventory.",
+      "title": "Start Run has no production authority contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Retry from safe point\",",
+          "line_end": 10637,
+          "line_start": 10637,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Start fresh attempt\",",
+          "line_end": 10660,
+          "line_start": 10660,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "recovery_semantics_and_safe_point_contract_missing",
+      "impact": "The two recovery paths could replay side effects, reuse an unsafe checkpoint, orphan an old attempt, or create competing attempts without a defined authority and receipt model.",
+      "item_id": "M15-000071-I009",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-028",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Retry from safe point and Start fresh attempt are distinct recovery operations but both remain concept-only with no safe-point identity, attempt lineage, side-effect replay policy, concurrency exclusion, rollback, or durable outcome oracle.",
+      "title": "Node recovery controls leave replay and lineage undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "consumers",
+        "gui_truth",
+        "operations",
+        "scale_performance",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Type: All TestLog Screenshot BrowserTrace FileSnapshot Metric GateReport CommandOutput\",",
+          "line_end": 10737,
+          "line_start": 10737,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "The concept establishes a useful observable evidence taxonomy and filter affordance while correctly withholding production status.",
+      "item_id": "M15-000071-I010",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-028",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Evidence surface concept exposes a typed evidence catalog spanning logs, screenshots, browser traces, file snapshots, metrics, gate reports, and command output, with type filtering and search.",
+      "title": "Evidence browsing has a concrete concept taxonomy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "destructive_actions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Delete Run\",",
+          "line_end": 10973,
+          "line_start": 10973,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 10983,
+          "line_start": 10983,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "destructive_run_deletion_contract_missing",
+      "impact": "An implementation could irreversibly remove run history or linked evidence without authorization, confirmation, retention enforcement, cascade visibility, concurrency control, or a recovery record.",
+      "item_id": "M15-000071-I011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-029",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Delete Run is presented as a history action but remains concept-only and has no target identity, authorization, confirmation, retention, evidence-cascade, concurrent-run, tombstone, undo, or deletion-receipt contract.",
+      "title": "Delete Run lacks destructive-action safeguards"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "consumers",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Export\",",
+          "line_end": 10843,
+          "line_start": 10843,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "evidence_export_privacy_and_scale_contract_missing",
+      "impact": "Evidence may contain logs, screenshots, traces, snapshots, or command output; an unconstrained export could disclose secrets or personal data, exceed memory limits, or produce incomplete files under partial failure.",
+      "item_id": "M15-000071-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-029",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Evidence Export, Copy, and Open in Editor are concept-only and do not define scope, authorization, secret redaction, provenance, maximum size, streaming behavior, offline handling, partial-file cleanup, destination, or export receipt.",
+      "title": "Evidence export has no privacy or large-payload boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "privacy_data_lifecycle",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Export JSON\",",
+          "line_end": 11127,
+          "line_start": 11127,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 11142,
+          "line_start": 11142,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "usage_ledger_export_contract_missing",
+      "impact": "CSV and JSON output can diverge in schema, filtering, redaction, precision, and completeness, making exported cost and activity data unsafe or non-reproducible.",
+      "item_id": "M15-000071-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-030",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The orchestrator ledger offers CSV and JSON export but both controls remain concept-only, with no filter-snapshot, schema-version, redaction, precision, pagination, maximum-size, destination, partial-failure, or completion-receipt contract.",
+      "title": "Usage-ledger exports are not contractually reproducible"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Overview\",",
+          "line_end": 11153,
+          "line_start": 11153,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"aria-selected\": \"true\",",
+          "line_end": 11155,
+          "line_start": 11155,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "usage_tab_selection_contract_missing",
+      "impact": "The selected Overview tab can be rendered, but there is no promoted navigation command, route state, deep-link behavior, or state-restoration oracle tying that visual selection to an authoritative page projection.",
+      "item_id": "M15-000071-I014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-030",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The first Usage tab exposes selected GUI state, yet all Usage tabs are concept-only and do not identify the navigation owner, route payload, selected-state producer, restoration behavior, or callers and consumers.",
+      "title": "Usage tab selection lacks authoritative navigation state"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "operations",
+        "scale_performance",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Session\",",
+          "line_end": 11307,
+          "line_start": 11307,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"30d\",",
+          "line_end": 11491,
+          "line_start": 11491,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit",
+      "impact": "The concept communicates two useful time-window families but leaves their production query semantics to the canonical Usage owner.",
+      "item_id": "M15-000071-I015",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-031",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Usage exposes a Session, Today, 7d, and 30d period selector plus a second 1h, 5h, 24h, 7d, and 30d time-window selector, all explicitly retained as concept lineage.",
+      "title": "Usage concept defines two time-window selector families"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "partial_failure",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"title\": \"Refresh all usage data\"",
+          "line_end": 11259,
+          "line_start": 11259,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 11266,
+          "line_start": 11266,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "usage_refresh_freshness_and_partial_failure_missing",
+      "impact": "A refresh spanning providers, analytics, ledger, and overview data could mix snapshots, overwrite newer results, hide provider failures, or leave the GUI looking current while offline or partially stale.",
+      "item_id": "M15-000071-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-031",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Refresh all usage data is concept-only and lacks snapshot identity, freshness timestamp, concurrent-refresh policy, provider fan-out and timeout behavior, cancellation, partial-success representation, offline behavior, stale-result suppression, and completion receipt.",
+      "title": "Usage refresh has no coherent-snapshot or partial-failure contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"acme-corp (Org) personal\",",
+          "line_end": 11652,
+          "line_start": 11652,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Switch Account\",",
+          "line_end": 11744,
+          "line_start": 11744,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "billing_account_switch_authority_and_isolation_missing",
+      "impact": "Switching between organization and personal billing context without atomic authority and cache-isolation rules could leak usage data, attribute costs to the wrong account, or retain stale account projections.",
+      "item_id": "M15-000071-I017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-031",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The billing selector and Switch Account control remain concept-only and do not define actor authority, target account identity, reauthentication, tenant isolation, unsaved work, in-flight query cancellation, cache invalidation, atomic projection replacement, rollback, or audit receipt.",
+      "title": "Account switching lacks tenant-isolation and atomicity rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "operations",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Retry\",",
+          "line_end": 11905,
+          "line_start": 11905,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 11917,
+          "line_start": 11917,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "usage_retry_scope_and_idempotency_missing",
+      "impact": "An ambiguous retry could duplicate provider requests, retry successful subrequests, act on a stale account or time window, or replace a newer successful projection with an older response.",
+      "item_id": "M15-000071-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-031",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The Usage Retry control is concept-only and does not identify the failed operation, provider subset, account, query window, attempt, idempotency key, backoff, cancellation, stale-response guard, or durable retry outcome.",
+      "title": "Usage Retry has no scoped recovery contract"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        8837,
+        9218
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-024",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I001",
+        "M15-000071-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all wizard final-review, compile-state pill, activity, and initial orchestrator-tab controls; extracted the durable approval contract and the non-authoritative READY-pill accessibility seam.",
+      "window_id": "WIN-A27048DCD484-0025"
+    },
+    {
+      "core_range": [
+        9219,
+        9614
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-025",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I003",
+        "M15-000071-I004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all remaining orchestrator tabs, status panel, Plan Compile route, run controls, Open Build contract, and status link; extracted route identity and the inactive-tab focus inconsistency.",
+      "window_id": "WIN-A27048DCD484-0026"
+    },
+    {
+      "core_range": [
+        9615,
+        10000
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-026",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I005",
+        "M15-000071-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed scoped HITL approval, reject and clear controls, Plan Compile hierarchy, expansion and state filters, and all hierarchy nodes; extracted the narrow approval authority and progress-truth seam.",
+      "window_id": "WIN-A27048DCD484-0027"
+    },
+    {
+      "core_range": [
+        10001,
+        10389
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-027",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I007",
+        "M15-000071-I008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the remainder of the Plan Compile tree and the complete Node Graph placeholder, start, layout, zoom, fit, filter, search, visibility, and quick-filter inventory; distinguished explicit concept status from the missing Start Run authority contract.",
+      "window_id": "WIN-A27048DCD484-0028"
+    },
+    {
+      "core_range": [
+        10390,
+        10781
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-028",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I009",
+        "M15-000071-I010"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all remaining graph quick filters, node detail sections, plan and log links, recovery actions, reset control, and the Evidence panel and filters; extracted the recovery-lineage gap and evidence taxonomy.",
+      "window_id": "WIN-A27048DCD484-0029"
+    },
+    {
+      "core_range": [
+        10782,
+        11169
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-029",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I011",
+        "M15-000071-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed evidence detail actions, run history and deletion, ledger filters and navigation, CSV and JSON exports, and the first Usage tab; extracted destructive deletion and evidence-export privacy gaps.",
+      "window_id": "WIN-A27048DCD484-0030"
+    },
+    {
+      "core_range": [
+        11170,
+        11550
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-030",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I013",
+        "M15-000071-I014"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete Usage tab strip, top-level refresh and export, period selectors, time-window selectors, and trailing usage actions; extracted export reproducibility and tab-selection authority gaps.",
+      "window_id": "WIN-A27048DCD484-0031"
+    },
+    {
+      "core_range": [
+        11551,
+        11941
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-031",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-000071-I015",
+        "M15-000071-I016",
+        "M15-000071-I017",
+        "M15-000071-I018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all repeated Usage refresh and analytics actions, billing account selection and switch history, Switch Account, and terminal Retry controls; extracted time-window intent plus refresh, tenant isolation, and scoped-retry gaps.",
+      "window_id": "WIN-A27048DCD484-0032"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0004",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": [
+      "WIN-A27048DCD484-0025",
+      "WIN-A27048DCD484-0026",
+      "WIN-A27048DCD484-0027",
+      "WIN-A27048DCD484-0028",
+      "WIN-A27048DCD484-0029",
+      "WIN-A27048DCD484-0030",
+      "WIN-A27048DCD484-0031",
+      "WIN-A27048DCD484-0032"
+    ],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines production commands and authoritative state for orchestrator tab selection, graph start, node recovery, evidence actions, and run deletion?",
+      "Which Usage owner defines coherent refresh snapshots, provider partial failure, export redaction and schema versioning, billing-account isolation, and scoped retry identity?",
+      "How are PlanCompileRun, runtime HITL, orchestrator run, evidence, usage ledger, and billing-account identities propagated without permitting stale cross-surface actions?"
+    ],
+    "feature_family_keys": [
+      "planning_wizard.final_review_approval",
+      "orchestrator.plan_compile_and_navigation",
+      "orchestrator.node_graph_and_recovery",
+      "orchestrator.evidence_history_and_ledger",
+      "usage.navigation_refresh_export_and_billing"
+    ],
+    "research_queries": [
+      "accessible tab roving tabindex keyboard interaction production test patterns",
+      "idempotent workflow retry safe checkpoint attempt lineage partial failure design",
+      "multi-tenant billing account switch cache isolation atomic UI projection",
+      "large evidence export redaction streaming schema version partial file cleanup"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000071_attempt_0015_terminal"
+}

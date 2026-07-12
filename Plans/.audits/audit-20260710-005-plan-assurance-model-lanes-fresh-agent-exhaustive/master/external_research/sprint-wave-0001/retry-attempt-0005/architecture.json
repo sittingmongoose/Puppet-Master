@@ -1,0 +1,32 @@
+{
+  "schema_version": "external-research-recovery-architecture-v5",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0005",
+  "attempt_id": "attempt-0005",
+  "status": "BLOCKED_AWAITING_INDEPENDENT_PRELAUNCH",
+  "activation_granted": false,
+  "assignment_ids": ["ER-0003", "ER-0008"],
+  "active_semantic_cap": 2,
+  "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+  "activation_visibility_solution": {
+    "problem": "attempt-0004 leaves could read only blocked immutable intents and could not see the later activation",
+    "core_first": "future generator writes one immutable activation core with exact final scope, lane, controller, V6, and independent gate",
+    "authorization_second": "future generator writes one unique immutable authorization per assignment binding its blocked intent, packet, output, core path and core SHA",
+    "envelope_last": "future generator writes one immutable envelope binding the core SHA and both authorization hashes",
+    "no_circular_hashes": true,
+    "prelaunch_intent_role": "immutable lineage and packet/output binding only; false activation cannot authorize and cannot veto a later valid authorization"
+  },
+  "write_order": ["activation-transaction/activation-core.json", "activation-transaction/leaf-dispatch-authorizations/ER-0003.json", "activation-transaction/leaf-dispatch-authorizations/ER-0008.json", "activation-transaction/activation-envelope.json"],
+  "identity_separation": {
+    "leaf_result": "canonical agent_path only; task_thread_id and native IDs forbidden",
+    "controller_receipt": "owns task/native thread identity after spawn, terminal PMR1, and result hash exist",
+    "independent_capture": "owns native thread and turn state from Codex task state",
+    "postrun_join": "joins result agent path to receipt and capture native identity"
+  },
+  "output_obligations": {"exact_fresh_research_key": "fresh_current_public_web_research_redone", "leaf_local_schema_check": true, "complete_unique_source_registry": true, "result_required_before_pmr1": true, "pmr1_without_result_zero_credit": true},
+  "preserved_cumulative_floor_ids": ["ER-0002", "ER-0001", "ER-0004", "ER-0005", "ER-0006", "ER-0007"],
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "coverage_credit": 0,
+  "cumulative_research_credit": 0
+}

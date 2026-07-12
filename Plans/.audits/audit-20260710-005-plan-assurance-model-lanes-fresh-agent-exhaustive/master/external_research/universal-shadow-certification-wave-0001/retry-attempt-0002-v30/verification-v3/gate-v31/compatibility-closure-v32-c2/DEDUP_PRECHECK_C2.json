@@ -1,0 +1,30 @@
+{
+  "schema_version": "a005-c2-compatibility-terminal-dedup-precheck-v1",
+  "status": "PASS_NO_EQUIVALENT_TERMINAL",
+  "scope": "audit_metadata_json_only",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "slot_id": "c2-atomic8-prelaunch",
+  "exact_target_namespace": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/verification-v3/gate-v31/compatibility-closure-v32-c2",
+  "scan_root_relative_to_audit": ".",
+  "target_namespace_excluded_from_foreign_scan": true,
+  "equivalence_predicate": {
+    "json_object_required": true,
+    "slot_id_must_equal": "c2-atomic8-prelaunch",
+    "schema_version_must_contain_all": [
+      "compatibility",
+      "terminal"
+    ],
+    "terminal_status_alternatives": [
+      "PASS_PREPARATION_ONLY_BLOCKED_NO_CAPTURE_NO_ACTIVATION",
+      "PASS_PREPARATION_ONLY_BLOCKED_NO_REVIEWER_NO_CAPTURE_NO_ACTIVATION",
+      "BLOCKED_PREPARATION_ONLY_FUTURE_REVIEWER_AND_CAPTURE_AUTHORITIES_ABSENT"
+    ]
+  },
+  "equivalent_terminal_count": 0,
+  "equivalent_terminal_paths": [],
+  "deduplicate_first": true,
+  "new_namespace_creation_permitted": true,
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "credit": 0
+}

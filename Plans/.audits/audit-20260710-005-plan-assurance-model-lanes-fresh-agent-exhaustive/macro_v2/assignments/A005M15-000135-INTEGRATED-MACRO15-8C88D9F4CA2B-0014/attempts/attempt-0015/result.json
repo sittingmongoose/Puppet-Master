@@ -1,0 +1,786 @@
+{
+  "assignment_id": "A005M15-000135-INTEGRATED-MACRO15-8C88D9F4CA2B-0014",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "operations",
+        "acceptance_oracles",
+        "accessibility",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.widget.remove must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 26235,
+          "line_start": 26235,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.widget.remove records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 26280,
+          "line_start": 26280,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The remove control has an explicit dispatcher, typed-contract, projected-availability, receipt, accessibility, and negative persisted-event certification surface.",
+      "item_id": "M15-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "catalog.widget_remove is wired as a no-persist UI command whose dispatch must still produce an attributable receipt or explicit route/open disposition and whose production evidence must cover state, disabled copy, accessibility, and regression behavior.",
+      "title": "Widget remove has a bounded no-persist dispatch contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "failures_recovery",
+        "security_privacy",
+        "recovery_rollback",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_location\": \"Widget surface > Remove\",",
+          "line_end": 26230,
+          "line_start": 26230,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.widget.remove records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 26280,
+          "line_start": 26280,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_destructive_recovery_contract",
+      "impact": "A builder could implement immediate irreversible removal, inconsistent confirmation, or unrecoverable dependent-state cleanup while still satisfying every listed wiring test.",
+      "item_id": "M15-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "The destructive Remove entry specifies dispatch receipt behavior but no confirmation policy, authorization predicate, cascade semantics, undo window, restoration path, or oracle for failed/partial removal.",
+      "title": "Widget removal lacks destructive-action and recovery semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "authority",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.\",",
+          "line_end": 26404,
+          "line_start": 26404,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The row cannot be used as evidence or authority for executable compilation, queue creation, code generation, or production building while activation remains disabled.",
+      "item_id": "M15-003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "orchestrator.plan.compile.open_build has an unusually explicit pre-enable authority boundary that forbids all executable build/runtime side effects until three named canonical contracts enable activation.",
+      "title": "Plan Compile open-build is explicitly pre-enable only"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.87,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "security_privacy",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.plan_compile.open_build opens the resulting build/artifact route when a build identity exists, or records a disabled route/open receipt while runtime activation remains blocked; it must not fabricate plan_compile.command_applied.\",",
+          "line_end": 26413,
+          "line_start": 26413,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "underspecified_build_identity_validation",
+      "impact": "An implementation could open a stale, cross-project, unauthorized, or otherwise invalid artifact identity without violating the declared effect assertion.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "The open-build effect is conditional on a build identity existing, but this row does not define identity provenance, project binding, freshness, authorization, terminal-state eligibility, or the distinct failure results for missing versus invalid identities.",
+      "title": "Open-build identity eligibility is not defined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "concurrency_races",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Duplicate idempotency key returns the same PlanCompileRun identity and does not create a second ordinary launch\",",
+          "line_end": 26462,
+          "line_start": 26462,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Approve And Build creates or binds only the durable PlanCompileRun contract identity under pre-enable governance; executable runtime dispatch/build work remains disabled until PNC runtime activation gates pass.\",",
+          "line_end": 26465,
+          "line_start": 26465,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Retries are constrained to converge on one durable run identity, and approval cannot be mistaken for executable runtime launch authority.",
+      "item_id": "M15-005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "Approve And Build specifies CAS-bound displayed inputs, idempotent run identity reuse, durable PlanCompileRun binding, visible pending-launch projection, and a hard pre-enable prohibition on executable build work.",
+      "title": "Approve And Build binds one durable pre-enable run identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Assert cmd.planning_wizard.approve_and_build emits expected event type planning.approval_cas_receipt.written with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type planning.plan_approved with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type plan_compile.run_created_or_bound with command_id, origin, correlation_id, and handler target.\"",
+          "line_end": 26511,
+          "line_start": 26511,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_multi_event_atomicity_and_recovery",
+      "impact": "A crash or rejection between emissions could leave approval receipt, approval state, and PlanCompileRun binding divergent, with no specified replay or operator recovery oracle.",
+      "item_id": "M15-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "The row requires three correlated event types but does not declare their transaction boundary, mandatory ordering, retry/deduplication behavior per event, compensation when only a prefix commits, or the state projection that exposes incomplete binding.",
+      "title": "Approve And Build has no partial-emission recovery contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Auto/On/Off capability policy persists at global/project scope and appears in the effective testing policy snapshot\",",
+          "line_end": 26529,
+          "line_start": 26529,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_policy_precedence_and_mutation_authority",
+      "impact": "Different builders could compute contradictory effective testing capability or allow unauthorized scope changes while producing the named updated event and snapshot.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "statement": "Capability policy persistence names global and project scopes but not precedence, inheritance/reset semantics, authorized mutators, optimistic-concurrency behavior, scope-deletion fallback, or how Auto resolves when capability availability changes during dispatch.",
+      "title": "Testing capability policy lacks scope-resolution rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "gui_truth",
+        "acceptance_oracles",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"show_when_possible visibility policy persists at global/project scope and appears in the effective testing policy snapshot\",",
+          "line_end": 26591,
+          "line_start": 26591,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Regression evidence proves show_when_possible does not hide unavailable evidence or critical blockers\",",
+          "line_end": 26593,
+          "line_start": 26593,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The visible-testing preference cannot legitimately turn unavailable evidence or critical blockers into an apparently healthy hidden state.",
+      "item_id": "M15-008",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "The visibility-policy control persists show_when_possible into the effective policy snapshot and explicitly requires regression evidence that visibility preference does not suppress unavailable evidence or critical blockers.",
+      "title": "Visibility preference preserves blocker truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"show_when_possible visibility policy persists at global/project scope and appears in the effective testing policy snapshot\",",
+          "line_end": 26591,
+          "line_start": 26591,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_visibility_policy_precedence_and_authority",
+      "impact": "Conflicting scope values or concurrent edits can yield nondeterministic visibility, and unauthorized callers may be able to change evidence exposure policy.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "The visibility policy does not define global-versus-project precedence, inheritance/reset behavior, mutation authority, version conflict handling, or the deterministic fallback when a project context becomes stale or disappears.",
+      "title": "Visibility policy has unresolved scope and authority semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Background action preserves visible session identity, test receipt refs, and recovery route without discarding evidence streams\",",
+          "line_end": 26653,
+          "line_start": 26653,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_stream_handoff_recovery_protocol",
+      "impact": "A background operation may appear successful while losing events, duplicating subscriptions, leaking stream resources, or leaving foreground/background ownership ambiguous after a network or process failure.",
+      "item_id": "M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "Backgrounding promises evidence-stream preservation and a recovery route, but it does not define the handoff acknowledgement, last-consumed cursor, buffering limit, reconnect/replay semantics, duplicate suppression, cleanup ownership, or oracle for a partially completed handoff.",
+      "title": "Background session handoff lacks stream continuity semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Regression evidence proves Open never fabricates a running test session from fixture/demo state\",",
+          "line_end": 26717,
+          "line_start": 26717,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The Open action has an explicit falsifiable guard against presenting fixture/demo data as a real active testing session.",
+      "item_id": "M15-011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "testing.session.open explicitly forbids fabricating a running session from fixture or demo state, preserving production GUI truth.",
+      "title": "Session Open forbids fixture-to-live fabrication"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.88,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Open action routes to the visible testing session with stable session id, active target, projection freshness, and receipt refs\",",
+          "line_end": 26715,
+          "line_start": 26715,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs\",",
+          "line_end": 26839,
+          "line_start": 26839,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_session_replacement_race_contract",
+      "impact": "Open or Watch can bind to a session that terminates or is replaced between projection read and handler execution, risking display of the wrong stream or stale evidence under a nominally stable identifier.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "The Open and Watch rows require stable session identity and projection freshness but do not define version tokens, compare-and-bind semantics, behavior when the active session is replaced during dispatch, or the resulting disabled/error transition and focus destination.",
+      "title": "Visible-session commands lack replacement-race semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "acceptance_oracles",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Redaction inspection opens only redaction manifest/projection evidence for the selected testing session\",",
+          "line_end": 26777,
+          "line_start": 26777,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Regression evidence proves raw secret/local account data is not exposed by redaction inspection\",",
+          "line_end": 26779,
+          "line_start": 26779,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The inspection surface is explicitly limited to derived redaction evidence and has a regression oracle against direct secret or local-account disclosure.",
+      "item_id": "M15-013",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "Redaction inspection is constrained to the selected session's manifest/projection evidence and explicitly excludes raw secret and local-account data.",
+      "title": "Redaction inspection has a clear minimum-disclosure boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.86,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Redaction inspection opens only redaction manifest/projection evidence for the selected testing session\",",
+          "line_end": 26777,
+          "line_start": 26777,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Disabled reasons cover missing manifest, policy denial, unavailable evidence, and stale projection\",",
+          "line_end": 26778,
+          "line_start": 26778,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_redaction_inspection_lifecycle_and_audit_contract",
+      "impact": "Sensitive derived metadata could be retained, cached, exported, or observed by an insufficiently authorized actor without violating the raw-secret non-exposure regression test.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "The row names policy denial and minimum disclosure but does not define the inspecting principal, authorization decision evidence, audit receipt, manifest sensitivity classification, cache/export restrictions, retention, revocation, or behavior if the manifest changes while open.",
+      "title": "Redaction inspection lacks lifecycle and audit semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs\",",
+          "line_end": 26839,
+          "line_start": 26839,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Disabled reasons cover no active session, unavailable stream, policy Off, missing approval, redaction block, and stale session projection\",",
+          "line_end": 26840,
+          "line_start": 26840,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_subscription_lifecycle_and_scale_contract",
+      "impact": "Long-running or repeated Watch operations may leak subscriptions, overwhelm the UI, lose ordering, duplicate evidence, or silently stall after network loss with no falsifiable degraded-state behavior.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071"
+      ],
+      "statement": "Watch defines entry eligibility and non-creation behavior but not unsubscribe ownership, terminal-session behavior, reconnect/backoff, cursor replay, ordering and deduplication, backpressure, buffer or subscriber limits, degraded GUI projection, or recovery after offline/network loss.",
+      "title": "Watch lacks subscription lifecycle, recovery, and scale limits"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "}",
+          "line_end": 26893,
+          "line_start": 26893,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The assigned suffix reaches the canonical root terminator, so the structural source units are not dangling fragments and their semantic entries are reviewed in whole-file closing context.",
+      "item_id": "M15-016",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_SUFFIX:Plans/Wiring_Matrix.production.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The source suffix closes the entries object and then the JSON root, providing complete structural termination for the assigned excerpt.",
+      "title": "Assigned source suffix closes the JSON structure"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        26228,
+        26581
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005",
+        "M15-006",
+        "M15-007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all widget remove/reset/resize, Plan Compile open-build, Planning Wizard Approve And Build, and testing capability-policy wiring lines. Exact contracts strongly bound dispatch, projected availability, accessibility, receipts/events, idempotency, and pre-enable authority; adversarial review found missing destructive recovery, build-identity eligibility, multi-event atomicity, and policy precedence/authority semantics.",
+      "window_id": "WIN-8C88D9F4CA2B-0070"
+    },
+    {
+      "core_range": [
+        26582,
+        26893
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071",
+        "SEMANTIC:JSON_SUFFIX:Plans/Wiring_Matrix.production.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "M15-008",
+        "M15-009",
+        "M15-010",
+        "M15-011",
+        "M15-012",
+        "M15-013",
+        "M15-014",
+        "M15-015",
+        "M15-016"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all visibility-policy, testing-session background/open/redaction-inspect/watch, event-test, accessibility, and JSON-suffix lines. Exact contracts preserve blocker truth, forbid fixture-to-live fabrication, and bound redaction disclosure; adversarial review found unresolved policy precedence, stream handoff and subscription recovery, active-session races, and redaction inspection lifecycle/audit semantics.",
+      "window_id": "WIN-8C88D9F4CA2B-0071"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0014",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": [
+      "WIN-8C88D9F4CA2B-0070",
+      "WIN-8C88D9F4CA2B-0071"
+    ],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner contract defines the typed payload and result fields, authorization predicates, and failure enums for each UICommand named in these wiring entries?",
+      "Which owner defines atomicity, ordering, replay, and compensation across planning.approval_cas_receipt.written, planning.plan_approved, and plan_compile.run_created_or_bound?",
+      "Which testing-policy contract defines global/project precedence, inheritance, reset semantics, authorized mutators, and version-conflict behavior for capability and visibility policies?",
+      "Which Automated Testing owner defines session stream cursors, replacement races, background handoff, Watch unsubscribe/reconnect/backpressure, and terminal-session recovery?",
+      "Which privacy owner defines authorization evidence, audit receipts, retention, caching, export, and revocation for redaction manifest/projection inspection?"
+    ],
+    "feature_family_keys": [
+      "widget_command_wiring",
+      "plan_compile_pre_enable",
+      "planning_wizard_approval",
+      "automated_testing_policy",
+      "visible_testing_session"
+    ],
+    "research_queries": [
+      "idempotent multi-event command atomicity outbox replay compensation acceptance tests",
+      "event stream subscription reconnect cursor backpressure duplicate suppression UI degraded state",
+      "hierarchical global project policy precedence optimistic concurrency authorization",
+      "redaction manifest inspection least privilege audit retention cache export controls",
+      "accessible destructive widget controls confirmation undo keyboard focus announcement"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000135_attempt_0015_terminal"
+}

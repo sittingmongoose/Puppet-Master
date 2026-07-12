@@ -1,0 +1,35 @@
+{
+  "schema_version": "scenario-late-cohorts-v32-terminal-verification-v2",
+  "status": "PASS_BLOCKED_ZERO_LAUNCH",
+  "authority_sha256": "276f361e00838098cb89ecf825d26832cfe75d2d35b4ac53df966f2e950ee7af",
+  "verifier_sha256": "a9755ffa2ceafb6b77cef01396eebd168ed8814f35643aabeab6c957680a97ea",
+  "test_sha256": "1b2025a8db6c583f7f7b4fa8b40034b002da48c1bea0982e0da901cc40dc1584",
+  "verifier_stdout_sha256": "03d6d748c146845d34db394152b3fed38a485a8557c0c35dd1cfffc92ddc9b7b",
+  "test_stdout_sha256": "c7e7a5b2f0851b9335bc800952accc3156812aea717874dde9590fdf2f23e11f",
+  "runtime": {
+    "python": "3.12.13",
+    "jsonschema": "4.26.0"
+  },
+  "tests": {
+    "retained": 970,
+    "added": 96,
+    "passed": 1066,
+    "failed": 0,
+    "total": 1066,
+    "added_case_digest": "e9a593f0442bafe5d6d7260ff4153b1b54238847a56c695e2aec10aa4eabc997"
+  },
+  "exact_future_path_binding_checks": 64,
+  "actual_zero_state_census": {
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "live_v31_identity_rows": 0,
+    "activation_transactions": 0
+  },
+  "activation": false,
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "spawn": "none",
+  "credit": 0,
+  "future_activation_policy_v32_required": true
+}

@@ -1,0 +1,590 @@
+{
+  "assignment_id": "A005M15-000070-INTEGRATED-MACRO15-A27048DCD484-0003",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "compatibility_migration", "builder_discretion", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 5736,
+          "line_start": 5736,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_authority_boundary",
+      "impact": "The dashboard and project controls in this window cannot be treated as implementation or acceptance evidence until canonical ownership and production wiring are supplied.",
+      "item_id": "A005M15-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-016", "STRUCTURAL:$.controls"],
+      "statement": "The inventory explicitly keeps these controls as concept/source-lineage and forbids promotion by inference.",
+      "title": "Concept-only controls are explicitly non-production"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "accessibility", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"missing_accessible_name_candidate\"",
+          "line_end": 5805,
+          "line_start": 5805,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "accessibility_gap",
+      "impact": "An eventual production Open Folder control requires an accessible-name contract and test; the concept markup is not sufficient evidence.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-016", "STRUCTURAL:$.controls"],
+      "statement": "The Open Folder control is explicitly inventoried with a missing accessible-name candidate.",
+      "title": "Open Folder accessible name is unresolved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "ownership", "consumers", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 6129,
+          "line_start": 6129,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_non_promotion_boundary",
+      "impact": "Repeated Open, Settings, Archive, and Remove affordances remain lineage inventory; downstream builders and consumers must wait for a canonical command and receipt contract.",
+      "item_id": "A005M15-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-017", "STRUCTURAL:$.controls"],
+      "statement": "This window consistently declares the repeated project action controls non-production rather than silently implying executable behavior.",
+      "title": "Repeated project actions are deliberately lineage-only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["failures_recovery", "authority_boundaries", "destructive_actions", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Remove\",",
+          "line_end": 6140,
+          "line_start": 6140,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 6157,
+          "line_start": 6157,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "destructive_action_contract_missing",
+      "impact": "Promotion of Remove without confirmation, authorization, idempotency, failure, recovery, and receipt semantics could cause irreversible project loss or misleading success.",
+      "item_id": "A005M15-I004",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-017", "STRUCTURAL:$.controls"],
+      "statement": "The production semantics for the destructive Remove affordance are intentionally absent and must not be invented by a builder.",
+      "title": "Remove lifecycle remains unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "compatibility_migration", "acceptance_oracles", "privacy_data_lifecycle"],
+      "evidence": [
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 6632,
+          "line_start": 6632,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "fixture_exclusion_boundary",
+      "impact": "The local working-directory value cannot leak into acceptance evidence or be mistaken for a portable production default.",
+      "item_id": "A005M15-I005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-018", "STRUCTURAL:$.controls"],
+      "statement": "The local path in Project Settings is explicitly classified as a fixture and excluded from acceptance evidence.",
+      "title": "Local path fixture is explicitly quarantined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "invalid_states_transitions", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 6514,
+          "line_start": 6514,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 6515,
+          "line_start": 6515,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "modal_accessibility_gap",
+      "impact": "A pointer-only settings modal can strand keyboard and assistive-technology users and leave modal open/close state misleading.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-018", "STRUCTURAL:$.controls"],
+      "statement": "The Project Settings modal click targets are explicitly missing semantic roles and keyboard parity.",
+      "title": "Project Settings modal lacks keyboard-semantic parity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["capabilities", "contracts", "states_transitions", "authority", "acceptance_oracles", "builder_discretion"],
+      "evidence": [
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\"",
+          "line_end": 6959,
+          "line_start": 6959,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "command_or_retirement_required",
+      "impact": "Plan Compile Configuration and Approve And Build cannot be implemented safely until each is either retired or bound to command, state, handler, receipt, and test evidence.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-019", "STRUCTURAL:$.controls"],
+      "statement": "The reconciliation explicitly identifies production-looking terminal wizard steps that still require a concrete command or retirement decision.",
+      "title": "Terminal wizard steps have no production command"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "security_privacy", "partial_failure", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Upload Files (Max 10, 5MB each)\",",
+          "line_end": 7230,
+          "line_start": 7230,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "untrusted_file_intake_contract_missing",
+      "impact": "Count and size copy alone does not define file-type validation, malicious-content handling, retention, rejection UX, batch atomicity, or partial-upload recovery.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-019", "STRUCTURAL:$.controls"],
+      "statement": "The concept exposes upload limits but no production contract for treating uploaded files as untrusted inputs.",
+      "title": "Requirements upload safety semantics are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "consumers", "propagation", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 7507,
+          "line_start": 7507,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "transition_contract_unassigned",
+      "impact": "Starting the planning interview cannot be assumed to persist provider/model selections, create a run, or move the wizard state until an owner defines those effects.",
+      "item_id": "A005M15-I009",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-020", "STRUCTURAL:$.controls"],
+      "statement": "The Start Planning Interview transition remains concept-only, with its production consumers and propagation effects unspecified.",
+      "title": "Interview-start transition has no canonical effects"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "gui_misleading_states", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\"",
+          "line_end": 7597,
+          "line_start": 7597,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "binder_navigation_accessibility_gap",
+      "impact": "Document status pills may look active and navigable while remaining semantically unavailable to assistive technology.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-020", "STRUCTURAL:$.controls"],
+      "statement": "The wizard binder uses custom click targets without semantic roles for document navigation/status controls.",
+      "title": "Wizard binder pills lack semantic roles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "invalid_states_transitions", "scale_performance", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"type\": \"number\",",
+          "line_end": 7811,
+          "line_start": 7811,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "numeric_bounds_and_validation_missing",
+      "impact": "Unbounded interview configuration values can admit zero, negative, excessive, non-finite, or otherwise invalid workloads with undefined error UX and resource impact.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-021", "STRUCTURAL:$.controls"],
+      "statement": "Numeric interview settings supply example values but no minimum, maximum, validation, or rejection contract in the assigned control objects.",
+      "title": "Interview numeric settings have no bounds"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "failures_recovery", "propagation", "recovery_rollback", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 7701,
+          "line_start": 7701,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "resubmission_lifecycle_unassigned",
+      "impact": "A production resubmission flow could duplicate work, lose annotations, or present stale approval state unless retry, failure, receipt, and rollback behavior are canonically assigned.",
+      "item_id": "A005M15-I012",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-021", "STRUCTURAL:$.controls"],
+      "statement": "Resubmit with Annotations is present as a concept control, but its production lifecycle and recovery semantics remain unspecified.",
+      "title": "Annotation resubmission lifecycle is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "        \"command_id\": \"cmd.prd_builder.approve_for_planning_wizard\",",
+          "line_end": 8384,
+          "line_start": 8384,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"handler_target\": \"handlers::prd_builder::approve_for_planning_wizard\",",
+          "line_end": 8385,
+          "line_start": 8385,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "concrete_production_wiring_contract",
+      "impact": "The approval action has a stable dispatcher and handler identity that downstream wiring can implement and verify without inventing command names.",
+      "item_id": "A005M15-I013",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-022", "STRUCTURAL:$.controls"],
+      "statement": "Approve PRD for Planning Wizard is the only assigned control in this macro with a concrete production command and handler target.",
+      "title": "PRD approval has concrete command wiring"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["consumers", "acceptance_oracles", "operations", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"test_evidence\": \"production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification\"",
+          "line_end": 8389,
+          "line_start": 8389,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_certification_oracle",
+      "impact": "Certification is falsifiable across rendering, dispatch, disabled reasons, effects, accessibility, and regression coverage rather than being inferred from the concept fixture.",
+      "item_id": "A005M15-I014",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-022", "STRUCTURAL:$.controls"],
+      "statement": "The approval control explicitly requires a multi-surface production evidence bundle before implementation certification.",
+      "title": "PRD approval certification has a falsifiable oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "gui_misleading_states", "accessibility", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "        \"keyboard_semantics\": \"keyboard activation parity required for every click/tap action\",",
+          "line_end": 8379,
+          "line_start": 8379,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"focus_semantics\": \"focus-visible state required and disabled reason must be perceivable\",",
+          "line_end": 8380,
+          "line_start": 8380,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_accessibility_contract",
+      "impact": "The eventual control must expose activation parity, visible focus, and a perceivable disabled reason, preventing visually enabled but semantically unusable approval states.",
+      "item_id": "A005M15-I015",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-022", "STRUCTURAL:$.controls"],
+      "statement": "The production accessibility contract defines keyboard and focus semantics for the approval action.",
+      "title": "PRD approval accessibility semantics are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "operations", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "        \"receipt_or_event_effect\": \"prd_builder.approval_snapshot.created, prd_builder.prd_pack_approved\",",
+          "line_end": 8388,
+          "line_start": 8388,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "approval_failure_and_idempotency_missing",
+      "impact": "Two declared effects can diverge under partial failure or repeated concurrent approval; without atomicity, ordering, idempotency, retry, and rollback semantics, consumers may observe an approved pack without a matching snapshot or vice versa.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-022", "STRUCTURAL:$.controls"],
+      "statement": "The production wiring names two approval effects but does not specify their atomicity, ordering, deduplication, retry, or compensation behavior.",
+      "title": "PRD approval partial-failure semantics are missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["ownership", "compatibility_migration", "builder_discretion", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 8459,
+          "line_start": 8459,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_owner_adjudication_boundary",
+      "impact": "Provider, model, effort, output, and approval-policy selectors cannot be promoted from the PMConcept inventory without canonical owner acceptance and production wiring evidence.",
+      "item_id": "A005M15-I017",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-023", "STRUCTURAL:$.controls"],
+      "statement": "The plan-compile configuration selectors are explicitly lineage-only and do not grant builder discretion to infer production support.",
+      "title": "Plan-compile selectors remain owner-adjudicated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "security_privacy", "authority_boundaries", "gui_misleading_states", "destructive_actions", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Auto-approve Require Prompt\",",
+          "line_end": 8746,
+          "line_start": 8746,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 8758,
+          "line_start": 8758,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "approval_policy_authority_contract_missing",
+      "impact": "A misleading or over-broad Auto-approve implementation could bypass prompts for destructive or privileged operations unless scope, precedence, identity, persistence, audit, revocation, and disabled-reason semantics are canonically defined.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-023", "STRUCTURAL:$.controls"],
+      "statement": "The authority-sensitive Auto-approve versus Require Prompt selector is visible in concept lineage but has no production authority-boundary contract.",
+      "title": "Auto-approve policy lacks authority semantics"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [5713, 6102],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-016", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I001", "A005M15-I002"],
+      "reviewed": true,
+      "summary": "Reviewed dashboard and project-entry controls; recorded the explicit concept-only boundary and the Open Folder accessible-name gap.",
+      "window_id": "WIN-A27048DCD484-0017"
+    },
+    {
+      "core_range": [6103, 6494],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-017", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I003", "A005M15-I004"],
+      "reviewed": true,
+      "summary": "Reviewed repeated project Open, Settings, Archive, and Remove controls; preserved their lineage-only status and flagged the unresolved destructive Remove lifecycle.",
+      "window_id": "WIN-A27048DCD484-0018"
+    },
+    {
+      "core_range": [6495, 6878],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-018", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I005", "A005M15-I006"],
+      "reviewed": true,
+      "summary": "Reviewed Project Settings and early wizard navigation; confirmed fixture exclusion and found explicit modal role and keyboard-parity gaps.",
+      "window_id": "WIN-A27048DCD484-0019"
+    },
+    {
+      "core_range": [6879, 7270],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-019", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I007", "A005M15-I008"],
+      "reviewed": true,
+      "summary": "Reviewed terminal wizard navigation and project/requirements intake; identified explicit command-or-retirement blockers and missing untrusted-file intake semantics.",
+      "window_id": "WIN-A27048DCD484-0020"
+    },
+    {
+      "core_range": [7271, 7654],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-020", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I009", "A005M15-I010"],
+      "reviewed": true,
+      "summary": "Reviewed provider/model selectors, interview-start controls, and binder pills; found unassigned transition effects and explicit custom-control accessibility gaps.",
+      "window_id": "WIN-A27048DCD484-0021"
+    },
+    {
+      "core_range": [7655, 8047],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-021", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I011", "A005M15-I012"],
+      "reviewed": true,
+      "summary": "Reviewed resubmission, provider/model, numeric, checkbox, and interview navigation controls; found numeric validation and resubmission lifecycle gaps.",
+      "window_id": "WIN-A27048DCD484-0022"
+    },
+    {
+      "core_range": [8048, 8437],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-022", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I013", "A005M15-I014", "A005M15-I015", "A005M15-I016"],
+      "reviewed": true,
+      "summary": "Reviewed PRD review fixtures and the production-wired approval control; captured its command, certification, and accessibility contracts plus missing multi-effect failure semantics.",
+      "window_id": "WIN-A27048DCD484-0023"
+    },
+    {
+      "core_range": [8438, 8836],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-023", "STRUCTURAL:$.controls"],
+      "item_ids": ["A005M15-I017", "A005M15-I018"],
+      "reviewed": true,
+      "summary": "Reviewed plan-compile provider, model, effort, output, and approval-policy selectors; preserved their owner-adjudicated boundary and identified the missing Auto-approve authority contract.",
+      "window_id": "WIN-A27048DCD484-0024"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0003",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": ["WIN-A27048DCD484-0017", "WIN-A27048DCD484-0018", "WIN-A27048DCD484-0019", "WIN-A27048DCD484-0020", "WIN-A27048DCD484-0021", "WIN-A27048DCD484-0022", "WIN-A27048DCD484-0023", "WIN-A27048DCD484-0024"],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner document will promote or retire each project-management and wizard control still classified as concept-only?",
+      "Where are atomicity, idempotency, retry, and compensation semantics for prd_builder.approval_snapshot.created and prd_builder.prd_pack_approved defined?",
+      "Which canonical authority policy scopes Auto-approve versus Require Prompt across destructive and privileged operations?"
+    ],
+    "feature_family_keys": [
+      "project_management_controls",
+      "project_settings_modal",
+      "planning_wizard_navigation",
+      "requirements_file_intake",
+      "planning_interview_configuration",
+      "prd_approval_handoff",
+      "plan_compile_provider_policy"
+    ],
+    "research_queries": [
+      "secure desktop file intake validation partial batch failure retention patterns",
+      "idempotent multi-event approval transaction outbox compensation patterns",
+      "accessible wizard navigation disabled reason focus keyboard semantics",
+      "least privilege auto approval policy audit revocation destructive actions"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000070_attempt_0015_terminal"
+}

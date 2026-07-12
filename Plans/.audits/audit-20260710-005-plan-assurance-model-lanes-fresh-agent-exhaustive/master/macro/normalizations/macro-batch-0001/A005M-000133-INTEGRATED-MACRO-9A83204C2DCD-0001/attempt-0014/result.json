@@ -1,0 +1,2553 @@
+{
+  "assignment_id": "A005M-000133-INTEGRATED-MACRO-9A83204C2DCD-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "This file is the wiring matrix template and example entries.",
+          "line_end": 22,
+          "line_start": 22,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "The current production GUI/PMConcept repair artifact is `Plans/Wiring_Matrix.production.json`; `Plans/Wiring_Matrix.production.exclusions.json` records generic, parser, glob, or compatibility-only command-family tokens that are not valid production wiring rows.",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Builders can distinguish illustrative rows from production evidence and avoid treating parser exclusions as real bindings.",
+      "item_id": "M133-001",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The Markdown file is a template/example owner, while the schema-validated production matrix and its exclusions artifact are the current production wiring authority.",
+      "title": "Template prose and production JSON authority are explicitly separated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "gui_truth",
+        "accessibility",
+        "observability_support",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, required evidence, typed state selector, disabled-reason projection, effect contract, accessibility contract, and test evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.",
+          "line_end": 150,
+          "line_start": 150,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This provides a strong end-to-end contract from visible control through dispatch and observable proof.",
+      "item_id": "M133-002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "A production row is more than a command-to-handler edge: it includes typed selection, disabled-state projection, effect, accessibility, test, and evidence obligations.",
+      "title": "Production rows have typed state, effect, accessibility, and evidence contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "gui_truth",
+        "accessibility",
+        "test_falsifiability",
+        "cross_document_seams",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `evidence_required` | Evidence artifact or bundle required to satisfy the gate. |",
+          "line_end": 43,
+          "line_start": 43,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "GATE-010 runs JSON Schema validation as its first check and fails production rows that lack typed state selector, disabled-reason projection, effect contract, accessibility contract, test evidence, or event-test requirements.",
+          "line_end": 210,
+          "line_start": 210,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "contract_inconsistency",
+      "impact": "A generator or builder following the template can produce structurally plausible but gate-invalid rows, and the examples are not falsifiable against the live production schema.",
+      "item_id": "M133-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The canonical seven-column template omits the typed state selector, disabled reason, effect, accessibility, test evidence, and event-test requirements that the later production contract says are mandatory.",
+      "title": "Base template and example shape lag the production row contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "acceptance_oracles",
+        "concurrency_races",
+        "test_falsifiability",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- success atomically writes `approval_cas_receipt`, `PlanApproved`, and `PlanCompileRun_created_or_bound`;",
+          "line_end": 182,
+          "line_start": 182,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- duplicate idempotency key plus identical CAS inputs returns the same `PlanCompileRun`;",
+          "line_end": 183,
+          "line_start": 183,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Duplicate launch and stale-review hazards have directly testable acceptance behavior.",
+      "item_id": "M133-004",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Approval is bound to all displayed planning revisions and hashes; stale input fails closed, success atomically records approval and compile binding, and identical retries return the same PlanCompileRun.",
+      "title": "Approve And Build has strong CAS, atomicity, and idempotency oracles"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.65,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Orchestrator Plan Compile opens as pending-launch or durable-run projection, not as a tab-switch-only success;",
+          "line_end": 184,
+          "line_start": 184,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_partial_failure_contract",
+      "impact": "The UI can misleadingly look unsuccessful after a durable approval, encouraging a second launch attempt or leaving an approved run undiscoverable.",
+      "item_id": "M133-005",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The contract says the compile view opens as a pending-launch or durable-run projection, but it does not define the user-visible state, retry key, or reconciliation behavior if the atomic approval succeeds and opening or projecting the compile run fails.",
+      "title": "Post-approval projection failure has no explicit recovery outcome"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "gui_truth",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The production matrix rows for `cmd.testing.capability_policy.set`, `cmd.testing.visibility_policy.set`, `cmd.testing.session.open`, `cmd.testing.session.watch`, `cmd.testing.session.background`, and `cmd.testing.session.redaction.inspect` are required for visible testing readiness. Evidence must cover global and per-project `Auto` / `On` / `Off`, inheritance/effective-policy projection, `show_when_possible`, `Open` / `Watch`, browser navigation/click/form/assertion/screenshot/console/network streams, native preview/simulator/emulator/device streams, redaction-before-display/persist, disabled reasons, and background continuation.",
+          "line_end": 189,
+          "line_start": 189,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The testing GUI has an explicit behavior and privacy envelope instead of a single launch button.",
+      "item_id": "M133-006",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Testing readiness spans inherited Auto/On/Off policy, visible browser and native streams, open/watch controls, redaction before display or persistence, disabled reasons, and background execution.",
+      "title": "Visible testing wiring includes policy projection, streams, redaction, and background continuation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "accessibility",
+        "gui_truth",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`ui_element_id -> accessible_name -> role -> keyboard_contract -> state_attributes -> disabled_reason_projection -> ui_command_id -> handler_location -> expected_event_types -> evidence_required`",
+          "line_end": 195,
+          "line_start": 195,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "The acceptance bar is zero unnamed actionable controls, zero retained custom clickable elements without keyboard parity, correct tab/menu/disclosure state semantics, visible focus handling, and disabled reason projection for every disabled production action.",
+          "line_end": 197,
+          "line_start": 197,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Accessibility failures are objectively gateable rather than left to visual inspection.",
+      "item_id": "M133-007",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Every retained production control must bind accessible name, role, keyboard behavior, state attributes, disabled reason, command, handler, events, and evidence, with zero unnamed or keyboard-inaccessible actions.",
+      "title": "Accessibility acceptance bar is explicit and zero-tolerance"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "localization",
+        "accessibility",
+        "gui_truth",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`ui_element_id -> accessible_name -> role -> keyboard_contract -> state_attributes -> disabled_reason_projection -> ui_command_id -> handler_location -> expected_event_types -> evidence_required`",
+          "line_end": 195,
+          "line_start": 195,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_localization_contract",
+      "impact": "A row can pass command and accessibility checks while labels or dynamic reasons are clipped, untranslated, or semantically inconsistent in non-default locales.",
+      "item_id": "M133-008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The otherwise exhaustive production-control evidence chain does not bind string identity, locale-aware formatting, expansion/overflow behavior, translated disabled reasons, or bidirectional layout behavior.",
+      "title": "Production-control chain has no localization contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "operations",
+        "missing_callers_consumers",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring matrix entry unless `Plans/Wiring_Matrix.production.exclusions.json` records the token as a parser false positive, glob token, invalid historical alias, generic family root, or compatibility-only namespace root.",
+          "line_end": 213,
+          "line_start": 213,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Command/wiring ownership must keep `cmd.chat.run_user_command`, `/compact`, `/mode`, runtime-mode, slash-command, `IDs`, `GUI`, `{ mode }`, `/wiring`, command-owner, command-system, and reverse-coverage visible until the catalog, command-system, and matrix agree on canonical dispatch boundaries.",
+          "line_end": 248,
+          "line_start": 248,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "coverage_oracle_gap",
+      "impact": "Orphan matrix commands or overly broad exclusions can survive while forward catalog coverage still passes.",
+      "item_id": "M133-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The gate requires every catalog command to appear in production but does not equivalently state that every production command must resolve to a canonical catalog identity; exclusion creation also lacks owner, reason, expiry, and approval criteria.",
+      "title": "Catalog coverage is not stated as a symmetric, governed set comparison"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "untrusted_inputs",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Every `handler_location` in the wiring matrix MUST resolve to an existing module and function in the codebase.",
+          "line_end": 224,
+          "line_start": 224,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Every wiring matrix entry with non-empty `expected_event_types` MUST have a corresponding dispatch test that:",
+          "line_end": 229,
+          "line_start": 229,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "semantic_validation_gap",
+      "impact": "A semantically wrong or unauthorized handler can pass resolution, while UI-only commands have no equally explicit dispatch oracle in this section.",
+      "item_id": "M133-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Existence of a callable path and exact emitted event names does not prove handler signature compatibility, input validation, permission enforcement, effect/state-selector agreement, or the state transition of rows with no events.",
+      "title": "Handler and event checks do not prove payload, authority, or UI-only semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "authority_boundaries",
+        "invalid_states_transitions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Wiring_Matrix and UI_Wiring_Rules / `UI_Wiring_Rules.md` share the `/docs` and `/consumer` boundary for recovery wiring, but the matrix must still expose exact structural limits: `cmd.runtime` / `cmd.runtime.*` CTAs need dispatcher-level producer/consumer rows, stale-projection revalidation, `correlation_id` trace-through, `allowed_action_ids`, and `allowed_action_ids[]`. `Wiring_Matrix.schema.json`, `schema.json`, `/matrix/gate`, command-family coverage, and deprecated-vs-canonical command-family status are gate inputs until generated matrix rows can represent them directly.",
+          "line_end": 240,
+          "line_start": 240,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.",
+          "line_end": 337,
+          "line_start": 337,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "identifier_cardinality_conflict",
+      "impact": "A UI can render, authorize, or dispatch a different action set than the blocked payload intended.",
+      "item_id": "M133-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "The gate boundary names `allowed_action_ids` and `allowed_action_ids[]`, but the handler rule later keys handlers by an `allowed_action_id` family; the document never defines whether a blocked payload carries one action, a list, or both normalized forms.",
+      "title": "Recovery action identifier cardinality is inconsistent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "invalid_states_transitions",
+        "ambiguity_unknowns",
+        "unknown_unknowns",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `cmd.chat.context_lens.toggle_message_selection` | Thread-local context overlay store | message ids[] selection mutation under the current mode | Multi-select is supported in all Context Lens modes. |",
+          "line_end": 349,
+          "line_start": 349,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| `cmd.chat.context_lens.revert_subcompact` | Thread-local context overlay store and effective-context assembler | restore original selected message block into effective assembly | Rehydration uses canonical source messages rather than already-compressed derivatives. |",
+          "line_end": 352,
+          "line_start": 352,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_concurrency_contract",
+      "impact": "Subcompact can summarize or restore the wrong message version, duplicate an apply, or overwrite a newer effective-context overlay.",
+      "item_id": "M133-012",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Thread-local selection and canonical-source rehydration are defined, but no message-set revision, compare-and-swap field, idempotency key, or conflict outcome is specified for concurrent selection, edit, delete, compact, apply, and revert operations.",
+      "title": "Context Lens apply and revert lack a concurrency identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.",
+          "line_end": 265,
+          "line_start": 265,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Compatibility/source-lineage disposition: this historical producer/consumer/action section preserves command and action-binding tokens. It remains source-lineage for runtime wiring consolidation and does not create a new executable queue, WorkNode, or NodeSeed surface.",
+          "line_end": 340,
+          "line_start": 340,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The text contains a usable precedence rule and does not create a second runtime authority merely by retaining historical tokens.",
+      "item_id": "M133-013",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Multiple addenda declare compatibility/source-lineage status and direct overlapping runtime precedence to named PlanUnits and Contracts_V0 rather than document order.",
+      "title": "Historical runtime addenda are explicitly demoted to source lineage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Each row MUST identify:",
+          "line_end": 369,
+          "line_start": 369,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- replay/recovery expectations",
+          "line_end": 374,
+          "line_start": 374,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This is a strong completeness checklist for producer-to-consumer and recovery traceability.",
+      "item_id": "M133-014",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "statement": "Every promoted runtime row must identify producer, persisted record, UI and policy consumers, replay/recovery behavior, and acting command surfaces.",
+      "title": "Canonical runtime rows require end-to-end trace fields"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "consumers",
+        "gui_truth",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |",
+          "line_end": 380,
+          "line_start": 380,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "This section is normative and not an example/template section.",
+          "line_end": 465,
+          "line_start": 465,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The source provides broad caller/consumer coverage and distinguishes command scopes that would otherwise collapse into generic navigation.",
+      "item_id": "M133-015",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The normative table binds visible producers to canonical UICommand IDs, controller consumers, and required effects across the major interactive runtime surfaces.",
+      "title": "Normative command map spans project, chat, browser, terminal, dev, catalog, and debug surfaces"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "authority_boundaries",
+        "contracts",
+        "cross_document_seams",
+        "ambiguity_unknowns",
+        "missing_callers_consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |",
+          "line_end": 386,
+          "line_start": 386,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "imprecise_external_contract_binding",
+      "impact": "The authority boundary is sensible, yet a builder cannot prove the wiring row and Goal owner resolve to the same executable envelope from this binding alone.",
+      "item_id": "M133-016",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The matrix deliberately avoids inventing Goal payloads, but the rows name three owner documents without a versioned contract identifier, exact event registry reference, receipt, correlation, or failure vocabulary.",
+      "title": "Goal commands defer their concrete event and payload schema without a precise binding"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "missing_callers_consumers",
+        "gui_truth",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Browser capture commands include `Add Selection to Chat`, `Pick Element for Chat`, `Add Selection + Screenshot`, `Add Element + Screenshot`, standalone screenshots, and screenshot-with-selection variants; screenshot-with-selection defaults to clipped context while full viewport remains explicit; `/trace/video`, `/video/screenshot`, and `/download` artifacts route through Runtime Artifacts.",
+          "line_end": 459,
+          "line_start": 459,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |",
+          "line_end": 397,
+          "line_start": 397,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_command_identity",
+      "impact": "A visible capture affordance can be omitted, aliased inconsistently, or implemented without catalog and evidence coverage.",
+      "item_id": "M133-017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The browser invariant names `Add Element + Screenshot` as a first-class capture command, while the normative rows provide element pick, selection screenshots, and standalone screenshots but no command identity for the combined element-plus-screenshot action.",
+      "title": "Add Element plus Screenshot is required but has no explicit command row"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_truth",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.",
+          "line_end": 458,
+          "line_start": 458,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_capture_privacy_contract",
+      "impact": "Credentials, tokens, private page content, or prompt-injection text can be persisted or supplied to an agent without a uniform privacy boundary.",
+      "item_id": "M133-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Explicit pending chips and non-auto-send behavior reduce accidental injection, but the capture contract does not require redaction, secret-field masking, origin labeling, retention expiry, revocation after send, or safe handling of hostile DOM text and screenshot content.",
+      "title": "Browser capture lacks a mandatory sensitive-data lifecycle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "offline_network_loss",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Live `automation_session` direct user input routes through user-takeover wiring: prompt actions are `Take over and pause agent`, `Let agent continue`, and `Stop agent and keep browser`; default highlighted action is `Take over and pause agent`; user-takeover leaves no half-owned session, and `/stop/take-over` or `/stop/take` handling must pause, stop, or take over rather than silently auto-resume work.",
+          "line_end": 457,
+          "line_start": 457,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- Recovery wiring preserves URL, tabs, session class, `/originating` session identity, and completed trace/video/screenshot artifacts; `workspace_preview` can restore, eligible `detached_preview` follows its originating restored session, automation/auth never auto-resume active work, auth never auto-complete, attention-required recovery offers `Reopen`, `Retry`, or `Keep Closed`, and cross-platform CEF runtime `/install/update` failures surface `runtime_unavailable`/`/capability-degradation` rather than hidden fallback.",
+          "line_end": 461,
+          "line_start": 461,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "User and agent authority remains visible across live takeover, runtime failure, restart, and recovery.",
+      "item_id": "M133-019",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Takeover has explicit pause/continue/stop choices, forbids half-owned sessions, preserves recoverable artifacts, and prevents automation or auth sessions from silently auto-resuming.",
+      "title": "Browser takeover and recovery prohibit silent ownership changes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "gui_truth",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Terminal workspace-structure commands must distinguish content-only actions from destructive workspace mutations: `replace-with-new-terminal` keeps the pane slot and attaches a new live-session `terminal_session_id`, `/close` removes pane/tab/section workspace structure only after user-visible `/escalation` and `/cleanup` rules, `/disconnected/review-only` and other non-live panes can be replaced without pretending the old session remains live, and clear or `/reset` affects terminal content without implying restart.",
+          "line_end": 448,
+          "line_start": 448,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The UI can preserve pane/tab identity without falsely claiming that a terminated or replaced process is the same runtime.",
+      "item_id": "M133-020",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Replace, close, disconnected review, clear, reset, restart, and detach operations have distinct identity consequences; clear/reset do not imply restart, while replacement can mint a new live-session identity in the same pane slot.",
+      "title": "Terminal workspace structure and runtime identity transitions are separated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "destructive_actions",
+        "partial_failure",
+        "failures_recovery",
+        "recovery_rollback",
+        "observability_support",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Terminal pane close affordance | `cmd.terminal.close_pane` | terminal pane chrome | terminal workspace controller | Close the pane and apply explicit termination policy if a live session is attached |",
+          "line_end": 429,
+          "line_start": 429,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Terminal recovery action `Kill` | `cmd.terminal.kill_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Force termination for the selected live session |",
+          "line_end": 434,
+          "line_start": 434,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_destructive_outcome_contract",
+      "impact": "A pane can disappear while its process remains alive, or a force-kill can succeed while workspace and evidence cleanup fail without an actionable user state.",
+      "item_id": "M133-021",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The rows name graceful and forceful termination and refer to an explicit policy, but they do not define refusal, timeout, already-exited, orphan-process, transcript-flush, pane-close rollback, or retry outcomes.",
+      "title": "Terminal close, terminate, and kill rows lack result and partial-cleanup contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "propagation",
+        "destructive_actions",
+        "partial_failure",
+        "recovery_rollback",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |",
+          "line_end": 443,
+          "line_start": 443,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |",
+          "line_end": 444,
+          "line_start": 444,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "non_falsifiable_effect_contract",
+      "impact": "Catalog actions can report success before dependent subsystems converge or remove an active item without a deterministic recovery path.",
+      "item_id": "M133-022",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "`propagate subsystem effects` and `subsystem-specific active-item rules` do not name lifecycle states, permission checks, dependency consumers, progress events, rollback, restart requirements, or failure receipts.",
+      "title": "Catalog install and remove effects are non-falsifiable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "states_transitions",
+        "concurrency_races",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Browser action `Promote to Normal Browsing` | `cmd.browser.promote_to_normal_browsing` | browser chrome / automation banner | browser-session controller / storage controller | Promote eligible state into a normal browsing session and update restore behavior |",
+          "line_end": 407,
+          "line_start": 407,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Debug Automation banner `Promote to normal browsing` | `cmd.browser.promote_to_normal_browsing` | investigation banner / automation banner | browser-session controller / storage controller / permission controller | promote eligible session state into normal browsing only after `explicit-confirmation`; do not silently promote the automation/auth session |",
+          "line_end": 481,
+          "line_start": 481,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "inconsistent_command_precondition",
+      "impact": "The same command may silently promote automation state from one surface while requiring confirmation from another.",
+      "item_id": "M133-023",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The Debug Automation row requires `explicit-confirmation`, while the general browser promotion row merely says to promote eligible state; no shared precondition proves every invocation path enforces confirmation and rejects auth sessions.",
+      "title": "Browser promotion confirmation is surface-dependent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "missing_callers_consumers",
+        "contracts",
+        "gui_truth",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref \u2192 worktree_id, path |",
+          "line_end": 498,
+          "line_start": 498,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id \u2192 success/error |",
+          "line_end": 499,
+          "line_start": 499,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target \u2192 pr_url |",
+          "line_end": 502,
+          "line_start": 502,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_command_identity",
+      "impact": "Those visible controls cannot satisfy the matrix's own command-coverage, handler, event, accessibility, and evidence chain consistently.",
+      "item_id": "M133-024",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Create names `cmd.chat.worktree.create`, but remove, bind-existing, merge, Create PR, and auto-create rows name manager methods or triggers without canonical command identities and event receipts.",
+      "title": "Most assistant-worktree lifecycle actions have no canonical UICommand ID"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "concurrency_races",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "inputs_outputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path \u2192 set FM root |",
+          "line_end": 518,
+          "line_start": 518,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Execution context population is deterministic: when a thread has a binding, `execution_unit_context.worktree_id = binding.worktree_id` and `execution_unit_context.working_directory = binding.worktree_path`; when unbound, `worktree_id = null` and `working_directory = project_root`.",
+          "line_end": 537,
+          "line_start": 537,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_atomic_binding_revision",
+      "impact": "A race can execute in the project root or a removed worktree while the GUI shows a different binding, with cross-surface state disagreeing.",
+      "item_id": "M133-025",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Thread selection independently changes File Manager root, LSP identity, and future executor working_directory, while worktree removal resets roots; no binding revision or atomic snapshot guards thread switches, removal, indexing, and execution-unit creation.",
+      "title": "Thread-worktree propagation lacks an atomic revision boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "destructive_actions",
+        "concurrency_races",
+        "untrusted_inputs",
+        "recovery_rollback",
+        "inputs_outputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Source Control review, diff, and conflict actions | `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, `cmd.source_control.toggle_generated_filter`, `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, `cmd.source_control.mark_conflict_resolved`; `cmd.git.diff_set_compare_target { target_kind: \"head\"\\|\"index\"\\|\"merge_base\"\\|\"branch\"\\|\"commit\"\\|\"parent\", ref? }`, `cmd.git.diff_search { query, direction?: \"next\"\\|\"prev\" }`, `cmd.git.stage_hunks { path, hunk_ids: string[] }`, `cmd.git.unstage_hunks { path, hunk_ids: string[] }`, `cmd.git.discard_hunks { path, hunk_ids: string[] }`, and `cmd.git.conflict_apply_resolution { path, conflict_id, resolution: \"ours\"\\|\"theirs\"\\|\"both\" }` remain lower-level diff operations | `Plans/UI_Command_Catalog.md` + `Plans/WorktreeGitImprovement.md` | Review mode and Conflict assistant stay Source Control owned; `cmd.git.*` rows are lower-level diff/git operations, not substitutes for `cmd.source_control.*` GUI entrypoints. Diff-local `local-search` belongs to the git diff/review surface and must not route through project-wide `cmd.search.find_in_files`; `/hunk/conflict/search-in-diff` affordances route through Source Control review and the git diff command family. |",
+          "line_end": 556,
+          "line_start": 556,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Source Control review, diff, and conflict actions | `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, `cmd.source_control.toggle_generated_filter`, `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, `cmd.source_control.mark_conflict_resolved`; `cmd.git.diff_set_compare_target { target_kind: \"head\"\\|\"index\"\\|\"merge_base\"\\|\"branch\"\\|\"commit\"\\|\"parent\", ref? }`, `cmd.git.diff_search { query, direction?: \"next\"\\|\"prev\" }`, `cmd.git.stage_hunks { path, hunk_ids: string[] }`, `cmd.git.unstage_hunks { path, hunk_ids: string[] }`, `cmd.git.discard_hunks { path, hunk_ids: string[] }`, and `cmd.git.conflict_apply_resolution { path, conflict_id, resolution: \"ours\"\\|\"theirs\"\\|\"both\" }` remain lower-level diff operations | `Plans/UI_Command_Catalog.md` + `Plans/WorktreeGitImprovement.md` | Review mode and Conflict assistant stay Source Control owned; `cmd.git.*` rows are lower-level diff/git operations, not substitutes for `cmd.source_control.*` GUI entrypoints. Diff-local `local-search` belongs to the git diff/review surface and must not route through project-wide `cmd.search.find_in_files`; `/hunk/conflict/search-in-diff` affordances route through Source Control review and the git diff command family. |",
+          "line_end": 556,
+          "line_start": 556,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_destructive_cas",
+      "impact": "A stale GUI can discard or resolve against newer content and irreversibly destroy edits.",
+      "item_id": "M133-026",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Hunk discard and conflict resolution payloads identify path and hunk/conflict IDs, but not blob hash, worktree revision, expected file generation, confirmation policy, undo receipt, or behavior when the file changes concurrently.",
+      "title": "Destructive diff operations omit stale-file and rollback guards"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "operations",
+        "concurrency_races",
+        "scale_performance",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- PM-mediated writes insert into the dirty layer SYNCHRONOUSLY before returning success. This is the agent-write-then-grep CRITICAL FIX: agent tool writes, editor saves, and remote write relays add the written path before the caller can immediately grep, while file watchers remain backup/dedup for external changes.",
+          "line_end": 583,
+          "line_start": 583,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- DirtyLayer storage is a `HashMap` with generation stamps, not a plain `HashSet`, so re-anchor clearing can distinguish entries created before and during a rebuild.",
+          "line_end": 584,
+          "line_start": 584,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Immediate local search cannot miss a just-written path merely because the watcher or incremental rebuild has not caught up.",
+      "item_id": "M133-027",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "PM-mediated writes insert a generation-stamped dirty entry synchronously before success, remote fetch marks changed paths before rebuild, and cycles do not overlap.",
+      "title": "Dirty-layer publication closes the immediate write-then-search race"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ambiguity_unknowns",
+        "unknown_unknowns",
+        "offline_network_loss",
+        "scale_performance",
+        "scale_limits",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |",
+          "line_end": 577,
+          "line_start": 577,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- In MVP, remote cache refresh starts on project open, on a timer every 5 minutes after the previous fetch+build cycle completes, and on explicit pull or `/sync/refresh`; webhook or push notification remains aspirational. When fetch advances `HEAD`, PM immediately runs `git diff --name-only old_anchor..new_HEAD` (`name-only`) and inserts changed paths into the dirty layer BEFORE incremental rebuild. This closes the false-negative window between fetch and rebuild completion; generation-stamped entries are cleared only when the rebuild re-anchors safely.",
+          "line_end": 587,
+          "line_start": 587,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_search_completeness_and_degradation_contract",
+      "impact": "A cache advertised as transparent can produce false negatives or remain stale under history rewrite, while large repositories can exhaust memory or disk without a deterministic degraded mode.",
+      "item_id": "M133-028",
+      "item_type": "unknown",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "Ripgrep verifies only the candidate set named here; the source does not state how completeness is guaranteed for corrupted or stale candidates, non-ancestor or force-pushed anchors, rename/delete/submodule cases, or resource exhaustion, nor when a full fallback is mandatory.",
+      "title": "Sparse-index correctness and pathological re-anchor behavior are underdefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "gui_misleading_states",
+        "partial_failure",
+        "offline_network_loss",
+        "observability_support",
+        "localization",
+        "accessibility",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |",
+          "line_end": 600,
+          "line_start": 600,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| `cmd.search.clear_all_remote_caches` | RemoteCacheManager `evict_all` | User confirms global clear | remove all remote cache roots |",
+          "line_end": 602,
+          "line_start": 602,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_operational_state_contract",
+      "impact": "Search can silently fall back or stay stale, and cache clearing can partially fail while the GUI appears complete.",
+      "item_id": "M133-029",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The status bar exposes only long-running Indexing or Refreshing states, while destructive per-project/global eviction commands do not define in-use locking, partial deletion, retry, receipt, accessibility announcement, translated progress, or stale/fallback indicators.",
+      "title": "Index UI and cache controls omit degraded and partial-failure states"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "authority_boundaries",
+        "cross_document_seams",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`Plans/UI_Command_Catalog.md` and `/UI_Command_Catalog.md` own command identity and alias metadata; Wiring Matrix rows consume that catalog ownership rather than duplicating route semantics. The matrix command-binding contract still exposes `ui_element_id`, `ui_command_id`, `handler_location`, and `expected_event_types`, but route-aware completeness requires each wrapper command to declare when it normalizes over canonical route/open semantics. This keeps `/open` meaning in the route contract while letting wiring/gates verify that the command row points at the catalog-owned normalization metadata.",
+          "line_end": 630,
+          "line_start": 630,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "`GATE-010` completeness includes `GATE` coverage for route/subject-aware navigation, stale-projection revalidation, wrapper-to-canonical normalization, admissibility, and correlation passthrough. The clean rule for `/gates` is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.",
+          "line_end": 632,
+          "line_start": 632,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Command and route ownership stays DRY while wiring retains a testable normalization boundary.",
+      "item_id": "M133-030",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "statement": "The matrix consumes catalog normalization metadata and requires gates to verify route-aware completeness without creating a second route schema.",
+      "title": "Route semantics remain catalog-owned instead of being duplicated in the matrix"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Owner-level runtime records remain a demotion hazard for wiring. `tier_runtime_record`, tier-keyed `usage_record`, and tier-keyed `evidence_record` need owner-level demotion or replacement before generated wiring rows treat them as canonical producers or consumers.",
+          "line_end": 634,
+          "line_start": 634,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "explicit_unresolved_authority_hazard",
+      "impact": "Generated rows that bind these records prematurely can encode a noncanonical producer/consumer model.",
+      "item_id": "M133-031",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-003"
+      ],
+      "statement": "The source directly states that tier_runtime_record and tier-keyed usage/evidence records require demotion or replacement before wiring may treat them as canonical endpoints.",
+      "title": "Tier-keyed runtime records are an explicit unresolved demotion hazard"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Plans/Wiring_Matrix.md is the canonical wiring matrix owner document and preserves `PUPPET MASTER -- UI WIRING MATRIX SSOT`, the platform name `Puppet Master`, and older naming only as compatibility-only legacy naming.'",
+          "line_end": 651,
+          "line_start": 651,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Wiring artifacts have one product identity and one canonical owner.",
+      "item_id": "M133-032",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-002",
+        "SEMANTIC:PLANUNIT:WM-002"
+      ],
+      "statement": "WM-002 clearly fixes the owner document, platform name, and compatibility-only treatment of older naming.",
+      "title": "WM-002 preserves document and naming authority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'This document provides the wiring matrix template and examples, while real project wiring matrices are generated or maintained as JSON validated against `Plans/Wiring_Matrix.schema.json` and gated by `GATE-010`.'",
+          "line_end": 710,
+          "line_start": 710,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "The current production GUI/PMConcept repair artifact is `Plans/Wiring_Matrix.production.json`; `Plans/Wiring_Matrix.production.exclusions.json` records generic, parser, glob, or compatibility-only command-family tokens that are not valid production wiring rows.",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "semantic_fidelity_omission",
+      "impact": "PlanUnit consumers can miss the actual production artifact and exclusion authority while still considering WM-003 satisfied.",
+      "item_id": "M133-033",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-003",
+        "SEMANTIC:PLANUNIT:WM-003"
+      ],
+      "statement": "WM-003 canonicalizes only template/examples, schema validation, and GATE-010, even though the source scope explicitly names the current production JSON and exclusions artifact.",
+      "title": "WM-003 omits the production matrix and exclusions from its scope canon"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "gui_truth",
+        "accessibility",
+        "test_falsifiability",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Wiring matrix entries expose `ui_element_id`, `ui_location`, `ui_command_id`, `handler_location`, `expected_event_types`, `acceptance_checks`, and `evidence_required`, with JSON `entries` keyed by `ui_element_id` for unique interactive element IDs.'",
+          "line_end": 761,
+          "line_start": 761,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "GATE-010 runs JSON Schema validation as its first check and fails production rows that lack typed state selector, disabled-reason projection, effect contract, accessibility contract, test evidence, or event-test requirements.",
+          "line_end": 210,
+          "line_start": 210,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "stale_planunit_contract",
+      "impact": "A fine-grained PlanUnit can be accepted while contradicting the production schema and GUI evidence bar.",
+      "item_id": "M133-034",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-004",
+        "SEMANTIC:PLANUNIT:WM-004"
+      ],
+      "statement": "WM-004 defines only the old seven-field entry contract, omitting the production row's typed selector, disabled reason, effect, accessibility, and test fields.",
+      "title": "WM-004 freezes the obsolete seven-field template"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "gui_truth",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The Markdown example rows remain `(EXAMPLE)` rows drawn from `Plans/UI_Command_Catalog.md`, preserving the listed command IDs for GitHub auth, LSP, widgets, graph selection/retry, orchestrator tab switching, and chat thread creation.'",
+          "line_end": 822,
+          "line_start": 822,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Example handlers and evidence placeholders cannot be mistaken for production proof if the marker is honored.",
+      "item_id": "M133-035",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-005",
+        "SEMANTIC:PLANUNIT:WM-005"
+      ],
+      "statement": "WM-005 retains the `(EXAMPLE)` marker and catalog lineage for all ten illustrative commands.",
+      "title": "WM-005 keeps sample rows explicitly non-production"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The JSON example preserves `pm.wiring_matrix.v0`, representative keyed entries, schema linkage, expected events, acceptance checks, evidence paths, and EventRecord linkage.'",
+          "line_end": 891,
+          "line_start": 891,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The example remains useful for structural orientation when read with the production authority rule.",
+      "item_id": "M133-036",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-006",
+        "SEMANTIC:PLANUNIT:WM-006"
+      ],
+      "statement": "WM-006 accurately carries the example schema ID, keyed entries, events, checks, evidence paths, and EventRecord linkage without claiming those rows are current production evidence.",
+      "title": "WM-006 preserves the illustrative JSON shape as an example"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "acceptance_oracles",
+        "operations",
+        "test_falsifiability",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'GATE-010 verifies wiring matrix entries by running JSON Schema validation against `Plans/Wiring_Matrix.schema.json` before further wiring checks.'",
+          "line_end": 951,
+          "line_start": 951,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 968,
+          "line_start": 968,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "validation_surface_mismatch",
+      "impact": "The PlanUnit can report accepted and validated without executing its own behavioral acceptance oracle.",
+      "item_id": "M133-037",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-007",
+        "SEMANTIC:PLANUNIT:WM-007"
+      ],
+      "statement": "WM-007 says GATE-010 performs schema validation, but its validation surfaces run only plan migration and plan index validators, not the named wiring-matrix validator, run-gates, or audit-governance checks.",
+      "title": "WM-007 does not validate the gate behavior it canonicalizes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "operations",
+        "acceptance_oracles",
+        "compatibility_migration",
+        "missing_callers_consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'GATE-010 requires every catalog `cmd.*` ID to have at least one wiring entry, treats stale research-session, web-tool, or terminal aliases as failures, and enforces one unique `ui_element_id` key/value per entry.'",
+          "line_end": 1004,
+          "line_start": 1004,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'Old work-item ledger `w-20260316-160450` lines 748-941 may be source-lineage evidence only and does not replace generated JSON entries.'",
+          "line_end": 1063,
+          "line_start": 1063,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "exclusion_governance_gap",
+      "impact": "A broad compatibility or parser exclusion can hide a missing production command indefinitely.",
+      "item_id": "M133-038",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-008",
+        "SEMANTIC:PLANUNIT:WM-008"
+      ],
+      "statement": "WM-008 has strong forward coverage and stale-alias rejection, but its PlanUnit does not require exclusion provenance, exact parser evidence, owner approval, expiry/revalidation, or reverse catalog coverage.",
+      "title": "WM-008 preserves exclusion classes without governing exclusion records"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "untrusted_inputs",
+        "test_falsifiability",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'GATE-010 requires each `handler_location` to resolve to an existing handler path and requires dispatch tests for non-empty `expected_event_types` that assert declared events in order and no undeclared events.'",
+          "line_end": 1079,
+          "line_start": 1079,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "semantic_dispatch_oracle_gap",
+      "impact": "A wrong handler can exist and emit the expected names while violating payload, authority, or visible-state contracts.",
+      "item_id": "M133-039",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-009",
+        "SEMANTIC:PLANUNIT:WM-009"
+      ],
+      "statement": "The PlanUnit does not require handler input schema compatibility, authorization, error events, correlation propagation, declared state effects, or tests for empty-event UI-only commands.",
+      "title": "WM-009 proves path existence and event names, not semantic dispatch safety"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The wiring matrix preserves gate/schema and owner limits for `cmd.runtime.*`, `correlation_id`, `allowed_action_ids[]`, route-aware evidence, extraction hazards, runtime owner references, command/wiring ownership, and route/open compatibility references without becoming a general runtime schema.'",
+          "line_end": 1142,
+          "line_start": 1142,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'allowed_action_ids'",
+          "line_end": 1177,
+          "line_start": 1177,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'allowed_action_ids[]'",
+          "line_end": 1178,
+          "line_start": 1178,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "preserved_unresolved_contract",
+      "impact": "Gate and runtime implementations can disagree on both which actions are authorized and which tokens count as commands.",
+      "item_id": "M133-040",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-010",
+        "SEMANTIC:PLANUNIT:WM-010"
+      ],
+      "statement": "WM-010 names both `allowed_action_ids` and `allowed_action_ids[]` plus regex extraction hazards, but supplies no normalized schema, cardinality rule, or machine-checkable catalog/exclusion discriminator.",
+      "title": "WM-010 preserves unresolved action-shape and extraction hazards rather than closing them"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "compatibility_migration",
+        "authority",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.",
+          "line_end": 265,
+          "line_start": 265,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "canonical_text: 'The scheduler analysis producer/consumer path wires canonical event `scheduler.pass` with legacy alias `run.scheduler_analysis` from executor/orchestrator scheduler pass to Run Graph queue-analysis, storage `scheduler_pass_record`, usage/analytics dashboard, and `scheduler_pass.{run_id}.{scheduler_pass_id}` projection.'",
+          "line_end": 1241,
+          "line_start": 1241,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "compatibility_only_notes: []",
+          "line_end": 1283,
+          "line_start": 1283,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "compatibility_disposition_loss",
+      "impact": "Downstream PlanUnit consumers can promote a historical projection or alias without applying the named PlanUnit/Contracts_V0 precedence rule.",
+      "item_id": "M133-041",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-011",
+        "SEMANTIC:PLANUNIT:WM-011"
+      ],
+      "statement": "The scheduler row comes from an addendum explicitly marked compatibility/source-lineage, but WM-011 makes it accepted canonical text and leaves `compatibility_only_notes` empty.",
+      "title": "WM-011 drops the historical compatibility disposition of its scheduler row"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "compatibility_migration",
+        "consumers",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Blocked/unblocked wiring rows cover `node.blocked`, `node.unblocked`, `wizard.blocked`, and `wizard.unblocked` with legacy aliases `run.node_blocked` and `run.node_unblocked`, producing blocked projections for Run Graph, assistant chat, dashboard counts, and storage.'",
+          "line_end": 1299,
+          "line_start": 1299,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'Legacy aliases `run.node_blocked` and `run.node_unblocked` are lineage only beside canonical blocked events.'",
+          "line_end": 1345,
+          "line_start": 1345,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Historical readers can migrate without authorizing legacy aliases as current dispatch identities.",
+      "item_id": "M133-042",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-012",
+        "SEMANTIC:PLANUNIT:WM-012"
+      ],
+      "statement": "WM-012 distinguishes canonical node/wizard blocked events from the two legacy run aliases and preserves the projection consumers.",
+      "title": "WM-012 retains blocked-event aliases as lineage only"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "states_transitions",
+        "ambiguity_unknowns",
+        "unknown_unknowns",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Safe-point wiring rows cover mutation-capable attempt dispatcher or retry controller production of `safe_point.created` and `safe_point.restored` to runtime recovery logic, Run Graph detail, and audit/debug surfaces.'",
+          "line_end": 1361,
+          "line_start": 1361,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_safe_point_recovery_contract",
+      "impact": "A destructive restore-and-retry flow can present a restored state that storage or runtime did not fully achieve.",
+      "item_id": "M133-043",
+      "item_type": "failure_recovery",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:WM-013",
+        "SEMANTIC:PLANUNIT:WM-013"
+      ],
+      "statement": "The PlanUnit names producers, created/restored events, and consumers, but not safe-point identity, persisted record, eligibility/precondition, restore atomicity, rollback, failure event, idempotency, or what the UI shows when restore partially fails.",
+      "title": "WM-013 does not identify safe-point persistence or restore failure states"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "failures_recovery",
+        "states_transitions",
+        "gui_misleading_states",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Remediation and degradation wiring rows cover `remediation.spawned`, `remediation.resolved`, and `plan.decomposition_degraded`, preserving remediation lineage storage, Run Graph, dashboard, wizard/interview planning UI, storage projections, and audit/debug consumers.'",
+          "line_end": 1416,
+          "line_start": 1416,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_degradation_state_machine",
+      "impact": "A degraded plan can look complete or remain stuck after recovery, and consumers may interpret the same event differently.",
+      "item_id": "M133-044",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-014",
+        "SEMANTIC:PLANUNIT:WM-014"
+      ],
+      "statement": "`plan.decomposition_degraded` reaches planning UI, storage, and debug consumers, but the PlanUnit does not define degradation reason codes, partial-plan validity, allowed actions, retry/replan transitions, persistence identity, or stale-clear behavior.",
+      "title": "WM-014 routes degradation without a recovery or display-state contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "inputs_outputs",
+        "gui_truth"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Runtime recovery wiring requires explicit producers, handlers, projection consumers, UI command handlers, and packet-field traceability from runtime event producers through run graph, orchestrator summaries, chat banners, and history/evidence tabs.'",
+          "line_end": 1481,
+          "line_start": 1481,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Runtime packet changes have an explicit end-to-end consumer inventory rather than isolated event declarations.",
+      "item_id": "M133-045",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-015",
+        "SEMANTIC:PLANUNIT:WM-015"
+      ],
+      "statement": "The PlanUnit connects runtime producers, handlers, projection consumers, and recovery UI actions through Run Graph, Orchestrator, chat, and history/evidence surfaces.",
+      "title": "WM-015 requires packet-field traceability across runtime consumers"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "missing_callers_consumers",
+        "consumers",
+        "compatibility_migration",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Add canonical rows for:",
+          "line_end": 359,
+          "line_start": 359,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- `node.ready`",
+          "line_end": 360,
+          "line_start": 360,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "canonical_text: 'Canonical runtime event rows use `Plans/Contracts_V0.md` identities for scheduler, attempts, blocked/prerequisite, remediation, and graph lock/integrity events, including persisted `attempt_record` and consumers across storage, Run Graph, Orchestrator Page, history/evidence, scheduler, recovery, executor admission, progression gates, and blocked/replan surfaces.'",
+          "line_end": 1555,
+          "line_start": 1555,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "semantic_fidelity_omission",
+      "impact": "A PlanUnit-only compiler can omit a required readiness producer/consumer path and still satisfy WM-016.",
+      "item_id": "M133-046",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-016",
+        "SEMANTIC:PLANUNIT:WM-016"
+      ],
+      "statement": "The normative source requires a `node.ready` row and says every row includes policy consumers, replay/recovery, and acting commands; WM-016 summarizes selected event families but omits `node.ready` and those complete row obligations from its canonical text.",
+      "title": "WM-016 does not preserve the complete canonical minimum-row set"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "inputs_outputs",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Recovery UI handlers are keyed by canonical `allowed_action_id` families before binding domain-specific command IDs through blocked payload metadata.'",
+          "line_end": 1623,
+          "line_start": 1623,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'allowed_action_ids[]'",
+          "line_end": 1178,
+          "line_start": 1178,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "cross_planunit_cardinality_conflict",
+      "impact": "Blocked-action admission and visible CTA sets can diverge at the recovery boundary.",
+      "item_id": "M133-047",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-017",
+        "SEMANTIC:PLANUNIT:WM-017"
+      ],
+      "statement": "WM-017 preserves the singular `allowed_action_id` family handler rule but does not resolve the plural `allowed_action_ids[]` payload contract retained by WM-010.",
+      "title": "WM-017 canonicalizes singular action-family wording against plural payload fields"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "ownership",
+        "cross_document_seams",
+        "compatibility_migration",
+        "concurrency_races",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Context Lens wiring rows preserve thread-local multi-select in all modes and explicit `Subcompact` apply/revert semantics, including mode toggle, target selection, export/revoke, Debug Automation banner, browser takeover, and investigation cancellation commands.'",
+          "line_end": 1675,
+          "line_start": 1675,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0028",
+          "line_end": 1703,
+          "line_start": 1703,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "planunit_scope_conflation",
+      "impact": "Two PlanUnits can claim the same commands with different dependency and validation context, while Context Lens concurrency semantics remain unowned.",
+      "item_id": "M133-048",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-018",
+        "SEMANTIC:PLANUNIT:WM-018"
+      ],
+      "statement": "WM-018 canonical text includes debug target, export/revoke, automation, browser takeover, and cancellation commands, yet its only source-lineage span is S0028 for Context Lens; those Debug rows are separately owned by WM-024/S0032.",
+      "title": "WM-018 conflates Context Lens with Debug Investigation scope"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |",
+          "line_end": 385,
+          "line_start": 385,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'",
+          "line_end": 1752,
+          "line_start": 1752,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "status_vocabulary_fidelity_loss",
+      "impact": "Consumers can collapse in-progress or degraded results into generic failure/success and emit an unregistered equivalent event while the PlanUnit still passes.",
+      "item_id": "M133-049",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-019",
+        "SEMANTIC:PLANUNIT:WM-019"
+      ],
+      "statement": "The normative row includes `started` and `degraded` among command results, but WM-019 omits them and allows `context.compaction.failed or equivalent`, weakening exact event and visible-state fidelity.",
+      "title": "WM-019 loses exact compaction statuses and weakens event identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "missing_callers_consumers",
+        "compatibility_migration",
+        "gui_truth",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Browser command rows cover browser open/focus/detach, DevTools, share/capture, takeover, pause/continue/stop/promote, screenshot capture, and recovery commands while preserving browser-session identity.'",
+          "line_end": 1818,
+          "line_start": 1818,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Browser action `Pause Agent` | `cmd.browser.pause_agent` | browser chrome / automation banner | runtime controller | Pause the live automation run without reclassifying the browser session |",
+          "line_end": 404,
+          "line_start": 404,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "preserved_token_coverage_gap",
+      "impact": "PlanUnit-based coverage can drop launch or takeover actions while the broad canonical sentence still appears satisfied.",
+      "item_id": "M133-050",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-020",
+        "SEMANTIC:PLANUNIT:WM-020"
+      ],
+      "statement": "WM-020 claims browser open and pause/continue coverage, but its preserved token list omits `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, `cmd.browser.pause_agent`, and `cmd.browser.let_agent_continue`; it also has no Add Element plus Screenshot identity.",
+      "title": "WM-020 does not preserve all browser command identities it claims"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "destructive_actions",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal reveal/show/rerun/detach/new/split/add/embed/focus/move/rename/pin/close/clear/restart/terminate/kill/reattach commands, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands.'",
+          "line_end": 1889,
+          "line_start": 1889,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "command_inventory_without_outcome_contract",
+      "impact": "Command presence can be mistaken for complete wiring even when the most destructive transitions remain non-falsifiable.",
+      "item_id": "M133-051",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-021",
+        "SEMANTIC:PLANUNIT:WM-021"
+      ],
+      "statement": "The PlanUnit preserves a broad terminal/dev/catalog command list, yet its canonical text supplies no result states, correlation, partial cleanup, rollback, or subsystem convergence oracle for close/terminate/kill/restart/install/remove.",
+      "title": "WM-021 enumerates commands but not destructive or catalog lifecycle outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "accessibility",
+        "destructive_actions",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, drag/drop layout concepts, and the rule that split-parent opacity effects must not dim terminal grids.'",
+          "line_end": 1970,
+          "line_start": 1970,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'Split-parent opacity effects must not dim terminal grids during reorder or drag operations.'",
+          "line_end": 2025,
+          "line_start": 2025,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Terminal identity and legibility have clear invariants across reorder, drag, clear, reset, replace, and close.",
+      "item_id": "M133-052",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-022",
+        "SEMANTIC:PLANUNIT:WM-022"
+      ],
+      "statement": "WM-022 explicitly distinguishes content operations from destructive structure changes, preserves session replacement semantics, treats PMConcept as lineage, and forbids opacity effects that dim terminal grids.",
+      "title": "WM-022 preserves terminal identity and visual drag safety"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "states_transitions",
+        "failures_recovery",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- 'auth_session is not general-purpose browsing state, is not auto-restored, must not auto-close or auto-complete on presumed success.'",
+          "line_end": 2104,
+          "line_start": 2104,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- 'Automation/auth sessions never auto-resume active work, auth never auto-completes.'",
+          "line_end": 2106,
+          "line_start": 2106,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "High-risk browser ownership and authentication transitions fail visibly instead of silently continuing.",
+      "item_id": "M133-053",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-023",
+        "SEMANTIC:PLANUNIT:WM-023"
+      ],
+      "statement": "Auth sessions are isolated and never auto-restored, auto-closed, or auto-completed; automation and auth never auto-resume after recovery, and ordinary clicks do not inject context.",
+      "title": "WM-023 has strong auth and automation recovery prohibitions"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "recovery_rollback",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Browser wiring invariants preserve stale `newfeatures.md \u00a715.18` cleanup, the CEF-class tab-first in-app `/browser` model, `auth_session` limits, explicit chip-based capture, DevTools contract, takeover behavior, and recovery behavior for workspace, detached, automation, and auth sessions.'",
+          "line_end": 2043,
+          "line_start": 2043,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.",
+          "line_end": 458,
+          "line_start": 458,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_browser_data_disposal_contract",
+      "impact": "Sensitive auth and page data can outlive the session boundary or enter chat/runtime artifacts without a consistent privacy lifecycle.",
+      "item_id": "M133-054",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-023",
+        "SEMANTIC:PLANUNIT:WM-023"
+      ],
+      "statement": "The PlanUnit preserves isolated cookies and non-auto-send capture behavior but does not specify when auth cookies/storage are destroyed, what survives promotion or recovery, or how captured DOM/screenshots are redacted, retained, revoked, and protected from hostile content.",
+      "title": "WM-023 omits capture and auth-storage disposal semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority",
+        "destructive_actions",
+        "acceptance_oracles",
+        "observability_support",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Debug Mode and Investigation Context wiring requires the listed cmd.chat.mode, cmd.chat.open_debug_target_picker, investigation export/revoke, cmd.runtime.* approval/resume/retry/abort rows, and browser stop/promote rows, including explicit-confirmation and stop_reason_code = investigation.cancelled_by_user.",
+          "line_end": 2129,
+          "line_start": 2129,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- Do not silently promote the automation/auth session.",
+          "line_end": 2175,
+          "line_start": 2175,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Two high-risk user actions have clear authorization and audit oracles.",
+      "item_id": "M133-055",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-024",
+        "SEMANTIC:PLANUNIT:WM-024"
+      ],
+      "statement": "Debug browser promotion requires explicit confirmation, and cancellation deterministically records `cancelled` with a stable stop reason.",
+      "title": "WM-024 makes promotion and cancellation outcomes explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "missing_callers_consumers",
+        "destructive_actions",
+        "concurrency_races",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Chat-to-WorktreeManager wiring covers create/remove/bind/list/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow.",
+          "line_end": 2194,
+          "line_start": 2194,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id \u2192 success/error |",
+          "line_end": 499,
+          "line_start": 499,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "incomplete_lifecycle_command_contract",
+      "impact": "Visible controls can bypass the catalog/evidence chain, duplicate merges or PRs, or remove a worktree still used by an executor.",
+      "item_id": "M133-056",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:WM-025",
+        "SEMANTIC:PLANUNIT:WM-025"
+      ],
+      "statement": "WM-025 treats create, remove, bind/list, merge, and PR creation as one accepted lifecycle, but only create has a canonical UICommand in its source; destructive removal and merge/PR also lack result enums, idempotency, active-run guards, and rollback receipts.",
+      "title": "WM-025 cannot close worktree lifecycle wiring with one command identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "concurrency_races",
+        "propagation",
+        "authority",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worktree binding wires Source Control, File Manager roots, LSP root_identity, and executor execution_unit_context.worktree_id / working_directory deterministically; Glossary keeps thread-worktree terminology as compatibility reference only while Wiring Matrix records producer/consumer edges.",
+          "line_end": 2259,
+          "line_start": 2259,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "Terminology for thread worktree binding, accordion layout, `working_directory`, merge lock, and pre-merge test gate stays in `Plans/Glossary.md` (`/Glossary.md` compatibility references); Wiring Matrix records producer/consumer edges only.",
+          "line_end": 539,
+          "line_start": 539,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "binding_race_and_semantic_demotion",
+      "impact": "Execution can use a stale root, and authoritative terminology may be incorrectly demoted by PlanUnit consumers.",
+      "item_id": "M133-057",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:WM-026",
+        "SEMANTIC:PLANUNIT:WM-026"
+      ],
+      "statement": "The PlanUnit lacks a binding revision across File Manager/LSP/executor propagation and says Glossary keeps terminology as compatibility reference only, while the source says canonical `Plans/Glossary.md` keeps the terminology and only `/Glossary.md` is a compatibility reference.",
+      "title": "WM-026 combines a race-prone binding handoff with an overbroad Glossary demotion"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "destructive_actions",
+        "concurrency_races",
+        "untrusted_inputs",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Search, file, chat restore/reference, Source Control review/conflict, host-aware LSP projection, and cmd.remote.reconnect handoffs share one shell slot and identity model; cmd.git.* rows stay lower-level, diff-local local-search must not route through project-wide search, and cmd.chat.rewind must not restore files.",
+          "line_end": 2325,
+          "line_start": 2325,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- cmd.git.* rows are lower-level diff/git operations, not substitutes for cmd.source_control.* GUI entrypoints.",
+          "line_end": 2381,
+          "line_start": 2381,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_git_mutation_cas",
+      "impact": "A stale diff can irreversibly overwrite user work even though command-family routing is correct.",
+      "item_id": "M133-058",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:WM-027",
+        "SEMANTIC:PLANUNIT:WM-027"
+      ],
+      "statement": "Discard and conflict-resolution commands remain lower-level operations but still need expected blob/file generation, stale-conflict rejection, confirmation, undo/safe-point, and partial-failure receipts; WM-027 carries none of those guards.",
+      "title": "WM-027 preserves destructive Git payloads without content identity or undo"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "authority_boundaries",
+        "gui_truth",
+        "destructive_actions",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Diff-local local-search belongs to the git diff/review surface and must not route through project-wide cmd.search.find_in_files.",
+          "line_end": 2382,
+          "line_start": 2382,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- cmd.chat.rewind must not restore files.",
+          "line_end": 2383,
+          "line_start": 2383,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Two superficially similar actions retain distinct scope and destructive consequences.",
+      "item_id": "M133-059",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:WM-027",
+        "SEMANTIC:PLANUNIT:WM-027"
+      ],
+      "statement": "Diff-local search remains Source Control owned rather than routing through project search, and chat rewind is prohibited from restoring files.",
+      "title": "WM-027 prevents cross-surface search and rewind semantic collapse"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "concurrency_races",
+        "unknown_unknowns",
+        "offline_network_loss",
+        "scale_performance",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Grep/index wiring routes agent grep calls and Search-panel regex queries through IndexEngine candidates and ripgrep verification, while PM-mediated writes, file watchers, and remote re-anchor insert generation-stamped DirtyLayer entries before callers can observe false-negative search results.",
+          "line_end": 2406,
+          "line_start": 2406,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |",
+          "line_end": 577,
+          "line_start": 577,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "missing_index_completeness_oracle",
+      "impact": "Transparent acceleration can return false negatives or fail catastrophically on large or rewritten repositories.",
+      "item_id": "M133-060",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:WM-028",
+        "SEMANTIC:PLANUNIT:WM-028"
+      ],
+      "statement": "Generation-stamped dirty entries close ordinary write races, but WM-028 does not require candidate-set completeness proof, dirty-set union semantics, full-ripgrep fallback triggers, history-rewrite handling, rename/delete correctness, or memory/disk limits.",
+      "title": "WM-028 does not prove sparse-index completeness under stale or adversarial anchors"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "accessibility",
+        "ownership",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Grep/index wiring routes agent grep calls and Search-panel regex queries through IndexEngine candidates and ripgrep verification, while PM-mediated writes, file watchers, and remote re-anchor insert generation-stamped DirtyLayer entries before callers can observe false-negative search results.",
+          "line_end": 2406,
+          "line_start": 2406,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "gui_related: false",
+          "line_end": 2407,
+          "line_start": 2407,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "gui_classification_error",
+      "impact": "GUI assurance and downstream UI work selection can omit a behavior that directly controls visible Search results.",
+      "item_id": "M133-061",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-028",
+        "SEMANTIC:PLANUNIT:WM-028"
+      ],
+      "statement": "Its canonical text explicitly governs Search-panel regex queries and prevention of user-observable false-negative results, yet `gui_related` is false and the reason calls it backend-only.",
+      "title": "WM-028 is incorrectly classified as not GUI-related"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "gui_misleading_states",
+        "failures_recovery",
+        "partial_failure",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Search-panel regex, status-bar Indexing / Refreshing index, cmd.search.rebuild_regex_index, cmd.search.evict_remote_cache, and cmd.search.clear_all_remote_caches expose index state and cache control without re-owning storage or remote correctness.",
+          "line_end": 2468,
+          "line_start": 2468,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- Refreshing index",
+          "line_end": 2502,
+          "line_start": 2502,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        },
+        {
+          "exact_quote": "- cmd.search.clear_all_remote_caches",
+          "line_end": 2504,
+          "line_start": 2504,
+          "path": "Plans/Wiring_Matrix.md",
+          "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+        }
+      ],
+      "gap_kind": "incomplete_operational_gui_state_model",
+      "impact": "Users can see no warning when results are stale or degraded, and destructive cache actions can fail partially without recoverable support evidence.",
+      "item_id": "M133-062",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:WM-029",
+        "SEMANTIC:PLANUNIT:WM-029"
+      ],
+      "statement": "The PlanUnit names regex mode, two progress labels, and cache commands, but not fallback/stale/failed/paused/offline states, progress announcement, localized/overflow-safe strings, quota/size estimates, cache-in-use blocking, partial deletion, retry, or receipts.",
+      "title": "WM-029 exposes happy-path index UX but not failure, accessibility, locale, or scale truth"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        378
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-001"
+      ],
+      "item_ids": [
+        "M133-001",
+        "M133-002",
+        "M133-003",
+        "M133-004",
+        "M133-005",
+        "M133-006",
+        "M133-007",
+        "M133-008",
+        "M133-009",
+        "M133-010",
+        "M133-011",
+        "M133-012",
+        "M133-013",
+        "M133-014"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0001"
+    },
+    {
+      "core_range": [
+        379,
+        632
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-002"
+      ],
+      "item_ids": [
+        "M133-015",
+        "M133-016",
+        "M133-017",
+        "M133-018",
+        "M133-019",
+        "M133-020",
+        "M133-021",
+        "M133-022",
+        "M133-023",
+        "M133-024",
+        "M133-025",
+        "M133-026",
+        "M133-027",
+        "M133-028",
+        "M133-029",
+        "M133-030"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0002"
+    },
+    {
+      "core_range": [
+        633,
+        996
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:WM-002",
+        "PLANUNIT:WM-003",
+        "PLANUNIT:WM-004",
+        "PLANUNIT:WM-005",
+        "PLANUNIT:WM-006",
+        "PLANUNIT:WM-007",
+        "SEMANTIC:PROLOGUE:Plans/Wiring_Matrix.md:CONT-003",
+        "SEMANTIC:PLANUNIT:WM-002",
+        "SEMANTIC:PLANUNIT:WM-003",
+        "SEMANTIC:PLANUNIT:WM-004",
+        "SEMANTIC:PLANUNIT:WM-005",
+        "SEMANTIC:PLANUNIT:WM-006",
+        "SEMANTIC:PLANUNIT:WM-007"
+      ],
+      "item_ids": [
+        "M133-031",
+        "M133-032",
+        "M133-033",
+        "M133-034",
+        "M133-035",
+        "M133-036",
+        "M133-037"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0003"
+    },
+    {
+      "core_range": [
+        997,
+        1353
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:WM-008",
+        "PLANUNIT:WM-009",
+        "PLANUNIT:WM-010",
+        "PLANUNIT:WM-011",
+        "PLANUNIT:WM-012",
+        "SEMANTIC:PLANUNIT:WM-008",
+        "SEMANTIC:PLANUNIT:WM-009",
+        "SEMANTIC:PLANUNIT:WM-010",
+        "SEMANTIC:PLANUNIT:WM-011",
+        "SEMANTIC:PLANUNIT:WM-012"
+      ],
+      "item_ids": [
+        "M133-038",
+        "M133-039",
+        "M133-040",
+        "M133-041",
+        "M133-042"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0004"
+    },
+    {
+      "core_range": [
+        1354,
+        1744
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:WM-013",
+        "PLANUNIT:WM-014",
+        "PLANUNIT:WM-015",
+        "PLANUNIT:WM-016",
+        "PLANUNIT:WM-017",
+        "PLANUNIT:WM-018",
+        "SEMANTIC:PLANUNIT:WM-013",
+        "SEMANTIC:PLANUNIT:WM-014",
+        "SEMANTIC:PLANUNIT:WM-015",
+        "SEMANTIC:PLANUNIT:WM-016",
+        "SEMANTIC:PLANUNIT:WM-017",
+        "SEMANTIC:PLANUNIT:WM-018"
+      ],
+      "item_ids": [
+        "M133-043",
+        "M133-044",
+        "M133-045",
+        "M133-046",
+        "M133-047",
+        "M133-048"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0005"
+    },
+    {
+      "core_range": [
+        1745,
+        2121
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:WM-019",
+        "PLANUNIT:WM-020",
+        "PLANUNIT:WM-021",
+        "PLANUNIT:WM-022",
+        "PLANUNIT:WM-023",
+        "SEMANTIC:PLANUNIT:WM-019",
+        "SEMANTIC:PLANUNIT:WM-020",
+        "SEMANTIC:PLANUNIT:WM-021",
+        "SEMANTIC:PLANUNIT:WM-022",
+        "SEMANTIC:PLANUNIT:WM-023"
+      ],
+      "item_ids": [
+        "M133-049",
+        "M133-050",
+        "M133-051",
+        "M133-052",
+        "M133-053",
+        "M133-054"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0006"
+    },
+    {
+      "core_range": [
+        2122,
+        2519
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:WM-024",
+        "PLANUNIT:WM-025",
+        "PLANUNIT:WM-026",
+        "PLANUNIT:WM-027",
+        "PLANUNIT:WM-028",
+        "PLANUNIT:WM-029",
+        "SEMANTIC:PLANUNIT:WM-024",
+        "SEMANTIC:PLANUNIT:WM-025",
+        "SEMANTIC:PLANUNIT:WM-026",
+        "SEMANTIC:PLANUNIT:WM-027",
+        "SEMANTIC:PLANUNIT:WM-028",
+        "SEMANTIC:PLANUNIT:WM-029"
+      ],
+      "item_ids": [
+        "M133-055",
+        "M133-056",
+        "M133-057",
+        "M133-058",
+        "M133-059",
+        "M133-060",
+        "M133-061",
+        "M133-062"
+      ],
+      "reviewed": true,
+      "summary": "complete\ncomplete",
+      "window_id": "WIN-9A83204C2DCD-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO-9A83204C2DCD-0001",
+    "document_path": "Plans/Wiring_Matrix.md",
+    "micro_window_ids": [
+      "WIN-9A83204C2DCD-0001",
+      "WIN-9A83204C2DCD-0002",
+      "WIN-9A83204C2DCD-0003",
+      "WIN-9A83204C2DCD-0004",
+      "WIN-9A83204C2DCD-0005",
+      "WIN-9A83204C2DCD-0006",
+      "WIN-9A83204C2DCD-0007"
+    ],
+    "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [],
+    "feature_family_keys": [],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m_000133_attempt_0014_terminal"
+}

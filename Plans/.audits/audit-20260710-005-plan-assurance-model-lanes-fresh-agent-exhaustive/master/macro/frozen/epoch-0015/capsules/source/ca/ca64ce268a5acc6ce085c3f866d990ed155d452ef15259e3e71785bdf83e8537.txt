@@ -1,0 +1,91 @@
+L00000001	{
+L00000002	  "schema_id": "pm.web_operation_job_fixtures.v1",
+L00000003	  "owner_schema": "Plans/web_operation_contracts.schema.json#/$defs/WebOperationJob",
+L00000004	  "valid_jobs": [
+L00000005	    {
+L00000006	      "case_id": "crawl_polling_job",
+L00000007	      "job_id": "webjob:crawl-001",
+L00000008	      "web_operation": "crawl",
+L00000009	      "tool_id": "webcrawl",
+L00000010	      "invocation": {
+L00000011	        "invocation_source": "agent_initiated",
+L00000012	        "agent_reason": "Bounded docs traversal needs async status."
+L00000013	      },
+L00000014	      "provider_job_id": "provider-job:crawl-001",
+L00000015	      "provider_adapter_id": "firecrawl.direct_api",
+L00000016	      "status": "polling",
+L00000017	      "status_source": "provider_poll",
+L00000018	      "poll_ref": "poll:webcrawl-001",
+L00000019	      "progress_ref": "progress:webcrawl-001",
+L00000020	      "partial_result_ref": "partial:webcrawl-001",
+L00000021	      "permission_snapshot_id": "perm:webcrawl.docs.example.com",
+L00000022	      "cache_ref": "cache:webcrawl-001",
+L00000023	      "redaction_profile_id": "redaction:web-default",
+L00000024	      "timeout_ms": 120000,
+L00000025	      "created_at_utc": "2026-07-09T00:00:00Z",
+L00000026	      "updated_at_utc": "2026-07-09T00:00:15Z",
+L00000027	      "not_runtime_queue": true
+L00000028	    },
+L00000029	    {
+L00000030	      "case_id": "research_timeout_partial_job",
+L00000031	      "job_id": "webjob:research-timeout-001",
+L00000032	      "web_operation": "research",
+L00000033	      "tool_id": "webresearch",
+L00000034	      "invocation": {
+L00000035	        "invocation_source": "goal",
+L00000036	        "agent_reason": "Goal required current external evidence."
+L00000037	      },
+L00000038	      "status": "timeout",
+L00000039	      "status_source": "pm_composed",
+L00000040	      "progress_ref": "progress:webresearch-timeout-001",
+L00000041	      "partial_result_ref": "partial:webresearch-timeout-001",
+L00000042	      "permission_snapshot_id": "perm:webresearch.session",
+L00000043	      "redaction_profile_id": "redaction:web-default",
+L00000044	      "timeout_ms": 120000,
+L00000045	      "created_at_utc": "2026-07-09T00:00:00Z",
+L00000046	      "updated_at_utc": "2026-07-09T00:02:00Z",
+L00000047	      "finished_at_utc": "2026-07-09T00:02:00Z",
+L00000048	      "failure_reason_code": "timeout",
+L00000049	      "cancelled": false,
+L00000050	      "not_runtime_queue": true
+L00000051	    }
+L00000052	  ],
+L00000053	  "invalid_jobs": [
+L00000054	    {
+L00000055	      "case_id": "failed_job_missing_failure_reason",
+L00000056	      "job": {
+L00000057	        "job_id": "webjob:bad-failed",
+L00000058	        "web_operation": "research",
+L00000059	        "tool_id": "webresearch",
+L00000060	        "invocation": {
+L00000061	          "invocation_source": "agent_initiated",
+L00000062	          "agent_reason": "Fixture failed job must carry failure metadata."
+L00000063	        },
+L00000064	        "status": "failed",
+L00000065	        "created_at_utc": "2026-07-09T00:00:00Z",
+L00000066	        "finished_at_utc": "2026-07-09T00:01:00Z",
+L00000067	        "not_runtime_queue": true
+L00000068	      },
+L00000069	      "expected_error": "missing_failure_reason_code"
+L00000070	    },
+L00000071	    {
+L00000072	      "case_id": "job_missing_non_queue_marker",
+L00000073	      "job": {
+L00000074	        "job_id": "webjob:bad-queue",
+L00000075	        "web_operation": "crawl",
+L00000076	        "tool_id": "webcrawl",
+L00000077	        "invocation": {
+L00000078	          "invocation_source": "agent_initiated",
+L00000079	          "agent_reason": "Fixture async web jobs must stay separate from runtime queues."
+L00000080	        },
+L00000081	        "status": "polling",
+L00000082	        "created_at_utc": "2026-07-09T00:00:00Z"
+L00000083	      },
+L00000084	      "expected_error": "missing_not_runtime_queue"
+L00000085	    }
+L00000086	  ],
+L00000087	  "negative_constraints": [
+L00000088	    "WebOperationJob records async web status only and must not create WorkNodes, NodeSeeds, runtime queues, or build tasks.",
+L00000089	    "Provider job IDs are lineage/audit metadata and do not make provider config the PM registry source of truth."
+L00000090	  ]
+L00000091	}

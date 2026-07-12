@@ -1,0 +1,735 @@
+{
+  "assignment_id": "A005M15-000100-INTEGRATED-MACRO15-EDC80C197D4C-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.",
+          "line_end": 398,
+          "line_start": 398,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "unresolved_account_attribution",
+      "impact": "Implementors cannot deterministically decide whether an upstream account switch is rejected, accepted as opaque, or recorded, so audit attribution, approval scope, billing, and incident reconstruction can diverge.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Provider_Stream_Mapping_External_Reference_A2A.md:CONT-001"
+      ],
+      "statement": "The prologue explicitly leaves bridged-account capture and policy unresolved despite requiring account references in provider diagnostics.",
+      "title": "Bridged account identity has no deterministic policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  This document must not define UI/UX behavior or widget rendering; GUI, widget, and user-visible rendering",
+          "line_end": 615,
+          "line_start": 615,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "none_explicit_owner_boundary",
+      "impact": "Adapter implementors and GUI consumers receive a clear non-ownership boundary, reducing the risk that provider mapping code silently becomes a UI or internal-orchestration SSOT.",
+      "item_id": "A005M15-I002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-002",
+        "PLANUNIT:PSMERA-003",
+        "PLANUNIT:PSMERA-004",
+        "PLANUNIT:PSMERA-005",
+        "PLANUNIT:PSMERA-006",
+        "SEMANTIC:PROLOGUE:Plans/Provider_Stream_Mapping_External_Reference_A2A.md:CONT-002",
+        "SEMANTIC:PLANUNIT:PSMERA-002",
+        "SEMANTIC:PLANUNIT:PSMERA-003",
+        "SEMANTIC:PLANUNIT:PSMERA-004",
+        "SEMANTIC:PLANUNIT:PSMERA-005",
+        "SEMANTIC:PLANUNIT:PSMERA-006"
+      ],
+      "statement": "The structural and boundary units explicitly constrain A2A to external bridge guidance, route backend authority to named owner documents, and route UI rendering to GUI owners.",
+      "title": "External bridge and GUI ownership boundaries are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  External bridge mappings may emit only the existing V0 event types text_delta, thinking_delta, tool_use,",
+          "line_end": 735,
+          "line_start": 735,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "none_bounded_event_vocabulary",
+      "impact": "A fixed event vocabulary and reserved diagnostic categories make schema expansion detectable and keep provider-specific context out of category names.",
+      "item_id": "A005M15-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-007",
+        "PLANUNIT:PSMERA-008",
+        "SEMANTIC:PLANUNIT:PSMERA-007",
+        "SEMANTIC:PLANUNIT:PSMERA-008"
+      ],
+      "statement": "PSMERA-007 and PSMERA-008 bound bridge output to the existing V0 types and a reserved, namespaced diagnostic vocabulary.",
+      "title": "Event and diagnostic vocabularies are closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Native external-framework text, stream, usage, termination, run-completion, and error events map to V0",
+          "line_end": 882,
+          "line_start": 882,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "error_terminal_transition_unspecified",
+      "impact": "A fatal or near-fatal native ErrorEvent can leave the normalized run non-terminal or let a later success completion override the error, with no deterministic recovery or done-status oracle.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-009",
+        "SEMANTIC:PLANUNIT:PSMERA-009"
+      ],
+      "statement": "The native mapping identifies error output but does not define whether ErrorEvent terminates the run, how it interacts with later terminal indicators, or which done status must result.",
+      "title": "Native errors lack terminal arbitration semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "failures_recovery",
+        "concurrency_races",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Native ToolCallEvent, ToolResponseEvent, FunctionCallEvent, and FunctionResponseEvent map to correlated",
+          "line_end": 952,
+          "line_start": 952,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "logical_tool_duplicate_identity_unspecified",
+      "impact": "Concurrent or replayed legacy and modern tool events can be double-emitted or incorrectly collapsed because adapters have no canonical identity tuple or comparison window for determining the same logical call.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-010",
+        "PLANUNIT:PSMERA-011",
+        "SEMANTIC:PLANUNIT:PSMERA-010",
+        "SEMANTIC:PLANUNIT:PSMERA-011"
+      ],
+      "statement": "The tool lifecycle suppresses a legacy duplicate when it represents the same logical call, but no deterministic correlation key, ordering rule, or race policy defines that equivalence.",
+      "title": "Legacy tool-call deduplication has no equivalence rule"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "partial_failure",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  A2A TaskState, Message, Part/TextPart/DataPart, Artifact, TaskArtifactUpdateEvent, TaskStatus,",
+          "line_end": 1169,
+          "line_start": 1169,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "a2a_terminal_state_coverage_incomplete",
+      "impact": "Failed, canceled, rejected, or transport-interrupted A2A tasks have no specified normalized step outcome, error emission, done status, or resumability rule, permitting invalid or permanently working PM states.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-012",
+        "PLANUNIT:PSMERA-013",
+        "SEMANTIC:PLANUNIT:PSMERA-012",
+        "SEMANTIC:PLANUNIT:PSMERA-013"
+      ],
+      "statement": "The A2A mapping enumerates submitted, working, input-required, and completed behavior but does not normatively map other terminal or interrupted TaskState outcomes.",
+      "title": "A2A failure and cancellation states are unmapped"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "scale_performance",
+        "concurrency_races",
+        "untrusted_inputs",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Adapters maintain a 10,000-entry LRU seen-set keyed by upstream uuid and a 500-entry raw-event ring buffer;",
+          "line_end": 1315,
+          "line_start": 1315,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "deduplication_scope_and_resume_edge_cases",
+      "impact": "UUID collisions across providers or runs can silently drop valid events, evicted replay entries can be reprocessed, and stale or duplicate HITL responses have no rejection oracle; these failures can corrupt tool and pause/resume lifecycles under concurrency.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-014",
+        "PLANUNIT:PSMERA-015",
+        "PLANUNIT:PSMERA-016",
+        "SEMANTIC:PLANUNIT:PSMERA-014",
+        "SEMANTIC:PLANUNIT:PSMERA-015",
+        "SEMANTIC:PLANUNIT:PSMERA-016"
+      ],
+      "statement": "Tool synthesis, deduplication, and HITL resume contracts do not define a provider/run namespace for UUIDs or behavior for evicted replays, stale context IDs, duplicate responses, and concurrent resumes.",
+      "title": "Deduplication and resume identities are under-scoped"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "ownership",
+        "failures_recovery",
+        "security_privacy",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  When authenticated A2A card fetches or bridge transport detect an authentication barrier, the adapter emits",
+          "line_end": 1462,
+          "line_start": 1462,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        },
+        {
+          "exact_quote": "  Binary and non-text A2A artifacts must never inline into normalized text; adapters persist artifacts, emit",
+          "line_end": 1523,
+          "line_start": 1523,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "auth_and_artifact_partial_failure_recovery_undefined",
+      "impact": "Auth recovery can leave a run indefinitely blocked or incorrectly terminal, while interrupted artifact persistence can expose paths, orphan partial data, or emit misleading persisted/chunk state without a rollback or cleanup contract.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-017",
+        "PLANUNIT:PSMERA-018",
+        "SEMANTIC:PLANUNIT:PSMERA-017",
+        "SEMANTIC:PLANUNIT:PSMERA-018"
+      ],
+      "statement": "The auth and artifact units delegate recovery ownership or require successful persistence but do not specify blocked, failed, retry, cleanup, rollback, or redaction behavior for partial operations.",
+      "title": "Auth and artifact partial failures lack recovery contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  When upstream emits multiple terminal indicators such as TerminationEvent or RunCompletionEvent, the adapter",
+          "line_end": 1599,
+          "line_start": 1599,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        },
+        {
+          "exact_quote": "  - \"exactly 2 reviewer subagents\"",
+          "line_end": 1704,
+          "line_start": 1704,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "terminal_conflict_and_reviewer_partial_failure",
+      "impact": "A late success indicator may mask an earlier failure, while a timed-out, crashed, duplicated, or missing reviewer can prevent consensus indefinitely or produce an unauditable verdict.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-019",
+        "PLANUNIT:PSMERA-020",
+        "PLANUNIT:PSMERA-021",
+        "SEMANTIC:PLANUNIT:PSMERA-019",
+        "SEMANTIC:PLANUNIT:PSMERA-020",
+        "SEMANTIC:PLANUNIT:PSMERA-021"
+      ],
+      "statement": "Terminal arbitration defines source preference without resolving contradictory success/failure evidence, and the two-reviewer audit protocol defines no timeout, missing-verdict, duplicate-verdict, or reviewer-failure transition.",
+      "title": "Terminal and audit arbitration omit contradictory and partial outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Provider/A2A normalized streams must preserve canonical wake reasons and attempt continuity: completion,",
+          "line_end": 1800,
+          "line_start": 1800,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "wake_reason_discriminator_and_resume_attempt_boundary",
+      "impact": "Different implementors can classify the same completion or resumed input as different wake reasons or attempt boundaries, causing nondeterministic scheduler propagation and lineage.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-022",
+        "PLANUNIT:PSMERA-023",
+        "SEMANTIC:PLANUNIT:PSMERA-022",
+        "SEMANTIC:PLANUNIT:PSMERA-023"
+      ],
+      "statement": "The wake contract lists multiple completion wake reasons without a selection discriminator and does not classify when a HITL or prerequisite resume stays on an attempt versus creates a new attempt.",
+      "title": "Wake and attempt transitions remain ambiguous"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "security_privacy",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  OpenCode and A2A session identifiers move to provider-native correlation fields rather than canonical",
+          "line_end": 1933,
+          "line_start": 1933,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "provider_correlation_rotation_and_account_binding",
+      "impact": "Session or account rotation behind a bridge can attach events and cached approvals to the wrong provider identity because no cardinality, rotation, invalidation, or account-binding rule is given for correlation fields.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-024",
+        "SEMANTIC:PLANUNIT:PSMERA-024"
+      ],
+      "statement": "PSMERA-024 separates upstream session identifiers from canonical thread identity but does not define correlation-field cardinality, rotation, invalidation, or binding to an upstream account change.",
+      "title": "Provider correlation lacks rotation and account binding"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "split_recommendation_reason: \"This span intentionally records multiple unresolved schema and routing gaps. It is atomized as a deferred reconciliation unit because owner placement is evidenced but final schema changes require a future owner-doc pass.\"",
+          "line_end": 2081,
+          "line_start": 2081,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "deferred_schema_reconciliation",
+      "impact": "Accepted PlanUnit status can be mistaken for schema closure even though account capture, version growth, stale tier routing, and owner-document changes remain intentionally unresolved.",
+      "item_id": "A005M15-I012",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-025",
+        "SEMANTIC:PLANUNIT:PSMERA-025"
+      ],
+      "statement": "PSMERA-025 is explicitly a deferred reconciliation unit whose final schema changes still require a future owner-document pass.",
+      "title": "Accepted continuity unit still contains deferred schema gaps"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Repairs `sfk-f343634c482c449df4c8d04f`: `approval_scope_key` format is `approval:{project_id}:{policy_axis}:{target_hash}:{operation_class}`. `target_hash` is lowercase hex SHA-256 over the normalized target identity. Keys are recomputed when project, policy axis, target, or operation class changes.",
+          "line_end": 2194,
+          "line_start": 2194,
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+        }
+      ],
+      "gap_kind": "approval_target_normalization_unspecified",
+      "impact": "Equivalent targets can hash differently across adapters or distinct targets can be normalized inconsistently, producing approval-cache misses, unintended reuse, and non-reproducible authorization decisions.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-025",
+        "SEMANTIC:PLANUNIT:PSMERA-025"
+      ],
+      "statement": "The approval key fixes the outer format and hash algorithm but does not define the normalized target identity grammar, canonical encoding, path rules, case rules, or versioning.",
+      "title": "Approval target normalization is not canonicalized"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        375
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Provider_Stream_Mapping_External_Reference_A2A.md:CONT-001"
+      ],
+      "item_ids": [
+        "A005M15-I001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the full owner prologue, native/A2A mappings, deterministic lifecycle rules, Overseer diagnostics, continuity addenda, and account-attribution negative space; the explicit unresolved bridged-account policy is the principal gap.",
+      "window_id": "WIN-EDC80C197D4C-0001"
+    },
+    {
+      "core_range": [
+        376,
+        726
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-002",
+        "PLANUNIT:PSMERA-003",
+        "PLANUNIT:PSMERA-004",
+        "PLANUNIT:PSMERA-005",
+        "PLANUNIT:PSMERA-006",
+        "SEMANTIC:PROLOGUE:Plans/Provider_Stream_Mapping_External_Reference_A2A.md:CONT-002",
+        "SEMANTIC:PLANUNIT:PSMERA-002",
+        "SEMANTIC:PLANUNIT:PSMERA-003",
+        "SEMANTIC:PLANUNIT:PSMERA-004",
+        "SEMANTIC:PLANUNIT:PSMERA-005",
+        "SEMANTIC:PLANUNIT:PSMERA-006"
+      ],
+      "item_ids": [
+        "A005M15-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the continuity tail, owner/consumer map, and PSMERA-002 through PSMERA-006; their external-only, backend, GUI, and DRY owner boundaries are explicit and internally coherent.",
+      "window_id": "WIN-EDC80C197D4C-0002"
+    },
+    {
+      "core_range": [
+        727,
+        1081
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-007",
+        "PLANUNIT:PSMERA-008",
+        "PLANUNIT:PSMERA-009",
+        "PLANUNIT:PSMERA-010",
+        "PLANUNIT:PSMERA-011",
+        "SEMANTIC:PLANUNIT:PSMERA-007",
+        "SEMANTIC:PLANUNIT:PSMERA-008",
+        "SEMANTIC:PLANUNIT:PSMERA-009",
+        "SEMANTIC:PLANUNIT:PSMERA-010",
+        "SEMANTIC:PLANUNIT:PSMERA-011"
+      ],
+      "item_ids": [
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PSMERA-007 through PSMERA-011: the event vocabulary is bounded, but ErrorEvent terminal behavior and the equivalence rule for legacy versus modern tool calls remain underspecified.",
+      "window_id": "WIN-EDC80C197D4C-0003"
+    },
+    {
+      "core_range": [
+        1082,
+        1453
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-012",
+        "PLANUNIT:PSMERA-013",
+        "PLANUNIT:PSMERA-014",
+        "PLANUNIT:PSMERA-015",
+        "PLANUNIT:PSMERA-016",
+        "SEMANTIC:PLANUNIT:PSMERA-012",
+        "SEMANTIC:PLANUNIT:PSMERA-013",
+        "SEMANTIC:PLANUNIT:PSMERA-014",
+        "SEMANTIC:PLANUNIT:PSMERA-015",
+        "SEMANTIC:PLANUNIT:PSMERA-016"
+      ],
+      "item_ids": [
+        "A005M15-I006",
+        "A005M15-I007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PSMERA-012 through PSMERA-016: A2A failure/cancellation states are absent, and identity scope for deduplication plus stale, duplicate, and concurrent resume behavior is not deterministic.",
+      "window_id": "WIN-EDC80C197D4C-0004"
+    },
+    {
+      "core_range": [
+        1454,
+        1791
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-017",
+        "PLANUNIT:PSMERA-018",
+        "PLANUNIT:PSMERA-019",
+        "PLANUNIT:PSMERA-020",
+        "PLANUNIT:PSMERA-021",
+        "SEMANTIC:PLANUNIT:PSMERA-017",
+        "SEMANTIC:PLANUNIT:PSMERA-018",
+        "SEMANTIC:PLANUNIT:PSMERA-019",
+        "SEMANTIC:PLANUNIT:PSMERA-020",
+        "SEMANTIC:PLANUNIT:PSMERA-021"
+      ],
+      "item_ids": [
+        "A005M15-I008",
+        "A005M15-I009"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PSMERA-017 through PSMERA-021: auth and artifact partial failures lack cleanup/recovery transitions, while terminal conflicts and missing reviewer outcomes have no deterministic arbitration.",
+      "window_id": "WIN-EDC80C197D4C-0005"
+    },
+    {
+      "core_range": [
+        1792,
+        1993
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-022",
+        "PLANUNIT:PSMERA-023",
+        "PLANUNIT:PSMERA-024",
+        "SEMANTIC:PLANUNIT:PSMERA-022",
+        "SEMANTIC:PLANUNIT:PSMERA-023",
+        "SEMANTIC:PLANUNIT:PSMERA-024"
+      ],
+      "item_ids": [
+        "A005M15-I010",
+        "A005M15-I011"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PSMERA-022 through PSMERA-024: wake selection and resume attempt boundaries remain ambiguous, and provider correlation fields lack rotation, invalidation, and account-binding rules.",
+      "window_id": "WIN-EDC80C197D4C-0006"
+    },
+    {
+      "core_range": [
+        1994,
+        2194
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PSMERA-025",
+        "SEMANTIC:PLANUNIT:PSMERA-025"
+      ],
+      "item_ids": [
+        "A005M15-I012",
+        "A005M15-I013"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PSMERA-025, the retired lineage bridge, migration coverage, and the FABLE addendum; final continuity schema changes remain deferred and approval target normalization is still unspecified.",
+      "window_id": "WIN-EDC80C197D4C-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-EDC80C197D4C-0001",
+    "document_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "micro_window_ids": [
+      "WIN-EDC80C197D4C-0001",
+      "WIN-EDC80C197D4C-0002",
+      "WIN-EDC80C197D4C-0003",
+      "WIN-EDC80C197D4C-0004",
+      "WIN-EDC80C197D4C-0005",
+      "WIN-EDC80C197D4C-0006",
+      "WIN-EDC80C197D4C-0007"
+    ],
+    "source_sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines whether bridged upstream account switches are capturable, opaque-but-accepted, or fatal, and how that decision invalidates approvals and billing attribution?",
+      "Which canonical scheduler discriminator selects node_completed versus verification_completed and distinguishes same-attempt reconnect from a new prerequisite-resume attempt?",
+      "Which artifact owner defines partial-write rollback, orphan cleanup, path redaction, and retention for A2A file and data parts?",
+      "Which auth owner transition converts an emitted auth barrier into blocked, recovered, failed, or terminal provider-stream state?",
+      "Which canonical grammar defines normalized target identity for approval_scope_key hashing across platforms and adapters?"
+    ],
+    "feature_family_keys": [
+      "provider_stream_continuity",
+      "a2a_bridge_normalization",
+      "diagnostic_event_contracts",
+      "tool_lifecycle_correlation",
+      "hitl_pause_resume",
+      "artifact_persistence",
+      "auth_and_account_attribution",
+      "scheduler_wake_mapping",
+      "approval_scope_key"
+    ],
+    "research_queries": [
+      "A2A v1 task terminal states failed canceled rejected mapping and resumability requirements",
+      "provider event UUID uniqueness scope replay deduplication namespace collision guidance",
+      "secure raw provider event retention redaction access control and deletion lifecycle",
+      "cross-platform canonical resource identity normalization before SHA-256 authorization cache keys",
+      "deterministic two-reviewer consensus behavior on timeout crash duplicate or missing verdict"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b6_000100_attempt_0015_terminal"
+}

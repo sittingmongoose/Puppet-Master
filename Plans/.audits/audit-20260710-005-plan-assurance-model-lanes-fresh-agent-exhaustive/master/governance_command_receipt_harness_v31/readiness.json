@@ -1,0 +1,63 @@
+{
+  "schema_version": "audit005-governance-command-receipt-harness-readiness-v1",
+  "status": "PASS_BLOCKED_PREPARATION_ONLY",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/governance_command_receipt_harness_v31",
+  "authority": "IMMUTABLE_AUTHORITY.json",
+  "authority_sha256": "6809c9a707a9e28263cdfd9c9fbc336ed32ce9aab75b9cec8ace995d472b0589",
+  "bound_artifact_hashes": {
+    "governance_command_receipt.schema.json": "430af85494a86b5958fb2ddd36f11ae2f40529b7eb3b26763b220a64437a6943",
+    "independent_luna_authorization.schema.json": "ad63dc8dfb286b19e8a0bcc9e8d939dd1ee7d9ea71050a23bcee08fbab9f608e",
+    "no_canonical_write_inventory_contract.json": "ea528e6a5664ca1861f4a7509b5102d56174c6afbe58ca9d77670e1881616d25",
+    "run_governance_commands_once.py": "287939c2fbf9346f347f6f3b1f60b6cb3ffd3f4c88315f3516a3fab4b57c9fe2",
+    "test_governance_receipt_harness.py": "a2763c89fff9ef8187b4b809d099269f7522e743d5007e84813dfa345f546ee0",
+    "verify_governance_receipt_harness.py": "e87bf2e55d626241c917537a40d7ae9e83cb884a7ccb381965f4e01ec8fe6dc5"
+  },
+  "current_no_execution_pacing_authority": {
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V32.json",
+    "sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "schema_version": "audit005-concurrency-policy-v32",
+    "execution_authority": false
+  },
+  "prepared_command_ids_in_order": [
+    "plans-run-gates",
+    "shards-check"
+  ],
+  "static_verifier": {
+    "artifact": "verify_governance_receipt_harness.py",
+    "sha256": "e87bf2e55d626241c917537a40d7ae9e83cb884a7ccb381965f4e01ec8fe6dc5",
+    "expected_status": "PASS_BLOCKED_PREPARATION_ONLY",
+    "expected_check_count": 7,
+    "executes_governed_commands": false
+  },
+  "strong_tests": {
+    "artifact": "test_governance_receipt_harness.py",
+    "sha256": "a2763c89fff9ef8187b4b809d099269f7522e743d5007e84813dfa345f546ee0",
+    "expected_status": "PASS",
+    "expected_test_count": 54,
+    "filesystem_test_writes": 0,
+    "executes_governed_commands": false
+  },
+  "governed_command_execution_count": 0,
+  "receipt_count": 0,
+  "stdout_capture_count": 0,
+  "stderr_capture_count": 0,
+  "inventory_capture_count": 0,
+  "canonical_write_count": 0,
+  "generated_artifact_regeneration_count": 0,
+  "descendant_count": 0,
+  "followup_count": 0,
+  "retry_count": 0,
+  "independent_luna_authorization_present": false,
+  "independent_luna_required": true,
+  "blockers": [
+    "INDEPENDENT_LUNA_AUTHORIZATION_ABSENT",
+    "EXECUTION_NOT_AUTHORIZED",
+    "GOVERNED_COMMANDS_NOT_EXECUTED_BY_DESIGN",
+    "FUTURE_RECEIPTS_ABSENT_BY_DESIGN"
+  ],
+  "activation": false,
+  "execution_authorized": false,
+  "certification": false,
+  "credit": 0
+}

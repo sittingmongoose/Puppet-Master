@@ -1,0 +1,565 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v7",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0008",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0007_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "activation_transaction_id": "A005-ER7-91b3d68b74605d4866b49104",
+  "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+  "leaf_dispatch_authorization_sha256": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+  "topic": "Agentic plan-to-code preflight and adversarial certification: executable acceptance criteria, simulation, negative-space review, evidence gates, human override, and regression traceability",
+  "owner_domains": [
+    "orchestration_runtime_execution",
+    "planning_specification_governance"
+  ],
+  "feature_refs": [],
+  "research_questions": [
+    "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+    "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+    "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+    "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?"
+  ],
+  "question_coverage": [
+    {
+      "question_index": 0,
+      "question": "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+      "coverage_state": "covered",
+      "evidence_refs": ["F-0001", "F-0002", "F-0003", "P-0002", "P-0003"]
+    },
+    {
+      "question_index": 1,
+      "question": "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+      "coverage_state": "covered",
+      "evidence_refs": ["F-0001", "F-0003", "P-0001", "P-0003", "P-0007"]
+    },
+    {
+      "question_index": 2,
+      "question": "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+      "coverage_state": "covered",
+      "evidence_refs": ["F-0004", "F-0006", "P-0004", "P-0005", "I-0002"]
+    },
+    {
+      "question_index": 3,
+      "question": "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?",
+      "coverage_state": "covered",
+      "evidence_refs": ["F-0002", "F-0005", "F-0006", "P-0006", "I-0004"]
+    }
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [],
+  "sources": [
+    {
+      "url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "title": "AI RMF Core",
+      "publisher": "NIST AI Resource Center",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines continuous Govern, Map, Measure, and Manage functions, go-no-go context, human oversight, uncertainty, independent review, TEVV, and emergent-risk monitoring."
+    },
+    {
+      "url": "https://airc.nist.gov/airmf-resources/playbook/measure/",
+      "title": "Measure - AI RMF Playbook",
+      "publisher": "NIST AI Resource Center",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents acceptable limits, metric selection, pre/post-deployment assessment, adversarial or stress testing, auditability, and regular re-evaluation."
+    },
+    {
+      "url": "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+      "title": "AI Risk Management Framework Playbook",
+      "publisher": "NIST AI Resource Center",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Provides primary guidance for simulations, stress and chaos testing, past incidents and near-misses, fail-safe envelopes, red-team exercises, and safety evidence documentation."
+    },
+    {
+      "url": "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+      "title": "System Engineering Handbook: Appendix",
+      "publisher": "NASA",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Specifies verification and validation planning, change authority, requirements flowdown, bidirectional traceability, verification methods, and qualification under extremes."
+    },
+    {
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "title": "SP 800-218, Secure Software Development Framework (SSDF) Version 1.1",
+      "publisher": "NIST Computer Security Resource Center",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Provides a lifecycle-integrated secure-development vocabulary for reducing vulnerabilities, preventing recurrence, and communicating controls across suppliers and consumers."
+    },
+    {
+      "url": "https://openai.com/index/updating-our-preparedness-framework/",
+      "title": "Our updated Preparedness Framework",
+      "publisher": "OpenAI",
+      "published_date": "2025-04-15",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents risk thresholds, scalable automated evaluations, expert deep dives, safeguards reports, residual-risk review, escalation, and reassessment when new evidence emerges."
+    },
+    {
+      "url": "https://www.anthropic.com/responsible-scaling-policy",
+      "title": "Anthropic's Responsible Scaling Policy",
+      "publisher": "Anthropic",
+      "published_date": "2026-07-08",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Current policy page documents capability thresholds, coverage-dated risk reports, external review, escalation, defense in depth, rapid response, and change history."
+    },
+    {
+      "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+      "title": "About protected branches",
+      "publisher": "GitHub Docs",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents required reviews, stale-approval invalidation, status checks, source identity, strict freshness, conversation resolution, and merge-queue controls."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+      "title": "Deployments and environments",
+      "publisher": "GitHub Docs",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents manual approvals, custom protection rules, branch restrictions, self-review prevention, wait timers, and explicit administrator-bypass policy."
+    },
+    {
+      "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+      "title": "Reviewing dependency changes in a pull request",
+      "publisher": "GitHub Docs",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents revision-to-revision dependency diffs, vulnerability findings, and enforceable dependency review before changes reach production."
+    },
+    {
+      "url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "title": "SLSA: Verifying artifacts",
+      "publisher": "SLSA",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines verification against roots of trust, signatures, artifact subjects, builder identity, build type, external parameters, and expectations."
+    },
+    {
+      "url": "https://slsa.dev/spec/v1.0/provenance",
+      "title": "SLSA: Provenance",
+      "publisher": "SLSA",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines provenance for artifacts, build inputs and resolved dependencies, builder trust closure, invocation metadata, and useful byproducts for later analysis."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-0001",
+      "claim": "NIST's lifecycle model makes preflight an evidence-producing loop: establish context and human oversight, measure before deployment and during operation with uncertainty and benchmarks, use independent review, then manage residual and emergent risk through documented response and improvement.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/"
+      ],
+      "confidence": 0.97,
+      "notes": "The source describes functions and outcomes rather than a single prescribed gate implementation; the preflight interpretation is a direct synthesis of those documented lifecycle requirements."
+    },
+    {
+      "finding_id": "F-0002",
+      "claim": "NASA's verification and validation plan pattern turns requirements into executable checks by assigning verification or validation activities, naming change authority, documenting flowdown and bidirectional traceability, and specifying analysis, inspection, demonstration, test, and qualification methods including worst-case conditions.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/"
+      ],
+      "confidence": 0.98,
+      "notes": "This is a systems-engineering analogue rather than an agent-specific recipe, but it directly supplies the plan-to-evidence mechanics requested by the assignment."
+    },
+    {
+      "finding_id": "F-0003",
+      "claim": "NIST's playbook recommends simulations before production, stress tests for likely scenarios and beyond known limits, tests against past incidents or near-misses, chaos engineering, red-team exercises, fail-safe documentation, and auditable records of methods, metrics, outcomes, and tested conditions.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf"
+      ],
+      "confidence": 0.96,
+      "notes": "The playbook presents these as suggested actions and documentation prompts, not as universal mandatory controls."
+    },
+    {
+      "finding_id": "F-0004",
+      "claim": "OpenAI's published Preparedness Framework separates capability thresholds from safeguard evidence, combines scalable automated evaluations with expert deep dives, uses dedicated capability and safeguards reports, and routes residual-risk recommendations from approval through further evaluation or stronger protection to leadership for a final decision.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "confidence": 0.95,
+      "notes": "The framework is an organizational example, not a generally applicable certification standard; its value here is the explicit escalation and report separation."
+    },
+    {
+      "finding_id": "F-0005",
+      "claim": "Anthropic's current Responsible Scaling Policy uses capability thresholds, coverage-dated risk reports, external review of report sections, documented change history, defense-in-depth safeguards, and explicit room to pause or revise when evidence or the risk landscape changes.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "confidence": 0.94,
+      "notes": "The July 8, 2026 version update is especially relevant to freshness, review coverage, and regression traceability."
+    },
+    {
+      "finding_id": "F-0006",
+      "claim": "Operational delivery systems make gate state enforceable through required reviews and status checks, stale-review invalidation, protected environments with approval and self-review controls, dependency diffs, vulnerability failures, and explicit bypass settings; secure-development guidance complements these controls with lifecycle-wide vulnerability reduction and recurrence prevention.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+        "https://csrc.nist.gov/pubs/sp/800/218/final"
+      ],
+      "confidence": 0.96,
+      "notes": "GitHub's controls are deployment and merge examples; mapping them to plan-to-code certification is an architectural inference captured separately below."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-0001",
+      "pattern": "Requirement-to-evidence traceability uses a controlled baseline, bidirectional parent-child links, named verification methods, and explicit change authority.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/"
+      ],
+      "implication": "A plan-to-code gate should make every acceptance criterion resolve to an executable check and a versioned evidence artifact, with changes able to invalidate downstream evidence."
+    },
+    {
+      "pattern_id": "P-0002",
+      "pattern": "High-consequence certification combines scalable automated checks with expert or independent deep review instead of treating automation as complete assurance.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/"
+      ],
+      "implication": "The gate should expose automation coverage and human-review coverage separately and require both where risk warrants it."
+    },
+    {
+      "pattern_id": "P-0003",
+      "pattern": "Scenario assurance expands from nominal tests to boundary, misuse, adversarial, stress, incident-replay, dependency-failure, and fail-safe or recovery scenarios.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf"
+      ],
+      "implication": "Negative-space review should be a first-class scenario set with explicit coverage rather than an informal reviewer comment."
+    },
+    {
+      "pattern_id": "P-0004",
+      "pattern": "Risk-tiered systems bind thresholds to escalating safeguards and route residual-risk decisions to named human authorities with permission to approve, request more evidence, strengthen controls, or pause.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "implication": "A gate needs explicit authority, escalation, and pause semantics; a green test result alone should not imply release authority."
+    },
+    {
+      "pattern_id": "P-0005",
+      "pattern": "Merge and deployment gates compose independent controls: required reviews, required status checks, freshness against the current base, dependency diffs, protected environments, approval, and configurable bypass.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request"
+      ],
+      "implication": "Certification should be the conjunction of independently named gates, not a single mutable boolean produced by an opaque evaluator."
+    },
+    {
+      "pattern_id": "P-0006",
+      "pattern": "Supply-chain assurance verifies provenance against a root of trust, artifact subject, builder identity, expected build type and parameters, and resolved dependencies; provenance also records useful invocation and byproduct context.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.0/verifying-artifacts",
+        "https://slsa.dev/spec/v1.0/provenance"
+      ],
+      "implication": "Plan-to-code evidence should bind to the exact implementation, build configuration, toolchain, and dependency closure rather than only to a plan revision."
+    },
+    {
+      "pattern_id": "P-0007",
+      "pattern": "Assurance is time- and change-sensitive: metrics are reassessed, stale approvals are invalidated, current coverage dates are recorded, and emergent risks trigger further monitoring or review.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://www.anthropic.com/responsible-scaling-policy",
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
+      ],
+      "implication": "A prior certification must have a freshness window and change-impact rules; it should not be copied across changed code, dependencies, context, or risk thresholds."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-0001",
+      "failure_mode": "The plan contains prose acceptance criteria but no executable method, scenario context, pass/fail threshold, responsible authority, or evidence artifact.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/"
+      ],
+      "mitigation_or_gap": "Compile each criterion into a typed check contract containing method, environment, scenarios, thresholds, owner, artifact, and invalidation triggers."
+    },
+    {
+      "failure_id": "FM-0002",
+      "failure_mode": "A gate remains green after the approved diff, base revision, dependency set, or operational context changes.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/"
+      ],
+      "mitigation_or_gap": "Record baseline and dependency digests in evidence, invalidate stale approvals, and schedule re-evaluation for drift and changed inputs."
+    },
+    {
+      "failure_id": "FM-0003",
+      "failure_mode": "Nominal tests pass while misuse, adversarial inputs, stress, boundary conditions, incident replay, or fail-safe behavior remain untested.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "mitigation_or_gap": "Require a negative-space scenario inventory, adversarial or red-team evidence, stress and recovery checks, and explicit coverage gaps before certification."
+    },
+    {
+      "failure_id": "FM-0004",
+      "failure_mode": "A human override silently converts a blocked or uncertain result into an apparently certified result without authority, rationale, scope, expiry, or residual-risk record.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "mitigation_or_gap": "Represent override as a distinct state with named authority, non-self-approval, reason, residual risk, compensating controls, expiry, and re-review trigger."
+    },
+    {
+      "failure_id": "FM-0005",
+      "failure_mode": "Evidence exists but cannot establish that the artifact, builder, configuration, or transitive dependencies are the ones that were actually evaluated.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.0/verifying-artifacts",
+        "https://slsa.dev/spec/v1.0/provenance",
+        "https://csrc.nist.gov/pubs/sp/800/218/final"
+      ],
+      "mitigation_or_gap": "Require signed or otherwise verifiable provenance, expected-parameter comparison, builder trust roots, subject digests, and dependency closure."
+    },
+    {
+      "failure_id": "FM-0006",
+      "failure_mode": "Unmeasurable or weakly measured risks disappear from the gate instead of being recorded as uncertainty and managed explicitly.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "mitigation_or_gap": "Preserve non-measurement reasons, uncertainty, residual risk, and escalation decisions as first-class gate inputs rather than treating missing metrics as pass."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-0001",
+      "implication": "The plan-to-code gate should be an evidence graph with typed, mutually exclusive outcomes rather than one pass/fail bit.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments"
+      ],
+      "rationale": "The sources distinguish context, measurement, risk management, review, protection, and bypass conditions. A graph preserves which condition caused the outcome and prevents a partial green signal from erasing a block or exception."
+    },
+    {
+      "implication_id": "I-0002",
+      "implication": "Use blocked for failed or missing mandatory evidence, uncertain for evidence with unresolved coverage or uncertainty, overridden for an explicit scoped human exception, and certified only when required evidence, freshness, provenance, and authority checks all pass.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://slsa.dev/spec/v1.0/verifying-artifacts"
+      ],
+      "rationale": "NIST and frontier-safety examples separate testing, residual risk, and decision authority; GitHub separates checks, approvals, and bypass; SLSA separates provenance presence from verification against expectations."
+    },
+    {
+      "implication_id": "I-0003",
+      "implication": "Every acceptance criterion should compile to a record containing requirement identity, expected result, method, scenario set including negative space, threshold, environment, owner, evidence digest, timestamp, baseline, and dependency snapshot.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://slsa.dev/spec/v1.0/provenance",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request"
+      ],
+      "rationale": "NASA supplies requirement and method traceability, NIST supplies scenario and documentation breadth, and SLSA/GitHub supply artifact and dependency identity patterns."
+    },
+    {
+      "implication_id": "I-0004",
+      "implication": "Implementation, dependency, baseline, context, or threshold changes should invalidate affected evidence or schedule targeted re-evaluation instead of inheriting a prior certification.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+        "https://slsa.dev/spec/v1.0/provenance"
+      ],
+      "rationale": "NASA describes controlled baselines and change authority; NIST describes drift and regular reassessment; GitHub invalidates stale approvals and compares revisions; SLSA binds evidence to resolved inputs."
+    },
+    {
+      "implication_id": "I-0005",
+      "implication": "The result model should distinguish evidence missing, evidence failed, evidence limited or not measurable, and evidence passed; incomplete evidence must never auto-promote to certified.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "rationale": "NIST explicitly calls for documenting risks that cannot be measured, while OpenAI separates reports and escalates unresolved safeguard questions to further evaluation or stronger protection."
+    },
+    {
+      "implication_id": "I-0006",
+      "implication": "Scenario certification should cover nominal behavior, boundaries, misuse, adversarial inputs, dependency and tool failures, load or drift, incident replay, recovery, and fail-safe behavior.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "NIST enumerates simulation, stress, incident, chaos, red-team, and fail-safe practices; Anthropic describes layered safeguards, jailbreak response, and real-world scenario validation."
+    },
+    {
+      "implication_id": "I-0007",
+      "implication": "Independent review and override records should be auditable and non-self-approving, with the reviewer, authority, decision, rationale, residual risk, and expiration visible to the gate.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "NIST recommends independent review; GitHub supports required reviewers and self-review prevention; Anthropic documents external review coverage and governance changes."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "NI-0001",
+      "idea": "Represent certification as an evidence vector with separate dimensions for coverage, validity, freshness, independence, provenance, and residual risk, then compute the visible state from those dimensions.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://slsa.dev/spec/v1.0/verifying-artifacts"
+      ],
+      "rationale": "The dimensions are a proposed synthesis of NIST measurement and uncertainty, NASA traceability, and SLSA verification requirements; they make partial assurance visible without collapsing it into a false binary."
+    },
+    {
+      "idea_id": "NI-0002",
+      "idea": "Generate a counterfactual negative-space set for every plan by mutating assumptions, permissions, tools, inputs, timing, dependencies, and user intent, then require disposition of each mutation.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "This operationalizes documented stress, red-team, future-risk, and jailbreak-testing patterns into a repeatable plan-review generator."
+    },
+    {
+      "idea_id": "NI-0003",
+      "idea": "Build a change-impact revalidation graph that maps each requirement and evidence artifact to implementation nodes, dependency descriptors, scenarios, and gate decisions, so a changed node fans out to exactly the checks it invalidates.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+        "https://slsa.dev/spec/v1.0/provenance"
+      ],
+      "rationale": "This combines NASA bidirectional traceability with revision-level dependency diffs and SLSA resolved-dependency identity."
+    },
+    {
+      "idea_id": "NI-0004",
+      "idea": "Issue an override lease rather than a permanent override: a signed exception records scope, authority, rationale, compensating controls, residual risk, expiry, and the evidence required to close it.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "This makes documented bypass, leadership decision, pause, reassessment, and changing risk thresholds explicit without treating an exception as certification."
+    },
+    {
+      "idea_id": "NI-0005",
+      "idea": "Create a certification envelope whose digest covers the plan baseline, generated check contracts, implementation artifact, build provenance, dependency closure, scenario corpus, and decision record; display any envelope mismatch as blocked.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+        "https://slsa.dev/spec/v1.0/verifying-artifacts",
+        "https://slsa.dev/spec/v1.0/provenance"
+      ],
+      "rationale": "The envelope is a proposed integration of traceability and provenance so certification cannot be detached from the exact inputs and evidence that produced it."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-0001",
+      "question": "What quantitative threshold and evidence-sufficiency rule should map uncertainty and residual risk to blocked versus certified for each plan risk class?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/airmf-resources/playbook/measure/",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ]
+    },
+    {
+      "question_id": "UQ-0002",
+      "question": "What is the minimum complete dependency closure for an agentic run when prompts, tools, external models, data, build services, and transitive services can change independently?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request",
+        "https://slsa.dev/spec/v1.0/verifying-artifacts",
+        "https://slsa.dev/spec/v1.0/provenance",
+        "https://csrc.nist.gov/pubs/sp/800/218/final"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true,
+    "fresh_current_public_web_research_redone": true,
+    "canonical_agent_path_is_only_leaf_known_identity": true,
+    "native_identity_deferred_to_controller_receipt_and_capture": true,
+    "prior_attempt_result_bodies_and_peer_outputs_not_read": true,
+    "leaf_local_schema_conformance_check_passed_before_final_write": true,
+    "exact_schema_key_set_verified": true,
+    "source_registry_unique_and_complete": true,
+    "source_registry_completed_before_claim_emission": true,
+    "activation_core_and_authorization_verified": true,
+    "blocked_prelaunch_intent_treated_as_lineage_only": true,
+    "result_required_before_pmr1": true,
+    "pmr1_not_returned_before_result_write": true
+  }
+}

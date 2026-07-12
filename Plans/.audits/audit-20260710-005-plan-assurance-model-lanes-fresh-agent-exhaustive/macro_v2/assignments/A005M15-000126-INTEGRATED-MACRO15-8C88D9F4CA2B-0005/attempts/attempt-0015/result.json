@@ -1,0 +1,684 @@
+{
+  "assignment_id": "A005M15-000126-INTEGRATED-MACRO15-8C88D9F4CA2B-0005",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "ownership", "consumers", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.dev.show_problems\",",
+          "line_end": 7646,
+          "line_start": 7646,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"handler_location\": \"handlers::dev::show_problems\",",
+          "line_end": 7647,
+          "line_start": 7647,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Builders and testers have an explicit command-to-handler ownership seam for each listed development and Docker control.",
+      "item_id": "A005M15-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-021", "STRUCTURAL:$.entries"],
+      "statement": "The window explicitly maps each visible control to a UI command and handler, including development problem/session controls and Docker bake/build controls.",
+      "title": "Explicit command-to-handler wiring"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "operations", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_required\": \"Production wiring contract for cmd.dev.show_problems; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+          "line_end": 7656,
+          "line_start": 7656,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Production certification is gated on multiple independently falsifiable evidence classes rather than registration alone.",
+      "item_id": "A005M15-I002",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-021", "STRUCTURAL:$.entries"],
+      "statement": "The repeated certification oracle requires render/control, dispatch, typed contract, state projection, disabled-reason, effect, accessibility, and regression evidence.",
+      "title": "Multi-part production certification oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "accessibility", "states_transitions", "failures_recovery"],
+      "evidence": [
+        {
+          "exact_quote": "        \"focus_management\": \"catalog.dev_show_problems preserves visible focus and returns focus deterministically after dispatch or error.\",",
+          "line_end": 7669,
+          "line_start": 7669,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"disabled_announcement\": \"catalog.dev_show_problems surfaces state.commands.dev_show_problems.disabled_reason to assistive technology when unavailable.\"",
+          "line_end": 7670,
+          "line_start": 7670,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "The GUI cannot satisfy the wiring contract while silently dropping focus recovery or unavailable-state announcements.",
+      "item_id": "A005M15-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-021", "STRUCTURAL:$.entries"],
+      "statement": "Keyboard reachability, deterministic focus restoration, stable semantics, and disabled-state announcement are expressly required for every control in this window.",
+      "title": "Accessibility and focus behavior are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "ambiguity_unknowns", "builder_discretion", "test_falsifiability", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.dev.show_problems must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 7650,
+          "line_start": 7650,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "payload_and_result_schema_absent",
+      "impact": "Independent builders can choose incompatible argument fields, validation rules, result variants, and error shapes while still claiming a typed contract exists.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-021", "STRUCTURAL:$.entries"],
+      "statement": "The entries demand typed arguments and results but do not instantiate their fields, types, validation constraints, result variants, or error vocabulary in this source unit.",
+      "title": "Typed payload and result contracts are named but not defined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "behavior", "gui_truth", "ownership", "consumers"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Build > Select Target\",",
+          "line_end": 8250,
+          "line_start": 8250,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.cleanup.scan\",",
+          "line_end": 8361,
+          "line_start": 8361,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "The Docker Manager exposes concrete build-target selection and cleanup scan/prune command surfaces with named handler ownership.",
+      "item_id": "A005M15-I005",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-022", "STRUCTURAL:$.entries"],
+      "statement": "This window defines Docker build variants, target selection, and cleanup scan/prune controls as separately dispatchable capabilities.",
+      "title": "Docker build and cleanup command surface"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "observability_support", "acceptance_oracles", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_required\": \"Production wiring contract for cmd.docker.cleanup.prune; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+          "line_end": 8316,
+          "line_start": 8316,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "A cleanup control cannot be certified solely by invoking a handler; state, effect, accessibility, and regression evidence are also mandatory.",
+      "item_id": "A005M15-I006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-022", "STRUCTURAL:$.entries"],
+      "statement": "Cleanup prune retains the same complete production evidence gate as the other command entries.",
+      "title": "Cleanup commands retain full certification gates"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["destructive_actions", "authority", "authority_boundaries", "failures_recovery", "recovery_rollback", "security_privacy", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.cleanup.prune\",",
+          "line_end": 8306,
+          "line_start": 8306,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.cleanup.prune has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8321,
+          "line_start": 8321,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "destructive_action_safeguards_unspecified",
+      "impact": "A destructive prune may be dispatched without a canonically defined confirmation, scope preview, privilege check, audit record, or recoverability boundary.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-022", "STRUCTURAL:$.entries"],
+      "statement": "The prune entry identifies a destructive command but specifies only a no-persist receipt disposition; confirmation, affected-resource preview, authorization, retention, and rollback or irreversibility semantics are absent.",
+      "title": "Prune lacks destructive-action safeguards"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "concurrency_races", "partial_failure", "offline_network_loss", "scale_performance", "operations", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.build.bake has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8046,
+          "line_start": 8046,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.cleanup.scan has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8376,
+          "line_start": 8376,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "long_running_operation_lifecycle_unspecified",
+      "impact": "Build, bake, and scan implementations may disagree on duplicate dispatch, progress, cancellation, timeout, reconnect, partial results, and resource limits.",
+      "item_id": "A005M15-I008",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-022", "STRUCTURAL:$.entries"],
+      "statement": "Receipt-only effects do not define the lifecycle of potentially long-running build, bake, or scan work, including concurrency, progress, cancellation, timeouts, partial failure, and offline recovery.",
+      "title": "Long-running Docker lifecycle is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "behavior", "consumers", "gui_truth", "ownership"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Compose > Scenario > Delete\",",
+          "line_end": 8580,
+          "line_start": 8580,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"handler_location\": \"handlers::docker::compose_scenario_save\",",
+          "line_end": 8747,
+          "line_start": 8747,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Compose operations and scenario CRUD/run actions have distinct visible controls and handlers rather than an opaque generic dispatch.",
+      "item_id": "A005M15-I009",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-023", "STRUCTURAL:$.entries"],
+      "statement": "This window exposes compose, down/subset, and scenario delete/edit/run/save operations as separate UI-command-handler paths.",
+      "title": "Compose and scenario command family"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "operations", "observability_support", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.compose.scenario.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8596,
+          "line_start": 8596,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Even when no domain event is declared, dispatch is not allowed to disappear without an observable receipt or explicit route/open disposition.",
+      "item_id": "A005M15-I010",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-023", "STRUCTURAL:$.entries"],
+      "statement": "Every compose/scenario command requires a receipt or explicit no-persist disposition and forbids unexpected persisted domain events.",
+      "title": "Receipt-only effect contract is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["destructive_actions", "authority", "authority_boundaries", "recovery_rollback", "privacy_data_lifecycle", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.compose.scenario.delete\",",
+          "line_end": 8581,
+          "line_start": 8581,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.compose_down has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8486,
+          "line_start": 8486,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "destructive_compose_semantics_unspecified",
+      "impact": "Scenario deletion or compose-down can remove configuration or runtime state without canonically defined confirmation, privilege, dependency impact, auditability, or recovery behavior.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-023", "STRUCTURAL:$.entries"],
+      "statement": "Delete and down operations are wired but lack confirmation, authorization, affected-resource scope, dependency handling, retention, undo, rollback, and invalid-state rules.",
+      "title": "Destructive compose operations lack safety semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "states_transitions", "concurrency_races", "partial_failure", "compatibility_migration", "offline_network_loss", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.compose.scenario.save\",",
+          "line_end": 8746,
+          "line_start": 8746,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.compose.scenario.save has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8761,
+          "line_start": 8761,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "scenario_mutation_consistency_unspecified",
+      "impact": "Concurrent editors or interrupted saves can overwrite, duplicate, or partially apply scenario changes with no canonical conflict or migration behavior.",
+      "item_id": "A005M15-I012",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-023", "STRUCTURAL:$.entries"],
+      "statement": "Scenario edit/save/run commands do not define scenario schema identity, revision preconditions, optimistic concurrency, atomicity, idempotency, partial-save recovery, or version migration.",
+      "title": "Scenario consistency and migration rules are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "behavior", "consumers", "gui_truth", "ownership"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Container > Attach Shell\",",
+          "line_end": 8965,
+          "line_start": 8965,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Container > Open\",",
+          "line_end": 9130,
+          "line_start": 9130,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Users receive distinct container attach, delete, inspect, and open controls, each with a named handler and availability projection.",
+      "item_id": "A005M15-I013",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-024", "STRUCTURAL:$.entries"],
+      "statement": "This window defines compose-up controls plus container navigation, shell attachment, deletion, inspection, and open operations.",
+      "title": "Container operation capability set"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["accessibility", "gui_truth", "states_transitions", "failures_recovery"],
+      "evidence": [
+        {
+          "exact_quote": "        \"role_or_semantics\": \"catalog.docker_container_attach_shell exposes a stable role/name/description matching cmd.docker.container.attach_shell.\",",
+          "line_end": 8987,
+          "line_start": 8987,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"focus_management\": \"catalog.docker_container_attach_shell preserves visible focus and returns focus deterministically after dispatch or error.\",",
+          "line_end": 8989,
+          "line_start": 8989,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Container controls have explicit assistive semantics and deterministic post-dispatch or error focus behavior.",
+      "item_id": "A005M15-I014",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-024", "STRUCTURAL:$.entries"],
+      "statement": "The attach-shell control explicitly requires stable accessible naming, keyboard activation, visible focus, deterministic focus return, and disabled-reason announcement.",
+      "title": "Container control accessibility is testable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["destructive_actions", "authority", "authority_boundaries", "failures_recovery", "recovery_rollback", "privacy_data_lifecycle", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.delete\",",
+          "line_end": 9021,
+          "line_start": 9021,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.container.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 9036,
+          "line_start": 9036,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "container_deletion_safety_unspecified",
+      "impact": "A container may be deleted with no canonical protection against wrong-target selection, insufficient privilege, attached-volume loss, concurrent mutation, or irrecoverable failure.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-024", "STRUCTURAL:$.entries"],
+      "statement": "Container deletion has a receipt-only effect but no confirmation, resource identity precondition, volume/data-loss warning, authorization rule, concurrent-state guard, persisted audit outcome, or recovery contract.",
+      "title": "Container deletion lacks safety and recovery contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["security_privacy", "untrusted_inputs", "authority_boundaries", "privacy_data_lifecycle", "states_transitions", "offline_network_loss", "scale_limits"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.attach_shell\",",
+          "line_end": 8966,
+          "line_start": 8966,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.container.attach_shell has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 8981,
+          "line_start": 8981,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "interactive_shell_security_lifecycle_absent",
+      "impact": "Implementations may expose an interactive privileged channel without consistent authorization, escaping, secret handling, termination, resource limits, or disconnect recovery.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-024", "STRUCTURAL:$.entries"],
+      "statement": "Attach shell lacks a defined principal and privilege boundary, command/input trust model, terminal encoding and escape policy, secret/redaction lifecycle, session termination, backpressure, and disconnect semantics.",
+      "title": "Attach-shell security and session lifecycle are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "consumers", "gui_truth", "behavior", "operations"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Container > Stats\",",
+          "line_end": 9240,
+          "line_start": 9240,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"ui_location\": \"Docker Manager > Create Repository\",",
+          "line_end": 9515,
+          "line_start": 9515,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "The Docker Manager has distinct controls for container lifecycle/inspection, context selection, and repository creation.",
+      "item_id": "A005M15-I017",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-025", "STRUCTURAL:$.entries"],
+      "statement": "The visible Docker Manager consumes commands for restart, stats, stop, logs, context selection, and repository creation.",
+      "title": "Docker Manager is the declared command consumer"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.restart\",",
+          "line_end": 9186,
+          "line_start": 9186,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.stop\",",
+          "line_end": 9296,
+          "line_start": 9296,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "container_transition_model_absent",
+      "impact": "Restart and stop can race with each other or external Docker changes, producing ambiguous duplicate, timeout, disconnected, or half-transitioned outcomes.",
+      "item_id": "A005M15-I018",
+      "item_type": "state_transition",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-025", "STRUCTURAL:$.entries"],
+      "statement": "Restart and stop are named as commands but the legal source states, transitional states, terminal states, duplicate-dispatch behavior, race resolution, timeout, rollback, and reconnect reconciliation are not defined.",
+      "title": "Container restart and stop transition model is absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "security_privacy", "privacy_data_lifecycle", "scale_performance", "scale_limits", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.stats\",",
+          "line_end": 9241,
+          "line_start": 9241,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.container.view_logs\",",
+          "line_end": 9351,
+          "line_start": 9351,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "streaming_observation_contract_absent",
+      "impact": "Stats or log viewers may leak secrets, exhaust memory, reorder or drop data invisibly, or mislead users during disconnect and reconnection.",
+      "item_id": "A005M15-I019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-025", "STRUCTURAL:$.entries"],
+      "statement": "Stats and log commands lack snapshot-versus-stream semantics, sampling or ordering, pagination/backpressure, retention, redaction, maximum volume, disconnect indication, resumption, and stale-data presentation rules.",
+      "title": "Stats and logs lack streaming, privacy, and scale contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "authority", "authority_boundaries", "security_privacy", "partial_failure", "offline_network_loss", "compatibility_migration", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.docker.context.select\",",
+          "line_end": 9461,
+          "line_start": 9461,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.docker.create_repository has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 9531,
+          "line_start": 9531,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "context_and_repository_contracts_unspecified",
+      "impact": "A builder must invent context identity, credential authority, repository naming/conflict behavior, network retry, duplicate creation, and migration semantics.",
+      "item_id": "A005M15-I020",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-025", "STRUCTURAL:$.entries"],
+      "statement": "Context selection and repository creation do not define input schemas, context identity and persistence, credential ownership, name validation, authorization, conflict handling, atomicity, retry/idempotency, offline failure, or compatibility behavior.",
+      "title": "Context selection and repository creation remain underspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [7643, 8027],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-021", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-I001", "A005M15-I002", "A005M15-I003", "A005M15-I004"],
+      "reviewed": true,
+      "summary": "Reviewed development-panel and Docker bake/build wiring. Explicit handler, state, receipt, accessibility, and evidence gates are present; concrete typed payload/result schemas remain absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0021"
+    },
+    {
+      "core_range": [8028, 8412],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-022", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-I005", "A005M15-I006", "A005M15-I007", "A005M15-I008"],
+      "reviewed": true,
+      "summary": "Reviewed Docker build variants, target selection, prune, and scan. Certification gates are explicit, while destructive safeguards and long-running operation lifecycle rules are missing.",
+      "window_id": "WIN-8C88D9F4CA2B-0022"
+    },
+    {
+      "core_range": [8413, 8797],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-023", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-I009", "A005M15-I010", "A005M15-I011", "A005M15-I012"],
+      "reviewed": true,
+      "summary": "Reviewed compose and scenario commands. Receipt-only behavior is explicit, but destructive down/delete safeguards and scenario consistency, concurrency, recovery, and migration contracts are absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0023"
+    },
+    {
+      "core_range": [8798, 9182],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-024", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-I013", "A005M15-I014", "A005M15-I015", "A005M15-I016"],
+      "reviewed": true,
+      "summary": "Reviewed compose-up and container attach/delete/inspect/open controls. Accessibility is explicit, while delete safety and interactive-shell security/session lifecycle are undefined.",
+      "window_id": "WIN-8C88D9F4CA2B-0024"
+    },
+    {
+      "core_range": [9183, 9567],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-025", "STRUCTURAL:$.entries"],
+      "item_ids": ["A005M15-I017", "A005M15-I018", "A005M15-I019", "A005M15-I020"],
+      "reviewed": true,
+      "summary": "Reviewed container restart/stats/stop/logs, Docker context selection, and repository creation. Transition, streaming/privacy/scale, authority, network, conflict, and retry semantics remain underspecified.",
+      "window_id": "WIN-8C88D9F4CA2B-0025"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0005",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": ["WIN-8C88D9F4CA2B-0021", "WIN-8C88D9F4CA2B-0022", "WIN-8C88D9F4CA2B-0023", "WIN-8C88D9F4CA2B-0024", "WIN-8C88D9F4CA2B-0025"],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Where are the concrete argument, result, and error schemas for these UI commands canonically defined?",
+      "Which canonical owner defines destructive-action confirmation, authorization, audit, and rollback rules for Docker prune, compose down, scenario delete, and container delete?",
+      "Which canonical owner defines lifecycle, progress, cancellation, concurrency, reconnect, and partial-failure semantics for long-running Docker operations and streams?"
+    ],
+    "feature_family_keys": [
+      "dev-runtime-panel-commands",
+      "docker-build-and-cleanup",
+      "docker-compose-scenarios",
+      "docker-container-operations",
+      "docker-context-and-repository"
+    ],
+    "research_queries": [
+      "Docker destructive operation confirmation authorization audit rollback interaction patterns",
+      "Docker build scan logs stats cancellation backpressure reconnect idempotency contracts",
+      "Docker interactive shell security privilege redaction terminal escape session lifecycle"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000126_attempt_0015_terminal"
+}

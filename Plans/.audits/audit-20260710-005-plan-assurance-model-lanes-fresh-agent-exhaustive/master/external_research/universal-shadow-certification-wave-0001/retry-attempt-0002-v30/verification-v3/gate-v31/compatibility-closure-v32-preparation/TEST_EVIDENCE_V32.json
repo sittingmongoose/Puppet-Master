@@ -1,0 +1,61 @@
+{
+  "schema_version": "a005-c1-v32-compatibility-closure-test-evidence-v1",
+  "status": "PASS_PREPARATION_TESTS_PRODUCTION_ZERO",
+  "new_compatibility_suite": {
+    "passed": 461,
+    "failed": 0,
+    "total": 461,
+    "minimum_required": 300,
+    "all_cases_use_real_temporary_files": true,
+    "categories": {
+      "child": 89,
+      "filesystem": 50,
+      "output": 60,
+      "parent": 127,
+      "report": 135
+    },
+    "test_path": "tools/test_compatibility_closure_v32.py",
+    "test_sha256": "a3f465f07efa879f46359cc31515fd06b4940c82ccfd83bb0a0d74336f0310bf",
+    "stdout_sha256": "5f3d853a83dc6e51dde8cfcd55f66fb306dc2ab7eee48ca7411a9fcd31224f13",
+    "test_name_digest": "951144b0dfc8b8af8e40b5e870ecb89713cab56e0297f14982abeb6506d14c25"
+  },
+  "preserved_v30_suite": {
+    "passed": 825,
+    "failed": 0,
+    "total": 825,
+    "wrapped_cases": 807,
+    "wrapper_cases": 18,
+    "test_relative_to_audit": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/verification-v2/test_retry_attempt_0002_v30_v3.py",
+    "test_sha256": "849cf07ccedaf868f43e28cf79a50ad9a1007b35d14575bc802eeae1e2784350",
+    "stdout_sha256": "2533adc1664f4b1a9d3680626351cb1e6ea339dd7654ea3a373837821de4a343"
+  },
+  "grand_total": {
+    "passed": 1286,
+    "failed": 0,
+    "total": 1286
+  },
+  "production_zero": {
+    "capture_relative_path": "controller-native-captures/c1-atomic8-prelaunch.json",
+    "capture_present": false,
+    "checkpoint_relative_path": "controller-native-checkpoints/c1-atomic8-prelaunch.jsonl",
+    "checkpoint_present": false,
+    "writer_invocations_in_v32_branch": 0
+  },
+  "runtime": {
+    "python_path": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "python_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff"
+  },
+  "scope": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "credit": 0,
+    "spawn": "none",
+    "spawn_count": 0,
+    "results": 0,
+    "receipts": 0,
+    "runtime_native_capture_rows": 0,
+    "activation_transactions": 0,
+    "launches": 0
+  }
+}

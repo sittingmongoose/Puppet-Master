@@ -1,0 +1,2309 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-universal-result-v1",
+  "phase": "universal_external_research",
+  "assignment_id": "A005ERU-0002",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_external_research_universal_0002_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "ERUPKT-0002",
+    "packet_sha256": "7960df165e9d054a1cd5d3f64bac4ef8b806b6325ff76a0ff7754a1eca9873fe",
+    "feature_refs_digest": "65400c723c57e65ea01f7264ebd976c5e2289508e63db8b3759183ed483d5f4b",
+    "source_rows_digest": "ffc4b847a09efcfdad43a2eeac24cdaef3ba94c74d6580ae2c5b728d25f90b64"
+  },
+  "coverage": {
+    "feature_count": 33,
+    "feature_refs": [
+      "OPF::A005OM-0002::PF-0001",
+      "OPF::A005OM-0002::PF-0002",
+      "OPF::A005OM-0002::PF-0003",
+      "OPF::A005OM-0002::PF-0004",
+      "OPF::A005OM-0002::PF-0005",
+      "OPF::A005OM-0002::PF-0006",
+      "OPF::A005OM-0002::PF-0007",
+      "OPF::A005OM-0002::PF-0008",
+      "OPF::A005OM-0002::PF-0009",
+      "OPF::A005OM-0002::PF-0010",
+      "OPF::A005OM-0002::PF-0011",
+      "OPF::A005OM-0002::PF-0012",
+      "OPF::A005OM-0002::PF-0013",
+      "OPF::A005OM-0002::PF-0014",
+      "OPF::A005OM-0002::PF-0015",
+      "OPF::A005OM-0002::PF-0016",
+      "OPF::A005OM-0002::PF-0017",
+      "OPF::A005OM-0002::PF-0018",
+      "OPF::A005OM-0002::PF-0019",
+      "OPF::A005OM-0002::PF-0020",
+      "OPF::A005OM-0002::PF-0021",
+      "OPF::A005OM-0002::PF-0022",
+      "OPF::A005OM-0002::PF-0023",
+      "OPF::A005OM-0002::PF-0024",
+      "OPF::A005OM-0002::PF-0025",
+      "OPF::A005OM-0002::PF-0026",
+      "OPF::A005OM-0002::PF-0027",
+      "OPF::A005OM-0002::PF-0028",
+      "OPF::A005OM-0002::PF-0029",
+      "OPF::A005OM-0002::PF-0030",
+      "OPF::A005OM-0002::PF-0031",
+      "OPF::A005OM-0002::PF-0032",
+      "OPF::A005OM-0002::PF-0033"
+    ]
+  },
+  "feature_results": [
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0001",
+      "source_row_sha256": "9dba11fc93f54ac39b04f0607d893b5fc9c3b2f6732572ee7574a0eefc7deda5",
+      "research_group_id": "RG-RETENTION-STATE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for DL-026 has retained entry conditions but no exit contract: Which published standard or production-grade reference architecture defines a testable contract for dl-026 has retained entry conditions but no exit contract, including retained state exit and cleanup recovery missing and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for DL-026 has retained entry conditions but no exit contract using World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction and Amazon Web Services — Restarting state machine executions with redrive in Step Functions"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-scxml-0001",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0001 (DL-026 has retained entry conditions but no exit contract): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        },
+        {
+          "source_id": "aws-step-functions-redrive-0001",
+          "url": "https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html",
+          "title": "Restarting state machine executions with redrive in Step Functions",
+          "publisher": "Amazon Web Services",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Redrive eligibility; Redrive behavior; Retry behavior",
+          "evidence_snippet": "Redrive resumes an unsuccessful execution from the failed step with the same input while preserving successful-step results and execution history.",
+          "applicability": "OPF::A005OM-0002::PF-0001 (DL-026 has retained entry conditions but no exit contract): Redrive resumes an unsuccessful execution from the failed step with the same input while preserving successful-step results and execution history.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0001",
+          "claim": "SCXML and Step Functions both make exit behavior first-class: legal transitions, final/error states, preserved history, and authorized redrive are explicit rather than inferred from entry reasons.",
+          "source_ids": [
+            "w3c-scxml-0001",
+            "aws-step-functions-redrive-0001"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0001; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "SCXML and Step Functions both make exit behavior first-class: legal transitions, final/error states, preserved history, and authorized redrive are explicit rather than inferred from entry reasons.",
+      "confirmed_gaps": [
+        "The packet correctly identifies that retained entry reasons alone cannot determine safe exit or cleanup resumption."
+      ],
+      "underspecifications": [
+        "Reason aggregation, per-reason authority, expiry, versioned concurrent mutation, and terminal cleanup predicates remain unspecified."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A cleanup actor can clear another actor's retention reason or resume from an obsolete checkpoint after a concurrent change."
+      ],
+      "conclusion_changed": true,
+      "conclusion_change_summary": "The external baseline changes the packet conclusion in a bounded way: SCXML and Step Functions both make exit behavior first-class: legal transitions, final/error states, preserved history, and authorized redrive are explicit rather than inferred from entry reasons. The Plans-derived state should be updated by the proposed delta, without editing Plans in this audit lane.",
+      "proposed_spec_deltas": [
+        "Define a versioned retained-reason set with add/clear capabilities, per-reason expiry, an all-reasons-cleared exit predicate, CAS conflict behavior, cleanup checkpoint, rollback, audit event, and notification oracle."
+      ],
+      "scenario_implications": [
+        "Test overlapping retention reasons where one expires while another is renewed; cleanup resumes only from the committed checkpoint."
+      ],
+      "adversarial_implications": [
+        "Replay, clock skew, or unauthorized clear requests must not release retained material."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0002",
+      "source_row_sha256": "6677b93d539c119be71e2419f5a54f644bd020b09fc3d0571249b163d9ded34f",
+      "research_group_id": "RG-SCHEDULER-FAIRNESS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Scheduler default lacks fairness and scale contracts: Which published standard or production-grade reference architecture defines a testable contract for scheduler default lacks fairness and scale contracts, including scheduler scoring fairness and deduplication unspecified and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for Scheduler default lacks fairness and scale contracts using Kueue / Kubernetes SIG Scheduling — Preemption — Fair Sharing and Kubernetes — API Priority and Fairness"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "kueue-fair-sharing-0002",
+          "url": "https://kueue.sigs.k8s.io/docs/concepts/preemption/",
+          "title": "Preemption — Fair Sharing",
+          "publisher": "Kueue / Kubernetes SIG Scheduling",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Fair Sharing; ClusterQueue share value",
+          "evidence_snippet": "Fair Sharing uses numeric share values, weighted resource shares, and explicit preemption strategies so competing queues trend toward defined shares.",
+          "applicability": "OPF::A005OM-0002::PF-0002 (Scheduler default lacks fairness and scale contracts): Fair Sharing uses numeric share values, weighted resource shares, and explicit preemption strategies so competing queues trend toward defined shares.."
+        },
+        {
+          "source_id": "k8s-api-priority-fairness-0002",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/flow-control/",
+          "title": "API Priority and Fairness",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Introduction; Queuing; Fairness",
+          "evidence_snippet": "Overload control exposes tunable queue limits and trades memory, fairness, burst tolerance, and latency while requiring independent flows to continue making progress.",
+          "applicability": "OPF::A005OM-0002::PF-0002 (Scheduler default lacks fairness and scale contracts): Overload control exposes tunable queue limits and trades memory, fairness, burst tolerance, and latency while requiring independent flows to continue making progress.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0002",
+          "claim": "Production schedulers expose queue ordering, weighted shares, overload queue bounds, and progress semantics; the Plans record only says scored/event-driven.",
+          "source_ids": [
+            "kueue-fair-sharing-0002",
+            "k8s-api-priority-fairness-0002"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0002; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Production schedulers expose queue ordering, weighted shares, overload queue bounds, and progress semantics; the Plans record only says scored/event-driven.",
+      "confirmed_gaps": [
+        "The missing formula, tie-break, starvation bound, deduplication, queue limit, and overload behavior are confirmed."
+      ],
+      "underspecifications": [
+        "The score inputs, normalization range, stable ordering key, aging rule, and overload metrics are absent."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A high-score stream can starve older work; redundant wake storms can expand queues without a dedupe key."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Specify score formula and normalization, stable deterministic tie-break, aging/starvation SLO, wake dedupe key/window, queue capacity, admission rejection/backpressure, and overload metrics."
+      ],
+      "scenario_implications": [
+        "Flood one tenant with high-score work while a low-score item ages; assert bounded service and deterministic order after restart."
+      ],
+      "adversarial_implications": [
+        "Manipulated weights or duplicate wake identities must not monopolize capacity."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0003",
+      "source_row_sha256": "e9d7e579074af0d04cfccf876918822d822cb209eee02f1f861c3afdcbbe572c",
+      "research_group_id": "RG-SCHEDULER-AUTHORITY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Single-scheduler authority boundary: Which published standard or production-grade reference architecture provides a comparable verification pattern for ep-004 carries the single-scheduler authority boundary while preserving the stated authority, consumer, and failure boundaries? | Which published standard or production-grade reference architecture provides a comparable verification pattern for scheduler and overseer authority are explicitly separated while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for Single-scheduler authority boundary using Kubernetes — Scheduling Framework and National Institute of Standards and Technology — Role Based Access Control — Standard Structure"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-scheduling-framework-0003",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0003 (Single-scheduler authority boundary): Scheduling and binding are distinct cycles."
+        },
+        {
+          "source_id": "nist-rbac-0003",
+          "url": "https://csrc.nist.gov/Projects/role-based-access-control/faqs",
+          "title": "Role Based Access Control — Standard Structure",
+          "publisher": "National Institute of Standards and Technology",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Standard Structure; Component summary",
+          "evidence_snippet": "Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations; separation-of-duty constraints are separately modeled.",
+          "applicability": "OPF::A005OM-0002::PF-0003 (Single-scheduler authority boundary): Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0003",
+          "claim": "Kubernetes uses one scheduler core with extension points and serialized scheduling cycles; NIST RBAC requires permissions to be assigned to explicit roles.",
+          "source_ids": [
+            "k8s-scheduling-framework-0003",
+            "nist-rbac-0003"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0003; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes uses one scheduler core with extension points and serialized scheduling cycles; NIST RBAC requires permissions to be assigned to explicit roles.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Acceptance evidence should still enumerate scheduler-only operations and overseer read/governance permissions."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A plugin or overseer could mutate transition state through an undocumented side channel."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add a capability matrix proving only the scheduler may admit, reserve, transition, and dispatch; overseers may inspect, attest, and reject packages but cannot write runtime readiness."
+      ],
+      "scenario_implications": [
+        "Attempt identical transition writes through scheduler and overseer identities; only scheduler succeeds and both decisions are audited."
+      ],
+      "adversarial_implications": [
+        "Compromised overseer credentials must not acquire hidden scheduling permissions."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0004",
+      "source_row_sha256": "c63a65b6821242c0b48d93490fa2f27d177f0cc37d8fcbb4274877703e97b395",
+      "research_group_id": "RG-LIFECYCLE-STATE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Ready-eligible states conflict with the declared closed lifecycle: Which published standard or production-grade reference architecture defines a testable contract for ready-eligible states conflict with the declared closed lifecycle, including state machine conflict and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for Ready-eligible states conflict with the declared closed lifecycle using World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction and Kubernetes — Scheduling Framework"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-scxml-0004",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0004 (Ready-eligible states conflict with the declared closed lifecycle): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        },
+        {
+          "source_id": "k8s-scheduling-framework-0004",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0004 (Ready-eligible states conflict with the declared closed lifecycle): Scheduling and binding are distinct cycles."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0004",
+          "claim": "SCXML requires an explicit transition relation and final states; Kubernetes names queued/unschedulable paths and retry events. Undeclared pending/reopened aliases are not safe.",
+          "source_ids": [
+            "w3c-scxml-0004",
+            "k8s-scheduling-framework-0004"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0004; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "SCXML requires an explicit transition relation and final states; Kubernetes names queued/unschedulable paths and retry events. Undeclared pending/reopened aliases are not safe.",
+      "confirmed_gaps": [
+        "The contradiction between the closed lifecycle and ready-eligible pending/reopened states is confirmed."
+      ],
+      "underspecifications": [
+        "There is no authoritative state vocabulary, alias rule, or recovery transition table."
+      ],
+      "contradictions": [
+        "The scheduler consumes states that the canonical lifecycle does not declare."
+      ],
+      "missed_failure_modes": [
+        "A stale prerequisite event can reopen a terminal node or strand a node in an unrecognized state."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Publish one closed state enum and transition table, define whether pending aliases queued, define authorized reopen from each terminal state, and reject unknown states."
+      ],
+      "scenario_implications": [
+        "Exercise every legal and illegal state/event pair, including prerequisite-cleared after terminal failure."
+      ],
+      "adversarial_implications": [
+        "Forged or replayed wake events must not transition final nodes without an authorized reopen generation."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0005",
+      "source_row_sha256": "0cc1a445d3d164543696acb93be4ec93ee47817048fc56c134b5e7c29490f8c9",
+      "research_group_id": "RG-WAKE-COALESCING",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Wake coalescing has a deterministic concurrency contract: Which published standard or production-grade reference architecture provides a comparable verification pattern for wake coalescing has a deterministic concurrency contract while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for Wake coalescing has a deterministic concurrency contract using Cloud Native Computing Foundation — CloudEvents Specification and Kubernetes — Scheduling Framework"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "cloudevents-core-spec-0005",
+          "url": "https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md",
+          "title": "CloudEvents Specification",
+          "publisher": "Cloud Native Computing Foundation",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Context Attributes; REQUIRED Attributes; id; source; type",
+          "evidence_snippet": "Each event has required id, source, specversion, and type context; source plus id identifies duplicate re-sends, enabling observable event identity and deduplication.",
+          "applicability": "OPF::A005OM-0002::PF-0005 (Wake coalescing has a deterministic concurrency contract): Each event has required id, source, specversion, and type context."
+        },
+        {
+          "source_id": "k8s-scheduling-framework-0005",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0005 (Wake coalescing has a deterministic concurrency contract): Scheduling and binding are distinct cycles."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0005",
+          "claim": "CloudEvents supplies stable event identity for duplicate detection, while Kubernetes QueueingHint and serial scheduling cycles provide a concrete coalescing model.",
+          "source_ids": [
+            "cloudevents-core-spec-0005",
+            "k8s-scheduling-framework-0005"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0005; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "CloudEvents supplies stable event identity for duplicate detection, while Kubernetes QueueingHint and serial scheduling cycles provide a concrete coalescing model.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "No material underspecification is confirmed, assuming every reason has a stable event identity."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A reason without source-plus-id identity could evade coalescing and cause repeat passes."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add an executable invariant: at most one admitted wake per run/generation, stable primary ordering, duplicate source/id suppression, reason-set preservation, and watchdog non-overtake."
+      ],
+      "scenario_implications": [
+        "Race two primary reasons, duplicates, and a watchdog tick; assert one pass and complete reason observability."
+      ],
+      "adversarial_implications": [
+        "Duplicate-id collision attempts must not erase a semantically distinct reason; reject mismatched payload hashes."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0006",
+      "source_row_sha256": "9c2216159e68b5e2a9413c20976835c08518d0f93b0ad62d7405ff625a735912",
+      "research_group_id": "RG-ROLE-CAPABILITIES",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for EP-003 names roles without acceptance-grade capabilities: Which published standard or production-grade reference architecture defines a testable contract for ep-003 names roles without acceptance-grade capabilities, including under specified planunit and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for EP-003 names roles without acceptance-grade capabilities using National Institute of Standards and Technology — Role Based Access Control — Standard Structure and Open Policy Agent / CNCF — Open Policy Agent Documentation"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "nist-rbac-0006",
+          "url": "https://csrc.nist.gov/Projects/role-based-access-control/faqs",
+          "title": "Role Based Access Control — Standard Structure",
+          "publisher": "National Institute of Standards and Technology",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Standard Structure; Component summary",
+          "evidence_snippet": "Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations; separation-of-duty constraints are separately modeled.",
+          "applicability": "OPF::A005OM-0002::PF-0006 (EP-003 names roles without acceptance-grade capabilities): Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations."
+        },
+        {
+          "source_id": "opa-policy-decisions-0006",
+          "url": "https://www.openpolicyagent.org/docs",
+          "title": "Open Policy Agent Documentation",
+          "publisher": "Open Policy Agent / CNCF",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "What is OPA; policy input and output",
+          "evidence_snippet": "OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.",
+          "applicability": "OPF::A005OM-0002::PF-0006 (EP-003 names roles without acceptance-grade capabilities): OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0006",
+          "claim": "NIST RBAC models roles as permission sets over operations and objects; OPA demonstrates structured policy inputs and outputs separated from enforcement.",
+          "source_ids": [
+            "nist-rbac-0006",
+            "opa-policy-decisions-0006"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0006; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "NIST RBAC models roles as permission sets over operations and objects; OPA demonstrates structured policy inputs and outputs separated from enforcement.",
+      "confirmed_gaps": [
+        "The packet's finding is confirmed: role names and a no-scheduler statement are not an acceptance-grade capability contract."
+      ],
+      "underspecifications": [
+        "Role-specific inputs, outputs, allowed operations, object scopes, denial reasons, and audit fields are missing."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A role can acquire effective authority through an unnamed shared API even if prose says it is not the scheduler."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add a role/capability matrix with input schemas, output schemas, allowed/denied actions, object scopes, decision owner, enforcement point, and audited decision ID."
+      ],
+      "scenario_implications": [
+        "For each role, submit every operation against allowed and forbidden objects and verify structured allow/deny output."
+      ],
+      "adversarial_implications": [
+        "Confused-deputy calls and role activation outside the permitted session must be denied and logged."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0007",
+      "source_row_sha256": "0e95db4f00f0c8bceba31da4c7345ac36cc07716a1193cb17c002d8c95a2ce33",
+      "research_group_id": "RG-AUTHORITY-SUPERSESSION",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Scheduler addendum supersedes lexical dispatch: Which published standard or production-grade reference architecture provides a comparable verification pattern for ep-021 labels its lexical loop as superseded baseline while preserving the stated authority, consumer, and failure boundaries? | Which published standard or production-grade reference architecture provides a comparable verification pattern for ep-023 states scheduler supersession directly while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for Scheduler addendum supersedes lexical dispatch using Open Policy Agent / CNCF — Open Policy Agent Documentation and Open Policy Agent / CNCF — Decision Logs"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "opa-policy-decisions-0007",
+          "url": "https://www.openpolicyagent.org/docs",
+          "title": "Open Policy Agent Documentation",
+          "publisher": "Open Policy Agent / CNCF",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "What is OPA; policy input and output",
+          "evidence_snippet": "OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.",
+          "applicability": "OPF::A005OM-0002::PF-0007 (Scheduler addendum supersedes lexical dispatch): OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.."
+        },
+        {
+          "source_id": "opa-decision-logs-0007",
+          "url": "https://www.openpolicyagent.org/docs/management-decision-logs",
+          "title": "Decision Logs",
+          "publisher": "Open Policy Agent / CNCF",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Decision log event; Masking Sensitive Data",
+          "evidence_snippet": "Decision logs include the queried policy, input, bundle metadata, and decision identifier, with masking rules for sensitive input and output.",
+          "applicability": "OPF::A005OM-0002::PF-0007 (Scheduler addendum supersedes lexical dispatch): Decision logs include the queried policy, input, bundle metadata, and decision identifier, with masking rules for sensitive input and output.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0007",
+          "claim": "A production-grade authority handoff needs one active decision source and traceable policy/version identity; OPA named decisions and decision logs provide that pattern.",
+          "source_ids": [
+            "opa-policy-decisions-0007",
+            "opa-decision-logs-0007"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0007; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "A production-grade authority handoff needs one active decision source and traceable policy/version identity; OPA named decisions and decision logs provide that pattern.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "No gap is confirmed if every runtime decision records the authoritative addendum/policy version."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A preserved baseline can be accidentally reactivated by configuration rollback or stale documentation tooling."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Require a machine-checkable authority version on every scheduling decision and a negative test proving the lexical loop cannot dispatch."
+      ],
+      "scenario_implications": [
+        "Replay a pre-addendum configuration and assert startup rejection or forced migration before dispatch."
+      ],
+      "adversarial_implications": [
+        "Downgrade or split-brain policy versions must not silently restore lexical authority."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0008",
+      "source_row_sha256": "7aa36e30dc39943c664522d791336473e8a234eaa47b133748b462dc01a82817",
+      "research_group_id": "RG-SCHEDULER-PASS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for EP-024 preserves the full scheduler-pass stages: Which published standard or production-grade reference architecture provides a comparable verification pattern for ep-024 preserves the full scheduler-pass stages while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for EP-024 preserves the full scheduler-pass stages using Kubernetes — Scheduling Framework and Cloud Native Computing Foundation — CloudEvents Specification"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-scheduling-framework-0008",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0008 (EP-024 preserves the full scheduler-pass stages): Scheduling and binding are distinct cycles."
+        },
+        {
+          "source_id": "cloudevents-core-spec-0008",
+          "url": "https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md",
+          "title": "CloudEvents Specification",
+          "publisher": "Cloud Native Computing Foundation",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Context Attributes; REQUIRED Attributes; id; source; type",
+          "evidence_snippet": "Each event has required id, source, specversion, and type context; source plus id identifies duplicate re-sends, enabling observable event identity and deduplication.",
+          "applicability": "OPF::A005OM-0002::PF-0008 (EP-024 preserves the full scheduler-pass stages): Each event has required id, source, specversion, and type context."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0008",
+          "claim": "Kubernetes scheduling explicitly stages enqueue, filter, score, reserve, permit, bind, and retry; its shared cycle state supplies a comparable full-pass oracle.",
+          "source_ids": [
+            "k8s-scheduling-framework-0008",
+            "cloudevents-core-spec-0008"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0008; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes scheduling explicitly stages enqueue, filter, score, reserve, permit, bind, and retry; its shared cycle state supplies a comparable full-pass oracle.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Stage inputs/outputs and abort/rollback semantics should be executable, even for a well-specified narrative."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A failure after reservation but before dispatch can leak capacity unless Unreserve is mandatory."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define a stage contract with snapshot/version input, output artifact, abort class, reservation compensation, and per-stage trace event."
+      ],
+      "scenario_implications": [
+        "Inject failure at each stage and assert no dispatch after failed validation and no leaked reservation."
+      ],
+      "adversarial_implications": [
+        "A malicious plugin must not skip validation or mutate shared cycle state outside its extension point."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0009",
+      "source_row_sha256": "faeb40f82f92509b4ce0a34ef0ab16ad11e908d30029f32f2b9059809a56b348",
+      "research_group_id": "RG-WAKE-OWNERSHIP",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Wake values remain single-owned: Which published standard or production-grade reference architecture provides a comparable verification pattern for ep-028 is a clean forward-reference boundary while preserving the stated authority, consumer, and failure boundaries? | Which published standard or production-grade reference architecture provides a comparable verification pattern for wake values remain single-owned while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for Wake values remain single-owned using Open Policy Agent / CNCF — Open Policy Agent Documentation and Cloud Native Computing Foundation — CloudEvents Specification"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "opa-policy-decisions-0009",
+          "url": "https://www.openpolicyagent.org/docs",
+          "title": "Open Policy Agent Documentation",
+          "publisher": "Open Policy Agent / CNCF",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "What is OPA; policy input and output",
+          "evidence_snippet": "OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.",
+          "applicability": "OPF::A005OM-0002::PF-0009 (Wake values remain single-owned): OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.."
+        },
+        {
+          "source_id": "cloudevents-core-spec-0009",
+          "url": "https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md",
+          "title": "CloudEvents Specification",
+          "publisher": "Cloud Native Computing Foundation",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Context Attributes; REQUIRED Attributes; id; source; type",
+          "evidence_snippet": "Each event has required id, source, specversion, and type context; source plus id identifies duplicate re-sends, enabling observable event identity and deduplication.",
+          "applicability": "OPF::A005OM-0002::PF-0009 (Wake values remain single-owned): Each event has required id, source, specversion, and type context."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0009",
+          "claim": "Single ownership is consistent with OPA named policy decisions and CloudEvents' requirement for one authoritative producer context per event identity.",
+          "source_ids": [
+            "opa-policy-decisions-0009",
+            "cloudevents-core-spec-0009"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0009; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Single ownership is consistent with OPA named policy decisions and CloudEvents' requirement for one authoritative producer context per event identity.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Reference resolution should fail closed when the owner is absent, duplicated, or version-incompatible."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Two documents can silently define the same wake value with different precedence."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add a unique owner identifier and schema version for every wake value, plus compile-time duplicate-owner and unresolved-reference failures."
+      ],
+      "scenario_implications": [
+        "Compile with missing, duplicate, and incompatible owners; only one matching owner succeeds."
+      ],
+      "adversarial_implications": [
+        "A crafted shadow definition must not override the canonical wake-value owner."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0010",
+      "source_row_sha256": "eaa1386b4d3ba0c3e0455896c58e5157cdaa7a8e2d880aeee05a9a6d60eb94b6",
+      "research_group_id": "RG-PREREQ-CASCADE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Same-wake prerequisite cascade: Which published standard or production-grade reference architecture provides a comparable verification pattern for same-wake cascade forbids extra-pass latency while preserving the stated authority, consumer, and failure boundaries? | Which published standard or production-grade reference architecture provides a comparable verification pattern for same-wake prerequisite cascade is explicit while preserving the stated authority, consumer, and failure boundaries?",
+        "Official-standard and production-documentation comparison for Same-wake prerequisite cascade using Kubernetes — Scheduling Framework and Kubernetes — API Priority and Fairness"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-scheduling-framework-0010",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0010 (Same-wake prerequisite cascade): Scheduling and binding are distinct cycles."
+        },
+        {
+          "source_id": "k8s-api-priority-fairness-0010",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/flow-control/",
+          "title": "API Priority and Fairness",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Introduction; Queuing; Fairness",
+          "evidence_snippet": "Overload control exposes tunable queue limits and trades memory, fairness, burst tolerance, and latency while requiring independent flows to continue making progress.",
+          "applicability": "OPF::A005OM-0002::PF-0010 (Same-wake prerequisite cascade): Overload control exposes tunable queue limits and trades memory, fairness, burst tolerance, and latency while requiring independent flows to continue making progress.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0010",
+          "claim": "Kubernetes QueueingHint requeues work when a relevant cluster change may make it schedulable; serial scheduling cycles make an immediate dependent reevaluation testable.",
+          "source_ids": [
+            "k8s-scheduling-framework-0010",
+            "k8s-api-priority-fairness-0010"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0010; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes QueueingHint requeues work when a relevant cluster change may make it schedulable; serial scheduling cycles make an immediate dependent reevaluation testable.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "A bound on cascade depth/work and cycle detection is not stated."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "A wide or cyclic dependency graph can turn one prerequisite event into unbounded synchronous work."
+      ],
+      "conclusion_changed": true,
+      "conclusion_change_summary": "The external baseline changes the packet conclusion in a bounded way: Kubernetes QueueingHint requeues work when a relevant cluster change may make it schedulable; serial scheduling cycles make an immediate dependent reevaluation testable. The Plans-derived state should be updated by the proposed delta, without editing Plans in this audit lane.",
+      "proposed_spec_deltas": [
+        "Specify deterministic dependent ordering, visited-set cycle suppression, maximum same-wake work budget, and continuation behavior when the budget is exceeded."
+      ],
+      "scenario_implications": [
+        "Clear a prerequisite on a diamond and a cycle; assert each direct dependent is evaluated once and overflow continues deterministically."
+      ],
+      "adversarial_implications": [
+        "An adversarial fan-out graph must not monopolize the scheduler thread or bypass capacity checks."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0011",
+      "source_row_sha256": "fc01f11f8e9ed63bba670a63462c9548aaa9a43d8bdf90758f471c34c615c221",
+      "research_group_id": "RG-SNAPSHOT-COMMIT",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Scheduler pass lacks a snapshot-and-commit boundary: Which published standard or production-grade reference architecture defines a testable contract for scheduler pass lacks a snapshot-and-commit boundary, including scheduler snapshot atomicity missing and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for Scheduler pass lacks a snapshot-and-commit boundary using Amazon Web Services — Optimistic locking with version number and Kubernetes — Scheduling Framework"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "aws-dynamodb-optimistic-locking-0011",
+          "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BestPractices_OptimisticLocking.html",
+          "title": "Optimistic locking with version number",
+          "publisher": "Amazon Web Services",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Pattern design; Implementation",
+          "evidence_snippet": "Each item carries an incrementing version; updates condition on the version last read, conflicts fail explicitly, and bounded retry begins from a fresh read.",
+          "applicability": "OPF::A005OM-0002::PF-0011 (Scheduler pass lacks a snapshot-and-commit boundary): Each item carries an incrementing version."
+        },
+        {
+          "source_id": "k8s-scheduling-framework-0011",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0011 (Scheduler pass lacks a snapshot-and-commit boundary): Scheduling and binding are distinct cycles."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0011",
+          "claim": "DynamoDB conditional versions and Kubernetes scheduling contexts show the missing read-snapshot/conditional-commit boundary.",
+          "source_ids": [
+            "aws-dynamodb-optimistic-locking-0011",
+            "k8s-scheduling-framework-0011"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0011; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "DynamoDB conditional versions and Kubernetes scheduling contexts show the missing read-snapshot/conditional-commit boundary.",
+      "confirmed_gaps": [
+        "The scheduler pass atomicity gap is confirmed."
+      ],
+      "underspecifications": [
+        "There is no snapshot token, commit precondition, conflict classification, retry budget, or compensation rule."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Concurrent blocker, capacity, or generation changes can make a previously scored dispatch invalid."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Read all pass inputs at snapshot version V, reserve and commit only if V and referenced resource versions remain current, otherwise abort, unreserve, emit conflict, and retry with a bounded fresh snapshot."
+      ],
+      "scenario_implications": [
+        "Change capacity between score and bind; assert the stale pass cannot commit and compensation is complete."
+      ],
+      "adversarial_implications": [
+        "Continuous version churn must not cause infinite retries or permit a stale forced commit."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0012",
+      "source_row_sha256": "8239e731665c4d2c57fefa1c78c04b2b170c8f1be6a68849ffd000e7c8c6d618",
+      "research_group_id": "RG-READINESS-CONSISTENCY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Readiness inputs have no consistency version: Which published standard or production-grade reference architecture defines a testable contract for readiness inputs have no consistency version, including readiness snapshot consistency missing and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for Readiness inputs have no consistency version using Kubernetes — Pod Conditions and RFC Editor / IETF — RFC 9111: HTTP Caching"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-pod-conditions-0012",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/",
+          "title": "Pod Conditions",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Fields of a PodCondition; observedGeneration; readiness gates",
+          "evidence_snippet": "Conditions carry status, reason, message, transition time, and observedGeneration; readiness additionally requires every declared readiness gate to be true.",
+          "applicability": "OPF::A005OM-0002::PF-0012 (Readiness inputs have no consistency version): Conditions carry status, reason, message, transition time, and observedGeneration."
+        },
+        {
+          "source_id": "rfc9111-http-caching-0012",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+          "title": "RFC 9111: HTTP Caching",
+          "publisher": "RFC Editor / IETF",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "4.2 Freshness; 4.2.4 Serving Stale Responses; 4.3 Validation",
+          "evidence_snippet": "Freshness has explicit age and lifetime rules; stale data requires permission or revalidation, and validators such as ETag prevent replacing known state without version agreement.",
+          "applicability": "OPF::A005OM-0002::PF-0012 (Readiness inputs have no consistency version): Freshness has explicit age and lifetime rules."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0012",
+          "claim": "Kubernetes conditions carry observedGeneration and readiness gates; HTTP validation similarly distinguishes fresh, stale, and revalidated representations.",
+          "source_ids": [
+            "k8s-pod-conditions-0012",
+            "rfc9111-http-caching-0012"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0012; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes conditions carry observedGeneration and readiness gates; HTTP validation similarly distinguishes fresh, stale, and revalidated representations.",
+      "confirmed_gaps": [
+        "The lack of a common consistency version across lifecycle, blockers, projections, generation, conflicts, and capacity is confirmed."
+      ],
+      "underspecifications": [
+        "The readiness predicate has no observed generation, per-input resource version, or stale/degraded result."
+      ],
+      "contradictions": [
+        "No contradiction beyond the missing version boundary is found."
+      ],
+      "missed_failure_modes": [
+        "Mixed-generation reads can display Ready while a newer blocker or worktree conflict already exists."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define ReadinessEvaluation{snapshot_id, observed_generation, input_versions, result, reason_codes}; Ready is valid only when all mandatory inputs match the snapshot, otherwise Unknown/Stale."
+      ],
+      "scenario_implications": [
+        "Update one input during evaluation and assert the UI shows stale/unknown rather than ready until reevaluated."
+      ],
+      "adversarial_implications": [
+        "An attacker controlling one projection must not forge the common snapshot/version tuple."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0013",
+      "source_row_sha256": "9a534baa26176028a183c56b8c9ad15bdc4c8dd462adb8b199ec143eccfd530f",
+      "research_group_id": "RG-CAPACITY-MODEL",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Capacity-aware dispatch lacks a capacity model: Which published standard or production-grade reference architecture defines a testable contract for capacity-aware dispatch lacks a capacity model, including scheduler capacity policy gap and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for Capacity-aware dispatch lacks a capacity model using Kubernetes — Resource Bin Packing and Kueue / Kubernetes SIG Scheduling — Preemption — Fair Sharing"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-resource-bin-packing-0013",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/resource-bin-packing/",
+          "title": "Resource Bin Packing",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "RequestedToCapacityRatio; resources and weights; Node scoring",
+          "evidence_snippet": "Capacity scoring names resource dimensions and weights, defines a score curve over requested-to-capacity ratio, and computes a deterministic weighted score.",
+          "applicability": "OPF::A005OM-0002::PF-0013 (Capacity-aware dispatch lacks a capacity model): Capacity scoring names resource dimensions and weights, defines a score curve over requested-to-capacity ratio, and computes a deterministic weighted score.."
+        },
+        {
+          "source_id": "kueue-fair-sharing-0013",
+          "url": "https://kueue.sigs.k8s.io/docs/concepts/preemption/",
+          "title": "Preemption — Fair Sharing",
+          "publisher": "Kueue / Kubernetes SIG Scheduling",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Fair Sharing; ClusterQueue share value",
+          "evidence_snippet": "Fair Sharing uses numeric share values, weighted resource shares, and explicit preemption strategies so competing queues trend toward defined shares.",
+          "applicability": "OPF::A005OM-0002::PF-0013 (Capacity-aware dispatch lacks a capacity model): Fair Sharing uses numeric share values, weighted resource shares, and explicit preemption strategies so competing queues trend toward defined shares.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0013",
+          "claim": "Kubernetes names resource dimensions, weights, reservation/unreserve, and score curves; Kueue adds quotas and weighted fairness.",
+          "source_ids": [
+            "k8s-resource-bin-packing-0013",
+            "kueue-fair-sharing-0013"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0013; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes names resource dimensions, weights, reservation/unreserve, and score curves; Kueue adds quotas and weighted fairness.",
+      "confirmed_gaps": [
+        "The undefined capacity model, reservation lifecycle, fairness, and overload observability are confirmed."
+      ],
+      "underspecifications": [
+        "Capacity units, request vectors, hard/soft limits, reserve/release points, and queue admission are missing."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Partial dispatch can consume one resource dimension and leak it after another dimension fails."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Specify typed capacity vectors, per-node requests, atomic reservation tokens, release/expiry rules, weighted fair queues, starvation bound, queue limit, and utilization/rejection metrics."
+      ],
+      "scenario_implications": [
+        "Race two multi-resource reservations at the limit and kill one dispatcher before bind; assert no oversubscription and eventual reclaim."
+      ],
+      "adversarial_implications": [
+        "Inflated or negative resource requests and reservation-token replay must be rejected."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0014",
+      "source_row_sha256": "8444116294f2af008acb013846e77661ff47a5c2ba0c28ff259b9fbd7d44cd82",
+      "research_group_id": "RG-RUNTIME-CONSTANTS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for FABLE runtime constants are explicit: Which published standard or production-grade reference architecture defines a testable contract for fable runtime constants are explicit, including none explicit runtime oracle and deterministic failure recovery?",
+        "Official-standard and production-documentation comparison for FABLE runtime constants are explicit using Kubernetes — Scheduling Framework and Amazon Web Services — Restarting state machine executions with redrive in Step Functions"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-scheduling-framework-0014",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0014 (FABLE runtime constants are explicit): Scheduling and binding are distinct cycles."
+        },
+        {
+          "source_id": "aws-step-functions-redrive-0014",
+          "url": "https://docs.aws.amazon.com/step-functions/latest/dg/redrive-executions.html",
+          "title": "Restarting state machine executions with redrive in Step Functions",
+          "publisher": "Amazon Web Services",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Redrive eligibility; Redrive behavior; Retry behavior",
+          "evidence_snippet": "Redrive resumes an unsuccessful execution from the failed step with the same input while preserving successful-step results and execution history.",
+          "applicability": "OPF::A005OM-0002::PF-0014 (FABLE runtime constants are explicit): Redrive resumes an unsuccessful execution from the failed step with the same input while preserving successful-step results and execution history.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0014",
+          "claim": "Kubernetes and AWS Step Functions show that exact constants become useful only when tied to stage transitions, retry classes, recovery, and executable observations.",
+          "source_ids": [
+            "k8s-scheduling-framework-0014",
+            "aws-step-functions-redrive-0014"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0014; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes and AWS Step Functions show that exact constants become useful only when tied to stage transitions, retry classes, recovery, and executable observations.",
+      "confirmed_gaps": [
+        "The packet's positive conclusion that timeout, backpressure, wake ordering, and receipt constants are explicit is confirmed."
+      ],
+      "underspecifications": [
+        "No value gap is confirmed; executable boundary and recovery tests remain necessary."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Clock skew, integer overflow, or a constant at exactly the threshold can diverge across implementations."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "For each constant, specify unit, inclusive/exclusive boundary, clock source, overflow behavior, configuration authority, and a failure-injection oracle."
+      ],
+      "scenario_implications": [
+        "Test values just below, at, and above every timeout/backpressure threshold across restart and redrive."
+      ],
+      "adversarial_implications": [
+        "Configuration injection must not set negative, overflowing, or mutually inconsistent constants."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0015",
+      "source_row_sha256": "89d9cdb06050688dc4c0dbc19c4beedf3b52b72ec378a72fed4bc02963399103",
+      "research_group_id": "RG-GUI-FALSIFIABILITY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Early Final GUI PlanUnits are addressable but not behaviorally falsifiable: Which external standards, mature implementations, and published failure analyses define measurable behavior for \"Early Final GUI PlanUnits are addressable but not behaviorally falsifiable\", specifically the boundary: F3-002 through F3-007 carry descriptive canonical text but repeat migration-oriented acceptance criteria, empty dependency fields, and no feature-specific executable oracle for the routes, records, transitions, projection trust, or attention projections they define.",
+        "Official-standard and production-documentation comparison for Early Final GUI PlanUnits are addressable but not behaviorally falsifiable using World Wide Web Consortium — Web Content Accessibility Guidelines (WCAG) 2.2 and Kubernetes — Pod Conditions"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-wcag22-0015",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "1.4.1 Use of Color; 1.4.2 Audio Control; 2.1 Keyboard Accessible; 4.1.2 Name, Role, Value",
+          "evidence_snippet": "Status cannot rely on color alone; keyboard operation, programmatic name/role/value, and independent audio pause, stop, or volume controls provide measurable accessibility criteria.",
+          "applicability": "OPF::A005OM-0002::PF-0015 (Early Final GUI PlanUnits are addressable but not behaviorally falsifiable): Status cannot rely on color alone."
+        },
+        {
+          "source_id": "k8s-pod-conditions-0015",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/",
+          "title": "Pod Conditions",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Fields of a PodCondition; observedGeneration; readiness gates",
+          "evidence_snippet": "Conditions carry status, reason, message, transition time, and observedGeneration; readiness additionally requires every declared readiness gate to be true.",
+          "applicability": "OPF::A005OM-0002::PF-0015 (Early Final GUI PlanUnits are addressable but not behaviorally falsifiable): Conditions carry status, reason, message, transition time, and observedGeneration."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0015",
+          "claim": "WCAG defines measurable UI behavior and Kubernetes conditions provide machine-readable state/reason/generation fields; descriptive route prose alone is not an oracle.",
+          "source_ids": [
+            "w3c-wcag22-0015",
+            "k8s-pod-conditions-0015"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0015; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "WCAG defines measurable UI behavior and Kubernetes conditions provide machine-readable state/reason/generation fields; descriptive route prose alone is not an oracle.",
+      "confirmed_gaps": [
+        "The early GUI PlanUnits remain addressable but not behaviorally falsifiable."
+      ],
+      "underspecifications": [
+        "Per-feature dependencies, state inputs, transitions, stale/degraded truth, keyboard/AT behavior, and executable acceptance checks are absent."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A route can render while showing a stale projection as current or sending focus to the wrong surface."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Give F3-002..007 separate Given/When/Then oracles covering route resolution, record identity, transition permission, observed generation, stale/degraded labels, keyboard focus, and failure recovery."
+      ],
+      "scenario_implications": [
+        "For every route, test fresh, stale, missing, unauthorized, and conflicting record states with keyboard and screen reader."
+      ],
+      "adversarial_implications": [
+        "Forged deep links and stale projection payloads must not be presented as authoritative state."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0016",
+      "source_row_sha256": "9ca28f032c93b99de6c46b7570f2f073c003ca7b95517d4cffc1ce9d4e56d180",
+      "research_group_id": "RG-GUI-A11Y-I18N",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Help and attention surfaces omit accessibility and localization contracts: Which external standards, mature implementations, and published failure analyses define measurable behavior for \"Help and attention surfaces omit accessibility and localization contracts\", specifically the boundary: The terminology, help, notification, badge, routing, and attention-projection units do not specify keyboard or screen-reader semantics, non-color status cues, focus/help behavior, pluralization, text expansion, truncation, or localized route-label acceptance.",
+        "Official-standard and production-documentation comparison for Help and attention surfaces omit accessibility and localization contracts using World Wide Web Consortium — Web Content Accessibility Guidelines (WCAG) 2.2 and Unicode Consortium — Unicode Technical Standard #35, Part 9: Message Format"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-wcag22-0016",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "1.4.1 Use of Color; 1.4.2 Audio Control; 2.1 Keyboard Accessible; 4.1.2 Name, Role, Value",
+          "evidence_snippet": "Status cannot rely on color alone; keyboard operation, programmatic name/role/value, and independent audio pause, stop, or volume controls provide measurable accessibility criteria.",
+          "applicability": "OPF::A005OM-0002::PF-0016 (Help and attention surfaces omit accessibility and localization contracts): Status cannot rely on color alone."
+        },
+        {
+          "source_id": "unicode-messageformat-0016",
+          "url": "https://www.unicode.org/reports/tr35/tr35-73/tr35-messageFormat.html",
+          "title": "Unicode Technical Standard #35, Part 9: Message Format",
+          "publisher": "Unicode Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "MessageFormat 2 syntax; Selection and plural rules",
+          "evidence_snippet": "Localized dynamic messages use locale-sensitive selection and CLDR plural rules, with an explicit other fallback, rather than concatenated English fragments.",
+          "applicability": "OPF::A005OM-0002::PF-0016 (Help and attention surfaces omit accessibility and localization contracts): Localized dynamic messages use locale-sensitive selection and CLDR plural rules, with an explicit other fallback, rather than concatenated English fragments.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0016",
+          "claim": "WCAG 2.2 requires keyboard access, non-color cues, programmatic state, and usable audio control; Unicode MessageFormat supplies plural and locale selection semantics.",
+          "source_ids": [
+            "w3c-wcag22-0016",
+            "unicode-messageformat-0016"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0016; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "WCAG 2.2 requires keyboard access, non-color cues, programmatic state, and usable audio control; Unicode MessageFormat supplies plural and locale selection semantics.",
+      "confirmed_gaps": [
+        "Every listed accessibility and localization omission is confirmed."
+      ],
+      "underspecifications": [
+        "No focus order, screen-reader role/state, non-color cue, plural rule, expansion budget, truncation disclosure, or localized route-label test is specified."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Long translated labels can hide critical status; assertive live regions can produce an unusable notification storm."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add WCAG 2.2 AA acceptance, APG roles/focus rules, text alternatives, non-color symbols/text, MessageFormat-based plurals, pseudolocalization at 30–50% expansion, bidirectional text tests, and accessible full-text recovery for truncation."
+      ],
+      "scenario_implications": [
+        "Run keyboard-only, screen-reader, high-contrast, 200% text, RTL, and long-plural scenarios for help, badges, routes, and attention surfaces."
+      ],
+      "adversarial_implications": [
+        "Maliciously long or bidi-controlled localized text must not conceal route identity or action severity."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0017",
+      "source_row_sha256": "eb29357a194d24bcf0ea322c5bce4b56ce8a8cae2d6409a22ad97b36d7f10bc4",
+      "research_group_id": "RG-ATTENTION-LIFECYCLE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Project attention and concern propagation contract: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Project attention and concern propagation contract, especially the packet observation 'Concern and notification lifecycle is not fully deterministic'?",
+        "Official-standard and production-documentation comparison for Project attention and concern propagation contract using World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction and Prometheus — Alertmanager"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-scxml-0017",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0017 (Project attention and concern propagation contract): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        },
+        {
+          "source_id": "prometheus-alertmanager-0017",
+          "url": "https://prometheus.io/docs/alerting/latest/alertmanager/",
+          "title": "Alertmanager",
+          "publisher": "Prometheus",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Grouping; Inhibition; Silences; Alert limits",
+          "evidence_snippet": "Alertmanager deduplicates, groups, routes, silences, and inhibits alerts; grouping keys and timing are explicit, and overload limits expose dropped-alert metrics.",
+          "applicability": "OPF::A005OM-0002::PF-0017 (Project attention and concern propagation contract): Alertmanager deduplicates, groups, routes, silences, and inhibits alerts."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0017",
+          "claim": "SCXML supplies deterministic transition semantics; Alertmanager supplies explicit grouping, silence, inhibition, and routing concepts.",
+          "source_ids": [
+            "w3c-scxml-0017",
+            "prometheus-alertmanager-0017"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0017; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "SCXML supplies deterministic transition semantics; Alertmanager supplies explicit grouping, silence, inhibition, and routing concepts.",
+      "confirmed_gaps": [
+        "The project-attention boundary is sound, but concern/notification lifecycle ambiguity is confirmed."
+      ],
+      "underspecifications": [
+        "Legal states, event ordering, coalescing identity, escalation precedence, and canonical-resolution linkage are incomplete."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A late acknowledge may race escalation or resolution and leave attention both silenced and active."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define a closed attention/concern state machine with versioned transitions, coalescing fingerprint, escalation clock, canonical resolution event, and projection lag state."
+      ],
+      "scenario_implications": [
+        "Race acknowledge, snooze expiry, escalation, and canonical resolution under the same expected version."
+      ],
+      "adversarial_implications": [
+        "Replayed acknowledge or crafted coalescing labels must not suppress a newer unrelated concern."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0018",
+      "source_row_sha256": "03562f9453bbb6d05e4976e266046ca26d6f689477f509cc340c757ec681d253",
+      "research_group_id": "RG-NOTIFICATION-SECRETS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notifications settings protect secrets and non-audio state: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Notifications settings protect secrets and non-audio state, especially the packet observation 'Notifications settings protect secrets and non-audio state'?",
+        "Official-standard and production-documentation comparison for Notifications settings protect secrets and non-audio state using OWASP Foundation — Secrets Management Cheat Sheet and Apple — Managing notifications"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "owasp-secrets-management-0018",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+          "title": "Secrets Management Cheat Sheet",
+          "publisher": "OWASP Foundation",
+          "source_type": "other_authoritative",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Access Control; Auditing; Secret Lifecycle; Revocation",
+          "evidence_snippet": "Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.",
+          "applicability": "OPF::A005OM-0002::PF-0018 (Notifications settings protect secrets and non-audio state): Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.."
+        },
+        {
+          "source_id": "apple-managing-notifications-0018",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/managing-notifications",
+          "title": "Managing notifications",
+          "publisher": "Apple",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Permission; Integrating with Focus; interruption levels",
+          "evidence_snippet": "Users grant permission and retain settings control; interruption levels define whether delivery breaks scheduled delivery, Focus, or mute, and critical bypass requires special entitlement.",
+          "applicability": "OPF::A005OM-0002::PF-0018 (Notifications settings protect secrets and non-audio state): Users grant permission and retain settings control."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0018",
+          "claim": "OWASP requires secret lifecycle, least privilege, revocation, and masked audit; Apple preserves user authority over notification permission and interruption settings.",
+          "source_ids": [
+            "owasp-secrets-management-0018",
+            "apple-managing-notifications-0018"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0018; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "OWASP requires secret lifecycle, least privilege, revocation, and masked audit; Apple preserves user authority over notification permission and interruption settings.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "The well-specified UI boundary should still prove masked display, credential-reference-only persistence, revocation propagation, and no audio preview mutation of unrelated settings."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A preview/test path can accidentally serialize a secret or mutate global delivery settings."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Add acceptance checks for masked secrets, copy/export prohibition, credential-ref indirection, least-privilege update, revocation visibility, and transactional isolation from audio preview."
+      ],
+      "scenario_implications": [
+        "Edit audio state while credential rotation fails; non-audio state and secret references remain unchanged and truthful."
+      ],
+      "adversarial_implications": [
+        "Clipboard, logs, accessibility names, and test payloads must not expose secret material."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0019",
+      "source_row_sha256": "c87b3f5fc005a2724740b38a76e7c2a207afee135484b1d24fe9a0759d44f186",
+      "research_group_id": "RG-POLICY-PREFERENCE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for DRY guard is user-controllable without weakening other rules: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for DRY guard is user-controllable without weakening other rules, especially the packet observation 'DRY guard is user-controllable without weakening other rules'?",
+        "Official-standard and production-documentation comparison for DRY guard is user-controllable without weakening other rules using Open Policy Agent / CNCF — Open Policy Agent Documentation and National Institute of Standards and Technology — Role Based Access Control — Standard Structure"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "opa-policy-decisions-0019",
+          "url": "https://www.openpolicyagent.org/docs",
+          "title": "Open Policy Agent Documentation",
+          "publisher": "Open Policy Agent / CNCF",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "What is OPA; policy input and output",
+          "evidence_snippet": "OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.",
+          "applicability": "OPF::A005OM-0002::PF-0019 (DRY guard is user-controllable without weakening other rules): OPA separates policy decision-making from enforcement and evaluates structured inputs against policy to return explicit, structured decisions.."
+        },
+        {
+          "source_id": "nist-rbac-0019",
+          "url": "https://csrc.nist.gov/Projects/role-based-access-control/faqs",
+          "title": "Role Based Access Control — Standard Structure",
+          "publisher": "National Institute of Standards and Technology",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Standard Structure; Component summary",
+          "evidence_snippet": "Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations; separation-of-duty constraints are separately modeled.",
+          "applicability": "OPF::A005OM-0002::PF-0019 (DRY guard is user-controllable without weakening other rules): Core RBAC requires explicit users, roles, permissions, operations, objects, role activation, and assignment relations."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0019",
+          "claim": "OPA separates user-supplied input from immutable policy, and NIST RBAC makes permissions and constraints explicit.",
+          "source_ids": [
+            "opa-policy-decisions-0019",
+            "nist-rbac-0019"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0019; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "OPA separates user-supplied input from immutable policy, and NIST RBAC makes permissions and constraints explicit.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "The immutable lower-bound rules, actor permission, audit event, and effect of concurrent policy change need explicit proof."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A crafted settings mutation could encode 'disable guard' as permission to bypass unrelated validation."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Model DRY as a typed preference input; enumerate invariant policies it cannot override, require authorized actor and expected version, and log old/new value plus effective policy version."
+      ],
+      "scenario_implications": [
+        "Toggle DRY during a policy update and prove unrelated validation and safety constraints remain enforced."
+      ],
+      "adversarial_implications": [
+        "Privilege escalation through malformed preference values or stale versions must fail closed."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0020",
+      "source_row_sha256": "ebf2e5b7dd99f09ba09442a2ca8d68495833c6424c780f3e562f78734b69e135",
+      "research_group_id": "RG-CATALOG-A11Y",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Free Models catalog balances density and critical status: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Free Models catalog balances density and critical status, especially the packet observation 'Free Models catalog balances density and critical status'?",
+        "Official-standard and production-documentation comparison for Free Models catalog balances density and critical status using World Wide Web Consortium — Web Content Accessibility Guidelines (WCAG) 2.2 and World Wide Web Consortium — Understanding Success Criterion 4.1.3: Status Messages"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-wcag22-0020",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "1.4.1 Use of Color; 1.4.2 Audio Control; 2.1 Keyboard Accessible; 4.1.2 Name, Role, Value",
+          "evidence_snippet": "Status cannot rely on color alone; keyboard operation, programmatic name/role/value, and independent audio pause, stop, or volume controls provide measurable accessibility criteria.",
+          "applicability": "OPF::A005OM-0002::PF-0020 (Free Models catalog balances density and critical status): Status cannot rely on color alone."
+        },
+        {
+          "source_id": "w3c-status-messages-0020",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages",
+          "title": "Understanding Success Criterion 4.1.3: Status Messages",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Success Criterion; Intent; Status Message Examples",
+          "evidence_snippet": "Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.",
+          "applicability": "OPF::A005OM-0002::PF-0020 (Free Models catalog balances density and critical status): Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0020",
+          "claim": "WCAG requires status not rely on color and status changes be programmatically announced without disruptive focus movement.",
+          "source_ids": [
+            "w3c-wcag22-0020",
+            "w3c-status-messages-0020"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0020; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "WCAG requires status not rely on color and status changes be programmatically announced without disruptive focus movement.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Row identity, keyboard navigation, non-color critical status, truncation recovery, and live refresh announcement are not specified in the packet."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "Dense rows can truncate provider/model identity or turn critical availability into a color-only badge."
+      ],
+      "conclusion_changed": true,
+      "conclusion_change_summary": "The external baseline changes the packet conclusion in a bounded way: WCAG requires status not rely on color and status changes be programmatically announced without disruptive focus movement. The Plans-derived state should be updated by the proposed delta, without editing Plans in this audit lane.",
+      "proposed_spec_deltas": [
+        "Specify accessible table/list semantics, stable row keys, keyboard traversal, text/icon critical cues, full-value tooltip/details, and polite refresh summary."
+      ],
+      "scenario_implications": [
+        "Render 1, 10, 1000, long-name, unavailable, and critical rows at text zoom and with a screen reader."
+      ],
+      "adversarial_implications": [
+        "A maliciously long model name must not obscure provider identity or critical unavailability."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0021",
+      "source_row_sha256": "cf073419aedd2c3c9b9467f698844f42cae2ff41e951b4646cac73713549d018",
+      "research_group_id": "RG-KNOWN-GOOD-REFRESH",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Free Models refresh preserves known-good state: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Free Models refresh preserves known-good state, especially the packet observation 'Free Models refresh preserves known-good state'?",
+        "Official-standard and production-documentation comparison for Free Models refresh preserves known-good state using RFC Editor / IETF — RFC 5861: HTTP Cache-Control Extensions for Stale Content and Kubernetes — Pod Conditions"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "rfc5861-stale-if-error-0021",
+          "url": "https://www.rfc-editor.org/info/rfc5861/",
+          "title": "RFC 5861: HTTP Cache-Control Extensions for Stale Content",
+          "publisher": "RFC Editor / IETF",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Section 4, stale-if-error",
+          "evidence_snippet": "A stale response may be used on specified errors only within an explicit staleness window, and it should remain visibly stale.",
+          "applicability": "OPF::A005OM-0002::PF-0021 (Free Models refresh preserves known-good state): A stale response may be used on specified errors only within an explicit staleness window, and it should remain visibly stale.."
+        },
+        {
+          "source_id": "k8s-pod-conditions-0021",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/",
+          "title": "Pod Conditions",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Fields of a PodCondition; observedGeneration; readiness gates",
+          "evidence_snippet": "Conditions carry status, reason, message, transition time, and observedGeneration; readiness additionally requires every declared readiness gate to be true.",
+          "applicability": "OPF::A005OM-0002::PF-0021 (Free Models refresh preserves known-good state): Conditions carry status, reason, message, transition time, and observedGeneration."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0021",
+          "claim": "RFC 5861 permits stale-if-error only within a bounded window and visibly stale; Kubernetes conditions attach observedGeneration and reasons.",
+          "source_ids": [
+            "rfc5861-stale-if-error-0021",
+            "k8s-pod-conditions-0021"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0021; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "RFC 5861 permits stale-if-error only within a bounded window and visibly stale; Kubernetes conditions attach observedGeneration and reasons.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "No maximum staleness, version/provenance, degraded label, retry schedule, or invalidation condition is stated."
+      ],
+      "contradictions": [
+        "No contradiction is found if preserved data is explicitly stale rather than current."
+      ],
+      "missed_failure_modes": [
+        "A compromised or revoked model can remain visible indefinitely as 'known good' after repeated refresh failures."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Store last_success_version/time/source; on failure preserve only within max_stale, mark degraded with reason, retry with bounded backoff, and invalidate immediately on revocation/security events."
+      ],
+      "scenario_implications": [
+        "Fail refresh before and after max_stale and after a revocation event; verify distinct stale, expired, and removed states."
+      ],
+      "adversarial_implications": [
+        "An attacker must not keep an unsafe entry alive by inducing refresh failures."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0022",
+      "source_row_sha256": "93f8a3899c93177d697e2c8d5b07ddd7333c7adc470faef1ab4fe1e35f2eab0a",
+      "research_group_id": "RG-UNAVAILABLE-VISIBILITY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Top-10 overrides and unavailable states remain visible: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Top-10 overrides and unavailable states remain visible, especially the packet observation 'Top-10 overrides and unavailable states remain visible'?",
+        "Official-standard and production-documentation comparison for Top-10 overrides and unavailable states remain visible using World Wide Web Consortium — Understanding Success Criterion 4.1.3: Status Messages and World Wide Web Consortium — Web Content Accessibility Guidelines (WCAG) 2.2"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-status-messages-0022",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages",
+          "title": "Understanding Success Criterion 4.1.3: Status Messages",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Success Criterion; Intent; Status Message Examples",
+          "evidence_snippet": "Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.",
+          "applicability": "OPF::A005OM-0002::PF-0022 (Top-10 overrides and unavailable states remain visible): Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.."
+        },
+        {
+          "source_id": "w3c-wcag22-0022",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "1.4.1 Use of Color; 1.4.2 Audio Control; 2.1 Keyboard Accessible; 4.1.2 Name, Role, Value",
+          "evidence_snippet": "Status cannot rely on color alone; keyboard operation, programmatic name/role/value, and independent audio pause, stop, or volume controls provide measurable accessibility criteria.",
+          "applicability": "OPF::A005OM-0002::PF-0022 (Top-10 overrides and unavailable states remain visible): Status cannot rely on color alone."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0022",
+          "claim": "WCAG status-message and non-color requirements support retaining unavailable entries with programmatic reason and state rather than hiding them.",
+          "source_ids": [
+            "w3c-status-messages-0022",
+            "w3c-wcag22-0022"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0022; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "WCAG status-message and non-color requirements support retaining unavailable entries with programmatic reason and state rather than hiding them.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Override precedence, provenance, expiry, unavailable reason taxonomy, and accessible non-color display should be explicit."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "A stale Top-10 override can keep an unavailable model ranked as recommended without disclosing provenance."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Specify override owner/version/expiry and precedence; show unavailable reason, last verified time, and non-color status; prevent selection while preserving discoverability."
+      ],
+      "scenario_implications": [
+        "Apply, expire, and conflict overrides while availability changes; verify stable ordering and truthful disabled state."
+      ],
+      "adversarial_implications": [
+        "Forged override provenance must not elevate an unavailable or disallowed model."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0023",
+      "source_row_sha256": "39d91cb36213bbf7619675c8bde6ad9b3ebe6cb07570b5a71688b5841b624594",
+      "research_group_id": "RG-ALERT-ACTIONS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Shared alert acknowledge, dismiss, mute, and snooze lifecycle: Which current external standard, reference implementation, or empirical benchmark defines a falsifiable oracle for Shared alert lifecycle is explicit, especially the packet observation 'Shared alert lifecycle is explicit'? | Which current standards, security guidance, and mature product implementations define best-practice authority, lifecycle, failure recovery, accessibility, and evidence semantics for Alert acknowledge, dismiss, mute, and snooze lifecycle, and which of the packet's observed assumptions would they falsify?",
+        "Official-standard and production-documentation comparison for Shared alert acknowledge, dismiss, mute, and snooze lifecycle using World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction and Prometheus — Alertmanager"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-scxml-0023",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0023 (Shared alert acknowledge, dismiss, mute, and snooze lifecycle): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        },
+        {
+          "source_id": "prometheus-alertmanager-0023",
+          "url": "https://prometheus.io/docs/alerting/latest/alertmanager/",
+          "title": "Alertmanager",
+          "publisher": "Prometheus",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Grouping; Inhibition; Silences; Alert limits",
+          "evidence_snippet": "Alertmanager deduplicates, groups, routes, silences, and inhibits alerts; grouping keys and timing are explicit, and overload limits expose dropped-alert metrics.",
+          "applicability": "OPF::A005OM-0002::PF-0023 (Shared alert acknowledge, dismiss, mute, and snooze lifecycle): Alertmanager deduplicates, groups, routes, silences, and inhibits alerts."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0023",
+          "claim": "SCXML provides legal-transition semantics; Alertmanager supplies grouping, silence timing, inhibition, and alert identity patterns.",
+          "source_ids": [
+            "w3c-scxml-0023",
+            "prometheus-alertmanager-0023"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0023; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "SCXML provides legal-transition semantics; Alertmanager supplies grouping, silence timing, inhibition, and alert identity patterns.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "Expected-version preconditions, rule mute scope, snooze clock/expiry, partial-failure recovery, and UI settlement are incomplete."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "The UI can optimistically dismiss while durable mute fails, or snooze expiry can resurrect a resolved alert."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It supports the stated boundary while identifying acceptance hardening and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define one versioned alert machine; action authority/scope; mute-rule matcher and expiry; snooze absolute deadline and clock; transactional event+state commit; compensation and reconciliation receipt."
+      ],
+      "scenario_implications": [
+        "Race acknowledge, dismiss, mute, snooze, expiry, and resolve while injecting storage and delivery failures."
+      ],
+      "adversarial_implications": [
+        "Replay and scope-widening attacks must not mute unrelated alerts or resurrect resolved ones."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0024",
+      "source_row_sha256": "77687c8e3fc1e3d728bdc292a08be62b1b10bad2a75329e1fbe4256e85743136",
+      "research_group_id": "RG-EVENT-WAKE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Event Driven Scheduler: Which externally validated state-machine, security, interoperability, and accessibility practices should govern Event Driven Scheduler, specifically resolving: Event-driven wakeups lack delivery and recovery semantics?",
+        "Official-standard and production-documentation comparison for Event Driven Scheduler using Kubernetes — Scheduling Framework and Cloud Native Computing Foundation — CloudEvents Specification"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "k8s-scheduling-framework-0024",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/",
+          "title": "Scheduling Framework",
+          "publisher": "Kubernetes",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Framework workflow; Scheduling cycle and binding cycle; QueueingHint; QueueSort; Reserve",
+          "evidence_snippet": "Scheduling and binding are distinct cycles; scheduling cycles are serial, binding may be concurrent, failed attempts return to a queue, QueueingHint controls requeue, and Reserve/Unreserve protects stateful reservation races.",
+          "applicability": "OPF::A005OM-0002::PF-0024 (Event Driven Scheduler): Scheduling and binding are distinct cycles."
+        },
+        {
+          "source_id": "cloudevents-core-spec-0024",
+          "url": "https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md",
+          "title": "CloudEvents Specification",
+          "publisher": "Cloud Native Computing Foundation",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Context Attributes; REQUIRED Attributes; id; source; type",
+          "evidence_snippet": "Each event has required id, source, specversion, and type context; source plus id identifies duplicate re-sends, enabling observable event identity and deduplication.",
+          "applicability": "OPF::A005OM-0002::PF-0024 (Event Driven Scheduler): Each event has required id, source, specversion, and type context."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0024",
+          "claim": "Kubernetes QueueingHint maps relevant state changes to active/backoff queues; CloudEvents provides stable occurrence identity and duplicate recognition.",
+          "source_ids": [
+            "k8s-scheduling-framework-0024",
+            "cloudevents-core-spec-0024"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0024; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Kubernetes QueueingHint maps relevant state changes to active/backoff queues; CloudEvents provides stable occurrence identity and duplicate recognition.",
+      "confirmed_gaps": [
+        "The lack of delivery, deduplication, ordering, and recovery semantics for event-driven wakeups is confirmed."
+      ],
+      "underspecifications": [
+        "Wake identity, at-least-once behavior, lost-event recovery, precedence, backoff, and terminal settlement are absent."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Lost or duplicated wake events can strand ready work or dispatch it twice; a watchdog can overtake an earlier event without ordering rules."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define wake envelope{id,source,type,run,generation,sequence,time}, idempotent admission, precedence, at-least-once dedupe, durable cursor, gap detection, watchdog reconciliation, retry/backoff, and poison-event quarantine."
+      ],
+      "scenario_implications": [
+        "Drop, duplicate, reorder, and delay each wake type across restart; resulting ready set and dispatch order remain deterministic."
+      ],
+      "adversarial_implications": [
+        "Forged generation/sequence and event floods must be rejected or rate-limited without starving legitimate reconciliation."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0025",
+      "source_row_sha256": "49f173c992a76c94e0b5c2f1ddd0ce18091084c2544f3b0c200457fac27e6181",
+      "research_group_id": "RG-WAKE-ATTEMPTS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Scheduler Wake Mapping: Which externally validated state-machine, security, interoperability, and accessibility practices should govern Scheduler Wake Mapping, specifically resolving: Wake and attempt transitions remain ambiguous?",
+        "Official-standard and production-documentation comparison for Scheduler Wake Mapping using World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction and Google Cloud — Exactly-once delivery"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "w3c-scxml-0025",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0025 (Scheduler Wake Mapping): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        },
+        {
+          "source_id": "gcp-pubsub-exactly-once-0025",
+          "url": "https://docs.cloud.google.com/pubsub/docs/exactly-once-delivery",
+          "title": "Exactly-once delivery",
+          "publisher": "Google Cloud",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Semantics; Redelivery versus duplicate; Regional considerations",
+          "evidence_snippet": "Delivery attempts have stable message identity and acknowledgment state; expired or superseded acknowledgment IDs fail, and exactly-once guarantees have explicit regional and subscription-type boundaries.",
+          "applicability": "OPF::A005OM-0002::PF-0025 (Scheduler Wake Mapping): Delivery attempts have stable message identity and acknowledgment state."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0025",
+          "claim": "SCXML demands explicit state/event transitions; Google Pub/Sub exposes delivery attempt identity and invalidates superseded acknowledgment IDs.",
+          "source_ids": [
+            "w3c-scxml-0025",
+            "gcp-pubsub-exactly-once-0025"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0025; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "SCXML demands explicit state/event transitions; Google Pub/Sub exposes delivery attempt identity and invalidates superseded acknowledgment IDs.",
+      "confirmed_gaps": [
+        "Wake and attempt transition ambiguity is confirmed."
+      ],
+      "underspecifications": [
+        "No mapping table relates wake type, attempt state, allowed source states, idempotency key, retry class, and terminal outcome."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "A late result from attempt N can settle attempt N+1 or reopen terminal work."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Publish a total wake×state transition table with attempt_id/generation preconditions, duplicate/no-op rules, stale-result rejection, retryable/permanent errors, and terminal receipt."
+      ],
+      "scenario_implications": [
+        "Deliver attempt completions out of order and reuse expired acknowledgment IDs; only the current attempt may settle."
+      ],
+      "adversarial_implications": [
+        "Attempt-id guessing, replay, or cross-run wake injection must not mutate another execution."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0026",
+      "source_row_sha256": "f9941a6967b7c9a68d72eebf6358782a5971fef925743baca3fd46221af82c1c",
+      "research_group_id": "RG-SOUND-TAXONOMY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Sound notification event taxonomy is missing: Which external standard, empirical study, or production implementation supplies testable guidance for \"Sound notification event taxonomy is missing\", including the observed sound_event_mapping_unspecified boundary?",
+        "Official-standard and production-documentation comparison for Sound notification event taxonomy is missing using Android Developers — About notifications and Apple — Managing notifications"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "android-notifications-0026",
+          "url": "https://developer.android.com/develop/ui/compose/notifications",
+          "title": "About notifications",
+          "publisher": "Android Developers",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Notification channels; Importance; Do Not Disturb; cooldown",
+          "evidence_snippet": "Channels bind notification categories to user-controlled visual and auditory behavior; importance and DND determine interruption, and repeated notifications may be cooled down.",
+          "applicability": "OPF::A005OM-0002::PF-0026 (Sound notification event taxonomy is missing): Channels bind notification categories to user-controlled visual and auditory behavior."
+        },
+        {
+          "source_id": "apple-managing-notifications-0026",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/managing-notifications",
+          "title": "Managing notifications",
+          "publisher": "Apple",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Permission; Integrating with Focus; interruption levels",
+          "evidence_snippet": "Users grant permission and retain settings control; interruption levels define whether delivery breaks scheduled delivery, Focus, or mute, and critical bypass requires special entitlement.",
+          "applicability": "OPF::A005OM-0002::PF-0026 (Sound notification event taxonomy is missing): Users grant permission and retain settings control."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0026",
+          "claim": "Android channels and Apple interruption levels map notification categories to user-controlled auditory behavior and DND/Focus precedence.",
+          "source_ids": [
+            "android-notifications-0026",
+            "apple-managing-notifications-0026"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0026; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Android channels and Apple interruption levels map notification categories to user-controlled auditory behavior and DND/Focus precedence.",
+      "confirmed_gaps": [
+        "The packet gap is confirmed: action-needed versus completion sound mapping cannot be left to builder discretion."
+      ],
+      "underspecifications": [
+        "No stable event taxonomy, default sound policy, urgency level, user override, DND rule, fallback, or accessibility equivalent is defined."
+      ],
+      "contradictions": [],
+      "missed_failure_modes": [
+        "Over-classifying routine completion as urgent causes alert fatigue; relying on sound alone excludes muted or deaf users."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define event classes (action_required, failed, completed, progress), default channel/importance/sound, per-class user override, DND/Focus precedence, cooldown/coalescing, visual/text equivalent, and critical exception authority."
+      ],
+      "scenario_implications": [
+        "Exercise each event class across mute, DND, app mute, missing device, repeated events, and accessibility modes."
+      ],
+      "adversarial_implications": [
+        "A producer must not self-label routine events critical or bypass user interruption policy."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0027",
+      "source_row_sha256": "1a5aa7bb4dd39bb606a09897c68b9746727e5268c150c627209e4860eb834d2a",
+      "research_group_id": "RG-NOTIFICATION-DELIVERY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notification delivery, sounds, and credential recovery: Which current standards, security guidance, and mature product implementations define best-practice authority, lifecycle, failure recovery, accessibility, and evidence semantics for Notification delivery, sounds, and credential recovery, and which of the packet's observed assumptions would they falsify?",
+        "Official-standard and production-documentation comparison for Notification delivery, sounds, and credential recovery using RFC Editor / IETF — RFC 8030: Generic Event Delivery Using HTTP Push and OWASP Foundation — Secrets Management Cheat Sheet"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "rfc8030-web-push-0027",
+          "url": "https://www.rfc-editor.org/info/rfc8030/",
+          "title": "RFC 8030: Generic Event Delivery Using HTTP Push",
+          "publisher": "RFC Editor / IETF",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "5.1 Receipts; 5.2 TTL; 5.4 Replacing; 6.2 Acknowledging; 8 Security",
+          "evidence_snippet": "Push delivery defines receipts, mandatory TTL, topic replacement, acknowledgment, retry-until-expiry, subscription expiry, authorization, privacy, and denial-of-service considerations.",
+          "applicability": "OPF::A005OM-0002::PF-0027 (Notification delivery, sounds, and credential recovery): Push delivery defines receipts, mandatory TTL, topic replacement, acknowledgment, retry-until-expiry, subscription expiry, authorization, privacy, and denial-of-service considerations.."
+        },
+        {
+          "source_id": "owasp-secrets-management-0027",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+          "title": "Secrets Management Cheat Sheet",
+          "publisher": "OWASP Foundation",
+          "source_type": "other_authoritative",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Access Control; Auditing; Secret Lifecycle; Revocation",
+          "evidence_snippet": "Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.",
+          "applicability": "OPF::A005OM-0002::PF-0027 (Notification delivery, sounds, and credential recovery): Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0027",
+          "claim": "RFC 8030 defines TTL, receipt, acknowledgment, retry, replacement, expiry, authorization, and DoS behavior; OWASP defines credential rotation/revocation and masking.",
+          "source_ids": [
+            "rfc8030-web-push-0027",
+            "owasp-secrets-management-0027"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0027; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "RFC 8030 defines TTL, receipt, acknowledgment, retry, replacement, expiry, authorization, and DoS behavior; OWASP defines credential rotation/revocation and masking.",
+      "confirmed_gaps": [
+        "The delivery and credential-recovery gaps are confirmed, and treating opening settings as a durable mutation contradicts external UI/action separation."
+      ],
+      "underspecifications": [
+        "Authorization, secret masking, TTL, idempotency, rate/cost limits, typed settlements, revocation propagation, and operator recovery are incomplete."
+      ],
+      "contradictions": [
+        "Opening settings is navigation, not a delivery-setting mutation unless a durable value actually changes."
+      ],
+      "missed_failure_modes": [
+        "A timed-out send may later deliver after the UI reports failure; revoked credentials may remain cached; retries may duplicate sound."
+      ],
+      "conclusion_changed": true,
+      "conclusion_change_summary": "The external baseline changes the packet conclusion in a bounded way: RFC 8030 defines TTL, receipt, acknowledgment, retry, replacement, expiry, authorization, and DoS behavior; OWASP defines credential rotation/revocation and masking. The Plans-derived state should be updated by the proposed delta, without editing Plans in this audit lane.",
+      "proposed_spec_deltas": [
+        "Define command types for navigate/test/send/configure; delivery_id/idempotency_key; TTL; typed accepted/delivered/expired/permanent_failed states; bounded jittered retry and DLQ; credential-ref rotation/revocation; masking; audit and remediation."
+      ],
+      "scenario_implications": [
+        "Rotate/revoke credentials during an in-flight test, lose its response, retry, and verify one settlement with no secret exposure."
+      ],
+      "adversarial_implications": [
+        "Credential exfiltration, replay, endpoint abuse, and notification floods must be bounded and observable."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0028",
+      "source_row_sha256": "2c73f036de57d053863dcdc97c79068ea230fadb5b6170fe78a981f87675535a",
+      "research_group_id": "RG-SOUND-ASSET-SAFETY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Sound asset, mapping, pack, preview, import, and export: Which current standards, security guidance, and mature product implementations define best-practice authority, lifecycle, failure recovery, accessibility, and evidence semantics for Sound asset, mapping, pack, preview, import, and export, and which of the packet's observed assumptions would they falsify?",
+        "Official-standard and production-documentation comparison for Sound asset, mapping, pack, preview, import, and export using OWASP Foundation — File Upload Cheat Sheet and Microsoft — Custom audio on app notifications"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "owasp-file-upload-0028",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+          "title": "File Upload Cheat Sheet",
+          "publisher": "OWASP Foundation",
+          "source_type": "other_authoritative",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "File Upload Protection; File Signature Validation; Storage; Limits",
+          "evidence_snippet": "Untrusted files require extension and signature allowlists, spoof-resistant type checks, generated names, size and decompression limits, authorization, isolated storage, least privilege, and scanning.",
+          "applicability": "OPF::A005OM-0002::PF-0028 (Sound asset, mapping, pack, preview, import, and export): Untrusted files require extension and signature allowlists, spoof-resistant type checks, generated names, size and decompression limits, authorization, isolated storage, least privilege, and scanning.."
+        },
+        {
+          "source_id": "windows-custom-notification-audio-0028",
+          "url": "https://learn.microsoft.com/en-us/windows/apps/develop/notifications/app-notifications/app-notifications-custom-audio",
+          "title": "Custom audio on app notifications",
+          "publisher": "Microsoft",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Add custom audio; supported file types and sources",
+          "evidence_snippet": "Custom notification audio accepts an explicit codec allowlist and restricted application resource URI schemes; arbitrary HTTP and filesystem paths are unsupported.",
+          "applicability": "OPF::A005OM-0002::PF-0028 (Sound asset, mapping, pack, preview, import, and export): Custom notification audio accepts an explicit codec allowlist and restricted application resource URI schemes."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0028",
+          "claim": "OWASP treats imports as hostile files with allowlists, signatures, size/decompression limits, isolated storage, and least privilege; Microsoft restricts codecs and resource URI schemes.",
+          "source_ids": [
+            "owasp-file-upload-0028",
+            "windows-custom-notification-audio-0028"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0028; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "OWASP treats imports as hostile files with allowlists, signatures, size/decompression limits, isolated storage, and least privilege; Microsoft restricts codecs and resource URI schemes.",
+      "confirmed_gaps": [
+        "Every listed sound-asset lifecycle and input-safety gap is confirmed."
+      ],
+      "underspecifications": [
+        "Import/upload validation, atomic persistence events, reference-safe delete/restore, export path policy, preview state/device errors, quotas, and rollback are missing."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "A crafted pack can exploit decompression bombs, path traversal, codec bugs, overwrite existing assets, or leave orphan mappings after partial import."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Specify manifest/schema/signature, codec allowlist, decoded duration/size/rate limits, safe extraction, generated IDs, quarantine/scan, transactional import+events, referential delete policy, export destination/overwrite confirmation, preview state and device-error receipt."
+      ],
+      "scenario_implications": [
+        "Test malicious archives, spoofed MIME/signature, quota exhaustion, device loss during preview, and rollback after partial persistence."
+      ],
+      "adversarial_implications": [
+        "Untrusted audio must never execute, escape storage, access arbitrary URLs/paths, or delete referenced defaults."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0029",
+      "source_row_sha256": "13edd4846c96803569d01aae583a300a77e296fc98e00b842496504ff0c4df37",
+      "research_group_id": "RG-DESTINATION-PERSISTENCE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notification destination configuration: What current standards and authoritative implementation patterns define secure, deterministic lifecycle, authority, failure-recovery, and user-truth semantics for Notification destination configuration, especially for Notification mutations conflict with no-persist effect contracts?",
+        "Official-standard and production-documentation comparison for Notification destination configuration using Amazon Web Services — Optimistic locking with version number and OWASP Foundation — Secrets Management Cheat Sheet"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "aws-dynamodb-optimistic-locking-0029",
+          "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BestPractices_OptimisticLocking.html",
+          "title": "Optimistic locking with version number",
+          "publisher": "Amazon Web Services",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Pattern design; Implementation",
+          "evidence_snippet": "Each item carries an incrementing version; updates condition on the version last read, conflicts fail explicitly, and bounded retry begins from a fresh read.",
+          "applicability": "OPF::A005OM-0002::PF-0029 (Notification destination configuration): Each item carries an incrementing version."
+        },
+        {
+          "source_id": "owasp-secrets-management-0029",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+          "title": "Secrets Management Cheat Sheet",
+          "publisher": "OWASP Foundation",
+          "source_type": "other_authoritative",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Access Control; Auditing; Secret Lifecycle; Revocation",
+          "evidence_snippet": "Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.",
+          "applicability": "OPF::A005OM-0002::PF-0029 (Notification destination configuration): Secrets require least privilege, creation, rotation, revocation, expiration, secure audit records, masking, and rapid de-authorization with observable revocation status.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0029",
+          "claim": "DynamoDB versioned conditional writes supply deterministic mutation conflict handling; OWASP secret guidance requires credential references, revocation, least privilege, and audit.",
+          "source_ids": [
+            "aws-dynamodb-optimistic-locking-0029",
+            "owasp-secrets-management-0029"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0029; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "DynamoDB versioned conditional writes supply deterministic mutation conflict handling; OWASP secret guidance requires credential references, revocation, least privilege, and audit.",
+      "confirmed_gaps": [
+        "The named create/delete/toggle mutations cannot truthfully declare no persistence; the durable-transition contradiction is confirmed."
+      ],
+      "underspecifications": [
+        "Storage owner, expected version, idempotency, domain events, projection updates, conflict/undo/rollback, and credential lifecycle are missing."
+      ],
+      "contradictions": [
+        "Durable destination mutations conflict with a no-persist effect contract."
+      ],
+      "missed_failure_modes": [
+        "Concurrent toggle/delete can resurrect a destination or send through revoked credentials while the UI shows success."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define Destination aggregate, storage owner, version/CAS, command idempotency key, created/updated/disabled/deleted events, credential_ref only, revocation reaction, transactional projection update, soft-delete/restore window, and rollback receipt."
+      ],
+      "scenario_implications": [
+        "Race update, toggle, delete, restore, and credential revocation; stale versions fail and UI reconciles to committed state."
+      ],
+      "adversarial_implications": [
+        "Unauthorized destination swaps and endpoint SSRF must be rejected before persistence or test delivery."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0030",
+      "source_row_sha256": "cf8427c72ece31359bcac3587f5499fb77083d867e5dcdf9d7cdfe2627608b03",
+      "research_group_id": "RG-TEST-DELIVERY",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notification test delivery: What current standards and authoritative implementation patterns define secure, deterministic lifecycle, authority, failure-recovery, and user-truth semantics for Notification test delivery, especially for Notification test delivery is treated as a local no-persist receipt?",
+        "Official-standard and production-documentation comparison for Notification test delivery using RFC Editor / IETF — RFC 7240: Prefer Header for HTTP and Stripe — Idempotent requests"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "rfc7240-respond-async-0030",
+          "url": "https://www.rfc-editor.org/info/rfc7240/",
+          "title": "RFC 7240: Prefer Header for HTTP",
+          "publisher": "RFC Editor / IETF",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "4.1 respond-async",
+          "evidence_snippet": "Asynchronous side effects can return 202 Accepted with a Location for later result inspection; the standard explicitly leaves final-settlement semantics to the application contract.",
+          "applicability": "OPF::A005OM-0002::PF-0030 (Notification test delivery): Asynchronous side effects can return 202 Accepted with a Location for later result inspection."
+        },
+        {
+          "source_id": "stripe-idempotent-requests-0030",
+          "url": "https://docs.stripe.com/api/idempotent_requests",
+          "title": "Idempotent requests",
+          "publisher": "Stripe",
+          "source_type": "official_product_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Idempotency keys; parameter comparison; retention",
+          "evidence_snippet": "A client-supplied idempotency key makes retries safe, replays the original result, and rejects reuse with different parameters; keys have an explicit retention window.",
+          "applicability": "OPF::A005OM-0002::PF-0030 (Notification test delivery): A client-supplied idempotency key makes retries safe, replays the original result, and rejects reuse with different parameters."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0030",
+          "claim": "RFC 7240 distinguishes asynchronous acceptance from final result; Stripe demonstrates idempotency keys and parameter-bound replay for safe side-effect retries.",
+          "source_ids": [
+            "rfc7240-respond-async-0030",
+            "stripe-idempotent-requests-0030"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0030; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "RFC 7240 distinguishes asynchronous acceptance from final result; Stripe demonstrates idempotency keys and parameter-bound replay for safe side-effect retries.",
+      "confirmed_gaps": [
+        "The local no-persist receipt is insufficient for an external delivery side effect."
+      ],
+      "underspecifications": [
+        "Typed target/sample payload, authorization, redaction, consent, idempotency, timeout, retry, rate/cost bounds, cancellation, and durable settlement are missing."
+      ],
+      "contradictions": [
+        "A local success receipt contradicts the possibility of remote pending, late success, or failure."
+      ],
+      "missed_failure_modes": [
+        "A lost response can cause duplicate tests; cancellation can race late provider acceptance; samples can leak secrets."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Create durable TestDelivery{id,target_hash,actor,idempotency_key,payload_schema,status,expires_at}; return accepted with settlement route, redact secrets, bound retries/rates/cost, and record delivered/expired/canceled/failed."
+      ],
+      "scenario_implications": [
+        "Lose the response, retry with same and changed parameters, cancel during provider delay, and observe one final settlement."
+      ],
+      "adversarial_implications": [
+        "Attackers must not use test-send for endpoint scanning, spam, cost exhaustion, or secret exfiltration."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0031",
+      "source_row_sha256": "a7098e234815f59d865652761a5055a50fd251e2f9bcbbeed24a071cbddb21b4",
+      "research_group_id": "RG-NOTIFICATION-TRUST",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notification trust and action boundary: Which external standard, peer-reviewed method, or production-grade reference architecture supplies a falsifiable oracle for 'Notification trust and action boundary', specifically the observation that Shared notification copy discloses stale/degraded projection state, opens PM routes only, and separates dismissal from canonical resolution.? Compare it against published guidance on LSP idle collection in-flight request cancellation and root removal race.",
+        "Official-standard and production-documentation comparison for Notification trust and action boundary using Microsoft — Language Server Protocol Specification 3.17 and World Wide Web Consortium — Understanding Success Criterion 4.1.3: Status Messages"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "lsp-3-17-specification-0031",
+          "url": "https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/",
+          "title": "Language Server Protocol Specification 3.17",
+          "publisher": "Microsoft",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Implementation Considerations; Cancellation Support; Workspace Features",
+          "evidence_snippet": "When client state invalidates a pending result, the client cancels and ignores it or transforms it; servers can return ContentModified, and clients may resend without surfacing stale errors to users.",
+          "applicability": "OPF::A005OM-0002::PF-0031 (Notification trust and action boundary): When client state invalidates a pending result, the client cancels and ignores it or transforms it."
+        },
+        {
+          "source_id": "w3c-status-messages-0031",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages",
+          "title": "Understanding Success Criterion 4.1.3: Status Messages",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Success Criterion; Intent; Status Message Examples",
+          "evidence_snippet": "Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.",
+          "applicability": "OPF::A005OM-0002::PF-0031 (Notification trust and action boundary): Success, waiting, progress, and error messages must be programmatically determinable so assistive technology can announce them without moving focus.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0031",
+          "claim": "LSP explicitly cancels or ignores pending results invalidated by client state and uses ContentModified; WCAG status messages require stale/degraded changes to be announced without stealing focus.",
+          "source_ids": [
+            "lsp-3-17-specification-0031",
+            "w3c-status-messages-0031"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0031; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "LSP explicitly cancels or ignores pending results invalidated by client state and uses ContentModified; WCAG status messages require stale/degraded changes to be announced without stealing focus.",
+      "confirmed_gaps": [],
+      "underspecifications": [
+        "The route should carry projection version/root identity and reject results invalidated by root removal; dismissal versus resolution needs separate telemetry."
+      ],
+      "contradictions": [
+        "No contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "An in-flight request can complete after root removal and open a stale route; dismissal can be mistaken for canonical resolution."
+      ],
+      "conclusion_changed": true,
+      "conclusion_change_summary": "The external baseline changes the packet conclusion in a bounded way: LSP explicitly cancels or ignores pending results invalidated by client state and uses ContentModified; WCAG status messages require stale/degraded changes to be announced without stealing focus. The Plans-derived state should be updated by the proposed delta, without editing Plans in this audit lane.",
+      "proposed_spec_deltas": [
+        "Bind notification and route to root_id plus projection_version; on root removal cancel and ignore in-flight results; disclose stale/degraded state via status semantics; model dismiss and resolve as distinct commands/events."
+      ],
+      "scenario_implications": [
+        "Remove the root while a route lookup is in flight, then deliver late success; no navigation or canonical resolution occurs."
+      ],
+      "adversarial_implications": [
+        "Forged route/root identity and replayed stale completion must not cross workspace authority."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0032",
+      "source_row_sha256": "fb61ec899ea3c903fd1b11f2ed6c6bffe3be1a83b163fdc6f5da9b583438cba9",
+      "research_group_id": "RG-DURABLE-ALERTS",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Project Attention and Durable Alert Lifecycle: What external standards, research, or production reference implementations provide a testable resolution for this Project Attention and Durable Alert Lifecycle requirement: Durable alert fields and delivery classes are named, but legal transitions, concurrent acknowledge/snooze/resolve ordering, coalescing identity, and escalation precedence are not specified.",
+        "Official-standard and production-documentation comparison for Project Attention and Durable Alert Lifecycle using Prometheus — Alertmanager and World Wide Web Consortium — State Chart XML (SCXML): State Machine Notation for Control Abstraction"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "prometheus-alertmanager-0032",
+          "url": "https://prometheus.io/docs/alerting/latest/alertmanager/",
+          "title": "Alertmanager",
+          "publisher": "Prometheus",
+          "source_type": "mature_open_source_documentation",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Grouping; Inhibition; Silences; Alert limits",
+          "evidence_snippet": "Alertmanager deduplicates, groups, routes, silences, and inhibits alerts; grouping keys and timing are explicit, and overload limits expose dropped-alert metrics.",
+          "applicability": "OPF::A005OM-0002::PF-0032 (Project Attention and Durable Alert Lifecycle): Alertmanager deduplicates, groups, routes, silences, and inhibits alerts."
+        },
+        {
+          "source_id": "w3c-scxml-0032",
+          "url": "https://www.w3.org/TR/scxml/",
+          "title": "State Chart XML (SCXML): State Machine Notation for Control Abstraction",
+          "publisher": "World Wide Web Consortium",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "3 Core Constructs; 3.13 final; 5 Executable Content; Appendix D Algorithm",
+          "evidence_snippet": "SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.",
+          "applicability": "OPF::A005OM-0002::PF-0032 (Project Attention and Durable Alert Lifecycle): SCXML defines explicit states, transitions, event selection, entry/exit behavior, final states, error handling, and a deterministic interpreter algorithm suitable as a lifecycle oracle.."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0032",
+          "claim": "Alertmanager supplies explicit fingerprint-based grouping, route timing, silences, inhibition, and overload behavior; SCXML supplies a closed transition oracle.",
+          "source_ids": [
+            "prometheus-alertmanager-0032",
+            "w3c-scxml-0032"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0032; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "Alertmanager supplies explicit fingerprint-based grouping, route timing, silences, inhibition, and overload behavior; SCXML supplies a closed transition oracle.",
+      "confirmed_gaps": [
+        "The alert-transition, coalescing, and escalation-precedence gap is confirmed."
+      ],
+      "underspecifications": [
+        "Legal states, expected-version ordering, fingerprint fields, acknowledge/snooze/resolve precedence, escalation clock, and terminal retention are missing."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "Two concurrent operators can snooze and resolve in different orders; poor fingerprints can merge unrelated incidents or fan out duplicates."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Define Alert aggregate and state machine, canonical fingerprint, versioned commands, transition precedence, silence/snooze expiry, escalation schedule, coalesced member set, terminal audit retention, and projection reconciliation."
+      ],
+      "scenario_implications": [
+        "Race concurrent acknowledge/snooze/resolve with duplicate observations and escalation ticks; assert one deterministic committed order."
+      ],
+      "adversarial_implications": [
+        "Label/fingerprint collision and alert storms must not suppress unrelated critical attention or exhaust storage."
+      ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0002::PF-0033",
+      "source_row_sha256": "b28536597e105dc7a815aaf96bc5babe0abf6194b83bb0581c9cda2d819b569f",
+      "research_group_id": "RG-RECEIPT-PERSISTENCE",
+      "research_state": "researched",
+      "search_attempts": [
+        "Live authoritative search for Notification Destination and Delivery Receipt Persistence: What external standards, research, or production reference implementations provide a testable resolution for this Notification Destination and Delivery Receipt Persistence requirement: SP-222 separates secrets into credential refs and specifies destination, receipt, and sound metadata, but it does not define receipt retention, encryption for provider profile payloads, credential-ref revocation propagation, retry terminal states, or transactional soft-delete of referenced sounds.",
+        "Official-standard and production-documentation comparison for Notification Destination and Delivery Receipt Persistence using National Institute of Standards and Technology — NIST SP 800-53 Revision 5.1 and OWASP Foundation — Logging Cheat Sheet"
+      ],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {
+          "source_id": "nist-800-53-au11-0033",
+          "url": "https://csrc.nist.gov/CSRC/media/Projects/risk-management/800-53%20Downloads/800-53r5/SP_800-53_v5_1-derived-OSCAL.pdf",
+          "title": "NIST SP 800-53 Revision 5.1",
+          "publisher": "National Institute of Standards and Technology",
+          "source_type": "official_standard",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "AU-11 Audit Record Retention; SC-28 Protection of Information at Rest",
+          "evidence_snippet": "AU-11 requires an organization-defined audit retention period tied to investigation and records policy; SC-28 requires protection of information at rest.",
+          "applicability": "OPF::A005OM-0002::PF-0033 (Notification Destination and Delivery Receipt Persistence): AU-11 requires an organization-defined audit retention period tied to investigation and records policy."
+        },
+        {
+          "source_id": "owasp-logging-0033",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+          "title": "Logging Cheat Sheet",
+          "publisher": "OWASP Foundation",
+          "source_type": "other_authoritative",
+          "accessed_date": "2026-07-11",
+          "section_anchor": "Data to exclude; Protection; Disposal of logs",
+          "evidence_snippet": "Sensitive fields should be removed, masked, hashed, or encrypted; logs need tamper and access protection and must be retained neither shorter nor longer than policy requires.",
+          "applicability": "OPF::A005OM-0002::PF-0033 (Notification Destination and Delivery Receipt Persistence): Sensitive fields should be removed, masked, hashed, or encrypted."
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "CLAIM-0033",
+          "claim": "NIST AU-11 requires an explicit retention period and protection at rest; OWASP logging requires minimization, masking/encryption, tamper protection, and timely disposal.",
+          "source_ids": [
+            "nist-800-53-au11-0033",
+            "owasp-logging-0033"
+          ],
+          "applicability": "Both cited sources were applied specifically to OPF::A005OM-0002::PF-0033; they establish the external baseline used to assess its Plans-derived record."
+        }
+      ],
+      "external_baseline_summary": "NIST AU-11 requires an explicit retention period and protection at rest; OWASP logging requires minimization, masking/encryption, tamper protection, and timely disposal.",
+      "confirmed_gaps": [
+        "Receipt retention and provider-payload protection gaps are confirmed, along with revocation and referenced-sound delete semantics."
+      ],
+      "underspecifications": [
+        "No retention schedule, encryption classification, key rotation, revocation propagation SLA, retry terminal states, or transactional reference policy is defined."
+      ],
+      "contradictions": [
+        "No direct contradiction is found."
+      ],
+      "missed_failure_modes": [
+        "Provider payloads can leak PII/secrets; revoked credentials can remain usable; deleting a referenced sound can orphan replay/audit records."
+      ],
+      "conclusion_changed": false,
+      "conclusion_change_summary": "The external evidence does not reverse the packet conclusion. It confirms the reported gap or contradiction and makes the required oracle more concrete.",
+      "proposed_spec_deltas": [
+        "Specify per-field classification and encryption, key separation/rotation, receipt retention and purge policy, immutable minimal audit fields, delivery terminal enum, credential-revoked transition/propagation SLA, and transactional RESTRICT or tombstone behavior for referenced sounds."
+      ],
+      "scenario_implications": [
+        "Expire receipts at policy boundary, rotate encryption keys, revoke a credential with pending retries, and soft-delete a referenced sound under injected transaction failure."
+      ],
+      "adversarial_implications": [
+        "Retention flooding, payload injection, key compromise, and deletion that destroys required evidence must be detected and bounded."
+      ]
+    }
+  ],
+  "self_attestation": {
+    "live_public_web_browsed": true,
+    "every_feature_researched_or_blocked": true,
+    "authoritative_sources_prioritized": true,
+    "per_feature_source_mapping_complete": true,
+    "plans_not_edited": true,
+    "no_peer_or_prior_research_used": true
+  }
+}

@@ -1,0 +1,2491 @@
+L00000001	# Commands System (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## 0. Scope and SSOT status
+L00000007	
+L00000008	
+L00000009	### 0.1 Command scope and legacy retirements
+L00000010	
+L00000011	This document is the **single canonical source of truth** for the Puppet Master User Commands system — user-authored command presets that inject templated prompts into a run. All other plan documents MUST reference this document by anchor (e.g., `Plans/Commands_System.md#COMMAND-SCHEMA`) rather than restating command definitions, discovery paths, template syntax, or execution semantics.
+L00000012	
+L00000013	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000014	
+L00000015	Command-system reconciliation also covers chat UX, context `/compaction`, Commands, skills `/plugins`, and provider-mapping seams only where they affect User Command invocation, validation, or child-run launch. Plugin installation and skill runtime ownership remain with their own SSOTs; this document owns only whether commands can surface, invoke, or validate those entries without rebinding provider or plugin identity.
+L00000016	
+L00000017	User Commands may surface `/resume` only by reference to the Assistant Chat and storage SSOTs; they MUST NOT define a separate restore/resume storage schema.
+L00000018	
+L00000019	Legacy `phase_subagents` and provider-native `command-name` assumptions are `/replace`-only migration labels. They MUST NOT remain active beside the Persona-stage command contract.
+L00000020	
+L00000021	### SSOT references (DRY)
+L00000022	
+L00000023	
+L00000024	- Locked decisions: `Plans/Spec_Lock.json`
+L00000025	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000026	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000027	- Canonical terms: `Plans/Glossary.md`
+L00000028	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000029	- UICommand dispatch IDs: `Plans/UI_Command_Catalog.md`
+L00000030	- Reserved slash commands: `Plans/assistant-chat-design.md` §5
+L00000031	- Run modes: `Plans/Run_Modes.md`
+L00000032	- Persona system: `Plans/Personas.md`
+L00000033	- Permissions system: `Plans/Permissions_System.md`
+L00000034	- Tool permissions + tool events: `Plans/Tools.md`
+L00000035	- OpenCode baseline (commands): `Plans/OpenCode_Deep_Extraction.md` §7D
+L00000036	- GUI specification: `Plans/FinalGUISpec.md`
+L00000037	
+L00000038	### 0.2 Cross-owner consumer boundaries
+L00000039	
+L00000040	User Commands consume, but do not re-own, several adjacent runtime and provider contracts. For MCP prompt or tool OAuth flows, command loading and invocation defer to `Plans/Tools.md` `### Schema isolation and OAuth state`; Commands may surface the selected provider/scope and stable `client-id`, but `/token` custody, refresh, retry, and shared local HTTP listener ownership remain keyed by provider+scope semantics in the Tools/MCP owner docs rather than by User Command file or server identity.
+L00000041	
+L00000042	For context behavior, Commands defer to `Plans/Run_Modes.md` `## 0. Scope and SSOT status`, `### SSOT references (DRY)`, and `## 7. Mode effects on context management`: `LF-006` and `LF-007` are treated as stale-residue / wrong-owner-routing failures whenever command prose sends detailed context-compilation or `/compaction` readers to `Plans/FileSafe.md` instead of the `Plans/Prompt_Pipeline.md` owner. FileSafe remains the guard over compiled output, not the context-compilation SSOT.
+L00000043	
+L00000044	For storage and migration paths, command execution uses the storage owner detection order `config > $PUPPET_MASTER_DATA_DIR > project dir > global dir`; Commands may display the resolved storage-root or pass it through execution context, but migration, persistence, and path-resolution semantics stay in `Plans/storage-plan.md`.
+L00000045	
+L00000046	For retry and failure recovery, Commands may expose status and recovery actions, but `429`, `402`, and `/breaker` behavior are owned by the bridge/runtime failure taxonomy in `Plans/CLI_Bridged_Providers.md`, `Plans/Executor_Protocol.md`, and `Plans/Run_Modes.md`. A User Command cannot override no-retry, rate-limit, quota, or circuit-breaker decisions with command-local retry text.
+L00000047	
+L00000048	For Assistant Chat message actions, Commands consume the owner-defined `Resend` semantics from `Plans/assistant-chat-design.md` and `Plans/UI_Command_Catalog.md`: `Resend` replays the latest user-authored message and discards later generated history/work, while command presets must not redefine it as a generic retry, rewind, or file-restore action.
+L00000049	
+L00000050	For clarification-request and `question-flow` behavior, command presets and wizard entry points defer to the shared question system in `Plans/assistant-chat-design.md` and the planning flow consumer rules in `Plans/chain-wizard-flexibility.md`; Commands may launch or reference those flows but do not define a separate question lifecycle.
+L00000051	
+L00000052	For process coordination, Commands consume the resolved project `lock-file` path from the storage/runtime owner contract. The lock location derives from the storage logical-root with any safe-local-fallback defined by `Plans/storage-plan.md`; command templates must not invent an alternate lock directory or persist a stale path beside the owner-derived value.
+L00000053	
+L00000054	Command-visible provider context is a projection of provider owners. For bridged providers, `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`) owns the versioned correlation `/context` block and account-health semantics; Commands may surface those values when a command launches or resumes work, but account-health is stronger than auth lifecycle alone and must not be collapsed into command-local credential state. For OpenCode, `Plans/Provider_OpenCode.md` (`/Provider_OpenCode.md`) owns canonical `thread_id` mapping and upstream-account opacity; Commands may pass through the selected `thread_id`, but it cannot infer upstream-account identity when the provider marks it opaque.
+L00000055	
+L00000056	Launcher and binary-location context is likewise owner-projected. `Plans/BinaryLocator_Spec.md` and `BinaryLocator_Spec` own OpenCode launcher ownership and binary discovery; Commands may invoke that resolved launcher, but it must treat rewrite-adjacent dead `four-tier` names, process-scope wording, and `/session-scope` wording as stale compatibility labels that cannot define command-local runtime identity.
+L00000057	
+L00000058	Command-contract reconciliation is registry-facing, not prose-only. `Commands_System.md`, `Wiring_Matrix.md`, and `UI_Wiring_Rules.md` must keep command-contract `IDs` and validation hooks aligned: `/compact` stays reserved when `cmd.chat.compact_context` exists, `cmd.chat.run_user_command` cannot claim a phantom `chat.message.submitted` event unless the event owner registers it, `cmd.chat.branch_from_restore` remains invalid until it is either registered or marked `/superseded`, and `AC-CMD02`, `AC-CMD07`, and `AC-CMD10` all enforce the same `override_builtin`, reserved-name, `/catalog`, `/actions`, `/mutation`, and projection-freshness boundaries instead of leaving git/actions prefix prohibition as prose-only guidance. The same registry boundary owns slash-command reservation, the command execution seam for User Commands, runtime vs overlay mode semantics, and reverse-coverage enforcement for every normative `cmd.*` reference.
+L00000059	
+L00000060	Route-like UICommands may be surfaced beside User Commands, but Commands does not let feature-local labels become private target models. In `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`), `/UI` rows that still expose graph HITL `request_id` or `hitl_request_id` commands are a same-file contradiction when the same catalog centers canonical runtime recovery commands; those rows must resolve to runtime `blocked_sequence` before acting. First-class object-selection/navigation commands such as `cmd.source_control.select_worktree` must not remain `layout/UI state only` when they perform object-first worktree selection or object-selection. `cmd.artifacts.open_panel`, `cmd.artifacts.show_in_ledger`, `cmd.artifacts.show_in_usage`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, graph `/filter` focus commands, chat usage `/open` commands, and `cmd.source_control.select_worktree` must normalize through a shared `/route` route-target / `route_target` / `/subject` subject-open family before they carry object identity. Navigation commands that restore scope must carry `project_id`, `focused_run_id`, `thread_id`, or an equivalent derivation rule instead of being labeled `/UI-state` only. If `cmd.nav` or `cmd.nav.*` is introduced, surface-specific commands either wrap it with explicit `normalizes_to_contract` metadata or remain typed `navigation_wrapper` / `domain_action` specializations; pure `layout/UI state only` shell commands must not silently become object-first navigation commands. `cmd.panel.switch` and `cmd.source_control.switch_subview` stay pure `/view` /view-state commands with controlled destination vocabularies: they may consume normalized routing context, but they must not replace the canonical `route_target` model. `Plans/Contracts_V0.md` (`/Contracts_V0.md`) owns the route-target / `route_target` and subject-open contract family above individual surface commands, while this document owns whether a User Command can invoke or display repo-state inspection, hosted workflow inspection, or chat `/navigation` commands without rebinding them.
+L00000061	
+L00000062	Command taxonomy is a three-way split, not a binary split: pure shell/view-state commands, route-consuming navigation commands, and domain mutation/runtime commands. Pure shell/view-state commands stay local and lightweight: they change what panel/subview/layout is visible, but they do not own canonical target identity. Route-consuming navigation commands reveal a specific object or scope and normalize through `route_target`; domain mutation/runtime commands act on canonical runtime or domain identity. `UICommand` remains the dispatch envelope, but `args` must carry a normalized target model when a command is navigation/open/focus-oriented instead of smuggling object identity through generic command-local payloads.
+L00000063	
+L00000064	Command palette object results follow the same route model. Because `Plans/FinalGUISpec.md` (`/FinalGUISpec.md`) already defines the global command palette, Commands treats palette exposure as a consumer boundary. The command palette may expose Orchestrator object results, not just commands/pages or `/pages`, but selecting an object result must route through the same `deep-link` contract as Orchestrator search and through the shared `/route` `route_target` / `/subject` subject-open family, not through command-local argument shapes. When those results reference run graph items, `Plans/Run_Graph_View.md` (`/Run_Graph_View.md`) owns the distinction between base `view-model` shape and `runtime-lineage` evidence; Commands may surface the result, but it does not redefine graph state. `Run_Graph_View.md` remains a strong internal contradiction site when later addenda prove the old `tier_id` model is no longer enough, so command results must treat graph context as owner-projected runtime lineage rather than command-local graph state.
+L00000065	
+L00000066	Subject-open and route-payload commands exposed from the palette must carry schema-level `argument-contract` requirements from `Plans/Contracts_V0.md`, `Plans/UI_Command_Catalog.md`, and `Plans/UI_Wiring_Rules.md` instead of hiding target identity in generic `args`. Commands may declare that a User Command invokes or displays those route-like UICommands, but the machine-verifiable argument shape remains owned by those route and wiring owners, not by User Command frontmatter.
+L00000067	
+L00000068	`UI_Wiring_Rules.md` remains the wiring owner for reusable navigation commands and subject-open commands; Commands treats those as first-class wiring shapes with schema-level route-payload and `argument-contract` obligations, not as generic `args` smuggling.
+L00000069	
+L00000070	Command-facing runtime identity is only a consumer of the owner split. `Plans/Prompt_Pipeline.md` defines requested/effective field meaning, `/runtime`, and dispatch presence; `Plans/storage-plan.md` defines persistence and `/projection`; executor docs define required dispatch/runtime boundaries; `Multi-Account.md` owns switch notification and `/history` semantics; and bridged-provider streams own bridged-provider account evidence. Projection trust/freshness and `/freshness` vocabulary must stay separate from preview `/browser` `trust_tier` language so command surfaces do not create a semantic collision between projection health and browser preview trust. Commands may pass or display those values, but it must not invent alternate requested/effective account history or erase switch notifications when launching a command, child run, or route-consuming UICommand.
+L00000071	
+L00000072	`persona_override_owner_id` and requested account context are owner-projected runtime identity, not command-local state: shared runtime docs must not let `persona_override_owner_id` preserve `tier_id`-style ownership while wizard/interview flows move to non-tier execution semantics, and command consumers must read `requested_account_binding` so hard-vs-soft account intent is explicit instead of inferred from UI context or switch reasons.
+L00000073	
+L00000074	Execution-core context remains owner-routed. `Plans/Executor_Protocol.md`, `Executor_Protocol`, `orchestrator-subagent-integration.md`, `WorktreeGitImprovement.md`, and their runtime owners must reconcile node-native and node-sharded ingest with legacy `tier_id`, tier-keyed, and tier-native execution constructs, including stale dispatch, agent tracking, and remediation paths plus scheduler and worktree isolation interaction. Commands may launch or display execution actions, but package/seam/corroboration/concern-aware execution hooks, lane/worktree-aware scheduling context, singular Overseer / Builder / Verifier retirement, and lane-awareness repairs belong to those runtime owners rather than to command frontmatter. Orchestrator live-context structs must rebase around node/attempt/worktree/permission-aware execution envelopes instead of tier-keyed adapters, and the runtime owners must introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking before Commands treats runtime context as canonical command input.
+L00000075	
+L00000076	orchestration-core reconciliation is execution-core owner work, not command-surface cleanup. `Executor_Protocol.md` and `orchestrator-subagent-integration.md` are the execution-core outliers when they retain tier-era, tier-shaped `TierContext`, or `tier_runtime_record` canon; Commands treats graph/package/seam/lane/runtime-record and `/package/seam/lane/runtime-record` language, node-native execution, runtime blocked overlays, and `execution_unit_context` as upstream runtime owner contracts so runtime seams do not reappear as surface problems. `TierContext` and `tier_runtime_record` may survive only as derived decomposition/grouping/view/current-view, current-view/runtime-overlay, or `/runtime-overlay` projections; they must not act as the rewrite-era canonical execution context, a canonical execution owner, or a collapse of planner/decomposition helpers with runtime/audit objects.
+L00000077	
+L00000078	Widget and native-surface state remains owner-routed when Commands exposes a command or checklist entry. `Plans/Widget_System.md` (`/Widget_System.md`) and `Widget_System` own chrome slots for `/trust-state`, projection-trust semantics, hostability, and tab-boundary direction. They also own the acceptable widget config / risky widget config boundary: acceptable widget config includes compact vs expanded view, item count, sort mode, and whether to show durations or cost; risky widget config includes a custom object model, custom state classification rules, widget-local definitions of blocked/completed/integration status, and slash-form `/completed/integration` labels. `Orchestrator_Page.md` and `Orchestrator_Page` own /page/native-surface behavior, no-active-run and `/historical-run` rendering, and any `/column/widget` table shape that still carries tier-era scoping. Commands may invoke or display these entries, but it must not define a parallel widget trust schema, widget-local state classification, or revive `Tiers` scope through command metadata.
+L00000079	
+L00000080	Runtime artifact panels are also owner-routed when Commands exposes an artifact action. `Runtime_Artifacts_Panel.md` and `Runtime_Artifacts_Panel` own artifact-type semantics, panel behavior, schema family references, and the artifact evidence/provenance model; Commands may open or invoke the panel, but it must not redefine those families through command metadata.
+L00000081	
+L00000082	Checklist references remain freshness-checked consumers. `Plans/Section15_MVP_Promoted_Features_Spec.md` (`/Section15_MVP_Promoted_Features_Spec.md`) is verification-only unless upstream reconciliation reveals direct stale references that require edits; it is not the storage, command, permission, or widget SSOT. Commands only relies on it for SSOT discipline and `/fail` checklist surfacing, and stale pass/fail references must be refreshed when upstream command, permission, storage, or widget specs move. `Plans/FinalGUISpec.md` (`/FinalGUISpec.md`) stays a GUI consumer for top-level navigation, so stale `Tiers`, `7.7 Tiers`, page-table, or settings-grouping references must be treated as GUI freshness issues rather than command-owned structure.
+L00000083	
+L00000084	Mutation and deprecation gates are first-class command constraints. `GATE-010` must evaluate subject-open commands, wrapper commands over canonical navigation, route-payload completeness, alias `/deprecation`, blocked-action admissibility against `allowed_action_ids` and `allowed_action_ids[]`, and stale or `/degraded` projection revalidation before mutation. Commands reuse the event-side alias discipline from `Contracts_V0.md` and `Contracts_V0` for command `/migration` and deprecation states instead of inventing a weaker prose-only alias pattern.
+L00000085	
+L00000086	Command availability and summary vocabulary are consumer constraints, not local decorations. Command definitions and UICommands must declare whether each action is `live-run only`, `historical-safe`, or `record-only/export-only` / `/export-only` before palette, shortcut, or route dispatch; Commands must not infer historical safety from a label alone. Project summaries and command-palette summaries preserve the distinction between user-attention problems and internal degraded-trust warnings, so title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows reuse the same status vocabulary and precedence rules. Runtime-detail, queue-analysis, remediation-lineage, and safe-point-history commands remain surface-specific commands, not a generalized subject-open family; they may normalize through route/subject contracts only as typed wrappers.
+L00000087	
+L00000088	Discoverability does not weaken confirmation. Any command palette, shortcut surface, or User Command surface that invokes a `strong`, `hard_gate`, `non_reversible`, or `compensating_action_only` action must preserve the owner-defined confirmation, gating, preview, and blocked-action checks before dispatch.
+L00000089	
+L00000090	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+L00000091	
+L00000092	### Debug and launcher command boundary
+L00000093	
+L00000094	Command-facing Debug terminology must distinguish classical DAP debugging, agentic app/runtime investigation, and assistant-session inspection so slash commands, palette labels, and help text do not collapse them into one ambiguous "Debug" surface.
+L00000095	
+L00000096	Debug instrumentation that edits wrapper scripts, `/launcher` files, or `/launch-command/env` state must record the exact revert path and restore from a restore point or generated revert patch during cleanup; command templates may request that workflow, but they do not themselves become persistent launcher owners.
+L00000097	
+L00000098	External directory access outside the active policy `/allowlist`, and any action unavailable or degraded for the active runtime or `/browser` health state, must resolve through the central permission/capability gates before a User Command can inject file contents, shell output, or debug evidence.
+L00000099	
+L00000100	---
+L00000101	
+L00000102	## 1. Definitions
+L00000103	
+L00000104	<a id="DEF-USER-COMMAND"></a>
+L00000105	### 1.1 User Command (preset)
+L00000106	
+L00000107	
+L00000108	A **User Command** is a user-authored or catalog-installed command preset stored as a Markdown file with YAML frontmatter. When invoked, the template body is resolved (placeholders expanded, file includes loaded, shell output injected) and submitted as a prompt to the active chat thread or run. User Commands are the user-facing automation surface — they let users package repeatable prompt workflows without writing code.
+L00000109	
+L00000110	<a id="DEF-UICOMMAND-DISTINCTION"></a>
+L00000111	### 1.2 UICommand (internal dispatch) — distinction
+L00000112	
+L00000113	
+L00000114	A **UICommand** (`Plans/Contracts_V0.md#7-uicommand`, `Plans/UI_Command_Catalog.md`) is an internal UI dispatch identifier (e.g., `cmd.chat.model`, `cmd.lsp.goto_definition`). UICommands are stable IDs that bind UI elements to handlers. They are **not** user-authored; they are developer-defined, code-registered, and wiring-matrix-verified.
+L00000115	
+L00000116	User Commands and UICommands are orthogonal:
+L00000117	- User Commands are **content presets** (prompt templates).
+L00000118	- UICommands are **internal dispatch actions** (UI handler bindings).
+L00000119	
+L00000120	A User Command's invocation through the chat slash-command surface or command palette ultimately dispatches a UICommand (`cmd.chat.run_user_command`) to trigger execution, but the User Command itself is not a UICommand.
+L00000121	
+L00000122	ContractRef: ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Plans/UI_Command_Catalog.md
+L00000123	
+L00000124	### 1.3 Invocation surfaces
+L00000125	
+L00000126	Project-scoped universal search, left-panel content search, and file-manager search remain product/search surfaces, not User Commands. The command palette may expose runnable commands as one category inside project-local `/symbols/commands/other` search, but implementation-readiness seams such as desktop to `/file-manager` `/drop`, diff heat maps or scrollbar change markers, ignored-file dimming or `/hiding`, generated-vs-workspace-file distinctions, and `/open/save/export` behavior are owned by the file/editor/search/GUI specs named in `Plans/00-plans-index.md`.
+L00000127	
+L00000128	File tree actions and editor/file operations use canonical UICommands, not user-authored command presets. `Plans/FileManager.md` owns tree context-menu and action semantics; `Plans/UI_Command_Catalog.md` owns `cmd.file.*` and `cmd.chat.add_file_reference`; this document only owns whether a user-authored command can invoke or appear beside those actions without rebinding their IDs.
+L00000129	
+L00000130	`Commands_System` / `Commands_System.md` owns this user-authored slash and `/palette` boundary only. Internal `UICommand` modeling, registration, route arguments, and command-catalog migration remain separate from user command presets even when the same palette displays both categories.
+L00000131	
+L00000132	User Commands are invocable from three surfaces:
+L00000133	
+L00000134	| Surface | Mechanism | Details |
+L00000135	|---------|-----------|---------|
+L00000136	| **Assistant chat** | Slash-command prefix `/` | User types `/<command-name>` (or `/x-<command-name>` for custom). Autocomplete popup lists available commands alongside reserved slash commands (`Plans/assistant-chat-design.md` §5). |
+L00000137	| **Command palette** | Palette entry | Commands exposed to the palette appear as "Run command: \<name\>". |
+L00000138	| **Orchestrator shortcut trigger** | Optional keybinding | A User Command may be bound to a keyboard shortcut via Settings > Shortcuts. |
+L00000139	
+L00000140	ContractRef: ContractName:Plans/assistant-chat-design.md#5, ContractName:Plans/FinalGUISpec.md
+L00000141	
+L00000142	---
+L00000143	
+L00000144	## 2. Storage and discovery
+L00000145	
+L00000146	<a id="STORAGE-LAYOUT"></a>
+L00000147	
+L00000148	User Command files are stored in a deterministic two-tier layout. Project-local commands override global commands by name.
+L00000149	
+L00000150	ContractRef: PolicyRule:Decision_Policy.md§2
+L00000151	
+L00000152	### 2.1 Project-local
+L00000153	
+L00000154	```
+L00000155	<project_root>/.puppet-master/commands/<name>.md
+L00000156	```
+L00000157	
+L00000158	Scoped to the project workspace root. Available only when that project is active.
+L00000159	
+L00000160	### 2.2 Global
+L00000161	
+L00000162	```
+L00000163	~/.config/puppet-master/commands/<name>.md
+L00000164	```
+L00000165	
+L00000166	Available across all projects. Overridden by a project-local command with the same name.
+L00000167	
+L00000168	### 2.3 Resolution order
+L00000169	
+L00000170	
+L00000171	When resolving a command by name:
+L00000172	1. Check `.puppet-master/commands/<name>.md` in the active project root.
+L00000173	2. If not found, check `~/.config/puppet-master/commands/<name>.md`.
+L00000174	3. If not found, the command is unresolved. The invocation surface MUST display an error: "Unknown command: \<name\>".
+L00000175	
+L00000176	### 2.4 Name collision rules
+L00000177	
+L00000178	
+L00000179	### 2.4.1 Reserved namespace retirements
+L00000180	
+L00000181	Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming.
+L00000182	
+L00000183	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+L00000184	
+L00000185	Collision rules:
+L00000186	- `/web` reserves the family namespace for `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`
+L00000187	- `override_builtin: true` is `/forbid` for reserved Assistant Chat built-ins; if it survives for extension design, it is limited to `non-core` command namespaces and cannot override `/web`, `/skill`, `/cancel`, `/clear`, `/stop`, or other canonical chat commands.
+L00000188	- `/web` commands are network `/external-read` operations, not `/shell` mutation commands. Approval/help copy routes URL-host scoped `For Session` examples for `/web extract`, `/web crawl`, `/web map`, and the `/crawl/map` follow-on family through `Plans/Permissions_System.md`, while `/web search` and `/web research` use `tool-wide` session grants only for that web tool.
+L00000189	- `/worktree` is reserved and cannot be re-bound by a custom command
+L00000190	- `/skill` is part of the reserved built-in slash-command set and remains a built-in helper surface for skill discovery or invocation; it cannot be rebound by User Commands or `override_builtin`
+L00000191	- `/plugins` remains a plugin-management/navigation surface, not a User Command namespace that a project command may redefine
+L00000192	- natural-language and slash dispatch share the same underlying dispatcher, so collision handling is consistent across both entry points
+L00000193	- Slash, palette, natural-language, agent-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web/browser intents normalize to the active `cmd.chat.web.*` command IDs and PM WebOperation / BrowserAction dispatcher; `/web` slash forms are entrypoints only, not the capability boundary. Command dispatch records `invocation_source`, optional `agent_reason`, and source IDs before the tool call; URL-reading phrases route to `cmd.chat.web.fetch` / `webfetch`, while visual, dynamic-page, iframe, console, network, screenshot, or PDF evidence requests attach BrowserAction/Site Reader requirements to the same command dispatch.
+L00000194	
+L00000195	Reserved-name validation is a command-system boundary shared with chat-design, chat-overlay, and command-catalog consumers. The runtime rejects command files, palette entries, or plugin/skill projections that collide with the reserved-name set before they can emit a canonical-event, and `/mode` must be disambiguated by owner context so chat-overlay display mode, runtime run mode, and User Command frontmatter do not share an untyped payload slot. GPT-era registry audits do not create new event names by observation: `chat.thread.created` and `chat.thread_created` cannot both be active names for the same event, and `chat.message.submitted` is not valid support for `cmd.chat.run_user_command` until the event registry owns that name.
+L00000196	
+L00000197	Ask `/Plan` behavior for command-triggered tools follows `Plans/Run_Modes.md` (`/Run_Modes.md`) and `Plans/Permissions_System.md`: Plan remains read-only for project mutation, but information-gathering `/tool` families such as web search, fetch, extract, research, crawl, and map are ask-gated or policy-denied by explicit permission rows rather than blanket auto-denied as if they were shell/file mutation.
+L00000198	
+L00000199	### 2.5 Name validation
+L00000200	
+L00000201	**Name regex:** `^[a-z][a-z0-9_-]{0,48}[a-z0-9]$`
+L00000202	- Starts with a lowercase letter.
+L00000203	- Contains only lowercase letters, digits, hyphens, and underscores.
+L00000204	- Ends with a lowercase letter or digit.
+L00000205	- Length: 2–50 characters.
+L00000206	
+L00000207	ContractRef: PolicyRule:Decision_Policy.md§2
+L00000208	
+L00000209	---
+L00000210	
+L00000211	## 3. Command schema
+L00000212	
+L00000213	<a id="COMMAND-SCHEMA"></a>
+L00000214	
+L00000215	A User Command file (`<name>.md`) consists of YAML frontmatter followed by a Markdown template body.
+L00000216	
+L00000217	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/DRY_Rules.md
+L00000218	
+L00000219	### 3.1 YAML frontmatter
+L00000220	
+L00000221	```yaml
+L00000222	---
+L00000223	description: "Run the project's test suite and report results"
+L00000224	persona: "rust-engineer"
+L00000225	mode: "regular"
+L00000226	model: "anthropic/claude-sonnet-4"
+L00000227	subtask: false
+L00000228	permissions_profile_override: null
+L00000229	override_builtin: false
+L00000230	---
+L00000231	```
+L00000232	
+L00000233	### 3.2 Field definitions
+L00000234	
+L00000235	| Field | Required | Type | Meaning |
+L00000236	|---|---|---|---|
+L00000237	| `name` | Required | `string` | Invocation name. Must pass validation and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes. |
+L00000238	| `description` | Required | `string` | Short user-facing description. |
+L00000239	| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. |
+L00000240	| `persona_override` | Optional | `string` | Requested Persona override for the command execution context. |
+L00000241	| `mode_override` | Optional | `string` | Requested runtime mode override when allowed by the owning surface. |
+L00000242	| `model_override` | Optional | `string` | Requested model override. |
+L00000243	| `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. |
+L00000244	| `override_builtin` | Optional | `boolean` | Reserved for future non-chat extension points. It MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes. |
+L00000245	
+L00000246	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
+L00000247	
+L00000248	### 3.3 Template body
+L00000249	
+L00000250	The Markdown body following the frontmatter is the prompt template. It supports three dynamic features: placeholders, file includes, and shell output injection.
+L00000251	
+L00000252	<a id="TEMPLATE-PLACEHOLDERS"></a>
+L00000253	#### 3.3.1 Placeholders
+L00000254	
+L00000255	| Placeholder | Meaning |
+L00000256	|-------------|---------|
+L00000257	| `$ARGUMENTS` | All remaining text after the command name. |
+L00000258	| `$1`, `$2`, ... `$N` | Positional arguments, space-separated from the invocation text. |
+L00000259	
+L00000260	Placeholder extraction: At load time, the template is scanned for `$ARGUMENTS` and `$N` patterns. The extracted list is stored as `hints` for autocomplete display.
+L00000261	
+L00000262	Unresolved placeholders (no value provided) are replaced with empty string.
+L00000263	
+L00000264	<a id="TEMPLATE-FILE-INCLUDE"></a>
+L00000265	#### 3.3.2 File includes (`@path`)
+L00000266	
+L00000267	The pattern `@path/to/file` in the template body causes the referenced file's contents to be included at that position during template resolution. Directory references (`@path/to/dir`) include a listing of the directory contents.
+L00000268	
+L00000269	**Permission guard:** File inclusion is checked against the `read` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny` for the referenced path, the include is blocked and an error message is substituted. If `ask`, the approval UI is shown.
+L00000270	
+L00000271	ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys
+L00000272	
+L00000273	<a id="TEMPLATE-SHELL-INJECTION"></a>
+L00000274	#### 3.3.3 Shell output injection (`` !`command` ``)
+L00000275	
+L00000276	
+L00000277	The pattern `` !`shell-command` `` in the template body executes the shell command and injects its stdout at that position during template resolution.
+L00000278	
+L00000279	**Permission guard:** Shell injection is checked against the `bash` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny`, the injection is blocked and an error message is substituted. If `ask`, the approval UI is shown and the user's response (`deny`/`once`/`for session`/`always`) is respected per `Plans/Permissions_System.md` §6.
+L00000280	
+L00000281	ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys, ContractName:Plans/Permissions_System.md#ASK-FLOW
+L00000282	
+L00000283	---
+L00000284	
+L00000285	## 4. Execution semantics
+L00000286	
+L00000287	
+L00000288	<a id="EXECUTION"></a>
+L00000289	
+L00000290	### 4.1 Working directory
+L00000291	
+L00000292	The active working directory for command execution resolves as follows:
+L00000293	
+L00000294	1. If the active context has a bound worktree (`is_worktree` is true in execution context), use the **worktree root path**
+L00000295	2. Otherwise, use the **active project root**
+L00000296	
+L00000297	This applies to all command execution contexts: Assistant Chat (all modes), Orchestrator DAE, terminal sessions, and file operations.
+L00000298	
+L00000299	When a thread with a bound worktree is active in Assistant Chat, all `cmd.chat.*` commands execute against the worktree root. When no worktree is bound, they execute against the project root.
+L00000300	
+L00000301	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
+L00000302	
+L00000303	Assistant worktree commands share the orchestrator worktree directory family but use thread-derived names. Existing orchestrator worktrees keep `.puppet-master/worktrees/{tier_id}` style directory names; Assistant thread worktrees use `.puppet-master/worktrees/thread-{short_id}`, where `short_id` is derived from the bound `thread_id`. If `thread-{short_id}` already exists, command handling appends a numeric suffix such as `thread-{short_id}-2` instead of silently reusing a stale directory.
+L00000304	
+L00000305	For worktree-bound threads, edit and file cards display paths relative to the resolved `working_directory`; for example, `src/main.rs (+12 −3)` is shown relative to the worktree root and opens by resolving that relative path under `working_directory`, with no special path rewriting layer. Terminal commands opened from the same thread set terminal `cwd` to the worktree path, not the main project root, and persist that worktree path as `cwd_snapshot` on the `terminal_session_record`.
+L00000306	
+L00000307	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md
+L00000308	
+L00000309	### 4.2 Subtask execution
+L00000310	
+L00000311	command-subtask behavior is not a lighter-weight exception to the canonical child-run contract. When `subtask: true` is set, the command launches a canonical child run through the same delegated-run contract used everywhere else.
+L00000312	
+L00000313	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+L00000314	
+L00000315	`subtask: true` is not a lighter-weight interpretation of a normal prompt submission. It creates a child-session / `/delegation` boundary with required parent-child lineage, storage, `/permission/capability`, and runtime evidence.
+L00000316	
+L00000317	Required behavior:
+L00000318	- resolve requested and effective Persona/runtime/model/effort state using the same pipeline as any other child run.
+L00000319	- classify the child dependency as `required` or `/optional`; `required` is the safer default for command subtasks unless the command explicitly declares advisory behavior.
+L00000320	- inherit and then narrow the parent permission ceiling and compatible capability universe, including child capability narrowing before dispatch.
+L00000321	- record the parent-child linkage in canonical event and storage records.
+L00000322	- do not silently fallback when the command explicitly requested a runtime surface that is unavailable or incompatible; this is the command-level `no-silent-fallback` rule.
+L00000323	- record the requested-vs-effective (`/effective`) provider `/runtime` surface when policy, availability, compatibility, or account binding changes the launched child.
+L00000324	- borrow provider child-session/delegation patterns where useful, but never require provider-native `session-tree` semantics on direct providers. PM canonical child-run identity remains the SSOT even when the provider has no native session tree.
+L00000325	- source-code evidence such as OpenCode `task.ts` is upstream evidence only; PM enforces its own `provider-family` / TOS guard for native subagent routing instead of assuming upstream task launch behavior is sufficient.
+L00000326	- permission resolution for command-launched child work defers to `Plans/Permissions_System.md` (`/Permissions_System.md`) for lane, package, `/package/account-bounded`, account-bounded approval scope, and multi-lane orchestrator runs; Commands may request or display the selected approval scope, but must not synthesize a weaker command-local policy.
+L00000327	- generalized projection freshness uses storage and owner vocabulary: `storage-plan.md` and `storage-plan` reserve `trust_tier` for Preview and `/browser` semantics, so Commands uses projection-freshness and `/degraded` state for stale command projections rather than reusing `trust_tier` as a generic trust/degraded label.
+L00000328	
+L00000329	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+L00000330	### 4.3 Persona selection
+L00000331	
+L00000332	Command subtasks follow the canonical child Persona resolution order.
+L00000333	
+L00000334	ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+L00000335	
+L00000336	Rules:
+L00000337	- explicit command Persona override wins.
+L00000338	- otherwise the command-provided task or child type resolves Persona through the normal child Persona pipeline.
+L00000339	- parent Persona is at most a weak hint.
+L00000340	- child Persona does not silently copy the parent Persona.
+L00000341	### 4.4 Mode and model overrides
+L00000342	
+L00000343	Provider, model, account, Persona, and worker-policy overrides, including the `/model/account/worker-policy` family, use the same requested/effective display grammar: command UI shows the requested override, effective result, inheritance source, and policy remap reason instead of deriving it from ad hoc color, disappearance, or current-settings winner state.
+L00000344	
+L00000345	
+L00000346	Command overrides are explicit child requests, not bypasses around the runtime model.
+L00000347	
+L00000348	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000349	
+L00000350	Rules:
+L00000351	- command mode overrides are capped by parent mode authority.
+L00000352	- command model/runtime surface overrides become explicit child requests.
+L00000353	- explicit requests do not silently fallback.
+L00000354	- requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
+L00000355	
+L00000356	### 4.5 Current Working Set
+L00000357	
+L00000358	Command cards, command-launched child runs, and command-produced blocks remain in the current `working-set` while they are the latest active result in the current branch of work, directly support the next intended action, participate in unresolved comparison `/approval/question/validation` state, or are explicitly focused or `/pinned` by the user. They leave the working set when a newer result supersedes the same purpose, the finding has been carried forward, or execution clearly moves to a different branch of work.
+L00000359	
+L00000360	### 4.6 Template resolution order
+L00000361	
+L00000362	Template resolution proceeds in this order:
+L00000363	1. Parse YAML frontmatter; extract field values.
+L00000364	2. Extract placeholder hints (`$ARGUMENTS`, `$1`, `$2`, ...) from body.
+L00000365	3. Substitute placeholders with invocation arguments.
+L00000366	4. Resolve `@path` file includes (permission-checked).
+L00000367	5. Resolve `` !`command` `` shell injections (permission-checked).
+L00000368	6. The fully resolved body is the prompt submitted to the run.
+L00000369	
+L00000370	ContractRef: ContractName:Plans/Commands_System.md#EXECUTION
+L00000371	
+L00000372	---
+L00000373	
+L00000374	## 5. Permissions integration
+L00000375	
+L00000376	<a id="PERMISSIONS"></a>
+L00000377	
+L00000378	### 5.1 Shell injection permission check
+L00000379	
+L00000380	Shell injection (`` !`command` ``) is evaluated against the `bash` permission key using the resolution algorithm in `Plans/Permissions_System.md` §8. The shell command string is the invocation context for granular pattern matching.
+L00000381	
+L00000382	If the resolution yields `ask`, the approval UI is shown with the full shell command displayed. The user's response follows `Plans/Permissions_System.md` §6 semantics:
+L00000383	- `once`: Execute this injection only.
+L00000384	- `for session`: Insert a session-scoped allow rule for the command pattern.
+L00000385	- `always`: Create the durable allow defined by `Plans/Permissions_System.md` §6.
+L00000386	- `deny`: Block this injection for the current blocked episode.
+L00000387	
+L00000388	Command permission prompts inherit parallel actor scoping. HITL/tool and `/tool` approval semantics normalize onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance. When resolving command-launched work, template file inclusion, or shell injection, the invocation must pass `actor/lane/run/account` and `/lane/run/account` scope so `session-scoped` `always` approvals, `reject-cascade` rules, and doom-loop `three consecutive times` counters are evaluated per actor/lane/run/account instead of across unrelated interleaved concurrent execution. If that context is under-specified, the command must present the blocked-overlay/HITL route instead of pretending a global approval or denial is safe. The legacy headless `ask -> deny unless HITL at current tier boundary` phrase is tier-era shorthand and resolves to normal blocked-overlay routing.
+L00000389	
+L00000390	The same permission algorithm owns `ask/plan` and `external_publish_side_effect` semantics. A command that would publish externally, mutate durable state, or ask the user to approve a plan must resolve both concepts through one canonical approval calculation, not through separate command-template text.
+L00000391	
+L00000392	ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW, ContractName:Plans/Permissions_System.md#RESOLUTION
+L00000393	
+L00000394	### 5.2 File inclusion permission check
+L00000395	
+L00000396	File inclusion (`@path`) is evaluated against the `read` permission key. The file path is the invocation context. Same `ask` flow semantics apply.
+L00000397	
+L00000398	ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys
+L00000399	
+L00000400	### 5.3 `permissions_profile_override`
+L00000401	
+L00000402	If a command specifies `permissions_profile_override`, the named profile is loaded from `~/.config/puppet-master/permission-profiles/<profile_id>.toml` and applied as an additional precedence layer between Persona overrides and project-level rules (effectively replacing the Persona's profile for this command's run).
+L00000403	
+L00000404	ContractRef: ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
+L00000405	
+L00000406	---
+L00000407	
+L00000408	## 6. GUI requirements
+L00000409	### 6.6 Catalog-installed command lifecycle
+L00000410	
+L00000411	Catalog-installed commands are still canonical User Commands after installation.
+L00000412	
+L00000413	Rules:
+L00000414	- installation creates or updates a command in the same canonical command roots described in §2
+L00000415	- updates follow the same validation rules as manual edits
+L00000416	- removal of an installed command is blocked or deferred when the command is actively referenced by an open edit session or another subsystem requires explicit replacement/confirmation
+L00000417	- the GUI must show whether a command is local/manual, catalog-installed, or catalog-installed with local override
+L00000418	- uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it
+L00000419	
+L00000420	<a id="GUI-COMMANDS"></a>
+L00000421	
+L00000422	The Commands settings screen is part of the **Rules & Commands** tab in the unified Settings page (`Plans/FinalGUISpec.md` §7.4). All GUI surfaces described here are normative; `Plans/FinalGUISpec.md` references this section as the SSOT for Commands GUI behavior.
+L00000423	
+L00000424	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+L00000425	
+L00000426	### 6.1 Commands management section
+L00000427	
+L00000428	A **Commands** section within Settings > Rules & Commands MUST provide the following.
+L00000429	
+L00000430	ContractRef: ContractName:Plans/Commands_System.md#GUI-COMMANDS
+L00000431	
+L00000432	#### 6.1.1 Scope selector
+L00000433	
+L00000434	
+L00000435	A toggle at the top of the Commands section:
+L00000436	- **Global** — manages commands in `~/.config/puppet-master/commands/`.
+L00000437	- **Project** (visible when a project is active) — manages commands in `<project_root>/.puppet-master/commands/`.
+L00000438	
+L00000439	#### 6.1.2 Command list
+L00000440	
+L00000441	A table listing all resolved commands (project + global, project-local indicated with badge). Columns:
+L00000442	- **Name** (bold, with `/x-` prefix shown)
+L00000443	- **Scope** badge (project / global)
+L00000444	- **Description** (truncated to 1 line)
+L00000445	- **Persona** (if set; otherwise "—")
+L00000446	- **Mode** (if set; otherwise "inherit")
+L00000447	- **Model** (if set; otherwise "inherit")
+L00000448	- **Subtask** indicator (checkbox icon if `true`)
+L00000449	
+L00000450	Sorted alphabetically by name; project-local entries sort before global when names match (indicating override).
+L00000451	
+L00000452	#### 6.1.3 Create
+L00000453	
+L00000454	"New Command" button opens an editor form with:
+L00000455	- **Name** (text input; validated per §2.5; collision check per §2.4)
+L00000456	- **Description** (text input; required; max 200 chars)
+L00000457	- **Persona** (dropdown populated from Persona registry, or null)
+L00000458	- **Mode** (dropdown: inherit / ask / plan / regular / yolo)
+L00000459	- **Model** (dropdown populated from model discovery, or null/inherit)
+L00000460	- **Subtask** (toggle; default off)
+L00000461	- **Permissions profile override** (dropdown populated from permission profiles, or null)
+L00000462	- **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
+L00000463	- **Template body** (Markdown editor with syntax highlighting for `$ARGUMENTS`, `$N`, `@path`, `` !`cmd` `` patterns)
+L00000464	
+L00000465	Scope selector: project-local or global.
+L00000466	
+L00000467	#### 6.1.4 Edit
+L00000468	
+L00000469	Row click or edit button opens the same editor pre-populated. Editing a global command while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
+L00000470	
+L00000471	#### 6.1.5 Delete
+L00000472	
+L00000473	Delete button with confirmation modal. Deleting a project-local command that overrides a global one reveals the global version. Deleting a global command with no project override removes it entirely.
+L00000474	
+L00000475	#### 6.1.6 Schema validation on save
+L00000476	
+L00000477	On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format. If `override_builtin: true` is set while the command name matches a reserved Assistant Chat slash command, display a validation error explaining that `override_builtin` does not apply to canonical reserved chat commands. Block save until errors are resolved.
+L00000478	
+L00000479	### 6.2 Dry-run preview
+L00000480	
+L00000481	<a id="DRY-RUN"></a>
+L00000482	
+L00000483	A **"Preview"** button in the command editor resolves the template with sample arguments and displays the fully rendered prompt without submitting it. The preview:
+L00000484	- Shows placeholder substitutions highlighted.
+L00000485	- Shows file-include results (or permission-blocked placeholders).
+L00000486	- Shows shell-injection results (or permission-blocked placeholders).
+L00000487	- Uses a read-only rendered Markdown view.
+L00000488	
+L00000489	The preview does NOT execute any run. Shell injections in preview mode execute the shell command (subject to `bash` permission) but do not submit the result to any agent.
+L00000490	
+L00000491	### 6.3 Shortcut binding
+L00000492	
+L00000493	## 7. Reserved built-in slash commands
+L00000494	
+L00000495	This section owns `## 7. Reserved built-in slash commands` as the locked reserved-set contract. The same built-in slash-command family must stay visible here and in consumers: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/web`, `/skill`, and `/cancel` remain reserved built-ins; `/clear` is removed; `/cancel` is a deprecated alias to `/stop`; and traceability for this reserved command family includes `obl-046` and `obl-047`.
+L00000496	
+L00000497	Packet regeneration treats this owner as a `replace_section` unit: repairs for the reserved-set contract replace `## 7. Reserved built-in slash commands` itself rather than appending raw material after `### 6.3 Shortcut binding`, so stale-residue child/parent packet material cannot survive beside the canonical `/web`, `/skill`, and `/cancel` rules.
+L00000498	
+L00000499	The `/web` family is reserved as one command family, not flattened into independent top-level commands. Bare `/web` has no-default execution behavior: it opens help/autocomplete only, and execution requires a subcommand such as `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, or `/web map`. The stale rule `Bare /web (with query argument) routes to cmd.web.search by default` is retired; `cmd.web.search` is not the implicit destination for bare `/web`.
+L00000500	
+L00000501	The reserved `/web` slash family is one entrypoint into the shared PM WebOperation / BrowserAction dispatcher. Slash, command palette, natural-language user intent, autonomous assistant/subagent initiation, Goal Runtime, PRD Builder, and Planning Wizard requests resolve to the same `cmd.chat.web.search`, `cmd.chat.web.fetch`, `cmd.chat.web.extract`, `cmd.chat.web.research`, `cmd.chat.web.crawl`, or `cmd.chat.web.map` IDs before tool dispatch. Dispatch payloads preserve `invocation_source`, optional `agent_reason`, and source IDs, and reading a URL always normalizes to `webfetch` rather than search.
+L00000502	
+L00000503	This section is the slash-command SSOT for the single canonical set of reserved chat slash commands; consumers mirror these commands rather than defining local variants.
+L00000504	
+L00000505	`override_builtin` is /forbid for every reserved built-in slash command. If `override_builtin` survives for extension design, it is narrowed to non-core command namespaces only and cannot override `/web`, `/skill`, `/cancel`, `/clear`, `/stop`, or other canonical Assistant Chat built-ins.
+L00000506	
+L00000507	Exact reserved-command behavior: bare /web has no default action, bare /skill is discovery or invocation only, /rewind dispatches conversation-only rewind, /revert dispatches file-mutation restore, /share/settings/doctor/help route to their owning surfaces, /cancel remains a deprecated alias to /stop, and /clear stays removed rather than a thread-clear command.
+L00000508	
+L00000509	
+L00000510	This section defines the canonical contract for this surface.
+L00000511	
+L00000512	Core rules:
+L00000513	- The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed.
+L00000514	- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
+L00000515	
+L00000516	Fields:
+L00000517	- slash prototype
+L00000518	- stable command ID
+L00000519	- subcommand-required parsing
+L00000520	
+L00000521	Labels and values:
+L00000522	- /new
+L00000523	- /model
+L00000524	- /effort
+L00000525	- /mode
+L00000526	- /export
+L00000527	- /compact
+L00000528	- /stop
+L00000529	- /resume
+L00000530	- /rewind
+L00000531	- /revert
+L00000532	- /share
+L00000533	- /settings
+L00000534	- /doctor
+L00000535	- /help
+L00000536	- /web
+L00000537	- /skill
+L00000538	- /cancel
+L00000539	- /goal
+L00000540	- /goal again
+L00000541	- reserved built-ins
+L00000542	
+L00000543	Rules:
+L00000544	- /web search <query>
+L00000545	- /web extract <url>
+L00000546	- /web research <task>
+L00000547	- /web crawl <url>
+L00000548	- /web map <url>
+L00000549	- cmd.chat.web.search
+L00000550	- cmd.chat.web.extract
+L00000551	- cmd.chat.web.research
+L00000552	- /web fetch <url>
+L00000553	- cmd.chat.web.fetch
+L00000554	- cmd.chat.web.crawl
+L00000555	- cmd.chat.web.map
+L00000556	- bare /web shows help/autocomplete only
+L00000557	- do not flatten /web into separate slash families
+L00000558	- subcommand is required for execution
+L00000559	- URL normalization applies
+L00000560	- parse failure shows usage
+L00000561	- /cancel resolves internally to cmd.chat.stop
+L00000562	- /goal resolves internally to cmd.chat.goal.start.
+L00000563	- /goal again resolves internally to cmd.chat.goal.update.
+L00000564	- /rewind dispatches `cmd.chat.rewind` and remains conversation-only
+L00000565	- /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
+L00000566	- /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
+L00000567	- /clear stays removed and must not return as a `thread-clear` command
+L00000568	- Source cleanup shorthand `/de-duplication`, `/research-focused`, `/risky`, and `thread-clear` normalizes to reserved-command alias policy plus ask-gated web permission posture; it does not create extra slash commands.
+L00000569	- /web remains discoverable in catalog
+L00000570	- deprecated aliases shown distinctly from active commands
+L00000571	- reserved commands shown as non-editable in catalog
+L00000572	
+L00000573	Goal Mode reserved slash commands:
+L00000574	- `/goal` starts Goal Mode through `cmd.chat.goal.start`.
+L00000575	- `/goal again` updates the active goal through `cmd.chat.goal.update`.
+L00000576	- These are reserved Assistant Chat built-ins and cannot be overridden by User Commands.
+L00000577	
+L00000578	## 7. UICommand catalog entry
+L00000579	
+L00000580	<a id="UICOMMAND-ENTRY"></a>
+L00000581	
+L00000582	The following UICommand ID is the required dispatch bridge for User Command execution from any invocation surface. Registration remains owned by `Plans/UI_Command_Catalog.md`; this document does not make `cmd.chat.run_user_command` registered by assertion.
+L00000583	
+L00000584	| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+L00000585	|---|---|---|---|
+L00000586	| `cmd.chat.run_user_command` | `{ command_name, arguments? }` | `tool.invoked` when `subtask: true`; otherwise the canonical chat message event registered by the event owner, not `chat.message.submitted` unless that event is explicitly registered | Assistant chat, Command palette |
+L00000587	
+L00000588	Reserved slash-command UICommand IDs (`cmd.chat.new`, `cmd.chat.model`, etc.) are defined in `Plans/UI_Command_Catalog.md` §2.7 and are distinct from User Command execution.
+L00000589	
+L00000590	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#7-uicommand
+L00000591	
+L00000592	### 7.1 Debug Mode dispatch family
+L00000593	
+L00000594	Debug Mode actions use a separate canonical UICommand family, `cmd.debug.*`, for assistant-thread investigation control. These dispatch IDs are internal wiring identifiers, not User Commands, and they let Assistant Chat, the editor, and debug-adjacent surfaces invoke investigation lifecycle actions without overloading the User Command namespace.
+L00000595	
+L00000596	| command_id | label | description | precondition |
+L00000597	|---|---|---|---|
+L00000598	| `cmd.debug.start` | Start Investigation | Begins a new debug investigation in current thread | `chat_active && !investigation_active` |
+L00000599	| `cmd.debug.stop` | End Investigation | Concludes the active investigation | `investigation_active` |
+L00000600	| `cmd.debug.pause` | Pause Investigation | Pauses evidence collection | `investigation_active` |
+L00000601	| `cmd.debug.resume` | Resume Investigation | Resumes paused investigation | `investigation_paused` |
+L00000602	| `cmd.debug.add_breakpoint` | Add Breakpoint | Adds a breakpoint at current editor position | `editor_active && investigation_active` |
+L00000603	| `cmd.debug.remove_breakpoint` | Remove Breakpoint | Removes selected breakpoint | `breakpoint_selected` |
+L00000604	| `cmd.debug.clear_breakpoints` | Clear All Breakpoints | Removes all breakpoints | `investigation_active && has_breakpoints` |
+L00000605	| `cmd.debug.view_evidence` | View Evidence | Opens evidence panel for current investigation | `investigation_active` |
+L00000606	| `cmd.debug.step` | Step Through | Advances to next execution point | `investigation_active && at_breakpoint` |
+L00000607	| `cmd.debug.collect_snapshot` | Collect Snapshot | Captures current state as evidence | `investigation_active` |
+L00000608	
+L00000609	These Debug Mode dispatch IDs complement, rather than replace, the reserved slash-command surface described in `Plans/assistant-chat-design.md` and the broader UI command catalog in `Plans/UI_Command_Catalog.md`.
+L00000610	
+L00000611	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md
+L00000612	
+L00000613	---
+L00000614	
+L00000615	## 8. OpenCode baseline and Puppet Master deltas
+L00000616	
+L00000617	OpenCode command material is external reference input used for ALIGNED/RECONCILED/ADOPTED/REFERENCE categorization only; it does not override Puppet Master command names, dispatch rules, storage paths, or reserved slash-command policy.
+L00000618	
+L00000619	
+L00000620	<a id="BASELINE-DELTAS"></a>
+L00000621	
+L00000622	Per `Plans/OpenCode_Deep_Extraction.md` §7D and §9D:
+L00000623	
+L00000624	### 8.1 Baseline
+L00000625	
+L00000626	OpenCode loads commands from four sources: built-in commands (`init`, `review`), config-defined commands, MCP prompts (converted to commands), and skills (registered as commands if no name collision). Discovery paths: `.opencode/commands/<name>.md` (project) and `~/.config/opencode/commands/<name>.md` (global). Template features: `$ARGUMENTS`, `$1`/`$2` positional args, `` !`shell` `` injection, `@file` inclusion. `subtask: true` runs as a subagent task. `model` override uses `provider_id/model_id` format. Custom commands can override built-in commands by name; when a user-defined command has the same name as a built-in command, the user-defined version takes precedence.
+L00000627	
+L00000628	### 8.2 Puppet Master deltas
+L00000629	
+L00000630	1. **Discovery paths:** Puppet Master uses `.puppet-master/commands/<name>.md` (project) and `~/.config/puppet-master/commands/<name>.md` (global) instead of `.opencode/` paths.
+L00000631	2. **Persona integration:** OpenCode commands specify `agent` (agent name). Puppet Master commands specify `persona` (Persona ID per `Plans/Personas.md`), which is a higher-level role definition decoupled from provider-native agent concepts.
+L00000632	3. **Permissions profile override:** OpenCode commands have no per-command permissions override. Puppet Master adds `permissions_profile_override` for fine-grained control.
+L00000633	4. **No built-in commands:** OpenCode bundles `init` and `review` as built-in commands. Puppet Master does not bundle built-in User Commands; equivalent functionality is provided through reserved slash commands (`Plans/assistant-chat-design.md` §5) and Orchestrator actions.
+L00000634	5. **MCP prompt integration:** OpenCode auto-converts MCP prompts to commands. Puppet Master treats MCP prompts as a separate mechanism; they are not auto-registered as User Commands.
+L00000635	6. **GUI management:** OpenCode has no GUI for command management. Puppet Master provides a full Commands settings screen (§6).
+L00000636	7. **Built-in command override policy:** OpenCode allows custom commands to freely override built-in commands by name. Puppet Master does not allow User Commands to override canonical reserved Assistant Chat slash commands. The `override_builtin` field is reserved for future non-chat extension points and MUST NOT be used to bypass reserved chat-command or reserved git/GitHub prefix rules.
+L00000637	8. **Provider and capability identity limits:** OpenCode final-pass evidence from `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, `Provider_OpenCode`, and `Provider_OpenCode.md` remains external reference input for command behavior only. Puppet Master still requires its own SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, requested `/auth` versus `/effective` account identity parity, and command ID registration before adopting OpenCode-specific behavior. Capability discovery such as `capabilities.get` is a live provider/runtime contract, not a command-local cache; `Media_Generation_and_Capabilities.md`, `Media_Generation_and_Capabilities`, `Contracts_V0.md`, and `Contracts_V0` own the frozen orchestrator capability snapshot and event-registration boundaries.
+L00000638	
+L00000639	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000640	
+L00000641	---
+L00000642	
+L00000643	## 9. Acceptance criteria
+L00000644	
+L00000645	<a id="ACCEPTANCE"></a>
+L00000646	
+L00000647	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000648	
+L00000649	ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Progression_Gates.md
+L00000650	
+L00000651	<a id="AC-CMD01"></a>
+L00000652	**AC-CMD01:** Project-local commands MUST override global commands with the same name. Resolution order (§2.3) MUST be deterministic.
+L00000653	
+L00000654	<a id="AC-CMD02"></a>
+L00000655	**AC-CMD02:** User Commands MUST NOT use any reserved slash-command name (§2.4). The runtime MUST reject creation of commands with reserved names.
+L00000656	
+L00000657	<a id="AC-CMD03"></a>
+L00000658	**AC-CMD03:** Template resolution (§4.6) MUST follow the defined order: frontmatter parse → placeholder extraction → placeholder substitution → file includes → shell injection.
+L00000659	
+L00000660	<a id="AC-CMD04"></a>
+L00000661	**AC-CMD04:** Shell injection (`` !`command` ``) MUST be permission-checked against the `bash` key before execution. If denied, the injection MUST be blocked and an error substituted.
+L00000662	
+L00000663	<a id="AC-CMD05"></a>
+L00000664	**AC-CMD05:** File inclusion (`@path`) MUST be permission-checked against the `read` key. If denied, the inclusion MUST be blocked and an error substituted.
+L00000665	
+L00000666	<a id="AC-CMD06"></a>
+L00000667	**AC-CMD06:** When `subtask: true`, the command MUST execute as a child run via the `task` tool, and the parent MUST record the linkage in the event ledger.
+L00000668	
+L00000669	<a id="AC-CMD07"></a>
+L00000670	**AC-CMD07:** The GUI Commands management section (§6) MUST validate command names on save and block saves with validation errors (reserved names, invalid format, missing description).
+L00000671	
+L00000672	<a id="AC-CMD08"></a>
+L00000673	**AC-CMD08:** The dry-run preview (§6.2) MUST render the fully resolved template without submitting it to any agent run.
+L00000674	
+L00000675	<a id="AC-CMD09"></a>
+L00000676	**AC-CMD09:** Every User Command MUST appear in the command palette and the chat slash-command autocomplete unless the command is unresolved.
+L00000677	
+L00000678	<a id="AC-CMD10"></a>
+L00000679	**AC-CMD10:** User Commands MUST NOT override reserved Assistant Chat slash commands. `override_builtin` MUST NOT enable overriding canonical reserved chat commands or reserved git/GitHub prefixes.
+L00000680	
+L00000681	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Commands_System.md#COMMAND-SCHEMA
+L00000682	
+L00000683	---
+L00000684	
+L00000685	*Document created for planning only; no code changes.*
+L00000686	
+L00000687	## Owner / Consumer Map
+L00000688	
+L00000689	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Commands_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000690	
+L00000691	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000692	
+L00000693	## PlanUnits
+L00000694	
+L00000695	### CS-002 - Command SSOT Authority and Legacy Retirements
+L00000696	
+L00000697	```yaml
+L00000698	plan_unit_id: CS-002
+L00000699	unit_type: requirement
+L00000700	status: accepted
+L00000701	owner_doc: Plans/Commands_System.md
+L00000702	canonical_text: >-
+L00000703	  Commands_System.md is the single canonical source of truth for Puppet Master
+L00000704	  User Commands, and adjacent docs must reference its anchors rather than
+L00000705	  restating command definitions, discovery paths, template syntax, or execution
+L00000706	  semantics; legacy phase_subagents and provider-native command-name assumptions
+L00000707	  remain replace-only migration labels.
+L00000708	gui_related: false
+L00000709	gui_classification_reason: Command SSOT authority and legacy retirement constraints are canonical ownership semantics, not GUI behavior.
+L00000710	split_recommended: false
+L00000711	depends_on: []
+L00000712	unblocks: [CS-003, CS-010, CS-012]
+L00000713	acceptance_criteria:
+L00000714	  - Commands_System.md remains the single canonical source of truth for User Commands.
+L00000715	  - Other plan documents reference command definitions, discovery paths, template syntax, and execution semantics by anchor.
+L00000716	  - User Commands may surface /resume only by reference to Assistant Chat and storage SSOTs.
+L00000717	  - User Commands MUST NOT define a separate restore/resume storage schema.
+L00000718	  - Legacy phase_subagents and provider-native command-name assumptions remain /replace-only migration labels and do not remain active beside the Persona-stage command contract.
+L00000719	validation_surfaces:
+L00000720	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000721	  - python3 scripts/pm-plan-index.py validate
+L00000722	risk_class: command_ssot_drift
+L00000723	reasoning_tier: high
+L00000724	context_scope: commands_system_authority
+L00000725	implementation_surfaces:
+L00000726	  - Plans/Commands_System.md
+L00000727	node_compile_hint:
+L00000728	  mode: command_ssot_authority
+L00000729	  create_worknodes: false
+L00000730	source_lineage:
+L00000731	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0001
+L00000732	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0002
+L00000733	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0003
+L00000734	preserved_exact_tokens:
+L00000735	  - "Puppet Master"
+L00000736	  - "single canonical source of truth"
+L00000737	  - "Plans/Commands_System.md#COMMAND-SCHEMA"
+L00000738	  - "/resume"
+L00000739	  - "phase_subagents"
+L00000740	  - "provider-native `command-name`"
+L00000741	  - "/replace"
+L00000742	negative_constraints:
+L00000743	  - "User Commands MUST NOT define a separate restore/resume storage schema."
+L00000744	  - "Legacy phase_subagents and provider-native command-name assumptions MUST NOT remain active beside the Persona-stage command contract."
+L00000745	owner_hints:
+L00000746	  - Plans/Commands_System.md
+L00000747	```
+L00000748	
+L00000749	### CS-003 - Command SSOT Reference Map
+L00000750	
+L00000751	```yaml
+L00000752	plan_unit_id: CS-003
+L00000753	unit_type: constraint
+L00000754	status: accepted
+L00000755	owner_doc: Plans/Commands_System.md
+L00000756	canonical_text: >-
+L00000757	  The Commands System reference map names the external owner documents that
+L00000758	  command behavior consumes, including locked decisions, contracts, DRY rules,
+L00000759	  glossary terms, deterministic ambiguity handling, UICommand IDs, reserved
+L00000760	  slash commands, run modes, Personas, permissions, tools, OpenCode extraction,
+L00000761	  and GUI specification.
+L00000762	gui_related: true
+L00000763	gui_classification_reason: The reference map includes user-visible slash commands, UICommand dispatch IDs, and GUI specification consumers.
+L00000764	split_recommended: false
+L00000765	depends_on: [CS-002]
+L00000766	unblocks: [CS-004, CS-006, CS-011]
+L00000767	acceptance_criteria:
+L00000768	  - SSOT references include Spec_Lock, Contracts_V0, DRY_Rules, Glossary, Decision_Policy, and auto_decisions.
+L00000769	  - UICommand dispatch IDs are routed to Plans/UI_Command_Catalog.md.
+L00000770	  - Reserved slash commands are routed to Plans/assistant-chat-design.md section 5.
+L00000771	  - Run modes, Personas, Permissions, Tools, OpenCode baseline, and FinalGUISpec remain referenced instead of duplicated.
+L00000772	validation_surfaces:
+L00000773	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000774	  - python3 scripts/pm-plan-index.py validate
+L00000775	risk_class: command_reference_map_drift
+L00000776	reasoning_tier: standard
+L00000777	context_scope: commands_system_references
+L00000778	implementation_surfaces:
+L00000779	  - Plans/Commands_System.md
+L00000780	  - Plans/UI_Command_Catalog.md
+L00000781	  - Plans/assistant-chat-design.md
+L00000782	  - Plans/FinalGUISpec.md
+L00000783	node_compile_hint:
+L00000784	  mode: command_ssot_reference_map
+L00000785	  create_worknodes: false
+L00000786	source_lineage:
+L00000787	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0004
+L00000788	preserved_exact_tokens:
+L00000789	  - "Plans/Spec_Lock.json"
+L00000790	  - "Plans/Contracts_V0.md"
+L00000791	  - "Plans/DRY_Rules.md"
+L00000792	  - "Plans/Glossary.md"
+L00000793	  - "Plans/Decision_Policy.md"
+L00000794	  - "Plans/UI_Command_Catalog.md"
+L00000795	  - "Plans/assistant-chat-design.md"
+L00000796	  - "Plans/Run_Modes.md"
+L00000797	  - "Plans/Personas.md"
+L00000798	  - "Plans/Permissions_System.md"
+L00000799	  - "Plans/Tools.md"
+L00000800	  - "Plans/OpenCode_Deep_Extraction.md"
+L00000801	  - "Plans/FinalGUISpec.md"
+L00000802	negative_constraints: []
+L00000803	owner_hints:
+L00000804	  - Plans/Commands_System.md
+L00000805	```
+L00000806	
+L00000807	### CS-004 - Backend and Provider Owner Deferral
+L00000808	
+L00000809	```yaml
+L00000810	plan_unit_id: CS-004
+L00000811	unit_type: constraint
+L00000812	status: accepted
+L00000813	owner_doc: Plans/Commands_System.md
+L00000814	canonical_text: >-
+L00000815	  User Commands consume but do not re-own adjacent MCP, context, storage, retry,
+L00000816	  provider, OpenCode, launcher, and binary-location runtime contracts; command
+L00000817	  loading and invocation may surface owner-projected values without rebinding
+L00000818	  credential custody, context compilation, persistence, recovery taxonomy,
+L00000819	  account health, thread mapping, or launcher identity.
+L00000820	gui_related: false
+L00000821	gui_classification_reason: Owner deferral for provider, storage, context, retry, and launcher semantics is backend/runtime governance.
+L00000822	split_recommended: true
+L00000823	split_recommendation_reason: Source span S0005 mixes backend owner boundaries with chat, route, palette, widget, and GUI-facing consumer constraints.
+L00000824	depends_on: [CS-002, CS-003]
+L00000825	unblocks: [CS-005, CS-006, CS-007, CS-009]
+L00000826	acceptance_criteria:
+L00000827	  - MCP prompt and tool OAuth flows defer /token custody, refresh, retry, and shared local HTTP listener ownership to Tools/MCP owner docs.
+L00000828	  - Context behavior treats LF-006 and LF-007 as stale-residue or wrong-owner-routing failures when detailed context compilation is routed to FileSafe instead of Prompt_Pipeline.
+L00000829	  - Storage and migration paths use the owner detection order config > $PUPPET_MASTER_DATA_DIR > project dir > global dir without moving path-resolution semantics out of storage-plan.
+L00000830	  - 429, 402, and /breaker behavior remains owned by CLI_Bridged_Providers, Executor_Protocol, and Run_Modes.
+L00000831	  - Provider account-health and OpenCode thread_id opacity remain owner-projected and are not collapsed into command-local credential state.
+L00000832	  - Launcher and binary-location context treats four-tier, process-scope wording, and /session-scope wording as stale compatibility labels.
+L00000833	validation_surfaces:
+L00000834	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000835	  - python3 scripts/pm-plan-index.py validate
+L00000836	risk_class: command_owner_boundary_drift
+L00000837	reasoning_tier: high
+L00000838	context_scope: command_provider_runtime_boundaries
+L00000839	implementation_surfaces:
+L00000840	  - Plans/Commands_System.md
+L00000841	  - Plans/Tools.md
+L00000842	  - Plans/Run_Modes.md
+L00000843	  - Plans/Prompt_Pipeline.md
+L00000844	  - Plans/storage-plan.md
+L00000845	  - Plans/CLI_Bridged_Providers.md
+L00000846	  - Plans/Provider_OpenCode.md
+L00000847	  - Plans/BinaryLocator_Spec.md
+L00000848	node_compile_hint:
+L00000849	  mode: command_backend_provider_owner_deferral
+L00000850	  create_worknodes: false
+L00000851	source_lineage:
+L00000852	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00000853	preserved_exact_tokens:
+L00000854	  - "/token"
+L00000855	  - "LF-006"
+L00000856	  - "LF-007"
+L00000857	  - "config > $PUPPET_MASTER_DATA_DIR > project dir > global dir"
+L00000858	  - "429"
+L00000859	  - "402"
+L00000860	  - "/breaker"
+L00000861	  - "client-id"
+L00000862	  - "thread_id"
+L00000863	  - "four-tier"
+L00000864	  - "/session-scope"
+L00000865	negative_constraints:
+L00000866	  - "Commands may not re-own credential custody, context compilation, persistence, retry taxonomy, provider account-health, OpenCode account identity, or launcher identity."
+L00000867	owner_hints:
+L00000868	  - Plans/Commands_System.md
+L00000869	  - Plans/Tools.md
+L00000870	  - Plans/Prompt_Pipeline.md
+L00000871	  - Plans/storage-plan.md
+L00000872	```
+L00000873	
+L00000874	### CS-005 - Chat Message and Question-Flow Command Boundaries
+L00000875	
+L00000876	```yaml
+L00000877	plan_unit_id: CS-005
+L00000878	unit_type: constraint
+L00000879	status: accepted
+L00000880	owner_doc: Plans/Commands_System.md
+L00000881	canonical_text: >-
+L00000882	  Command presets consume Assistant Chat message actions and shared question
+L00000883	  lifecycle behavior without redefining Resend, retry, rewind, file restore, or
+L00000884	  clarification-request semantics.
+L00000885	gui_related: true
+L00000886	gui_classification_reason: Resend and question-flow behavior are user-visible chat and wizard interaction semantics.
+L00000887	split_recommended: true
+L00000888	split_recommendation_reason: Source span S0005 mixes visible chat/question behavior with backend owner boundaries.
+L00000889	depends_on: [CS-004]
+L00000890	unblocks: [CS-006, CS-011]
+L00000891	acceptance_criteria:
+L00000892	  - Resend replays the latest user-authored message and discards later generated history/work.
+L00000893	  - Command presets do not redefine Resend as generic retry, rewind, or file-restore.
+L00000894	  - Clarification-request and question-flow behavior defer to assistant-chat-design and chain-wizard-flexibility.
+L00000895	  - Commands may launch or reference question flows but do not define a separate question lifecycle.
+L00000896	validation_surfaces:
+L00000897	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000898	  - python3 scripts/pm-plan-index.py validate
+L00000899	risk_class: chat_command_boundary_drift
+L00000900	reasoning_tier: high
+L00000901	context_scope: command_chat_question_boundaries
+L00000902	implementation_surfaces:
+L00000903	  - Plans/Commands_System.md
+L00000904	  - Plans/assistant-chat-design.md
+L00000905	  - Plans/UI_Command_Catalog.md
+L00000906	  - Plans/chain-wizard-flexibility.md
+L00000907	node_compile_hint:
+L00000908	  mode: command_chat_question_flow_boundary
+L00000909	  create_worknodes: false
+L00000910	source_lineage:
+L00000911	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00000912	preserved_exact_tokens:
+L00000913	  - "Resend"
+L00000914	  - "question-flow"
+L00000915	  - "clarification-request"
+L00000916	negative_constraints:
+L00000917	  - "Command presets must not redefine Resend as generic retry, rewind, or file-restore."
+L00000918	  - "Commands do not define a separate question lifecycle."
+L00000919	owner_hints:
+L00000920	  - Plans/Commands_System.md
+L00000921	  - Plans/assistant-chat-design.md
+L00000922	  - Plans/chain-wizard-flexibility.md
+L00000923	```
+L00000924	
+L00000925	### CS-006 - Registry Route Palette and Argument Contracts
+L00000926	
+L00000927	```yaml
+L00000928	plan_unit_id: CS-006
+L00000929	unit_type: constraint
+L00000930	status: accepted
+L00000931	owner_doc: Plans/Commands_System.md
+L00000932	canonical_text: >-
+L00000933	  Command-contract reconciliation is registry-facing: User Commands may invoke
+L00000934	  or display route-like UICommands, palette object results, navigation wrappers,
+L00000935	  and subject-open commands only when cmd.* IDs, validation hooks, route_target
+L00000936	  payloads, /subject semantics, and argument-contract requirements remain owned
+L00000937	  by Contracts_V0, UI_Command_Catalog, and UI_Wiring_Rules.
+L00000938	gui_related: true
+L00000939	gui_classification_reason: Route-like UICommands, command palette object results, navigation wrappers, and subject-open commands drive visible UI surfaces.
+L00000940	split_recommended: true
+L00000941	split_recommendation_reason: Source span S0005 mixes registry, route, palette, navigation, and backend runtime owner constraints.
+L00000942	depends_on: [CS-003, CS-005]
+L00000943	unblocks: [CS-007, CS-008, CS-011, CS-013]
+L00000944	acceptance_criteria:
+L00000945	  - /compact stays reserved when cmd.chat.compact_context exists.
+L00000946	  - cmd.chat.run_user_command cannot claim chat.message.submitted unless the event owner registers it.
+L00000947	  - cmd.chat.branch_from_restore remains invalid until registered or marked /superseded.
+L00000948	  - Route-like commands normalize object identity through route_target, /route, or /subject contracts before carrying object identity.
+L00000949	  - cmd.panel.switch and cmd.source_control.switch_subview remain pure /view state commands with controlled destination vocabularies.
+L00000950	  - Palette object results route through the deep-link contract and shared route_target or subject-open family.
+L00000951	  - Schema-level argument-contract requirements are not hidden in generic args.
+L00000952	validation_surfaces:
+L00000953	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000954	  - python3 scripts/pm-plan-index.py validate
+L00000955	risk_class: command_registry_route_drift
+L00000956	reasoning_tier: high
+L00000957	context_scope: command_registry_route_contracts
+L00000958	implementation_surfaces:
+L00000959	  - Plans/Commands_System.md
+L00000960	  - Plans/Contracts_V0.md
+L00000961	  - Plans/UI_Command_Catalog.md
+L00000962	  - Plans/UI_Wiring_Rules.md
+L00000963	  - Plans/FinalGUISpec.md
+L00000964	  - Plans/Run_Graph_View.md
+L00000965	node_compile_hint:
+L00000966	  mode: command_registry_route_palette_contracts
+L00000967	  create_worknodes: false
+L00000968	source_lineage:
+L00000969	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00000970	preserved_exact_tokens:
+L00000971	  - "cmd.chat.run_user_command"
+L00000972	  - "chat.message.submitted"
+L00000973	  - "cmd.chat.branch_from_restore"
+L00000974	  - "route_target"
+L00000975	  - "/subject"
+L00000976	  - "argument-contract"
+L00000977	  - "cmd.panel.switch"
+L00000978	  - "cmd.source_control.switch_subview"
+L00000979	negative_constraints:
+L00000980	  - "Commands must not let feature-local labels become private target models."
+L00000981	  - "Object identity must not be smuggled through generic command-local payloads."
+L00000982	owner_hints:
+L00000983	  - Plans/Commands_System.md
+L00000984	  - Plans/Contracts_V0.md
+L00000985	  - Plans/UI_Command_Catalog.md
+L00000986	  - Plans/UI_Wiring_Rules.md
+L00000987	```
+L00000988	
+L00000989	### CS-007 - Runtime Identity and Execution-Core Projection
+L00000990	
+L00000991	```yaml
+L00000992	plan_unit_id: CS-007
+L00000993	unit_type: constraint
+L00000994	status: accepted
+L00000995	owner_doc: Plans/Commands_System.md
+L00000996	canonical_text: >-
+L00000997	  Command-facing runtime identity is owner-projected from Prompt_Pipeline,
+L00000998	  storage, executor, multi-account, bridged-provider, and execution-core owners;
+L00000999	  Commands may launch or display execution actions but must not revive tier-era
+L00001000	  execution context, TierContext, tier_runtime_record, requested/effective
+L00001001	  account history, or runtime ownership through command frontmatter.
+L00001002	gui_related: false
+L00001003	gui_classification_reason: Runtime identity and execution-core projection are backend execution-context semantics.
+L00001004	split_recommended: true
+L00001005	split_recommendation_reason: Source span S0005 mixes runtime identity projection with route and GUI-facing consumer rules.
+L00001006	depends_on: [CS-004, CS-006]
+L00001007	unblocks: [CS-008, CS-020]
+L00001008	acceptance_criteria:
+L00001009	  - Requested/effective field meaning, /runtime, dispatch presence, persistence, /projection, and account history stay with their owner docs.
+L00001010	  - Projection trust/freshness and /freshness vocabulary remain separate from preview /browser trust_tier language.
+L00001011	  - persona_override_owner_id and requested_account_binding are owner-projected runtime identity, not command-local state.
+L00001012	  - TierContext and tier_runtime_record may survive only as derived decomposition, grouping, view, current-view, current-view/runtime-overlay, or /runtime-overlay projections.
+L00001013	  - Execution-core owners must reconcile node-native execution, graph/package/seam/lane/runtime-record language, blocked overlays, and execution_unit_context before Commands treats runtime context as canonical command input.
+L00001014	validation_surfaces:
+L00001015	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001016	  - python3 scripts/pm-plan-index.py validate
+L00001017	risk_class: command_runtime_identity_drift
+L00001018	reasoning_tier: high
+L00001019	context_scope: command_runtime_projection
+L00001020	implementation_surfaces:
+L00001021	  - Plans/Commands_System.md
+L00001022	  - Plans/Prompt_Pipeline.md
+L00001023	  - Plans/storage-plan.md
+L00001024	  - Plans/Executor_Protocol.md
+L00001025	  - Plans/Multi-Account.md
+L00001026	  - Plans/CLI_Bridged_Providers.md
+L00001027	  - Plans/orchestrator-subagent-integration.md
+L00001028	  - Plans/WorktreeGitImprovement.md
+L00001029	node_compile_hint:
+L00001030	  mode: command_runtime_identity_projection
+L00001031	  create_worknodes: false
+L00001032	source_lineage:
+L00001033	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00001034	preserved_exact_tokens:
+L00001035	  - "requested/effective"
+L00001036	  - "/runtime"
+L00001037	  - "/projection"
+L00001038	  - "trust_tier"
+L00001039	  - "/browser"
+L00001040	  - "persona_override_owner_id"
+L00001041	  - "requested_account_binding"
+L00001042	  - "TierContext"
+L00001043	  - "tier_runtime_record"
+L00001044	  - "execution_unit_context"
+L00001045	negative_constraints:
+L00001046	  - "Commands must not invent alternate requested/effective account history or erase switch notifications."
+L00001047	  - "TierContext and tier_runtime_record must not act as rewrite-era canonical execution context."
+L00001048	owner_hints:
+L00001049	  - Plans/Commands_System.md
+L00001050	  - Plans/Prompt_Pipeline.md
+L00001051	  - Plans/Executor_Protocol.md
+L00001052	```
+L00001053	
+L00001054	### CS-008 - Widget Artifact Checklist Availability and Confirmation Consumers
+L00001055	
+L00001056	```yaml
+L00001057	plan_unit_id: CS-008
+L00001058	unit_type: constraint
+L00001059	status: accepted
+L00001060	owner_doc: Plans/Commands_System.md
+L00001061	canonical_text: >-
+L00001062	  Commands may expose widget, native-surface, artifact, checklist, availability,
+L00001063	  summary, and mutation entries only as owner-routed consumers that preserve
+L00001064	  widget trust, artifact provenance, checklist freshness, availability classes,
+L00001065	  alias/deprecation gates, stale or degraded projection revalidation, and
+L00001066	  confirmation requirements for strong or non-reversible actions.
+L00001067	gui_related: true
+L00001068	gui_classification_reason: Widgets, native surfaces, artifact panels, command-palette summaries, badges, and confirmation gates are visible user-facing surfaces.
+L00001069	split_recommended: true
+L00001070	split_recommendation_reason: Source span S0005 mixes GUI-facing consumer constraints with backend mutation and availability gates.
+L00001071	depends_on: [CS-006, CS-007]
+L00001072	unblocks: [CS-013]
+L00001073	acceptance_criteria:
+L00001074	  - Widget_System owns chrome slots, /trust-state, projection-trust semantics, hostability, tab-boundary direction, and risky widget config boundaries.
+L00001075	  - Runtime_Artifacts_Panel owns artifact-type semantics, panel behavior, schema family references, and artifact evidence/provenance.
+L00001076	  - Section15_MVP_Promoted_Features_Spec remains verification-only unless upstream reconciliation requires direct edits.
+L00001077	  - GATE-010 evaluates subject-open commands, wrappers, route-payload completeness, alias /deprecation, blocked-action admissibility, allowed_action_ids, and stale or /degraded projection revalidation.
+L00001078	  - Command definitions and UICommands declare live-run only, historical-safe, or record-only/export-only before palette, shortcut, or route dispatch.
+L00001079	  - strong, hard_gate, non_reversible, and compensating_action_only actions preserve owner-defined confirmation, gating, preview, and blocked-action checks before dispatch.
+L00001080	validation_surfaces:
+L00001081	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001082	  - python3 scripts/pm-plan-index.py validate
+L00001083	risk_class: command_consumer_surface_drift
+L00001084	reasoning_tier: high
+L00001085	context_scope: command_widget_artifact_confirmation_consumers
+L00001086	implementation_surfaces:
+L00001087	  - Plans/Commands_System.md
+L00001088	  - Plans/Widget_System.md
+L00001089	  - Plans/Runtime_Artifacts_Panel.md
+L00001090	  - Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001091	  - Plans/FinalGUISpec.md
+L00001092	  - Plans/Contracts_V0.md
+L00001093	node_compile_hint:
+L00001094	  mode: command_widget_artifact_confirmation_consumers
+L00001095	  create_worknodes: false
+L00001096	source_lineage:
+L00001097	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00001098	preserved_exact_tokens:
+L00001099	  - "/trust-state"
+L00001100	  - "/completed/integration"
+L00001101	  - "/historical-run"
+L00001102	  - "GATE-010"
+L00001103	  - "allowed_action_ids"
+L00001104	  - "live-run only"
+L00001105	  - "historical-safe"
+L00001106	  - "record-only/export-only"
+L00001107	  - "strong"
+L00001108	  - "hard_gate"
+L00001109	  - "non_reversible"
+L00001110	  - "compensating_action_only"
+L00001111	negative_constraints:
+L00001112	  - "Commands must not define a parallel widget trust schema, widget-local state classification, artifact schema family, or stale Tiers scope through command metadata."
+L00001113	owner_hints:
+L00001114	  - Plans/Commands_System.md
+L00001115	  - Plans/Widget_System.md
+L00001116	  - Plans/Runtime_Artifacts_Panel.md
+L00001117	```
+L00001118	
+L00001119	### CS-009 - Debug and Launcher Command Boundary
+L00001120	
+L00001121	```yaml
+L00001122	plan_unit_id: CS-009
+L00001123	unit_type: constraint
+L00001124	status: accepted
+L00001125	owner_doc: Plans/Commands_System.md
+L00001126	canonical_text: >-
+L00001127	  Command-facing Debug terminology distinguishes DAP debugging, agentic
+L00001128	  app/runtime investigation, and assistant-session inspection; any command that
+L00001129	  requests wrapper-script, launcher-file, launch-command/env, external-directory,
+L00001130	  degraded-runtime, or browser-health-sensitive actions must preserve revert
+L00001131	  paths and central permission/capability gate routing.
+L00001132	gui_related: false
+L00001133	gui_classification_reason: Debug terminology, launcher mutation cleanup, and permission/capability gates are runtime and policy behavior.
+L00001134	split_recommended: false
+L00001135	depends_on: [CS-004]
+L00001136	unblocks: []
+L00001137	acceptance_criteria:
+L00001138	  - Debug terminology does not collapse classical DAP debugging, agentic app/runtime investigation, and assistant-session inspection.
+L00001139	  - Wrapper script, /launcher file, or /launch-command/env edits record an exact revert path.
+L00001140	  - Cleanup restores from a restore point or generated revert patch.
+L00001141	  - External directory access outside the active policy /allowlist resolves through central permission/capability gates.
+L00001142	  - Actions unavailable or degraded for the active runtime or /browser health state resolve through central permission/capability gates before command injection.
+L00001143	validation_surfaces:
+L00001144	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001145	  - python3 scripts/pm-plan-index.py validate
+L00001146	risk_class: debug_launcher_boundary_drift
+L00001147	reasoning_tier: high
+L00001148	context_scope: command_debug_launcher_boundary
+L00001149	implementation_surfaces:
+L00001150	  - Plans/Commands_System.md
+L00001151	  - Plans/Permissions_System.md
+L00001152	  - Plans/BinaryLocator_Spec.md
+L00001153	node_compile_hint:
+L00001154	  mode: command_debug_launcher_boundary
+L00001155	  create_worknodes: false
+L00001156	source_lineage:
+L00001157	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0006
+L00001158	preserved_exact_tokens:
+L00001159	  - "Debug"
+L00001160	  - "/launcher"
+L00001161	  - "/launch-command/env"
+L00001162	  - "/allowlist"
+L00001163	  - "/browser"
+L00001164	negative_constraints:
+L00001165	  - "Command templates may request launcher cleanup workflow, but they do not themselves become persistent launcher owners."
+L00001166	owner_hints:
+L00001167	  - Plans/Commands_System.md
+L00001168	```
+L00001169	
+L00001170	### CS-010 - User Command Definition
+L00001171	
+L00001172	```yaml
+L00001173	plan_unit_id: CS-010
+L00001174	unit_type: requirement
+L00001175	status: accepted
+L00001176	owner_doc: Plans/Commands_System.md
+L00001177	canonical_text: >-
+L00001178	  A User Command is a user-authored or catalog-installed Markdown preset with
+L00001179	  YAML frontmatter whose resolved template body is submitted to the active chat
+L00001180	  thread or run as a repeatable prompt workflow.
+L00001181	gui_related: false
+L00001182	gui_classification_reason: The User Command definition is data/model semantics for command presets.
+L00001183	split_recommended: true
+L00001184	split_recommendation_reason: Source span S0008 includes the next anchor for UICommand distinction, so lineage is shared with CS-011.
+L00001185	depends_on: [CS-002]
+L00001186	unblocks: [CS-011, CS-014]
+L00001187	acceptance_criteria:
+L00001188	  - DEF-USER-COMMAND remains the anchor for the User Command definition.
+L00001189	  - User Commands are user-authored or catalog-installed command presets stored as Markdown files with YAML frontmatter.
+L00001190	  - Invocation resolves placeholders, file includes, and shell output injection before submission.
+L00001191	  - User Commands package repeatable prompt workflows without requiring code.
+L00001192	validation_surfaces:
+L00001193	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001194	  - python3 scripts/pm-plan-index.py validate
+L00001195	risk_class: user_command_definition_drift
+L00001196	reasoning_tier: standard
+L00001197	context_scope: command_definitions
+L00001198	implementation_surfaces:
+L00001199	  - Plans/Commands_System.md
+L00001200	node_compile_hint:
+L00001201	  mode: user_command_definition
+L00001202	  create_worknodes: false
+L00001203	source_lineage:
+L00001204	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0007
+L00001205	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+L00001206	preserved_exact_tokens:
+L00001207	  - "DEF-USER-COMMAND"
+L00001208	  - "User Command"
+L00001209	  - "YAML frontmatter"
+L00001210	negative_constraints: []
+L00001211	owner_hints:
+L00001212	  - Plans/Commands_System.md
+L00001213	```
+L00001214	
+L00001215	### CS-011 - UICommand Distinction and Invocation Surfaces
+L00001216	
+L00001217	```yaml
+L00001218	plan_unit_id: CS-011
+L00001219	unit_type: requirement
+L00001220	status: accepted
+L00001221	owner_doc: Plans/Commands_System.md
+L00001222	canonical_text: >-
+L00001223	  UICommands are developer-defined internal dispatch identifiers distinct from
+L00001224	  user-authored User Commands; User Commands may be invoked from Assistant chat,
+L00001225	  the command palette, and optional Orchestrator shortcut triggers through the
+L00001226	  command execution seam without becoming UICommand definitions.
+L00001227	gui_related: true
+L00001228	gui_classification_reason: UICommand dispatch, slash autocomplete, command palette entries, and shortcut triggers are visible UI interaction surfaces.
+L00001229	split_recommended: true
+L00001230	split_recommendation_reason: Source spans S0008 and S0010 mix definition anchors with visible invocation surfaces.
+L00001231	depends_on: [CS-006, CS-010]
+L00001232	unblocks: [CS-013, CS-022]
+L00001233	acceptance_criteria:
+L00001234	  - DEF-UICOMMAND-DISTINCTION remains the anchor for UICommand distinction.
+L00001235	  - UICommands are stable IDs that bind UI elements to handlers and are developer-defined, code-registered, and wiring-matrix-verified.
+L00001236	  - User Commands are content presets and UICommands are internal dispatch actions.
+L00001237	  - User Command invocation ultimately dispatches cmd.chat.run_user_command without making the User Command itself a UICommand.
+L00001238	  - Assistant chat uses slash-command prefix / with custom /x-<command-name> support.
+L00001239	  - Command palette entries appear as Run command: <name>.
+L00001240	  - Orchestrator shortcut trigger keybindings remain optional via Settings > Shortcuts.
+L00001241	validation_surfaces:
+L00001242	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001243	  - python3 scripts/pm-plan-index.py validate
+L00001244	risk_class: uicommand_user_command_conflation
+L00001245	reasoning_tier: high
+L00001246	context_scope: command_invocation_surfaces
+L00001247	implementation_surfaces:
+L00001248	  - Plans/Commands_System.md
+L00001249	  - Plans/Contracts_V0.md
+L00001250	  - Plans/UI_Command_Catalog.md
+L00001251	  - Plans/assistant-chat-design.md
+L00001252	  - Plans/FinalGUISpec.md
+L00001253	node_compile_hint:
+L00001254	  mode: uicommand_distinction_invocation_surfaces
+L00001255	  create_worknodes: false
+L00001256	source_lineage:
+L00001257	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+L00001258	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0009
+L00001259	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0010
+L00001260	preserved_exact_tokens:
+L00001261	  - "DEF-UICOMMAND-DISTINCTION"
+L00001262	  - "UICommand"
+L00001263	  - "cmd.chat.run_user_command"
+L00001264	  - "project-local `/symbols/commands/other`"
+L00001265	  - "Run command: <name>"
+L00001266	  - "Settings > Shortcuts"
+L00001267	negative_constraints:
+L00001268	  - "User Commands are not user-authored UICommands."
+L00001269	  - "File tree actions and editor/file operations use canonical UICommands, not user-authored command presets."
+L00001270	owner_hints:
+L00001271	  - Plans/Commands_System.md
+L00001272	  - Plans/UI_Command_Catalog.md
+L00001273	```
+L00001274	
+L00001275	### CS-012 - Command Storage Roots and Resolution
+L00001276	
+L00001277	```yaml
+L00001278	plan_unit_id: CS-012
+L00001279	unit_type: requirement
+L00001280	status: accepted
+L00001281	owner_doc: Plans/Commands_System.md
+L00001282	canonical_text: >-
+L00001283	  User Command files use a deterministic project-local and global two-tier
+L00001284	  layout where project-local commands override global commands by name and
+L00001285	  unresolved command names surface the exact Unknown command error.
+L00001286	gui_related: false
+L00001287	gui_classification_reason: Command file storage roots and resolution order are filesystem and lookup semantics.
+L00001288	split_recommended: false
+L00001289	depends_on: [CS-002]
+L00001290	unblocks: [CS-013, CS-014]
+L00001291	acceptance_criteria:
+L00001292	  - STORAGE-LAYOUT remains the anchor for User Command storage layout.
+L00001293	  - Project-local commands live at <project_root>/.puppet-master/commands/<name>.md and are available only when that project is active.
+L00001294	  - Global commands live at ~/.config/puppet-master/commands/<name>.md and are overridden by a project-local command with the same name.
+L00001295	  - Resolution checks project-local commands first, global commands second, and returns unresolved when neither path exists.
+L00001296	  - Unresolved invocation surfaces display "Unknown command: <name>".
+L00001297	validation_surfaces:
+L00001298	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001299	  - python3 scripts/pm-plan-index.py validate
+L00001300	risk_class: command_storage_resolution_drift
+L00001301	reasoning_tier: standard
+L00001302	context_scope: command_storage_discovery
+L00001303	implementation_surfaces:
+L00001304	  - Plans/Commands_System.md
+L00001305	  - Plans/storage-plan.md
+L00001306	node_compile_hint:
+L00001307	  mode: command_storage_roots_resolution
+L00001308	  create_worknodes: false
+L00001309	source_lineage:
+L00001310	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0011
+L00001311	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0012
+L00001312	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0013
+L00001313	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0014
+L00001314	preserved_exact_tokens:
+L00001315	  - "STORAGE-LAYOUT"
+L00001316	  - "<project_root>/.puppet-master/commands/<name>.md"
+L00001317	  - "~/.config/puppet-master/commands/<name>.md"
+L00001318	  - "Unknown command: <name>"
+L00001319	negative_constraints: []
+L00001320	owner_hints:
+L00001321	  - Plans/Commands_System.md
+L00001322	  - Plans/storage-plan.md
+L00001323	```
+L00001324	
+L00001325	### CS-013 - Reserved Names Collisions and Name Validation
+L00001326	
+L00001327	```yaml
+L00001328	plan_unit_id: CS-013
+L00001329	unit_type: constraint
+L00001330	status: accepted
+L00001331	owner_doc: Plans/Commands_System.md
+L00001332	canonical_text: >-
+L00001333	  Reserved built-in slash commands and their families cannot be overridden by
+L00001334	  provider, skill, plugin, extension, natural-language, or custom User Command
+L00001335	  names; command creation also enforces the canonical lowercase name regex and
+L00001336	  disambiguates /mode by owner context.
+L00001337	gui_related: false
+L00001338	gui_classification_reason: Reserved-name collision handling and regex validation are command registry and schema constraints.
+L00001339	split_recommended: false
+L00001340	depends_on: [CS-011, CS-012]
+L00001341	unblocks: [CS-014, CS-016]
+L00001342	acceptance_criteria:
+L00001343	  - /web reserves the family namespace for /web search, /web fetch, /web extract, /web research, /web crawl, and /web map.
+L00001344	  - override_builtin: true is /forbid for reserved Assistant Chat built-ins and cannot override /web, /skill, /cancel, /clear, /stop, or canonical chat commands.
+L00001345	  - /web commands are network /external-read operations, not /shell mutation commands.
+L00001346	  - /worktree is reserved and cannot be re-bound by a custom command.
+L00001347	  - /skill cannot be rebound by User Commands or override_builtin.
+L00001348	  - /plugins remains plugin-management/navigation, not a User Command namespace.
+L00001349	  - Natural-language and slash dispatch share the same dispatcher collision handling.
+L00001350	  - GPT-era registry audits do not create new event names by observation.
+L00001351	  - Ask /Plan behavior for command-triggered tools follows Run_Modes and Permissions_System permission rows.
+L00001352	  - Names match ^[a-z][a-z0-9_-]{0,48}[a-z0-9]$ and length 2-50 characters.
+L00001353	validation_surfaces:
+L00001354	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001355	  - python3 scripts/pm-plan-index.py validate
+L00001356	risk_class: command_reserved_name_drift
+L00001357	reasoning_tier: high
+L00001358	context_scope: command_name_validation
+L00001359	implementation_surfaces:
+L00001360	  - Plans/Commands_System.md
+L00001361	  - Plans/UI_Command_Catalog.md
+L00001362	  - Plans/assistant-chat-design.md
+L00001363	  - Plans/Permissions_System.md
+L00001364	  - Plans/Run_Modes.md
+L00001365	node_compile_hint:
+L00001366	  mode: command_reserved_name_validation
+L00001367	  create_worknodes: false
+L00001368	source_lineage:
+L00001369	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0015
+L00001370	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0016
+L00001371	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0017
+L00001372	preserved_exact_tokens:
+L00001373	  - "/web"
+L00001374	  - "/web search"
+L00001375	  - "/web fetch"
+L00001376	  - "/web extract"
+L00001377	  - "/web research"
+L00001378	  - "/web crawl"
+L00001379	  - "/web map"
+L00001380	  - "override_builtin: true"
+L00001381	  - "/forbid"
+L00001382	  - "/worktree"
+L00001383	  - "/skill"
+L00001384	  - "/plugins"
+L00001385	  - "chat.thread.created"
+L00001386	  - "chat.thread_created"
+L00001387	  - "chat.message.submitted"
+L00001388	  - "^[a-z][a-z0-9_-]{0,48}[a-z0-9]$"
+L00001389	negative_constraints:
+L00001390	  - "Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming."
+L00001391	  - "GPT-era registry audits do not create new event names by observation."
+L00001392	owner_hints:
+L00001393	  - Plans/Commands_System.md
+L00001394	  - Plans/UI_Command_Catalog.md
+L00001395	  - Plans/assistant-chat-design.md
+L00001396	```
+L00001397	
+L00001398	### CS-014 - Command File Schema and Frontmatter Fields
+L00001399	
+L00001400	```yaml
+L00001401	plan_unit_id: CS-014
+L00001402	unit_type: requirement
+L00001403	status: accepted
+L00001404	owner_doc: Plans/Commands_System.md
+L00001405	canonical_text: >-
+L00001406	  A User Command file consists of YAML frontmatter plus a Markdown template body,
+L00001407	  with canonical fields for name, description, arguments, persona/model/mode
+L00001408	  overrides, permissions_profile_override, and override_builtin.
+L00001409	gui_related: false
+L00001410	gui_classification_reason: Command schema and frontmatter field definitions are file-format semantics.
+L00001411	split_recommended: false
+L00001412	depends_on: [CS-013]
+L00001413	unblocks: [CS-015, CS-018, CS-020]
+L00001414	acceptance_criteria:
+L00001415	  - COMMAND-SCHEMA remains the anchor for User Command file structure.
+L00001416	  - Frontmatter examples preserve description, persona, mode, model, subtask, permissions_profile_override, and override_builtin.
+L00001417	  - name is required, must pass validation, and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes.
+L00001418	  - description is required and remains a short user-facing description.
+L00001419	  - arguments remains an optional array<object> for positional argument schema.
+L00001420	  - persona_override, mode_override, model_override, and permissions_profile_override remain requested overrides subject to their owner systems.
+L00001421	  - override_builtin remains reserved for future non-chat extension points and MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes.
+L00001422	validation_surfaces:
+L00001423	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001424	  - python3 scripts/pm-plan-index.py validate
+L00001425	risk_class: command_schema_drift
+L00001426	reasoning_tier: standard
+L00001427	context_scope: command_file_schema
+L00001428	implementation_surfaces:
+L00001429	  - Plans/Commands_System.md
+L00001430	  - Plans/assistant-chat-design.md
+L00001431	  - Plans/Permissions_System.md
+L00001432	  - Plans/Prompt_Pipeline.md
+L00001433	node_compile_hint:
+L00001434	  mode: command_file_schema_frontmatter
+L00001435	  create_worknodes: false
+L00001436	source_lineage:
+L00001437	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0018
+L00001438	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0019
+L00001439	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0020
+L00001440	preserved_exact_tokens:
+L00001441	  - "COMMAND-SCHEMA"
+L00001442	  - "YAML frontmatter"
+L00001443	  - "description"
+L00001444	  - "persona"
+L00001445	  - "mode"
+L00001446	  - "model"
+L00001447	  - "subtask"
+L00001448	  - "permissions_profile_override"
+L00001449	  - "override_builtin"
+L00001450	negative_constraints:
+L00001451	  - "name MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes."
+L00001452	  - "override_builtin MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes."
+L00001453	owner_hints:
+L00001454	  - Plans/Commands_System.md
+L00001455	```
+L00001456	
+L00001457	### CS-015 - Template Body and Placeholder Semantics
+L00001458	
+L00001459	```yaml
+L00001460	plan_unit_id: CS-015
+L00001461	unit_type: requirement
+L00001462	status: accepted
+L00001463	owner_doc: Plans/Commands_System.md
+L00001464	canonical_text: >-
+L00001465	  The Markdown template body supports placeholders, file includes, and shell
+L00001466	  output injection; placeholder extraction scans for $ARGUMENTS and $N patterns,
+L00001467	  stores extracted hints for autocomplete display, and replaces unresolved
+L00001468	  placeholders with an empty string.
+L00001469	gui_related: false
+L00001470	gui_classification_reason: Template body and placeholder expansion are command template processing semantics.
+L00001471	split_recommended: true
+L00001472	split_recommendation_reason: Source span S0022 also carries the TEMPLATE-FILE-INCLUDE anchor consumed by CS-016.
+L00001473	depends_on: [CS-014]
+L00001474	unblocks: [CS-016, CS-017, CS-024]
+L00001475	acceptance_criteria:
+L00001476	  - TEMPLATE-PLACEHOLDERS remains the anchor for placeholder semantics.
+L00001477	  - The template body supports placeholders, file includes, and shell output injection.
+L00001478	  - $ARGUMENTS represents all remaining text after the command name.
+L00001479	  - $1, $2, and $N represent positional arguments from invocation text.
+L00001480	  - Load-time extraction scans for $ARGUMENTS and $N patterns and stores the extracted list as hints for autocomplete display.
+L00001481	  - Unresolved placeholders are replaced with empty string.
+L00001482	validation_surfaces:
+L00001483	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001484	  - python3 scripts/pm-plan-index.py validate
+L00001485	risk_class: command_template_placeholder_drift
+L00001486	reasoning_tier: standard
+L00001487	context_scope: command_template_resolution
+L00001488	implementation_surfaces:
+L00001489	  - Plans/Commands_System.md
+L00001490	node_compile_hint:
+L00001491	  mode: command_template_placeholders
+L00001492	  create_worknodes: false
+L00001493	source_lineage:
+L00001494	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0021
+L00001495	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0022
+L00001496	preserved_exact_tokens:
+L00001497	  - "TEMPLATE-PLACEHOLDERS"
+L00001498	  - "$ARGUMENTS"
+L00001499	  - "$1"
+L00001500	  - "$2"
+L00001501	  - "$N"
+L00001502	  - "hints"
+L00001503	negative_constraints: []
+L00001504	owner_hints:
+L00001505	  - Plans/Commands_System.md
+L00001506	```
+L00001507	
+L00001508	### CS-016 - File Include Resolution and Read Permission Guard
+L00001509	
+L00001510	```yaml
+L00001511	plan_unit_id: CS-016
+L00001512	unit_type: requirement
+L00001513	status: accepted
+L00001514	owner_doc: Plans/Commands_System.md
+L00001515	canonical_text: >-
+L00001516	  Template file includes use @path and directory listing expansion, then enforce
+L00001517	  the Permissions System read permission key so denied includes are blocked,
+L00001518	  ask results show approval UI, and blocked includes substitute an error.
+L00001519	gui_related: true
+L00001520	gui_classification_reason: File include permission handling can surface approval UI and visible blocked-include errors.
+L00001521	split_recommended: true
+L00001522	split_recommendation_reason: Source spans S0022, S0023, and S0034 share anchors and permission behavior with placeholder and shell-injection units.
+L00001523	depends_on: [CS-013, CS-015]
+L00001524	unblocks: [CS-017, CS-024]
+L00001525	acceptance_criteria:
+L00001526	  - TEMPLATE-FILE-INCLUDE remains the anchor for file include semantics.
+L00001527	  - "@path/to/file includes the referenced file contents during template resolution."
+L00001528	  - "@path/to/dir includes a directory listing."
+L00001529	  - File inclusion checks the read permission key from Permissions_System section 5.
+L00001530	  - deny blocks the include and substitutes an error message.
+L00001531	  - ask shows the approval UI and applies the same ask flow semantics.
+L00001532	validation_surfaces:
+L00001533	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001534	  - python3 scripts/pm-plan-index.py validate
+L00001535	risk_class: command_file_include_permission_drift
+L00001536	reasoning_tier: high
+L00001537	context_scope: command_template_permission_guards
+L00001538	implementation_surfaces:
+L00001539	  - Plans/Commands_System.md
+L00001540	  - Plans/Permissions_System.md
+L00001541	node_compile_hint:
+L00001542	  mode: command_file_include_permission_guard
+L00001543	  create_worknodes: false
+L00001544	source_lineage:
+L00001545	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0022
+L00001546	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0023
+L00001547	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0034
+L00001548	preserved_exact_tokens:
+L00001549	  - "TEMPLATE-FILE-INCLUDE"
+L00001550	  - "@path"
+L00001551	  - "@path/to/file"
+L00001552	  - "@path/to/dir"
+L00001553	  - "read"
+L00001554	  - "ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys"
+L00001555	negative_constraints:
+L00001556	  - "Denied file inclusion must be blocked and substituted with an error message."
+L00001557	owner_hints:
+L00001558	  - Plans/Commands_System.md
+L00001559	  - Plans/Permissions_System.md
+L00001560	```
+L00001561	
+L00001562	### CS-017 - Shell Injection Resolution and Bash Permission Guard
+L00001563	
+L00001564	```yaml
+L00001565	plan_unit_id: CS-017
+L00001566	unit_type: requirement
+L00001567	status: accepted
+L00001568	owner_doc: Plans/Commands_System.md
+L00001569	canonical_text: >-
+L00001570	  Template shell output injection uses the !`shell-command` pattern and enforces
+L00001571	  the Permissions System bash key and ask flow, including actor/lane/run/account
+L00001572	  scope, blocked-overlay/HITL routing for underspecified context, and unified
+L00001573	  ask/plan plus external_publish_side_effect approval calculation.
+L00001574	gui_related: true
+L00001575	gui_classification_reason: Shell injection permission prompts and blocked overlays are visible approval/HITL UI behavior.
+L00001576	split_recommended: true
+L00001577	split_recommendation_reason: Source spans S0023, S0024, S0032, and S0033 share template and permission-section anchors with adjacent units.
+L00001578	depends_on: [CS-015, CS-016]
+L00001579	unblocks: [CS-024]
+L00001580	acceptance_criteria:
+L00001581	  - TEMPLATE-SHELL-INJECTION remains the anchor for shell output injection.
+L00001582	  - The pattern !`shell-command` executes the shell command and injects stdout during template resolution.
+L00001583	  - Shell injection checks the bash permission key from Permissions_System section 5.
+L00001584	  - deny, once, for session, and always responses follow Permissions_System ask flow semantics.
+L00001585	  - The shell command string is the invocation context for granular pattern matching.
+L00001586	  - Command-launched work, template file inclusion, and shell injection pass actor/lane/run/account and /lane/run/account scope.
+L00001587	  - Underspecified context presents blocked-overlay/HITL routing rather than pretending a global approval or denial is safe.
+L00001588	  - ask/plan and external_publish_side_effect resolve through one canonical approval calculation.
+L00001589	validation_surfaces:
+L00001590	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001591	  - python3 scripts/pm-plan-index.py validate
+L00001592	risk_class: command_shell_permission_drift
+L00001593	reasoning_tier: high
+L00001594	context_scope: command_template_permission_guards
+L00001595	implementation_surfaces:
+L00001596	  - Plans/Commands_System.md
+L00001597	  - Plans/Permissions_System.md
+L00001598	node_compile_hint:
+L00001599	  mode: command_shell_injection_permission_guard
+L00001600	  create_worknodes: false
+L00001601	source_lineage:
+L00001602	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0023
+L00001603	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0024
+L00001604	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0032
+L00001605	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0033
+L00001606	preserved_exact_tokens:
+L00001607	  - "TEMPLATE-SHELL-INJECTION"
+L00001608	  - "!`shell-command`"
+L00001609	  - "bash"
+L00001610	  - "once"
+L00001611	  - "for session"
+L00001612	  - "always"
+L00001613	  - "deny"
+L00001614	  - "actor/lane/run/account"
+L00001615	  - "/lane/run/account"
+L00001616	  - "ask/plan"
+L00001617	  - "external_publish_side_effect"
+L00001618	negative_constraints:
+L00001619	  - "A command must not resolve publish, durable mutation, or plan approval through separate command-template text."
+L00001620	owner_hints:
+L00001621	  - Plans/Commands_System.md
+L00001622	  - Plans/Permissions_System.md
+L00001623	```
+L00001624	
+L00001625	### CS-018 - Command Working Directory Resolution
+L00001626	
+L00001627	```yaml
+L00001628	plan_unit_id: CS-018
+L00001629	unit_type: requirement
+L00001630	status: accepted
+L00001631	owner_doc: Plans/Commands_System.md
+L00001632	canonical_text: >-
+L00001633	  Command execution resolves the active working directory to the bound worktree
+L00001634	  root when execution context has is_worktree true and otherwise to the active
+L00001635	  project root, applying consistently to Assistant Chat, Orchestrator DAE,
+L00001636	  terminal sessions, and file operations.
+L00001637	gui_related: false
+L00001638	gui_classification_reason: Working directory resolution is command execution runtime behavior.
+L00001639	split_recommended: true
+L00001640	split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered by CS-019.
+L00001641	depends_on: [CS-014]
+L00001642	unblocks: [CS-019, CS-020]
+L00001643	acceptance_criteria:
+L00001644	  - EXECUTION remains the anchor for command execution semantics.
+L00001645	  - If active context has a bound worktree with is_worktree true, commands use the worktree root path.
+L00001646	  - Otherwise commands use the active project root.
+L00001647	  - Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
+L00001648	  - cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against project root otherwise.
+L00001649	validation_surfaces:
+L00001650	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001651	  - python3 scripts/pm-plan-index.py validate
+L00001652	risk_class: command_working_directory_drift
+L00001653	reasoning_tier: high
+L00001654	context_scope: command_execution_context
+L00001655	implementation_surfaces:
+L00001656	  - Plans/Commands_System.md
+L00001657	  - Plans/Executor_Protocol.md
+L00001658	  - Plans/assistant-chat-design.md
+L00001659	  - Plans/Run_Modes.md
+L00001660	node_compile_hint:
+L00001661	  mode: command_working_directory_resolution
+L00001662	  create_worknodes: false
+L00001663	source_lineage:
+L00001664	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
+L00001665	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+L00001666	preserved_exact_tokens:
+L00001667	  - "EXECUTION"
+L00001668	  - "is_worktree"
+L00001669	  - "worktree root path"
+L00001670	  - "active project root"
+L00001671	  - "cmd.chat.*"
+L00001672	negative_constraints: []
+L00001673	owner_hints:
+L00001674	  - Plans/Commands_System.md
+L00001675	```
+L00001676	
+L00001677	### CS-019 - Assistant Worktree Naming Path Display and Terminal CWD
+L00001678	
+L00001679	```yaml
+L00001680	plan_unit_id: CS-019
+L00001681	unit_type: requirement
+L00001682	status: accepted
+L00001683	owner_doc: Plans/Commands_System.md
+L00001684	canonical_text: >-
+L00001685	  Assistant worktree commands use thread-derived worktree directory names,
+L00001686	  append numeric suffixes for collisions, show edit and file-card paths relative
+L00001687	  to the resolved working_directory, and persist terminal cwd snapshots from
+L00001688	  the worktree path.
+L00001689	gui_related: true
+L00001690	gui_classification_reason: Edit and file-card path display is user-visible, and terminal sessions expose cwd behavior.
+L00001691	split_recommended: true
+L00001692	split_recommendation_reason: Source span S0026 mixes backend working-directory resolution with visible path display and terminal session behavior.
+L00001693	depends_on: [CS-018]
+L00001694	unblocks: []
+L00001695	acceptance_criteria:
+L00001696	  - Assistant thread worktrees use .puppet-master/worktrees/thread-{short_id}, where short_id derives from the bound thread_id.
+L00001697	  - If thread-{short_id} already exists, command handling appends a numeric suffix such as thread-{short_id}-2.
+L00001698	  - Existing orchestrator worktrees keep .puppet-master/worktrees/{tier_id} style directory names as compatibility lineage.
+L00001699	  - Worktree-bound edit and file cards display paths relative to the resolved working_directory.
+L00001700	  - File cards open by resolving the displayed relative path under working_directory with no special path rewriting layer.
+L00001701	  - Terminal commands opened from the same thread set terminal cwd to the worktree path and persist cwd_snapshot on terminal_session_record.
+L00001702	validation_surfaces:
+L00001703	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001704	  - python3 scripts/pm-plan-index.py validate
+L00001705	risk_class: assistant_worktree_command_drift
+L00001706	reasoning_tier: high
+L00001707	context_scope: command_execution_context
+L00001708	implementation_surfaces:
+L00001709	  - Plans/Commands_System.md
+L00001710	  - Plans/assistant-chat-design.md
+L00001711	  - Plans/WorktreeGitImprovement.md
+L00001712	  - Plans/storage-plan.md
+L00001713	node_compile_hint:
+L00001714	  mode: assistant_worktree_command_display_cwd
+L00001715	  create_worknodes: false
+L00001716	source_lineage:
+L00001717	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+L00001718	preserved_exact_tokens:
+L00001719	  - ".puppet-master/worktrees/{tier_id}"
+L00001720	  - ".puppet-master/worktrees/thread-{short_id}"
+L00001721	  - "thread-{short_id}-2"
+L00001722	  - "working_directory"
+L00001723	  - "cwd_snapshot"
+L00001724	  - "terminal_session_record"
+L00001725	negative_constraints:
+L00001726	  - "Worktree-bound file cards must not use a special path rewriting layer."
+L00001727	owner_hints:
+L00001728	  - Plans/Commands_System.md
+L00001729	  - Plans/assistant-chat-design.md
+L00001730	```
+L00001731	
+L00001732	### CS-020 - Command Subtask Child-Run Contract
+L00001733	
+L00001734	```yaml
+L00001735	plan_unit_id: CS-020
+L00001736	unit_type: requirement
+L00001737	status: accepted
+L00001738	owner_doc: Plans/Commands_System.md
+L00001739	canonical_text: >-
+L00001740	  When subtask: true is set, command execution launches a canonical child run
+L00001741	  through the shared delegated-run contract with required lineage, storage,
+L00001742	  permission/capability narrowing, requested-vs-effective runtime evidence, and
+L00001743	  no silent fallback for unavailable or incompatible runtime surfaces.
+L00001744	gui_related: false
+L00001745	gui_classification_reason: Command-launched child-run behavior is runtime delegation and storage evidence semantics.
+L00001746	split_recommended: false
+L00001747	depends_on: [CS-007, CS-018]
+L00001748	unblocks: [CS-021, CS-022, CS-023]
+L00001749	acceptance_criteria:
+L00001750	  - subtask: true is not a lighter-weight interpretation of normal prompt submission.
+L00001751	  - subtask: true creates a child-session and /delegation boundary with parent-child lineage, storage, /permission/capability, and runtime evidence.
+L00001752	  - Persona/runtime/model/effort state resolves through the same pipeline as other child runs.
+L00001753	  - Child dependency classification is required by safer default unless the command declares advisory behavior.
+L00001754	  - Child execution inherits and narrows parent permission ceiling and compatible capability universe before dispatch.
+L00001755	  - Parent-child linkage is recorded in canonical event and storage records.
+L00001756	  - The no-silent-fallback rule applies when a command explicitly requests an unavailable or incompatible runtime surface.
+L00001757	  - Requested-vs-effective provider /runtime surface is recorded when policy, availability, compatibility, or account binding changes the launched child.
+L00001758	  - PM canonical child-run identity remains the SSOT even when a provider has no native session tree.
+L00001759	  - Command-launched permission resolution defers lane, package, /package/account-bounded, account-bounded approval scope, and multi-lane orchestrator semantics to Permissions_System.
+L00001760	  - Commands uses projection-freshness and /degraded state rather than trust_tier for stale command projections.
+L00001761	validation_surfaces:
+L00001762	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001763	  - python3 scripts/pm-plan-index.py validate
+L00001764	risk_class: command_subtask_delegation_drift
+L00001765	reasoning_tier: high
+L00001766	context_scope: command_child_run_contract
+L00001767	implementation_surfaces:
+L00001768	  - Plans/Commands_System.md
+L00001769	  - Plans/Tools.md
+L00001770	  - Plans/Prompt_Pipeline.md
+L00001771	  - Plans/storage-plan.md
+L00001772	  - Plans/Models_System.md
+L00001773	  - Plans/Permissions_System.md
+L00001774	  - Plans/Contracts_V0.md
+L00001775	node_compile_hint:
+L00001776	  mode: command_subtask_child_run_contract
+L00001777	  create_worknodes: false
+L00001778	source_lineage:
+L00001779	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0027
+L00001780	preserved_exact_tokens:
+L00001781	  - "subtask: true"
+L00001782	  - "child-session"
+L00001783	  - "/delegation"
+L00001784	  - "/permission/capability"
+L00001785	  - "no-silent-fallback"
+L00001786	  - "/effective"
+L00001787	  - "/runtime"
+L00001788	  - "session-tree"
+L00001789	  - "provider-family"
+L00001790	  - "/package/account-bounded"
+L00001791	  - "trust_tier"
+L00001792	  - "/degraded"
+L00001793	negative_constraints:
+L00001794	  - "Command subtasks are not a lighter-weight exception to the canonical child-run contract."
+L00001795	  - "Commands must not synthesize a weaker command-local permission policy."
+L00001796	owner_hints:
+L00001797	  - Plans/Commands_System.md
+L00001798	  - Plans/Prompt_Pipeline.md
+L00001799	  - Plans/Permissions_System.md
+L00001800	```
+L00001801	
+L00001802	### CS-021 - Command Persona Resolution
+L00001803	
+L00001804	```yaml
+L00001805	plan_unit_id: CS-021
+L00001806	unit_type: requirement
+L00001807	status: accepted
+L00001808	owner_doc: Plans/Commands_System.md
+L00001809	canonical_text: >-
+L00001810	  Command subtasks follow the canonical child Persona resolution order: explicit
+L00001811	  command Persona override wins, otherwise task or child type resolves through
+L00001812	  the normal child Persona pipeline, parent Persona is only a weak hint, and
+L00001813	  child Persona does not silently copy the parent Persona.
+L00001814	gui_related: false
+L00001815	gui_classification_reason: Persona selection is runtime child-run resolution semantics.
+L00001816	split_recommended: false
+L00001817	depends_on: [CS-020]
+L00001818	unblocks: [CS-022]
+L00001819	acceptance_criteria:
+L00001820	  - Command subtasks follow canonical child Persona resolution order.
+L00001821	  - Explicit command Persona override wins.
+L00001822	  - Otherwise command-provided task or child type resolves Persona through the normal child Persona pipeline.
+L00001823	  - Parent Persona is at most a weak hint.
+L00001824	  - Child Persona does not silently copy the parent Persona.
+L00001825	validation_surfaces:
+L00001826	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001827	  - python3 scripts/pm-plan-index.py validate
+L00001828	risk_class: command_persona_resolution_drift
+L00001829	reasoning_tier: standard
+L00001830	context_scope: command_child_run_contract
+L00001831	implementation_surfaces:
+L00001832	  - Plans/Commands_System.md
+L00001833	  - Plans/Personas.md
+L00001834	  - Plans/Tools.md
+L00001835	  - Plans/Run_Modes.md
+L00001836	node_compile_hint:
+L00001837	  mode: command_persona_resolution
+L00001838	  create_worknodes: false
+L00001839	source_lineage:
+L00001840	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0028
+L00001841	preserved_exact_tokens:
+L00001842	  - "Persona"
+L00001843	  - "parent Persona"
+L00001844	negative_constraints:
+L00001845	  - "Child Persona does not silently copy the parent Persona."
+L00001846	owner_hints:
+L00001847	  - Plans/Commands_System.md
+L00001848	  - Plans/Personas.md
+L00001849	```
+L00001850	
+L00001851	### CS-022 - Mode Model Account Requested-Effective Overrides
+L00001852	
+L00001853	```yaml
+L00001854	plan_unit_id: CS-022
+L00001855	unit_type: requirement
+L00001856	status: accepted
+L00001857	owner_doc: Plans/Commands_System.md
+L00001858	canonical_text: >-
+L00001859	  Command provider, model, account, Persona, worker-policy, mode, and runtime
+L00001860	  surface overrides are explicit child requests capped by parent authority, with
+L00001861	  UI-visible requested/effective fields and policy remap reasons whenever
+L00001862	  compatibility, availability, policy, or account binding changes the launched
+L00001863	  runtime/model/effort result.
+L00001864	gui_related: true
+L00001865	gui_classification_reason: The requested/effective override grammar is explicitly displayed in command UI.
+L00001866	split_recommended: false
+L00001867	depends_on: [CS-020, CS-021]
+L00001868	unblocks: [CS-023]
+L00001869	acceptance_criteria:
+L00001870	  - Command UI shows requested override, effective result, inheritance source, and policy remap reason.
+L00001871	  - Command overrides are explicit child requests, not bypasses around the runtime model.
+L00001872	  - Command mode overrides are capped by parent mode authority.
+L00001873	  - Command model/runtime surface overrides become explicit child requests.
+L00001874	  - Explicit requests do not silently fallback.
+L00001875	  - Requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
+L00001876	validation_surfaces:
+L00001877	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001878	  - python3 scripts/pm-plan-index.py validate
+L00001879	risk_class: command_override_visibility_drift
+L00001880	reasoning_tier: high
+L00001881	context_scope: command_child_run_contract
+L00001882	implementation_surfaces:
+L00001883	  - Plans/Commands_System.md
+L00001884	  - Plans/Models_System.md
+L00001885	  - Plans/Run_Modes.md
+L00001886	  - Plans/CLI_Bridged_Providers.md
+L00001887	node_compile_hint:
+L00001888	  mode: command_requested_effective_overrides
+L00001889	  create_worknodes: false
+L00001890	source_lineage:
+L00001891	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0029
+L00001892	preserved_exact_tokens:
+L00001893	  - "/model/account/worker-policy"
+L00001894	  - "requested/effective"
+L00001895	  - "runtime/model/effort"
+L00001896	negative_constraints:
+L00001897	  - "Explicit requests do not silently fallback."
+L00001898	owner_hints:
+L00001899	  - Plans/Commands_System.md
+L00001900	```
+L00001901	
+L00001902	### CS-023 - Current Working Set Retention
+L00001903	
+L00001904	```yaml
+L00001905	plan_unit_id: CS-023
+L00001906	unit_type: requirement
+L00001907	status: accepted
+L00001908	owner_doc: Plans/Commands_System.md
+L00001909	canonical_text: >-
+L00001910	  Command cards, command-launched child runs, and command-produced blocks remain
+L00001911	  in the current working-set while they are latest active results, support the
+L00001912	  next intended action, participate in unresolved comparison, approval, question,
+L00001913	  or validation state, or are focused or pinned; they leave when superseded,
+L00001914	  carried forward, or execution moves to another branch.
+L00001915	gui_related: true
+L00001916	gui_classification_reason: Command cards, focus, pinned state, and working-set membership are user-visible interaction and state presentation.
+L00001917	split_recommended: true
+L00001918	split_recommendation_reason: Span map inferred S0030 as non-GUI, but the source text governs visible command cards, focus, /pinned, and working-set behavior.
+L00001919	depends_on: [CS-020, CS-022]
+L00001920	unblocks: []
+L00001921	acceptance_criteria:
+L00001922	  - Command cards remain in the current working-set while they are latest active results in the current branch of work.
+L00001923	  - Command-launched child runs and command-produced blocks remain while they support the next intended action.
+L00001924	  - Items remain while participating in unresolved comparison, /approval/question/validation state.
+L00001925	  - Items remain while explicitly focused or /pinned by the user.
+L00001926	  - Items leave when a newer result supersedes the same purpose, the finding has been carried forward, or execution clearly moves to a different branch of work.
+L00001927	validation_surfaces:
+L00001928	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001929	  - python3 scripts/pm-plan-index.py validate
+L00001930	risk_class: command_working_set_drift
+L00001931	reasoning_tier: standard
+L00001932	context_scope: command_working_set
+L00001933	implementation_surfaces:
+L00001934	  - Plans/Commands_System.md
+L00001935	node_compile_hint:
+L00001936	  mode: command_current_working_set_retention
+L00001937	  create_worknodes: false
+L00001938	source_lineage:
+L00001939	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0030
+L00001940	preserved_exact_tokens:
+L00001941	  - "working-set"
+L00001942	  - "/approval/question/validation"
+L00001943	  - "/pinned"
+L00001944	negative_constraints: []
+L00001945	owner_hints:
+L00001946	  - Plans/Commands_System.md
+L00001947	```
+L00001948	
+L00001949	### CS-024 - Template Resolution Order
+L00001950	
+L00001951	```yaml
+L00001952	plan_unit_id: CS-024
+L00001953	unit_type: requirement
+L00001954	status: accepted
+L00001955	owner_doc: Plans/Commands_System.md
+L00001956	canonical_text: >-
+L00001957	  Template resolution parses YAML frontmatter, extracts placeholder hints,
+L00001958	  substitutes invocation arguments, resolves permission-checked file includes,
+L00001959	  resolves permission-checked shell injections, and submits the fully resolved
+L00001960	  body to the run in that order.
+L00001961	gui_related: false
+L00001962	gui_classification_reason: Template resolution order is deterministic backend command processing.
+L00001963	split_recommended: false
+L00001964	depends_on: [CS-015, CS-016, CS-017]
+L00001965	unblocks: []
+L00001966	acceptance_criteria:
+L00001967	  - Template resolution first parses YAML frontmatter and extracts field values.
+L00001968	  - Placeholder hints for $ARGUMENTS and positional patterns are extracted before substitution.
+L00001969	  - Invocation arguments substitute placeholders before file includes and shell injections.
+L00001970	  - "@path file includes resolve with permission checks before shell injections."
+L00001971	  - "!`command` shell injections resolve with permission checks after file includes."
+L00001972	  - The fully resolved body is the prompt submitted to the run.
+L00001973	validation_surfaces:
+L00001974	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001975	  - python3 scripts/pm-plan-index.py validate
+L00001976	risk_class: command_template_order_drift
+L00001977	reasoning_tier: standard
+L00001978	context_scope: command_template_resolution
+L00001979	implementation_surfaces:
+L00001980	  - Plans/Commands_System.md
+L00001981	node_compile_hint:
+L00001982	  mode: command_template_resolution_order
+L00001983	  create_worknodes: false
+L00001984	source_lineage:
+L00001985	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0031
+L00001986	preserved_exact_tokens:
+L00001987	  - "$ARGUMENTS"
+L00001988	  - "$1"
+L00001989	  - "$2"
+L00001990	  - "@path"
+L00001991	  - "!`command`"
+L00001992	  - "ContractRef: ContractName:Plans/Commands_System.md#EXECUTION"
+L00001993	negative_constraints: []
+L00001994	owner_hints:
+L00001995	  - Plans/Commands_System.md
+L00001996	```
+L00001997	
+L00001998	### CS-025 - Permissions Profile Override Precedence
+L00001999	
+L00002000	```yaml
+L00002001	plan_unit_id: CS-025
+L00002002	unit_type: requirement
+L00002003	status: accepted
+L00002004	owner_doc: Plans/Commands_System.md
+L00002005	canonical_text: >-
+L00002006	  A command permissions_profile_override loads the named permission profile from
+L00002007	  ~/.config/puppet-master/permission-profiles/<profile_id>.toml and applies it
+L00002008	  as an additional precedence layer between Persona overrides and project-level
+L00002009	  rules, effectively replacing the Persona profile for that command run.
+L00002010	gui_related: false
+L00002011	gui_classification_reason: Permissions profile override precedence is policy resolution behavior, not visual presentation.
+L00002012	split_recommended: false
+L00002013	depends_on: [CS-014, CS-020, CS-021]
+L00002014	unblocks: [CS-030, CS-033, CS-045]
+L00002015	acceptance_criteria:
+L00002016	  - permissions_profile_override loads the named profile from ~/.config/puppet-master/permission-profiles/<profile_id>.toml.
+L00002017	  - The profile applies as an additional precedence layer between Persona overrides and project-level rules.
+L00002018	  - For this command run, the override effectively replaces the Persona profile.
+L00002019	validation_surfaces:
+L00002020	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002021	  - python3 scripts/pm-plan-index.py validate
+L00002022	risk_class: command_permission_precedence_drift
+L00002023	reasoning_tier: high
+L00002024	context_scope: command_permission_profile_resolution
+L00002025	implementation_surfaces:
+L00002026	  - Plans/Commands_System.md
+L00002027	  - Plans/Permissions_System.md
+L00002028	node_compile_hint:
+L00002029	  mode: command_permissions_profile_override_precedence
+L00002030	  create_worknodes: false
+L00002031	source_lineage:
+L00002032	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0035
+L00002033	preserved_exact_tokens:
+L00002034	  - "permissions_profile_override"
+L00002035	  - "~/.config/puppet-master/permission-profiles/<profile_id>.toml"
+L00002036	  - "Persona"
+L00002037	  - "project-level rules"
+L00002038	  - "ContractRef: ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS"
+L00002039	negative_constraints: []
+L00002040	owner_hints:
+L00002041	  - Plans/Commands_System.md
+L00002042	  - Plans/Permissions_System.md
+L00002043	```
+L00002044	
+L00002045	### CS-026 - Catalog-Installed Command Lifecycle and Override Safety
+L00002046	
+L00002047	```yaml
+L00002048	plan_unit_id: CS-026
+L00002049	unit_type: requirement
+L00002050	status: accepted
+L00002051	owner_doc: Plans/Commands_System.md
+L00002052	canonical_text: >-
+L00002053	  Catalog-installed commands remain canonical User Commands after installation:
+L00002054	  installation writes through the same command roots, updates follow manual edit
+L00002055	  validation, removal is blocked or deferred when active references require it,
+L00002056	  and uninstalling a catalog item never silently deletes a user-authored project
+L00002057	  override that intentionally shadows it.
+L00002058	gui_related: false
+L00002059	gui_classification_reason: Catalog installation, update, and deletion safety are lifecycle and storage semantics.
+L00002060	split_recommended: true
+L00002061	split_recommendation_reason: Source span S0037 mixes lifecycle/storage constraints with GUI provenance display and Settings ownership.
+L00002062	depends_on: [CS-012, CS-013, CS-014]
+L00002063	unblocks: [CS-027, CS-032]
+L00002064	acceptance_criteria:
+L00002065	  - Catalog-installed commands are still canonical User Commands after installation.
+L00002066	  - Installation creates or updates a command in the same canonical command roots described in section 2.
+L00002067	  - Updates follow the same validation rules as manual edits.
+L00002068	  - Removal is blocked or deferred when the command is actively referenced by an open edit session or another subsystem requires explicit replacement/confirmation.
+L00002069	  - Uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it.
+L00002070	validation_surfaces:
+L00002071	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002072	  - python3 scripts/pm-plan-index.py validate
+L00002073	risk_class: catalog_command_lifecycle_drift
+L00002074	reasoning_tier: high
+L00002075	context_scope: command_catalog_lifecycle
+L00002076	implementation_surfaces:
+L00002077	  - Plans/Commands_System.md
+L00002078	node_compile_hint:
+L00002079	  mode: catalog_installed_command_lifecycle
+L00002080	  create_worknodes: false
+L00002081	source_lineage:
+L00002082	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0037
+L00002083	preserved_exact_tokens:
+L00002084	  - "Catalog-installed commands"
+L00002085	  - "canonical User Commands"
+L00002086	  - "same canonical command roots"
+L00002087	negative_constraints:
+L00002088	  - "Uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it."
+L00002089	owner_hints:
+L00002090	  - Plans/Commands_System.md
+L00002091	```
+L00002092	
+L00002093	### CS-027 - Commands GUI SSOT and Catalog Provenance Display
+L00002094	
+L00002095	```yaml
+L00002096	plan_unit_id: CS-027
+L00002097	unit_type: requirement
+L00002098	status: accepted
+L00002099	owner_doc: Plans/Commands_System.md
+L00002100	canonical_text: >-
+L00002101	  The Commands settings screen is part of Settings > Rules & Commands, this
+L00002102	  document is the SSOT for Commands GUI behavior, and the GUI shows whether each
+L00002103	  command is local/manual, catalog-installed, or catalog-installed with local
+L00002104	  override.
+L00002105	gui_related: true
+L00002106	gui_classification_reason: This PlanUnit governs the visible Commands settings screen and catalog provenance display.
+L00002107	split_recommended: true
+L00002108	split_recommendation_reason: Source span S0037 mixes visible GUI provenance with lifecycle and storage safety covered by CS-026.
+L00002109	depends_on: [CS-026]
+L00002110	unblocks: [CS-028, CS-029, CS-030, CS-040, CS-046, CS-049]
+L00002111	acceptance_criteria:
+L00002112	  - GUI-COMMANDS remains the anchor for Commands GUI behavior.
+L00002113	  - The Commands settings screen is part of the Rules & Commands tab in the unified Settings page.
+L00002114	  - All GUI surfaces described in Commands_System.md remain normative.
+L00002115	  - FinalGUISpec references this section as the SSOT for Commands GUI behavior.
+L00002116	  - The GUI shows whether a command is local/manual, catalog-installed, or catalog-installed with local override.
+L00002117	validation_surfaces:
+L00002118	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002119	  - python3 scripts/pm-plan-index.py validate
+L00002120	risk_class: commands_gui_ssot_drift
+L00002121	reasoning_tier: standard
+L00002122	context_scope: commands_gui_settings
+L00002123	implementation_surfaces:
+L00002124	  - Plans/Commands_System.md
+L00002125	  - Plans/FinalGUISpec.md
+L00002126	node_compile_hint:
+L00002127	  mode: commands_gui_ssot_catalog_provenance
+L00002128	  create_worknodes: false
+L00002129	source_lineage:
+L00002130	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0036
+L00002131	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0037
+L00002132	preserved_exact_tokens:
+L00002133	  - "GUI-COMMANDS"
+L00002134	  - "Rules & Commands"
+L00002135	  - "local/manual"
+L00002136	  - "catalog-installed"
+L00002137	  - "catalog-installed with local override"
+L00002138	  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md"
+L00002139	negative_constraints: []
+L00002140	owner_hints:
+L00002141	  - Plans/Commands_System.md
+L00002142	  - Plans/FinalGUISpec.md
+L00002143	```
+L00002144	
+L00002145	### CS-028 - Commands Settings Scope Selector
+L00002146	
+L00002147	```yaml
+L00002148	plan_unit_id: CS-028
+L00002149	unit_type: requirement
+L00002150	status: accepted
+L00002151	owner_doc: Plans/Commands_System.md
+L00002152	canonical_text: >-
+L00002153	  Settings > Rules & Commands includes a Commands section with a top scope
+L00002154	  selector that manages Global commands from ~/.config/puppet-master/commands/
+L00002155	  and Project commands from <project_root>/.puppet-master/commands/ when a
+L00002156	  project is active.
+L00002157	gui_related: true
+L00002158	gui_classification_reason: Scope selection is a visible control in the Commands settings section.
+L00002159	split_recommended: false
+L00002160	depends_on: [CS-012, CS-027]
+L00002161	unblocks: [CS-029, CS-046]
+L00002162	acceptance_criteria:
+L00002163	  - The Commands section within Settings > Rules & Commands provides a top-level scope selector.
+L00002164	  - Global manages commands in ~/.config/puppet-master/commands/.
+L00002165	  - Project is visible when a project is active and manages commands in <project_root>/.puppet-master/commands/.
+L00002166	validation_surfaces:
+L00002167	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002168	  - python3 scripts/pm-plan-index.py validate
+L00002169	risk_class: commands_gui_scope_drift
+L00002170	reasoning_tier: standard
+L00002171	context_scope: commands_gui_settings
+L00002172	implementation_surfaces:
+L00002173	  - Plans/Commands_System.md
+L00002174	node_compile_hint:
+L00002175	  mode: commands_gui_scope_selector
+L00002176	  create_worknodes: false
+L00002177	source_lineage:
+L00002178	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0038
+L00002179	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0039
+L00002180	preserved_exact_tokens:
+L00002181	  - "Settings > Rules & Commands"
+L00002182	  - "Global"
+L00002183	  - "Project"
+L00002184	  - "~/.config/puppet-master/commands/"
+L00002185	  - "<project_root>/.puppet-master/commands/"
+L00002186	negative_constraints: []
+L00002187	owner_hints:
+L00002188	  - Plans/Commands_System.md
+L00002189	```
+L00002190	
+L00002191	### CS-029 - Resolved Command List
+L00002192	
+L00002193	```yaml
+L00002194	plan_unit_id: CS-029
+L00002195	unit_type: requirement
+L00002196	status: accepted
+L00002197	owner_doc: Plans/Commands_System.md
+L00002198	canonical_text: >-
+L00002199	  The Commands GUI lists resolved project and global commands in a table with
+L00002200	  name, scope, description, Persona, Mode, Model, and Subtask columns, shows
+L00002201	  project-local badges and /x- prefixes, and sorts alphabetically with
+L00002202	  project-local overrides before matching global commands.
+L00002203	gui_related: true
+L00002204	gui_classification_reason: The resolved command list is a visible table in Settings.
+L00002205	split_recommended: false
+L00002206	depends_on: [CS-012, CS-021, CS-022, CS-027, CS-028]
+L00002207	unblocks: [CS-046]
+L00002208	acceptance_criteria:
+L00002209	  - The table lists all resolved project and global commands.
+L00002210	  - Project-local commands are indicated with a badge.
+L00002211	  - Columns include Name, Scope, Description, Persona, Mode, Model, and Subtask.
+L00002212	  - Name is bold with /x- prefix shown.
+L00002213	  - Description is truncated to one line.
+L00002214	  - Persona, Mode, and Model show unset inherited states as specified.
+L00002215	  - Subtask true is indicated with a checkbox icon.
+L00002216	  - The table sorts alphabetically by name with project-local entries before global entries when names match.
+L00002217	validation_surfaces:
+L00002218	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002219	  - python3 scripts/pm-plan-index.py validate
+L00002220	risk_class: commands_gui_list_drift
+L00002221	reasoning_tier: standard
+L00002222	context_scope: commands_gui_settings
+L00002223	implementation_surfaces:
+L00002224	  - Plans/Commands_System.md
+L00002225	node_compile_hint:
+L00002226	  mode: commands_gui_resolved_command_list
+L00002227	  create_worknodes: false
+L00002228	source_lineage:
+L00002229	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0040
+L00002230	preserved_exact_tokens:
+L00002231	  - "/x-"
+L00002232	  - "Scope"
+L00002233	  - "Persona"
+L00002234	  - "Mode"
+L00002235	  - "Model"
+L00002236	  - "Subtask"
+L00002237	  - "inherit"
+L00002238	negative_constraints: []
+L00002239	owner_hints:
+L00002240	  - Plans/Commands_System.md
+L00002241	```
+L00002242	
+L00002243	### CS-030 - Command Create Editor Form
+L00002244	
+L00002245	```yaml
+L00002246	plan_unit_id: CS-030
+L00002247	unit_type: requirement
+L00002248	status: accepted
+L00002249	owner_doc: Plans/Commands_System.md
+L00002250	canonical_text: >-
+L00002251	  New Command opens an editor form for name, description, Persona, mode, model,
+L00002252	  subtask, permissions profile override, override built-in, template body, and
+L00002253	  project-local or global save scope, using canonical validation and syntax
+L00002254	  highlighting for command template patterns.
+L00002255	gui_related: true
+L00002256	gui_classification_reason: The create editor form is a visible command authoring UI.
+L00002257	split_recommended: true
+L00002258	split_recommendation_reason: Source span S0041 mixes editor controls with save-time validation covered by CS-033.
+L00002259	depends_on: [CS-013, CS-014, CS-015, CS-021, CS-022, CS-025, CS-027]
+L00002260	unblocks: [CS-031, CS-033, CS-034, CS-046]
+L00002261	acceptance_criteria:
+L00002262	  - New Command opens an editor form.
+L00002263	  - Name is validated per section 2.5 and collision-checked per section 2.4.
+L00002264	  - Description is required and has max 200 chars.
+L00002265	  - Persona, Mode, Model, Subtask, Permissions profile override, and Override built-in controls are present as specified.
+L00002266	  - Override built-in is visible only in Expert mode.
+L00002267	  - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
+L00002268	  - Template body uses a Markdown editor with syntax highlighting for $ARGUMENTS, $N, @path, and !`cmd` patterns.
+L00002269	  - Scope selector supports project-local or global.
+L00002270	validation_surfaces:
+L00002271	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002272	  - python3 scripts/pm-plan-index.py validate
+L00002273	risk_class: commands_gui_create_form_drift
+L00002274	reasoning_tier: standard
+L00002275	context_scope: commands_gui_editor
+L00002276	implementation_surfaces:
+L00002277	  - Plans/Commands_System.md
+L00002278	node_compile_hint:
+L00002279	  mode: commands_gui_create_editor_form
+L00002280	  create_worknodes: false
+L00002281	source_lineage:
+L00002282	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0041
+L00002283	preserved_exact_tokens:
+L00002284	  - "New Command"
+L00002285	  - "override_builtin"
+L00002286	  - "Expert mode"
+L00002287	  - "$ARGUMENTS"
+L00002288	  - "$N"
+L00002289	  - "@path"
+L00002290	  - "!`cmd`"
+L00002291	negative_constraints:
+L00002292	  - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+L00002293	owner_hints:
+L00002294	  - Plans/Commands_System.md
+L00002295	```
+L00002296	
+L00002297	### CS-031 - Command Edit Save Targets
+L00002298	
+L00002299	```yaml
+L00002300	plan_unit_id: CS-031
+L00002301	unit_type: requirement
+L00002302	status: accepted
+L00002303	owner_doc: Plans/Commands_System.md
+L00002304	canonical_text: >-
+L00002305	  Row click or edit button opens the command editor pre-populated; editing a
+L00002306	  global command while a project is active offers Save as project override or
+L00002307	  Save globally.
+L00002308	gui_related: true
+L00002309	gui_classification_reason: Edit entry points and save-target options are visible editor interactions.
+L00002310	split_recommended: false
+L00002311	depends_on: [CS-012, CS-030]
+L00002312	unblocks: [CS-032]
+L00002313	acceptance_criteria:
+L00002314	  - Row click opens the same editor pre-populated.
+L00002315	  - Edit button opens the same editor pre-populated.
+L00002316	  - Editing a global command while a project is active offers Save as project override.
+L00002317	  - Editing a global command while a project is active offers Save globally.
+L00002318	validation_surfaces:
+L00002319	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002320	  - python3 scripts/pm-plan-index.py validate
+L00002321	risk_class: commands_gui_edit_target_drift
+L00002322	reasoning_tier: standard
+L00002323	context_scope: commands_gui_editor
+L00002324	implementation_surfaces:
+L00002325	  - Plans/Commands_System.md
+L00002326	node_compile_hint:
+L00002327	  mode: commands_gui_edit_save_targets
+L00002328	  create_worknodes: false
+L00002329	source_lineage:
+L00002330	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0042
+L00002331	preserved_exact_tokens:
+L00002332	  - "Save as project override"
+L00002333	  - "Save globally"
+L00002334	negative_constraints: []
+L00002335	owner_hints:
+L00002336	  - Plans/Commands_System.md
+L00002337	```
+L00002338	
+L00002339	### CS-032 - Command Delete and Reveal Behavior
+L00002340	
+L00002341	```yaml
+L00002342	plan_unit_id: CS-032
+L00002343	unit_type: requirement
+L00002344	status: accepted
+L00002345	owner_doc: Plans/Commands_System.md
+L00002346	canonical_text: >-
+L00002347	  Delete uses a confirmation modal; deleting a project-local command that
+L00002348	  overrides a global command reveals the global version, while deleting a global
+L00002349	  command with no project override removes it entirely.
+L00002350	gui_related: true
+L00002351	gui_classification_reason: Delete confirmation and reveal behavior are visible settings interactions.
+L00002352	split_recommended: false
+L00002353	depends_on: [CS-012, CS-026, CS-031]
+L00002354	unblocks: []
+L00002355	acceptance_criteria:
+L00002356	  - Delete button uses a confirmation modal.
+L00002357	  - Deleting a project-local command that overrides a global one reveals the global version.
+L00002358	  - Deleting a global command with no project override removes it entirely.
+L00002359	validation_surfaces:
+L00002360	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002361	  - python3 scripts/pm-plan-index.py validate
+L00002362	risk_class: commands_gui_delete_drift
+L00002363	reasoning_tier: standard
+L00002364	context_scope: commands_gui_editor
+L00002365	implementation_surfaces:
+L00002366	  - Plans/Commands_System.md
+L00002367	node_compile_hint:
+L00002368	  mode: commands_gui_delete_reveal_behavior
+L00002369	  create_worknodes: false
+L00002370	source_lineage:
+L00002371	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0043
+L00002372	preserved_exact_tokens:
+L00002373	  - "confirmation modal"
+L00002374	  - "project-local command"
+L00002375	  - "global version"
+L00002376	negative_constraints: []
+L00002377	owner_hints:
+L00002378	  - Plans/Commands_System.md
+L00002379	```
+L00002380	
+L00002381	### CS-033 - Command Save Schema Validation
+L00002382	
+L00002383	```yaml
+L00002384	plan_unit_id: CS-033
+L00002385	unit_type: requirement
+L00002386	status: accepted
+L00002387	owner_doc: Plans/Commands_System.md
+L00002388	canonical_text: >-
+L00002389	  Every command save validates the file against the command schema, displays
+L00002390	  inline errors for reserved names, invalid formats, missing description,
+L00002391	  invalid mode, invalid model, and invalid override_builtin use, and blocks save
+L00002392	  until all errors are resolved.
+L00002393	gui_related: true
+L00002394	gui_classification_reason: Inline save validation errors and blocked saves are visible editor behavior.
+L00002395	split_recommended: true
+L00002396	split_recommendation_reason: Span map inferred S0044 as non-GUI, but the source text governs visible inline errors and save blocking.
+L00002397	depends_on: [CS-013, CS-014, CS-025, CS-030]
+L00002398	unblocks: [CS-049]
+L00002399	acceptance_criteria:
+L00002400	  - Every save validates the command file against section 3 schema.
+L00002401	  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format.
+L00002402	  - If override_builtin: true is set while the command name matches a reserved Assistant Chat slash command, inline validation explains that override_builtin does not apply to canonical reserved chat commands.
+L00002403	  - Save is blocked until errors are resolved.
+L00002404	validation_surfaces:
+L00002405	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002406	  - python3 scripts/pm-plan-index.py validate
+L00002407	risk_class: command_save_validation_drift
+L00002408	reasoning_tier: high
+L00002409	context_scope: commands_gui_editor_validation
+L00002410	implementation_surfaces:
+L00002411	  - Plans/Commands_System.md
+L00002412	node_compile_hint:
+L00002413	  mode: commands_gui_save_schema_validation
+L00002414	  create_worknodes: false
+L00002415	source_lineage:
+L00002416	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0041
+L00002417	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0044
+L00002418	preserved_exact_tokens:
+L00002419	  - "override_builtin: true"
+L00002420	  - "reserved name collision"
+L00002421	  - "invalid name format"
+L00002422	  - "missing description"
+L00002423	  - "invalid mode value"
+L00002424	  - "invalid model format"
+L00002425	negative_constraints:
+L00002426	  - "override_builtin does not apply to canonical reserved chat commands."
+L00002427	  - "Block save until errors are resolved."
+L00002428	owner_hints:
+L00002429	  - Plans/Commands_System.md
+L00002430	```
+L00002431	
+L00002432	### CS-034 - Dry-Run Preview Rendering
+L00002433	
+L00002434	```yaml
+L00002435	plan_unit_id: CS-034
+L00002436	unit_type: requirement
+L00002437	status: accepted
+L00002438	owner_doc: Plans/Commands_System.md
+L00002439	canonical_text: >-
+L00002440	  The command editor Preview resolves a template with sample arguments and
+L00002441	  renders the fully resolved prompt in a read-only Markdown view with
+L00002442	  highlighted placeholder substitutions, file-include results, shell-injection
+L00002443	  results, or permission-blocked placeholders.
+L00002444	gui_related: true
+L00002445	gui_classification_reason: Dry-run preview is a visible editor preview surface.
+L00002446	split_recommended: true
+L00002447	split_recommendation_reason: Source span S0045 mixes preview rendering with execution safety covered by CS-035.
+L00002448	depends_on: [CS-015, CS-016, CS-017, CS-024, CS-030]
+L00002449	unblocks: [CS-035, CS-046, CS-049]
+L00002450	acceptance_criteria:
+L00002451	  - DRY-RUN remains the anchor for dry-run preview behavior.
+L00002452	  - Preview resolves the template with sample arguments.
+L00002453	  - Preview displays the fully rendered prompt without submitting it.
+L00002454	  - Placeholder substitutions are highlighted.
+L00002455	  - File-include and shell-injection results appear, or permission-blocked placeholders appear.
+L00002456	  - Preview uses a read-only rendered Markdown view.
+L00002457	validation_surfaces:
+L00002458	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002459	  - python3 scripts/pm-plan-index.py validate
+L00002460	risk_class: dry_run_preview_rendering_drift
+L00002461	reasoning_tier: standard
+L00002462	context_scope: commands_gui_preview
+L00002463	implementation_surfaces:
+L00002464	  - Plans/Commands_System.md
+L00002465	node_compile_hint:
+L00002466	  mode: commands_gui_dry_run_preview_rendering
+L00002467	  create_worknodes: false
+L00002468	source_lineage:
+L00002469	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0045
+L00002470	preserved_exact_tokens:
+L00002471	  - "DRY-RUN"
+L00002472	  - "Preview"
+L00002473	  - "permission-blocked placeholders"
+L00002474	  - "read-only rendered Markdown view"
+L00002475	negative_constraints: []
+L00002476	owner_hints:
+L00002477	  - Plans/Commands_System.md
+L00002478	```
+L00002479	
+L00002480	### CS-035 - Dry-Run Preview Execution Safety
+L00002481	
+L00002482	```yaml
+L00002483	plan_unit_id: CS-035
+L00002484	unit_type: constraint
+L00002485	status: accepted
+L00002486	owner_doc: Plans/Commands_System.md
+L00002487	canonical_text: >-
+L00002488	  Dry-run preview does not execute any run; shell injections in preview mode may
+L00002489	  execute the shell command only under bash permission and must not submit the
+L00002490	  result to any agent.
+L00002491	gui_related: false

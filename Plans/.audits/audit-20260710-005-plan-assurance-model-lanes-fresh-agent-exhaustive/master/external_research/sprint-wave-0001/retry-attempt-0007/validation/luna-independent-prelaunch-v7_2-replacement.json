@@ -1,0 +1,235 @@
+{
+  "checker": "external_research_luna_receipt_closure_prelaunch_v7_2_replacement",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "effort": "max",
+  "fork_turns": "none",
+  "status": "FAIL_CLOSED",
+  "errors": [
+    {
+      "code": "environment_runtime_discovery",
+      "phase": "preflight",
+      "message": "The discovered python3 interpreter was Python 3.9.6, while the frozen repo validator bundle contained only rpds.cpython-312-darwin.so. Importing the sealed common.py validator path failed at jsonschema -> referencing -> rpds with ModuleNotFoundError: No module named 'rpds.rpds'.",
+      "discovered_python3": "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "discovered_python3_version": "3.9.6",
+      "bundle_extension": "master/dependencies/jsonschema-draft202012-v1/site-packages/rpds/rpds.cpython-312-darwin.so",
+      "exception_type": "ModuleNotFoundError",
+      "exception_message": "No module named 'rpds.rpds'",
+      "credit": 0
+    },
+    {
+      "code": "safety_stop",
+      "phase": "preflight",
+      "message": "The authorized safety stop forbade the Python 3.9 preload or in-process emulation, any retry or restart, and any PASS. The parent supplied that the authoritative CPython 3.12 path exists, but this reviewer did not reopen or reuse it.",
+      "credit": 0
+    }
+  ],
+  "scope": {
+    "fresh_direct_luna_replacement_reviewer": true,
+    "descendants_launched": false,
+    "followups_launched": false,
+    "retries_launched": false,
+    "production_writers_invoked": false,
+    "only_report_write_authorized": true,
+    "canonical_plans_read_for_product_review": false,
+    "canonical_plans_mutated": false,
+    "prior_v7_evidence_mutated": false,
+    "prior_v7_1_evidence_mutated": false,
+    "seam_checkpoint_mutated": false,
+    "activation_mutated": false,
+    "production_receipts_or_capture_mutated": false
+  },
+  "predecessor_binding": {
+    "thread_id": "019f546a-e7bc-7990-8cf5-e422d7753736",
+    "status": "infrastructure_interrupted",
+    "report_exists": false,
+    "semantic_credit": 0,
+    "production_writes": 0,
+    "followup_or_identity_reuse_forbidden": true,
+    "preserved_as_zero_credit_lineage": true,
+    "reused": false
+  },
+  "seam_checkpoint_binding": {
+    "path": "master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/independent-seam-checkpoint.json",
+    "sha256": "72bfdc5519bb3b25f723a6a107320357a9176c67db8990f444193274cf27c910",
+    "eligible_assignments": 61,
+    "quarantined_assignments": [
+      "A005CDSV2-0002",
+      "A005CDSV2-0006",
+      "A005CDSV2-0039"
+    ],
+    "coverage_credit": 0,
+    "research_credit": 0,
+    "promotion_credit": 0,
+    "spec_credit": 0,
+    "merge_credit": 0,
+    "checkpoint_is_not_promotion": true
+  },
+  "input_hashes": {
+    "policy_v17": {
+      "path": "master/coordination/CONCURRENCY_POLICY_V17.json",
+      "sha256": "db664f1701b7d2e2a001f527663f6150e891af68c74c9e737d26f549005c1876"
+    },
+    "terminal_preparation_report_v7_2": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/terminal-sol-preparation-report-v7_2.json",
+      "sha256": "17835931a537616594933a978ab6a00527ee7222370a6c2f8e4ea603c11421a4"
+    },
+    "terminal_authority_v7_2": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/authority-v7_2-terminal.json",
+      "sha256": "cb2e296fb5712e26a4fab97a11df3210c5f8dccaffe045397679fc126c0d7e39"
+    },
+    "terminal_verifier_v7_2": "e1e15d1252eae306afaaf357aee655cebbb773d0c91d680f8d5712de7b6e830f",
+    "result_validator_v7_2": "c678f65ea3518a12415af57581818cb43399eb04432412447b69ae7f0774c84f",
+    "sealed_receipt_writer_v7_2": "997e58260cf5342bee7d060e53a71278417ed253e834f3da1f1c6eda696e6d24",
+    "sealed_native_capture_writer_v7_2": "bf02818c247007f5d6c486e48f2c6b74d5086a9221f2d0734e028a9b922ad1d5",
+    "receipt_schema_v7_2": "a39987afa695c4a2576a8292d8bd0f2207e09288afeddbba8b5c10d9fbb3a5bb",
+    "capture_schema_v7_2": "9758ef23d92f2eab80d2c1ccdd3a87b3ec867daf556fef49c1d20c318ee390be",
+    "tests_v7_2": "8dcc732ddb4b7f1061df9879cd8fe7dac5053594908f4f77166979d51882fd5b",
+    "native_state_v7_1": "c893c4d64004c4bc9d021f75238f832356afa353c4fd7de2eebea45b8b7a2cd5",
+    "terminal_proof_ER_0003": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+    "terminal_proof_ER_0008": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047"
+  },
+  "activation_digest_maps": {
+    "current_raw_file_sha256": {
+      "core": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+      "ER-0003": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+      "ER-0008": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+      "envelope": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406"
+    },
+    "historical_embedded_canonical_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40"
+    },
+    "recomputed_canonical_object_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+      "envelope": "c60f6b3c51fdc9661f782f81667a8a570ea8f9e808ea0f7c20846f24537ad4f5"
+    },
+    "raw_file_binding_verified": true,
+    "historical_embedded_values_verified": true,
+    "activation_restamped": false
+  },
+  "result_digest_maps": {
+    "raw_file_sha256": {
+      "ER-0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+      "ER-0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+    },
+    "canonical_object_sha256": {
+      "ER-0003": "d2eeceeb712ad5a5c0f0b67825ff0f78769e2e83275b28de4a87137b71ba27dc",
+      "ER-0008": "d2079f27bd8d8c10a7a1eb2d48917a5d67d69153b372c68a5096ce16a8a0612c"
+    },
+    "result_files_mutated": false
+  },
+  "v7_1_failure_and_v7_2_fix": {
+    "old_common_result_errors_expected": {
+      "ER-0003": [
+        "binding:activation_core_sha256",
+        "binding:leaf_dispatch_authorization_sha256"
+      ],
+      "ER-0008": [
+        "binding:activation_core_sha256",
+        "binding:leaf_dispatch_authorization_sha256"
+      ]
+    },
+    "v7_2_isolated_result_errors_expected": {
+      "ER-0003": [],
+      "ER-0008": []
+    },
+    "independent_execution_under_authoritative_pinned_runtime": false,
+    "credit": 0,
+    "reason_not_executed": "Safety stop forbade the unpinned Python 3.9 preload/in-process workaround before receipt closure.",
+    "delegation_fields_only": [
+      "activation_core_sha256",
+      "leaf_dispatch_authorization_sha256"
+    ]
+  },
+  "production_zero_state": {
+    "before": {
+      "replacement_report_preexisting": false,
+      "ER-0003_production_dispatch_receipt_present": false,
+      "ER-0008_production_dispatch_receipt_present": false,
+      "production_runtime_native_capture_present": false,
+      "activation_mutation": false,
+      "result_mutation": false,
+      "coverage_credit": 0,
+      "research_credit": 0,
+      "promotion_credit": 0,
+      "spec_credit": 0,
+      "merge_credit": 0
+    },
+    "after": {
+      "ER-0003_production_dispatch_receipt_present": false,
+      "ER-0008_production_dispatch_receipt_present": false,
+      "production_runtime_native_capture_present": false,
+      "activation_mutation": false,
+      "result_mutation": false,
+      "coverage_credit": 0,
+      "research_credit": 0,
+      "promotion_credit": 0,
+      "spec_credit": 0,
+      "merge_credit": 0
+    },
+    "production_writes": 0,
+    "verified_immediately_before_and_after_stop": true
+  },
+  "temporary_fixture_and_writers": {
+    "fixture_root": "validation/receipt-closure-v7_2/fixture-sandbox/full-real",
+    "required_receipts": 2,
+    "required_capture_rows": 2,
+    "receipt_writer_ER_0003": "not_invoked",
+    "receipt_writer_ER_0008": "not_invoked",
+    "capture_writer": "not_invoked",
+    "observed_temporary_receipts": 0,
+    "observed_temporary_capture_rows": 0,
+    "observed_temporary_files": [],
+    "fixture_cleaned": true,
+    "production_output_paths_passed": false,
+    "credit": 0
+  },
+  "tests_and_independent_probes": {
+    "frozen_terminal_authority_claim": {
+      "passed": 644,
+      "total": 644,
+      "failed": 0,
+      "test_digest": "227f23a4c2d05b87997948fe1a97954c40efa8a3f4c896ac277095fae85fc76c"
+    },
+    "this_reviewer": {
+      "authoritative_pinned_runtime_executed": false,
+      "passed": 0,
+      "total": 0,
+      "failed": 0,
+      "test_digest": null,
+      "independent_probes_credited": 0,
+      "receipt_capture_identity_join": "not_run",
+      "toctou_closure": "not_run",
+      "schema_validation": "blocked_by_runtime_import",
+      "writer_invocation_count": 0,
+      "capture_invocation_count": 0
+    }
+  },
+  "no_mutation_and_identity_reuse": {
+    "predecessor_identity_reused": false,
+    "new_descendant_identity_created": false,
+    "followup_identity_created": false,
+    "retry_identity_created": false,
+    "activation_bytes_unchanged": true,
+    "result_bytes_unchanged": true,
+    "production_receipt_capture_bytes_created": false,
+    "unrelated_phase_mutated": false,
+    "sole_persistent_write_is_this_report": true
+  },
+  "credits": {
+    "coverage": 0,
+    "research": 0,
+    "promotion": 0,
+    "spec": 0,
+    "merge": 0
+  },
+  "sole_next_action": "none_authorized_in_this_turn; preserve this zero-credit fail-closed lineage and terminate",
+  "terminal_response_required": "PMR1"
+}

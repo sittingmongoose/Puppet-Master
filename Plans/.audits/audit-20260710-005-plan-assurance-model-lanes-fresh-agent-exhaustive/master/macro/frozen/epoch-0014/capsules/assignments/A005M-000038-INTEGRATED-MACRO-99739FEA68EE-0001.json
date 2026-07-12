@@ -1,0 +1,182 @@
+{
+  "assignment_id": "A005M-000038-INTEGRATED-MACRO-99739FEA68EE-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    2368
+  ],
+  "bundle_id": "MACRO-99739FEA68EE-0001",
+  "context_ranges": [
+    [
+      2369,
+      2380
+    ]
+  ],
+  "document_path": "Plans/FileSafe.md",
+  "micro_window_ids": [
+    "WIN-99739FEA68EE-0001",
+    "WIN-99739FEA68EE-0002",
+    "WIN-99739FEA68EE-0003",
+    "WIN-99739FEA68EE-0004",
+    "WIN-99739FEA68EE-0005",
+    "WIN-99739FEA68EE-0006"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        394
+      ],
+      "core_sha256": "0641fa3635fdb900cc0897132a52225679a27909e2648637d8b771a5710e33d0",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-001"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 8842,
+      "window_id": "WIN-99739FEA68EE-0001"
+    },
+    {
+      "core_range": [
+        395,
+        790
+      ],
+      "core_sha256": "119996ca6ef73cfe0ded3899edb8c58830789221a90195e37811ab52374b884b",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-002"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-002"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4517,
+      "window_id": "WIN-99739FEA68EE-0002"
+    },
+    {
+      "core_range": [
+        791,
+        1186
+      ],
+      "core_sha256": "d29360560af90cfe4885c6e75dc625e3c3949b6d7fbbbc4352c622783194713e",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-003"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-003"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5106,
+      "window_id": "WIN-99739FEA68EE-0003"
+    },
+    {
+      "core_range": [
+        1187,
+        1581
+      ],
+      "core_sha256": "2e8753351eb48996bfe2de319e8535cc05c152233b3f8cb95c3748bbf09b4198",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-004"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-004"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10075,
+      "window_id": "WIN-99739FEA68EE-0004"
+    },
+    {
+      "core_range": [
+        1582,
+        1973
+      ],
+      "core_sha256": "dc3b30bd9cf6f14ea23ae68bcfe660ae8d339d068bc73339be44efd918e13a7f",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-005"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-005"
+      ],
+      "structural_paths": [],
+      "token_estimate": 6411,
+      "window_id": "WIN-99739FEA68EE-0005"
+    },
+    {
+      "core_range": [
+        1974,
+        2368
+      ],
+      "core_sha256": "f6adc75347427d633e06533616b3f6e9dd5fde6122d3687e022b333d86bda821",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileSafe.md:CONT-006"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileSafe.md:CONT-006"
+      ],
+      "structural_paths": [],
+      "token_estimate": 6837,
+      "window_id": "WIN-99739FEA68EE-0006"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/05/05db28448df549a3b091a59e349be8079b5bb0fb9c16c66caeac9e76845a36d7.txt",
+  "source_excerpt_sha256": "05db28448df549a3b091a59e349be8079b5bb0fb9c16c66caeac9e76845a36d7",
+  "source_sha256": "d5e5bac279f215379f79b061d0273bfdc217fe608cd0c264913f441cf8518113",
+  "token_estimate": 41788
+}

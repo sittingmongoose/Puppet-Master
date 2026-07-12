@@ -1,0 +1,695 @@
+{
+  "assignment_id": "A005M15-000218-INTEGRATED-MACRO15-510B3DE676A3-0006",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "failures_recovery", "security_privacy", "recovery_rollback", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  PM persists Free Models activation receipts, last-known-good refs, quarantine state, rollback evidence, failed-check state, route impact, affected provider/model ids, redaction profile, redaction summary, and support export manifests. Failed or quarantined updates keep the current known-good state active. Diagnostics/export may preserve source/ref/hash and route impact while raw secrets, tokens, provider error payloads, and sensitive provider responses remain redacted or Advanced/Support-only.",
+          "line_end": 15997,
+          "line_start": 15997,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Activation failures preserve a usable known-good configuration and leave supportable rollback and quarantine evidence without putting raw credentials into normal records.",
+      "item_id": "A005M15-I001",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-225", "SEMANTIC:PLANUNIT:SP-225"],
+      "statement": "SP-225 defines durable activation, quarantine, rollback, route-impact, redaction, and support-export records and requires failed or quarantined updates to leave the current known-good state active.",
+      "title": "Free Models activation rollback evidence is durable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "authority", "security_privacy", "builder_discretion", "ambiguity_unknowns", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  PM persists Free Models activation receipts, last-known-good refs, quarantine state, rollback evidence, failed-check state, route impact, affected provider/model ids, redaction profile, redaction summary, and support export manifests. Failed or quarantined updates keep the current known-good state active. Diagnostics/export may preserve source/ref/hash and route impact while raw secrets, tokens, provider error payloads, and sensitive provider responses remain redacted or Advanced/Support-only.",
+          "line_end": 15997,
+          "line_start": 15997,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Do not expose raw provider error payloads in normal expanded availability rows.",
+          "line_end": 16037,
+          "line_start": 16037,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "advanced_support_redaction_authority_ambiguity",
+      "impact": "Implementations can disagree on whether Advanced/Support may persist or export unredacted provider payloads or sensitive responses, creating privacy leakage and inconsistent support behavior.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-225", "SEMANTIC:PLANUNIT:SP-225"],
+      "statement": "The phrase 'redacted or Advanced/Support-only' makes access restriction an apparent alternative to redaction, while the explicit prohibition only addresses normal expanded rows; the permitted payload classes, authorization, retention, and export rules for Advanced/Support are not closed.",
+      "title": "Advanced/Support redaction boundary is under-specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "ownership", "failures_recovery", "security_privacy", "operations", "compatibility_migration", "recovery_rollback"],
+      "evidence": [
+        {
+          "exact_quote": "  explicit, and stale/orphaned resources reconcile through retained_for_debug, cleanup_pending, cleaned, orphaned, or",
+          "line_end": 16062,
+          "line_start": 16062,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Failed or retained instances cannot disappear without cleanup_retention_receipt or explicit orphan reconciliation state.",
+          "line_end": 16071,
+          "line_start": 16071,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Ephemeral and failed host resources remain auditable rather than disappearing when the backing runtime resource is missing.",
+      "item_id": "A005M15-I003",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-226", "SEMANTIC:PLANUNIT:SP-226"],
+      "statement": "SP-226 establishes PM-owned host identities, explicit retention/cleanup states, and receipt-backed disappearance rules for containerized host resources.",
+      "title": "Container host cleanup uses explicit retained and orphan states"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "failures_recovery", "operations", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Do not infer cleanup from missing runtime resources; use reference_state and cleanup receipts.",
+          "line_end": 16123,
+          "line_start": 16123,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  confidence, health_state, source, and blocked_reason_code. Instances are ephemeral by default, retain-on-failure is",
+          "line_end": 16061,
+          "line_start": 16061,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cleanup_state_machine_and_reference_state_missing",
+      "impact": "Cleanup workers can make different destructive decisions after crashes, retries, or concurrent reconciliation, and fixtures cannot falsify illegal transitions without a closed state machine.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-226", "SEMANTIC:PLANUNIT:SP-226"],
+      "statement": "The unit requires reference_state but does not include it in the preserved host-record fields, and it names cleanup states without legal transitions, transition authority, idempotency behavior, retry ordering, terminality, or retention deadlines.",
+      "title": "Container cleanup state machine is not closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "consumers", "gui_truth", "scale_performance", "acceptance_oracles", "offline_network_loss", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  P0-HISTORY-STORAGE-CAPS (P0) is compiled as canonical Puppet Master intent for Bounded session/history storage: Add HistoryObjectBudget and ManagedOutputRef requirements. Segment large histories by reference; never inline unbounded JSON into model context. The preserved PM gap/delta is: Need explicit per-record, per-turn, per-tool-result, and per-thread cap policy with managed-output references and context compiler backpressure. The observed external-repo signal remains source-lineage evidence: Agent Zero issue list reports chat history metadata ~127MB and raw JSON pollution of utility-model context; Cline issues/PRs target large MCP result crashes and compacted provider history; Pi has a SQLite session-storage PR.",
+          "line_end": 16147,
+          "line_start": 16147,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- Large tool results remain retrievable from artifacts with hashes.",
+          "line_end": 16157,
+          "line_start": 16157,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Oversized histories and tool results are kept out of UI/model loads while remaining retrievable through hashed artifact references.",
+      "item_id": "A005M15-I005",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-227", "SEMANTIC:PLANUNIT:SP-227"],
+      "statement": "SP-227 requires bounded history objects, managed output references, segmentation before UI or model-context load, compact summaries, and hash-addressable retrieval.",
+      "title": "Large histories are segmented into managed references"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "security_privacy", "operations", "scale_performance", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: Need explicit per-record, per-turn, per-tool-result, and per-thread cap policy with managed-output references and context compiler backpressure.",
+          "line_end": 16214,
+          "line_start": 16214,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- 127MB metadata fixture is rejected/segmented before UI or model context load.",
+          "line_end": 16155,
+          "line_start": 16155,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "history_budget_policy_and_managed_ref_lifecycle_missing",
+      "impact": "Builders must invent thresholds, overflow behavior, reference schemas, authorization, retention, garbage collection, and degraded-mode behavior; the 127MB fixture alone cannot prove bounded operation across lower limits or nested results.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:SP-227", "SEMANTIC:PLANUNIT:SP-227"],
+      "statement": "The accepted unit repeats that explicit per-record, per-turn, per-tool-result, and per-thread caps are needed but supplies no numeric/default/configurable policy or HistoryObjectBudget and ManagedOutputRef value/lifecycle contracts.",
+      "title": "History caps and managed-reference lifecycle remain undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "states_transitions", "consumers", "gui_truth", "failures_recovery", "operations", "scale_performance", "acceptance_oracles", "scale_limits", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS (P1) is compiled as canonical Puppet Master intent for Resource ceilings for indexers/watchers/background agents: Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls. The preserved PM gap/delta is: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation. The observed external-repo signal remains source-lineage evidence: Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.",
+          "line_end": 16227,
+          "line_start": 16227,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- Quota exceeded degrades with warning and exact subsystem, not crash.",
+          "line_end": 16236,
+          "line_start": 16236,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Background subsystems are expected to degrade visibly and recoverably instead of exhausting host resources or crashing.",
+      "item_id": "A005M15-I007",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-228", "SEMANTIC:PLANUNIT:SP-228"],
+      "statement": "SP-228 introduces per-project/global resource ceilings with quota warnings, backoff, suspension, prioritization, and user-facing Explain/Resume controls.",
+      "title": "Indexer and watcher quotas degrade visibly"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "gui_truth", "failures_recovery", "operations", "scale_performance", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation.",
+          "line_end": 16295,
+          "line_start": 16295,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- Large repo cannot allocate unbounded watchers.",
+          "line_end": 16235,
+          "line_start": 16235,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "resource_quota_values_precedence_and_gui_state_missing",
+      "impact": "Implementations can choose incompatible caps and fairness rules, disagree when global versus project limits win, and present warning/resume states that are inaccessible, stale, or unable to recover after network or process loss.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:SP-228", "SEMANTIC:PLANUNIT:SP-228"],
+      "statement": "No actual ceilings, accounting windows, precedence, prioritization algorithm, suspension/resume state machine, caller authority, or Explain/Resume GUI contract is specified; 'unbounded' is not a falsifiable maximum.",
+      "title": "Resource quota policy and control states are not buildable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "states_transitions", "consumers", "gui_truth", "failures_recovery", "operations", "scale_performance", "acceptance_oracles", "recovery_rollback", "scale_limits", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  P0-SYSTEM-RESOURCE-GOVERNOR (P0) is compiled as canonical Puppet Master intent for System memory/process/file-watcher/resource management: Define RuntimeResourceGovernor: memory budgets, queue budgets, process pools, stale helper reaper, file-watcher caps, terminal scrollback/transcript retention, MCP transport cleanup, crash snapshot budget, low-memory degradation mode, and GUI-visible resource alerts. The preserved PM gap/delta is: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes. The observed external-repo signal remains source-lineage evidence: Ghostty reports major memory leaks under long-running Claude Code sessions; Warp reports CPU hangs and large-output TUI crashes; Codex reports stale Computer Use/MCP/app-server helper accumulation; Agent Zero reports large chat.json/memory scalability issues.",
+          "line_end": 16308,
+          "line_start": 16308,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- Low-memory mode disables optional previews/agents before core runtime fails.",
+          "line_end": 16319,
+          "line_start": 16319,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "The intended governor covers the major resource-consuming runtime families and preserves core operation by degrading optional work first.",
+      "item_id": "A005M15-I009",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-229", "SEMANTIC:PLANUNIT:SP-229"],
+      "statement": "SP-229 broadens resource governance across memory, queues, process pools, helpers, watchers, terminal output, MCP transports, crash snapshots, low-memory mode, and visible alerts.",
+      "title": "Cross-runtime governor prioritizes core survival"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "propagation", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "scale_limits", "accessibility", "localization", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes.",
+          "line_end": 16386,
+          "line_start": 16386,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "- Closing/crashing PM reaps child helpers or marks them orphaned for cleanup.",
+          "line_end": 16316,
+          "line_start": 16316,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cross_runtime_governor_contract_and_ownership_missing",
+      "impact": "Multiple runtime owners can apply conflicting accounting and cleanup, while crashes or pressure races can kill essential processes, leak helpers, or oscillate optional services without deterministic recovery.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:SP-229", "SEMANTIC:PLANUNIT:SP-229"],
+      "statement": "The unit calls for explicit limits but provides none and leaves resource ownership, cross-subsystem accounting, pressure signals, low-memory entry/exit thresholds, orphan reaping deadlines, prioritization, concurrency, and alert presentation unspecified; its boundary with SP-227/SP-228 is also unresolved.",
+      "title": "System resource governor remains an intent shell"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "security_privacy", "propagation", "operations", "scale_performance", "compatibility_migration", "acceptance_oracles", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Plans/event_record.schema.json. Seglog is the authoritative append-only",
+          "line_end": 16401,
+          "line_start": 16401,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Replay order is deterministic and not timestamp-derived.",
+          "line_end": 16418,
+          "line_start": 16418,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Consumers have a single append-only event authority and deterministic replay basis, while redb remains rebuildable and legacy envelopes cannot become a second canonical format.",
+      "item_id": "A005M15-I011",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-230", "SEMANTIC:PLANUNIT:SP-230"],
+      "statement": "SP-230 fixes seglog as the MessagePack EventRecord authority, constrains redb to rebuildable indexes/projections/checkpoints, orders replay without timestamps, validates schema identity/version, and treats EventEnvelopeV1 as migration input only.",
+      "title": "EventRecord authority and replay boundary are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "failures_recovery", "propagation", "operations", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  projections, idempotency indexes, and event_record_index.v1 lookup rows that",
+          "line_end": 16403,
+          "line_start": 16403,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Do not infer schema shape from event_type when schema_id or schema_version is missing or unsupported.",
+          "line_end": 16451,
+          "line_start": 16451,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "event_append_projection_partial_failure_protocol_missing",
+      "impact": "After crashes or unsupported inputs, producers and consumers can disagree whether an append committed, whether a projection is trustworthy, and whether replay, quarantine, retry, or operator intervention is required.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-230", "SEMANTIC:PLANUNIT:SP-230"],
+      "statement": "The boundary does not specify append acknowledgement, crash points between seglog and redb, checkpoint/index repair, duplicate concurrent append arbitration, unsupported-schema quarantine/error propagation, or the exact migration metadata and rollback behavior for EventEnvelopeV1.",
+      "title": "Event append and projection recovery protocol is incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "ownership", "consumers", "security_privacy", "operations", "compatibility_migration", "acceptance_oracles", "authority_boundaries", "privacy_data_lifecycle", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Every registered storage family has key_shape, value_schema_id/ref, owner_doc, producer, consumers, schema_version, encoding, replay, migration, retention/compaction, redaction/no-secret, and legacy/canonical crosswalk status.",
+          "line_end": 16490,
+          "line_start": 16490,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.",
+          "line_end": 16493,
+          "line_start": 16493,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Storage families are discoverable with explicit ownership, consumers, lifecycle, security, and migration metadata instead of relying on prose key templates.",
+      "item_id": "A005M15-I013",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-231", "SEMANTIC:PLANUNIT:SP-231"],
+      "statement": "SP-231 defines a closed storage value registry contract, fully materializes named launch-critical rows, inventories deferred families with reopening metadata, and makes schema-version and no-secret validation executable.",
+      "title": "Storage value registry replaces prose-only authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "authority", "operations", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - This is partial storage-value progress only; IRB-002 remains open until all required persistence families and replay/migration behavior are executable and proven.",
+          "line_end": 16496,
+          "line_start": 16496,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Do not declare Puppet Master implementation-buildable from storage value schemas alone.",
+          "line_end": 16534,
+          "line_start": 16534,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Registry completion cannot be misread as executable system or broad implementation readiness.",
+      "item_id": "A005M15-I014",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-231", "SEMANTIC:PLANUNIT:SP-231"],
+      "statement": "SP-231 explicitly preserves the buildability boundary: storage schema materialization is partial evidence and IRB-002 remains open pending executable persistence and replay/migration proof.",
+      "title": "Registry progress is explicitly not buildability proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "operations", "scale_performance", "acceptance_oracles", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "scale_limits", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.",
+          "line_end": 16567,
+          "line_start": 16567,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Stale writes fail with coordination conflict diagnostics rather than overwriting canonical state.",
+          "line_end": 16568,
+          "line_start": 16568,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Concurrent worktrees have one PM-owned append authority with conflict detection, while loose JSON mirrors cannot alter scheduling or execution truth.",
+      "item_id": "A005M15-I015",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-232", "SEMANTIC:PLANUNIT:SP-232"],
+      "statement": "SP-232 assigns active-agent coordination canon to seglog EventRecords plus authoritative redb projections/checkpoints and requires idempotent expected-revision appends with stale-write diagnostics.",
+      "title": "Coordination mutations use a single append authority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "propagation", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "scale_limits", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`.",
+          "line_end": 16570,
+          "line_start": 16570,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.",
+          "line_end": 16567,
+          "line_start": 16567,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "coordination_projection_recovery_and_over_capacity_behavior_missing",
+      "impact": "A crash, full disk, checkpoint divergence, or 33rd agent can produce implementation-specific admission, replay, quarantine, and liveness behavior and may leave projections silently stale or repeatedly regenerated.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-232", "SEMANTIC:PLANUNIT:SP-232"],
+      "statement": "The unit does not close commit ordering and recovery across seglog append versus redb projection/checkpoint transaction, checkpoint divergence detection, mirror regeneration retries under persistent disk-full, path-hash collision handling, or admission/degradation behavior above 32 agents.",
+      "title": "Coordination recovery and scale-edge behavior are open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  graph_patch, and projection_trust. Seglog remains the source of truth; redb projections expose current summaries.",
+          "line_end": 16680,
+          "line_start": 16680,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Stale, degraded, or unavailable projection trust blocks mutation/export authority until direct canonical revalidation.",
+          "line_end": 16690,
+          "line_start": 16690,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Stale derived projections cannot grant mutation or export authority, and compatibility naming cannot supplant the canonical projection-trust record.",
+      "item_id": "A005M15-I017",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-233", "SEMANTIC:PLANUNIT:SP-233"],
+      "statement": "SP-233 binds governance records to versioned durable keys, keeps seglog authoritative, treats trust-state as a compatibility alias, and gates mutation/export on current trust or direct canonical revalidation.",
+      "title": "Projection trust gates governance mutation and export"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "propagation", "operations", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "offline_network_loss", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  trust-state is a compatibility alias for projection_trust, and non-current trust states require direct canonical",
+          "line_end": 16681,
+          "line_start": 16681,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Stale, degraded, or unavailable projection trust blocks mutation/export authority until direct canonical revalidation.",
+          "line_end": 16690,
+          "line_start": 16690,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "projection_trust_state_machine_and_revalidation_receipt_missing",
+      "impact": "Different consumers can interpret trust states and revalidation freshness differently, allowing authority to remain blocked indefinitely or to be restored from stale or incomplete evidence.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-233", "SEMANTIC:PLANUNIT:SP-233"],
+      "statement": "The unit names current and non-current conditions but does not define the closed projection_trust enum, legal transitions, who may revalidate, the required canonical evidence/receipt, expiry, concurrent revalidation arbitration, or failure recovery between seglog and redb.",
+      "title": "Projection trust recovery authority is not operationally closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "ownership", "consumers", "gui_truth", "security_privacy", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "privacy_data_lifecycle", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Storage owns the durable projection joins that let GUI surfaces recover UsageRecord identity and route/open state without recomputing accounting. Usage projection records and runtime-artifact projector families carry usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance. Compatibility aliases such as usage_id, input_tokens, output_tokens, cache_read_tokens, cache_creation_input_tokens, cost_usd, usage_source_kind, UnifiedUsageRecord, estimated_cost_microdollars, and final_cost_microdollars are migration/display inputs only and normalize to UF-085 fields before persistence, aggregation, or GUI projection. `usage_event_ref` remains a usage/storage join and normalizes through route_target.object_kind = usage_event for route/open; it does not become a separate route selector.",
+          "line_end": 16743,
+          "line_start": 16743,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Runtime artifact projector records can join cost_usage and tool_llm_trace artifacts to Usage, Ledger, Context Detail Pane, Run Graph, and Orchestrator without timestamp/run/thread/tier primary routing.",
+          "line_end": 16750,
+          "line_start": 16750,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "GUI and runtime consumers can join Usage records through durable identities and normalized routes without timestamp heuristics or a competing alias schema.",
+      "item_id": "A005M15-I019",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:SP-234", "SEMANTIC:PLANUNIT:SP-234"],
+      "statement": "SP-234 defines durable Usage projection joins, canonical UF-085 alias normalization, object-kind route normalization, named GUI/runtime consumers, freshness/health metadata, and redacted payload-reference records.",
+      "title": "Usage projections provide normalized GUI joins"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "consumers", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "localization", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Usage projection records persist usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance when available.",
+          "line_end": 16749,
+          "line_start": 16749,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "  - Redaction records preserve raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, and permission state while excluding credentials, account identifiers, and local paths.",
+          "line_end": 16752,
+          "line_start": 16752,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "usage_projection_requiredness_staleness_and_payload_ref_lifecycle_missing",
+      "impact": "Consumers can receive records missing the identities needed to route or reconcile them, display stale accounting as current, normalize aliases inconsistently, or expose long-lived raw payload references without a closed access and deletion policy.",
+      "item_id": "A005M15-I020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:SP-234", "SEMANTIC:PLANUNIT:SP-234"],
+      "statement": "The qualifier 'when available' does not identify required join keys or failure states; the unit also omits projection freshness thresholds and GUI behavior for degraded/unavailable data, alias collision and numeric conversion rules, rebuild failure recovery, and raw_payload_ref authorization, retention, and revocation.",
+      "title": "Usage projection missing-field and stale-state behavior is open"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [15989, 16299],
+      "covered_source_unit_refs": ["PLANUNIT:SP-225", "PLANUNIT:SP-226", "PLANUNIT:SP-227", "PLANUNIT:SP-228", "SEMANTIC:PLANUNIT:SP-225", "SEMANTIC:PLANUNIT:SP-226", "SEMANTIC:PLANUNIT:SP-227", "SEMANTIC:PLANUNIT:SP-228"],
+      "item_ids": ["A005M15-I001", "A005M15-I002", "A005M15-I003", "A005M15-I004", "A005M15-I005", "A005M15-I006", "A005M15-I007", "A005M15-I008"],
+      "reviewed": true,
+      "summary": "Reviewed SP-225 through SP-228: activation quarantine storage, container-host retention, bounded histories, and background-resource quotas. Exact contracts are present, but Advanced/Support redaction, cleanup state transitions, concrete history budgets, quota precedence, recovery, and GUI control states remain materially open.",
+      "window_id": "WIN-510B3DE676A3-0045"
+    },
+    {
+      "core_range": [16300, 16670],
+      "covered_source_unit_refs": ["PLANUNIT:SP-229", "PLANUNIT:SP-230", "PLANUNIT:SP-231", "PLANUNIT:SP-232", "SEMANTIC:PLANUNIT:SP-229", "SEMANTIC:PLANUNIT:SP-230", "SEMANTIC:PLANUNIT:SP-231", "SEMANTIC:PLANUNIT:SP-232"],
+      "item_ids": ["A005M15-I009", "A005M15-I010", "A005M15-I011", "A005M15-I012", "A005M15-I013", "A005M15-I014", "A005M15-I015", "A005M15-I016"],
+      "reviewed": true,
+      "summary": "Reviewed SP-229 through SP-232 and every intervening core line: cross-runtime resource governance, EventRecord persistence, the storage value registry, coordination canon, and bounded storage addenda. Strong authority boundaries coexist with open resource policy, partial-failure, projection recovery, and over-capacity behavior.",
+      "window_id": "WIN-510B3DE676A3-0046"
+    },
+    {
+      "core_range": [16671, 16795],
+      "covered_source_unit_refs": ["PLANUNIT:SP-233", "PLANUNIT:SP-234", "SEMANTIC:PLANUNIT:SP-233", "SEMANTIC:PLANUNIT:SP-234"],
+      "item_ids": ["A005M15-I017", "A005M15-I018", "A005M15-I019", "A005M15-I020"],
+      "reviewed": true,
+      "summary": "Reviewed SP-233 and SP-234 plus all audit-lineage and Usage addendum lines. Governance projection authority and Usage joins are explicit, while trust recovery, Usage requiredness, stale/degraded GUI behavior, alias conversion, and payload-reference lifecycle remain under-specified.",
+      "window_id": "WIN-510B3DE676A3-0047"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-510B3DE676A3-0006",
+    "document_path": "Plans/storage-plan.md",
+    "micro_window_ids": ["WIN-510B3DE676A3-0045", "WIN-510B3DE676A3-0046", "WIN-510B3DE676A3-0047"],
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner document defines the concrete RuntimeResourceGovernor accounting model and its boundary across SP-227, SP-228, and SP-229?",
+      "Which EventRecord contract defines acknowledgement and recovery across a committed seglog append and a failed redb projection/checkpoint update?",
+      "Which CV-315 contract defines projection_trust states, revalidation evidence, expiry, and restoration of mutation/export authority?",
+      "Which UF-085 and GUI contracts define required Usage join fields, alias collision/conversion rules, and stale or degraded projection presentation?"
+    ],
+    "feature_family_keys": [
+      "free_models_activation_diagnostics",
+      "container_host_persistence_cleanup",
+      "history_storage_budgets",
+      "runtime_resource_governor",
+      "event_record_persistence",
+      "storage_value_registry",
+      "coordination_storage_canon",
+      "governance_projection_trust",
+      "usage_projection_storage"
+    ],
+    "research_queries": [
+      "resource governor deterministic quota precedence and low-memory hysteresis across GUI PTY MCP watchers and agents",
+      "append-only event log projection checkpoint crash consistency idempotency and replay recovery",
+      "projection trust state machine canonical revalidation receipt expiry and concurrent authority restoration",
+      "usage accounting alias normalization stale projection UX and raw payload reference retention authorization"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000218_attempt_0015_terminal"
+}

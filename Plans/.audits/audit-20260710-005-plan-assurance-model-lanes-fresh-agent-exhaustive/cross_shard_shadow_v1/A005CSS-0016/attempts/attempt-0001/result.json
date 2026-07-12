@@ -1,0 +1,914 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-result-v1",
+  "phase": "cross_shard_reverse_orientation_shadow_candidate_discovery",
+  "assignment_id": "A005CSS-0016",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0016_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSSPKT-0016",
+    "packet_sha256": "66a10aa3c3ab5c9924c5cd6af20609ef22897248bc9739264f4c0d8563b7f762",
+    "anchor_refs_digest": "9e13065175df6ba907bde179e1ffe266647979c45a85382d9723af7215814e5a",
+    "comparator_refs_digest": "e267ea4a2e1a585c29d62a885bb218019456771906c2199652df1519c6abaed1",
+    "orientation": "primary_right_as_shadow_anchor",
+    "anchor_owner_assignment_id": "A005OM-0015",
+    "comparator_owner_assignment_id": "A005OM-0014"
+  },
+  "coverage": {
+    "anchor_count": 50,
+    "anchor_refs": [
+      "OPF::A005OM-0015::PF-0153",
+      "OPF::A005OM-0015::PF-0154",
+      "OPF::A005OM-0015::PF-0155",
+      "OPF::A005OM-0015::PF-0156",
+      "OPF::A005OM-0015::PF-0157",
+      "OPF::A005OM-0015::PF-0158",
+      "OPF::A005OM-0015::PF-0159",
+      "OPF::A005OM-0015::PF-0160",
+      "OPF::A005OM-0015::PF-0161",
+      "OPF::A005OM-0015::PF-0162",
+      "OPF::A005OM-0015::PF-0163",
+      "OPF::A005OM-0015::PF-0164",
+      "OPF::A005OM-0015::PF-0165",
+      "OPF::A005OM-0015::PF-0166",
+      "OPF::A005OM-0015::PF-0167",
+      "OPF::A005OM-0015::PF-0168",
+      "OPF::A005OM-0015::PF-0169",
+      "OPF::A005OM-0015::PF-0170",
+      "OPF::A005OM-0015::PF-0171",
+      "OPF::A005OM-0015::PF-0172",
+      "OPF::A005OM-0015::PF-0173",
+      "OPF::A005OM-0015::PF-0174",
+      "OPF::A005OM-0015::PF-0175",
+      "OPF::A005OM-0015::PF-0176",
+      "OPF::A005OM-0015::PF-0177",
+      "OPF::A005OM-0015::PF-0178",
+      "OPF::A005OM-0015::PF-0179",
+      "OPF::A005OM-0015::PF-0180",
+      "OPF::A005OM-0015::PF-0181",
+      "OPF::A005OM-0015::PF-0182",
+      "OPF::A005OM-0015::PF-0183",
+      "OPF::A005OM-0015::PF-0184",
+      "OPF::A005OM-0015::PF-0185",
+      "OPF::A005OM-0015::PF-0186",
+      "OPF::A005OM-0015::PF-0187",
+      "OPF::A005OM-0015::PF-0188",
+      "OPF::A005OM-0015::PF-0189",
+      "OPF::A005OM-0015::PF-0190",
+      "OPF::A005OM-0015::PF-0191",
+      "OPF::A005OM-0015::PF-0192",
+      "OPF::A005OM-0015::PF-0193",
+      "OPF::A005OM-0015::PF-0194",
+      "OPF::A005OM-0015::PF-0195",
+      "OPF::A005OM-0015::PF-0196",
+      "OPF::A005OM-0015::PF-0197",
+      "OPF::A005OM-0015::PF-0198",
+      "OPF::A005OM-0015::PF-0199",
+      "OPF::A005OM-0015::PF-0200",
+      "OPF::A005OM-0015::PF-0201",
+      "OPF::A005OM-0015::PF-0202"
+    ],
+    "comparator_count": 222,
+    "comparator_refs": [
+      "OPF::A005OM-0014::PF-0001",
+      "OPF::A005OM-0014::PF-0002",
+      "OPF::A005OM-0014::PF-0003",
+      "OPF::A005OM-0014::PF-0004",
+      "OPF::A005OM-0014::PF-0005",
+      "OPF::A005OM-0014::PF-0006",
+      "OPF::A005OM-0014::PF-0007",
+      "OPF::A005OM-0014::PF-0008",
+      "OPF::A005OM-0014::PF-0009",
+      "OPF::A005OM-0014::PF-0010",
+      "OPF::A005OM-0014::PF-0011",
+      "OPF::A005OM-0014::PF-0012",
+      "OPF::A005OM-0014::PF-0013",
+      "OPF::A005OM-0014::PF-0014",
+      "OPF::A005OM-0014::PF-0015",
+      "OPF::A005OM-0014::PF-0016",
+      "OPF::A005OM-0014::PF-0017",
+      "OPF::A005OM-0014::PF-0018",
+      "OPF::A005OM-0014::PF-0019",
+      "OPF::A005OM-0014::PF-0020",
+      "OPF::A005OM-0014::PF-0021",
+      "OPF::A005OM-0014::PF-0022",
+      "OPF::A005OM-0014::PF-0023",
+      "OPF::A005OM-0014::PF-0024",
+      "OPF::A005OM-0014::PF-0025",
+      "OPF::A005OM-0014::PF-0026",
+      "OPF::A005OM-0014::PF-0027",
+      "OPF::A005OM-0014::PF-0028",
+      "OPF::A005OM-0014::PF-0029",
+      "OPF::A005OM-0014::PF-0030",
+      "OPF::A005OM-0014::PF-0031",
+      "OPF::A005OM-0014::PF-0032",
+      "OPF::A005OM-0014::PF-0033",
+      "OPF::A005OM-0014::PF-0034",
+      "OPF::A005OM-0014::PF-0035",
+      "OPF::A005OM-0014::PF-0036",
+      "OPF::A005OM-0014::PF-0037",
+      "OPF::A005OM-0014::PF-0038",
+      "OPF::A005OM-0014::PF-0039",
+      "OPF::A005OM-0014::PF-0040",
+      "OPF::A005OM-0014::PF-0041",
+      "OPF::A005OM-0014::PF-0042",
+      "OPF::A005OM-0014::PF-0043",
+      "OPF::A005OM-0014::PF-0044",
+      "OPF::A005OM-0014::PF-0045",
+      "OPF::A005OM-0014::PF-0046",
+      "OPF::A005OM-0014::PF-0047",
+      "OPF::A005OM-0014::PF-0048",
+      "OPF::A005OM-0014::PF-0049",
+      "OPF::A005OM-0014::PF-0050",
+      "OPF::A005OM-0014::PF-0051",
+      "OPF::A005OM-0014::PF-0052",
+      "OPF::A005OM-0014::PF-0053",
+      "OPF::A005OM-0014::PF-0054",
+      "OPF::A005OM-0014::PF-0055",
+      "OPF::A005OM-0014::PF-0056",
+      "OPF::A005OM-0014::PF-0057",
+      "OPF::A005OM-0014::PF-0058",
+      "OPF::A005OM-0014::PF-0059",
+      "OPF::A005OM-0014::PF-0060",
+      "OPF::A005OM-0014::PF-0061",
+      "OPF::A005OM-0014::PF-0062",
+      "OPF::A005OM-0014::PF-0063",
+      "OPF::A005OM-0014::PF-0064",
+      "OPF::A005OM-0014::PF-0065",
+      "OPF::A005OM-0014::PF-0066",
+      "OPF::A005OM-0014::PF-0067",
+      "OPF::A005OM-0014::PF-0068",
+      "OPF::A005OM-0014::PF-0069",
+      "OPF::A005OM-0014::PF-0070",
+      "OPF::A005OM-0014::PF-0071",
+      "OPF::A005OM-0014::PF-0072",
+      "OPF::A005OM-0014::PF-0073",
+      "OPF::A005OM-0014::PF-0074",
+      "OPF::A005OM-0014::PF-0075",
+      "OPF::A005OM-0014::PF-0076",
+      "OPF::A005OM-0014::PF-0077",
+      "OPF::A005OM-0014::PF-0078",
+      "OPF::A005OM-0014::PF-0079",
+      "OPF::A005OM-0014::PF-0080",
+      "OPF::A005OM-0014::PF-0081",
+      "OPF::A005OM-0014::PF-0082",
+      "OPF::A005OM-0014::PF-0083",
+      "OPF::A005OM-0014::PF-0084",
+      "OPF::A005OM-0014::PF-0085",
+      "OPF::A005OM-0014::PF-0086",
+      "OPF::A005OM-0014::PF-0087",
+      "OPF::A005OM-0014::PF-0088",
+      "OPF::A005OM-0014::PF-0089",
+      "OPF::A005OM-0014::PF-0090",
+      "OPF::A005OM-0014::PF-0091",
+      "OPF::A005OM-0014::PF-0092",
+      "OPF::A005OM-0014::PF-0093",
+      "OPF::A005OM-0014::PF-0094",
+      "OPF::A005OM-0014::PF-0095",
+      "OPF::A005OM-0014::PF-0096",
+      "OPF::A005OM-0014::PF-0097",
+      "OPF::A005OM-0014::PF-0098",
+      "OPF::A005OM-0014::PF-0099",
+      "OPF::A005OM-0014::PF-0100",
+      "OPF::A005OM-0014::PF-0101",
+      "OPF::A005OM-0014::PF-0102",
+      "OPF::A005OM-0014::PF-0103",
+      "OPF::A005OM-0014::PF-0104",
+      "OPF::A005OM-0014::PF-0105",
+      "OPF::A005OM-0014::PF-0106",
+      "OPF::A005OM-0014::PF-0107",
+      "OPF::A005OM-0014::PF-0108",
+      "OPF::A005OM-0014::PF-0109",
+      "OPF::A005OM-0014::PF-0110",
+      "OPF::A005OM-0014::PF-0111",
+      "OPF::A005OM-0014::PF-0112",
+      "OPF::A005OM-0014::PF-0113",
+      "OPF::A005OM-0014::PF-0114",
+      "OPF::A005OM-0014::PF-0115",
+      "OPF::A005OM-0014::PF-0116",
+      "OPF::A005OM-0014::PF-0117",
+      "OPF::A005OM-0014::PF-0118",
+      "OPF::A005OM-0014::PF-0119",
+      "OPF::A005OM-0014::PF-0120",
+      "OPF::A005OM-0014::PF-0121",
+      "OPF::A005OM-0014::PF-0122",
+      "OPF::A005OM-0014::PF-0123",
+      "OPF::A005OM-0014::PF-0124",
+      "OPF::A005OM-0014::PF-0125",
+      "OPF::A005OM-0014::PF-0126",
+      "OPF::A005OM-0014::PF-0127",
+      "OPF::A005OM-0014::PF-0128",
+      "OPF::A005OM-0014::PF-0129",
+      "OPF::A005OM-0014::PF-0130",
+      "OPF::A005OM-0014::PF-0131",
+      "OPF::A005OM-0014::PF-0132",
+      "OPF::A005OM-0014::PF-0133",
+      "OPF::A005OM-0014::PF-0134",
+      "OPF::A005OM-0014::PF-0135",
+      "OPF::A005OM-0014::PF-0136",
+      "OPF::A005OM-0014::PF-0137",
+      "OPF::A005OM-0014::PF-0138",
+      "OPF::A005OM-0014::PF-0139",
+      "OPF::A005OM-0014::PF-0140",
+      "OPF::A005OM-0014::PF-0141",
+      "OPF::A005OM-0014::PF-0142",
+      "OPF::A005OM-0014::PF-0143",
+      "OPF::A005OM-0014::PF-0144",
+      "OPF::A005OM-0014::PF-0145",
+      "OPF::A005OM-0014::PF-0146",
+      "OPF::A005OM-0014::PF-0147",
+      "OPF::A005OM-0014::PF-0148",
+      "OPF::A005OM-0014::PF-0149",
+      "OPF::A005OM-0014::PF-0150",
+      "OPF::A005OM-0014::PF-0151",
+      "OPF::A005OM-0014::PF-0152",
+      "OPF::A005OM-0014::PF-0153",
+      "OPF::A005OM-0014::PF-0154",
+      "OPF::A005OM-0014::PF-0155",
+      "OPF::A005OM-0014::PF-0156",
+      "OPF::A005OM-0014::PF-0157",
+      "OPF::A005OM-0014::PF-0158",
+      "OPF::A005OM-0014::PF-0159",
+      "OPF::A005OM-0014::PF-0160",
+      "OPF::A005OM-0014::PF-0161",
+      "OPF::A005OM-0014::PF-0162",
+      "OPF::A005OM-0014::PF-0163",
+      "OPF::A005OM-0014::PF-0164",
+      "OPF::A005OM-0014::PF-0165",
+      "OPF::A005OM-0014::PF-0166",
+      "OPF::A005OM-0014::PF-0167",
+      "OPF::A005OM-0014::PF-0168",
+      "OPF::A005OM-0014::PF-0169",
+      "OPF::A005OM-0014::PF-0170",
+      "OPF::A005OM-0014::PF-0171",
+      "OPF::A005OM-0014::PF-0172",
+      "OPF::A005OM-0014::PF-0173",
+      "OPF::A005OM-0014::PF-0174",
+      "OPF::A005OM-0014::PF-0175",
+      "OPF::A005OM-0014::PF-0176",
+      "OPF::A005OM-0014::PF-0177",
+      "OPF::A005OM-0014::PF-0178",
+      "OPF::A005OM-0014::PF-0179",
+      "OPF::A005OM-0014::PF-0180",
+      "OPF::A005OM-0014::PF-0181",
+      "OPF::A005OM-0014::PF-0182",
+      "OPF::A005OM-0014::PF-0183",
+      "OPF::A005OM-0014::PF-0184",
+      "OPF::A005OM-0014::PF-0185",
+      "OPF::A005OM-0014::PF-0186",
+      "OPF::A005OM-0014::PF-0187",
+      "OPF::A005OM-0014::PF-0188",
+      "OPF::A005OM-0014::PF-0189",
+      "OPF::A005OM-0014::PF-0190",
+      "OPF::A005OM-0014::PF-0191",
+      "OPF::A005OM-0014::PF-0192",
+      "OPF::A005OM-0014::PF-0193",
+      "OPF::A005OM-0014::PF-0194",
+      "OPF::A005OM-0014::PF-0195",
+      "OPF::A005OM-0014::PF-0196",
+      "OPF::A005OM-0014::PF-0197",
+      "OPF::A005OM-0014::PF-0198",
+      "OPF::A005OM-0014::PF-0199",
+      "OPF::A005OM-0014::PF-0200",
+      "OPF::A005OM-0014::PF-0201",
+      "OPF::A005OM-0014::PF-0202",
+      "OPF::A005OM-0014::PF-0203",
+      "OPF::A005OM-0014::PF-0204",
+      "OPF::A005OM-0014::PF-0205",
+      "OPF::A005OM-0014::PF-0206",
+      "OPF::A005OM-0014::PF-0207",
+      "OPF::A005OM-0014::PF-0208",
+      "OPF::A005OM-0014::PF-0209",
+      "OPF::A005OM-0014::PF-0210",
+      "OPF::A005OM-0014::PF-0211",
+      "OPF::A005OM-0014::PF-0212",
+      "OPF::A005OM-0014::PF-0213",
+      "OPF::A005OM-0014::PF-0214",
+      "OPF::A005OM-0014::PF-0215",
+      "OPF::A005OM-0014::PF-0216",
+      "OPF::A005OM-0014::PF-0217",
+      "OPF::A005OM-0014::PF-0218",
+      "OPF::A005OM-0014::PF-0219",
+      "OPF::A005OM-0014::PF-0220",
+      "OPF::A005OM-0014::PF-0221",
+      "OPF::A005OM-0014::PF-0222"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0153",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0055",
+        "OPF::A005OM-0014::PF-0118"
+      ],
+      "rationale": "The packet-wide negative-policy oracle is adjacent to permission behavior-oracle and authority acceptance suites, but those suites govern different products and failure sets; none matches its full fixture authority and invariant matrix.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0154",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0012",
+        "OPF::A005OM-0014::PF-0014",
+        "OPF::A005OM-0014::PF-0017",
+        "OPF::A005OM-0014::PF-0071"
+      ],
+      "rationale": "Permission matching, cascade resolution, reply transitions, and persistence tiers are lifecycle neighbors. They are umbrella or component contracts, not the same web-permission state lifecycle across grant, deny, revoke, expiry, concurrency, cancellation, and recovery.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0155",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0111",
+        "OPF::A005OM-0014::PF-0157",
+        "OPF::A005OM-0014::PF-0173",
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "rationale": "The URL, SSRF, imported-input, and instruction-input concerns are plausible neighbors, but each covers only part of the anchor's combined hostile URL, browser-content, download, prompt-injection, and exfiltration boundary.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0156",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0004",
+        "OPF::A005OM-0014::PF-0072",
+        "OPF::A005OM-0014::PF-0091",
+        "OPF::A005OM-0014::PF-0148",
+        "OPF::A005OM-0014::PF-0188"
+      ],
+      "rationale": "Audit identity, audit routing, deletion, citation, and Firecrawl trace lifecycles overlap individual evidence concerns. None shares the anchor's complete evidence-destination authority, payload, provenance, redaction, retention, acknowledgement, and partial-write boundary.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0157",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0055",
+        "OPF::A005OM-0014::PF-0142",
+        "OPF::A005OM-0014::PF-0170"
+      ],
+      "rationale": "The comparator oracles expose related coverage limitations, but they target permission PlanUnits, skill document acceptance, or migration-heavy runtime artifacts rather than the anchor's full web-policy cross-product.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0158",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0103",
+        "OPF::A005OM-0014::PF-0132",
+        "OPF::A005OM-0014::PF-0180"
+      ],
+      "rationale": "Immutable-source provenance, artifact-index integrity, and managed-output references are related integrity mechanisms, but none governs the same source-packet, evidence-file, and validator-reference values.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0159",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0086"
+      ],
+      "rationale": "The capability-and-audit boundary is a plausible operational-semantics neighbor, but it does not share this generic schema's producer, consumer, transition, privacy, GUI, migration, and rollback boundary.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0160",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0053",
+        "OPF::A005OM-0014::PF-0176"
+      ],
+      "rationale": "Reason-code consistency and disabled-reason projection are adjacent reason surfaces. They do not govern the agent-reason field's validation, provenance, size, persistence, redaction, and visibility lifecycle.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0161",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0111",
+        "OPF::A005OM-0014::PF-0222"
+      ],
+      "rationale": "PF-0212 describes the same pre-permission URL-safety authority, lifecycle, user outcome, state boundary, and unsafe-input rejection semantics, expressed as a missing owner/oracle rather than a missing routing-fixture policy. Provider per-hop SSRF and reader/fetch escalation controls remain related but distinct.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0162",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0148",
+        "OPF::A005OM-0014::PF-0160",
+        "OPF::A005OM-0014::PF-0180"
+      ],
+      "rationale": "Citation behavior, discovery receipts, and managed output references are evidence neighbors, but they do not share the planning-ledger or Plan source-evidence destination, writer authority, canonicalization, and failure lifecycle.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0163",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0063",
+        "OPF::A005OM-0014::PF-0125",
+        "OPF::A005OM-0014::PF-0129",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0187"
+      ],
+      "rationale": "Compact permission UI, blocked notices, browser action taxonomy/envelope, and browser race handling are GUI or lifecycle neighbors. None is the same observe/screenshot visible-state contract across loading, capture freshness, permission, empty, error, accessibility, and localization states.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0164",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0123",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0187"
+      ],
+      "rationale": "The external browser permission matrix, canonical action envelope, and browser consent/race concerns are close neighbors, but they divide authority, envelope, and failure behavior that the anchor combines; strict equivalence is not met.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0165",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0062",
+        "OPF::A005OM-0014::PF-0125",
+        "OPF::A005OM-0014::PF-0171"
+      ],
+      "rationale": "Network outcome selection, blocked-notice presentation, and visible permission-gated research are related. They do not reproduce the operation-card denial record's policy-source, headless-state, suggested-recovery, and bounded-action semantics.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0166",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0190",
+        "OPF::A005OM-0014::PF-0210"
+      ],
+      "rationale": "MCP degradation and provider health/fallback UI are availability neighbors, but neither is the same settings-health reference representation for missing provider credentials.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0167",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0044",
+        "OPF::A005OM-0014::PF-0073",
+        "OPF::A005OM-0014::PF-0218"
+      ],
+      "rationale": "Batch input declarations, bounded batch HITL, and large-domain approval UX are adjacent batch-web concerns. None shares the anchor's aggregate progress snapshot, continue-on-error, host-permission reference, and timeout-policy semantics.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0168",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0162",
+        "OPF::A005OM-0014::PF-0173",
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "rationale": "Redaction gates, invocation privacy, imported hostile input, and URL safety each cover part of the missing adversarial corpus. None has the same operation-card fixture boundary spanning secrets, user-info URLs, private targets, schemes, bidi, markup, and retention.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0169",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0086",
+        "OPF::A005OM-0014::PF-0110",
+        "OPF::A005OM-0014::PF-0111"
+      ],
+      "rationale": "Provider egress governance and per-hop SSRF controls are strong neighbors, but the anchor additionally governs mandatory secret redaction, fanout, and crawl depth in a web-operation schema, so the concerns are not merge-equivalent.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0170",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0014",
+        "OPF::A005OM-0014::PF-0017",
+        "OPF::A005OM-0014::PF-0043",
+        "OPF::A005OM-0014::PF-0064",
+        "OPF::A005OM-0014::PF-0213"
+      ],
+      "rationale": "Cascade, reply, session-approval, tri-state, and competing-resolution algorithms are permission-decision neighbors. None matches the assertion object's ask/allow/deny evidence and headless-decision invariants.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0171",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0040",
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0092",
+        "OPF::A005OM-0014::PF-0115",
+        "OPF::A005OM-0014::PF-0124"
+      ],
+      "rationale": "Secret custody, scrub enforcement, leakage surfaces, executable lease tests, and provider-native receipt projections are related controls or consumers. They do not share the generator-schema, projected-config, scan-oracle, provenance, failure, and freshness contract.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0172",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were reviewed; none governs detected prompt-injection chips and a conditionally mandatory visible card with the same browser representation authority and state transition.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0173",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0140",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0163",
+        "OPF::A005OM-0014::PF-0187",
+        "OPF::A005OM-0014::PF-0192"
+      ],
+      "rationale": "Generic invocation results, browser envelopes, notification receipts, browser publication races, and tool truthfulness are outcome neighbors. None shares BrowserActionResult's success, error, artifact, omission, and redaction-status conditional boundary.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0174",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0119",
+        "OPF::A005OM-0014::PF-0120",
+        "OPF::A005OM-0014::PF-0138"
+      ],
+      "rationale": "Scrub gates, export minimization, sensitive-channel previews, and testing redaction are privacy neighbors, but none governs the required web-operation input preview itself.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0175",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0013",
+        "OPF::A005OM-0014::PF-0138",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0187"
+      ],
+      "rationale": "Fallback decision state, testing redaction, browser envelopes, and browser races are plausible neighbors. None shares the testing manifest's visibility-state by open-watch-state cross-product and conditional evidence references.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0176",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0115",
+        "OPF::A005OM-0014::PF-0136",
+        "OPF::A005OM-0014::PF-0140",
+        "OPF::A005OM-0014::PF-0163"
+      ],
+      "rationale": "Missing lease tests, receipt-state oracles, late completion, and notification transitions are temporal or oracle neighbors, but none is the same adversarial lifecycle-timestamp ordering fixture.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0177",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0115",
+        "OPF::A005OM-0014::PF-0136",
+        "OPF::A005OM-0014::PF-0170"
+      ],
+      "rationale": "Scrub enforcement and missing runtime-oracle comparators are adjacent negative-evidence concerns. They do not share the permission-snapshot plus redaction-profile binding and its adversarial fixture boundary.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0178",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0118",
+        "OPF::A005OM-0014::PF-0166"
+      ],
+      "rationale": "Behavioral acceptance and the versioned SS-035/FABLE contract are validator-oracle neighbors, but their authority, fixture families, outcomes, and failure semantics differ from this web-policy negative-fixture contract.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0179",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0110",
+        "OPF::A005OM-0014::PF-0111",
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "rationale": "Provider egress requirements, per-hop SSRF invariants, and URL-safety ownership are closely related. The anchor is specifically the assertion schema and adversarial canonicalization/cross-field fixture matrix, not the runtime policy or command seam.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0180",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0068",
+        "OPF::A005OM-0014::PF-0171"
+      ],
+      "rationale": "Normalized web approvals and permission-gated research are related positive authority contracts, but they do not express the exact public-HTTPS fetch preflight expectation.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0181",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0039",
+        "OPF::A005OM-0014::PF-0042",
+        "OPF::A005OM-0014::PF-0066",
+        "OPF::A005OM-0014::PF-0068",
+        "OPF::A005OM-0014::PF-0121"
+      ],
+      "rationale": "Approval-key serialization, registrable-domain broadening, matcher normalization, operation approvals, and tool hierarchy are scope neighbors. None duplicates the tool-discriminated fetch/extract/crawl/map versus search/research derivation contract.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0182",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0004",
+        "OPF::A005OM-0014::PF-0072",
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0091",
+        "OPF::A005OM-0014::PF-0138",
+        "OPF::A005OM-0014::PF-0188"
+      ],
+      "rationale": "Audit lifecycle, scrub-gate, deletion, testing-render, and Firecrawl trace concerns overlap redaction consumers. None shares this web redaction assertion discriminator plus rejection, propagation, retention, deletion, and status/error oracle lifecycle.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0183",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0055",
+        "OPF::A005OM-0014::PF-0118",
+        "OPF::A005OM-0014::PF-0170",
+        "OPF::A005OM-0014::PF-0201"
+      ],
+      "rationale": "Permission behavior, authority acceptance, migration-heavy oracle gaps, and cross-entry dispatcher fixtures are related test matrices. None has the anchor's exact cross-surface web negative-case families and rejection semantics.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0184",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0012",
+        "OPF::A005OM-0014::PF-0013",
+        "OPF::A005OM-0014::PF-0014",
+        "OPF::A005OM-0014::PF-0015",
+        "OPF::A005OM-0014::PF-0017"
+      ],
+      "rationale": "Human approval, fallback, cascade, UI mapping, and reply transition features are lifecycle neighbors or umbrellas. The anchor is the run-mode ask-card lifecycle after approve, deny, dismiss, timeout, mode change, or concurrency, so strict equivalence fails.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0185",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0004",
+        "OPF::A005OM-0014::PF-0072",
+        "OPF::A005OM-0014::PF-0177",
+        "OPF::A005OM-0014::PF-0180"
+      ],
+      "rationale": "Generic audit lifecycles, post-action cache identity, and managed-output retention are related data-lifecycle concerns. None shares the web cache's tenant and credential partitioning, poisoning, expiry, invalidation, stale-read, deletion-evidence, and redaction-timing boundary.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0186",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0085",
+        "OPF::A005OM-0014::PF-0157"
+      ],
+      "rationale": "Threat-oracle gaps and untrusted instruction inputs are prompt-injection neighbors, but neither governs the same detected-page representation, instruction/data isolation, downstream propagation, and blocked-action containment proof.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0187",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were reviewed; none is the same closed top-level web-policy fixture schema requiring the seven named collections and identifiers.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0188",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0118"
+      ],
+      "rationale": "The behavioral acceptance suite is a test-family neighbor, but it covers HTE and runtime authority outcomes rather than the six required web-policy assertion arrays.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0189",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were reviewed; none defines the same six specialized web-policy assertion object shapes and their schema authority.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0190",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0158",
+        "OPF::A005OM-0014::PF-0191"
+      ],
+      "rationale": "Skills SSOT ownership and general tool ownership are authority-lineage neighbors, but neither is the web provider registry's schema binding, source-of-truth identity, and canonical no-secrets status.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0191",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0110",
+        "OPF::A005OM-0014::PF-0201",
+        "OPF::A005OM-0014::PF-0210"
+      ],
+      "rationale": "Provider egress policy, dispatcher disclosure, and provider health/fallback are consumers or portions of the registry-row metadata. They are not the same per-provider support, enablement, cache, rank, robots, SSRF, and limit row contract.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0192",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0110",
+        "OPF::A005OM-0014::PF-0210",
+        "OPF::A005OM-0014::PF-0211"
+      ],
+      "rationale": "Provider egress, health/fallback, and deployment-mode distinctions are related provider concerns. They do not reproduce the Firecrawl, DuckDuckGo, and Google-compatible capability/rank/limits distinction matrix.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0193",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0110",
+        "OPF::A005OM-0014::PF-0111"
+      ],
+      "rationale": "Provider egress and SSRF policy are adjacent authority controls, but the anchor is the Google-specific operation override separating native search from PM-composed read/research routes.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0194",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0008",
+        "OPF::A005OM-0014::PF-0010",
+        "OPF::A005OM-0014::PF-0101",
+        "OPF::A005OM-0014::PF-0210"
+      ],
+      "rationale": "Polling recovery, account authentication, notification recovery, and provider health/fallback are lifecycle neighbors. None shares registry credential-reference and health-reference validation, expiry, circuit-breaker, quarantine, and recovery semantics.",
+      "confidence": 0.94
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0195",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0040",
+        "OPF::A005OM-0014::PF-0102",
+        "OPF::A005OM-0014::PF-0124"
+      ],
+      "rationale": "Provider-route custody, Free Models secret ownership, and provider-native projections are related authority or consumer contracts. The anchor specifically governs model-native and external-account projection rows with selected account references and empty credential arrays, so it is not merge-equivalent.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0196",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0133",
+        "OPF::A005OM-0014::PF-0190",
+        "OPF::A005OM-0014::PF-0204"
+      ],
+      "rationale": "Host-managed MCP resolution, MCP degradation, and MCP registry/snapshot governance are related. None is the same concrete Claude Code, Cursor, and Codex configuration-template projection example contract.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0197",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0041",
+        "OPF::A005OM-0014::PF-0102",
+        "OPF::A005OM-0014::PF-0220"
+      ],
+      "rationale": "Account-reference boundaries, provider secret custody, and API-key lifecycle are related. None shares the coding-agent consumer row's single secret policy across heterogeneous providers and missing per-provider override/revocation mapping.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0198",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were reviewed; none is the same fixture-level schema version plus canonical no-secrets status identity.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0199",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0001",
+        "OPF::A005OM-0014::PF-0079",
+        "OPF::A005OM-0014::PF-0214"
+      ],
+      "rationale": "Projection gating, requested/effective disclosure, and ZDR effective state are related state models. None duplicates the three projected enablement preconditions tied specifically to secret, runtime, or selected-account availability.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0200",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0007",
+        "OPF::A005OM-0014::PF-0190",
+        "OPF::A005OM-0014::PF-0197"
+      ],
+      "rationale": "Remote fallback, MCP degradation, and non-local freshness gates are failure-isolation neighbors. None shares the provider-projection rule that projection failure must preserve independent PM-native Site Reader and registry capabilities.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0201",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0008",
+        "OPF::A005OM-0014::PF-0062",
+        "OPF::A005OM-0014::PF-0086",
+        "OPF::A005OM-0014::PF-0210"
+      ],
+      "rationale": "Polling, enterprise network outcomes, capability semantics, and provider health/fallback are related recovery concerns. None governs projection rows whose unresolved or negative health and egress references lack a state and recovery model.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0015::PF-0202",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0055",
+        "OPF::A005OM-0014::PF-0118",
+        "OPF::A005OM-0014::PF-0136",
+        "OPF::A005OM-0014::PF-0142",
+        "OPF::A005OM-0014::PF-0170"
+      ],
+      "rationale": "Permission oracles, behavioral suites, receipt validation, document acceptance gaps, and migration-heavy criteria are related test-coverage concerns. None shares the negative corpus's combined identity, operation, time, subagent, closure, URL, receipt, cancellation, concurrency, rollback, and missing extract-positive seams.",
+      "confidence": 0.95
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "strict_merge_equivalence_applied": true,
+    "umbrella_member_and_adjacency_kept_distinct": true,
+    "reverse_orientation_verified": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

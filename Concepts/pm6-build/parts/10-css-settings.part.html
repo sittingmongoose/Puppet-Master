@@ -192,8 +192,12 @@
   gap: var(--lg);
   overflow-x: auto;
   scroll-snap-type: x proximity;
-  padding: var(--sm) var(--sm) var(--lg);
-  margin: 0 calc(-1 * var(--sm));
+  /* glow gutter (shell polish): 12px scrollport room so the first/last
+     card's hover ring + glow are not clipped by the rail's own scrollport;
+     negative margins cancel the layout shift (cards keep their spot). */
+  padding: 12px 12px var(--lg);
+  margin: calc(-1 * (12px - var(--sm))) -12px 0;
+  scroll-padding-inline: 12px;   /* keep snap from re-hiding the gutter */
 }
 .s4-card {
   position: relative;

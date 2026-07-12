@@ -1,0 +1,1807 @@
+L00002608	  contracts.
+L00002609	compatibility_only_notes: []
+L00002610	stale_retired_dispositions:
+L00002611	- The stale part of WorktreeGitImprovement is the identity anchor, not the product boundary.
+L00002612	owner_boundary_notes: []
+L00002613	owner_hints:
+L00002614	- Plans/Architecture_Invariants.md
+L00002615	preserved_contractrefs:
+L00002616	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002617	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002618	```
+L00002619	
+L00002620	### AI-039 - Legacy Tier Event And Usage Evidence Demotion
+L00002621	
+L00002622	```yaml
+L00002623	plan_unit_id: AI-039
+L00002624	unit_type: requirement
+L00002625	status: accepted
+L00002626	owner_doc: Plans/Architecture_Invariants.md
+L00002627	canonical_text: Consumers must not mix canonical blocked, scheduler, remediation lineage, or /scheduler/remediation lineage
+L00002628	  with legacy tier-event push streams, and usage/evidence families move away from tier-first correlation toward usage-event
+L00002629	  or node/attempt identity as primary.
+L00002630	gui_related: true
+L00002631	gui_classification_reason: This unit affects user-visible status, usage, ledger, runtime, and graph inspection surfaces.
+L00002632	split_recommended: false
+L00002633	depends_on: []
+L00002634	unblocks: []
+L00002635	acceptance_criteria:
+L00002636	- Covered source spans remain losslessly available for exact-text audit.
+L00002637	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002638	  bridge.
+L00002639	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002640	  own contracts.
+L00002641	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002642	validation_surfaces:
+L00002643	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002644	- python3 scripts/pm-plan-index.py validate
+L00002645	risk_class: legacy_tier_event_and_usage_evidence_demotion
+L00002646	reasoning_tier: standard
+L00002647	context_scope: architecture_invariants_standardization
+L00002648	implementation_surfaces:
+L00002649	- Plans/Architecture_Invariants.md
+L00002650	node_compile_hint:
+L00002651	  mode: legacy_tier_event_usage_evidence_demotion
+L00002652	  create_worknodes: false
+L00002653	source_lineage:
+L00002654	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002655	preserved_exact_tokens:
+L00002656	- legacy `tier-event`
+L00002657	- blocked
+L00002658	- scheduler
+L00002659	- remediation
+L00002660	- /scheduler/remediation
+L00002661	- tier-first
+L00002662	- Usage/Ledger navigation
+L00002663	- usage-event identity
+L00002664	- runtime and graph inspectors
+L00002665	- node/attempt identity
+L00002666	negative_constraints:
+L00002667	- Consumer docs must not mix canonical blocked/scheduler/remediation lineage with legacy tier-event push streams.
+L00002668	compatibility_only_notes:
+L00002669	- Usage/evidence families must demote tier-first cross-surface correlation in favor of usage-event or node/attempt identity.
+L00002670	stale_retired_dispositions: []
+L00002671	owner_boundary_notes: []
+L00002672	owner_hints:
+L00002673	- Plans/Architecture_Invariants.md
+L00002674	preserved_contractrefs:
+L00002675	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002676	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002677	```
+L00002678	
+L00002679	### AI-040 - Runtime Chat Boundary And Owner First Repair
+L00002680	
+L00002681	```yaml
+L00002682	plan_unit_id: AI-040
+L00002683	unit_type: requirement
+L00002684	status: accepted
+L00002685	owner_doc: Plans/Architecture_Invariants.md
+L00002686	canonical_text: Runtime/chat boundaries avoid over-unify and under-unify behavior, unresolved owner gaps remain owner obligations,
+L00002687	  and owner docs plus rewrite-root routing are repaired before primary stale consumers or checklist mirrors update.
+L00002688	gui_related: false
+L00002689	gui_classification_reason: This unit covers owner-first repair and runtime/chat boundary policy, not GUI behavior.
+L00002690	split_recommended: false
+L00002691	depends_on: []
+L00002692	unblocks: []
+L00002693	acceptance_criteria:
+L00002694	- Covered source spans remain losslessly available for exact-text audit.
+L00002695	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002696	  bridge.
+L00002697	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002698	  own contracts.
+L00002699	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002700	validation_surfaces:
+L00002701	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002702	- python3 scripts/pm-plan-index.py validate
+L00002703	risk_class: runtime_chat_boundary_and_owner_first_repair
+L00002704	reasoning_tier: standard
+L00002705	context_scope: architecture_invariants_standardization
+L00002706	implementation_surfaces:
+L00002707	- Plans/Architecture_Invariants.md
+L00002708	node_compile_hint:
+L00002709	  mode: runtime_chat_boundary_owner_first_repair
+L00002710	  create_worknodes: false
+L00002711	source_lineage:
+L00002712	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002713	preserved_exact_tokens:
+L00002714	- over-unify
+L00002715	- under-unify
+L00002716	- builder/interview/chat
+L00002717	- /interview/chat
+L00002718	- /account/runtime
+L00002719	- /session
+L00002720	- safe-point cleanup ordering
+L00002721	- OpenCode server/session limits
+L00002722	- project/session browser ownership
+L00002723	- attention-center ownership
+L00002724	- runtime-recovery
+L00002725	- plugin `/skill/formatter`
+L00002726	- rewrite-root
+L00002727	- /checklist
+L00002728	negative_constraints:
+L00002729	- Runtime/chat boundaries must avoid over-unify and under-unify behavior.
+L00002730	- Cross-cutting owner gaps must not be republished as local consumer behavior.
+L00002731	compatibility_only_notes: []
+L00002732	stale_retired_dispositions:
+L00002733	- Owner docs and rewrite-root routing are repaired before primary stale consumers, and mirror /checklist followers update
+L00002734	  only after owners settle.
+L00002735	owner_boundary_notes:
+L00002736	- Owner gaps remain invariant obligations until resolved by their owner docs.
+L00002737	owner_hints:
+L00002738	- Plans/Architecture_Invariants.md
+L00002739	preserved_contractrefs:
+L00002740	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002741	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002742	```
+L00002743	
+L00002744	### AI-041 - Project Activation Import And Visible Ambiguity
+L00002745	
+L00002746	```yaml
+L00002747	plan_unit_id: AI-041
+L00002748	unit_type: requirement
+L00002749	status: accepted
+L00002750	owner_doc: Plans/Architecture_Invariants.md
+L00002751	canonical_text: 'Puppet Master remains one extensible platform with project-driven capability activation: project-open detection/import
+L00002752	  runs before activation, project signals drive language/framework/build/review/remote/LSP/search/source-control capability
+L00002753	  packs, and ambiguous interpretations are visible, recorded, and overridable.'
+L00002754	gui_related: true
+L00002755	gui_classification_reason: This unit affects user-visible project activation, alternatives, defaults, and override behavior.
+L00002756	split_recommended: false
+L00002757	depends_on: []
+L00002758	unblocks: []
+L00002759	acceptance_criteria:
+L00002760	- Covered source spans remain losslessly available for exact-text audit.
+L00002761	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002762	  bridge.
+L00002763	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002764	  own contracts.
+L00002765	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002766	validation_surfaces:
+L00002767	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002768	- python3 scripts/pm-plan-index.py validate
+L00002769	risk_class: project_activation_import_and_visible_ambiguity
+L00002770	reasoning_tier: standard
+L00002771	context_scope: architecture_invariants_standardization
+L00002772	implementation_surfaces:
+L00002773	- Plans/Architecture_Invariants.md
+L00002774	node_compile_hint:
+L00002775	  mode: project_activation_import_visible_ambiguity
+L00002776	  create_worknodes: false
+L00002777	source_lineage:
+L00002778	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+L00002779	preserved_exact_tokens:
+L00002780	- INV-020 -- Project-driven capability activation
+L00002781	- bench-03
+L00002782	- one extensible platform
+L00002783	- Project-open detection/import
+L00002784	- language markers
+L00002785	- framework files
+L00002786	- build/run metadata
+L00002787	- hosted-repository state
+L00002788	- remote-host state
+L00002789	- capability packs/modules
+L00002790	- Ambiguity MUST be visible and overridable
+L00002791	negative_constraints:
+L00002792	- Puppet Master MUST remain one extensible platform, not separate hard-forked products or rigid personalities.
+L00002793	compatibility_only_notes: []
+L00002794	stale_retired_dispositions: []
+L00002795	owner_boundary_notes: []
+L00002796	owner_hints:
+L00002797	- Plans/Architecture_Invariants.md
+L00002798	preserved_contractrefs:
+L00002799	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+L00002800	  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+L00002801	```
+L00002802	
+L00002803	### AI-042 - Index Sync Degraded State And Shared Shell Workflow
+L00002804	
+L00002805	```yaml
+L00002806	plan_unit_id: AI-042
+L00002807	unit_type: requirement
+L00002808	status: accepted
+L00002809	owner_doc: Plans/Architecture_Invariants.md
+L00002810	canonical_text: Indexing and external-model sync are first-class bounded background subsystems that disclose reduced-capability/degraded-mode
+L00002811	  state while warming, and diff/review/hosted-repository workflows compose inside the shared IDE shell rather than becoming
+L00002812	  separate ad hoc tools.
+L00002813	gui_related: true
+L00002814	gui_classification_reason: This unit affects user-visible readiness, degraded-mode disclosure, and IDE shell workflow composition.
+L00002815	split_recommended: false
+L00002816	depends_on: []
+L00002817	unblocks: []
+L00002818	acceptance_criteria:
+L00002819	- Covered source spans remain losslessly available for exact-text audit.
+L00002820	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002821	  bridge.
+L00002822	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002823	  own contracts.
+L00002824	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002825	validation_surfaces:
+L00002826	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002827	- python3 scripts/pm-plan-index.py validate
+L00002828	risk_class: index_sync_degraded_state_and_shared_shell_workflow
+L00002829	reasoning_tier: standard
+L00002830	context_scope: architecture_invariants_standardization
+L00002831	implementation_surfaces:
+L00002832	- Plans/Architecture_Invariants.md
+L00002833	node_compile_hint:
+L00002834	  mode: index_sync_degraded_state_shared_shell
+L00002835	  create_worknodes: false
+L00002836	source_lineage:
+L00002837	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+L00002838	preserved_exact_tokens:
+L00002839	- Indexing
+L00002840	- external-model sync
+L00002841	- reduced-capability/degraded-mode state
+L00002842	- bounded/reused
+L00002843	- startup
+L00002844	- large-workspace responsiveness
+L00002845	- diff/review/hosted-repository workflows
+L00002846	- same shell
+L00002847	- Source Control
+L00002848	- Problems
+L00002849	- Search
+L00002850	negative_constraints:
+L00002851	- Affected features must not pretend full readiness while indexes or external model/capability reports are still synchronizing.
+L00002852	compatibility_only_notes: []
+L00002853	stale_retired_dispositions: []
+L00002854	owner_boundary_notes: []
+L00002855	owner_hints:
+L00002856	- Plans/Architecture_Invariants.md
+L00002857	preserved_contractrefs:
+L00002858	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+L00002859	  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+L00002860	```
+L00002861	
+L00002862	### AI-043 - Remote Attachment And Lazy Module Activation
+L00002863	
+L00002864	```yaml
+L00002865	plan_unit_id: AI-043
+L00002866	unit_type: requirement
+L00002867	status: accepted
+L00002868	owner_doc: Plans/Architecture_Invariants.md
+L00002869	canonical_text: Remote projects use a thin local client/launcher with backend attachment and version management, while plugins/modules
+L00002870	  load lazily and stay scoped to activated capabilities without unbounded startup work, hidden dependency chains, or duplicate
+L00002871	  project-detection logic.
+L00002872	gui_related: false
+L00002873	gui_classification_reason: This unit covers remote/module architecture and startup dependency policy, not GUI behavior.
+L00002874	split_recommended: false
+L00002875	depends_on: []
+L00002876	unblocks: []
+L00002877	acceptance_criteria:
+L00002878	- Covered source spans remain losslessly available for exact-text audit.
+L00002879	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002880	  bridge.
+L00002881	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002882	  own contracts.
+L00002883	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002884	validation_surfaces:
+L00002885	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002886	- python3 scripts/pm-plan-index.py validate
+L00002887	risk_class: remote_attachment_and_lazy_module_activation
+L00002888	reasoning_tier: standard
+L00002889	context_scope: architecture_invariants_standardization
+L00002890	implementation_surfaces:
+L00002891	- Plans/Architecture_Invariants.md
+L00002892	node_compile_hint:
+L00002893	  mode: remote_attachment_lazy_module_activation
+L00002894	  create_worknodes: false
+L00002895	source_lineage:
+L00002896	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+L00002897	preserved_exact_tokens:
+L00002898	- Remote architecture
+L00002899	- thin local client/launcher
+L00002900	- backend attachment/version management
+L00002901	- host identity
+L00002902	- helper-binary version
+L00002903	- connection health
+L00002904	- requested/effective capability state
+L00002905	- Plugin/module breadth
+L00002906	- dynamic-loading dependency debt
+L00002907	- loaded lazily
+L00002908	- unbounded startup work
+L00002909	- duplicate project-detection logic
+L00002910	negative_constraints:
+L00002911	- Module activation must not create unbounded startup work, hidden dependency chains, or duplicate project-detection logic.
+L00002912	compatibility_only_notes: []
+L00002913	stale_retired_dispositions: []
+L00002914	owner_boundary_notes: []
+L00002915	owner_hints:
+L00002916	- Plans/Architecture_Invariants.md
+L00002917	preserved_contractrefs:
+L00002918	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+L00002919	  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+L00002920	```
+L00002921	
+L00002922	### AI-044 - Dependency Driven Seam Reconciliation Order
+L00002923	
+L00002924	```yaml
+L00002925	plan_unit_id: AI-044
+L00002926	unit_type: requirement
+L00002927	status: accepted
+L00002928	owner_doc: Plans/Architecture_Invariants.md
+L00002929	canonical_text: Reconciliation work converts research into implementation-ready decisions seam-by-seam in dependency-driven
+L00002930	  order, preserving canonical seam labels, owner mapping, shell/identity/routing first, explicit owner docs, consumer docs,
+L00002931	  unresolved risk, acceptance guidance, and package/seam/node/lane/attempt addressing instead of rigid phase/task/subtask
+L00002932	  paths.
+L00002933	gui_related: false
+L00002934	gui_classification_reason: This unit covers planning/reconciliation order and addressing, not GUI behavior.
+L00002935	split_recommended: false
+L00002936	depends_on: []
+L00002937	unblocks: []
+L00002938	acceptance_criteria:
+L00002939	- Covered source spans remain losslessly available for exact-text audit.
+L00002940	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002941	  bridge.
+L00002942	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002943	  own contracts.
+L00002944	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002945	validation_surfaces:
+L00002946	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002947	- python3 scripts/pm-plan-index.py validate
+L00002948	risk_class: dependency_driven_seam_reconciliation_order
+L00002949	reasoning_tier: standard
+L00002950	context_scope: architecture_invariants_standardization
+L00002951	implementation_surfaces:
+L00002952	- Plans/Architecture_Invariants.md
+L00002953	node_compile_hint:
+L00002954	  mode: dependency_driven_seam_reconciliation_order
+L00002955	  create_worknodes: false
+L00002956	source_lineage:
+L00002957	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0034
+L00002958	preserved_exact_tokens:
+L00002959	- INV-021 -- Dependency-driven seam reconciliation order
+L00002960	- seam-shell-identity-routing
+L00002961	- seam-editor-core
+L00002962	- seam-diff-review-source-control
+L00002963	- seam-file-manager
+L00002964	- seam-search
+L00002965	- seam-preview-browser
+L00002966	- seam-lsp-indexing-autodetect
+L00002967	- seam-ssh-remote
+L00002968	- seam-terminal-runtime-environment
+L00002969	- seam-cross-cutting
+L00002970	- seam-reconciliation-synthesis
+L00002971	- <phase>/<task>/<subtask>
+L00002972	- package, seam, node, lane, and attempt identity
+L00002973	negative_constraints:
+L00002974	- Addressing cannot assume rigid <phase>/<task>/<subtask> paths when package/seam architecture is active.
+L00002975	compatibility_only_notes: []
+L00002976	stale_retired_dispositions: []
+L00002977	owner_boundary_notes:
+L00002978	- Each seam must leave explicit owner docs, consumer docs, unresolved risk if any, and implementation-ready acceptance guidance
+L00002979	  before moving out of reconciliation.
+L00002980	owner_hints:
+L00002981	- Plans/Architecture_Invariants.md
+L00002982	preserved_contractrefs:
+L00002983	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md,
+L00002984	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00002985	```
+L00002986	
+L00002987	### AI-045 - Native Workbench Service Bound Evidence
+L00002988	
+L00002989	```yaml
+L00002990	plan_unit_id: AI-045
+L00002991	unit_type: requirement
+L00002992	status: accepted
+L00002993	owner_doc: Plans/Architecture_Invariants.md
+L00002994	canonical_text: Puppet Master keeps a PM-native Rust plus Slint service-bound workbench architecture, preserving benchmark/research
+L00002995	  lineage for service boundaries, collaborative room constraints, degraded/indexing/remote/offline/requested-vs-effective
+L00002996	  state visibility, and the anti-delegated-core rule from implementation-reference synthesis.
+L00002997	gui_related: true
+L00002998	gui_classification_reason: This unit covers native workbench product architecture and Slint shell/workbench UI constraints.
+L00002999	split_recommended: false
+L00003000	depends_on: []
+L00003001	unblocks: []
+L00003002	acceptance_criteria:
+L00003003	- Covered source spans remain losslessly available for exact-text audit.
+L00003004	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003005	  bridge.
+L00003006	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003007	  own contracts.
+L00003008	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003009	validation_surfaces:
+L00003010	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003011	- python3 scripts/pm-plan-index.py validate
+L00003012	risk_class: native_workbench_service_bound_evidence
+L00003013	reasoning_tier: standard
+L00003014	context_scope: architecture_invariants_standardization
+L00003015	implementation_surfaces:
+L00003016	- Plans/Architecture_Invariants.md
+L00003017	node_compile_hint:
+L00003018	  mode: native_workbench_service_bound_evidence
+L00003019	  create_worknodes: false
+L00003020	source_lineage:
+L00003021	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003022	preserved_exact_tokens:
+L00003023	- INV-022 -- Service-bound native workbench architecture
+L00003024	- bench-01
+L00003025	- bench-04
+L00003026	- bench-09
+L00003027	- bench-17
+L00003028	- bench-21
+L00003029	- bench-29
+L00003030	- bench-32
+L00003031	- bench-10
+L00003032	- bench-30
+L00003033	- Rust/Tauri
+L00003034	- Slint shell/workbench UI
+L00003035	- fleet-synthesis
+L00003036	- research_summaries
+L00003037	- implementation_ref_findings
+L00003038	- implementation_ref_summaries
+L00003039	- 32-target implementation-reference fleet
+L00003040	- hidden delegated-backend ownership
+L00003041	negative_constraints:
+L00003042	- Puppet Master must avoid hidden delegated-backend ownership of core workbench state.
+L00003043	compatibility_only_notes: []
+L00003044	stale_retired_dispositions:
+L00003045	- Thin-editor/wrapper and IDE-shell lessons are bounded implementation tactics inside PM-native Rust + Slint architecture,
+L00003046	  not direct architecture foundations.
+L00003047	owner_boundary_notes: []
+L00003048	owner_hints:
+L00003049	- Plans/Architecture_Invariants.md
+L00003050	preserved_contractrefs:
+L00003051	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003052	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003053	```
+L00003054	
+L00003055	### AI-046 - UI Responsiveness And Background Service Projections
+L00003056	
+L00003057	```yaml
+L00003058	plan_unit_id: AI-046
+L00003059	unit_type: requirement
+L00003060	status: accepted
+L00003061	owner_doc: Plans/Architecture_Invariants.md
+L00003062	canonical_text: Editor/view responsiveness stays separate from heavier file walking, git, indexing, remote RPC, PTY/runtime,
+L00003063	  and provider services; Git/SCM subprocess work is never an editor or UI hot-path dependency, and editor/file surfaces consume
+L00003064	  coalesced background projections with explicit revalidation before mutation.
+L00003065	gui_related: true
+L00003066	gui_classification_reason: This unit governs UI/editor responsiveness, source-control projections, and user-visible file/editor
+L00003067	  surfaces.
+L00003068	split_recommended: false
+L00003069	depends_on: []
+L00003070	unblocks: []
+L00003071	acceptance_criteria:
+L00003072	- Covered source spans remain losslessly available for exact-text audit.
+L00003073	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003074	  bridge.
+L00003075	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003076	  own contracts.
+L00003077	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003078	validation_surfaces:
+L00003079	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003080	- python3 scripts/pm-plan-index.py validate
+L00003081	risk_class: ui_responsiveness_and_background_service_projections
+L00003082	reasoning_tier: standard
+L00003083	context_scope: architecture_invariants_standardization
+L00003084	implementation_surfaces:
+L00003085	- Plans/Architecture_Invariants.md
+L00003086	node_compile_hint:
+L00003087	  mode: ui_responsiveness_background_service_projections
+L00003088	  create_worknodes: false
+L00003089	source_lineage:
+L00003090	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003091	preserved_exact_tokens:
+L00003092	- Editor/view responsiveness
+L00003093	- latency-sensitive
+L00003094	- file walking
+L00003095	- git
+L00003096	- indexing
+L00003097	- remote RPC
+L00003098	- PTY/runtime
+L00003099	- provider-dispatched services
+L00003100	- background worker/proxy
+L00003101	- Git/SCM subprocess
+L00003102	- UI hot-path dependency
+L00003103	- coalesce
+L00003104	- budget
+L00003105	- explicit revalidation
+L00003106	negative_constraints:
+L00003107	- Git/SCM subprocess work is never an editor or UI hot-path dependency.
+L00003108	compatibility_only_notes: []
+L00003109	stale_retired_dispositions: []
+L00003110	owner_boundary_notes:
+L00003111	- Source Control and worktree services own SCM refresh projections; editor/file surfaces consume projections and request explicit
+L00003112	  revalidation before mutation.
+L00003113	owner_hints:
+L00003114	- Plans/Architecture_Invariants.md
+L00003115	preserved_contractrefs:
+L00003116	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003117	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003118	```
+L00003119	
+L00003120	### AI-047 - Platform Adapter Seam
+L00003121	
+L00003122	```yaml
+L00003123	plan_unit_id: AI-047
+L00003124	unit_type: requirement
+L00003125	status: accepted
+L00003126	owner_doc: Plans/Architecture_Invariants.md
+L00003127	canonical_text: OS-facing behavior is an explicit platform adapter seam for open/reveal, dialogs, drag/drop, file watching,
+L00003128	  URL handoff, path normalization, process/PTY integration, native dialogs, trash behavior, keychain/credential access, symlink/case
+L00003129	  sensitivity, clipboard, IME, accessibility bridges, and browser/webview embedding.
+L00003130	gui_related: true
+L00003131	gui_classification_reason: This unit affects user-visible native OS integration, dialogs, drag/drop, clipboard, accessibility,
+L00003132	  and embedded browser/webview behavior.
+L00003133	split_recommended: false
+L00003134	depends_on: []
+L00003135	unblocks: []
+L00003136	acceptance_criteria:
+L00003137	- Covered source spans remain losslessly available for exact-text audit.
+L00003138	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003139	  bridge.
+L00003140	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003141	  own contracts.
+L00003142	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003143	validation_surfaces:
+L00003144	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003145	- python3 scripts/pm-plan-index.py validate
+L00003146	risk_class: platform_adapter_seam
+L00003147	reasoning_tier: standard
+L00003148	context_scope: architecture_invariants_standardization
+L00003149	implementation_surfaces:
+L00003150	- Plans/Architecture_Invariants.md
+L00003151	node_compile_hint:
+L00003152	  mode: platform_adapter_seam
+L00003153	  create_worknodes: false
+L00003154	source_lineage:
+L00003155	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003156	preserved_exact_tokens:
+L00003157	- OS-facing behavior
+L00003158	- Open/reveal
+L00003159	- dialogs
+L00003160	- drag/drop
+L00003161	- file watching
+L00003162	- URL handoff
+L00003163	- path normalization
+L00003164	- process/PTY integration
+L00003165	- platform adapters
+L00003166	- native dialogs
+L00003167	- trash behavior
+L00003168	- keychain/credential access
+L00003169	- symlink
+L00003170	- case-sensitivity
+L00003171	- clipboard/IME/accessibility
+L00003172	- browser/webview embedding
+L00003173	negative_constraints:
+L00003174	- OS-facing behavior must not be implemented as scattered per-view shortcuts.
+L00003175	compatibility_only_notes: []
+L00003176	stale_retired_dispositions: []
+L00003177	owner_boundary_notes: []
+L00003178	owner_hints:
+L00003179	- Plans/Architecture_Invariants.md
+L00003180	preserved_contractrefs:
+L00003181	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003182	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003183	```
+L00003184	
+L00003185	### AI-048 - Shared Rust Core Ownership
+L00003186	
+L00003187	```yaml
+L00003188	plan_unit_id: AI-048
+L00003189	unit_type: requirement
+L00003190	status: accepted
+L00003191	owner_doc: Plans/Architecture_Invariants.md
+L00003192	canonical_text: The shared Rust core owns typed resource identity, buffer/text model, save/recovery/on-disk transactions,
+L00003193	  watcher/invalidation normalization, ignore policy, search/indexing/autodetection, LSP brokering, diff/review engine, preview
+L00003194	  session state, terminal/runtime state, remote/session state machine, command routing, and persistence schemas.
+L00003195	gui_related: false
+L00003196	gui_classification_reason: This unit covers core service ownership, not GUI behavior.
+L00003197	split_recommended: false
+L00003198	depends_on: []
+L00003199	unblocks: []
+L00003200	acceptance_criteria:
+L00003201	- Covered source spans remain losslessly available for exact-text audit.
+L00003202	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003203	  bridge.
+L00003204	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003205	  own contracts.
+L00003206	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003207	validation_surfaces:
+L00003208	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003209	- python3 scripts/pm-plan-index.py validate
+L00003210	risk_class: shared_rust_core_ownership
+L00003211	reasoning_tier: standard
+L00003212	context_scope: architecture_invariants_standardization
+L00003213	implementation_surfaces:
+L00003214	- Plans/Architecture_Invariants.md
+L00003215	node_compile_hint:
+L00003216	  mode: shared_rust_core_ownership
+L00003217	  create_worknodes: false
+L00003218	source_lineage:
+L00003219	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003220	preserved_exact_tokens:
+L00003221	- Resource identity
+L00003222	- workspace file
+L00003223	- scratch/history/generated/remote/session-bound resource
+L00003224	- provider-owned runtime object identity
+L00003225	- shared Rust core
+L00003226	- buffer/text model
+L00003227	- save/recovery/on-disk change transactions
+L00003228	- watcher/invalidation normalization
+L00003229	- ignore policy
+L00003230	- search/indexing/autodetection
+L00003231	- LSP brokering
+L00003232	- diff/review engine
+L00003233	- preview session state
+L00003234	- terminal/runtime state
+L00003235	- remote/session state machine
+L00003236	- command routing
+L00003237	- persistence schemas
+L00003238	negative_constraints:
+L00003239	- Resource identity must not be inferred from view placement or path strings alone.
+L00003240	compatibility_only_notes: []
+L00003241	stale_retired_dispositions: []
+L00003242	owner_boundary_notes:
+L00003243	- The shared Rust core owns cross-surface core services while platform adapters own OS specifics.
+L00003244	owner_hints:
+L00003245	- Plans/Architecture_Invariants.md
+L00003246	preserved_contractrefs:
+L00003247	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003248	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003249	```
+L00003250	
+L00003251	### AI-049 - Ignore Search Index Invalidation And Storage Isolation
+L00003252	
+L00003253	```yaml
+L00003254	plan_unit_id: AI-049
+L00003255	unit_type: requirement
+L00003256	status: accepted
+L00003257	owner_doc: Plans/Architecture_Invariants.md
+L00003258	canonical_text: Ignore handling, search/index walks, and tree visibility share one deliberate policy layer; watchers, remote
+L00003259	  notifications, and provider streams are invalidation signals only; search/index storage follows storage-isolation and no-secrets-in-storage
+L00003260	  with remote-build, local-query, and remote-verify for remote non-Git Instant Grep.
+L00003261	gui_related: false
+L00003262	gui_classification_reason: This unit covers search/index/storage policy and invalidation semantics, not GUI behavior.
+L00003263	split_recommended: false
+L00003264	depends_on: []
+L00003265	unblocks: []
+L00003266	acceptance_criteria:
+L00003267	- Covered source spans remain losslessly available for exact-text audit.
+L00003268	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003269	  bridge.
+L00003270	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003271	  own contracts.
+L00003272	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003273	validation_surfaces:
+L00003274	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003275	- python3 scripts/pm-plan-index.py validate
+L00003276	risk_class: ignore_search_index_invalidation_and_storage_isolation
+L00003277	reasoning_tier: standard
+L00003278	context_scope: architecture_invariants_standardization
+L00003279	implementation_surfaces:
+L00003280	- Plans/Architecture_Invariants.md
+L00003281	node_compile_hint:
+L00003282	  mode: ignore_search_index_invalidation_storage_isolation
+L00003283	  create_worknodes: false
+L00003284	source_lineage:
+L00003285	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003286	preserved_exact_tokens:
+L00003287	- Ignore handling
+L00003288	- search/index walks
+L00003289	- tree visibility
+L00003290	- File Manager
+L00003291	- Search
+L00003292	- LSP/indexing
+L00003293	- Source Control
+L00003294	- preview surfaces
+L00003295	- invalidation signals
+L00003296	- bounded reconciliation
+L00003297	- storage-isolation
+L00003298	- no-secrets-in-storage
+L00003299	- regex index
+L00003300	- sparse n-gram postings
+L00003301	- dirty layer
+L00003302	- remote/local cache projections
+L00003303	- remote-build
+L00003304	- local-query
+L00003305	- remote-verify
+L00003306	negative_constraints:
+L00003307	- File Manager, Search, LSP/indexing, Source Control, and preview surfaces cannot diverge silently on ignore/search/index
+L00003308	  visibility.
+L00003309	- File watchers, remote file-change notifications, and provider update streams are invalidation signals, not authoritative
+L00003310	  state.
+L00003311	compatibility_only_notes: []
+L00003312	stale_retired_dispositions: []
+L00003313	owner_boundary_notes: []
+L00003314	owner_hints:
+L00003315	- Plans/Architecture_Invariants.md
+L00003316	preserved_contractrefs:
+L00003317	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003318	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003319	```
+L00003320	
+L00003321	### AI-050 - Service Routing External Adapters And Anti DOM Constraints
+L00003322	
+L00003323	```yaml
+L00003324	plan_unit_id: AI-050
+L00003325	unit_type: requirement
+L00003326	status: accepted
+L00003327	owner_doc: Plans/Architecture_Invariants.md
+L00003328	canonical_text: File/open/search/undo/terminal/diff/preview routing resolves through service-registered/provider seams and
+L00003329	  owner contracts; external engines and CLIs are adapters only; requested-vs-effective state remains explicit; browser-specific
+L00003330	  assumptions such as DOM roots, service-worker persistence, hidden file inputs, Blob downloads, localStorage identity, query-string
+L00003331	  routing, and browser-only clipboard/selection hacks must not shape PM architecture.
+L00003332	gui_related: false
+L00003333	gui_classification_reason: This unit covers service routing, adapter boundaries, and architecture constraints rather than
+L00003334	  GUI presentation.
+L00003335	split_recommended: false
+L00003336	depends_on: []
+L00003337	unblocks: []
+L00003338	acceptance_criteria:
+L00003339	- Covered source spans remain losslessly available for exact-text audit.
+L00003340	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00003341	  bridge.
+L00003342	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003343	  own contracts.
+L00003344	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003345	validation_surfaces:
+L00003346	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003347	- python3 scripts/pm-plan-index.py validate
+L00003348	risk_class: service_routing_external_adapters_and_anti_dom_constraints
+L00003349	reasoning_tier: standard
+L00003350	context_scope: architecture_invariants_standardization
+L00003351	implementation_surfaces:
+L00003352	- Plans/Architecture_Invariants.md
+L00003353	node_compile_hint:
+L00003354	  mode: service_routing_external_adapters_anti_dom_constraints
+L00003355	  create_worknodes: false
+L00003356	source_lineage:
+L00003357	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+L00003358	preserved_exact_tokens:
+L00003359	- service-registered/provider-based seams
+L00003360	- owner contract
+L00003361	- External engines and CLIs
+L00003362	- adapters only
+L00003363	- requested-vs-effective state
+L00003364	- /bootstrap/runtime/indexing
+L00003365	- DOM roots
+L00003366	- service-worker persistence
+L00003367	- hidden file inputs
+L00003368	- Blob downloads
+L00003369	- localStorage identity
+L00003370	- query-string routing
+L00003371	- browser-only clipboard/selection hacks
+L00003372	- thin-wrapper
+L00003373	- Electron
+L00003374	- DOM-first
+L00003375	negative_constraints:
+L00003376	- External engines and CLIs may be reused only as adapters inside PM-owned boundaries.
+L00003377	- Browser-specific implementation assumptions must not shape Puppet Master architecture.
+L00003378	- Puppet Master must avoid direct adoption of thin-wrapper, Electron, or DOM-first implementation assumptions as native workbench
+L00003379	  foundations.
+L00003380	compatibility_only_notes: []
+L00003381	stale_retired_dispositions: []
+L00003382	owner_boundary_notes: []
+L00003383	owner_hints:
+L00003384	- Plans/Architecture_Invariants.md
+L00003385	preserved_contractrefs:
+L00003386	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+L00003387	  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+L00003388	```
+L00003389	
+L00003390	### AI-051 - Typed Investigation Budget Exhaustion
+L00003391	
+L00003392	```yaml
+L00003393	plan_unit_id: AI-051
+L00003394	unit_type: requirement
+L00003395	status: accepted
+L00003396	owner_doc: Plans/Architecture_Invariants.md
+L00003397	canonical_text: Debug/investigation flows MUST record typed budget exhaustion instead of collapsing every stop into generic
+L00003398	  failed, failed_cleanup, attention_required, failure, or blocked state; lifecycle records may carry budget_kind?, and retry,
+L00003399	  resume, and cleanup surfaces preserve the exact budget_kind? that tripped.
+L00003400	gui_related: false
+L00003401	gui_classification_reason: This unit covers investigation lifecycle state semantics and budget accounting, not GUI behavior.
+L00003402	split_recommended: false
+L00003403	depends_on: []
+L00003404	unblocks: []
+L00003405	acceptance_criteria:
+L00003406	- Covered source spans remain losslessly available for exact-text audit.
+L00003407	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003408	  bridge.
+L00003409	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003410	  own contracts.
+L00003411	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003412	validation_surfaces:
+L00003413	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003414	- python3 scripts/pm-plan-index.py validate
+L00003415	risk_class: typed_investigation_budget_exhaustion
+L00003416	reasoning_tier: standard
+L00003417	context_scope: architecture_invariants_standardization
+L00003418	implementation_surfaces:
+L00003419	- Plans/Architecture_Invariants.md
+L00003420	node_compile_hint:
+L00003421	  mode: typed_investigation_budget_exhaustion
+L00003422	  create_worknodes: false
+L00003423	source_lineage:
+L00003424	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+L00003425	preserved_exact_tokens:
+L00003426	- INV-023 -- Investigation lifecycle budgets are typed
+L00003427	- typed budget exhaustion
+L00003428	- generic failure
+L00003429	- blocked state
+L00003430	- budget_kind?
+L00003431	- failed
+L00003432	- failed_cleanup
+L00003433	- attention_required
+L00003434	- retry
+L00003435	- resume
+L00003436	- cleanup surfaces
+L00003437	negative_constraints:
+L00003438	- Debug/investigation flows MUST record typed budget exhaustion rather than collapsing every stop into a generic failure or
+L00003439	  blocked state.
+L00003440	compatibility_only_notes: []
+L00003441	stale_retired_dispositions: []
+L00003442	owner_boundary_notes: []
+L00003443	owner_hints:
+L00003444	- Plans/Architecture_Invariants.md
+L00003445	preserved_contractrefs:
+L00003446	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+L00003447	  ContractName:Plans/FinalGUISpec.md'
+L00003448	```
+L00003449	
+L00003450	### AI-052 - Investigation Budget Kinds And Defaults
+L00003451	
+L00003452	```yaml
+L00003453	plan_unit_id: AI-052
+L00003454	unit_type: requirement
+L00003455	status: accepted
+L00003456	owner_doc: Plans/Architecture_Invariants.md
+L00003457	canonical_text: Allowed budget_kind? values are target_discovery_attempts, prepare_attempts, instrumentation_passes, invasive_instrumentation_passes,
+L00003458	  fix_candidates, repro_attempts, verification_attempts, package_or_tool_installs, browser_scenario_branches, no_new_evidence_loops,
+L00003459	  active_temporary_instrumentation_lanes, cleanup_retries, attention_required_resume_cycles, and elapsed_wall_time; MVP ceilings
+L00003460	  are max_verification_attempts_per_fix_candidate = 2 and max_package_or_tool_installs = 2, with named keys persisted or exported
+L00003461	  when they affect stop/retry decisions.
+L00003462	gui_related: false
+L00003463	gui_classification_reason: This unit covers investigation budget enumeration and defaults, not GUI behavior.
+L00003464	split_recommended: false
+L00003465	depends_on: []
+L00003466	unblocks: []
+L00003467	acceptance_criteria:
+L00003468	- Covered source spans remain losslessly available for exact-text audit.
+L00003469	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003470	  bridge.
+L00003471	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003472	  own contracts.
+L00003473	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003474	validation_surfaces:
+L00003475	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003476	- python3 scripts/pm-plan-index.py validate
+L00003477	risk_class: investigation_budget_kinds_and_defaults
+L00003478	reasoning_tier: standard
+L00003479	context_scope: architecture_invariants_standardization
+L00003480	implementation_surfaces:
+L00003481	- Plans/Architecture_Invariants.md
+L00003482	node_compile_hint:
+L00003483	  mode: investigation_budget_kinds_defaults
+L00003484	  create_worknodes: false
+L00003485	source_lineage:
+L00003486	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+L00003487	preserved_exact_tokens:
+L00003488	- target_discovery_attempts
+L00003489	- prepare_attempts
+L00003490	- instrumentation_passes
+L00003491	- invasive_instrumentation_passes
+L00003492	- fix_candidates
+L00003493	- repro_attempts
+L00003494	- verification_attempts
+L00003495	- package_or_tool_installs
+L00003496	- browser_scenario_branches
+L00003497	- no_new_evidence_loops
+L00003498	- active_temporary_instrumentation_lanes
+L00003499	- cleanup_retries
+L00003500	- attention_required_resume_cycles
+L00003501	- elapsed_wall_time
+L00003502	- max_verification_attempts_per_fix_candidate = 2
+L00003503	- max_package_or_tool_installs = 2
+L00003504	negative_constraints: []
+L00003505	compatibility_only_notes: []
+L00003506	stale_retired_dispositions: []
+L00003507	owner_boundary_notes: []
+L00003508	owner_hints:
+L00003509	- Plans/Architecture_Invariants.md
+L00003510	preserved_contractrefs:
+L00003511	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+L00003512	  ContractName:Plans/FinalGUISpec.md'
+L00003513	```
+L00003514	
+L00003515	### AI-053 - Package Install Budget Accounting
+L00003516	
+L00003517	```yaml
+L00003518	plan_unit_id: AI-053
+L00003519	unit_type: requirement
+L00003520	status: accepted
+L00003521	owner_doc: Plans/Architecture_Invariants.md
+L00003522	canonical_text: Only package or tool installs that persist beyond a single process lifetime count against max_package_or_tool_installs;
+L00003523	  ephemeral per-process installs may be logged as investigation context but do not consume the install budget.
+L00003524	gui_related: false
+L00003525	gui_classification_reason: This unit covers investigation package/tool install budget accounting, not GUI behavior.
+L00003526	split_recommended: false
+L00003527	depends_on: []
+L00003528	unblocks: []
+L00003529	acceptance_criteria:
+L00003530	- Covered source spans remain losslessly available for exact-text audit.
+L00003531	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003532	  bridge.
+L00003533	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003534	  own contracts.
+L00003535	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003536	validation_surfaces:
+L00003537	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003538	- python3 scripts/pm-plan-index.py validate
+L00003539	risk_class: package_install_budget_accounting
+L00003540	reasoning_tier: standard
+L00003541	context_scope: architecture_invariants_standardization
+L00003542	implementation_surfaces:
+L00003543	- Plans/Architecture_Invariants.md
+L00003544	node_compile_hint:
+L00003545	  mode: package_install_budget_accounting
+L00003546	  create_worknodes: false
+L00003547	source_lineage:
+L00003548	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+L00003549	preserved_exact_tokens:
+L00003550	- package or tool installs
+L00003551	- persist beyond a single process lifetime
+L00003552	- max_package_or_tool_installs
+L00003553	- ephemeral per-process installs
+L00003554	- investigation context
+L00003555	- install budget
+L00003556	negative_constraints:
+L00003557	- Ephemeral per-process installs do not consume max_package_or_tool_installs.
+L00003558	compatibility_only_notes: []
+L00003559	stale_retired_dispositions: []
+L00003560	owner_boundary_notes: []
+L00003561	owner_hints:
+L00003562	- Plans/Architecture_Invariants.md
+L00003563	preserved_contractrefs:
+L00003564	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+L00003565	  ContractName:Plans/FinalGUISpec.md'
+L00003566	```
+L00003567	
+L00003568	### AI-054 - Debug Evidence Plane Separation
+L00003569	
+L00003570	```yaml
+L00003571	plan_unit_id: AI-054
+L00003572	unit_type: requirement
+L00003573	status: accepted
+L00003574	owner_doc: Plans/Architecture_Invariants.md
+L00003575	canonical_text: Debug Mode MUST preserve local ephemeral investigation, hosted runtime verification, production/data-plane
+L00003576	  observability, assistant-session diagnostics, terminal/test observe loops, and DAP-grade interactive inspection as distinct
+L00003577	  evidence planes; Devin, Replit, OpenHands, SWE-agent / mini-swe-agent, Cline, Roo Code, Continue, Aider, InspectCoder /
+L00003578	  InspectWare, snooper-ai, and PySnooper remain examples and not collapsed owner models.
+L00003579	gui_related: false
+L00003580	gui_classification_reason: This unit covers debug evidence plane ownership and examples, not GUI behavior.
+L00003581	split_recommended: false
+L00003582	depends_on: []
+L00003583	unblocks: []
+L00003584	acceptance_criteria:
+L00003585	- Covered source spans remain losslessly available for exact-text audit.
+L00003586	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003587	  bridge.
+L00003588	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003589	  own contracts.
+L00003590	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003591	validation_surfaces:
+L00003592	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003593	- python3 scripts/pm-plan-index.py validate
+L00003594	risk_class: debug_evidence_plane_separation
+L00003595	reasoning_tier: standard
+L00003596	context_scope: architecture_invariants_standardization
+L00003597	implementation_surfaces:
+L00003598	- Plans/Architecture_Invariants.md
+L00003599	node_compile_hint:
+L00003600	  mode: debug_evidence_plane_separation
+L00003601	  create_worknodes: false
+L00003602	source_lineage:
+L00003603	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+L00003604	preserved_exact_tokens:
+L00003605	- INV-024 -- Debug Mode evidence planes stay explicit
+L00003606	- local ephemeral investigation
+L00003607	- hosted runtime verification
+L00003608	- production/data-plane observability
+L00003609	- assistant-session diagnostics
+L00003610	- terminal/test observe loops
+L00003611	- DAP-grade interactive inspection
+L00003612	- Devin
+L00003613	- Replit
+L00003614	- OpenHands
+L00003615	- SWE-agent / mini-swe-agent
+L00003616	- Cline
+L00003617	- Roo Code
+L00003618	- Continue
+L00003619	- Aider
+L00003620	- InspectCoder / InspectWare
+L00003621	- snooper-ai
+L00003622	- PySnooper
+L00003623	negative_constraints:
+L00003624	- Debug Mode MUST preserve evidence planes instead of collapsing them into one owner model.
+L00003625	compatibility_only_notes: []
+L00003626	stale_retired_dispositions: []
+L00003627	owner_boundary_notes: []
+L00003628	owner_hints:
+L00003629	- Plans/Architecture_Invariants.md
+L00003630	preserved_contractrefs:
+L00003631	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+L00003632	  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+L00003633	```
+L00003634	
+L00003635	### AI-055 - Debug And Deep Plan Overlay Boundaries
+L00003636	
+L00003637	```yaml
+L00003638	plan_unit_id: AI-055
+L00003639	unit_type: requirement
+L00003640	status: accepted
+L00003641	owner_doc: Plans/Architecture_Invariants.md
+L00003642	canonical_text: Debug Mode is a chat/workflow overlay and not a new execution-posture enum; assistant-chat-design may expose
+L00003643	  Debug alongside Ask, Agent, Plan, and Deep Plan while Run_Modes keeps runtime posture separate. Deep Plan is single-threaded
+L00003644	  read-only planning and does not create sub-task inheritance or widen child authority.
+L00003645	gui_related: true
+L00003646	gui_classification_reason: This unit covers user-visible Assistant mode labels and overlay behavior.
+L00003647	split_recommended: false
+L00003648	depends_on: []
+L00003649	unblocks: []
+L00003650	acceptance_criteria:
+L00003651	- Covered source spans remain losslessly available for exact-text audit.
+L00003652	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003653	  bridge.
+L00003654	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003655	  own contracts.
+L00003656	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003657	validation_surfaces:
+L00003658	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003659	- python3 scripts/pm-plan-index.py validate
+L00003660	risk_class: debug_and_deep_plan_overlay_boundaries
+L00003661	reasoning_tier: standard
+L00003662	context_scope: architecture_invariants_standardization
+L00003663	implementation_surfaces:
+L00003664	- Plans/Architecture_Invariants.md
+L00003665	node_compile_hint:
+L00003666	  mode: debug_deep_plan_overlay_boundaries
+L00003667	  create_worknodes: false
+L00003668	source_lineage:
+L00003669	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+L00003670	preserved_exact_tokens:
+L00003671	- Debug Mode
+L00003672	- chat/workflow overlay
+L00003673	- execution-posture enum
+L00003674	- Plans/assistant-chat-design.md
+L00003675	- Ask
+L00003676	- Agent
+L00003677	- Plan
+L00003678	- Deep Plan
+L00003679	- Plans/Run_Modes.md
+L00003680	- single-threaded read-only planning
+L00003681	- sub-task inheritance
+L00003682	- child authority
+L00003683	negative_constraints:
+L00003684	- Debug Mode must not become a new execution-posture enum.
+L00003685	- Deep Plan does not create a sub-task inheritance path or widen child authority.
+L00003686	compatibility_only_notes: []
+L00003687	stale_retired_dispositions: []
+L00003688	owner_boundary_notes:
+L00003689	- assistant-chat-design owns Debug exposure as a chat/workflow overlay; Run_Modes owns runtime posture.
+L00003690	owner_hints:
+L00003691	- Plans/Architecture_Invariants.md
+L00003692	preserved_contractrefs:
+L00003693	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+L00003694	  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+L00003695	```
+L00003696	
+L00003697	### AI-056 - Debug MVP Authority Seams
+L00003698	
+L00003699	```yaml
+L00003700	plan_unit_id: AI-056
+L00003701	unit_type: requirement
+L00003702	status: accepted
+L00003703	owner_doc: Plans/Architecture_Invariants.md
+L00003704	canonical_text: Debug Mode is MVP only when remote targets keep /no-local-fallback, requested /effective capability /state
+L00003705	  stays visible, and seams for investigation_id, instrumentation_id, storage, /contracts/prompt, permissions, and browser
+L00003706	  evidence are explicitly owned rather than inferred from a debug label.
+L00003707	gui_related: false
+L00003708	gui_classification_reason: This unit covers authority seams and target/capability state, not GUI behavior.
+L00003709	split_recommended: false
+L00003710	depends_on: []
+L00003711	unblocks: []
+L00003712	acceptance_criteria:
+L00003713	- Covered source spans remain losslessly available for exact-text audit.
+L00003714	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003715	  bridge.
+L00003716	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003717	  own contracts.
+L00003718	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003719	validation_surfaces:
+L00003720	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003721	- python3 scripts/pm-plan-index.py validate
+L00003722	risk_class: debug_mvp_authority_seams
+L00003723	reasoning_tier: standard
+L00003724	context_scope: architecture_invariants_standardization
+L00003725	implementation_surfaces:
+L00003726	- Plans/Architecture_Invariants.md
+L00003727	node_compile_hint:
+L00003728	  mode: debug_mvp_authority_seams
+L00003729	  create_worknodes: false
+L00003730	source_lineage:
+L00003731	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+L00003732	preserved_exact_tokens:
+L00003733	- /no-local-fallback
+L00003734	- requested /effective capability /state
+L00003735	- investigation_id
+L00003736	- instrumentation_id
+L00003737	- storage
+L00003738	- /contracts/prompt
+L00003739	- permissions
+L00003740	- browser evidence
+L00003741	- debug label
+L00003742	negative_constraints:
+L00003743	- Debug authority seams must not be inferred from a debug label.
+L00003744	compatibility_only_notes: []
+L00003745	stale_retired_dispositions: []
+L00003746	owner_boundary_notes:
+L00003747	- Remote target, capability, storage, prompt, permission, and browser evidence seams require explicit owners.
+L00003748	owner_hints:
+L00003749	- Plans/Architecture_Invariants.md
+L00003750	preserved_contractrefs:
+L00003751	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+L00003752	  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+L00003753	```
+L00003754	
+L00003755	### AI-057 - Visible Browser Evidence Attachment
+L00003756	
+L00003757	```yaml
+L00003758	plan_unit_id: AI-057
+L00003759	unit_type: requirement
+L00003760	status: accepted
+L00003761	owner_doc: Plans/Architecture_Invariants.md
+L00003762	canonical_text: Browser evidence auto-feed must be a visible attach /bundle contract and must not contradict the no hidden
+L00003763	  browser-to-chat injection rule; bounded auto-feed is allowed only through visible Investigation Context state, consented
+L00003764	  attach/revoke affordances, and owner-routed browser capture events.
+L00003765	gui_related: true
+L00003766	gui_classification_reason: This unit governs user-visible browser evidence attach/revoke affordances and Investigation Context
+L00003767	  state.
+L00003768	split_recommended: false
+L00003769	depends_on: []
+L00003770	unblocks: []
+L00003771	acceptance_criteria:
+L00003772	- Covered source spans remain losslessly available for exact-text audit.
+L00003773	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003774	  bridge.
+L00003775	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003776	  own contracts.
+L00003777	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003778	validation_surfaces:
+L00003779	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003780	- python3 scripts/pm-plan-index.py validate
+L00003781	risk_class: visible_browser_evidence_attachment
+L00003782	reasoning_tier: standard
+L00003783	context_scope: architecture_invariants_standardization
+L00003784	implementation_surfaces:
+L00003785	- Plans/Architecture_Invariants.md
+L00003786	node_compile_hint:
+L00003787	  mode: visible_browser_evidence_attachment
+L00003788	  create_worknodes: false
+L00003789	source_lineage:
+L00003790	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+L00003791	preserved_exact_tokens:
+L00003792	- browser evidence auto-feed
+L00003793	- visible attach `/bundle` contract
+L00003794	- no hidden browser-to-chat injection rule
+L00003795	- visible Investigation Context state
+L00003796	- consented attach/revoke affordances
+L00003797	- owner-routed browser capture events
+L00003798	negative_constraints:
+L00003799	- Browser evidence auto-feed must not contradict the no hidden browser-to-chat injection rule.
+L00003800	compatibility_only_notes: []
+L00003801	stale_retired_dispositions: []
+L00003802	owner_boundary_notes:
+L00003803	- Browser-backed investigation evidence enters through visible owner-routed attach/bundle state, not hidden prompt injection.
+L00003804	owner_hints:
+L00003805	- Plans/Architecture_Invariants.md
+L00003806	preserved_contractrefs:
+L00003807	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+L00003808	  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+L00003809	```
+L00003810	
+L00003811	### AI-058 - Investigation Evidence State And Replay Heuristics
+L00003812	
+L00003813	```yaml
+L00003814	plan_unit_id: AI-058
+L00003815	unit_type: requirement
+L00003816	status: accepted
+L00003817	owner_doc: Plans/Architecture_Invariants.md
+L00003818	canonical_text: In-scope tool-emitted evidence for an active investigation enters Investigation Context as active unless redaction,
+L00003819	  trust, or /truncation policy narrows it; out-of-scope evidence remains referenced or rejected instead of silently injected.
+L00003820	  Exported or replayed Debug verification evidence carries heuristic_version = debug_verify.v1, and future debug_verify tuning
+L00003821	  increments or preserves heuristic_version.
+L00003822	gui_related: false
+L00003823	gui_classification_reason: This unit covers evidence state, redaction/trust/truncation policy, and replay metadata, not GUI
+L00003824	  behavior.
+L00003825	split_recommended: false
+L00003826	depends_on: []
+L00003827	unblocks: []
+L00003828	acceptance_criteria:
+L00003829	- Covered source spans remain losslessly available for exact-text audit.
+L00003830	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003831	  bridge.
+L00003832	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003833	  own contracts.
+L00003834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003835	validation_surfaces:
+L00003836	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003837	- python3 scripts/pm-plan-index.py validate
+L00003838	risk_class: investigation_evidence_state_and_replay_heuristics
+L00003839	reasoning_tier: standard
+L00003840	context_scope: architecture_invariants_standardization
+L00003841	implementation_surfaces:
+L00003842	- Plans/Architecture_Invariants.md
+L00003843	node_compile_hint:
+L00003844	  mode: investigation_evidence_state_replay_heuristics
+L00003845	  create_worknodes: false
+L00003846	source_lineage:
+L00003847	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+L00003848	preserved_exact_tokens:
+L00003849	- tool-emitted evidence
+L00003850	- Investigation Context
+L00003851	- active
+L00003852	- redaction
+L00003853	- trust
+L00003854	- /truncation
+L00003855	- referenced or rejected
+L00003856	- silently injected
+L00003857	- heuristic_version = debug_verify.v1
+L00003858	- debug_verify
+L00003859	- exported or replayed
+L00003860	negative_constraints:
+L00003861	- Out-of-scope evidence remains referenced or rejected instead of being silently injected.
+L00003862	compatibility_only_notes: []
+L00003863	stale_retired_dispositions: []
+L00003864	owner_boundary_notes: []
+L00003865	owner_hints:
+L00003866	- Plans/Architecture_Invariants.md
+L00003867	preserved_contractrefs:
+L00003868	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+L00003869	  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+L00003870	```
+L00003871	
+L00003872	### AI-059 - Provider Profiles Are Runtime Isolated
+L00003873	
+L00003874	```yaml
+L00003875	plan_unit_id: AI-059
+L00003876	unit_type: requirement
+L00003877	status: accepted
+L00003878	owner_doc: Plans/Architecture_Invariants.md
+L00003879	canonical_text: CLI/provider profile mechanisms used for account separation MUST be treated as isolated runtime profiles;
+L00003880	  Cursor --user-data-dir and user-data-dir separation do not authorize sharing auth, cooldown, usage, session history, runtime
+L00003881	  cache, or telemetry state between accounts.
+L00003882	gui_related: false
+L00003883	gui_classification_reason: This unit covers provider/runtime profile isolation, not GUI behavior.
+L00003884	split_recommended: false
+L00003885	depends_on: []
+L00003886	unblocks: []
+L00003887	acceptance_criteria:
+L00003888	- Covered source spans remain losslessly available for exact-text audit.
+L00003889	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003890	  bridge.
+L00003891	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003892	  own contracts.
+L00003893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003894	validation_surfaces:
+L00003895	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003896	- python3 scripts/pm-plan-index.py validate
+L00003897	risk_class: provider_profiles_are_runtime_isolated
+L00003898	reasoning_tier: standard
+L00003899	context_scope: architecture_invariants_standardization
+L00003900	implementation_surfaces:
+L00003901	- Plans/Architecture_Invariants.md
+L00003902	node_compile_hint:
+L00003903	  mode: provider_profiles_runtime_isolated
+L00003904	  create_worknodes: false
+L00003905	source_lineage:
+L00003906	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0038
+L00003907	preserved_exact_tokens:
+L00003908	- INV-025 -- Provider profile isolation is not shared mutable state
+L00003909	- CLI/provider profile mechanisms
+L00003910	- isolated runtime profiles
+L00003911	- Cursor
+L00003912	- --user-data-dir
+L00003913	- user-data-dir
+L00003914	- auth
+L00003915	- cooldown
+L00003916	- usage
+L00003917	- session history
+L00003918	- runtime cache
+L00003919	- telemetry state
+L00003920	negative_constraints:
+L00003921	- user-data-dir profile separation does not authorize sharing auth, cooldown, usage, session history, runtime cache, or telemetry
+L00003922	  state between accounts.
+L00003923	compatibility_only_notes: []
+L00003924	stale_retired_dispositions: []
+L00003925	owner_boundary_notes: []
+L00003926	owner_hints:
+L00003927	- Plans/Architecture_Invariants.md
+L00003928	preserved_contractrefs:
+L00003929	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/BinaryLocator_Spec.md,
+L00003930	  ContractName:Plans/Permissions_System.md'
+L00003931	```
+L00003932	
+L00003933	### AI-060 - Provider Overlay Sharing Requires Owner Contract
+L00003934	
+L00003935	```yaml
+L00003936	plan_unit_id: AI-060
+L00003937	unit_type: requirement
+L00003938	status: accepted
+L00003939	owner_doc: Plans/Architecture_Invariants.md
+L00003940	canonical_text: PM-managed overlays such as instructions, projected PM skills, selected MCP/tool definitions, and selected
+L00003941	  plugins/extensions may be shared only when the provider/runtime contract explicitly allows safe projection and drift handling.
+L00003942	gui_related: false
+L00003943	gui_classification_reason: This unit covers provider/runtime overlay sharing contracts, not GUI behavior.
+L00003944	split_recommended: false
+L00003945	depends_on: []
+L00003946	unblocks: []
+L00003947	acceptance_criteria:
+L00003948	- Covered source spans remain losslessly available for exact-text audit.
+L00003949	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00003950	  bridge.
+L00003951	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00003952	  own contracts.
+L00003953	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003954	validation_surfaces:
+L00003955	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003956	- python3 scripts/pm-plan-index.py validate
+L00003957	risk_class: provider_overlay_sharing_requires_owner_contract
+L00003958	reasoning_tier: standard
+L00003959	context_scope: architecture_invariants_standardization
+L00003960	implementation_surfaces:
+L00003961	- Plans/Architecture_Invariants.md
+L00003962	node_compile_hint:
+L00003963	  mode: provider_overlay_sharing_owner_contract
+L00003964	  create_worknodes: false
+L00003965	source_lineage:
+L00003966	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0038
+L00003967	preserved_exact_tokens:
+L00003968	- PM-managed overlays
+L00003969	- instructions
+L00003970	- projected PM skills
+L00003971	- selected MCP/tool definitions
+L00003972	- selected plugins/extensions
+L00003973	- provider/runtime contract
+L00003974	- safe projection
+L00003975	- drift handling
+L00003976	negative_constraints:
+L00003977	- PM-managed overlays may be shared only when the provider/runtime contract explicitly allows safe projection and drift handling.
+L00003978	compatibility_only_notes: []
+L00003979	stale_retired_dispositions: []
+L00003980	owner_boundary_notes:
+L00003981	- Provider/runtime contracts own safe overlay projection and drift handling.
+L00003982	owner_hints:
+L00003983	- Plans/Architecture_Invariants.md
+L00003984	preserved_contractrefs:
+L00003985	- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/BinaryLocator_Spec.md,
+L00003986	  ContractName:Plans/Permissions_System.md'
+L00003987	```
+L00003988	
+L00003989	### AI-061 - File Browser Recovery Consumer Routing
+L00003990	
+L00003991	```yaml
+L00003992	plan_unit_id: AI-061
+L00003993	unit_type: requirement
+L00003994	status: accepted
+L00003995	owner_doc: Plans/Architecture_Invariants.md
+L00003996	canonical_text: FileManager consumes file/browser/rendering repairs and MUST NOT keep stale inline visualizer or terminal-action
+L00003997	  assumptions; /browser/rendering behavior stays routed through browser/rendering owners, and terminal-action surfaces remain
+L00003998	  consumers of terminal/runtime contracts.
+L00003999	gui_related: true
+L00004000	gui_classification_reason: This unit affects FileManager, browser/rendering, and terminal-action user-visible surfaces.
+L00004001	split_recommended: false
+L00004002	depends_on: []
+L00004003	unblocks: []
+L00004004	acceptance_criteria:
+L00004005	- Covered source spans remain losslessly available for exact-text audit.
+L00004006	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004007	  bridge.
+L00004008	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004009	  own contracts.
+L00004010	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004011	validation_surfaces:
+L00004012	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004013	- python3 scripts/pm-plan-index.py validate
+L00004014	risk_class: file_browser_recovery_consumer_routing
+L00004015	reasoning_tier: standard
+L00004016	context_scope: architecture_invariants_standardization
+L00004017	implementation_surfaces:
+L00004018	- Plans/Architecture_Invariants.md
+L00004019	node_compile_hint:
+L00004020	  mode: file_browser_recovery_consumer_routing
+L00004021	  create_worknodes: false
+L00004022	source_lineage:
+L00004023	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004024	preserved_exact_tokens:
+L00004025	- Plans/FileManager.md
+L00004026	- file/browser/rendering repairs
+L00004027	- stale inline visualizer
+L00004028	- terminal-action assumptions
+L00004029	- /browser/rendering
+L00004030	- browser/rendering owners
+L00004031	- terminal-action surface
+L00004032	- terminal/runtime contracts
+L00004033	negative_constraints:
+L00004034	- Plans/FileManager.md MUST NOT keep stale inline visualizer or terminal-action assumptions.
+L00004035	compatibility_only_notes: []
+L00004036	stale_retired_dispositions:
+L00004037	- File/browser/rendering and terminal-action assumptions are stale if they bypass owner routing.
+L00004038	owner_boundary_notes:
+L00004039	- FileManager consumes browser/rendering and terminal/runtime owners instead of re-owning them.
+L00004040	owner_hints:
+L00004041	- Plans/Architecture_Invariants.md
+L00004042	preserved_contractrefs:
+L00004043	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004044	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004045	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004046	```
+L00004047	
+L00004048	### AI-062 - Firecrawl Billing And Audit UI Ownership
+L00004049	
+L00004050	```yaml
+L00004051	plan_unit_id: AI-062
+L00004052	unit_type: requirement
+L00004053	status: accepted
+L00004054	owner_doc: Plans/Architecture_Invariants.md
+L00004055	canonical_text: FinalGUISpec consumes Firecrawl billing and audit disclosure, and credit-warning plus audit-surface UI copy
+L00004056	  MUST defer to Tools for thresholds, provider billing exceptions, cache/routing disclosure, and web-operation audit payload
+L00004057	  ownership.
+L00004058	gui_related: true
+L00004059	gui_classification_reason: This unit governs Firecrawl credit-warning, audit-surface UI copy, and user-visible disclosure
+L00004060	  ownership.
+L00004061	split_recommended: false
+L00004062	depends_on: []
+L00004063	unblocks: []
+L00004064	acceptance_criteria:
+L00004065	- Covered source spans remain losslessly available for exact-text audit.
+L00004066	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004067	  bridge.
+L00004068	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004069	  own contracts.
+L00004070	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004071	validation_surfaces:
+L00004072	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004073	- python3 scripts/pm-plan-index.py validate
+L00004074	risk_class: firecrawl_billing_and_audit_ui_ownership
+L00004075	reasoning_tier: standard
+L00004076	context_scope: architecture_invariants_standardization
+L00004077	implementation_surfaces:
+L00004078	- Plans/Architecture_Invariants.md
+L00004079	node_compile_hint:
+L00004080	  mode: firecrawl_billing_audit_ui_ownership
+L00004081	  create_worknodes: false
+L00004082	source_lineage:
+L00004083	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004084	preserved_exact_tokens:
+L00004085	- Plans/FinalGUISpec.md
+L00004086	- Firecrawl billing
+L00004087	- audit disclosure
+L00004088	- credit-warning
+L00004089	- audit-surface UI copy
+L00004090	- Plans/Tools.md
+L00004091	- thresholds
+L00004092	- provider billing exceptions
+L00004093	- cache/routing disclosure
+L00004094	- web-operation audit payload ownership
+L00004095	negative_constraints:
+L00004096	- Firecrawl credit-warning and audit-surface UI copy MUST defer to Plans/Tools.md for provider/billing/audit payload ownership.
+L00004097	compatibility_only_notes: []
+L00004098	stale_retired_dispositions: []
+L00004099	owner_boundary_notes:
+L00004100	- FinalGUISpec consumes Firecrawl UI disclosure while Tools owns thresholds, billing exceptions, cache/routing disclosure,
+L00004101	  and audit payload semantics.
+L00004102	owner_hints:
+L00004103	- Plans/Architecture_Invariants.md
+L00004104	preserved_contractrefs:
+L00004105	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004106	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004107	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004108	```
+L00004109	
+L00004110	### AI-063 - Web Provider Non GUI Consumer Map
+L00004111	
+L00004112	```yaml
+L00004113	plan_unit_id: AI-063
+L00004114	unit_type: requirement
+L00004115	status: accepted
+L00004116	owner_doc: Plans/Architecture_Invariants.md
+L00004117	canonical_text: Wiring_Matrix carries research_session and web-tool wiring, usage-feature tracks Firecrawl credit model and
+L00004118	  /billing, assistant-memory-subsystem persists web research session context without owning provider semantics, Architecture
+L00004119	  Invariants records provider architecture changes, and DRY_Rules owns external reference policy including Part Q-style external-reference
+L00004120	  constraints.
+L00004121	gui_related: false
+L00004122	gui_classification_reason: This unit records non-GUI web/provider consumer ownership boundaries.
+L00004123	split_recommended: false
+L00004124	depends_on: []
+L00004125	unblocks: []
+L00004126	acceptance_criteria:
+L00004127	- Covered source spans remain losslessly available for exact-text audit.
+L00004128	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004129	  bridge.
+L00004130	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004131	  own contracts.
+L00004132	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004133	validation_surfaces:
+L00004134	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004135	- python3 scripts/pm-plan-index.py validate
+L00004136	risk_class: web_provider_non_gui_consumer_map
+L00004137	reasoning_tier: standard
+L00004138	context_scope: architecture_invariants_standardization
+L00004139	implementation_surfaces:
+L00004140	- Plans/Architecture_Invariants.md
+L00004141	node_compile_hint:
+L00004142	  mode: web_provider_non_gui_consumer_map
+L00004143	  create_worknodes: false
+L00004144	source_lineage:
+L00004145	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004146	preserved_exact_tokens:
+L00004147	- Plans/Wiring_Matrix.md
+L00004148	- research_session
+L00004149	- web-tool wiring
+L00004150	- Plans/usage-feature.md
+L00004151	- Firecrawl credit model
+L00004152	- /billing
+L00004153	- Plans/assistant-memory-subsystem.md
+L00004154	- web research session context
+L00004155	- provider semantics
+L00004156	- Plans/Architecture_Invariants.md
+L00004157	- provider architecture changes
+L00004158	- Plans/DRY_Rules.md
+L00004159	- external reference policy
+L00004160	- Part Q-style external-reference constraints
+L00004161	negative_constraints: []
+L00004162	compatibility_only_notes: []
+L00004163	stale_retired_dispositions: []
+L00004164	owner_boundary_notes:
+L00004165	- Consumer docs remain consumers and do not own provider semantics unless their owner contract says so.
+L00004166	owner_hints:
+L00004167	- Plans/Architecture_Invariants.md
+L00004168	preserved_contractrefs:
+L00004169	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004170	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004171	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004172	```
+L00004173	
+L00004174	### AI-064 - HITL And Widget Recovery Consumers
+L00004175	
+L00004176	```yaml
+L00004177	plan_unit_id: AI-064
+L00004178	unit_type: requirement
+L00004179	status: accepted
+L00004180	owner_doc: Plans/Architecture_Invariants.md
+L00004181	canonical_text: HITL patterns consume the shared approval ladder and batch permission UX, while Widget_System adds only owner-approved
+L00004182	  card widget types.
+L00004183	gui_related: true
+L00004184	gui_classification_reason: This unit affects HITL permission UX and user-visible widget card types.
+L00004185	split_recommended: false
+L00004186	depends_on: []
+L00004187	unblocks: []
+L00004188	acceptance_criteria:
+L00004189	- Covered source spans remain losslessly available for exact-text audit.
+L00004190	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004191	  bridge.
+L00004192	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004193	  own contracts.
+L00004194	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004195	validation_surfaces:
+L00004196	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004197	- python3 scripts/pm-plan-index.py validate
+L00004198	risk_class: hitl_and_widget_recovery_consumers
+L00004199	reasoning_tier: standard
+L00004200	context_scope: architecture_invariants_standardization
+L00004201	implementation_surfaces:
+L00004202	- Plans/Architecture_Invariants.md
+L00004203	node_compile_hint:
+L00004204	  mode: hitl_widget_recovery_consumers
+L00004205	  create_worknodes: false
+L00004206	source_lineage:
+L00004207	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004208	preserved_exact_tokens:
+L00004209	- HITL patterns
+L00004210	- shared approval ladder
+L00004211	- batch permission UX
+L00004212	- Plans/Widget_System.md
+L00004213	- owner-approved card widget types
+L00004214	negative_constraints:
+L00004215	- Widget_System adds only owner-approved card widget types.
+L00004216	compatibility_only_notes: []
+L00004217	stale_retired_dispositions: []
+L00004218	owner_boundary_notes:
+L00004219	- HITL and Widget_System are consumers in the web/provider recovery map.
+L00004220	owner_hints:
+L00004221	- Plans/Architecture_Invariants.md
+L00004222	preserved_contractrefs:
+L00004223	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004224	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004225	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004226	```
+L00004227	
+L00004228	### AI-065 - Owner First Consumer Drift Blocking
+L00004229	
+L00004230	```yaml
+L00004231	plan_unit_id: AI-065
+L00004232	unit_type: requirement
+L00004233	status: accepted
+L00004234	owner_doc: Plans/Architecture_Invariants.md
+L00004235	canonical_text: 'Consumer drift remains blocking even when owner docs exist: slash-command consumers, questionnaire consumers,
+L00004236	  and provider /multi-account/runtime-identity consumers MUST be reconciled in the same packet as repaired owner docs so stale
+L00004237	  local assumptions do not mislead implementation.'
+L00004238	gui_related: false
+L00004239	gui_classification_reason: This unit covers consumer drift and owner-first repair policy, not GUI behavior.
+L00004240	split_recommended: false
+L00004241	depends_on: []
+L00004242	unblocks: []
+L00004243	acceptance_criteria:
+L00004244	- Covered source spans remain losslessly available for exact-text audit.
+L00004245	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004246	  bridge.
+L00004247	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004248	  own contracts.
+L00004249	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004250	validation_surfaces:
+L00004251	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004252	- python3 scripts/pm-plan-index.py validate
+L00004253	risk_class: owner_first_consumer_drift_blocking
+L00004254	reasoning_tier: standard
+L00004255	context_scope: architecture_invariants_standardization
+L00004256	implementation_surfaces:
+L00004257	- Plans/Architecture_Invariants.md
+L00004258	node_compile_hint:
+L00004259	  mode: owner_first_consumer_drift_blocking
+L00004260	  create_worknodes: false
+L00004261	source_lineage:
+L00004262	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004263	preserved_exact_tokens:
+L00004264	- Consumer drift remains blocking
+L00004265	- owner docs
+L00004266	- slash-command consumers
+L00004267	- questionnaire consumers
+L00004268	- provider `/multi-account/runtime-identity` consumers
+L00004269	- same packet
+L00004270	- repaired owner docs
+L00004271	- stale local assumptions
+L00004272	- mislead implementation
+L00004273	negative_constraints:
+L00004274	- Consumer drift remains blocking even when owner docs exist.
+L00004275	compatibility_only_notes: []
+L00004276	stale_retired_dispositions:
+L00004277	- Stale local assumptions in slash-command, questionnaire, and provider runtime-identity consumers must be reconciled with
+L00004278	  owner docs.
+L00004279	owner_boundary_notes:
+L00004280	- Consumer repair happens in the same packet as repaired owner docs.
+L00004281	owner_hints:
+L00004282	- Plans/Architecture_Invariants.md
+L00004283	preserved_contractrefs:
+L00004284	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004285	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004286	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004287	```
+L00004288	
+L00004289	### AI-066 - Log Audit GUI Drift Blocking
+L00004290	
+L00004291	```yaml
+L00004292	plan_unit_id: AI-066
+L00004293	unit_type: requirement
+L00004294	status: accepted
+L00004295	owner_doc: Plans/Architecture_Invariants.md
+L00004296	canonical_text: Log/audit GUI consumers MUST be reconciled in the same packet as repaired owner docs so stale local assumptions
+L00004297	  do not mislead implementation.
+L00004298	gui_related: true
+L00004299	gui_classification_reason: This unit governs GUI log/audit consumer drift and visible audit surfaces.
+L00004300	split_recommended: false
+L00004301	depends_on: []
+L00004302	unblocks: []
+L00004303	acceptance_criteria:
+L00004304	- Covered source spans remain losslessly available for exact-text audit.
+L00004305	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004306	  bridge.
+L00004307	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004308	  own contracts.
+L00004309	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004310	validation_surfaces:
+L00004311	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004312	- python3 scripts/pm-plan-index.py validate
+L00004313	risk_class: log_audit_gui_drift_blocking
+L00004314	reasoning_tier: standard
+L00004315	context_scope: architecture_invariants_standardization
+L00004316	implementation_surfaces:
+L00004317	- Plans/Architecture_Invariants.md
+L00004318	node_compile_hint:
+L00004319	  mode: log_audit_gui_drift_blocking
+L00004320	  create_worknodes: false
+L00004321	source_lineage:
+L00004322	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+L00004323	preserved_exact_tokens:
+L00004324	- log/audit GUI consumers
+L00004325	- same packet
+L00004326	- repaired owner docs
+L00004327	- stale local assumptions
+L00004328	- mislead implementation
+L00004329	negative_constraints:
+L00004330	- Log/audit GUI consumers MUST be reconciled in the same packet as repaired owner docs.
+L00004331	compatibility_only_notes: []
+L00004332	stale_retired_dispositions:
+L00004333	- Log/audit GUI stale assumptions are blocking until reconciled with repaired owner docs.
+L00004334	owner_boundary_notes: []
+L00004335	owner_hints:
+L00004336	- Plans/Architecture_Invariants.md
+L00004337	preserved_contractrefs:
+L00004338	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+L00004339	  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+L00004340	  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+L00004341	```
+L00004342	
+L00004343	### AI-067 - Architecture Owner Consumer Boundary Map
+L00004344	
+L00004345	```yaml
+L00004346	plan_unit_id: AI-067
+L00004347	unit_type: requirement
+L00004348	status: accepted
+L00004349	owner_doc: Plans/Architecture_Invariants.md
+L00004350	canonical_text: Architecture_Invariants.md remains the owner doc for behavior described by its preserved sections, and cross-doc
+L00004351	  ownership follows the ContractRefs and boundary notes already present in the original text.
+L00004352	gui_related: false
+L00004353	gui_classification_reason: This unit records owner/consumer map boundaries, not GUI behavior.
+L00004354	split_recommended: false
+L00004355	depends_on: []
+L00004356	unblocks: []
+L00004357	acceptance_criteria:
+L00004358	- Covered source spans remain losslessly available for exact-text audit.
+L00004359	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+L00004360	  bridge.
+L00004361	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00004362	  own contracts.
+L00004363	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004364	validation_surfaces:
+L00004365	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004366	- python3 scripts/pm-plan-index.py validate
+L00004367	risk_class: architecture_owner_consumer_boundary_map
+L00004368	reasoning_tier: standard
+L00004369	context_scope: architecture_invariants_standardization
+L00004370	implementation_surfaces:
+L00004371	- Plans/Architecture_Invariants.md
+L00004372	node_compile_hint:
+L00004373	  mode: architecture_owner_consumer_boundary_map
+L00004374	  create_worknodes: false
+L00004375	source_lineage:
+L00004376	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0040
+L00004377	preserved_exact_tokens:
+L00004378	- Owner / Consumer Map
+L00004379	- source-preserving standardization
+L00004380	- owner and consumer boundaries
+L00004381	- Plans/Architecture_Invariants.md
+L00004382	- ContractRefs
+L00004383	- boundary notes
+L00004384	negative_constraints: []
+L00004385	compatibility_only_notes: []
+L00004386	stale_retired_dispositions: []
+L00004387	owner_boundary_notes:
+L00004388	- Architecture_Invariants.md remains the owner doc for behavior described by its preserved sections while cross-doc ownership
+L00004389	  follows ContractRefs and boundary notes.
+L00004390	owner_hints:
+L00004391	- Plans/Architecture_Invariants.md
+L00004392	preserved_contractrefs:
+L00004393	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00004394	```
+L00004395	
+L00004396	## Migration Coverage
+L00004397	
+L00004398	Original hash: `bc5fe0c3f06f26531d4c79e420f135da41f29e5c31e371784e9df7c35255a3a3`.
+L00004399	
+L00004400	Run-scoped proof artifacts:
+L00004401	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00004402	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00004403	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00004404	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00004405	
+L00004406	Phase 2B batches 115 and 116 atomized `Architecture_Invariants-S0001` through `Architecture_Invariants-S0040` into fine-grained PlanUnits `AI-002` through `AI-067`. `Architecture_Invariants-S0041` is the PlanUnits heading/container, `Architecture_Invariants-S0042` is the retired `AI-001` source-preserving bridge, and `Architecture_Invariants-S0043` is Migration Coverage metadata. `AI-001` is now migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00004407	
+L00004408	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00004409	
+L00004410	This addendum repairs non-runtime architecture-invariant rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00004411	
+L00004412	- Repairs `sfk-60e840c059b6db237485d48c`: raw reconciliation fragments preceding INV-001 are audit-lineage only. The canonical invariant is that correlation, usage, permission, route, and artifact identity must be represented by named owner fields and must not be reintroduced as anonymous prose aliases.
+L00004413	- Repairs `sfk-ddd4dece078c664fd31f6de5`: INV-001 now requires `correlation_id` trace-through across provider/runtime dispatch, persisted EventRecord/domain events, artifacts, receipts, and route/open payloads; `usage_event_ref` is normalized to `object_kind = usage_event` plus `object_id` before routing and is not a top-level route special case. Evidence: this section, `AI-004`, and `Plans/Contracts_V0.md` route/runtime identity contracts.
+L00004414	- Repairs `sfk-937c36d705a22bf16645cca2`: `GATE-001`, `GATE-003`, and `GATE-010` are routed through `Plans/Progression_Gates.md`; this section now states that `GATE-003` owns invariant governance while current `run-gates` enforcement remains partial until a dedicated invariant verifier exists.

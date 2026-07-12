@@ -1,0 +1,770 @@
+{
+  "assignment_id": "A005M15-000015-INTEGRATED-MACRO15-19B62D73B9EF-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "Contracts_V0 owns only stable cross-surface record envelopes, shared primitive names, and typed payload minima. Domain-specific docs own their behavior and may reference these contracts without copying them. When an owner-specific section and a consumer note disagree, the owner section wins; compatibility/source-lineage tokens remain traceable but do not create peer canon.",
+          "line_end": 231,
+          "line_start": 231,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_owner_precedence",
+      "impact": "Implementers have an explicit rule for resolving owner-versus-consumer disagreement without creating peer canon.",
+      "item_id": "M15-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "statement": "Contracts_V0 owns shared envelopes and primitive minima, while domain documents own behavior and owner sections override consumer notes.",
+      "title": "Owner-before-consumer precedence is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "failures_recovery"],
+      "evidence": [
+        {
+          "exact_quote": "Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.",
+          "line_end": 248,
+          "line_start": 248,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly.",
+          "line_end": 252,
+          "line_start": 252,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_typed_concern_lifecycle",
+      "impact": "Concern projections cannot directly mutate durable state, and terminal actions carry explicit validation minima.",
+      "item_id": "M15-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "statement": "Concern lifecycle values, resolution values, action authority inputs, and typed command mutation paths are defined.",
+      "title": "Concern lifecycle and authority contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "ownership", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Shared governance/runtime records carry `record_id`, `record_kind`, `schema_version`, `created_at`, `updated_at`, `owner_ref`, `source_event_refs[]`, `subject_ref`, `status`, `visibility_level`, `redaction_profile`, and `evidence_refs[]`. Records may project into multiple UI or audit surfaces, but the persisted record remains one typed family.",
+          "line_end": 240,
+          "line_start": 240,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "- `project_id`",
+          "line_end": 354,
+          "line_start": 354,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "- `created_at_utc`",
+          "line_end": 362,
+          "line_start": 362,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "competing_shared_record_envelopes",
+      "impact": "Writers can persist incompatible timestamp, ownership, project-scope, visibility, and lineage shapes while each claims the shared canonical envelope.",
+      "item_id": "M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "statement": "The document defines two required shared record envelopes with materially different field sets and timestamp names but provides no explicit supersession or normalization mapping between them.",
+      "title": "Shared record envelope is internally split"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "contracts", "states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend the existing concern while it is active or acknowledged. A terminal concern may be reopened only when its reopen condition is met or when owner/evidence hashes change. Otherwise a new concern id is required.",
+          "line_end": 288,
+          "line_start": 288,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "concern_update_concurrency_unspecified",
+      "impact": "Concurrent validators or operators can race on amendment, reopening, or new-id creation and lose evidence or create duplicate durable concerns.",
+      "item_id": "M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "statement": "Concern matching and reopen rules omit revision preconditions, atomicity, idempotency keys, and deterministic conflict behavior for simultaneous updates.",
+      "title": "Concern updates lack race semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "acceptance_oracles", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.",
+          "line_end": 248,
+          "line_start": 248,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_terminal_action_oracle",
+      "impact": "Validators can reject dismissal without reason/resolver and accepted-risk closure without the flag and evidence reference.",
+      "item_id": "M15-I005",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "statement": "Dismissal and accepted-risk transitions have concrete required-field oracles.",
+      "title": "Concern terminal transitions are partly falsifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "- `requested_persona` and `effective_persona` are persisted core runtime identity fields. `_id` variants such as `requested_persona_id` and `effective_persona_id` are retired from canonical contracts and may survive only as migration/source-lineage aliases.",
+          "line_end": 408,
+          "line_start": 408,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "- `requested_account_binding` is the canonical binding posture with `none | preferred | required` semantics.",
+          "line_end": 412,
+          "line_start": 412,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_requested_effective_identity",
+      "impact": "Runtime, persistence, and migration code have a stable intent-versus-effective identity vocabulary.",
+      "item_id": "M15-I006",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "Requested and effective persona/account identity is persisted separately, with explicit account binding semantics and retired persona-id aliases.",
+      "title": "Requested/effective identity split"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["consumers", "gui_truth", "propagation", "acceptance_oracles", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "- Runtime, effective-resolution, permission, attempt, usage, and inspector surfaces all project Requested account / Requested binding / Effective account / Switch reason from the same shared runtime identity snapshot.",
+          "line_end": 417,
+          "line_start": 417,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_shared_identity_projection",
+      "impact": "Six named surfaces must disclose the same requested/effective choice and switch rationale, reducing misleading divergence.",
+      "item_id": "M15-I007",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "Runtime identity projections share one snapshot and a fixed Requested account, Requested binding, Effective account, and Switch reason disclosure.",
+      "title": "Identity disclosure propagates across surfaces"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "`package-overseer-only` responsibility is bounded local execution supervision, package-level worker dispatch / review cadence, and package-local remediation recommendations. Cross-package promotion, seam governance, durable route identity, and global remediation policy stay outside package-local authority unless the package overseer receives an explicit higher-scope decision.",
+          "line_end": 453,
+          "line_start": 453,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_package_overseer_boundary",
+      "impact": "Package-local actors cannot silently promote across packages, govern seams, own routes, or set global remediation policy.",
+      "item_id": "M15-I008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "Package-overseer authority is local and requires an explicit higher-scope decision for cross-package or global authority.",
+      "title": "Package overseer authority is bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "failures_recovery", "partial_failure", "recovery_rollback", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "Dispatcher and projection safety are runtime contract concerns. `/domain`, `cmd.runtime`, `cmd.runtime.*`, `correlation_id`, `allowed_action_ids`, and `allowed_action_ids[]` require a trace-through into persisted dispatch/domain events; recovery actions are admitted only when the current blocked episode exposes the corresponding ordered actions. `stale-projection` safety uses a canonical revalidation handshake and disable-with-reason `GUI` behavior before mutation, rather than trusting a stale projection or omitting the disable reason.",
+          "line_end": 475,
+          "line_start": 475,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_stale_projection_mutation_guard",
+      "impact": "A stale action set cannot be executed without revalidation, and disabled actions must explain projection health.",
+      "item_id": "M15-I009",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "Mutation through stale projections requires canonical revalidation or disable-with-reason behavior.",
+      "title": "Stale projection actions fail safely"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.92,
+      "dimensions": ["contracts", "failures_recovery", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Canonical persona and account field names must be traceable end to end. `Contracts_V0`, `Contracts_V0.md`, `attempt.started`, usage, storage, auth, and `/effective/provider/account` surfaces must not normatively revive `requested_persona_id` or `effective_persona_id` after this contract forbids them; those names are field-name compatibility aliases only. Provider/runtime/account seams for `OpenCode_Deep_Extraction`, `OpenCode_Coverage_Matrix`, `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, `Media_Generation_and_Capabilities`, `Media_Generation_and_Capabilities.md`, OpenCode, `media.generate`, mid-run, `/effective`, `session-scoped`, disabled-state, `/stream-owner`, `/observe`, server-global, source-verifies, dual-auth-realm, under-specified `/runtime/account`, concurrent-client, capability-change, runtime-correlation, and `GUI` must preserve requested/effective account disclosure and cannot pretend an unobservable server-global stream is a reconnectable, account-owned runtime without explicit evidence.",
+          "line_end": 473,
+          "line_start": 473,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "stream_reconnect_protocol_unspecified",
+      "impact": "Concurrent clients and network loss can produce duplicated, skipped, or misattributed stream events without a cursor, replay boundary, deduplication key, ownership lease, or reconnect acceptance oracle.",
+      "item_id": "M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "The text forbids unsupported reconnectability claims but does not define the reconnect, replay, cursor, deduplication, or concurrent-client protocol needed to make stream recovery implementable and falsifiable.",
+      "title": "Stream reconnect behavior remains undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "compatibility_migration", "propagation", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Runtime attribution uses `package_id`, `run_id`, `node_id`, `attempt_id`, `execution_unit_context_ref`, and `provider_account_ref` where applicable. `package_id` is canonical; `work_package_id` is import/export compatibility only and must normalize before persistence.",
+          "line_end": 280,
+          "line_start": 280,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `work_package_id`, `feature_seam_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity`. Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.",
+          "line_end": 485,
+          "line_start": 485,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "canonical_package_key_conflict",
+      "impact": "Tool and artifact producers can persist the compatibility key that the attribution contract explicitly requires them to normalize away.",
+      "item_id": "M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "statement": "`package_id` is declared canonical and `work_package_id` compatibility-only, but the later canonical tool-event ref list uses `work_package_id` without an explicit normalization boundary.",
+      "title": "Canonical package identity conflicts in tool events"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "recovery_rollback", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and the closed `wake_reason` enum `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`; old HITL request examples are compatibility references only when they resolve into that family.",
+          "line_end": 563,
+          "line_start": 563,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_blocked_recovery_family",
+      "impact": "Pre-attempt recovery is addressable without fabricated attempts, and wake causes use a closed vocabulary.",
+      "item_id": "M15-I012",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "Blocked episodes, ordered actions, runtime commands, and a closed wake-reason enum form the recovery state contract.",
+      "title": "Blocked recovery is episode-native"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "untrusted_inputs", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Route validation rejects invalid-combination payloads before any surface-specific open behavior runs. `route_target` requires `project_id` and one primary selector; it must reject a missing primary selector, competing `subject_id` and `object_kind/object_id` selectors, `object_kind` without `object_id`, `object_id` without `object_kind`, `inspector_target` without an object selector, `tab_id` that conflicts with `target_kind`, `line` or `range` inside `route_target`, and any per-surface state inside `route_target`. `/object_id`, `subject_id`, `object_kind`, `object_id`, `target_kind`, `tab_id`, and `inspector_target` are route contract fields only when these selector rules are satisfied.",
+          "line_end": 621,
+          "line_start": 621,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_route_validation_oracle",
+      "impact": "Malformed or ambiguous route payloads have a deterministic rejection boundary before UI behavior executes.",
+      "item_id": "M15-I013",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "Route targets require project scope and one primary selector, with an explicit invalid-combination rejection set.",
+      "title": "Route payload rejection rules are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "gui_truth", "failures_recovery", "operations", "observability_support", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "Projection health states use one rebuild/scan vocabulary. `/rebuild`, `/scan`, and `/sections` projections use `current` when caught up enough for normal use, `refreshing` when an old committed projection remains visible while refresh or rebuild runs, `stale` when usable for context but not guaranteed to reflect current runtime truth, `degraded` when a projector or scan partially failed or a dependency signal is missing and some fields/sections are less trustworthy, and `unavailable` when the surface contract cannot currently be answered. `Plans/storage-plan.md` and `/storage-plan.md` table-vs-prose conflicts for runtime identity, usage attribution, receipt ownership, and `/projection` ownership resolve to these contract fields rather than to contradictory local tables.",
+          "line_end": 633,
+          "line_start": 633,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_projection_health_vocabulary",
+      "impact": "Surfaces can distinguish stale-but-visible data, partial projector failure, and total unavailability.",
+      "item_id": "M15-I014",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "Projection health has five shared states with distinct visible and trust meanings.",
+      "title": "Projection health state vocabulary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "operations", "scale_performance", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Projection health states use one rebuild/scan vocabulary. `/rebuild`, `/scan`, and `/sections` projections use `current` when caught up enough for normal use, `refreshing` when an old committed projection remains visible while refresh or rebuild runs, `stale` when usable for context but not guaranteed to reflect current runtime truth, `degraded` when a projector or scan partially failed or a dependency signal is missing and some fields/sections are less trustworthy, and `unavailable` when the surface contract cannot currently be answered. `Plans/storage-plan.md` and `/storage-plan.md` table-vs-prose conflicts for runtime identity, usage attribution, receipt ownership, and `/projection` ownership resolve to these contract fields rather than to contradictory local tables.",
+          "line_end": 633,
+          "line_start": 633,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "projection_freshness_threshold_unspecified",
+      "impact": "Different projectors can label materially different lag as current, undermining mutation gating and cross-surface trust at scale.",
+      "item_id": "M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "The phrase `caught up enough for normal use` leaves the current-versus-stale threshold, clock basis, lag metric, and per-surface acceptance oracle to builder discretion.",
+      "title": "Projection freshness threshold is not falsifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "`blocked_sequence` is monotonic per `{ run_id, node_id }`, starts at `1`, and increments only when the node transitions from non-blocked to a new blocked episode.",
+          "line_end": 565,
+          "line_start": 565,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "blocked_sequence_atomicity_unspecified",
+      "impact": "Simultaneous blockers, replayed events, or restart recovery can allocate duplicate sequences or create multiple active episodes for the same run and node.",
+      "item_id": "M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "The monotonic sequence rule omits atomic allocation, uniqueness enforcement, transition serialization, replay idempotency, and conflict recovery.",
+      "title": "Blocked sequence lacks concurrency semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "compatibility_migration", "propagation", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Attention rows, deep links, search, and palette results share the internal route payload. URLs, in-app actions, `/search/palette` results, deep links, and `resume_url` decode to the same route payload rather than separate link semantics. The canonical internal route payload is separate from command `IDs` and may carry `target_kind`, `project_id?`, `workspace_tab_id?`, `destination_surface`, `destination_tab?`, `focused_run_id?`, `historical_mode?`, `thread_id?`, `wizard_id?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, and `focus_behavior?`.",
+          "line_end": 601,
+          "line_start": 601,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Route normalization happens before special identifiers enter the canonical route layer. Restore `project_id` first, then route scope such as `focused_run_id` and `thread_id` when present. Normalize every special-case id into `subject_id` or `object_kind` + `object_id`; `subject_id` is not a second generic object taxonomy. Usage routes normalize `usage_event_ref` into `object_kind = usage_event` with the canonical usage event as `object_id`. Graph/detail pivots and `/detail` opens are canonical route restoration, not tab switches plus local state.",
+          "line_end": 775,
+          "line_start": 775,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "route_payload_selector_conflict",
+      "impact": "Producers can emit special-case top-level identifiers that bypass or compete with the canonical selector pair, making validation and round-trip decoding inconsistent.",
+      "item_id": "M15-I017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "The canonical internal route payload admits multiple direct special-case ids, while the later normalization rule requires every special-case id to become `subject_id` or `object_kind` plus `object_id` before entering the canonical route layer.",
+      "title": "Canonical route payload has competing selector shapes"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "consumers", "compatibility_migration", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "Navigation and command migration normalize payload semantics without requiring a hard flag day. Existing user-facing wrapper commands may remain during migration, but their payloads normalize through `route_target` and `OpenSubject`; older payload shapes may be accepted, while new producers and `/docs` emit the canonical normalized target model. Route overrides MUST override target object identity, explicit destination surface when the action names a different surface, and scope required to make the target meaningful, including `project_id`, `thread_id`, `focused_run_id`, an explicitly requested panel, and `/tab`.",
+          "line_end": 665,
+          "line_start": 665,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_incremental_route_migration",
+      "impact": "Public wrappers can remain stable while new producers converge on canonical route and open semantics.",
+      "item_id": "M15-I018",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "Legacy wrapper payloads may be accepted during migration, but canonical normalization and explicit route overrides govern execution.",
+      "title": "Route migration avoids a flag day"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "`OpenSubject` subject kinds include `doc:<document_id>` and `artifact:<artifact_id>`. Resolution may end in a workspace-backed source opening, a transient `generated://<artifact_id>` buffer, or a routed non-editor surface. `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source when one exists, otherwise it resolves to transient `generated://<artifact_id>` source opening.",
+          "line_end": 725,
+          "line_start": 725,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_identity_native_open_resolution",
+      "impact": "Content can open before persistence without turning generated transport into durable identity.",
+      "item_id": "M15-I019",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "OpenSubject resolves document and artifact identities to workspace, transient generated, or routed non-editor realizations.",
+      "title": "Identity-native opening supports transient artifacts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "failures_recovery", "partial_failure", "recovery_rollback", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Approval and restart semantics preserve blocked-state identity across the Contracts, Executor Protocol, and HITL owners. `Plans/Contracts_V0.md`, `/Contracts_V0.md`, `Plans/Executor_Protocol.md`, `/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, and `/human-in-the-loop.md` jointly own the rule that a `waiting_approval` blocked episode exists first-class in `/state`; when an approval prompt surface needs a stable `request_id`, that `request_id` maps 1:1 to the underlying `{ run_id, node_id, blocked_sequence }`. If restart determines an in-flight attempt cannot resume, that attempt transitions to `stale_historical`; if a blocked prerequisite still exists, the existing unresolved blocked episode remains the actionable state.",
+          "line_end": 659,
+          "line_start": 659,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_restart_blocked_identity",
+      "impact": "Restart does not fabricate new approval identity or erase an unresolved prerequisite, and non-resumable attempts remain historical.",
+      "item_id": "M15-I020",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "Approval request identity maps to a blocked episode, and restart moves non-resumable attempts to stale history while retaining actionable unresolved blocks.",
+      "title": "Restart preserves blocked episode identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "failures_recovery", "recovery_rollback", "destructive_actions", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Concern-action reversibility is a controlled audit field. Each concern action records actor authority, confirmation, rationale, and one reversibility class from `immediate_undo`, `compensating_action_only`, or `non_reversible`; `compensating_action_only` and `non_reversible` require consequence-specific confirmation before execution.",
+          "line_end": 595,
+          "line_start": 595,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_destructive_action_confirmation",
+      "impact": "Irreversible or compensation-only concern actions require explicit consequence-aware confirmation and audit data.",
+      "item_id": "M15-I021",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "statement": "Concern actions classify reversibility and strengthen confirmation for destructive outcomes.",
+      "title": "Destructive concern actions are guarded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.",
+          "line_end": 248,
+          "line_start": 248,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Wizard blocked routing and remediation resolution must not keep competing canonical vocabularies. `wizard.blocked` is grounded in named `route_target`; `resume_url` and `resume_url?` are serialized transport forms only, never a shadow primitive. `remediation.resolved` owns one `resolution` reconciliation: legacy `success | failed | ceiling_exceeded` and current `fixed | superseded | abandoned | replan_required` values must be represented through an explicit compatibility mapping, with `ceiling_exceeded` and `replan_required` retained as named outcomes instead of presenting both lists as independent canonical sets.",
+          "line_end": 743,
+          "line_start": 743,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "resolution_enum_mapping_absent",
+      "impact": "Recovery, concern, wizard, and history consumers cannot deterministically encode or migrate outcomes such as failed, ceiling_exceeded, superseded, abandoned, not_reproducible, and replan_required.",
+      "item_id": "M15-I022",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "The owner text names multiple concern and remediation resolution families and requires an explicit compatibility mapping, but the mapping and invalid-combination rules are not supplied.",
+      "title": "Resolution vocabularies lack the required mapping"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": ["contracts", "security_privacy", "operations", "ambiguity_unknowns", "privacy_data_lifecycle", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Shared governance/runtime records carry `record_id`, `record_kind`, `schema_version`, `created_at`, `updated_at`, `owner_ref`, `source_event_refs[]`, `subject_ref`, `status`, `visibility_level`, `redaction_profile`, and `evidence_refs[]`. Records may project into multiple UI or audit surfaces, but the persisted record remains one typed family.",
+          "line_end": 240,
+          "line_start": 240,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Downstream identity consumers reconcile to one requested/effective account block owned by `Contracts_V0` / `Contracts_V0.md`, with `Plans/Multi-Account.md` and `/Multi-Account.md` as companion account-policy consumers. That block must expose `/fallback`, `/effective`, and account-switch disclosures, preserve `requested_account_policy`, and define a requested-side concrete account anchor so downstream docs do not improvise requested account selection semantics. `effective_provider_identity` and `/display` labels are audit/display fields, not routing keys, and must not override the canonical account or route identity.",
+          "line_end": 689,
+          "line_start": 689,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "identity_privacy_lifecycle_unspecified",
+      "impact": "Requested/effective account, actor, operational identity, evidence, and history can be over-retained or over-disclosed across projections without enforceable privacy behavior.",
+      "item_id": "M15-I023",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "Although the envelope names visibility and redaction fields, the assigned text does not define redaction-profile semantics, field classification, retention or deletion rules, audience derivation, or safe historical disclosure for identity-bearing records.",
+      "title": "Identity records lack a privacy lifecycle contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": ["consumers", "gui_truth", "gui_misleading_states", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Graph readability is a route/runtime projection contract before it is a local drawing preference. `Plans/Run_Graph_View.md` consumes zoom-dependent label density: far zoom shows structure/state only, medium zoom shows abbreviated/local labels, near zoom shows full labels and richer local annotations, and selected objects still expose strong detail in the right-side inspector regardless of zoom.",
+          "line_end": 471,
+          "line_start": 471,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Inspector `/detail` presentations for requested/effective runtime identity use a two-column requested/effective block when both sides are material; controls carry support-status chips, and reason text below the control explains why a requested value was honored, changed, unsupported, or blocked.",
+          "line_end": 693,
+          "line_start": 693,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "gui_accessibility_localization_unspecified",
+      "impact": "Keyboard, screen-reader, high-zoom, reduced-vision, bidirectional, and text-expansion users may lose state, support-status, or requested/effective distinctions that sighted English layouts expose.",
+      "item_id": "M15-I024",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "The graph zoom and two-column identity UI contracts omit accessible naming, focus order, non-color status semantics, alternative presentation at large text, localization expansion, and bidirectional layout behavior.",
+      "title": "GUI truth lacks accessibility and localization contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Usage deep links are object routes, not top-level route aliases. Cost or usage rows normalize through `object_kind = usage_event` and `object_id = <canonical usage event id>`; `usage_event_ref` may remain a storage/projection reference, but it must not survive as a top-level route field that bypasses the canonical `object_kind` and `object_id` selector model.",
+          "line_end": 619,
+          "line_start": 619,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "Usage routing treats `usage_event_ref` as canonical when present. `usage-feature` / `usage-feature.md` may retain timestamp or `/run/thread` fallback only as degraded compatibility, not as the preferred routing path when canonical usage identity exists.",
+          "line_end": 719,
+          "line_start": 719,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "usage_route_identity_contradiction",
+      "impact": "Usage producers and consumers can disagree on whether `usage_event_ref` is the canonical routing input or merely a storage reference that must be normalized away.",
+      "item_id": "M15-I025",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003", "SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "One rule forbids `usage_event_ref` as top-level route identity, while another says Usage routing treats it as canonical when present; the input-versus-normalized-identity distinction is not made explicit.",
+      "title": "Usage route identity is self-contradictory"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "operations", "acceptance_oracles", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Approval and dispatch proof stay runtime-command aware. `allowed_action_ids[]` has won at the runtime-command layer, so approval targeting resolves through `blocked_sequence` while any retained `request_id` is lineage or lookup metadata. `GATE-010` must eventually validate more than flat wiring coverage: command wrapper normalization, `route_target` pass-through, `OpenSubject` subject-open binding, and deprecated alias versus stable wrapper semantics are part of the Contracts-owned proof shape.",
+          "line_end": 785,
+          "line_start": 785,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "gate_010_oracle_incomplete",
+      "impact": "A gate can claim success without executable cases proving route pass-through, subject binding, wrapper normalization, and alias semantics.",
+      "item_id": "M15-I026",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "statement": "The text expands GATE-010's intended proof surface but supplies no fixtures, pass/fail predicates, invalid cases, or required receipts for those behaviors.",
+      "title": "GATE-010 remains non-falsifiable"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 395],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-001"],
+      "item_ids": ["M15-I001", "M15-I002", "M15-I003", "M15-I004", "M15-I005", "M15-I011", "M15-I022", "M15-I023"],
+      "reviewed": true,
+      "summary": "Reviewed the canonical owner and concern contracts, shared envelope definitions, mutation authority, account identity roots, and adversarial concurrency, privacy, compatibility, and oracle seams.",
+      "window_id": "WIN-19B62D73B9EF-0001"
+    },
+    {
+      "core_range": [396, 535],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-002"],
+      "item_ids": ["M15-I006", "M15-I007", "M15-I008", "M15-I009", "M15-I010", "M15-I011", "M15-I024"],
+      "reviewed": true,
+      "summary": "Reviewed requested/effective runtime identity, UI propagation, overseer authority, stale-projection safeguards, provider and stream boundaries, package-key migration, and GUI accessibility/localization negative space.",
+      "window_id": "WIN-19B62D73B9EF-0002"
+    },
+    {
+      "core_range": [536, 657],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-003"],
+      "item_ids": ["M15-I012", "M15-I013", "M15-I014", "M15-I015", "M15-I016", "M15-I017", "M15-I021", "M15-I025"],
+      "reviewed": true,
+      "summary": "Reviewed blocked recovery, route validation, projection health, destructive-action guards, route payload identity, usage routing, and adversarial freshness and concurrency behavior.",
+      "window_id": "WIN-19B62D73B9EF-0003"
+    },
+    {
+      "core_range": [658, 794],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Contracts_V0.md:CONT-004"],
+      "item_ids": ["M15-I017", "M15-I018", "M15-I019", "M15-I020", "M15-I022", "M15-I023", "M15-I024", "M15-I025", "M15-I026"],
+      "reviewed": true,
+      "summary": "Reviewed migration, restart, identity-native opening, route normalization, privacy and GUI seams, resolution compatibility, Usage identity, and gate proof requirements through exact and adversarial lenses.",
+      "window_id": "WIN-19B62D73B9EF-0004"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-19B62D73B9EF-0001",
+    "document_path": "Plans/Contracts_V0.md",
+    "micro_window_ids": ["WIN-19B62D73B9EF-0001", "WIN-19B62D73B9EF-0002", "WIN-19B62D73B9EF-0003", "WIN-19B62D73B9EF-0004"],
+    "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do storage-plan, Executor_Protocol, human-in-the-loop, UI_Command_Catalog, Run_Graph_View, and usage-feature consume one exact record, blocked-episode, route, and requested/effective identity schema without reviving compatibility keys?",
+      "Which owner supplies the executable resolution-enum mapping and GATE-010 fixtures required by Contracts_V0?",
+      "Where are projection freshness thresholds, privacy lifecycle rules, stream replay semantics, and accessible localized GUI behavior made canonical?"
+    ],
+    "feature_family_keys": [
+      "shared-governance-runtime-records",
+      "concern-lifecycle-actions",
+      "requested-effective-runtime-identity",
+      "blocked-episode-recovery",
+      "route-target-open-subject",
+      "projection-health-trust",
+      "runtime-attribution",
+      "usage-deep-linking"
+    ],
+    "research_queries": [
+      "event stream reconnect cursor replay deduplication contract patterns",
+      "optimistic concurrency and idempotency for durable concern workflows",
+      "accessible graph zoom detail disclosure and two-column comparison UI",
+      "privacy retention and redaction policy for runtime identity audit records"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000015_attempt_0015_terminal"
+}

@@ -1,0 +1,34 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0012",
+  "coverage_ref": "master/macro/transactions/macro-batch-0012/coverage.snapshot-0012.json",
+  "coverage_sha256": "200d4f9ce29f35a4c29c45d056f8541e91a9cbcdd2a84e294330489981ee93f4",
+  "credited_assignment_ids": [
+    "A005M16-000001-INTEGRATED-MACRO16-AC612DBB4EFE-0001",
+    "A005M16-000002-INTEGRATED-MACRO16-74C788D8A63C-0001"
+  ],
+  "credited_micro_window_ids": [
+    "WIN-74C788D8A63C-0008",
+    "WIN-74C788D8A63C-0009",
+    "WIN-74C788D8A63C-0010",
+    "WIN-74C788D8A63C-0011",
+    "WIN-74C788D8A63C-0012",
+    "WIN-74C788D8A63C-0013",
+    "WIN-74C788D8A63C-0014",
+    "WIN-74C788D8A63C-0015",
+    "WIN-AC612DBB4EFE-0006",
+    "WIN-AC612DBB4EFE-0007",
+    "WIN-AC612DBB4EFE-0008",
+    "WIN-AC612DBB4EFE-0009",
+    "WIN-AC612DBB4EFE-0010"
+  ],
+  "epoch_id": "epoch-0016",
+  "native_capture_ref": "master/macro/runtime/macro-batch-0012/native_capture.json",
+  "native_capture_sha256": "90f1529a576466fa36c553625794ef30961abfe8ad5b4d788a9606fc4fba532c",
+  "parent_coverage_ref": "master/macro/transactions/macro-batch-0011/coverage.snapshot-0011.json",
+  "parent_coverage_sha256": "acc9256d3bfcda89aa155093a6d9c349b06048caa09e352be3a29ada8ee732be",
+  "payload_root_sha256": "73749fad8d563f111e1ebcc08b8e353373ee261de4e5a6f837f2d6a3289f5adf",
+  "quarantined_assignment_ids": [],
+  "schema_version": "macro-transaction-commit-v1",
+  "status": "COMMITTED_READY_FOR_ACTIVE_POINTER"
+}

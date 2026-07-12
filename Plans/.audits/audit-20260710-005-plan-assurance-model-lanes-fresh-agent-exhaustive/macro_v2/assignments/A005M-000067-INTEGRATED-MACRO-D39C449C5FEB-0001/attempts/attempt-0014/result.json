@@ -1,0 +1,1368 @@
+{
+  "schema_version": "macro-review-result-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "assignment_id": "A005M-000067-INTEGRATED-MACRO-D39C449C5FEB-0001",
+  "attempt_id": "attempt-0014",
+  "task_thread_id": "/root/a005m_000067_attempt_0014_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "phase": "blind_macro_window_review",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Models_System.md",
+    "canonical_source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b",
+    "source_excerpt_path": "capsules/source/f9/f9ffcae5a100729ff9e72e227d1dcaaecd734ab47613ecace0360cc888c99223.txt",
+    "source_excerpt_sha256_expected": "f9ffcae5a100729ff9e72e227d1dcaaecd734ab47613ecace0360cc888c99223",
+    "source_excerpt_sha256_actual": "f9ffcae5a100729ff9e72e227d1dcaaecd734ab47613ecace0360cc888c99223",
+    "source_excerpt_hash_verified": true,
+    "capsule_sha256_expected": "2ed8f5fe08fb593d253d197f41565c15698259b6ddb806a2dabdd238b9703356",
+    "capsule_sha256_actual": "2ed8f5fe08fb593d253d197f41565c15698259b6ddb806a2dabdd238b9703356",
+    "capsule_hash_verified": true,
+    "result_schema_sha256_actual": "38f914c153e22a4df573de5f6f11c09fd1519de409a5ee8b1cca8055a5c99d9d",
+    "assignment_record_sha256_declared": "1ff8399e1cfe16ba91b541ec4ef187740319bd7b17d886934998895986c63252",
+    "identity_verified": {
+      "assignment_id": true,
+      "attempt_id": true,
+      "audit_id": true,
+      "model": true,
+      "phase": true,
+      "reasoning_effort": true,
+      "epoch_id": true,
+      "batch_id": true
+    },
+    "segment_core_hashes": [
+      {
+        "window_id": "WIN-D39C449C5FEB-0001",
+        "core_range": [1, 341],
+        "expected": "4bd24d06d0eafe615c387387c1c82db685964725da4423f100f97e9d163568fe",
+        "actual": "4bd24d06d0eafe615c387387c1c82db685964725da4423f100f97e9d163568fe",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0002",
+        "core_range": [342, 385],
+        "expected": "7e9569e19c2f20d7da716d10b423daf452261330077c0698a04c8c5ac70bea74",
+        "actual": "7e9569e19c2f20d7da716d10b423daf452261330077c0698a04c8c5ac70bea74",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0003",
+        "core_range": [386, 782],
+        "expected": "7ba1c31619289fc801c0edcc672a68fef67154448a9fe9a76b2868f928620169",
+        "actual": "7ba1c31619289fc801c0edcc672a68fef67154448a9fe9a76b2868f928620169",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0004",
+        "core_range": [783, 1180],
+        "expected": "df66d15f5436e13c5d4f4ef45669b3b9fa677389d40661ec8607d0479ebb7165",
+        "actual": "df66d15f5436e13c5d4f4ef45669b3b9fa677389d40661ec8607d0479ebb7165",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0005",
+        "core_range": [1181, 1541],
+        "expected": "c70d706cb4ae14783e51649287281452715d889b1e53004b03f783a914e2db42",
+        "actual": "c70d706cb4ae14783e51649287281452715d889b1e53004b03f783a914e2db42",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0006",
+        "core_range": [1542, 1929],
+        "expected": "715ebd53cc7351c3cc8c166974a9f38da88efb143fc8866a6ba4ffbcf09f0cdd",
+        "actual": "715ebd53cc7351c3cc8c166974a9f38da88efb143fc8866a6ba4ffbcf09f0cdd",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-D39C449C5FEB-0007",
+        "core_range": [1930, 2264],
+        "expected": "928f1ea5451fa504a4e371a8b5455c2fbbca2a8f5728d15c4e240b9104701326",
+        "actual": "928f1ea5451fa504a4e371a8b5455c2fbbca2a8f5728d15c4e240b9104701326",
+        "verified": true
+      }
+    ]
+  },
+  "coverage": {
+    "bundle_id": "MACRO-D39C449C5FEB-0001",
+    "bundle_core_range": [1, 2264],
+    "core_lines_reviewed": 2264,
+    "all_core_lines_read": true,
+    "context_ranges_reviewed": [[2265, 2276]],
+    "micro_window_count": 7,
+    "segment_bound_required_source_unit_ref_count": 41,
+    "all_required_source_units_accounted_for": true,
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "required_dimensions_reviewed": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ],
+    "dimension_finding_map": {
+      "behavior": ["M67-001", "M67-008", "M67-012", "M67-021"],
+      "capabilities": ["M67-004", "M67-008", "M67-009", "M67-018"],
+      "inputs_outputs": ["M67-003", "M67-006", "M67-024"],
+      "contracts": ["M67-001", "M67-002", "M67-010", "M67-014", "M67-018"],
+      "states_transitions": ["M67-011", "M67-016", "M67-020", "M67-021"],
+      "authority": ["M67-001", "M67-006", "M67-032"],
+      "ownership": ["M67-001", "M67-013", "M67-028", "M67-034"],
+      "consumers": ["M67-001", "M67-005", "M67-020", "M67-034"],
+      "gui_truth": ["M67-005", "M67-016", "M67-017", "M67-020", "M67-022"],
+      "failures_recovery": ["M67-007", "M67-011", "M67-016", "M67-021", "M67-022"],
+      "security_privacy": ["M67-006", "M67-032"],
+      "propagation": ["M67-001", "M67-003", "M67-021", "M67-028"],
+      "operations": ["M67-009", "M67-016", "M67-024", "M67-033"],
+      "scale_performance": ["M67-016", "M67-033"],
+      "compatibility_migration": ["M67-014", "M67-025", "M67-030", "M67-031"],
+      "acceptance_oracles": ["M67-004", "M67-026", "M67-029"],
+      "builder_discretion": ["M67-002", "M67-003", "M67-006", "M67-008", "M67-012", "M67-016", "M67-023", "M67-026", "M67-029"],
+      "ambiguity_unknowns": ["M67-006", "M67-010", "M67-015", "M67-019", "M67-023"],
+      "missing_callers_consumers": ["M67-003", "M67-031"],
+      "invalid_states_transitions": ["M67-011", "M67-016", "M67-020", "M67-027"],
+      "concurrency_races": ["M67-016", "M67-022", "M67-033"],
+      "partial_failure": ["M67-007", "M67-016", "M67-021"],
+      "recovery_rollback": ["M67-011", "M67-016", "M67-022"],
+      "authority_boundaries": ["M67-001", "M67-013", "M67-032"],
+      "privacy_data_lifecycle": ["M67-032"],
+      "untrusted_inputs": ["M67-006", "M67-015", "M67-032"],
+      "gui_misleading_states": ["M67-005", "M67-020", "M67-030"],
+      "offline_network_loss": ["M67-016", "M67-019"],
+      "scale_limits": ["M67-033"],
+      "accessibility": ["M67-017"],
+      "localization": ["M67-017"],
+      "observability_support": ["M67-009", "M67-016", "M67-024"],
+      "destructive_actions": ["M67-022"],
+      "cross_document_seams": ["M67-002", "M67-013", "M67-025", "M67-031"],
+      "test_falsifiability": ["M67-004", "M67-026", "M67-029"],
+      "unknown_unknowns": ["M67-006", "M67-016", "M67-019", "M67-033"]
+    }
+  },
+  "segments": [
+    {
+      "window_id": "WIN-D39C449C5FEB-0001",
+      "core_range": [1, 341],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-113",
+        "SEMANTIC:PROLOGUE:Plans/Models_System.md",
+        "SEMANTIC:PLANUNIT:MS-113"
+      ],
+      "item_ids": ["M67-001", "M67-002", "M67-003", "M67-004", "M67-005", "M67-014", "M67-032"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0002",
+      "core_range": [342, 385],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-114",
+        "SEMANTIC:PLANUNIT:MS-114"
+      ],
+      "item_ids": ["M67-006", "M67-007", "M67-032"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0003",
+      "core_range": [386, 782],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001"
+      ],
+      "item_ids": ["M67-008", "M67-009", "M67-010", "M67-011", "M67-012", "M67-013", "M67-018", "M67-032", "M67-033"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0004",
+      "core_range": [783, 1180],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002"
+      ],
+      "item_ids": ["M67-002", "M67-014", "M67-015", "M67-016", "M67-017", "M67-018", "M67-019", "M67-020", "M67-032", "M67-033"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0005",
+      "core_range": [1181, 1541],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-002",
+        "PLANUNIT:MS-003",
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-003",
+        "SEMANTIC:PLANUNIT:MS-002",
+        "SEMANTIC:PLANUNIT:MS-003"
+      ],
+      "item_ids": ["M67-002", "M67-020", "M67-021", "M67-022", "M67-023", "M67-024", "M67-025", "M67-032"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0006",
+      "core_range": [1542, 1929],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-004",
+        "PLANUNIT:MS-005",
+        "PLANUNIT:MS-006",
+        "PLANUNIT:MS-007",
+        "PLANUNIT:MS-008",
+        "PLANUNIT:MS-009",
+        "PLANUNIT:MS-010",
+        "SEMANTIC:PLANUNIT:MS-004",
+        "SEMANTIC:PLANUNIT:MS-005",
+        "SEMANTIC:PLANUNIT:MS-006",
+        "SEMANTIC:PLANUNIT:MS-007",
+        "SEMANTIC:PLANUNIT:MS-008",
+        "SEMANTIC:PLANUNIT:MS-009",
+        "SEMANTIC:PLANUNIT:MS-010"
+      ],
+      "item_ids": ["M67-026", "M67-027", "M67-028"]
+    },
+    {
+      "window_id": "WIN-D39C449C5FEB-0007",
+      "core_range": [1930, 2264],
+      "required_source_unit_refs": [
+        "PLANUNIT:MS-011",
+        "PLANUNIT:MS-012",
+        "PLANUNIT:MS-013",
+        "PLANUNIT:MS-014",
+        "PLANUNIT:MS-015",
+        "PLANUNIT:MS-016",
+        "SEMANTIC:PLANUNIT:MS-011",
+        "SEMANTIC:PLANUNIT:MS-012",
+        "SEMANTIC:PLANUNIT:MS-013",
+        "SEMANTIC:PLANUNIT:MS-014",
+        "SEMANTIC:PLANUNIT:MS-015",
+        "SEMANTIC:PLANUNIT:MS-016"
+      ],
+      "item_ids": ["M67-029", "M67-030", "M67-031", "M67-034"]
+    }
+  ],
+  "items": [
+    {
+      "item_id": "M67-001",
+      "item_type": "contract",
+      "title": "Provider/model ownership and three-axis resolution are explicit",
+      "statement": "Models_System is explicitly the provider/model selection SSOT, and it distinguishes candidate source, user request, and executed value while requiring requested/effective disclosure across execution scopes.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This is a sound authority and propagation boundary for runtime snapshots, inspectors, worktrees, and delegated execution.",
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "consumers", "propagation", "authority_boundaries"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Models_System.md", "PLANUNIT:MS-113", "SEMANTIC:PLANUNIT:MS-113"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 13,
+          "line_end": 13,
+          "exact_quote": "This document is the **single canonical source of truth** for the Puppet Master model selection, configuration, and variant system — how models are identified, selected, overridden per Persona, and cycled via variants. All other plan documents MUST reference this document by anchor (e.g., `Plans/Models_System.md#MODEL-ID`) rather than restating model selection rules or variant definitions.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 46,
+          "line_end": 49,
+          "exact_quote": "Settings resolution is always described on three axes:\n- `source`: where a candidate value came from (`manual_override`, `persona_preference`, `surface_default`, `scope_policy`, `config_default`, `provider_default`).\n- `request`: the value explicitly requested for this run or child run.\n- `execution`: the value actually handed to the selected provider/runtime after capability checks, worktree assignment, and policy gating.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-002",
+      "item_type": "gap",
+      "title": "The document contains incompatible precedence chains",
+      "statement": "The canonical owner chain places scoped owner policy before Persona, but both the section 2 table and the expanded section 10.3 chain omit scoped owner policy and move Persona to tier 2; a later addendum restores scoped policy. These cannot all be the same deterministic resolver contract.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "internal_contradiction",
+      "builder_discretion": true,
+      "impact": "Different consumers can select different effective providers/models from identical inputs, invalidating deterministic selection and audit replay.",
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "propagation", "compatibility_migration", "cross_document_seams", "test_falsifiability"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Models_System.md", "PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 57,
+          "line_end": 58,
+          "exact_quote": "2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)\n3. Persona preference",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 252,
+          "line_end": 253,
+          "exact_quote": "| 2 | Persona runtime preferences | per-Persona defaults for provider entry, model, variant, and supported controls |\n| 3 | surface defaults | Chat, Interview, Builder, Orchestrator, or profile defaults |",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 991,
+          "line_end": 994,
+          "exact_quote": "2. **Persona preference**\n   Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.\n3. **Surface/tier/phase defaults**\n   Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1361,
+          "line_end": 1362,
+          "exact_quote": "2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., \"node-type uses Copilot\"), apply it.\n3. **Persona preference**: Use the active Persona's default model and provider.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-003",
+      "item_type": "gap",
+      "title": "The owner resolver emit shape omits required effort and runtime-platform fields",
+      "statement": "The display grammar requires requested/effective effort, and later contracts require runtime-platform and model-provider distinctions, but the canonical minimum resolver record has no requested/effective effort, runtime-platform, capability-snapshot, or resolver-record identity fields.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_output_contract",
+      "builder_discretion": true,
+      "impact": "Consumers must invent fields or infer values, making clamps, reroutes, and owner transitions impossible to replay reliably.",
+      "dimensions": ["inputs_outputs", "contracts", "propagation", "missing_callers_consumers", "observability_support", "ambiguity_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Models_System.md"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 51,
+          "line_end": 51,
+          "exact_quote": "The display grammar MUST preserve the distinction between requested and effective values for provider, model, variant, effort, auth mode, and account identity.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 81,
+          "line_end": 91,
+          "exact_quote": "The resolver MUST emit one shared record containing at least:\n- `requested_platform`, `effective_platform`\n- `requested_model`, `effective_model`\n- `requested_variant`, `effective_variant`\n- `requested_auth_mode`, `effective_auth_mode`\n- `requested_account_id?`, `effective_account_id?`\n- `execution_role`\n- `selection_reason`\n- `resolver_matrix_entry`\n- `worker_policy_display`\n- `skipped_persona_controls[]`",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-004",
+      "item_type": "explicit_non_gap",
+      "title": "Catalog presence and generated-media claims are correctly evidence-gated",
+      "statement": "MS-113 explicitly prevents catalog visibility from becoming implementation readiness and requires public Antigravity text/coding rows to keep generated-media flags false without row-specific artifact proof.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This prevents false-green provider support and misleading image-engine eligibility.",
+      "dimensions": ["capabilities", "gui_truth", "acceptance_oracles", "test_falsifiability", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:MS-113", "SEMANTIC:PLANUNIT:MS-113"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 308,
+          "line_end": 310,
+          "exact_quote": "  - Catalog presence alone cannot mark a row green or implementation-ready.\n  - Public `agy` text/coding rows appear in Settings/model capability data with generated-media flags false unless exact generated-artifact proof exists.\n  - Settings image-generation support rows expose OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Gemini Direct where verified, Antigravity OAuth/internal `gemini-3.1-flash-image`, and gated/disabled/unverified providers as route-specific entries rather than a Gemini-primary list.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-005",
+      "item_type": "gap",
+      "title": "MS-113 is marked non-GUI despite normative Settings behavior",
+      "statement": "The PlanUnit declares gui_related false while its acceptance criteria directly require Settings capability data and Settings image-generation rows.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "gui_classification_contradiction",
+      "builder_discretion": true,
+      "impact": "GUI work can be omitted from readiness, indexing, or assurance even though user-visible behavior is normative.",
+      "dimensions": ["gui_truth", "consumers", "gui_misleading_states", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:MS-113", "SEMANTIC:PLANUNIT:MS-113"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 300,
+          "line_end": 301,
+          "exact_quote": "gui_related: false\ngui_classification_reason: Backend provider/model registry and evidence semantics rather than visual presentation.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 309,
+          "line_end": 310,
+          "exact_quote": "  - Public `agy` text/coding rows appear in Settings/model capability data with generated-media flags false unless exact generated-artifact proof exists.\n  - Settings image-generation support rows expose OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Gemini Direct where verified, Antigravity OAuth/internal `gemini-3.1-flash-image`, and gated/disabled/unverified providers as route-specific entries rather than a Gemini-primary list.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-006",
+      "item_type": "gap",
+      "title": "MS-114 promises a route matrix but does not specify most routes",
+      "statement": "The unit requires route-specific base URLs, credentials, model IDs, media support, and verification state for many coding-plan providers, but supplies a concrete base URL and endpoint shape only for GitHub Copilot. It also leaves credential validation, secret handling, and provider failure-code normalization unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_route_contract",
+      "builder_discretion": true,
+      "impact": "A builder cannot implement or falsify Kimi, MiniMax, Z.AI/Zhipu, Alibaba/Qwen, and other route rows consistently from this unit.",
+      "dimensions": ["capabilities", "inputs_outputs", "contracts", "security_privacy", "untrusted_inputs", "ambiguity_unknowns", "unknown_unknowns", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-114", "SEMANTIC:PLANUNIT:MS-114"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 350,
+          "line_end": 350,
+          "exact_quote": "  Direct coding-plan providers are first-class Provider -> models routes in PM. Kimi For Coding, MiniMax Coding Plan global, Z.AI/Zhipu coding-plan routes, GitHub Copilot direct hosted API, Alibaba/Qwen Coding Plan global and CN rows, and other OpenCode/Models.dev coding-plan families must be represented as separate provider entries with route-specific base URLs, credential/profile requirements, model ids, media support, support-state, and verification-state. Rows without local end-to-end prompt proof remain disabled, capability-gated, unverified, or separate-profile rather than purchase blockers.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 359,
+          "line_end": 359,
+          "exact_quote": "  - GitHub Copilot direct hosted API uses `https://api.githubcopilot.com` with `/models` and `/chat/completions`, no `/v1`, and no native image-generation route.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-007",
+      "item_type": "explicit_non_gap",
+      "title": "Region and verification distinctions are not collapsed",
+      "statement": "MS-114 explicitly keeps global/CN credentials separate, distinguishes Z.AI route and entitlement failures, and prevents unverified or unpurchased families from becoming green or blocking compile.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This is a useful partial-failure and migration boundary even though the complete route matrix is missing.",
+      "dimensions": ["capabilities", "failures_recovery", "partial_failure", "compatibility_migration", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:MS-114", "SEMANTIC:PLANUNIT:MS-114"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 357,
+          "line_end": 360,
+          "exact_quote": "  - MiniMax global coding plan is green for tested text, thinking, image input, and separate `image-01` generation; MiniMax CN remains separate/unverified with a global key.\n  - Z.AI/Zhipu rows preserve standard, coding-plan, Anthropic, and Zhipu base-route distinctions and mark overload, plan-not-included, balance, and resource-package states accurately.\n  - GitHub Copilot direct hosted API uses `https://api.githubcopilot.com` with `/models` and `/chat/completions`, no `/v1`, and no native image-generation route.\n  - Unpurchased or unverified coding-plan families do not block compile and are not marked green.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-008",
+      "item_type": "gap",
+      "title": "Effort transforms are prose, not an executable mapping contract",
+      "statement": "MS-115 lists provider-specific transform examples and outcome labels but does not define a versioned, machine-readable input domain, per-model mapping, unsupported/clamp reason-code output, or precedence between overlapping provider/runtime transforms.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_transform_matrix",
+      "builder_discretion": true,
+      "impact": "Adapters can map the same requested effort differently and still claim conformance; test fixtures cannot exhaustively prove honored, skipped, clamped, or partial outcomes.",
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "acceptance_oracles", "builder_discretion", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 394,
+          "line_end": 394,
+          "exact_quote": "  Thinking effort is a global user-selectable intent that resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 400,
+          "line_end": 403,
+          "exact_quote": "  - Requested effort and effective provider wire value are both recorded for every provider attempt.\n  - Unsupported or clamped effort requests do not silently become successful support claims.\n  - OpenCode/Models.dev defaults are treated as source-lineage for PM-owned transforms, not copied adapter code.\n  - Qwen/Alibaba `enable_thinking` is not assumed for coding-plan rows until PM verifies or maps it explicitly.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-009",
+      "item_type": "explicit_non_gap",
+      "title": "Capability provenance and staleness are first-class",
+      "statement": "The source requires capability snapshots to retain provider/model/runtime identity, source references, observation time, verification, and staleness, while keeping unknown and inferred states visible.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This supports observability, stale-data disclosure, and route-specific capability audits.",
+      "dimensions": ["capabilities", "operations", "observability_support", "gui_truth", "partial_failure"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 473,
+          "line_end": 473,
+          "exact_quote": "Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-010",
+      "item_type": "gap",
+      "title": "Context-limit field names diverge inside the owner contract",
+      "statement": "The standard capability table uses *_tokens names, while overflow ownership switches to context_window and effective_context_window. No alias or migration rule says whether these are the same fields.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "field_name_contradiction",
+      "builder_discretion": true,
+      "impact": "Adapters, compaction, retry classification, and persisted snapshots can read different keys and lose overflow evidence.",
+      "dimensions": ["contracts", "inputs_outputs", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 450,
+          "line_end": 454,
+          "exact_quote": "| `context_window_tokens` | integer | Provider/model advertised total context window for the concrete runtime surface |\n| `max_input_tokens` | integer? | Maximum input budget when the provider distinguishes input from total context |\n| `max_output_tokens` | integer? | Maximum output/generation budget for the concrete provider/model entry |\n| `effective_context_window_tokens` | integer | Runtime-safe context limit after route, account, model variant, and policy clamps |\n| `fallback_chain[]` | array | Ordered fallback candidates with rank, provider/model identity, eligibility, capability deltas, rejection reason, and selected marker |",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 552,
+          "line_end": 552,
+          "exact_quote": "Model overflow detection is a model/runtime capability question before it becomes a retry or compaction decision. The model capability snapshot owns `context_window`, `effective_context_window`, `max_input_tokens`, `max_output_tokens`, `supports_truncation_signal`, and provider-specific overflow signal evidence. An adapter or provider may report overflow, length truncation, context-window exhaustion, or equivalent status, but it must preserve the provider signal and requested/effective model snapshot instead of converting it into a generic retry reason. Prompt compaction and context assembly consume these fields through `Plans/Prompt_Pipeline.md#COMPACTION` and `#COMPACTION-THRESHOLDS`; runtime retry policy consumes the classified outcome after model overflow has been attributed.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-011",
+      "item_type": "gap",
+      "title": "Model lifecycle states lack transition and recovery semantics",
+      "statement": "The lifecycle enum defines eligibility at selected states but does not specify legal transitions, transition authority, atomicity with catalog refresh, in-flight-run behavior, rollback after a bad sunset update, or deterministic handling when replacement_model_id is absent or unavailable.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_state_machine",
+      "builder_discretion": true,
+      "impact": "Concurrent dispatch and catalog refresh can produce invalid or unrecoverable lifecycle states.",
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "failures_recovery", "recovery_rollback", "operations", "offline_network_loss"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 541,
+          "line_end": 541,
+          "exact_quote": "Model catalog entries carry `model_lifecycle_state` with closed values `active | deprecated | sunset_pending | sunset | removed`. Deprecated models may continue for compatible existing work with a `deprecation_notice_ref?`; `/sunset` or `sunset` models require `sunset_at_utc?` and `replacement_model_id?` when known and are not eligible for new dispatch unless an explicit compatibility policy permits them. Removed models are retained only for history, receipts, and migration lineage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-012",
+      "item_type": "gap",
+      "title": "Variant ranking and user-selected variant precedence are underdefined",
+      "statement": "Fast and powerful variants rely on undefined smallest/cheapest/largest/most-capable scoring and tie-breaking. A user-selected variant is then assigned priority 3 even though other explicit picker selections are priority 1, leaving manual variant intent ambiguous.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "nondeterministic_selection",
+      "builder_discretion": true,
+      "impact": "Identical provider sets can resolve different variants across implementations, and explicit user choices may be unexpectedly overridden.",
+      "dimensions": ["behavior", "contracts", "builder_discretion", "ambiguity_unknowns", "states_transitions", "gui_truth", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 719,
+          "line_end": 720,
+          "exact_quote": "| `fast` | Smallest/cheapest available model | Optimized for speed and cost. |\n| `powerful` | Largest/most capable available model | Optimized for quality. |",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 722,
+          "line_end": 722,
+          "exact_quote": "Built-in variants are resolved dynamically based on available providers at runtime. If a variant's target model is unavailable, the variant falls back to the `default` variant.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 764,
+          "line_end": 764,
+          "exact_quote": "When a variant is selected, its `model` field is used as the active model for subsequent runs (priority 3 in §2). The active variant is persisted per session (not across restarts unless `config.default_variant` is set).",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-013",
+      "item_type": "explicit_non_gap",
+      "title": "Web capability tier is correctly separated from routing posture",
+      "statement": "The web-provider section explicitly distinguishes a provider's real webfetch capability from whether Site Reader is the primary route and requires requested/effective deployment identity for hosted versus self-hosted Firecrawl.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This avoids flattening capable alternatives to unsupported and preserves fallback disclosure.",
+      "dimensions": ["capabilities", "authority_boundaries", "ownership", "consumers", "failures_recovery", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 600,
+          "line_end": 601,
+          "exact_quote": "- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.\n- Site Reader is the DEFAULT and PRIMARY webfetch routing path; Firecrawl, Tavily, Exa, and other provider routes remain fallback/alternative paths that require explicit configuration, Site Reader failure, or an operation-specific override.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 609,
+          "line_end": 609,
+          "exact_quote": "- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl; deployment mode, requested/effective adapter identity, and capability differences remain visible before fallback or recovery.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-014",
+      "item_type": "gap",
+      "title": "The canonical media alias table violates the canonical model-ID grammar",
+      "statement": "The owner contract says canonical model IDs are provider_id/model_id, but the table explicitly labeled Canonical model ID stores bare Gemini/Veo/TTS model names with no provider prefix.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "identifier_contract_contradiction",
+      "builder_discretion": true,
+      "impact": "Alias resolution can yield values that fail canonical parsing or collide across providers, breaking persistence and route selection.",
+      "dimensions": ["contracts", "inputs_outputs", "compatibility_migration", "cross_document_seams", "untrusted_inputs", "test_falsifiability"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Models_System.md", "PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 208,
+          "line_end": 208,
+          "exact_quote": "A model is identified canonically by `provider_id/model_id`.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 798,
+          "line_end": 800,
+          "exact_quote": "| Alias (normalized key) | Canonical model ID | Kind(s) |\n|------------------------|--------------------|---------|\n| `nano banana` | `gemini-2.5-flash-image` | image |",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-015",
+      "item_type": "gap",
+      "title": "Alias normalization collisions and unsafe overrides have no resolution contract",
+      "statement": "Spaces, underscores, and hyphens collapse to one key, while users may override defaults; the source does not define duplicate detection, precedence between config scopes, case-preserving display, invalid/control-character handling, or audit history for an override.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "untrusted_input_collision",
+      "builder_discretion": true,
+      "impact": "Different aliases can silently overwrite one another or redirect model selection, with no deterministic recovery or disclosure.",
+      "dimensions": ["untrusted_inputs", "security_privacy", "ambiguity_unknowns", "states_transitions", "observability_support", "recovery_rollback"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 784,
+          "line_end": 787,
+          "exact_quote": "Deterministic alias resolution requirements:\n- Alias keys MUST be normalized by lowercasing and collapsing spaces/underscores/hyphens.\n- Resolution order for user-provided model text is: alias → exact model id → exact display name.\n- If no match is found, the caller receives a model-unavailable result from the requesting subsystem.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 806,
+          "line_end": 806,
+          "exact_quote": "Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-016",
+      "item_type": "gap",
+      "title": "Model refresh has display states but no operational state machine",
+      "statement": "Settings must show stale cache, partial completion, and per-provider failure, but the source does not define refresh generation IDs, concurrent refresh coalescing/cancellation, atomic publication, last-good retention, timeout/network-loss behavior, retry policy, or what selection may do during a partial refresh.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_refresh_state_machine",
+      "builder_discretion": true,
+      "impact": "Races can publish older catalogs over newer ones or let GUI and dispatch disagree about availability after partial/offline failure.",
+      "dimensions": ["states_transitions", "invalid_states_transitions", "concurrency_races", "partial_failure", "failures_recovery", "recovery_rollback", "offline_network_loss", "operations", "gui_misleading_states", "unknown_unknowns"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 843,
+          "line_end": 845,
+          "exact_quote": "- model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.\n- explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.\n- `Edit Threshold` opens the most-local applicable override and discloses whether that value overrides the provider default or model default.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 539,
+          "line_end": 539,
+          "exact_quote": "A model is available only when its provider/runtime surface is registered, authenticated, reachable, and compatible with the requested run posture.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-017",
+      "item_type": "gap",
+      "title": "Model-selection GUI requirements omit accessibility and localization",
+      "statement": "The picker and Settings requirements define visual labels, grouping, status, and actions but no keyboard traversal, focus order, screen-reader names/state announcements, non-color status cues, scalable text/overflow, or localization-safe label/collision behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_gui_quality_contract",
+      "builder_discretion": true,
+      "impact": "Core provider/model controls can be inaccessible or misleading in localized and assistive-technology contexts.",
+      "dimensions": ["gui_truth", "accessibility", "localization", "gui_misleading_states", "acceptance_oracles", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 823,
+          "line_end": 831,
+          "exact_quote": "The chat model picker shows:\n- primary label: cleaned model name for readability\n- secondary label: runtime platform when needed for disambiguation\n- capability indicators where available\n\nRules:\n- selecting a model creates a priority-1 requested override.\n- if two runtime surfaces expose the same canonical model id, the picker must show the concrete runtime surface on the secondary line.\n- the detailed inspector must always expose the exact raw canonical model id.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 837,
+          "line_end": 837,
+          "exact_quote": "Settings must show:",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-018",
+      "item_type": "gap",
+      "title": "The canonical capability snapshot example omits mandatory provenance",
+      "statement": "Section 3.3.1 says every capability snapshot must carry identity, source, observation, verification, and staleness fields, but section 10.4.3 labels an example canonical snapshot shape that omits all of those fields. The later prose does not state that the example is partial.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "schema_example_contradiction",
+      "builder_discretion": true,
+      "impact": "Builders can implement the example as canonical and lose provenance/staleness required by refresh, UI, and routing.",
+      "dimensions": ["capabilities", "contracts", "inputs_outputs", "observability_support", "compatibility_migration", "cross_document_seams", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 473,
+          "line_end": 473,
+          "exact_quote": "Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1134,
+          "line_end": 1146,
+          "exact_quote": "The Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.\n\nCanonical snapshot shape:\n```json\n{\n  \"provider_id\": \"cursor\",\n  \"transport\": \"CliBridge\",\n  \"model_id\": \"anthropic/claude-sonnet-4\",\n  \"variant\": null,\n  \"context_window_tokens\": 200000,\n  \"max_input_tokens\": 180000,\n  \"max_output_tokens\": 64000,\n  \"effective_context_window_tokens\": 180000,",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-019",
+      "item_type": "unknown",
+      "title": "Interview Gemini default lacks a deterministic candidate contract",
+      "statement": "The rule requires Gemini to support controls needed for the current stage, but those controls are not enumerated and no preferred Gemini runtime/model or tie-break is defined when multiple candidates qualify. Network/capability failure falls through without specifying the persisted skipped candidate set.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "underspecified_surface_default",
+      "builder_discretion": true,
+      "impact": "The same Interview state can select different Gemini routes or produce irreproducible fallback explanations.",
+      "dimensions": ["behavior", "capabilities", "ambiguity_unknowns", "offline_network_loss", "observability_support", "unknown_unknowns", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1020,
+          "line_end": 1024,
+          "exact_quote": "Trigger conditions:\n- active surface = `interview`\n- current Interview phase is `product_ux` **or** the Interview state has `has_gui = true`\n- active stage is one of `questioning`, `research`, `drafting`, or `review`\n- no explicit run-envelope or stage override already selected a different platform/model",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1027,
+          "line_end": 1029,
+          "exact_quote": "- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 (\"Surface/tier/phase defaults\")\n- validation stages do **not** auto-switch to Gemini unless the user or a stage override explicitly requests it\n- if Gemini is unavailable or fails capability checks, selection falls back to the normal precedence chain with no special-case retry loop",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-020",
+      "item_type": "gap",
+      "title": "GUI support states cannot represent the full runtime truth",
+      "statement": "The editor GUI exposes only supported, partially_supported, and unsupported, while the same owner contract requires Unknown for stale/silent discovery and runtime outcomes such as skipped, clamped, substituted, blocked, and retried_on_fallback. No mapping from runtime states to GUI states is defined.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_gui_state_model",
+      "builder_discretion": true,
+      "impact": "The UI can falsely present unknown or clamped controls as unsupported, supported, or fully honored.",
+      "dimensions": ["gui_truth", "states_transitions", "invalid_states_transitions", "gui_misleading_states", "contracts", "propagation", "accessibility"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-002", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 855,
+          "line_end": 858,
+          "exact_quote": "Rules:\n- effort support is never inferred solely from model-name similarity.\n- unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.\n- the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1224,
+          "line_end": 1228,
+          "exact_quote": "Persona-related model/runtime controls shown in GUI MUST reflect provider support state:\n\n- **supported:** editable normally\n- **partially_supported:** editable with warning badge and explanatory tooltip\n- **unsupported:** disabled with explanatory text",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1264,
+          "line_end": 1266,
+          "exact_quote": "- Effective runtime state must distinguish requested vs effective vs skipped Persona controls.\n- Runtime support outcomes must preserve the `requested_runtime` alongside whether the request was `substituted`, `clamped`, `blocked`, or `retried_on_fallback`.\n- Unsupported controls must be visible in both editor UI and runtime UI.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-021",
+      "item_type": "explicit_non_gap",
+      "title": "Fallback, retry, and attempt identity are correctly separated",
+      "statement": "The source consistently requires model fallback to occur through selection and runtime retry/resume to create a new attempt snapshot rather than hiding model changes inside an adapter retry loop.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "This is a strong partial-failure, propagation, and auditability boundary.",
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "partial_failure", "propagation", "observability_support", "authority_boundaries"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1285,
+          "line_end": 1296,
+          "exact_quote": "### Ownership split\n- model selection decides requested/effective provider/model before execution begins\n- runtime policy decides whether an attempt is retried, remediated, blocked, or escalated after a classified outcome\n- providers and adapters may not invent model-local retry loops that bypass runtime policy\n\n### Required attempt snapshots\n\n\nEach attempt MUST retain requested and effective model/provider identifiers so users can later explain why a blocked or failed attempt ran under a specific effective configuration.\n\n### Fallback rule\nModel fallback may change the effective model only through the shared model-selection contract, never as an implicit side effect of provider transient handling inside an already-running attempt.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-022",
+      "item_type": "gap",
+      "title": "Copilot crew normalization is destructive without confirmation or rollback",
+      "statement": "Selecting Copilot for any crew member immediately normalizes the entire crew, but the source does not define a preview/confirmation, preservation of displaced per-member choices, undo/rollback, conflict handling for concurrent edits, or whether a failed Copilot capability check restores the prior crew.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unsafe_destructive_transition",
+      "builder_discretion": true,
+      "impact": "A single edit can silently erase multiple configured provider/model choices and leave no recoverable prior state.",
+      "dimensions": ["destructive_actions", "states_transitions", "invalid_states_transitions", "concurrency_races", "recovery_rollback", "gui_truth", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1334,
+          "line_end": 1343,
+          "exact_quote": "Default Crew configuration belongs under the model/runtime settings surface.\n\nMinimum Default Crew settings model:\n- enable or disable Default Crew\n- ordered list of crew members\n- per-member model selector\n- per-member provider/runtime surface selector\n- immediate normalization of the whole crew to `Copilot` when any member selects Copilot, because Copilot is a crew-level provider selection constraint and is not a per-member freely mixed provider in the default crew editor\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-023",
+      "item_type": "gap",
+      "title": "Conservative, standard, and aggressive policies do not compose with canonical precedence",
+      "statement": "The policy modes refer to tiers inconsistently: conservative says tier 1 or tier 3+, standard says tiers 1-5, and aggressive adds cheapest/fastest auto-selection. No exact filtering algorithm explains skipped tier 2, interaction with the seven-tier owner chain, or the equally-suitable scoring/tie rule.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "policy_composition_ambiguity",
+      "builder_discretion": true,
+      "impact": "The same policy label can produce divergent resolver inputs and effective selections.",
+      "dimensions": ["behavior", "contracts", "builder_discretion", "ambiguity_unknowns", "test_falsifiability", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1371,
+          "line_end": 1373,
+          "exact_quote": "- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.\n- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.\n- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-024",
+      "item_type": "gap",
+      "title": "selection_reason is an unversioned competing schema with noncanonical examples",
+      "statement": "The later selection_reason object is not reconciled with the owner resolver record, uses bare selected_model examples rather than provider_id/model_id, and omits requested values, runtime platform, account/auth identity, resolver/snapshot IDs, capability evidence, and structured reason codes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "competing_audit_schema",
+      "builder_discretion": true,
+      "impact": "Inspectors cannot reliably join a reason to the immutable resolver and attempt snapshots, and model identity can be ambiguous.",
+      "dimensions": ["inputs_outputs", "contracts", "observability_support", "operations", "propagation", "compatibility_migration", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-003", "SEMANTIC:PROLOGUE:Plans/Models_System.md"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1406,
+          "line_end": 1416,
+          "exact_quote": "When a provider and model are selected, emit a `selection_reason` object:\n```typescript\nselection_reason {\n  selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'\n  selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'\n  precedence_tier: number,             // 1-7 indicating which tier was applied\n  fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)\n  alternatives: Array,                 // Other models that were considered and why they were skipped\n  selection_time_utc: string,          // When the decision was made\n  execution_unit_id: string,           // Tied to the unit making the selection\n}",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 208,
+          "line_end": 208,
+          "exact_quote": "A model is identified canonically by `provider_id/model_id`.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-025",
+      "item_type": "gap",
+      "title": "MS-002 and MS-003 contain unrelated Antigravity media constraints",
+      "statement": "MS-002 is scoped to SSOT/DRY and MS-003 to reference inventory, yet both carry route-specific Nano Banana/Antigravity capability constraints. That content is not represented in either canonical_text and creates duplicate ownership beside MS-113 and media-capability owners.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "planunit_scope_incoherence",
+      "builder_discretion": true,
+      "impact": "Audits and builders can miss or inconsistently enforce capability proof because normative constraints are attached to unrelated governance units.",
+      "dimensions": ["ownership", "authority_boundaries", "cross_document_seams", "compatibility_migration", "missing_callers_consumers", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-002", "SEMANTIC:PLANUNIT:MS-002", "PLANUNIT:MS-003", "SEMANTIC:PLANUNIT:MS-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1438,
+          "line_end": 1439,
+          "exact_quote": "canonical_text: Models_System.md is the SSOT for model selection, configuration, and variants. Consumers reference anchors\n  such as Plans/Models_System.md#MODEL-ID instead of restating model selection rules or variant definitions.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1470,
+          "line_end": 1474,
+          "exact_quote": "negative_constraints:\n- Default aliases must not be treated as provider availability proof.\n- Antigravity `--model` prompt success with an unlisted alias must not mark that alias green because the CLI can fall back to a default model.\ncompatibility_only_notes:\n- Nano Banana aliases remain valid media lookup aliases, but current Antigravity CLI verification does not prove Antigravity media-generation support for them.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1493,
+          "line_end": 1494,
+          "exact_quote": "canonical_text: Canonical owner-section requirements preserve product, runtime, storage, UI, and governance details, while\n  SSOT references remain exact inventory pointers and do not replace their owner docs.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1526,
+          "line_end": 1532,
+          "exact_quote": "negative_constraints:\n- Default media aliases are lookup aliases, not provider availability proof.\n- Do not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other generated-media aliases green through Antigravity unless the selected provider catalog lists the media model and an E2E generated artifact proof succeeds.\ncompatibility_only_notes:\n- Nano Banana aliases remain valid lookup aliases, but current Antigravity CLI proof does not verify Antigravity generated-media support for them.\nstale_retired_dispositions:\n- Arbitrary successful `agy --model \"Nano Banana\"` prompt output is not support evidence because the current Antigravity CLI logs the model as unrecognized and falls back.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-026",
+      "item_type": "gap",
+      "title": "MS-004 through MS-010 have no behavior-specific acceptance oracles",
+      "statement": "All seven PlanUnits repeat migration-preservation and no-WorkNode assertions, but none tests its canonical behavior: resolver precedence, emitted fields, concern transitions, identity separation, delegation, or compatibility mapping.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_acceptance_oracles",
+      "builder_discretion": true,
+      "impact": "The listed validators can pass while the runtime behavior each PlanUnit claims to specify remains unimplemented or wrong.",
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "builder_discretion", "behavior", "contracts"],
+      "source_unit_refs": ["PLANUNIT:MS-004", "PLANUNIT:MS-005", "PLANUNIT:MS-006", "PLANUNIT:MS-007", "PLANUNIT:MS-008", "PLANUNIT:MS-009", "PLANUNIT:MS-010", "SEMANTIC:PLANUNIT:MS-004", "SEMANTIC:PLANUNIT:MS-005", "SEMANTIC:PLANUNIT:MS-006", "SEMANTIC:PLANUNIT:MS-007", "SEMANTIC:PLANUNIT:MS-008", "SEMANTIC:PLANUNIT:MS-009", "SEMANTIC:PLANUNIT:MS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1559,
+          "line_end": 1559,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1615,
+          "line_end": 1615,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1671,
+          "line_end": 1671,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1724,
+          "line_end": 1724,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1780,
+          "line_end": 1780,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1837,
+          "line_end": 1837,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1891,
+          "line_end": 1891,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-027",
+      "item_type": "gap",
+      "title": "MS-005 misclassifies an active invariant as stale/retired",
+      "statement": "The requirement to emit a fresh resolver record on ownership transition is placed under stale_retired_dispositions even though it is an active canonical rule in the owner prose.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_semantic_classification",
+      "builder_discretion": true,
+      "impact": "A compiler or builder may discard the fresh-record invariant as legacy and silently inherit stale effective state.",
+      "dimensions": ["states_transitions", "invalid_states_transitions", "compatibility_migration", "propagation", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-005", "SEMANTIC:PLANUNIT:MS-005"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1641,
+          "line_end": 1645,
+          "exact_quote": "stale_retired_dispositions:\n- Ownership transitions between overseer and delegated-subagent levels MUST emit a fresh resolver record instead of silently\n  inheriting stale effective state.\nowner_boundary_notes:\n- Policy remains in the Models owner section and produces requested/effective resolver state.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-028",
+      "item_type": "explicit_non_gap",
+      "title": "MS-004 through MS-010 preserve distinct owner concerns",
+      "statement": "The seven PlanUnits separately identify owner scope, three-axis precedence, resolver shape, concern lifecycle, identity continuity, execution/delegation policy, and legacy-tier cleanup rather than collapsing them into one broad unit.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "The decomposition is useful for ownership and dependency reasoning even though its acceptance criteria need strengthening.",
+      "dimensions": ["behavior", "ownership", "authority_boundaries", "contracts", "compatibility_migration", "consumers", "propagation"],
+      "source_unit_refs": ["PLANUNIT:MS-004", "PLANUNIT:MS-005", "PLANUNIT:MS-006", "PLANUNIT:MS-007", "PLANUNIT:MS-008", "PLANUNIT:MS-009", "PLANUNIT:MS-010", "SEMANTIC:PLANUNIT:MS-004", "SEMANTIC:PLANUNIT:MS-005", "SEMANTIC:PLANUNIT:MS-006", "SEMANTIC:PLANUNIT:MS-007", "SEMANTIC:PLANUNIT:MS-008", "SEMANTIC:PLANUNIT:MS-009", "SEMANTIC:PLANUNIT:MS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1549,
+          "line_end": 1550,
+          "exact_quote": "canonical_text: Models_System.md owns provider/model precedence across run, seam, package, node, overseer, delegated-subagent,\n  and worktree-narrowed surfaces without replacing requested/effective resolver records.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1660,
+          "line_end": 1662,
+          "exact_quote": "canonical_text: The resolver accepts overrides, defaults, policy, capability, account, worktree, and permission context, then\n  emits requested and effective platform, model, variant, auth, account, execution_role, selection_reason, resolver_matrix_entry,\n  worker_policy_display, and skipped_persona_controls.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1881,
+          "line_end": 1882,
+          "exact_quote": "canonical_text: Legacy tier, event, four-tier, TierContext, tier-native, and active-agent vocabulary maps to current execution-unit,\n  package/lane, and requested/effective resolver semantics.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-029",
+      "item_type": "gap",
+      "title": "MS-011 through MS-016 also lack behavior-specific acceptance oracles",
+      "statement": "Every PlanUnit repeats generic preservation/indexability criteria. None falsifies GUI display and subject-open behavior, canonical ID parsing, collision disambiguation, runtime-platform evidence, retired Gemini handling, or option-scope precedence.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_acceptance_oracles",
+      "builder_discretion": true,
+      "impact": "Plan validators can pass without proving the six specified behaviors or their negative constraints.",
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "builder_discretion", "gui_truth", "contracts"],
+      "source_unit_refs": ["PLANUNIT:MS-011", "PLANUNIT:MS-012", "PLANUNIT:MS-013", "PLANUNIT:MS-014", "PLANUNIT:MS-015", "PLANUNIT:MS-016", "SEMANTIC:PLANUNIT:MS-011", "SEMANTIC:PLANUNIT:MS-012", "SEMANTIC:PLANUNIT:MS-013", "SEMANTIC:PLANUNIT:MS-014", "SEMANTIC:PLANUNIT:MS-015", "SEMANTIC:PLANUNIT:MS-016"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1947,
+          "line_end": 1947,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2004,
+          "line_end": 2004,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2058,
+          "line_end": 2058,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2113,
+          "line_end": 2113,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2172,
+          "line_end": 2172,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2228,
+          "line_end": 2228,
+          "exact_quote": "- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-030",
+      "item_type": "gap",
+      "title": "MS-014 preserves gemini_cli without marking it retired",
+      "statement": "MS-014 lists gemini_cli among preserved exact tokens, but its stale_retired_dispositions is empty even though the owner prose repeatedly says Gemini CLI is retired/source-lineage only.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_retired_disposition",
+      "builder_discretion": true,
+      "impact": "Generated consumers can treat gemini_cli as an active runtime identity and expose misleading selectable state.",
+      "dimensions": ["compatibility_migration", "gui_misleading_states", "contracts", "states_transitions", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:MS-014", "SEMANTIC:PLANUNIT:MS-014"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2130,
+          "line_end": 2141,
+          "exact_quote": "- requested_runtime_platform_id\n- provider_usage_source_kind?\n- /API-backed\n- gemini_direct\n- gemini_cli\n- model_id_raw\n- effective_runtime_snapshot\nnegative_constraints: []\ncompatibility_only_notes:\n- model_id_raw, effort, compact_threshold, auth_family, pool_scope, effective_runtime, and effective_runtime_snapshot remain\n  inspectable when they affect selection or disclosure.\nstale_retired_dispositions: []",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-031",
+      "item_type": "gap",
+      "title": "MS-016 claims option-field ownership without depending on MS-017",
+      "statement": "MS-016 says the standard option field section is canonical and cites source spans that lead into capability fields, but depends only on MS-012. The immediate context creates MS-017 as the capability-matrix field PlanUnit, leaving the ownership/dependency seam unexpressed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_planunit_dependency",
+      "builder_discretion": true,
+      "impact": "MS-016 can be treated ready before the field schema it promises is ready, or duplicate MS-017 ownership.",
+      "dimensions": ["ownership", "missing_callers_consumers", "cross_document_seams", "compatibility_migration", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:MS-016", "SEMANTIC:PLANUNIT:MS-016"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2218,
+          "line_end": 2224,
+          "exact_quote": "canonical_text: Provider options live under config.provider.<provider_id>.options. Model options override provider defaults,\n  and the standard option field section remains canonical for shared model option metadata.\ngui_related: false\ngui_classification_reason: The unit covers configuration schema rather than direct GUI presentation.\nsplit_recommended: false\ndepends_on:\n- MS-012",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2265,
+          "line_end": 2275,
+          "exact_quote": "### MS-017 - Capability Matrix Fields And Data Driven Checks\n\n```yaml\nplan_unit_id: MS-017\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Models_System.md\ncanonical_text: Capability metadata covers transport, tool, context-window, max-token, fallback-chain, cache, payload,\n  pricing, billing, provenance, and source fields. Checks are data-driven, Gemini Direct and Antigravity CLI remain\n  distinct active entries, retired Gemini CLI and platform_specs capability tokens remain source-lineage only, and\n  disableCache maps through cache capability fields.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-032",
+      "item_type": "gap",
+      "title": "Account, credential, and billing data lack security and lifecycle rules",
+      "statement": "The resolver, provider rows, and capability snapshots carry account IDs, auth mode, credential/profile requirements, billing entity, quota signals, cooldown, and reset data, but this owner excerpt defines no secret/non-secret boundary, encryption or redaction, access authority, retention/deletion, export/logging policy, or privacy-safe GUI disclosure.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_security_privacy_contract",
+      "builder_discretion": true,
+      "impact": "Sensitive account and entitlement metadata can leak through snapshots, logs, inspectors, or storage, and builders must invent lifecycle policy.",
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "authority", "authority_boundaries", "untrusted_inputs", "operations", "gui_truth", "unknown_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Models_System.md", "PLANUNIT:MS-114", "SEMANTIC:PLANUNIT:MS-114", "PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001", "SEMANTIC:PLANUNIT:MS-115:CONT-002", "SEMANTIC:PLANUNIT:MS-115:CONT-003"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 85,
+          "line_end": 86,
+          "exact_quote": "- `requested_auth_mode`, `effective_auth_mode`\n- `requested_account_id?`, `effective_account_id?`",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 350,
+          "line_end": 350,
+          "exact_quote": "  Direct coding-plan providers are first-class Provider -> models routes in PM. Kimi For Coding, MiniMax Coding Plan global, Z.AI/Zhipu coding-plan routes, GitHub Copilot direct hosted API, Alibaba/Qwen Coding Plan global and CN rows, and other OpenCode/Models.dev coding-plan families must be represented as separate provider entries with route-specific base URLs, credential/profile requirements, model ids, media support, support-state, and verification-state. Rows without local end-to-end prompt proof remain disabled, capability-gated, unverified, or separate-profile rather than purchase blockers.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 463,
+          "line_end": 465,
+          "exact_quote": "| `billing_entity_mode` | enum | whether billing attribution is account-only or requires billing-entity keying |\n| `billing_entity` | string? | Billable quota or tenant dimension used in `(model_id, provider_id, billing_entity)` cost keys when applicable |\n| `billing_source` | string? | Display/evidence label for the pricing source, including free-tier, server-authoritative, user override, or estimate-only paths |",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1182,
+          "line_end": 1186,
+          "exact_quote": "Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:\n- `supports_multi_account`\n- `account_identity_kind`\n- `quota_signal_sources[]`\n- `quota_signal_confidence`",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-033",
+      "item_type": "gap",
+      "title": "Dynamic catalogs and fallback chains have no scale or resource limits",
+      "statement": "The source makes discovery dynamic and refreshable but defines no maximum catalog size, fallback-chain length, page/batch contract, refresh concurrency, timeout budget, memory bound, backpressure, or behavior for extremely large provider/model sets.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_scale_limits",
+      "builder_discretion": true,
+      "impact": "Large or hostile catalogs can stall boot/refresh, exhaust memory, make pickers unusable, or create unbounded fallback evaluation.",
+      "dimensions": ["scale_performance", "scale_limits", "operations", "concurrency_races", "untrusted_inputs", "unknown_unknowns", "gui_truth"],
+      "source_unit_refs": ["PLANUNIT:MS-115", "SEMANTIC:PLANUNIT:MS-115:CONT-001", "SEMANTIC:PLANUNIT:MS-115:CONT-002"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 471,
+          "line_end": 471,
+          "exact_quote": "Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 843,
+          "line_end": 844,
+          "exact_quote": "- model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.\n- explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    },
+    {
+      "item_id": "M67-034",
+      "item_type": "explicit_non_gap",
+      "title": "MS-011 through MS-016 preserve useful presentation, identity, and option boundaries",
+      "statement": "The final six core PlanUnits keep GUI presentation over canonical state, enforce first-slash model-ID grammar, separate runtime-platform evidence, retire Gemini CLI selection guidance, and establish provider-before-model option scope.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "impact": "These boundaries reduce display-driven identity drift and configuration-scope ambiguity.",
+      "dimensions": ["behavior", "contracts", "ownership", "consumers", "gui_truth", "compatibility_migration", "authority_boundaries"],
+      "source_unit_refs": ["PLANUNIT:MS-011", "PLANUNIT:MS-012", "PLANUNIT:MS-013", "PLANUNIT:MS-014", "PLANUNIT:MS-015", "PLANUNIT:MS-016", "SEMANTIC:PLANUNIT:MS-011", "SEMANTIC:PLANUNIT:MS-012", "SEMANTIC:PLANUNIT:MS-013", "SEMANTIC:PLANUNIT:MS-014", "SEMANTIC:PLANUNIT:MS-015", "SEMANTIC:PLANUNIT:MS-016"],
+      "evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1937,
+          "line_end": 1938,
+          "exact_quote": "canonical_text: Visible labels, help text, receipts, and subject-open presentation may simplify display but remain views over\n  canonical requested/effective model state and shared cost, ledger, and artifact-opening identity.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1994,
+          "line_end": 1995,
+          "exact_quote": "canonical_text: Stored and runtime model IDs use provider_id/model_id, split only on the first slash, and cannot be rewritten\n  by labels, grouping, pooling, or runtime-platform grouping.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2159,
+          "line_end": 2162,
+          "exact_quote": "canonical_text: Selection follows the deterministic requested/effective pipeline and priority table. Concrete provider entries\n  resolve before provider families. Gemini CLI precedence and general.plan.modelRouting are retained only as retired\n  source-lineage evidence; active CLI-runtime model selection for this lane belongs to Antigravity CLI and other verified\n  active provider entries.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 2218,
+          "line_end": 2219,
+          "exact_quote": "canonical_text: Provider options live under config.provider.<provider_id>.options. Model options override provider defaults,\n  and the standard option field section remains canonical for shared model option metadata.",
+          "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b"
+        }
+      ]
+    }
+  ],
+  "synthesis": {
+    "overall_assessment": "material_contract_gaps",
+    "item_count": 34,
+    "gap_count": 26,
+    "explicit_non_gap_count": 8,
+    "high_severity_gap_ids": ["M67-002", "M67-003", "M67-006", "M67-008", "M67-012", "M67-014", "M67-016", "M67-018", "M67-020", "M67-022", "M67-023", "M67-024", "M67-026", "M67-027", "M67-029", "M67-032"],
+    "principal_builder_blockers": [
+      "Conflicting precedence chains prevent a single deterministic resolver.",
+      "The canonical alias table emits noncanonical bare model IDs.",
+      "Effort transforms and direct coding-plan routes lack executable matrices.",
+      "The canonical capability-snapshot example omits fields declared mandatory.",
+      "Refresh, lifecycle, and destructive crew transitions lack concurrency and rollback contracts.",
+      "PlanUnit acceptance criteria prove migration shape, not the behavior each unit specifies."
+    ],
+    "strong_explicit_boundaries": [
+      "Catalog presence is not support proof and generated-media rows remain evidence-gated.",
+      "Fallback selection is separate from retry and new attempts retain requested/effective snapshots.",
+      "Provider capability is separate from primary/fallback routing posture.",
+      "Canonical stored identity is intended to remain separate from GUI labels and runtime-platform context."
+    ]
+  },
+  "self_attestation": {
+    "read_every_core_line": true,
+    "reviewed_every_required_source_unit": true,
+    "used_exact_behavior_lens": true,
+    "used_adversarial_negative_space_lens": true,
+    "evidence_quotes_checked_against_assigned_excerpt": true,
+    "capsule_and_excerpt_hashes_verified": true,
+    "all_segment_core_hashes_verified": true,
+    "identity_fields_matched_dispatch_intent_and_capsule": true,
+    "external_research_used": false,
+    "peer_results_read": false,
+    "prior_audits_read": false,
+    "unrelated_sources_read": false,
+    "canonical_plans_edited": false,
+    "terminal_seal_written": false,
+    "task_thread_id_is_canonical_agent_path": true
+  }
+}

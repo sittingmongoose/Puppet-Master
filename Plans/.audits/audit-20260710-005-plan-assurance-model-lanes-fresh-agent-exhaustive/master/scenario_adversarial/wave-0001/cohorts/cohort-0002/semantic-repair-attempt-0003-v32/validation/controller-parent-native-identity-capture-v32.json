@@ -1,0 +1,111 @@
+{
+  "append_only": true,
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "authored_by_role": "controller",
+  "capture_kind": "controller_parent_native_identity_and_prelaunch_separation_v32",
+  "cohort_id": "cohort-0002",
+  "controller_identity": {
+    "controller_identity_authority": true,
+    "descendants": 0,
+    "failed_old_controller_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "followups": 0,
+    "model": "gpt-5.6-luna",
+    "native_controller_thread_id": "019f5674-dfc2-75f1-8262-df491c2cf245",
+    "native_controller_turn_id": "019f5674-e11e-71e2-aad2-a34827ba03f7",
+    "reasoning_effort": "max",
+    "replacement_controller": true,
+    "retries": 0,
+    "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753"
+  },
+  "dedup": {
+    "capture_target_lexists_before_write": false,
+    "equivalent_atomic6_transaction_count": 0,
+    "equivalent_reviewer_report_count": 0,
+    "future_transaction_target_lexists_before_write": false,
+    "report_target_lexists_before_write": true,
+    "report_target_raw_sha256": "5dd930a7e2547f371b77390955801e2f4079150ecb038c85366c699506bcd9c0",
+    "result": "no_equivalent_reviewer_report_or_atomic6_transaction;_report_bound_fail_closed"
+  },
+  "errors": [
+    "attempt3_namespace_lstat_inventory_stable: 4e095af37396b0a365056c846227b7e944b8a277591ba3fb762b8a615ecfa7ee",
+    "preparation_namespace_lstat_inventory_stable: 9b682f9fdf36b5f7dd76d5994ca0a92fbfe710d38b3e4516e18313b07ad86914"
+  ],
+  "failed_old_controller_separation": {
+    "contacted_failed_old_controller": false,
+    "distinct_replacement_controller": true,
+    "distinct_reviewer": true,
+    "failed_old_controller_immutable_lineage": true,
+    "failed_old_controller_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+    "replacement_controller_thread_id": "019f5674-dfc2-75f1-8262-df491c2cf245",
+    "reviewer_thread_id": "019f567b-76e7-7060-93e8-2b98344318d0"
+  },
+  "gate_id": "SCENARIO-COHORT-0002-SEMANTIC-REPAIR-ATTEMPT-0003-V32",
+  "input_bindings": {
+    "attempt3_authority_sha256": "1e189816fd44c7a56331e8921743d724a58727abb1b67116c6385a7bda4398e0",
+    "attempt3_inventory_sha256": "ad42d5077e6125accd83aecfa9e670f81702de79eddfaa92b37d0a2f4ecdc850",
+    "attempt3_readiness_sha256": "33b0a8cca0068d08e9b8731a9ae1ec8bd6449315582f7627903b7550c5963351",
+    "attempt3_test_report_sha256": "f22168e35381f720eb45266e015f1be48fab949bdcfe22a565b6684fd86092ef",
+    "attempt3_verifier_sha256": "b94d02993e64b17b98a27327a3ff15b168a1b52ca5d2a14c280cc601be87f177",
+    "preparation_authority_sha256": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41",
+    "preparation_readiness_sha256": "f289864d2cbbfc76c7df8b35f20cf7a02cb854807a2357b3fa066261c9894511",
+    "preparation_terminal_evidence_sha256": "662ba73489df792dbe88a1a8dd91d7fa8475e0870194836d3f83a071078eadca",
+    "preparation_test_matrix_sha256": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e",
+    "preparation_test_report_sha256": "d5751e7b3d9076471a539bef82480c114f7dd5b031d4332d38153055fd5a7396",
+    "preparation_test_source_sha256": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551",
+    "preparation_tool_seal_sha256": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35",
+    "preparation_verifier_sha256": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0"
+  },
+  "parent_controller_thread_id": "019f5674-dfc2-75f1-8262-df491c2cf245",
+  "parent_controller_turn_id": "019f5674-e11e-71e2-aad2-a34827ba03f7",
+  "review_report": {
+    "authorship_attested_by_controller": true,
+    "created_exactly_one_report": true,
+    "observed_status": "fail_closed",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/luna-independent-prelaunch-v32.json",
+    "raw_sha256": "5dd930a7e2547f371b77390955801e2f4079150ecb038c85366c699506bcd9c0"
+  },
+  "reviewer_native_identity": {
+    "descendants": 0,
+    "distinct_from_failed_old_controller": true,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "independent": true,
+    "model": "gpt-5.6-luna",
+    "name": "a005_scenario_c2_attempt3_prelaunch_v32_luna_max",
+    "native_reviewer_thread_id": "019f567b-76e7-7060-93e8-2b98344318d0",
+    "native_reviewer_turn_id": "019f567b-7752-7ca3-a32c-927ddb2fee95",
+    "observed_via": "controller_native_subagent_control_plane",
+    "reasoning_effort": "max",
+    "retries": 0,
+    "terminal_status": "completed"
+  },
+  "schema_version": "audit005-controller-parent-native-identity-capture-v32-v1",
+  "scope": {
+    "activation": false,
+    "activation_authorized": false,
+    "capture_rows": 0,
+    "credit": 0,
+    "generator_invoked": false,
+    "launch": false,
+    "launch_authorized": false,
+    "receipt_writes": 0,
+    "result_writes": 0,
+    "semantic_children": 0,
+    "sol_native_capture_rows": 0,
+    "spawned_children": 0,
+    "tool_executions": 0
+  },
+  "status": "fail_closed",
+  "target_binding": {
+    "append_only": true,
+    "exclusive_create": true,
+    "overwriting": false,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/validation/controller-parent-native-identity-capture-v32.json",
+    "target_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32",
+    "write_role": "replacement_controller"
+  },
+  "wave_id": "wave-0001"
+}

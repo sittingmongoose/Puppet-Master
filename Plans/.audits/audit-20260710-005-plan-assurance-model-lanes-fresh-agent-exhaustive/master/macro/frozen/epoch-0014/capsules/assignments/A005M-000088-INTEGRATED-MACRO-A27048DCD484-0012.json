@@ -1,0 +1,132 @@
+{
+  "assignment_id": "A005M-000088-INTEGRATED-MACRO-A27048DCD484-0012",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    33652,
+    34221
+  ],
+  "bundle_id": "MACRO-A27048DCD484-0012",
+  "context_ranges": [
+    [
+      33640,
+      33651
+    ]
+  ],
+  "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+  "micro_window_ids": [
+    "WIN-A27048DCD484-0089",
+    "WIN-A27048DCD484-0090"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        33652,
+        34041
+      ],
+      "core_sha256": "c899f1f977fc9306f5563f9bb42a27433ee8b00253ede49949a719a8fac7cafd",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 4583,
+      "window_id": "WIN-A27048DCD484-0089"
+    },
+    {
+      "core_range": [
+        34042,
+        34221
+      ],
+      "core_sha256": "93df10ec919b229369f7ce6fcee77c32a6af40ca25abc47dc55a5234acfdb531",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-089",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_sha256",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_evidence_refs",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "SEMANTIC:JSON_SUFFIX:Plans/PMConcept_Control_Reconciliation.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.controls",
+        "STRUCTURAL:$.final_gui_ownership",
+        "STRUCTURAL:$.source_evidence_refs",
+        "STRUCTURAL:$.source_sha256"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-089",
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_sha256",
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_evidence_refs",
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "JSON_SUFFIX:Plans/PMConcept_Control_Reconciliation.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.controls",
+        "$.final_gui_ownership",
+        "$.source_evidence_refs",
+        "$.source_sha256"
+      ],
+      "token_estimate": 2716,
+      "window_id": "WIN-A27048DCD484-0090"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/c8/c84fafcb429c510a06bc04c03baacd6bd1e385caa8e6a43056474b059c4efccb.txt",
+  "source_excerpt_sha256": "c84fafcb429c510a06bc04c03baacd6bd1e385caa8e6a43056474b059c4efccb",
+  "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2",
+  "token_estimate": 7299
+}

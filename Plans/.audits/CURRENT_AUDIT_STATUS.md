@@ -2,8 +2,8 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-07-09T16:46:04Z`
-- Reports indexed: 63
+- Generated: `2026-07-12T03:23:44Z`
+- Reports indexed: 66
 - Current blockers: 0
 - Historical BLOCKED/FAIL reports indexed: 24
 - Closure registry rows: 735
@@ -73,3 +73,6 @@ This generated index separates immutable historical report headers from current 
 | `audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 8 |
 | `audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 10 |
 | `audit-20260704-001-external-repo-import-metadata-hygiene` | `PASS` | `reported_pass_or_pass_with_warnings` | false | 0 |
+| `audit-20260709-001-plan-assurance-blind-exhaustive` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260709-002-plan-assurance-windowed-blind-exhaustive` | `not_available` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive` | `in_progress` | `historical_report_status_unstated_or_nonstandard` | false | 0 |

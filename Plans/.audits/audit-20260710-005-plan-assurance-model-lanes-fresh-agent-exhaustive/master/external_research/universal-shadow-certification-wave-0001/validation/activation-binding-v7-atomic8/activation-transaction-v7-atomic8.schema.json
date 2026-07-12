@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:audit005:universal-shadow-certification:activation-v7-atomic8",
+  "title": "Audit005 certification atomic8 activation transaction document",
+  "oneOf": [
+    {"$ref": "#/$defs/core"},
+    {"$ref": "#/$defs/authorization"},
+    {"$ref": "#/$defs/envelope"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "assignment_id": {"type": "string", "pattern": "^A005ERSC-(000[1-9]|001[0-6])$"},
+    "cohort_id": {"type": "string", "enum": ["cohort-0001", "cohort-0002"]},
+    "assignment_ids": {
+      "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true,
+      "items": {"$ref": "#/$defs/assignment_id"}
+    },
+    "core": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "status", "activation_granted", "activation_transaction_id", "cohort_id", "assignment_count", "assignment_ids", "feature_count", "feature_refs_digest", "controller_thread_id", "model", "reasoning_effort", "policy_v25_sha256", "v6_terminal_report_sha256", "v6_luna_report_sha256", "atomic8_luna_report_sha256", "credit"],
+      "properties": {
+        "schema_version": {"const": "universal-shadow-certification-activation-core-v7-atomic8"},
+        "status": {"const": "ACTIVE_FOR_EXACTLY_8_FRESH_SOL_XHIGH_CERTIFICATION_LEAVES"},
+        "activation_granted": {"const": true},
+        "activation_transaction_id": {"type": "string", "pattern": "^A005-ERSC-V7-ATOMIC8-cohort-000[12]-[0-9a-f]{20}$"},
+        "cohort_id": {"$ref": "#/$defs/cohort_id"},
+        "assignment_count": {"const": 8},
+        "assignment_ids": {"$ref": "#/$defs/assignment_ids"},
+        "feature_count": {"const": 1944},
+        "feature_refs_digest": {"$ref": "#/$defs/sha256"},
+        "controller_thread_id": {"const": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c"},
+        "model": {"const": "gpt-5.6-sol"},
+        "reasoning_effort": {"const": "xhigh"},
+        "policy_v25_sha256": {"const": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b"},
+        "v6_terminal_report_sha256": {"const": "fb1b1ccfb6ef11f1e99164cc8196d73043a9374cedd0e3f5c293a61bc5d97435"},
+        "v6_luna_report_sha256": {"$ref": "#/$defs/sha256"},
+        "atomic8_luna_report_sha256": {"$ref": "#/$defs/sha256"},
+        "credit": {"const": 0}
+      }
+    },
+    "authorization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "activation_granted", "activation_transaction_id", "cohort_id", "assignment_id", "activation_core_ref", "activation_core_sha256", "intent_ref", "intent_sha256", "packet_ref", "packet_sha256", "output_directory", "prospective_agent_path", "model", "reasoning_effort", "credit"],
+      "properties": {
+        "schema_version": {"const": "universal-shadow-certification-leaf-authorization-v7-atomic8"},
+        "activation_granted": {"const": true},
+        "activation_transaction_id": {"type": "string"},
+        "cohort_id": {"$ref": "#/$defs/cohort_id"},
+        "assignment_id": {"$ref": "#/$defs/assignment_id"},
+        "activation_core_ref": {"type": "string", "minLength": 1},
+        "activation_core_sha256": {"$ref": "#/$defs/sha256"},
+        "intent_ref": {"type": "string", "minLength": 1},
+        "intent_sha256": {"$ref": "#/$defs/sha256"},
+        "packet_ref": {"type": "string", "minLength": 1},
+        "packet_sha256": {"$ref": "#/$defs/sha256"},
+        "output_directory": {"type": "string", "minLength": 1},
+        "prospective_agent_path": {"type": "string", "pattern": "^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$"},
+        "model": {"const": "gpt-5.6-sol"},
+        "reasoning_effort": {"const": "xhigh"},
+        "credit": {"const": 0}
+      }
+    },
+    "envelope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "status", "activation_granted", "activation_transaction_id", "cohort_id", "assignment_count", "assignment_ids", "activation_core_ref", "activation_core_sha256", "authorization_count", "authorization_sha256_by_assignment", "policy_v25_sha256", "credit"],
+      "properties": {
+        "schema_version": {"const": "universal-shadow-certification-activation-envelope-v7-atomic8"},
+        "status": {"const": "ACTIVE_FOR_EXACTLY_8_FRESH_SOL_XHIGH_CERTIFICATION_LEAVES"},
+        "activation_granted": {"const": true},
+        "activation_transaction_id": {"type": "string"},
+        "cohort_id": {"$ref": "#/$defs/cohort_id"},
+        "assignment_count": {"const": 8},
+        "assignment_ids": {"$ref": "#/$defs/assignment_ids"},
+        "activation_core_ref": {"type": "string", "minLength": 1},
+        "activation_core_sha256": {"$ref": "#/$defs/sha256"},
+        "authorization_count": {"const": 8},
+        "authorization_sha256_by_assignment": {
+          "type": "object", "minProperties": 8, "maxProperties": 8,
+          "propertyNames": {"$ref": "#/$defs/assignment_id"},
+          "additionalProperties": {"$ref": "#/$defs/sha256"}
+        },
+        "policy_v25_sha256": {"const": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b"},
+        "credit": {"const": 0}
+      }
+    }
+  }
+}

@@ -1,0 +1,1586 @@
+{
+  "_meta": {
+    "append_only_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-compatible-prelaunch-v2",
+    "bound_artifacts": {
+      "activation_template": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation_transaction.template.json",
+        "sha256": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f"
+      },
+      "architecture": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/architecture.json",
+        "sha256": "880882ce9ec525bd0cc2c5717545fe0a838725367c9d8eb27c6fccf9f7048677"
+      },
+      "attempt4_activation": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/activation.json",
+        "sha256": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301"
+      },
+      "attempt4_failure": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d"
+      },
+      "authority": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/authority.json",
+        "sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081"
+      },
+      "capture_contract": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/native_capture_contract_v5.json",
+        "sha256": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693"
+      },
+      "frozen_tests": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/test_attempt_0005.py",
+        "sha256": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9"
+      },
+      "generator": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/generate_activation_transaction.py",
+        "sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a"
+      },
+      "initial_task_contract": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/leaf_initial_task_contract.json",
+        "sha256": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d"
+      },
+      "launch_seal": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/launch_seal.json",
+        "sha256": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8"
+      },
+      "leaf_prompt": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/leaf_prompt.json",
+        "sha256": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc"
+      },
+      "lineage": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/lineage.json",
+        "sha256": "2755d29236fbb3776615c2bdeb00f9ac480950002dbe6ee8f596b115a8df398e"
+      },
+      "local_report": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/local-prelaunch-candidate.json",
+        "sha256": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+      },
+      "manifest": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/manifest.json",
+        "sha256": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483"
+      },
+      "postrun_validator": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/validate_postrun.py",
+        "sha256": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c"
+      },
+      "prelaunch_verifier": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/verify_prelaunch.py",
+        "sha256": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6"
+      },
+      "receipt_contract": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/receipt_contract_v5.json",
+        "sha256": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6"
+      },
+      "result_schema": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/schema/external_research_result_v5.schema.json",
+        "sha256": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8"
+      },
+      "sol_rejection": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/sol-independent-adapter-validation.json",
+        "sha256": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446"
+      },
+      "source_report": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/luna-prelaunch.json",
+        "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+      },
+      "v6": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V6.json",
+        "sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0"
+      },
+      "v7": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V7.json",
+        "sha256": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed"
+      },
+      "validator_authority": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/VALIDATOR_AUTHORITY_V5.json",
+        "sha256": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2"
+      }
+    },
+    "candidate_hashes": {
+      "activation_generator_sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "activation_template_sha256": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+      "architecture_sha256": "880882ce9ec525bd0cc2c5717545fe0a838725367c9d8eb27c6fccf9f7048677",
+      "attempt_0004_activation_sha256": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301",
+      "attempt_0004_failure_lineage_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+      "authority_sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+      "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+      "concurrency_policy_v7_sha256": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+      "initial_task_contract_sha256": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+      "intent_sha256": {
+        "ER-0003": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+        "ER-0008": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821"
+      },
+      "launch_seal_sha256": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+      "leaf_prompt_sha256": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+      "lineage_sha256": "2755d29236fbb3776615c2bdeb00f9ac480950002dbe6ee8f596b115a8df398e",
+      "local_prelaunch_report_sha256": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3",
+      "manifest_sha256": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+      "native_capture_contract_sha256": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+      "packet_sha256": {
+        "ER-0003": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+        "ER-0008": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f"
+      },
+      "postrun_validator_sha256": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+      "prelaunch_verifier_sha256": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+      "receipt_contract_sha256": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+      "result_schema_sha256": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+      "test_harness_sha256": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+      "validator_authority_sha256": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2"
+    },
+    "canonical_plan_changes": [],
+    "checker": "external_research_generator_compatible_prelaunch_v2_independent_reconstructor",
+    "closing_toc_recheck": {
+      "closing_hashes": {
+        "activation_template": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+        "architecture": "880882ce9ec525bd0cc2c5717545fe0a838725367c9d8eb27c6fccf9f7048677",
+        "attempt4_activation": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301",
+        "attempt4_failure": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+        "authority": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+        "capture_contract": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+        "frozen_tests": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+        "generator": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+        "initial_task_contract": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+        "launch_seal": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+        "leaf_prompt": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+        "lineage": "2755d29236fbb3776615c2bdeb00f9ac480950002dbe6ee8f596b115a8df398e",
+        "local_report": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3",
+        "manifest": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+        "postrun_validator": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+        "prelaunch_verifier": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+        "receipt_contract": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+        "result_schema": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+        "sol_rejection": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446",
+        "source_report": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+        "v6": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+        "v7": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+        "validator_authority": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2"
+      },
+      "initial_hashes": {
+        "activation_template": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+        "architecture": "880882ce9ec525bd0cc2c5717545fe0a838725367c9d8eb27c6fccf9f7048677",
+        "attempt4_activation": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301",
+        "attempt4_failure": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+        "authority": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+        "capture_contract": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+        "frozen_tests": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+        "generator": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+        "initial_task_contract": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+        "launch_seal": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+        "leaf_prompt": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+        "lineage": "2755d29236fbb3776615c2bdeb00f9ac480950002dbe6ee8f596b115a8df398e",
+        "local_report": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3",
+        "manifest": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+        "postrun_validator": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+        "prelaunch_verifier": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+        "receipt_contract": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+        "result_schema": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+        "sol_rejection": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446",
+        "source_report": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+        "v6": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+        "v7": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+        "validator_authority": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2"
+      },
+      "stable": true
+    },
+    "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "count_ledger": {
+      "assignments": 2,
+      "attempt_0004_empty_output_directories": 2,
+      "attempt_0004_receipts": 0,
+      "attempt_0004_results": 0,
+      "attempt_0005_activation_transaction_files": 0,
+      "attempt_0005_empty_output_directories": 2,
+      "attempt_0005_native_capture_rows": 0,
+      "attempt_0005_receipts": 0,
+      "attempt_0005_results": 0,
+      "intents": 2,
+      "packets": 2
+    },
+    "credit_policy": {
+      "coverage_credit": 0,
+      "merge_credit": 0,
+      "promotion_credit": 0,
+      "research_credit": 0,
+      "sole_next_action_after_independent_sol_validation": "separately authorized invocation-2 of unchanged frozen generator exactly once; no launch in this gate",
+      "spec_credit": 0
+    },
+    "frozen_comparison": {
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 114,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/test_attempt_0005.py",
+      "sha256": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+      "source_report_test_digest": "0bb6e2a985fd273aedf4fc12930d5f7071ec27face30c7f5d21852f5d97ab0d5",
+      "status": "pass",
+      "test_count": 114,
+      "test_digest": "0bb6e2a985fd273aedf4fc12930d5f7071ec27face30c7f5d21852f5d97ab0d5"
+    },
+    "generator_compatibility": {
+      "ast_contract_shape_verified": true,
+      "extra_metadata_ignored_by_generator_contract": true,
+      "frozen_generator_invoked": false,
+      "frozen_generator_sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "reserved_metadata_key": "_meta"
+    },
+    "generator_payload_sha256": "a3a0b3ea3e6810850467c737bcd67e7f0aa028a99ad1dde5b3251a2c103726d8",
+    "generator_required_field_count": 40,
+    "generator_required_fields": [
+      "audit_id",
+      "sprint_id",
+      "retry_namespace",
+      "attempt_id",
+      "status",
+      "gate_passed",
+      "independent",
+      "activation_transaction_authorized",
+      "assignment_count",
+      "assignment_ids",
+      "agent_paths",
+      "controller_thread_id",
+      "model",
+      "reasoning_effort",
+      "fresh_direct_leaves",
+      "fork_turns",
+      "descendants_forbidden",
+      "followups_forbidden",
+      "retries_forbidden",
+      "concurrency_policy_v6_sha256",
+      "preserved_cumulative_floor_ids",
+      "preserved_cumulative_floor_digest",
+      "cumulative_floor_count",
+      "attempt_0004_failure_lineage_sha256",
+      "attempt_0004_outputs_empty",
+      "attempt_0004_receipts",
+      "attempt_0004_results",
+      "attempt_0004_credit",
+      "attempt_0005_outputs_empty",
+      "attempt_0005_receipts",
+      "attempt_0005_results",
+      "attempt_0005_native_capture_rows",
+      "attempt_0005_activation_transaction_files",
+      "payload_hashes",
+      "errors",
+      "coverage_credit",
+      "research_credit",
+      "promotion_credit",
+      "spec_credit",
+      "merge_credit"
+    ],
+    "independence_provenance": {
+      "algorithm": "captured-buffer-control-reconstruction-plus-direct-output-inventory-and-closing-toc-recheck",
+      "direct_attestation": true,
+      "gate_passed_source_path": "independently_recomputed_gate_signal",
+      "gate_passed_source_report_comparison": true,
+      "independent_source": "independent_reconstruction_pass",
+      "not_aliased_to_gate_passed": true,
+      "source_report_gate_passed_was_not_used_as_independent_value": true
+    },
+    "independent_structural_checks": {
+      "count": 245,
+      "digest": "7a66679733542b8dcf3ad77e6a81408e62407c9c8615108b1f0992956dd4a7f0",
+      "failed": 0,
+      "ledger": [
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/luna-prelaunch.json",
+          "name": "bound:source_report:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/sol-independent-adapter-validation.json",
+          "name": "bound:sol_rejection:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/authority.json",
+          "name": "bound:authority:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/launch_seal.json",
+          "name": "bound:launch_seal:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/manifest.json",
+          "name": "bound:manifest:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/architecture.json",
+          "name": "bound:architecture:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/lineage.json",
+          "name": "bound:lineage:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation_transaction.template.json",
+          "name": "bound:activation_template:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/leaf_prompt.json",
+          "name": "bound:leaf_prompt:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/leaf_initial_task_contract.json",
+          "name": "bound:initial_task_contract:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/schema/external_research_result_v5.schema.json",
+          "name": "bound:result_schema:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/receipt_contract_v5.json",
+          "name": "bound:receipt_contract:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/native_capture_contract_v5.json",
+          "name": "bound:capture_contract:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/VALIDATOR_AUTHORITY_V5.json",
+          "name": "bound:validator_authority:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/generate_activation_transaction.py",
+          "name": "bound:generator:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/verify_prelaunch.py",
+          "name": "bound:prelaunch_verifier:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/validate_postrun.py",
+          "name": "bound:postrun_validator:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/test_attempt_0005.py",
+          "name": "bound:frozen_tests:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/local-prelaunch-candidate.json",
+          "name": "bound:local_report:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V6.json",
+          "name": "bound:v6:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V7.json",
+          "name": "bound:v7:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+          "name": "bound:attempt4_failure:present",
+          "passed": true
+        },
+        {
+          "detail": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/activation.json",
+          "name": "bound:attempt4_activation:present",
+          "passed": true
+        },
+        {
+          "detail": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+          "name": "source:sha256",
+          "passed": true
+        },
+        {
+          "name": "source:object",
+          "passed": true
+        },
+        {
+          "name": "source:status",
+          "passed": true
+        },
+        {
+          "name": "source:gate_passed",
+          "passed": true
+        },
+        {
+          "name": "source:errors",
+          "passed": true
+        },
+        {
+          "name": "source:scope",
+          "passed": true
+        },
+        {
+          "name": "source:scope_count",
+          "passed": true
+        },
+        {
+          "name": "source:scope_model",
+          "passed": true
+        },
+        {
+          "name": "source:scope_effort",
+          "passed": true
+        },
+        {
+          "name": "source:scope_fork",
+          "passed": true
+        },
+        {
+          "name": "source:scope_fresh",
+          "passed": true
+        },
+        {
+          "name": "source:floor",
+          "passed": true
+        },
+        {
+          "name": "source:floor_digest",
+          "passed": true
+        },
+        {
+          "name": "source:source_zero_state",
+          "passed": true
+        },
+        {
+          "name": "source:source_credits",
+          "passed": true
+        },
+        {
+          "detail": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446",
+          "name": "sol:sha256",
+          "passed": true
+        },
+        {
+          "name": "sol:object",
+          "passed": true
+        },
+        {
+          "name": "sol:status",
+          "passed": true
+        },
+        {
+          "name": "sol:decision_closed",
+          "passed": true
+        },
+        {
+          "name": "sol:v1_alias_errors_preserved",
+          "passed": true
+        },
+        {
+          "name": "sol:v1_empty_alias_errors_preserved",
+          "passed": true
+        },
+        {
+          "name": "sol:v1_live_stability_error_preserved",
+          "passed": true
+        },
+        {
+          "name": "generator:ast_parse",
+          "passed": true
+        },
+        {
+          "name": "generator:field_order",
+          "passed": true
+        },
+        {
+          "name": "generator:field_count",
+          "passed": true
+        },
+        {
+          "name": "generator:not_invoked",
+          "passed": true
+        },
+        {
+          "detail": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+          "name": "v6:sha256",
+          "passed": true
+        },
+        {
+          "name": "v6:status",
+          "passed": true
+        },
+        {
+          "name": "v6:scope",
+          "passed": true
+        },
+        {
+          "name": "v6:cap",
+          "passed": true
+        },
+        {
+          "name": "v6:checkpoint",
+          "passed": true
+        },
+        {
+          "name": "v6:no_plan_writes",
+          "passed": true
+        },
+        {
+          "name": "v6:no_identity_bypass",
+          "passed": true
+        },
+        {
+          "name": "v6:no_prior_mutation",
+          "passed": true
+        },
+        {
+          "detail": "4641936981927f732851267d66d7e90b0dc5eb2aa7898eea9e3d7895c1b292ed",
+          "name": "v7:sha256",
+          "passed": true
+        },
+        {
+          "name": "v7:parse",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_sha256",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_status",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_scope",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_results_zero",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_receipts_zero",
+          "passed": true
+        },
+        {
+          "name": "attempt4:failure_credit_zero",
+          "passed": true
+        },
+        {
+          "name": "attempt4:activation_sha256",
+          "passed": true
+        },
+        {
+          "name": "manifest:sha256",
+          "passed": true
+        },
+        {
+          "name": "manifest:status",
+          "passed": true
+        },
+        {
+          "name": "manifest:activation_false",
+          "passed": true
+        },
+        {
+          "name": "manifest:count",
+          "passed": true
+        },
+        {
+          "name": "manifest:ids",
+          "passed": true
+        },
+        {
+          "name": "manifest:floor_ids",
+          "passed": true
+        },
+        {
+          "name": "manifest:floor_digest",
+          "passed": true
+        },
+        {
+          "name": "manifest:floor_count",
+          "passed": true
+        },
+        {
+          "name": "manifest:controller",
+          "passed": true
+        },
+        {
+          "name": "manifest:model",
+          "passed": true
+        },
+        {
+          "name": "manifest:effort",
+          "passed": true
+        },
+        {
+          "name": "manifest:fresh",
+          "passed": true
+        },
+        {
+          "name": "manifest:fork",
+          "passed": true
+        },
+        {
+          "name": "manifest:descendants",
+          "passed": true
+        },
+        {
+          "name": "manifest:followups",
+          "passed": true
+        },
+        {
+          "name": "manifest:retries",
+          "passed": true
+        },
+        {
+          "name": "manifest:v6",
+          "passed": true
+        },
+        {
+          "name": "manifest:result_before_pmr1",
+          "passed": true
+        },
+        {
+          "name": "manifest:pmr1_zero_credit",
+          "passed": true
+        },
+        {
+          "name": "manifest:active_cap",
+          "passed": true
+        },
+        {
+          "name": "template:sha256",
+          "passed": true
+        },
+        {
+          "name": "template:status",
+          "passed": true
+        },
+        {
+          "name": "template:live_activation_false",
+          "passed": true
+        },
+        {
+          "name": "template:future_core_grant",
+          "passed": true
+        },
+        {
+          "name": "template:core_cap",
+          "passed": true
+        },
+        {
+          "name": "template:core_ids",
+          "passed": true
+        },
+        {
+          "name": "template:core_paths",
+          "passed": true
+        },
+        {
+          "name": "template:core_identity",
+          "passed": true
+        },
+        {
+          "name": "template:auth_contract",
+          "passed": true
+        },
+        {
+          "name": "template:envelope_contract",
+          "passed": true
+        },
+        {
+          "name": "template:no_circular_hash",
+          "passed": true
+        },
+        {
+          "name": "template:zero_live_files",
+          "passed": true
+        },
+        {
+          "detail": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+          "name": "payload_hash:authority.json",
+          "passed": true
+        },
+        {
+          "detail": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+          "name": "payload_hash:launch_seal.json",
+          "passed": true
+        },
+        {
+          "detail": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+          "name": "payload_hash:manifest.json",
+          "passed": true
+        },
+        {
+          "detail": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+          "name": "payload_hash:leaf_prompt.json",
+          "passed": true
+        },
+        {
+          "detail": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+          "name": "payload_hash:receipt_contract_v5.json",
+          "passed": true
+        },
+        {
+          "detail": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+          "name": "payload_hash:native_capture_contract_v5.json",
+          "passed": true
+        },
+        {
+          "detail": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+          "name": "payload_hash:leaf_initial_task_contract.json",
+          "passed": true
+        },
+        {
+          "detail": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+          "name": "payload_hash:activation_transaction.template.json",
+          "passed": true
+        },
+        {
+          "detail": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+          "name": "payload_hash:schema/external_research_result_v5.schema.json",
+          "passed": true
+        },
+        {
+          "detail": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+          "name": "payload_hash:validation/VALIDATOR_AUTHORITY_V5.json",
+          "passed": true
+        },
+        {
+          "detail": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3",
+          "name": "payload_hash:validation/local-prelaunch-candidate.json",
+          "passed": true
+        },
+        {
+          "detail": "939dd6841200f01f18b26bc9c73cfd8fbff5c5c9f953a1b58607188ee626e578",
+          "name": "payload_hash:tools/common.py",
+          "passed": true
+        },
+        {
+          "detail": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+          "name": "payload_hash:tools/generate_activation_transaction.py",
+          "passed": true
+        },
+        {
+          "detail": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+          "name": "payload_hash:tools/verify_prelaunch.py",
+          "passed": true
+        },
+        {
+          "detail": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+          "name": "payload_hash:tools/validate_postrun.py",
+          "passed": true
+        },
+        {
+          "detail": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+          "name": "payload_hash:tools/test_attempt_0005.py",
+          "passed": true
+        },
+        {
+          "name": "payload_hash:packet:ER-0003",
+          "passed": true
+        },
+        {
+          "name": "payload_hash:intent:ER-0003",
+          "passed": true
+        },
+        {
+          "name": "payload_hash:packet:ER-0008",
+          "passed": true
+        },
+        {
+          "name": "payload_hash:intent:ER-0008",
+          "passed": true
+        },
+        {
+          "name": "source:candidate_hashes_exact",
+          "passed": true
+        },
+        {
+          "name": "candidate:authority",
+          "passed": true
+        },
+        {
+          "name": "candidate:launch_seal",
+          "passed": true
+        },
+        {
+          "name": "candidate:architecture",
+          "passed": true
+        },
+        {
+          "name": "candidate:lineage",
+          "passed": true
+        },
+        {
+          "name": "candidate:v6",
+          "passed": true
+        },
+        {
+          "name": "candidate:v7",
+          "passed": true
+        },
+        {
+          "name": "candidate:attempt4_activation",
+          "passed": true
+        },
+        {
+          "name": "candidate:attempt4_failure",
+          "passed": true
+        },
+        {
+          "name": "assignments:row_count",
+          "passed": true
+        },
+        {
+          "name": "assignments:ordered_ids",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:manifest_path",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:manifest_packet_hash",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:manifest_intent_hash",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_assignment",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_attempt",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_identity",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_lane",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_blocked",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_no_native_ids",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:packet_obligations",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_assignment",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_attempt",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_path",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_blocked",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_lineage_only",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_no_native_ids",
+          "passed": true
+        },
+        {
+          "name": "ER-0003:intent_result_before_pmr1",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:manifest_path",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:manifest_packet_hash",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:manifest_intent_hash",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_assignment",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_attempt",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_identity",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_lane",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_blocked",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_no_native_ids",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:packet_obligations",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_assignment",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_attempt",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_path",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_blocked",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_lineage_only",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_no_native_ids",
+          "passed": true
+        },
+        {
+          "name": "ER-0008:intent_result_before_pmr1",
+          "passed": true
+        },
+        {
+          "name": "assignments:unique_paths",
+          "passed": true
+        },
+        {
+          "name": "identity:current_paths_not_prior",
+          "passed": true
+        },
+        {
+          "name": "identity:prior_native_ids_unique",
+          "passed": true
+        },
+        {
+          "name": "identity:current_paths_fresh_suffix",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt4_direct_empty",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt5_direct_empty",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt4_assignment_set",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt5_assignment_set",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt4_path_digest",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt5_path_digest",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt4_root_digest",
+          "passed": true
+        },
+        {
+          "name": "output_inventory:attempt5_root_digest",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt4_receipts",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt4_results",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_receipts",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_results",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_native_capture",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_activation_files",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_activation_json_absent",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_receipt_paths_absent",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_result_paths_absent",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_credit_zero",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt4_outputs_direct_empty",
+          "passed": true
+        },
+        {
+          "name": "zero_state:attempt5_outputs_direct_empty",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_exit",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_status",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_count",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_all_true",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_sha",
+          "passed": true
+        },
+        {
+          "name": "comparison:frozen_digest_matches_source",
+          "passed": true
+        },
+        {
+          "name": "comparison:prelaunch_exit",
+          "passed": true
+        },
+        {
+          "name": "comparison:prelaunch_status",
+          "passed": true
+        },
+        {
+          "name": "comparison:prelaunch_errors",
+          "passed": true
+        },
+        {
+          "name": "source:strict_test_count",
+          "passed": true
+        },
+        {
+          "name": "source:strict_test_passed",
+          "passed": true
+        },
+        {
+          "name": "semantics:assignment_set_exact",
+          "passed": true
+        },
+        {
+          "name": "semantics:agent_paths_exact",
+          "passed": true
+        },
+        {
+          "name": "semantics:floor_order_exact",
+          "passed": true
+        },
+        {
+          "name": "semantics:payload_key_contract",
+          "passed": true
+        },
+        {
+          "name": "semantics:zero_credit_all_dimensions",
+          "passed": true
+        },
+        {
+          "name": "semantics:current_activation_not_written",
+          "passed": true
+        },
+        {
+          "name": "semantics:current_native_capture_not_written",
+          "passed": true
+        },
+        {
+          "name": "semantics:current_result_not_written",
+          "passed": true
+        },
+        {
+          "name": "semantics:current_receipt_not_written",
+          "passed": true
+        },
+        {
+          "name": "semantics:attempt4_credit_preserved",
+          "passed": true
+        },
+        {
+          "name": "semantics:template_v6_binding",
+          "passed": true
+        },
+        {
+          "name": "semantics:template_controller_binding",
+          "passed": true
+        },
+        {
+          "name": "semantics:template_model_binding",
+          "passed": true
+        },
+        {
+          "name": "semantics:template_effort_binding",
+          "passed": true
+        },
+        {
+          "name": "semantics:template_result_gate",
+          "passed": true
+        },
+        {
+          "name": "semantics:envelope_written_last",
+          "passed": true
+        },
+        {
+          "name": "semantics:source_local_candidate_blocked",
+          "passed": true
+        },
+        {
+          "name": "semantics:source_independent_structural_floor",
+          "passed": true
+        },
+        {
+          "name": "semantics:attempt4_result_absence",
+          "passed": true
+        },
+        {
+          "name": "semantics:attempt4_receipt_absence",
+          "passed": true
+        },
+        {
+          "name": "semantics:attempt5_inventory_root_stable",
+          "passed": true
+        },
+        {
+          "name": "semantics:attempt4_inventory_root_stable",
+          "passed": true
+        },
+        {
+          "name": "toc:source_report:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:sol_rejection:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:authority:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:launch_seal:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:manifest:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:architecture:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:lineage:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:activation_template:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:leaf_prompt:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:initial_task_contract:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:result_schema:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:receipt_contract:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:capture_contract:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:validator_authority:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:generator:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:prelaunch_verifier:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:postrun_validator:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:frozen_tests:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:local_report:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:v6:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:v7:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:attempt4_failure:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:attempt4_activation:unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:attempt4_inventory_unchanged",
+          "passed": true
+        },
+        {
+          "name": "toc:attempt5_inventory_unchanged",
+          "passed": true
+        }
+      ],
+      "passed": 245
+    },
+    "model": "gpt-5.6-luna",
+    "no_frozen_generator_invocation": true,
+    "observations": {
+      "attempt_0004": {
+        "closing": {
+          "assignment_directories": {
+            "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0004",
+            "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0004"
+          },
+          "empty": true,
+          "entries": [],
+          "exact_entry_count": 0,
+          "inventory_root_digest": "713c119672dce34d120d5d8dc3ef97f8f969ee637227e385fa09ae85b23665b0",
+          "missing_directories": [],
+          "path_set": [
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0004",
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0004"
+          ],
+          "path_set_digest": "b8017f75d8143770a9f4d7425e6257d4b9eae7a2a9951fc9876548fd45d38a23"
+        },
+        "initial": {
+          "assignment_directories": {
+            "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0004",
+            "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0004"
+          },
+          "empty": true,
+          "entries": [],
+          "exact_entry_count": 0,
+          "inventory_root_digest": "713c119672dce34d120d5d8dc3ef97f8f969ee637227e385fa09ae85b23665b0",
+          "missing_directories": [],
+          "path_set": [
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0004",
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0004"
+          ],
+          "path_set_digest": "b8017f75d8143770a9f4d7425e6257d4b9eae7a2a9951fc9876548fd45d38a23"
+        },
+        "stable": true
+      },
+      "attempt_0005": {
+        "closing": {
+          "assignment_directories": {
+            "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005",
+            "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005"
+          },
+          "empty": true,
+          "entries": [],
+          "exact_entry_count": 0,
+          "inventory_root_digest": "6d1080cca6d55289fdb6fbd63f4aaf864b2d2035948f02e8bc5e105182103d99",
+          "missing_directories": [],
+          "path_set": [
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005",
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005"
+          ],
+          "path_set_digest": "1af8477ae477e7cab2438f1fbd989f44e5ad6e3c8689431008f8e02835cc1f2f"
+        },
+        "initial": {
+          "assignment_directories": {
+            "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005",
+            "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005"
+          },
+          "empty": true,
+          "entries": [],
+          "exact_entry_count": 0,
+          "inventory_root_digest": "6d1080cca6d55289fdb6fbd63f4aaf864b2d2035948f02e8bc5e105182103d99",
+          "missing_directories": [],
+          "path_set": [
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005",
+            "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005"
+          ],
+          "path_set_digest": "1af8477ae477e7cab2438f1fbd989f44e5ad6e3c8689431008f8e02835cc1f2f"
+        },
+        "stable": true
+      }
+    },
+    "payload_hashes_recomputed_from_bound_files": {
+      "activation_transaction.template.json": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+      "authority.json": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+      "intents": {
+        "ER-0003": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+        "ER-0008": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821"
+      },
+      "launch_seal.json": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+      "leaf_initial_task_contract.json": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+      "leaf_prompt.json": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+      "manifest.json": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+      "native_capture_contract_v5.json": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+      "packets": {
+        "ER-0003": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+        "ER-0008": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f"
+      },
+      "receipt_contract_v5.json": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+      "schema/external_research_result_v5.schema.json": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+      "tools/common.py": "939dd6841200f01f18b26bc9c73cfd8fbff5c5c9f953a1b58607188ee626e578",
+      "tools/generate_activation_transaction.py": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "tools/test_attempt_0005.py": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+      "tools/validate_postrun.py": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+      "tools/verify_prelaunch.py": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+      "validation/VALIDATOR_AUTHORITY_V5.json": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+      "validation/local-prelaunch-candidate.json": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+    },
+    "phase_stability": {
+      "pre_report": {
+        "status": "pass",
+        "test_count": 114,
+        "passed": 114,
+        "failed": 0,
+        "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994"
+      },
+      "post_report": {
+        "status": "pass",
+        "test_count": 114,
+        "passed": 114,
+        "failed": 0,
+        "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994"
+      },
+      "expected_post_report": {
+        "status": "pass",
+        "test_count": 114,
+        "passed": 114,
+        "failed": 0,
+        "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994"
+      },
+      "required": true,
+      "candidate_state_transition": "absent_before_emission_to_present_and_valid_after_emission",
+      "post_report_must_equal_pre_report": true
+    },
+    "prelaunch_comparison": {
+      "errors": [],
+      "exit_code": 0,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/verify_prelaunch.py",
+      "sha256": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+      "status": "pass"
+    },
+    "prior_identity_evidence": {
+      "current_paths_disjoint": true,
+      "identity_field_count": 96,
+      "identity_field_digest": "29f132f6669d87d378f54ed2782f68158a05ff4eea5e3db42f43231a2b8e280f",
+      "native_identity_count": 34,
+      "native_identity_digest": "27e8b9dc3f98d4648797cb658e9757a0f73948dfd7dd657bc4e5672fc3685dae"
+    },
+    "reasoning_effort": "max",
+    "schema_version": "audit005-generator-compatible-prelaunch-v2-report",
+    "sol_rejection": {
+      "decision_closed": true,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-report-adapter-v1/validation/sol-independent-adapter-validation.json",
+      "sha256": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446"
+    },
+    "source_report": {
+      "captured_buffer_sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/luna-prelaunch.json",
+      "sha256": "b9fa0acea81bc77c26f624bb96793c69a84adf6cfb7b0a8e11bf011bacaf8218"
+    },
+    "v1_rejection_lineage": {
+      "errors_preserved": [
+        "adapter_live_test_harness_not_post_emit_stable:projection_candidate_path_absent_before_emit",
+        "derived_hardcoded_alias_not_exact_copy:attempt_0004_outputs_empty",
+        "derived_hardcoded_alias_not_exact_copy:attempt_0005_outputs_empty",
+        "duplicate_source_location:luna_report:$.gate_passed:gate_passed,independent",
+        "inferred_alias_without_distinct_authority:independent<-gate_passed"
+      ],
+      "generator_invocation_authorized": false,
+      "sol_report_sha256": "753c2bf07936eee4be46996f308539066790fb7f1bb462d3ca616bb2d911d446",
+      "v1_reused": false
+    },
+    "v2_artifacts": {
+      "authority_sha256": "bc6a45a58aa94e1ae07e408bffee1474de5bd8b7e7910a10397c5d1d91fbf571",
+      "schema_sha256": "2b11c95b3611f4eb3833ef14ac4f2fdc3519df143df6cd456d894082b363c4d0",
+      "verifier_sha256": "fc3ec38cbb5c763b919dbe1015dbd99addc30730647ccd6ea8d80d7a2b1985cf",
+      "test_harness_sha256": "fbd3e8933ad2136ce0a237825475443c5c08b1c6bd91bbbde875b3ca27c3e486"
+    },
+    "zero_launch_state": {
+      "activation_json_present": false,
+      "activation_transaction_files": 0,
+      "attempt_0004_output_inventory_root_digest": "713c119672dce34d120d5d8dc3ef97f8f969ee637227e385fa09ae85b23665b0",
+      "attempt_0005_output_inventory_root_digest": "6d1080cca6d55289fdb6fbd63f4aaf864b2d2035948f02e8bc5e105182103d99",
+      "native_capture_rows": 0,
+      "output_files": 0,
+      "prevalidation_credit": 0,
+      "receipt_files": 0,
+      "result_files": 0
+    },
+    "v2_strict_tests": {
+      "pre_report": {
+        "status": "pass",
+        "test_count": 114,
+        "passed": 114,
+        "failed": 0,
+        "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994"
+      },
+      "post_report": {
+        "status": "pass",
+        "test_count": 114,
+        "passed": 114,
+        "failed": 0,
+        "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994"
+      },
+      "minimum_required": 60,
+      "phase_stable": true
+    }
+  },
+  "activation_transaction_authorized": true,
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+  ],
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_0004_credit": 0,
+  "attempt_0004_failure_lineage_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+  "attempt_0004_outputs_empty": true,
+  "attempt_0004_receipts": 0,
+  "attempt_0004_results": 0,
+  "attempt_0005_activation_transaction_files": 0,
+  "attempt_0005_native_capture_rows": 0,
+  "attempt_0005_outputs_empty": true,
+  "attempt_0005_receipts": 0,
+  "attempt_0005_results": 0,
+  "attempt_id": "attempt-0005",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "coverage_credit": 0,
+  "cumulative_floor_count": 6,
+  "descendants_forbidden": true,
+  "errors": [],
+  "followups_forbidden": true,
+  "fork_turns": "none",
+  "fresh_direct_leaves": 2,
+  "gate_passed": true,
+  "independent": true,
+  "merge_credit": 0,
+  "model": "gpt-5.6-luna",
+  "payload_hashes": {
+    "activation_transaction.template.json": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+    "authority.json": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+    "intents": {
+      "ER-0003": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+      "ER-0008": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821"
+    },
+    "launch_seal.json": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+    "leaf_initial_task_contract.json": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+    "leaf_prompt.json": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+    "manifest.json": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+    "native_capture_contract_v5.json": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+    "packets": {
+      "ER-0003": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+      "ER-0008": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f"
+    },
+    "receipt_contract_v5.json": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+    "schema/external_research_result_v5.schema.json": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+    "tools/common.py": "939dd6841200f01f18b26bc9c73cfd8fbff5c5c9f953a1b58607188ee626e578",
+    "tools/generate_activation_transaction.py": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+    "tools/test_attempt_0005.py": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+    "tools/validate_postrun.py": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+    "tools/verify_prelaunch.py": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+    "validation/VALIDATOR_AUTHORITY_V5.json": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+    "validation/local-prelaunch-candidate.json": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+  },
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "promotion_credit": 0,
+  "reasoning_effort": "max",
+  "research_credit": 0,
+  "retries_forbidden": true,
+  "retry_namespace": "retry-attempt-0005",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "pass"
+}

@@ -1,0 +1,602 @@
+{
+  "assignment_id": "A005M15-000084-INTEGRATED-MACRO15-A66DA7F6551C-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "5. **Disable and restore:** Bundled first-party specialty Personas can be disabled and restored to the shipped default after user customization. Protected core built-ins cannot be disabled. User-created and imported Personas can be deleted with confirmation.",
+          "line_end": 233,
+          "line_start": 233,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "persona_mutation_atomicity_and_recovery_unspecified",
+      "impact": "Concurrent editors, interrupted writes, restore failures, or deletion races can corrupt or silently overwrite a Persona because the contract defines user actions but no atomic commit, conflict, recovery, or rollback semantics.",
+      "item_id": "A005M15-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Personas.md:CONT-001"],
+      "statement": "The Persona system specifies create, edit, disable, restore, and delete behavior but does not define atomic file mutation, optimistic concurrency, interruption recovery, or rollback guarantees.",
+      "title": "Persona mutation lifecycle has no atomicity or recovery contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "ownership", "consumers", "propagation", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "This document is the **single canonical source of truth** for the Puppet Master Persona system. All other plan documents MUST reference this document by anchor (e.g., `Plans/Personas.md#PERSONA-SCHEMA`) rather than restating Persona definitions, storage layout, schema, or selection rules.",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "explicit_non_gap",
+      "impact": "A single owner and anchor-based consumption rule reduces contradictory Persona definitions across plans.",
+      "item_id": "A005M15-002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:P-002", "SEMANTIC:PLANUNIT:P-002"],
+      "statement": "The document explicitly owns Persona definitions, storage, schema, and selection rules and directs consumers to anchors instead of restatement.",
+      "title": "Persona SSOT ownership is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["ownership", "gui_truth", "propagation", "builder_discretion"],
+      "evidence": [
+        {
+          "exact_quote": "  Plans/Personas.md is the single canonical source for Persona definitions, storage layout, schema, and selection rules; other documents must reference Personas anchors instead of restating those rules.",
+          "line_end": 747,
+          "line_start": 747,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "gui_related: true",
+          "line_end": 748,
+          "line_start": 748,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "gui_classification_not_supported_by_canonical_text",
+      "impact": "A governance-only SSOT constraint can be routed into GUI work or counted as GUI coverage even though its canonical behavior is document ownership and DRY referencing.",
+      "item_id": "A005M15-003",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:P-003", "SEMANTIC:PLANUNIT:P-003"],
+      "statement": "P-003 is marked gui_related even though its canonical text contains no screen, interaction, presentation, or user-visible state requirement.",
+      "title": "P-003 GUI classification is semantically unsupported"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "compatibility_migration", "invalid_states_transitions", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "`owner_hint` is advisory until resolved by the crew-role map. PM checks the active agent config `crew.roles` map, for example `{ \"code-review\": { provider, model, persona } }`, using exact tag matches such as `code-review`, `test-writer`, or `researcher`; partial matches are not supported in MVP. If no mapping exists, PM falls back to the current session provider/model while selecting the requested Persona behavior. If a mapping exists but the mapped provider or model is unavailable, PM returns `capability_unavailable` and does not silently fall back to a different provider/model/persona tuple.",
+          "line_end": 469,
+          "line_start": 469,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "capability_unavailable_recovery_state_unspecified",
+      "impact": "Callers cannot deterministically decide whether to prompt for an override, retry after configuration repair, remain blocked, or terminate, and support tooling lacks a required diagnostic payload.",
+      "item_id": "A005M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Personas.md:CONT-002"],
+      "statement": "The crew-role mapping contract defines `capability_unavailable` as an outcome but omits its state transition, required diagnostic fields, retry or override path, and caller-visible recovery behavior.",
+      "title": "Crew-role capability failure has no recovery protocol"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "states_transitions", "authority", "ownership", "compatibility_migration", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare provider/model/variant preferences, optional runtime control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.",
+          "line_end": 53,
+          "line_start": 53,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "explicit_non_gap",
+      "impact": "Implementations have a clear distinction between persistent role artifacts, ephemeral execution units, child runs, and provider-native configuration.",
+      "item_id": "A005M15-005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:P-004", "PLANUNIT:P-005", "PLANUNIT:P-006", "PLANUNIT:P-007", "SEMANTIC:PLANUNIT:P-004", "SEMANTIC:PLANUNIT:P-005", "SEMANTIC:PLANUNIT:P-006", "SEMANTIC:PLANUNIT:P-007"],
+      "statement": "Agent, Subagent, Persona, and provider-native concepts are separated by identity, lifetime, authority, and storage boundaries.",
+      "title": "Runtime and artifact identities are clearly separated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "security_privacy", "operations", "scale_performance", "concurrency_races", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": ".puppet-master/personas/<persona_id>/PERSONA.md",
+          "line_end": 89,
+          "line_start": 89,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "Persona validation MUST enforce:",
+          "line_end": 185,
+          "line_start": 185,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "untrusted_persona_file_and_path_safety_unspecified",
+      "impact": "A malicious or malformed Persona can exploit YAML parser features, excessive input size, symlink traversal, or path ambiguity; implementations may choose incompatible safeguards and failure handling.",
+      "item_id": "A005M15-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-008", "PLANUNIT:P-009", "PLANUNIT:P-010", "SEMANTIC:PLANUNIT:P-008", "SEMANTIC:PLANUNIT:P-009", "SEMANTIC:PLANUNIT:P-010"],
+      "statement": "Storage and schema rules do not specify canonical path containment, symlink handling, YAML safe-loading constraints, byte or nesting limits, duplicate-key behavior, encoding failures, or quarantine/recovery for hostile PERSONA.md input.",
+      "title": "PERSONA.md trust boundary and resource limits are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when the active provider transport supports it. Unsupported values are recorded as skipped, not silently applied. |",
+          "line_end": 171,
+          "line_start": 171,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "runtime_control_value_domain_unspecified",
+      "impact": "Providers and GUI validators can clamp, reject, or skip the same numeric value differently, making requested/effective state non-portable and difficult to test.",
+      "item_id": "A005M15-007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:P-011", "SEMANTIC:PLANUNIT:P-011"],
+      "statement": "The schema names temperature and top_p as numbers and mentions skipped or clamped controls, but it gives no canonical numeric domains, finite-number rule, normalization policy, or machine-testable reason taxonomy.",
+      "title": "Runtime-control validation lacks canonical domains"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "consumers", "propagation", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "The Markdown body following the frontmatter contains the Persona's system instructions. This content is injected into the Agent's compiled context (see §5). There are no structural constraints on the body beyond valid Markdown. Recommended sections: expertise areas, behavioral guidelines, output format preferences.",
+          "line_end": 209,
+          "line_start": 209,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "explicit_non_gap",
+      "impact": "Prompt compilers and editors have a direct canonical source for Persona system instructions without inventing an extra body schema.",
+      "item_id": "A005M15-008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:P-012", "SEMANTIC:PLANUNIT:P-012"],
+      "statement": "The Markdown body is explicitly the Persona instruction payload and intentionally has no required internal section structure beyond valid Markdown.",
+      "title": "Persona body injection contract is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "scale_performance", "acceptance_oracles", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "scale_limits", "accessibility", "localization", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "7. **Schema validation on save:** On every save, validate the PERSONA.md against the schema (§3). Display inline errors for: invalid `id` format, reserved `id` usage, name/description length violations, invalid `default_mode`, folder-name mismatch, and attempted protected-ID shadowing. Block save until errors are resolved.",
+          "line_end": 237,
+          "line_start": 237,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "Persona management UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.personas.*` prefix. Both Expert and ELI5 variants are required.",
+          "line_end": 259,
+          "line_start": 259,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "persona_gui_edge_state_and_accessibility_oracles_missing",
+      "impact": "Large registries, long or localized content, assistive technology, concurrent edits, interrupted saves, and failed deletes/restores can produce inaccessible or misleading states without falsifiable expected behavior.",
+      "item_id": "A005M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-013", "PLANUNIT:P-014", "PLANUNIT:P-015", "PLANUNIT:P-016", "PLANUNIT:P-017", "SEMANTIC:PLANUNIT:P-013", "SEMANTIC:PLANUNIT:P-014", "SEMANTIC:PLANUNIT:P-015", "SEMANTIC:PLANUNIT:P-016", "SEMANTIC:PLANUNIT:P-017"],
+      "statement": "The GUI enumerates fields and validation errors but does not define keyboard and focus behavior, screen-reader semantics, localization and overflow handling, large-library performance, dirty-state conflict handling, or failure/retry/rollback states for save, delete, disable, and restore.",
+      "title": "Persona GUI lacks adversarial interaction and accessibility contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "security_privacy", "invalid_states_transitions", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- child runs inherit only the effective compatible subset of parent-allowed tools, skills, plugins, and MCP capabilities.",
+          "line_end": 302,
+          "line_start": 302,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "child_capability_intersection_and_failure_contract_missing",
+      "impact": "Different implementations can compute different child authority, silently omit required capabilities, or fail after dispatch without a stable blocked-state reason or recovery path.",
+      "item_id": "A005M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-018", "PLANUNIT:P-019", "SEMANTIC:PLANUNIT:P-018", "SEMANTIC:PLANUNIT:P-019"],
+      "statement": "Child selection and handoff precedence are ordered, but the compatible-subset algorithm, required-versus-optional capability distinction, empty-intersection outcome, injection failure state, and retry or fallback behavior are not specified.",
+      "title": "Child handoff capability reduction is not executable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "ownership", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "missing_callers_consumers", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "The following integrations are specified by their subsystem SSOTs and MUST NOT be restated here:",
+          "line_end": 319,
+          "line_start": 319,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "`subagent_registry` owns launchable delegated child-run types. It validates names used by `task`, orchestrator routing, interview routing, and command subtasks.",
+          "line_end": 368,
+          "line_start": 368,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "cross_document_consumer_conformance_not_oracled",
+      "impact": "Permissions, prompt compilation, model controls, task launch, interview routing, command subtasks, and provider adapters can drift independently while each owner document still validates in isolation.",
+      "item_id": "A005M15-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-020", "PLANUNIT:P-021", "PLANUNIT:P-022", "PLANUNIT:P-023", "PLANUNIT:P-024", "PLANUNIT:P-025", "SEMANTIC:PLANUNIT:P-020", "SEMANTIC:PLANUNIT:P-021", "SEMANTIC:PLANUNIT:P-022", "SEMANTIC:PLANUNIT:P-023", "SEMANTIC:PLANUNIT:P-024", "SEMANTIC:PLANUNIT:P-025"],
+      "statement": "Owner boundaries and registry consumers are named, but no cross-document compatibility matrix or executable consumer conformance oracle verifies shared field names, eligibility, collision handling, projection semantics, and alias migration end to end.",
+      "title": "Persona cross-document seams lack an executable conformance oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "failures_recovery", "operations", "acceptance_oracles", "invalid_states_transitions", "partial_failure", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Persona validation acceptance criteria require every loaded PERSONA.md file to pass schema validation, skip invalid files with a warning log entry, reject Reserved Persona IDs, and treat folder-name/id mismatches as validation errors.",
+          "line_end": 1834,
+          "line_start": 1834,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "line_end": 1848,
+          "line_start": 1848,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "acceptance_criteria_lack_runtime_and_gui_test_surfaces",
+      "impact": "Plan structure can validate while the loader accepts invalid files, override order is wrong, prompt injection is absent, warning logs lack required data, or GUI saves mutate forbidden paths.",
+      "item_id": "A005M15-012",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-026", "PLANUNIT:P-027", "SEMANTIC:PLANUNIT:P-026", "SEMANTIC:PLANUNIT:P-027"],
+      "statement": "P-026 and P-027 state testable product behavior, but their validation surfaces only validate plan migration and indexing rather than the runtime loader, filesystem effects, resolution precedence, prompt compiler, log payloads, or GUI behavior.",
+      "title": "Persona acceptance criteria are not connected to product tests"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "acceptance_oracles", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "gui_misleading_states", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  GUI Persona edits must never create, modify, or delete provider-native agent files, and the GUI Personas management card must validate the schema on save and block saves with validation errors.",
+          "line_end": 1927,
+          "line_start": 1927,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "gui_save_transaction_and_conflict_semantics_missing",
+      "impact": "Two editors or an external file change can cause lost updates, and a process crash can leave a partially written Persona despite all schema checks passing.",
+      "item_id": "A005M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-028", "SEMANTIC:PLANUNIT:P-028"],
+      "statement": "The save-isolation criterion blocks schema-invalid writes and provider-native mutation but omits atomic replace, file-version checks, conflict UI, crash consistency, backup disposition, and rollback verification.",
+      "title": "GUI save isolation does not guarantee durable correctness"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "operations", "compatibility_migration", "acceptance_oracles", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable.",
+          "line_end": 2039,
+          "line_start": 2039,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "runtime_resolution_snapshot_and_recovery_unspecified",
+      "impact": "A mutable crew-role map or provider inventory can change between resolution and dispatch, producing nondeterministic tuples, stale historical explanations, or un-actionable blocked runs.",
+      "item_id": "A005M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-029", "PLANUNIT:P-030", "SEMANTIC:PLANUNIT:P-029", "SEMANTIC:PLANUNIT:P-030"],
+      "statement": "Requested/effective identity and precedence are named, but there is no required immutable resolution snapshot, compare-and-dispatch boundary, capability_unavailable payload, user-visible recovery path, or retry semantics when configuration or provider availability changes concurrently.",
+      "title": "Persona resolution is ordered but not transactionally stable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "compatibility_migration", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "  Core Persona default model/provider/runtime controls appear as Auto in the UI and are stored as inherited/null fields unless a PM-owned definition sets a value; core definitions are user-immutable, explorer and bash are subagent-only, assistant and teacher are direct user-facing Personas, and other protected core Personas are chat-selectable unless a narrower owner rule forbids the surface.",
+          "line_end": 2122,
+          "line_start": 2122,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "  assistant is the default chat Persona with broad capability similar to general-purpose, a warmer and more collaborative style, permission to do real work when warranted, and boundaries against becoming a hidden worker Persona or passive help-bot.",
+          "line_end": 2217,
+          "line_start": 2217,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "explicit_non_gap",
+      "impact": "Picker eligibility, mutability, inherited controls, child selection recording, and broad assistant/general routing have a coherent baseline.",
+      "item_id": "A005M15-015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:P-031", "PLANUNIT:P-032", "PLANUNIT:P-033", "PLANUNIT:P-034", "PLANUNIT:P-035", "SEMANTIC:PLANUNIT:P-031", "SEMANTIC:PLANUNIT:P-032", "SEMANTIC:PLANUNIT:P-033", "SEMANTIC:PLANUNIT:P-034", "SEMANTIC:PLANUNIT:P-035"],
+      "statement": "The core catalog defines hierarchy, protected mutability, picker eligibility, inherited Auto controls, child selection recording, and distinct assistant/general behavior boundaries.",
+      "title": "Core Persona catalog boundaries are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "failures_recovery", "security_privacy", "operations", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  explorer is a fast, read-only, subagent-only core Persona for codebase-local investigation that searches files, symbols, configs, tests, docs, and call sites, returns concise evidence-backed synthesis, and does not edit, refactor, implement, or use web research by default.",
+          "line_end": 2307,
+          "line_start": 2307,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "  bash is a subagent-only terminal-execution Persona that runs useful command sequences in an isolated context, inspects stdout, stderr, exit status, and side effects, and reports the smallest actionable result without becoming a general planner or coding Persona.",
+          "line_end": 2352,
+          "line_start": 2352,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "  researcher is a read-only Persona that combines local codebase inspection with current external sources when those sources materially improve the answer, stays grounded in project context, compares evidence, and returns citations plus handoff guidance without taking over implementation.",
+          "line_end": 2396,
+          "line_start": 2396,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "persona_capability_enforcement_and_hazard_policy_unspecified",
+      "impact": "Read-only Personas may still receive mutating tools or leak sensitive project context externally, while Bash can perform destructive side effects without a Persona-specific approval, rollback, or evidence requirement.",
+      "item_id": "A005M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-036", "PLANUNIT:P-037", "PLANUNIT:P-038", "PLANUNIT:P-039", "SEMANTIC:PLANUNIT:P-036", "SEMANTIC:PLANUNIT:P-037", "SEMANTIC:PLANUNIT:P-038", "SEMANTIC:PLANUNIT:P-039"],
+      "statement": "Explorer and Researcher declare read-only behavior and Bash acknowledges side effects, but the units do not define enforceable tool capability sets, mutation classification, destructive-command approval, rollback evidence, external-source trust handling, secret redaction, citation failure, or project-data lifecycle rules.",
+      "title": "Specialized core Personas lack enforceable hazard boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  overseer is a governance/conductor Persona, not the scheduler personified and not a normal node-worker implementation Persona; scheduler and executor owners retain dispatchability, readiness, transitions, blocked-state lifecycle, retries, wakeups, attempt identity, and hard Orchestrator mechanics.",
+          "line_end": 2530,
+          "line_start": 2530,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        },
+        {
+          "exact_quote": "  overseer expresses delegation-first, verification-first, wiring/completeness-sensitive, integration-aware, audit-minded behavior; package-overseer mode governs package-local readiness and remediation evidence, while seam-overseer mode judges cross-package integration, wiring, architecture consistency, GUI/runtime fit, workflow completeness, weak integration, and coherent feature formation.",
+          "line_end": 2577,
+          "line_start": 2577,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "overseer_authority_handoff_and_disagreement_protocol_missing",
+      "impact": "Overseer can appear to decide readiness or cross-package completion without a machine-visible authority grant, and disagreements or failed handoffs can be buried or deadlock despite prose requiring visibility.",
+      "item_id": "A005M15-017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-040", "PLANUNIT:P-041", "PLANUNIT:P-042", "SEMANTIC:PLANUNIT:P-040", "SEMANTIC:PLANUNIT:P-041", "SEMANTIC:PLANUNIT:P-042"],
+      "statement": "Teacher and Overseer boundaries are directionally clear, but the package/seam authority token, direct-action authorization record, handoff acceptance, disagreement/corroboration state machine, timeout/escalation path, and user-visible blocked or incomplete states remain unspecified.",
+      "title": "Overseer governance boundary lacks an executable handoff protocol"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "partial_failure", "recovery_rollback", "authority_boundaries", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  There is no protected core document-writer Persona; durable document creation is workflow behavior handled by the owning surface and resolved stage Persona, and generated requirements, summaries, plans, reports, and durable artifacts remain draft workflow outputs until accepted by the relevant user or validation gate.",
+          "line_end": 2622,
+          "line_start": 2622,
+          "path": "Plans/Personas.md",
+          "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+        }
+      ],
+      "gap_kind": "durable_artifact_acceptance_lifecycle_unspecified",
+      "impact": "Consumers cannot reliably distinguish draft, submitted, rejected, superseded, accepted, or revoked artifacts, and a later failed validation may not have a defined rollback or provenance-preserving response.",
+      "item_id": "A005M15-018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:P-043", "SEMANTIC:PLANUNIT:P-043"],
+      "statement": "The document-generation boundary defines artifacts as draft until acceptance but does not define artifact identity, acceptance authority, submitted/rejected/superseded states, validation failure handling, version lineage, revocation, or rollback after acceptance.",
+      "title": "Draft document outputs have no complete acceptance lifecycle"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 399],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Personas.md:CONT-001"],
+      "item_ids": ["A005M15-001"],
+      "reviewed": true,
+      "summary": "Reviewed the canonical Persona definitions, storage, schema, GUI, selection, and integration prologue; the dominant adversarial gap is the absence of atomic mutation and recovery semantics across GUI-managed file operations.",
+      "window_id": "WIN-A66DA7F6551C-0001"
+    },
+    {
+      "core_range": [400, 781],
+      "covered_source_unit_refs": ["PLANUNIT:P-002", "PLANUNIT:P-003", "SEMANTIC:PROLOGUE:Plans/Personas.md:CONT-002", "SEMANTIC:PLANUNIT:P-002", "SEMANTIC:PLANUNIT:P-003"],
+      "item_ids": ["A005M15-002", "A005M15-003", "A005M15-004"],
+      "reviewed": true,
+      "summary": "Reviewed acceptance criteria, runtime expansion, core and specialty catalog prose, owner map, and P-002/P-003; SSOT ownership is strong, P-003 is misclassified as GUI work, and crew-role capability failure lacks a recovery protocol.",
+      "window_id": "WIN-A66DA7F6551C-0002"
+    },
+    {
+      "core_range": [782, 1164],
+      "covered_source_unit_refs": ["PLANUNIT:P-004", "PLANUNIT:P-005", "PLANUNIT:P-006", "PLANUNIT:P-007", "PLANUNIT:P-008", "PLANUNIT:P-009", "PLANUNIT:P-010", "PLANUNIT:P-011", "SEMANTIC:PLANUNIT:P-004", "SEMANTIC:PLANUNIT:P-005", "SEMANTIC:PLANUNIT:P-006", "SEMANTIC:PLANUNIT:P-007", "SEMANTIC:PLANUNIT:P-008", "SEMANTIC:PLANUNIT:P-009", "SEMANTIC:PLANUNIT:P-010", "SEMANTIC:PLANUNIT:P-011"],
+      "item_ids": ["A005M15-005", "A005M15-006", "A005M15-007"],
+      "reviewed": true,
+      "summary": "Reviewed P-004 through P-011; identity boundaries are clear, while PERSONA.md path/parser trust and runtime-control value domains remain underspecified.",
+      "window_id": "WIN-A66DA7F6551C-0003"
+    },
+    {
+      "core_range": [1165, 1529],
+      "covered_source_unit_refs": ["PLANUNIT:P-012", "PLANUNIT:P-013", "PLANUNIT:P-014", "PLANUNIT:P-015", "PLANUNIT:P-016", "PLANUNIT:P-017", "PLANUNIT:P-018", "PLANUNIT:P-019", "SEMANTIC:PLANUNIT:P-012", "SEMANTIC:PLANUNIT:P-013", "SEMANTIC:PLANUNIT:P-014", "SEMANTIC:PLANUNIT:P-015", "SEMANTIC:PLANUNIT:P-016", "SEMANTIC:PLANUNIT:P-017", "SEMANTIC:PLANUNIT:P-018", "SEMANTIC:PLANUNIT:P-019"],
+      "item_ids": ["A005M15-008", "A005M15-009", "A005M15-010"],
+      "reviewed": true,
+      "summary": "Reviewed P-012 through P-019; body injection is explicit, but the Persona GUI lacks adversarial accessibility and transaction states and child capability reduction is not executable.",
+      "window_id": "WIN-A66DA7F6551C-0004"
+    },
+    {
+      "core_range": [1530, 1918],
+      "covered_source_unit_refs": ["PLANUNIT:P-020", "PLANUNIT:P-021", "PLANUNIT:P-022", "PLANUNIT:P-023", "PLANUNIT:P-024", "PLANUNIT:P-025", "PLANUNIT:P-026", "PLANUNIT:P-027", "SEMANTIC:PLANUNIT:P-020", "SEMANTIC:PLANUNIT:P-021", "SEMANTIC:PLANUNIT:P-022", "SEMANTIC:PLANUNIT:P-023", "SEMANTIC:PLANUNIT:P-024", "SEMANTIC:PLANUNIT:P-025", "SEMANTIC:PLANUNIT:P-026", "SEMANTIC:PLANUNIT:P-027"],
+      "item_ids": ["A005M15-011", "A005M15-012"],
+      "reviewed": true,
+      "summary": "Reviewed P-020 through P-027; cross-subsystem ownership is enumerated but lacks an end-to-end consumer oracle, and product acceptance criteria are connected only to plan validators.",
+      "window_id": "WIN-A66DA7F6551C-0005"
+    },
+    {
+      "core_range": [1919, 2298],
+      "covered_source_unit_refs": ["PLANUNIT:P-028", "PLANUNIT:P-029", "PLANUNIT:P-030", "PLANUNIT:P-031", "PLANUNIT:P-032", "PLANUNIT:P-033", "PLANUNIT:P-034", "PLANUNIT:P-035", "SEMANTIC:PLANUNIT:P-028", "SEMANTIC:PLANUNIT:P-029", "SEMANTIC:PLANUNIT:P-030", "SEMANTIC:PLANUNIT:P-031", "SEMANTIC:PLANUNIT:P-032", "SEMANTIC:PLANUNIT:P-033", "SEMANTIC:PLANUNIT:P-034", "SEMANTIC:PLANUNIT:P-035"],
+      "item_ids": ["A005M15-013", "A005M15-014", "A005M15-015"],
+      "reviewed": true,
+      "summary": "Reviewed P-028 through P-035; core catalog boundaries are coherent, but GUI persistence and runtime resolution lack transactional stability and recovery detail.",
+      "window_id": "WIN-A66DA7F6551C-0006"
+    },
+    {
+      "core_range": [2299, 2660],
+      "covered_source_unit_refs": ["PLANUNIT:P-036", "PLANUNIT:P-037", "PLANUNIT:P-038", "PLANUNIT:P-039", "PLANUNIT:P-040", "PLANUNIT:P-041", "PLANUNIT:P-042", "PLANUNIT:P-043", "SEMANTIC:PLANUNIT:P-036", "SEMANTIC:PLANUNIT:P-037", "SEMANTIC:PLANUNIT:P-038", "SEMANTIC:PLANUNIT:P-039", "SEMANTIC:PLANUNIT:P-040", "SEMANTIC:PLANUNIT:P-041", "SEMANTIC:PLANUNIT:P-042", "SEMANTIC:PLANUNIT:P-043"],
+      "item_ids": ["A005M15-016", "A005M15-017", "A005M15-018"],
+      "reviewed": true,
+      "summary": "Reviewed P-036 through P-043; specialized Personas lack enforceable hazard boundaries, Overseer lacks an executable authority and handoff protocol, and durable draft artifacts lack a complete acceptance lifecycle.",
+      "window_id": "WIN-A66DA7F6551C-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A66DA7F6551C-0001",
+    "document_path": "Plans/Personas.md",
+    "micro_window_ids": ["WIN-A66DA7F6551C-0001", "WIN-A66DA7F6551C-0002", "WIN-A66DA7F6551C-0003", "WIN-A66DA7F6551C-0004", "WIN-A66DA7F6551C-0005", "WIN-A66DA7F6551C-0006", "WIN-A66DA7F6551C-0007"],
+    "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines the immutable Persona resolution snapshot, capability_unavailable payload, retry path, and user-visible blocked state consumed by Orchestrator, Prompt Pipeline, Models, and GUI surfaces?",
+      "Which executable suite verifies Persona loader safety, project/global override precedence, prompt injection, provider-native file isolation, registry compatibility, and requested/effective identity propagation across all named consumers?",
+      "Which storage or workflow owner defines atomic PERSONA.md writes, concurrent-edit conflict handling, backups, restore/delete rollback, and durable artifact acceptance or revocation states?"
+    ],
+    "feature_family_keys": ["persona-storage-schema", "persona-gui-management", "persona-runtime-resolution", "persona-child-handoff", "persona-registry-seams", "persona-core-catalog", "persona-governance-handoffs", "durable-artifact-lifecycle"],
+    "research_queries": [
+      "safe YAML frontmatter parsing duplicate key alias expansion and resource limit practices",
+      "atomic cross-platform configuration file replacement optimistic concurrency and crash recovery",
+      "accessible large virtualized table editor keyboard focus validation and destructive action patterns",
+      "capability-based child agent delegation least privilege and immutable dispatch snapshot patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000084_attempt_0015_terminal"
+}

@@ -1,0 +1,547 @@
+{
+  "assignment_id": "A005M15-000207-INTEGRATED-MACRO15-183F03A77755-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts"],
+      "evidence": [
+        {
+          "exact_quote": "\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "none_closed_envelope_contract",
+      "impact": "Consumers receive a versioned, closed JSON object shape for a runtime restore-point artifact, so undeclared top-level fields are rejected.",
+      "item_id": "M15-001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The source defines a draft-2020-12 JSON Schema for a restore_point runtime artifact as an object with additionalProperties disabled.",
+      "title": "Closed restore-point artifact envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "none_required_field_contract",
+      "impact": "A conforming artifact must carry identity, run/attempt correlation, creation time, projection and retention metadata, routing, and a payload.",
+      "item_id": "M15-002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The schema requires twelve named top-level fields and makes all other declared properties optional.",
+      "title": "Required restore-point fields"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "none_discriminator_contract",
+      "impact": "Validation can reject artifacts claiming another schema version or artifact type.",
+      "item_id": "M15-003",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "schema_id and artifact_type are exact constant discriminators for version v1 and restore_point respectively.",
+      "title": "Exact schema and artifact discriminators"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "ownership"],
+      "evidence": [
+        {
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "none_optional_correlation_fields",
+      "impact": "Producers may attach thread, node, provider-attempt, usage-event, producer, and actor correlations without making them mandatory for every artifact.",
+      "item_id": "M15-004",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The envelope declares optional provenance and execution-correlation reference fields as strings.",
+      "title": "Optional provenance and correlation references"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "none_minimum_routing_contract",
+      "impact": "Every valid restore point exposes at least one non-empty routing reference for downstream discovery or propagation.",
+      "item_id": "M15-005",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "routing_refs is required and must be a non-empty array of non-empty strings.",
+      "title": "Minimum routing reference contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "compatibility_migration", "builder_discretion"],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "open_payload_extension_point",
+      "impact": "A producer has flexibility to encode restore-point-specific content, but interoperability depends on contracts outside this schema.",
+      "item_id": "M15-006",
+      "item_type": "contract",
+      "severity": "low",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "type_payload must be a non-empty object, while its property names and value schemas are otherwise unconstrained here.",
+      "title": "Open non-empty type payload"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "operations", "ambiguity_unknowns", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_timestamp_format_constraint",
+      "impact": "Any non-empty text, including a non-UTC or unparsable value, passes structural validation and can break ordering, expiry, and operational diagnosis.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "created_at_utc is only constrained to a non-empty string; the schema supplies no date-time format or UTC-shape oracle.",
+      "title": "UTC creation timestamp is not format-validated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "operations", "ambiguity_unknowns", "invalid_states_transitions", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "unbounded_domain_state_values",
+      "impact": "Producers can emit empty, misspelled, or contradictory state labels; consumers or GUI surfaces may interpret the same artifact differently or present false health/freshness confidence.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "projection_freshness, projection_health, and retention_class are required but accept every string, including the empty string, with no enum or cross-field state rules.",
+      "title": "Projection and retention state domains are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "security_privacy", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "untrusted_inputs", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_payload_semantic_contract",
+      "impact": "Structurally valid payloads may be unusable, unsafe, incompatible, or impossible to migrate because required restore content, versions, integrity fields, and sensitive-data rules are not established here.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The payload contract establishes only object-ness and one property, leaving its semantic schema, payload versioning, trust boundary, and compatibility behavior to external decisions.",
+      "title": "Restore payload semantics are externalized"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "ambiguity_unknowns", "invalid_states_transitions", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_reference_integrity_and_conditionals",
+      "impact": "An artifact can validate with empty or mutually inconsistent provenance references, leaving ownership, authority, and correlation ambiguous.",
+      "item_id": "M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "Optional reference fields have no minimum length, namespace, referential-integrity, co-requirement, or conditional relationship constraints.",
+      "title": "Reference integrity and conditional relationships are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["inputs_outputs", "contracts", "scale_performance", "untrusted_inputs", "scale_limits"],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_collection_uniqueness_and_bounds",
+      "impact": "Duplicate or arbitrarily large arrays remain valid, allowing redundant routing, excessive validation/storage work, and amplification from untrusted producers.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "receipt_refs and routing_refs lack uniqueItems and maxItems; receipt_refs also permits an empty array, and their strings have no maximum length.",
+      "title": "Reference collections are duplicate-tolerant and unbounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "security_privacy", "operations", "ambiguity_unknowns", "authority_boundaries", "privacy_data_lifecycle", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_authority_and_data_lifecycle_contract",
+      "impact": "Schema-valid artifacts do not prove who may create, restore, disclose, retain, expire, or delete them, so destructive and privacy-sensitive operations require unstated policy.",
+      "item_id": "M15-012",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "actor_ref, producer_ref, and retention_class are plain strings and do not encode authorization, ownership, privacy classification, retention duration, expiry, or deletion authority.",
+      "title": "Authority and data-lifecycle semantics are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "invalid_states_transitions", "partial_failure", "recovery_rollback", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"},\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_restore_lifecycle_and_integrity_contract",
+      "impact": "A structurally valid artifact gives no oracle for whether content is complete, restorable, corrupted, partially persisted, rolled back, or safely discardable.",
+      "item_id": "M15-013",
+      "item_type": "failure_recovery",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The contract has no restore lifecycle state, completion marker, integrity digest, dependency set, failure detail, retry identity, rollback marker, or recovery transition constraints.",
+      "title": "Restore integrity and recovery lifecycle have no oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["consumers", "propagation", "ambiguity_unknowns", "missing_callers_consumers", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "missing_consumer_and_reference_resolution_contract",
+      "impact": "Callers cannot derive from this schema which subsystem resolves each reference, which references are durable, or what to do when a target is unavailable.",
+      "item_id": "M15-014",
+      "item_type": "consumer",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The schema names detail, content, source-surface, and routing references but does not identify their namespaces, owners, consumers, resolution protocol, propagation guarantees, or missing-target behavior.",
+      "title": "Reference consumers and resolution seams are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "accessibility", "localization"],
+      "evidence": [
+        {
+          "exact_quote": "\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "not_applicable_representation_schema",
+      "impact": "Reviewers and builders must not treat structural artifact validity as proof of correct, accessible, or localized user presentation.",
+      "item_id": "M15-015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "This source is a runtime-artifact representation schema and asserts no GUI layout, interaction, accessibility, or localization behavior.",
+      "title": "No GUI truth is asserted by the artifact schema"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "ambiguity_unknowns", "concurrency_races", "partial_failure", "offline_network_loss", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1},\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "unspecified_concurrency_and_connectivity_semantics",
+      "impact": "Competing attempts, late writes, disconnected creation, duplicate publication, and partial persistence can produce ambiguous restore candidates with no schema-level conflict or reconciliation signal.",
+      "item_id": "M15-016",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "Run and attempt identifiers correlate an artifact but do not specify ordering, uniqueness, idempotency, concurrent-writer resolution, offline creation, network-loss handling, or reconciliation semantics.",
+      "title": "Concurrency and offline behavior remain unknown"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "\"$schema\":\"https://json-schema.org/draft/2020-12/schema\"",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "structural_oracle_without_semantic_restore_oracle",
+      "impact": "Tests can falsify envelope-shape violations, but passing schema validation cannot establish that a restore point is complete, correct, compatible, authorized, or recoverable.",
+      "item_id": "M15-017",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "Draft-2020-12 validation is an executable structural oracle, while the permissive payload and unconstrained semantic strings leave restore correctness without an acceptance oracle in this source.",
+      "title": "Structural validity does not prove restore correctness"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "operations", "compatibility_migration", "builder_discretion", "ambiguity_unknowns", "recovery_rollback", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        },
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ],
+      "gap_kind": "unbounded_builder_semantic_discretion",
+      "impact": "Independent builders can make incompatible choices about inline versus referenced content, summary meaning, source-surface vocabulary, payload shape, and restore behavior while all outputs remain schema-valid.",
+      "item_id": "M15-018",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "statement": "The schema leaves the semantic relationship among summary, detail_ref, content_ref, source_surface, and type_payload unspecified, including precedence, required combinations, fallback, and migration behavior.",
+      "title": "Content representation choices remain builder discretion"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 1],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_ROOT:Plans/runtime_artifact_restore_point.schema.json", "STRUCTURAL:$"],
+      "item_ids": ["M15-001", "M15-002", "M15-003", "M15-004", "M15-005", "M15-006", "M15-007", "M15-008", "M15-009", "M15-010", "M15-011", "M15-012", "M15-013", "M15-014", "M15-015", "M15-016", "M15-017", "M15-018"],
+      "reviewed": true,
+      "summary": "Reviewed the complete one-line restore-point schema under exact and adversarial lenses. The envelope is closed and structurally testable, but semantic payload, state domains, reference integrity, authority, recovery, concurrency, lifecycle, consumer, scale, and restore-correctness contracts remain external or unspecified.",
+      "window_id": "WIN-183F03A77755-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-183F03A77755-0001",
+    "document_path": "Plans/runtime_artifact_restore_point.schema.json",
+    "micro_window_ids": ["WIN-183F03A77755-0001"],
+    "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines the type_payload shape and compatibility rules for restore_point artifacts?",
+      "Which canonical owner defines projection_freshness, projection_health, retention_class, and source_surface vocabularies?",
+      "Which consumers resolve routing_refs, receipt_refs, detail_ref, and content_ref, and what failure behavior applies when targets are unavailable?",
+      "Which runtime contract defines restore authorization, integrity verification, concurrency resolution, rollback, and terminal success?"
+    ],
+    "feature_family_keys": ["runtime-artifact", "restore-point", "restore-recovery", "artifact-routing", "artifact-retention"],
+    "research_queries": [
+      "JSON Schema restore-point artifact integrity checksum lifecycle patterns",
+      "restore-point schema concurrency idempotency rollback best practices",
+      "artifact reference namespace retention privacy contract patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000207_attempt_0015_terminal"
+}

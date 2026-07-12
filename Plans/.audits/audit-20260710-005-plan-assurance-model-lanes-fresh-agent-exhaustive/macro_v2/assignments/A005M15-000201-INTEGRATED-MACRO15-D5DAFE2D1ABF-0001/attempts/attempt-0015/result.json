@@ -1,0 +1,507 @@
+{
+  "assignment_id": "A005M15-000201-INTEGRATED-MACRO15-D5DAFE2D1ABF-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "not_a_gap",
+      "impact": "Instances have a closed top-level shape and must supply the twelve named envelope fields, making omission and undeclared-field rejection directly testable.",
+      "item_id": "ITEM-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The envelope is a JSON object with additional properties forbidden and twelve explicitly required properties.",
+      "title": "Closed required envelope shape"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"artifact_type\":{\"type\":\"string\",\"enum\":[\"code_diff\",\"implementation_plan\",\"reasoning_summary\",\"validation_test\",\"screenshot\",\"evidence\",\"document\",\"restore_point\",\"browser_recording\",\"tool_llm_trace\",\"context_snapshot\",\"cost_usage\",\"hitl_approval\",\"failed_attempts\",\"subagent_lineage\",\"before_after_snapshot\",\"suggested_next_steps\",\"api_web_call\",\"artifact_version\"]}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "not_a_gap",
+      "impact": "Producers and validators share a finite v1 artifact taxonomy, so unsupported type labels fail validation rather than silently extending the protocol.",
+      "item_id": "ITEM-002",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema supports nineteen enumerated runtime artifact categories ranging from code diffs and evidence to approvals, traces, costs, lineage, and artifact versions.",
+      "title": "Finite runtime artifact taxonomy"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "undiscriminated_payload_contract",
+      "impact": "Any nonempty object is accepted for every artifact type, allowing malformed, irrelevant, or mutually incompatible payloads to pass the envelope schema and leaving producers and consumers to invent validation rules.",
+      "item_id": "ITEM-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema does not discriminate type_payload by artifact_type or bind it to any per-type schema.",
+      "title": "Artifact payload is not type-bound"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "weak_timestamp_validation",
+      "impact": "Non-UTC, locale-dependent, and nonsensical nonempty strings validate, undermining chronological ordering, retention calculations, incident reconstruction, and deterministic tests.",
+      "item_id": "ITEM-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "created_at_utc is required but has no date-time format or explicit UTC-offset constraint.",
+      "title": "UTC timestamp accepts arbitrary strings"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "gui_misleading_states",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\",\"enum\":[\"current\",\"refreshing\",\"stale\",\"degraded\",\"unavailable\"]},\"projection_health\":{\"type\":\"string\",\"enum\":[\"healthy\",\"degraded\",\"unavailable\"]}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "invalid_state_combinations_unconstrained",
+      "impact": "Contradictory combinations such as current/unavailable or unavailable/healthy can validate and propagate to consumers, potentially producing misleading status presentation during refresh, degradation, or network loss.",
+      "item_id": "ITEM-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Freshness and health values are independently enumerated without allowed-pair invariants or transition semantics.",
+      "title": "Projection state pairs lack invariants"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "builder_discretion",
+        "missing_callers_consumers",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "authority_and_ownership_unspecified",
+      "impact": "The envelope cannot prove who may create, mutate, route, disclose, or consume an artifact, and even empty producer or actor references validate; enforcement is wholly external and unspecified here.",
+      "item_id": "ITEM-006",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Producer and actor references are optional unconstrained strings, while no owner, authorized consumer, or access policy is represented.",
+      "title": "Authority and ownership are not enforceable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "propagation",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "routing_reference_semantics_missing",
+      "impact": "Duplicate, dangling, cyclic, wrongly typed, or unauthorized routing targets can pass structural validation, and the schema provides no caller/consumer contract for resolving or acting on them.",
+      "item_id": "ITEM-007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "At least one nonempty routing reference is required, but uniqueness, reference syntax, target existence, target type, resolution behavior, and consumers are unspecified.",
+      "title": "Routing references are structurally shallow"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "security_privacy",
+        "operations",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"retention_class\":{\"type\":\"string\",\"enum\":[\"ephemeral\",\"session\",\"project\",\"governed\",\"debug_retained\"]}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "retention_lifecycle_undefined",
+      "impact": "Validators can identify a class label but cannot verify expiry, deletion, legal hold, redaction, archival, access, or safe handling of sensitive debug artifacts.",
+      "item_id": "ITEM-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Retention is an enum only; the envelope contains no lifecycle dates, policy version, privacy classification, deletion authorization, or disposition proof.",
+      "title": "Retention labels lack lifecycle semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "operational_failure_contract_missing",
+      "impact": "Concurrent revisions, partial writes, retries, network interruption, restoration, rollback, and support diagnosis have no envelope-level status or causal invariants, so different producers may represent the same failure differently or not at all.",
+      "item_id": "ITEM-009",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Optional receipt references are the only explicit operational evidence hook; the schema defines no failure state, idempotency/version field, retry lineage invariant, integrity marker, recovery action, rollback relation, or support diagnostic requirement.",
+      "title": "Failure, concurrency, and recovery semantics are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "scale_limits",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "size_and_reference_limits_missing",
+      "impact": "Oversized inline text, enormous payload objects or reference arrays, and unsafe or unsupported reference forms remain valid, creating storage, transport, rendering, and denial-of-service risk.",
+      "item_id": "ITEM-010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema sets no maximum lengths, collection sizes, payload depth or size, reference schemes, or resource budgets.",
+      "title": "Envelope has no scale or resource bounds"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"pattern\":\"^pm\\\\.runtime_artifact\\\\.[a-z_]+\\\\.schema\\\\.v1$\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "version_migration_contract_missing",
+      "impact": "A v1-shaped identifier can be validated, but consumers have no declared compatibility range, upgrader path, downgrade rule, deprecation policy, or rejection behavior for future envelope and payload versions.",
+      "item_id": "ITEM-011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema_id pattern names v1 but the envelope supplies no migration or compatibility metadata and does not assert the exact envelope schema identifier.",
+      "title": "Version token lacks migration semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_envelope.schema.json",
+          "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+        }
+      ],
+      "gap_kind": "presentation_semantics_unspecified",
+      "impact": "User interfaces and assistive or localized consumers must infer whether and how to display summaries, sensitive payloads, state labels, and artifact types, leaving room for inaccessible, untranslated, or misleading presentation and undiscovered consumer assumptions.",
+      "item_id": "ITEM-012",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The envelope contains a free-form optional summary but no display safety, localization, accessibility, redaction, or user-visible truth contract; whether a separate consumer contract supplies these rules is unknown in this blind window.",
+      "title": "GUI and human-consumer contract is unknown"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_envelope.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "item_ids": [
+        "ITEM-001",
+        "ITEM-002",
+        "ITEM-003",
+        "ITEM-004",
+        "ITEM-005",
+        "ITEM-006",
+        "ITEM-007",
+        "ITEM-008",
+        "ITEM-009",
+        "ITEM-010",
+        "ITEM-011",
+        "ITEM-012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete one-line JSON Schema root under both exact-contract and adversarial-negative-space lenses. The closed required envelope and finite artifact taxonomy are explicit, while type payload discrimination, timestamp rigor, state-pair invariants, authority, routing semantics, retention lifecycle, operational recovery, scale bounds, migration, and human-consumer semantics remain under-specified.",
+      "window_id": "WIN-D5DAFE2D1ABF-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-D5DAFE2D1ABF-0001",
+    "document_path": "Plans/runtime_artifact_envelope.schema.json",
+    "micro_window_ids": [
+      "WIN-D5DAFE2D1ABF-0001"
+    ],
+    "source_sha256": "794108ddb705979106d0f48cfaa5c4c58d28b70598cab05ec87567e06d9bc4ae"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical per-artifact schemas bind each artifact_type to type_payload, and how are those schemas versioned and resolved?",
+      "Which consumer contract defines valid projection freshness and health pairs plus user-visible behavior for degraded, stale, refreshing, and unavailable states?",
+      "Which authority, retention, privacy, deletion, recovery, and reference-resolution policies govern runtime artifact envelopes outside this schema?"
+    ],
+    "feature_family_keys": [
+      "runtime_artifact_envelope",
+      "runtime_artifact_projection_state",
+      "runtime_artifact_governance"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 discriminator patterns for artifact type payload validation",
+      "artifact envelope retention lifecycle integrity and access-control schema patterns",
+      "projection freshness health state machine invariants for offline and partial failure"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000201_attempt_0015_terminal"
+}

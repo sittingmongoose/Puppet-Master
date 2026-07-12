@@ -1,0 +1,759 @@
+{
+  "assignment_id": "A005M15-000123-INTEGRATED-MACRO15-8C88D9F4CA2B-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "gui_truth", "propagation", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.browser.promote_to_normal_browsing must be registered in the UICommand dispatcher with typed args and result contract\",",
+          "line_end": 1865,
+          "line_start": 1865,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "          \"requirement\": \"Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.\"",
+          "line_end": 1907,
+          "line_start": 1907,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_production_wiring_contract",
+      "impact": "The browser commands have concrete dispatcher, projection, effect-receipt, accessibility, and regression evidence obligations that can be falsified in production certification.",
+      "item_id": "M15-0001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-006", "STRUCTURAL:$.entries"],
+      "statement": "The window consistently binds each browser control to a command, handler, availability selector, disabled reason, correlated event or receipt, accessibility behavior, and named test evidence.",
+      "title": "Browser controls have testable end-to-end wiring"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "authority", "failures_recovery", "security_privacy", "concurrency_races", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.browser.revoke_share_with_agent\",",
+          "line_end": 2048,
+          "line_start": 2048,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.browser.share_with_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.\",",
+          "line_end": 2128,
+          "line_start": 2128,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "missing_share_authority_and_lifecycle_semantics",
+      "impact": "An implementation could share excessive browser context, accept stale or untrusted capture references, or let share and revoke race while still satisfying the named-event checks.",
+      "item_id": "M15-0002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-006", "STRUCTURAL:$.entries"],
+      "statement": "Share and revoke are wired to events, but this window does not define who may share, what exact context is exposed, recipient and duration scope, revocation guarantees, or ordering when share and revoke overlap.",
+      "title": "Browser context sharing lacks authority and lifecycle rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "states_transitions", "consumers", "failures_recovery", "propagation", "acceptance_oracles", "missing_callers_consumers", "invalid_states_transitions", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Dispatching cmd.browser.stop_agent_keep_browser emits expected event(s): browser.session.takeover_state_changed, dev.session.stopped.\"",
+          "line_end": 2229,
+          "line_start": 2229,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "multi_event_atomicity_and_ordering_unspecified",
+      "impact": "A crash or handler failure between the two effects could leave the browser takeover projection and development-session projection contradictory, with no defined compensating action or authoritative event order.",
+      "item_id": "M15-0003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-006", "STRUCTURAL:$.entries"],
+      "statement": "The stop-agent-keep-browser command requires two domain events but specifies neither atomicity nor ordering, partial-success behavior, retry idempotency, compensation, or which consumer reconciles a split outcome.",
+      "title": "Dual-event stop flow has no partial-failure contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "inputs_outputs", "states_transitions", "consumers", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "          \"requirement\": \"Dispatching cmd.browser.reopen emits expected event(s): browser.session.state_changed.\"",
+          "line_end": 1975,
+          "line_start": 1975,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "          \"requirement\": \"Dispatching cmd.browser.retry emits expected event(s): browser.session.state_changed.\"",
+          "line_end": 2038,
+          "line_start": 2038,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "generic_transition_event_under_specification",
+      "impact": "Tests can pass by observing the generic event even if reopen and retry enter the wrong target state, mishandle an already-running session, or fail to distinguish offline and terminal errors.",
+      "item_id": "M15-0004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-006", "STRUCTURAL:$.entries"],
+      "statement": "Reopen and retry share only a generic state-changed event oracle; the allowed source states, distinct target states, invalid transitions, idempotency, and failure payloads are not fixed here.",
+      "title": "Reopen and retry transitions are not distinguishable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "propagation", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"cmd.browser.take_over must declare state selector, disabled reason, browser event effect, and regression evidence before production certification\"",
+          "line_end": 2250,
+          "line_start": 2250,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_production_wiring_contract",
+      "impact": "Takeover cannot be certified from a clickable control alone; projection, disabled-reason, event, receipt, accessibility, and regression evidence remain required.",
+      "item_id": "M15-0005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "statement": "Browser takeover is explicitly subject to projected-state, disabled-reason, event-effect, and regression-evidence certification rather than an implicit handler-only contract.",
+      "title": "Browser takeover certification is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "propagation", "acceptance_oracles", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.browser.toggle_devtools_dock is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events.\",",
+          "line_end": 2318,
+          "line_start": 2318,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.browser.toggle_devtools_dock records a no-persist dispatch receipt and emits no browser/runtime domain event.\"",
+          "line_end": 2352,
+          "line_start": 2352,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_no_persist_disposition",
+      "impact": "Implementers and tests are prevented from inventing a persisted domain event for a layout-only toggle while retaining correlated operational evidence.",
+      "item_id": "M15-0006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "statement": "The devtools dock toggle is explicitly classified as layout-only, no-persist behavior with a receipt and a negative event oracle.",
+      "title": "Devtools dock correctly forbids fabricated events"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "security_privacy", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "missing_callers_consumers", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.catalog.install_item has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2373,
+          "line_start": 2373,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.catalog.remove_item has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2428,
+          "line_start": 2428,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.catalog.update_item has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2483,
+          "line_start": 2483,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "stateful_catalog_mutations_lack_domain_outcomes",
+      "impact": "A receipt can prove dispatch but not whether code was verified, installed, activated, removed, rolled back, or observed by dependent runtimes; partial filesystem or registry mutations can be silently misprojected as success.",
+      "item_id": "M15-0007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "statement": "Install, remove, and update are stateful catalog operations, yet all three are assigned generic no-persist receipts with no success, failure, rollback, activation, compatibility, provenance, signature, permission, or consumer-propagation contract.",
+      "title": "Catalog mutations are modeled as no-persist dispatches"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["inputs_outputs", "authority", "security_privacy", "ambiguity_unknowns", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.chat.add_file_reference\",",
+          "line_end": 2523,
+          "line_start": 2523,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.add_file_reference has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2538,
+          "line_start": 2538,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "file_reference_trust_and_lifecycle_unspecified",
+      "impact": "The chat context could retain inaccessible, sensitive, symlink-escaped, oversized, or later-mutated content without a canonical snapshot, consent, revocation, or validation rule.",
+      "item_id": "M15-0008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "statement": "Adding a file reference lacks an explicit payload shape, workspace and symlink boundary, size and type validation, snapshot-versus-live semantics, sensitive-data handling, retention, and removal propagation contract.",
+      "title": "Chat file references lack trust boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "security_privacy", "propagation", "acceptance_oracles", "partial_failure", "recovery_rollback", "authority_boundaries", "untrusted_inputs", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.chat.apply_code_block\",",
+          "line_end": 2578,
+          "line_start": 2578,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.apply_code_block has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2593,
+          "line_start": 2593,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "code_application_effect_and_recovery_unspecified",
+      "impact": "A destructive or partially applied edit could be recorded only as a dispatch receipt, with no canonical changed-file set, precondition conflict, user approval, rollback handle, or success oracle.",
+      "item_id": "M15-0009",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "statement": "Applying a code block is potentially workspace-mutating, but this wiring provides only a no-persist receipt and does not specify target selection, authorization, conflict detection, atomicity, partial failure, rollback, or resulting artifact evidence.",
+      "title": "Apply-code-block has no mutation outcome contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "consumers", "failures_recovery", "propagation", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "partial_failure", "recovery_rollback", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2648,
+          "line_start": 2648,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.branch_from_restore has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2703,
+          "line_start": 2703,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.compact_context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2813,
+          "line_start": 2813,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "durable_chat_state_changes_use_receipt_only",
+      "impact": "History, restore lineage, context budgeting, and downstream projections can diverge after retry or restart because dispatch evidence does not define the resulting durable state or consumer propagation.",
+      "item_id": "M15-0010",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-008", "STRUCTURAL:$.entries"],
+      "statement": "Archive, branch-from-restore, and compact-context imply durable or semantically consequential chat state transitions, yet each is represented only by a no-persist receipt without outcome events, lineage, idempotency, conflict, rollback, or consumer contracts.",
+      "title": "Core chat state transitions lack durable outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.close_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2758,
+          "line_start": 2758,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.chat.close_thread_context_details records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 2792,
+          "line_start": 2792,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_no_persist_ui_disposition",
+      "impact": "A panel-close interaction can remain ephemeral while still producing dispatch evidence and a negative domain-event oracle.",
+      "item_id": "M15-0011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-008", "STRUCTURAL:$.entries"],
+      "statement": "Closing thread-context details is explicitly allowed to be a receipt-only UI disposition and is tested not to fabricate a persisted event.",
+      "title": "Thread-context panel close is explicitly ephemeral"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "consumers", "failures_recovery", "security_privacy", "propagation", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "recovery_rollback", "privacy_data_lifecycle", "gui_misleading_states", "scale_limits", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.context_lens.apply_subcompact has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2868,
+          "line_start": 2868,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.context_lens.revert_subcompact has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 2978,
+          "line_start": 2978,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "context_lens_transformation_state_machine_missing",
+      "impact": "A builder can choose incompatible selection, token-budget, restoration, or repeated-application behavior, and the GUI may claim that context was reverted even when the exact prior context cannot be reconstructed.",
+      "item_id": "M15-0012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-008", "STRUCTURAL:$.entries"],
+      "statement": "Apply-subcompact, clear-selection, and revert-subcompact expose command wiring but not the context selection model, transformation inputs and outputs, token limits, reversibility, repeated-operation semantics, concurrent message changes, or exact acceptance oracle.",
+      "title": "Context-lens transformation semantics are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "gui_truth", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_required\": \"Production wiring contract for cmd.chat.compact_context; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+          "line_end": 2808,
+          "line_start": 2808,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_certification_evidence_bundle",
+      "impact": "Certification requires multiple independent forms of executable evidence rather than allowing a dispatcher registration alone to stand in for production readiness.",
+      "item_id": "M15-0013",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-008", "STRUCTURAL:$.entries"],
+      "statement": "Each command repeats a concrete evidence bundle covering rendering, dispatcher routing, typed contracts, projections, receipts or events, accessibility, and regression behavior.",
+      "title": "Production certification requires layered evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "consumers", "gui_truth", "failures_recovery", "propagation", "acceptance_oracles", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "recovery_rollback", "gui_misleading_states", "scale_limits", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.context_lens.set_mode has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3033,
+          "line_start": 3033,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.context_lens.toggle_message_selection has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3143,
+          "line_start": 3143,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.context_lens.turn_off has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3198,
+          "line_start": 3198,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "context_lens_control_transitions_unspecified",
+      "impact": "Set-mode, toggle, selection, and turn-off can race or produce contradictory projections, and receipts alone cannot prove which messages or mode actually governed the next model request.",
+      "item_id": "M15-0014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-009", "STRUCTURAL:$.entries"],
+      "statement": "The context-lens controls have no canonical mode enum, transition table, selection invariants, turn-off cleanup rule, conflict behavior, ordering with new messages, or resulting prompt-context oracle.",
+      "title": "Context-lens controls lack a coherent state machine"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "gui_truth", "security_privacy", "propagation", "acceptance_oracles", "privacy_data_lifecycle", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.copy_code_block has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3253,
+          "line_start": 3253,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.chat.copy_message records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 3342,
+          "line_start": 3342,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_no_persist_clipboard_disposition",
+      "impact": "Copy operations can remain non-domain actions with correlated dispatch evidence, though platform clipboard privacy and expiry behavior remain implementation concerns.",
+      "item_id": "M15-0015",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-009", "STRUCTURAL:$.entries"],
+      "statement": "Copy-code-block and copy-message explicitly use no-persist receipts and negative domain-event assertions, which is consistent with ephemeral clipboard behavior.",
+      "title": "Copy actions correctly avoid domain events"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "security_privacy", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "missing_callers_consumers", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "gui_misleading_states", "offline_network_loss", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.chat.delete\",",
+          "line_end": 3348,
+          "line_start": 3348,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3363,
+          "line_start": 3363,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "destructive_chat_delete_has_no_state_outcome",
+      "impact": "A thread can disappear from the GUI while remaining in storage or downstream indexes, or be irreversibly removed without confirmation, retention handling, audit evidence, or recovery.",
+      "item_id": "M15-0016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-009", "STRUCTURAL:$.entries"],
+      "statement": "Chat delete is a destructive state mutation but has only a no-persist receipt; target identity, authorization, confirmation, retention versus hard-delete semantics, cascading consumers, idempotency, failure, and restore behavior are unspecified.",
+      "title": "Chat deletion lacks destructive-action semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "gui_truth", "acceptance_oracles", "accessibility", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"disabled_announcement\": \"catalog.chat_copy_message surfaces state.commands.chat_copy_message.disabled_reason to assistive technology when unavailable.\"",
+          "line_end": 3317,
+          "line_start": 3317,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_accessibility_projection_contract",
+      "impact": "Unavailable controls must expose their canonical disabled reason to assistive technology, making silent or visually exclusive disablement nonconforming.",
+      "item_id": "M15-0017",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-009", "STRUCTURAL:$.entries"],
+      "statement": "The controls explicitly bind disabled-state copy to assistive-technology announcement in addition to keyboard and focus requirements.",
+      "title": "Disabled reasons are part of accessible GUI truth"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "security_privacy", "propagation", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "gui_misleading_states", "offline_network_loss", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.delete_message has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3418,
+          "line_start": 3418,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.edit_last_user_message has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3473,
+          "line_start": 3473,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "message_history_mutations_lack_lineage_and_outcomes",
+      "impact": "Conversation history, model context, indexes, exports, and audit trails can disagree after an edit or deletion, and concurrent sends can attach to an obsolete lineage with no defined resolution.",
+      "item_id": "M15-0018",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "statement": "Delete-message and edit-last-user-message change authoritative conversation history but specify neither mutation events nor message identity, authorization, branch or truncation semantics, downstream invalidation, concurrency behavior, audit retention, or restore rules.",
+      "title": "Message edits and deletes have no history contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "gui_truth", "propagation", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.chat.effort\",",
+          "line_end": 3513,
+          "line_start": 3513,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.effort has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3528,
+          "line_start": 3528,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "effort_setting_semantics_undefined",
+      "impact": "Different builders may interpret effort as a transient composer value, thread setting, provider parameter, or persistent preference, producing inconsistent GUI state and request behavior.",
+      "item_id": "M15-0019",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "statement": "The effort command has no payload enum, scope, default, persistence rule, provider-compatibility fallback, projection of the applied value, or oracle connecting the control to the next request.",
+      "title": "Chat effort has no canonical meaning"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "authority", "consumers", "failures_recovery", "security_privacy", "operations", "scale_performance", "acceptance_oracles", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3583,
+          "line_start": 3583,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.export_investigation_bundle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3638,
+          "line_start": 3638,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "export_data_boundary_and_completion_unspecified",
+      "impact": "Exports can leak secrets or private context, follow unsafe paths, truncate silently, leave partial files, or report dispatch success without proving a complete and readable artifact.",
+      "item_id": "M15-0020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "statement": "Chat export and investigation-bundle export have receipt-only effects without defining included and excluded data, redaction, authorization, destination trust, overwrite behavior, format and version, size limits, atomic write, cancellation, failure cleanup, or artifact-completion evidence.",
+      "title": "Export commands lack privacy and artifact contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "acceptance_oracles", "accessibility", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.focus_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3693,
+          "line_start": 3693,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "explicit_no_persist_ui_disposition",
+      "impact": "Focus navigation may remain local UI state while retaining a correlated receipt and accessibility obligations.",
+      "item_id": "M15-0021",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "statement": "Focusing thread-context details is explicitly represented as a no-persist UI disposition, which does not require a domain event.",
+      "title": "Thread-context focus is appropriately ephemeral"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "propagation", "operations", "scale_performance", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "gui_misleading_states", "offline_network_loss", "scale_limits", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"ui_command_id\": \"cmd.chat.goal.start\",",
+          "line_end": 3733,
+          "line_start": 3733,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"description\": \"cmd.chat.goal.start has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+          "line_end": 3748,
+          "line_start": 3748,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "        \"Assert cmd.chat.goal.start records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+          "line_end": 3782,
+          "line_start": 3782,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "goal_lifecycle_start_has_no_domain_transition",
+      "impact": "A dispatch can be certified while no durable goal exists, duplicate goals can start on retry, GUI and execution consumers can diverge, and partial startup cannot be reconciled or recovered.",
+      "item_id": "M15-0022",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "statement": "Starting a goal is a lifecycle transition, but the wiring explicitly expects no persisted domain event and does not define goal identity, allowed source state, authoritative owner, consumers, idempotency, concurrency, resource limits, partial-start recovery, or a durable success oracle.",
+      "title": "Goal start is receipt-only despite creating lifecycle state"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1856, 2236],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-006", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-0001", "M15-0002", "M15-0003", "M15-0004"],
+      "reviewed": true,
+      "summary": "Reviewed promote, reopen, retry, share, revoke, and stop-agent browser wiring. The common dispatcher, projection, accessibility, receipt, and event evidence is strong; share authority and lifecycle, generic retry transitions, and the dual-event stop flow remain under-specified.",
+      "window_id": "WIN-8C88D9F4CA2B-0006"
+    },
+    {
+      "core_range": [2237, 2629],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-007", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-0005", "M15-0006", "M15-0007", "M15-0008", "M15-0009"],
+      "reviewed": true,
+      "summary": "Reviewed browser takeover and dock behavior, catalog install/remove/update, and chat file-reference and code-application commands. Layout-only no-persist behavior is explicit, but catalog and code mutations lack authoritative outcome and recovery contracts, and file references lack trust boundaries.",
+      "window_id": "WIN-8C88D9F4CA2B-0007"
+    },
+    {
+      "core_range": [2630, 3014],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-008", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-0010", "M15-0011", "M15-0012", "M15-0013"],
+      "reviewed": true,
+      "summary": "Reviewed archive, restore branching, thread-context close, compact-context, and context-lens subcompact controls. Certification evidence is layered and panel close is explicitly ephemeral, while durable chat changes and reversible context transformations are modeled only as receipts.",
+      "window_id": "WIN-8C88D9F4CA2B-0008"
+    },
+    {
+      "core_range": [3015, 3399],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-009", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-0014", "M15-0015", "M15-0016", "M15-0017"],
+      "reviewed": true,
+      "summary": "Reviewed context-lens mode, toggle, selection and off controls, copy actions, and chat deletion. Copy is appropriately no-persist and accessibility projections are explicit; context-lens transitions and destructive thread deletion lack canonical state semantics.",
+      "window_id": "WIN-8C88D9F4CA2B-0009"
+    },
+    {
+      "core_range": [3400, 3784],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-010", "STRUCTURAL:$.entries"],
+      "item_ids": ["M15-0018", "M15-0019", "M15-0020", "M15-0021", "M15-0022"],
+      "reviewed": true,
+      "summary": "Reviewed message deletion and editing, effort, export, investigation-bundle export, thread-context focus, and goal start. Focus is reasonably ephemeral, but history mutations, exports, effort semantics, and goal lifecycle creation lack authoritative outcomes and adversarial safeguards.",
+      "window_id": "WIN-8C88D9F4CA2B-0010"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0002",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": ["WIN-8C88D9F4CA2B-0006", "WIN-8C88D9F4CA2B-0007", "WIN-8C88D9F4CA2B-0008", "WIN-8C88D9F4CA2B-0009", "WIN-8C88D9F4CA2B-0010"],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does Plans/UI_Command_Catalog.md define authoritative state transitions, payloads, and outcomes for the receipt-only catalog, chat-history, context-lens, export, and goal commands referenced here?",
+      "Which canonical owner defines browser share authorization, context scope, revocation ordering, and privacy lifecycle beyond the event names in this matrix?",
+      "Which consumers reconcile multi-event browser operations and durable chat mutations after partial failure, retry, restart, or offline execution?"
+    ],
+    "feature_family_keys": ["browser-session-control", "browser-context-sharing", "extension-catalog-mutation", "chat-history-and-context", "context-lens", "chat-export", "goal-lifecycle", "ui-command-certification"],
+    "research_queries": [
+      "event-sourced command receipts versus durable domain outcomes for destructive UI operations",
+      "secure browser-context sharing revocation race and least-privilege design",
+      "atomic extension install update rollback signature verification and recovery",
+      "conversation edit delete branching lineage idempotency and audit retention",
+      "privacy-preserving support bundle export redaction atomic write and cancellation"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000123_attempt_0015_terminal"
+}

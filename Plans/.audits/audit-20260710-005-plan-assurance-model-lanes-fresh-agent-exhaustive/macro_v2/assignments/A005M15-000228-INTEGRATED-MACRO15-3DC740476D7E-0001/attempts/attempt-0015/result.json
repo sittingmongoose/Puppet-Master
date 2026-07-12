@@ -1,0 +1,860 @@
+{
+  "assignment_id": "A005M15-000228-INTEGRATED-MACRO15-3DC740476D7E-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "ownership",
+        "consumers",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"schema_id\": \"pm.web_intent_routing_fixtures.v1\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "  \"dispatcher\": \"PM WebOperation/BrowserAction dispatcher\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Gives the fixture an explicit versioned identity and names the dispatcher that consumes its routing contract.",
+      "item_id": "M15-001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_intent_routing_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:dispatcher",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.dispatcher",
+        "STRUCTURAL:$.schema_id"
+      ],
+      "statement": "The document is a versioned routing-fixture contract owned by the PM WebOperation/BrowserAction dispatcher.",
+      "title": "Versioned dispatcher fixture identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"browser_action_owner\": \"Site Reader / BrowserAction\",",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    \"not_a_separate_slash_family\": true,",
+          "line_end": 10,
+          "line_start": 10,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    \"not_a_separate_browser_tool_id\": true",
+          "line_end": 11,
+          "line_start": 11,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents browser observation from drifting into a seventh slash-command family or an independent tool namespace.",
+      "item_id": "M15-002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:browser_action_dispatch_invariant",
+        "STRUCTURAL:$.browser_action_dispatch_invariant"
+      ],
+      "statement": "BrowserAction is owned by Site Reader / BrowserAction and is nested under cmd.chat.web.fetch, read, and webfetch rather than becoming a separate slash family or tool ID.",
+      "title": "BrowserAction nesting invariant"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"nl_latest_docs\", \"input_text\": \"look up the latest docs\", \"invocation_source\": \"nl_user\", \"command_id\": \"cmd.chat.web.search\", \"web_operation\": \"search\", \"tool_id\": \"websearch\", \"followup_tool_id\": \"webfetch\", \"agent_reason_required\": false},",
+          "line_end": 16,
+          "line_start": 16,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"subagent_dynamic_page\", \"input_text\": \"open the site and check the UI state\", \"invocation_source\": \"subagent\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"observe\"}, \"agent_reason_required\": true, \"agent_reason\": \"Subagent needs dynamic visual state rather than plain fetch.\"}",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides concrete positive fixtures for slash, palette, natural-language, agent, goal, PRD, Planning Wizard, and subagent routing paths.",
+      "item_id": "M15-003",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "STRUCTURAL:$.valid_routes"
+      ],
+      "statement": "Valid routes bind user or agent intent to a command ID, normalized web operation, tool ID, and conditional follow-up or browser action.",
+      "title": "Positive routing fixtures"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "consumers",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"required_invocation_sources\": [\"slash\", \"palette\", \"nl_user\", \"agent_initiated\"],",
+          "line_end": 34,
+          "line_start": 34,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "        {\"case_id\": \"eq_search_agent\", \"input_text\": \"find current provider docs\", \"invocation_source\": \"agent_initiated\", \"command_id\": \"cmd.chat.web.search\", \"web_operation\": \"search\", \"tool_id\": \"websearch\", \"agent_reason_required\": true, \"agent_reason\": \"Current external documentation may affect the answer.\"}",
+          "line_end": 39,
+          "line_start": 39,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes route normalization testable across four primary invocation surfaces while preserving one command, operation, and tool identity per group.",
+      "item_id": "M15-004",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:route_equivalence_groups",
+        "STRUCTURAL:$.route_equivalence_groups"
+      ],
+      "statement": "Equivalence groups require slash, palette, natural-language user, and agent-initiated routes to normalize to the same dispatch tuple for each supported operation.",
+      "title": "Cross-surface route equivalence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "authority",
+        "consumers",
+        "propagation",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"invocation_sources\": [\"agent_initiated\", \"goal\", \"prd\", \"planning_wizard\", \"subagent\"],",
+          "line_end": 141,
+          "line_start": 141,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"agent_reason_required\": true,",
+          "line_end": 142,
+          "line_start": 142,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"source_evidence_destination_for\": [\"prd\", \"planning_wizard\"],",
+          "line_end": 143,
+          "line_start": 143,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the supported agentic caller family, requires a stated reason, and identifies which planning callers must receive source evidence.",
+      "item_id": "M15-005",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "STRUCTURAL:$.agentic_dispatch_matrix"
+      ],
+      "statement": "Every agentic operation is declared for agent, goal, PRD, Planning Wizard, and subagent callers; each requires an agent reason, and PRD or Planning Wizard calls require an evidence destination.",
+      "title": "Agentic dispatch authority matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "failures_recovery",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"url_read_must_not_search\", \"input_text\": \"read https://example.com\", \"forbidden_command_id\": \"cmd.chat.web.search\", \"forbidden_tool_id\": \"websearch\"},",
+          "line_end": 218,
+          "line_start": 218,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"deep_research_not_seventh_slash_family\", \"input_text\": \"/web deep-research providers\", \"forbidden_command_id\": \"cmd.chat.web.deep_research\", \"expected_command_id\": \"cmd.chat.web.research\"},",
+          "line_end": 220,
+          "line_start": 220,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"agentic_route_missing_reason\", \"input_text\": \"research alternatives\", \"invocation_source\": \"agent_initiated\", \"command_id\": \"cmd.chat.web.research\", \"web_operation\": \"research\", \"tool_id\": \"webresearch\", \"agent_reason_required\": true, \"expected_error\": \"missing_agent_reason\"}",
+          "line_end": 221,
+          "line_start": 221,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Protects key negative boundaries: URL reads cannot silently become searches, bare /web cannot execute, deep research cannot become another command family, and reasonless agent dispatch must fail.",
+      "item_id": "M15-006",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:invalid_routes",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_intent_routing_fixtures.json",
+        "STRUCTURAL:$.invalid_routes"
+      ],
+      "statement": "Invalid-route fixtures define forbidden dispatches and one explicit missing-reason error oracle.",
+      "title": "Negative routing oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "consumers",
+        "acceptance_oracles",
+        "missing_callers_consumers",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"invocation_sources\": [\"agent_initiated\", \"goal\", \"prd\", \"planning_wizard\", \"subagent\"],",
+          "line_end": 141,
+          "line_start": 141,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"prd_current_support_check\", \"input_text\": \"check current platform support for this PRD option\", \"invocation_source\": \"prd\", \"command_id\": \"cmd.chat.web.research\", \"web_operation\": \"research\", \"tool_id\": \"webresearch\", \"agent_reason_required\": true, \"agent_reason\": \"PRD option depends on current platform support.\", \"source_evidence_destination\": \"ledger_or_plan_source_evidence\"},",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "matrix_cells_not_fixture_backed",
+      "impact": "An implementation can claim matrix compliance while failing uninstantiated operation-by-caller combinations, especially goal, PRD, Planning Wizard, and subagent paths.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "STRUCTURAL:$.agentic_dispatch_matrix",
+        "STRUCTURAL:$.valid_routes"
+      ],
+      "statement": "The matrix declares eight operations across five agentic caller types, but valid_routes supplies only a small sample rather than a concrete fixture or explicit exclusion for every declared cell.",
+      "title": "Agentic matrix lacks exhaustive cell fixtures"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"agentic_route_missing_reason\", \"input_text\": \"research alternatives\", \"invocation_source\": \"agent_initiated\", \"command_id\": \"cmd.chat.web.research\", \"web_operation\": \"research\", \"tool_id\": \"webresearch\", \"agent_reason_required\": true, \"expected_error\": \"missing_agent_reason\"}",
+          "line_end": 221,
+          "line_start": 221,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "agent_reason_validation_underspecified",
+      "impact": "Any nonempty or fabricated string could satisfy the fixture even if the reason is untrusted, unrelated to the operation, or unavailable to audit and support tooling.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:invalid_routes",
+        "STRUCTURAL:$.invalid_routes"
+      ],
+      "statement": "The fixture rejects a missing agent reason but does not define validation, provenance, maximum size, persistence, redaction, or whether the reason is user-visible.",
+      "title": "Agent reason contract stops at presence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"slash_web_fetch\", \"input_text\": \"/web fetch https://example.com/docs\", \"invocation_source\": \"slash\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"agent_reason_required\": false},",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"url_read_must_not_search\", \"input_text\": \"read https://example.com\", \"forbidden_command_id\": \"cmd.chat.web.search\", \"forbidden_tool_id\": \"websearch\"},",
+          "line_end": 218,
+          "line_start": 218,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "url_trust_boundary_missing",
+      "impact": "A syntactically valid route could access loopback, private-network, local-file, credential-bearing, redirecting, or otherwise sensitive targets without a fixture that rejects or contains them.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:invalid_routes"
+      ],
+      "statement": "URL-bearing fixtures establish read-versus-search routing but define no URL validation, redirect, SSRF, authentication, cookie, secret, or private-network boundary.",
+      "title": "Untrusted URL policy is absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"web_operation\": \"crawl\",",
+          "line_end": 188,
+          "line_start": 188,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "    {\"case_id\": \"agentic_route_missing_reason\", \"input_text\": \"research alternatives\", \"invocation_source\": \"agent_initiated\", \"command_id\": \"cmd.chat.web.research\", \"web_operation\": \"research\", \"tool_id\": \"webresearch\", \"agent_reason_required\": true, \"expected_error\": \"missing_agent_reason\"}",
+          "line_end": 221,
+          "line_start": 221,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "runtime_failure_model_missing",
+      "impact": "Callers cannot distinguish retryable outage, partial evidence, cancellation, permanent rejection, or successful-but-incomplete traversal, and cannot know how to recover safely.",
+      "item_id": "M15-010",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:invalid_routes"
+      ],
+      "statement": "The only explicit error is missing_agent_reason; network loss, timeout, provider failure, partial crawl or research results, cancellation, retry, resume, and rollback behavior are unspecified.",
+      "title": "Network and partial-failure recovery is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "scale_limits",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"web_operation\": \"deep_research\",",
+          "line_end": 178,
+          "line_start": 178,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"web_operation\": \"crawl\",",
+          "line_end": 188,
+          "line_start": 188,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "operational_limits_missing",
+      "impact": "Concurrent or large research and crawl requests can race, duplicate work, exceed budgets, or become untraceable without violating any listed fixture.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "STRUCTURAL:$.agentic_dispatch_matrix"
+      ],
+      "statement": "No fixture specifies concurrency, idempotency, deduplication, rate or depth limits, time and cost budgets, correlation IDs, progress, metrics, or support diagnostics.",
+      "title": "Operational and scale boundaries are missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "privacy_data_lifecycle",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"planning_wizard_source_intake\", \"input_text\": \"verify current platform support before asking the next planning question\", \"invocation_source\": \"planning_wizard\", \"command_id\": \"cmd.chat.web.research\", \"web_operation\": \"research\", \"tool_id\": \"webresearch\", \"agent_reason_required\": true, \"agent_reason\": \"Planning Wizard question should be shaped by current platform support.\", \"source_evidence_destination\": \"ledger_or_plan_source_evidence\"},",
+          "line_end": 25,
+          "line_start": 25,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"source_evidence_destination_for\": [\"prd\", \"planning_wizard\"],",
+          "line_end": 143,
+          "line_start": 143,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "evidence_destination_contract_missing",
+      "impact": "Research evidence may be silently lost, duplicated, written to the wrong authority surface, retain sensitive material indefinitely, or appear canonical before validation.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix"
+      ],
+      "statement": "The token ledger_or_plan_source_evidence identifies a destination class but does not define routing choice, writer authority, schema, provenance, deduplication, failure handling, retention, redaction, or canonicalization boundaries.",
+      "title": "Planning evidence propagation is underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility",
+        "localization"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        {\"case_id\": \"eq_browser_palette\", \"input_text\": \"Command Palette > Web: Open/Watch Page\", \"invocation_source\": \"palette\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"observe\"}, \"agent_reason_required\": false},",
+          "line_end": 129,
+          "line_start": 129,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "        {\"case_id\": \"eq_browser_nl\", \"input_text\": \"open this page and inspect the visible state\", \"invocation_source\": \"nl_user\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"screenshot\"}, \"agent_reason_required\": false},",
+          "line_end": 130,
+          "line_start": 130,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "browser_gui_state_contract_missing",
+      "impact": "A UI can present stale screenshots as live observation, hide loading or failure states, or expose controls and results without accessible names or localized status semantics.",
+      "item_id": "M15-013",
+      "item_type": "gui_truth",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:route_equivalence_groups",
+        "STRUCTURAL:$.route_equivalence_groups"
+      ],
+      "statement": "Palette and natural-language browser routes name observe and screenshot actions, but no visible loading, permission, live-versus-captured, stale, empty, error, accessibility, or localization contract is provided.",
+      "title": "Browser-action GUI truth is incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"nl_screenshot_summary\", \"input_text\": \"summarize this page with screenshots\", \"invocation_source\": \"nl_user\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"screenshot\"}, \"agent_reason_required\": false},",
+          "line_end": 18,
+          "line_start": 18,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "        {\"case_id\": \"eq_browser_agent\", \"input_text\": \"inspect the dynamic page state before answering\", \"invocation_source\": \"agent_initiated\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"observe\"}, \"agent_reason_required\": true, \"agent_reason\": \"Dynamic visual evidence is needed rather than plain fetch.\"}",
+          "line_end": 131,
+          "line_start": 131,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "browser_action_schema_missing",
+      "impact": "Implementations can disagree on allowed action types, required fields, invalid combinations, capture freshness, navigation effects, and output semantics while still matching these examples.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:route_equivalence_groups"
+      ],
+      "statement": "browser_action is example-shaped only: the fixture gives observe and screenshot values but no closed enum, payload schema, preconditions, postconditions, invalid cases, or extension rule.",
+      "title": "BrowserAction payload has no normative schema"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "consumers",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    {\"case_id\": \"slash_web_fetch\", \"input_text\": \"/web fetch https://example.com/docs\", \"invocation_source\": \"slash\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"agent_reason_required\": false},",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "dispatch_output_contract_missing",
+      "impact": "Callers and tests can verify selection but not whether returned data, evidence metadata, warnings, errors, or browser captures satisfy a stable contract.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "STRUCTURAL:$.valid_routes"
+      ],
+      "statement": "Positive fixtures specify dispatch inputs and selected IDs but no normalized dispatch-result schema or downstream tool-result envelope.",
+      "title": "Dispatch result shape is untestable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"agentic_dispatch_matrix\": [",
+          "line_end": 135,
+          "line_start": 135,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"browser_action_required\": true",
+          "line_end": 214,
+          "line_start": 214,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "dispatch_lifecycle_states_missing",
+      "impact": "Races between cancellation, retries, follow-up fetches, browser observation, and caller teardown cannot be resolved from the fixture, and invalid transitions cannot be rejected deterministically.",
+      "item_id": "M15-016",
+      "item_type": "state_transition",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "STRUCTURAL:$.agentic_dispatch_matrix"
+      ],
+      "statement": "The matrix is stateless: it does not define queued, authorized, dispatched, running, waiting, partially complete, completed, failed, cancelled, retrying, or resumed transitions.",
+      "title": "No execution lifecycle state machine"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"schema_id\": \"pm.web_intent_routing_fixtures.v1\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "version_migration_contract_missing",
+      "impact": "Consumers cannot know whether unknown fields or operations are rejected, ignored, or preserved, nor how recorded v1 fixtures migrate when IDs or operation semantics change.",
+      "item_id": "M15-017",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:schema_id",
+        "STRUCTURAL:$.schema_id"
+      ],
+      "statement": "The v1 schema identity has no compatibility, migration, unknown-field, deprecation, or version-negotiation rule; this is not safe builder discretion because dispatcher and fixture consumers must agree.",
+      "title": "Schema evolution rules are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "destructive_actions",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        {\"case_id\": \"eq_browser_slash\", \"input_text\": \"/web fetch --observe https://example.com/app\", \"invocation_source\": \"slash\", \"command_id\": \"cmd.chat.web.fetch\", \"web_operation\": \"read\", \"tool_id\": \"webfetch\", \"browser_action\": {\"action_type\": \"observe\"}, \"agent_reason_required\": false},",
+          "line_end": 128,
+          "line_start": 128,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        },
+        {
+          "exact_quote": "      \"browser_action_required\": true",
+          "line_end": 214,
+          "line_start": 214,
+          "path": "Plans/web_intent_routing_fixtures.json",
+          "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+        }
+      ],
+      "gap_kind": "browser_authority_and_side_effect_boundary_missing",
+      "impact": "A future or provider-specific interpretation of observe could navigate, execute page scripts, submit state, accept prompts, or expose authenticated content without violating any fixture-level authority check.",
+      "item_id": "M15-018",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:browser_action_dispatch_invariant",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:route_equivalence_groups",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "STRUCTURAL:$.browser_action_dispatch_invariant",
+        "STRUCTURAL:$.route_equivalence_groups",
+        "STRUCTURAL:$.agentic_dispatch_matrix"
+      ],
+      "statement": "The fixture names a browser-action owner but does not bind action authority to user consent, session identity, site permissions, navigation limits, authenticated data boundaries, or a non-destructive side-effect policy.",
+      "title": "Browser authority boundary is open-ended"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        223
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_intent_routing_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:dispatcher",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:browser_action_dispatch_invariant",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:valid_routes",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:route_equivalence_groups",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:agentic_dispatch_matrix",
+        "SEMANTIC:JSON_FIELD:Plans/web_intent_routing_fixtures.json:invalid_routes",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_intent_routing_fixtures.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.agentic_dispatch_matrix",
+        "STRUCTURAL:$.browser_action_dispatch_invariant",
+        "STRUCTURAL:$.dispatcher",
+        "STRUCTURAL:$.invalid_routes",
+        "STRUCTURAL:$.route_equivalence_groups",
+        "STRUCTURAL:$.schema_id",
+        "STRUCTURAL:$.valid_routes"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005",
+        "M15-006",
+        "M15-007",
+        "M15-008",
+        "M15-009",
+        "M15-010",
+        "M15-011",
+        "M15-012",
+        "M15-013",
+        "M15-014",
+        "M15-015",
+        "M15-016",
+        "M15-017",
+        "M15-018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 223 lines and every assigned semantic and structural source unit. The fixture strongly binds route identity, equivalence, agent reasons, browser-action nesting, and several invalid routes, while leaving matrix completeness, URL trust, lifecycle, recovery, scale, evidence propagation, GUI truth, schema evolution, and browser authority materially underspecified.",
+      "window_id": "WIN-3DC740476D7E-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-3DC740476D7E-0001",
+    "document_path": "Plans/web_intent_routing_fixtures.json",
+    "micro_window_ids": [
+      "WIN-3DC740476D7E-0001"
+    ],
+    "source_sha256": "a7243f1cdfb9ce28af67c8fb45f07ac43c4efc51c58a3b4589d8e39cf4db3ce5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines the normalized dispatcher result and tool-result envelope for these command, operation, and tool IDs?",
+      "Where are URL trust, browser-session authority, and authenticated-data boundaries specified for webfetch and BrowserAction?",
+      "Which owner defines ledger_or_plan_source_evidence routing, provenance, retention, redaction, and canonicalization?",
+      "Where is the execution lifecycle for retry, cancellation, partial results, and resume defined?"
+    ],
+    "feature_family_keys": [
+      "web_intent_routing",
+      "browser_action_dispatch",
+      "agentic_web_authority",
+      "planning_source_evidence",
+      "web_operation_recovery"
+    ],
+    "research_queries": [
+      "secure URL fetching SSRF redirect and private-network protection patterns",
+      "browser automation consent authenticated-session and side-effect isolation patterns",
+      "crawl and deep-research cancellation retry partial-result and budget contracts",
+      "accessible live-versus-screenshot browser evidence status patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000228_attempt_0015_terminal"
+}

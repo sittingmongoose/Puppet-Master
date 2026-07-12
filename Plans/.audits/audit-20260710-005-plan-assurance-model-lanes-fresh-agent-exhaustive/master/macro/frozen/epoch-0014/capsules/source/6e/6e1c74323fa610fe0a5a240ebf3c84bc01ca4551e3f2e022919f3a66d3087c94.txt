@@ -1,0 +1,1178 @@
+L00007012	negative_constraints:
+L00007013	- Do not let Commands_System re-own UICommand payload/result semantics.
+L00007014	- Do not allow Approve And Build to return a success state with no PlanCompileRun identity.
+L00007015	owner_hints:
+L00007016	- Plans/UI_Command_Catalog.md
+L00007017	- Plans/Commands_System.md
+L00007018	- Plans/Planning_Wizard.md
+L00007019	- Plans/Plan_To_Node_Compilation.md
+L00007020	```
+L00007021	
+L00007022	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00007023	
+L00007024	### UCC-099 - Discovery-Routed Search And Picker Command Compatibility
+L00007025	
+L00007026	```yaml
+L00007027	plan_unit_id: UCC-099
+L00007028	unit_type: constraint
+L00007029	status: accepted
+L00007030	owner_doc: Plans/UI_Command_Catalog.md
+L00007031	canonical_text: >-
+L00007032	  UI command catalog compatibility preserves existing GUI command names and shortcuts while path/context discovery routes through DiscoveryService. Quick Open, command palette fuzzy file search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker do not require a parallel cmd.discovery.* GUI command family. cmd.search.* remains Search/content command canon, and DiscoveryService is the path/context routing substrate for compatible surfaces. Discovery/frecency reset controls require storage/search settings owner reconciliation before adding new command IDs.
+L00007033	gui_related: true
+L00007034	gui_classification_reason: This is user-visible command naming, shortcut, and command routing compatibility.
+L00007035	depends_on: [F3-399, SP-217, T-160]
+L00007036	unblocks: [ATS-011]
+L00007037	acceptance_criteria:
+L00007038	  - Existing GUI command names and shortcuts remain stable.
+L00007039	  - No parallel cmd.discovery.* command family is introduced without a separate owner decision.
+L00007040	  - Search/content commands remain owned by the Search/content lane, not DiscoveryService.
+L00007041	validation_surfaces:
+L00007042	  - python3 scripts/pm-plan-index.py validate
+L00007043	  - Future UI command catalog compatibility review.
+L00007044	  - Future GUI route migration tests.
+L00007045	risk_class: ui_command_compatibility_drift
+L00007046	reasoning_tier: standard
+L00007047	context_scope: gui_command_catalog
+L00007048	implementation_surfaces: [Plans/UI_Command_Catalog.md, future command registry]
+L00007049	node_compile_hint: {mode: ui_command_compatibility, create_worknodes: false, create_nodeseeds: false}
+L00007050	source_lineage:
+L00007051	  - pldg-20260622-001-fff:atom-0056
+L00007052	  - pldg-20260622-001-fff:atom-0063
+L00007053	  - pldg-20260622-001-fff:atom-0066
+L00007054	  - pldg-20260622-001-fff:atom-0078
+L00007055	  - pldg-20260622-001-fff:atom-0080
+L00007056	  - pldg-20260622-001-fff:atom-0081
+L00007057	  - pldg-20260622-001-fff:atom-0087
+L00007058	  - pldg-20260622-001-fff:atom-0090
+L00007059	source_atom_ids: [atom-0056, atom-0063, atom-0066, atom-0078, atom-0080, atom-0081, atom-0087, atom-0090]
+L00007060	preserved_exact_tokens: ["Quick Open", "command palette fuzzy file search", "Search path narrowing", "Assistant Chat file mentions", "File Manager type-ahead", "cmd.search.*", "cmd.discovery.*", "DiscoveryService", "frecency reset"]
+L00007061	negative_constraints:
+L00007062	  - Do not rename existing GUI commands or add a parallel cmd.discovery.* GUI family in this compile.
+L00007063	  - Do not let command aliases create a second discovery canon.
+L00007064	owner_hints: [Plans/UI_Command_Catalog.md, Plans/FinalGUISpec.md, Plans/storage-plan.md]
+L00007065	```
+L00007066	
+L00007067	
+L00007068	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00007069	
+L00007070	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00007071	
+L00007072	### UCC-100 - History Command Payloads And Action Wrappers
+L00007073	
+L00007074	```yaml
+L00007075	plan_unit_id: UCC-100
+L00007076	unit_type: requirement
+L00007077	status: accepted
+L00007078	owner_doc: Plans/UI_Command_Catalog.md
+L00007079	canonical_text: History command wrappers cover focus Orchestrator History, switch Documents/Runs subviews, open
+L00007080	  row, open artifacts/evidence, compare versions, duplicate as draft, reopen wizard, send forward, selected-row
+L00007081	  export, multi-select bundle export, filtered-view export, resume/retry where valid, clone as new run, inspect
+L00007082	  ledger/raw records, include archived, and rebuild projection. Each command carries identity-native payload refs,
+L00007083	  current-project scope, currentness/authority state, stale-projection gating, and non-mutating immutable-history
+L00007084	  semantics.
+L00007085	gui_related: true
+L00007086	gui_classification_reason: Defines user-visible commands/actions for History rows and rebuild controls.
+L00007087	depends_on:
+L00007088	- OP-027
+L00007089	- CV-295
+L00007090	- PS-120
+L00007091	unblocks:
+L00007092	- ATS-012
+L00007093	acceptance_criteria:
+L00007094	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00007095	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00007096	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00007097	  are created by this compile.
+L00007098	validation_surfaces:
+L00007099	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00007100	- python3 scripts/pm-plan-index.py validate
+L00007101	- git diff --check
+L00007102	risk_class: history_command_drift
+L00007103	reasoning_tier: standard
+L00007104	context_scope: history_ui_commands
+L00007105	implementation_surfaces:
+L00007106	- Plans/UI_Command_Catalog.md
+L00007107	- future History command catalog
+L00007108	node_compile_hint:
+L00007109	  mode: history_command_catalog
+L00007110	  create_worknodes: false
+L00007111	  create_nodeseeds: false
+L00007112	source_lineage:
+L00007113	- pldg-20260626-001-feature-name:atom-0017
+L00007114	- pldg-20260626-001-feature-name:atom-0018
+L00007115	- pldg-20260626-001-feature-name:atom-0026
+L00007116	- pldg-20260626-001-feature-name:atom-0027
+L00007117	- pldg-20260626-001-feature-name:atom-0034
+L00007118	- pldg-20260626-001-feature-name:atom-0038
+L00007119	- pldg-20260626-001-feature-name:atom-0041
+L00007120	- pldg-20260626-001-feature-name:atom-0043
+L00007121	- pldg-20260626-001-feature-name:atom-0057
+L00007122	- pldg-20260626-001-feature-name:atom-0058
+L00007123	- pldg-20260626-001-feature-name:atom-0059
+L00007124	- chat:history-defaults-answers
+L00007125	- chat:history-scope-retention-actions-answers
+L00007126	- chat:history-columns-toggle-deep-compare-answers
+L00007127	- chat:history-export-granularity-answer
+L00007128	- chat:history-export-compare-archive-answers
+L00007129	- chat:history-degraded-mode-answer
+L00007130	source_atom_ids:
+L00007131	- atom-0017
+L00007132	- atom-0018
+L00007133	- atom-0026
+L00007134	- atom-0027
+L00007135	- atom-0034
+L00007136	- atom-0038
+L00007137	- atom-0041
+L00007138	- atom-0043
+L00007139	- atom-0057
+L00007140	- atom-0058
+L00007141	- atom-0059
+L00007142	decision_refs:
+L00007143	- dec-0003
+L00007144	- dec-0004
+L00007145	- dec-0005
+L00007146	- dec-0006
+L00007147	- dec-0007
+L00007148	- dec-0010
+L00007149	preserved_exact_tokens:
+L00007150	- All of that.
+L00007151	- status/date/project search
+L00007152	- opening artifacts/evidence
+L00007153	- resuming/retrying
+L00007154	- cloning as a new run
+L00007155	- exporting
+L00007156	- viewing what happened
+L00007157	- historical orchestrator runs
+L00007158	- document-specific actions
+L00007159	- Duplicate as draft
+L00007160	- Reopen in Wizard
+L00007161	- Compare versions
+L00007162	- Export
+L00007163	- Send forward when currentness allows
+L00007164	- 'Yes'
+L00007165	- currentness allows
+L00007166	- deeper is mvp
+L00007167	- rendered document diff
+L00007168	- package/source-lineage metadata
+L00007169	- ledger-atom diff
+L00007170	- all of thodse
+L00007171	- selected-row export
+L00007172	- multi-select bundle export
+L00007173	- whole filtered-view export
+L00007174	- manifest
+L00007175	- yes, and yes.
+L00007176	- zip+manifest
+L00007177	- JSON
+L00007178	- rendered Markdown/HTML/PDF
+L00007179	- 'yes'
+L00007180	- side-by-side rendered diff
+L00007181	- metadata/source-lineage pane
+L00007182	- atom/manifest change table
+L00007183	- sounds good
+L00007184	- Rebuild
+L00007185	- immutable source records
+L00007186	- block compare/export/reopen/send-forward until rebuild succeeds
+L00007187	- until rebuild succeeds
+L00007188	- currentness
+L00007189	- authority
+L00007190	negative_constraints:
+L00007191	- Do not reduce historical runs to read-only summaries when the user needs action routes.
+L00007192	- Do not omit evidence/artifact/Ledger pivots from historical run rows.
+L00007193	- Do not mutate immutable historical run/document identity in place.
+L00007194	- Do not resume or retry a stale historical run without currentness and authority checks.
+L00007195	- Do not treat clone-as-new-run as the same identity as the original historical run.
+L00007196	- Do not expose run-only actions such as retry or clone-as-new-run directly on document rows unless they route through
+L00007197	  a document-appropriate currentness/authority action.
+L00007198	- Do not send a historical document forward without currentness checks.
+L00007199	- Do not launch Plan Compile, Orchestrator execution, or mutable wizard state directly from stale historical documents
+L00007200	  without currentness checks.
+L00007201	- Do not mutate immutable approved packs or historical document records in place.
+L00007202	- Do not ship compare versions as rendered-text-only in MVP.
+L00007203	- Do not hide source-lineage or package identity changes when comparing historical wizard documents.
+L00007204	- Do not limit MVP export to selected-row-only.
+L00007205	- Do not make whole filtered-view export omit the active filter context.
+L00007206	- Do not collapse export into only one opaque archive format.
+L00007207	- Do not omit the manifest from archive/zip exports.
+L00007208	- Do not make deep comparison a single raw JSON or text-only diff.
+L00007209	- Do not hide metadata/source-lineage or atom/manifest changes behind unrelated developer-only tooling.
+L00007210	- Do not make rebuild available only as hidden developer tooling.
+L00007211	- Do not rebuild by mutating immutable source records.
+L00007212	- Do not allow compare/export/reopen/send-forward from stale projection state.
+L00007213	- Do not bypass currentness/authority checks just because rebuild is requested.
+L00007214	- Do not treat successful rebuild as automatic permission to bypass currentness or authority checks.
+L00007215	- Do not mutate immutable historical records after rebuild.
+L00007216	owner_hints:
+L00007217	- Plans/Orchestrator_Page.md
+L00007218	- Plans/Runtime_Artifacts_Panel.md
+L00007219	- Plans/UI_Command_Catalog.md
+L00007220	- Plans/storage-plan.md
+L00007221	- Plans/Contracts_V0.md
+L00007222	- Plans/Permissions_System.md
+L00007223	- Plans/Planning_Wizard.md
+L00007224	- Plans/PRD_Builder.md
+L00007225	- Plans/FinalGUISpec.md
+L00007226	- Plans/Project_Output_Artifacts.md
+L00007227	```
+L00007228	
+L00007229	### UCC-101 - Vision Bridge GUI Commands
+L00007230	
+L00007231	```yaml
+L00007232	plan_unit_id: UCC-101
+L00007233	unit_type: requirement
+L00007234	status: accepted
+L00007235	owner_doc: Plans/UI_Command_Catalog.md
+L00007236	canonical_text: Vision bridge command wrappers cover explicit image source selection, recent OS screenshot picker
+L00007237	  choice, inspect derived description, rerun with a question, copy description, attach result to current turn/run,
+L00007238	  and manage remembered always-accept permission. Commands must show the selected source, avoid ambiguous screenshot
+L00007239	  auto-selection, preserve FileSafe and permission scope, and avoid presenting bridge-derived answers as if the
+L00007240	  non-vision model directly saw the image.
+L00007241	gui_related: true
+L00007242	gui_classification_reason: Defines inspect/rerun/copy/attach/manage-permission controls for user-visible image bridge
+L00007243	  artifacts.
+L00007244	depends_on:
+L00007245	- T-165
+L00007246	- RAP-035
+L00007247	- PS-121
+L00007248	unblocks:
+L00007249	- ATS-013
+L00007250	acceptance_criteria:
+L00007251	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00007252	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00007253	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00007254	  are created by this compile.
+L00007255	validation_surfaces:
+L00007256	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00007257	- python3 scripts/pm-plan-index.py validate
+L00007258	- git diff --check
+L00007259	risk_class: vision_command_drift
+L00007260	reasoning_tier: standard
+L00007261	context_scope: vision_bridge_ui_commands
+L00007262	implementation_surfaces:
+L00007263	- Plans/UI_Command_Catalog.md
+L00007264	- future Assistant Chat vision bridge controls
+L00007265	node_compile_hint:
+L00007266	  mode: vision_bridge_command_catalog
+L00007267	  create_worknodes: false
+L00007268	  create_nodeseeds: false
+L00007269	source_lineage:
+L00007270	- pldg-20260626-001-feature-name:atom-0078
+L00007271	- pldg-20260626-001-feature-name:atom-0082
+L00007272	- pldg-20260626-001-feature-name:atom-0083
+L00007273	- chat:opencode-see-image-request
+L00007274	- chat:vision-bridge-defaults-answer
+L00007275	- Plans/Runtime_Artifacts_Panel.md
+L00007276	- chat:vision-pressure-test-request
+L00007277	- chat:vision-pressure-test-defaults-answer
+L00007278	- Plans/FileSafe.md
+L00007279	- Plans/Permissions_System.md
+L00007280	source_atom_ids:
+L00007281	- atom-0078
+L00007282	- atom-0082
+L00007283	- atom-0083
+L00007284	decision_refs:
+L00007285	- dec-0014
+L00007286	- dec-0015
+L00007287	- dec-0016
+L00007288	- dec-0017
+L00007289	preserved_exact_tokens:
+L00007290	- GUI
+L00007291	- provider/model used
+L00007292	- derived description
+L00007293	- source image/artifact link
+L00007294	- freshness/cache state
+L00007295	- inspect
+L00007296	- rerun with a question
+L00007297	- copy description
+L00007298	- attach result
+L00007299	- always accept
+L00007300	- stops asking
+L00007301	- current-turn attachment
+L00007302	- selected artifact
+L00007303	- project file allowed by FileSafe
+L00007304	- clipboard image
+L00007305	- recent OS screenshot picker
+L00007306	- ambiguous
+L00007307	- hidden Desktop/Downloads scraping
+L00007308	- 'yes'
+L00007309	- project_id
+L00007310	- user/account identity
+L00007311	- source class
+L00007312	- destination provider/account
+L00007313	- provider-family policy
+L00007314	- tool id
+L00007315	- sensitivity/redaction class
+L00007316	- revocable/resettable
+L00007317	negative_constraints:
+L00007318	- Do not hide bridge outputs inside opaque provider logs only.
+L00007319	- Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
+L00007320	- Do not omit failure/denial states from the user-visible surface.
+L00007321	- Do not omit a user-visible way to inspect or reset remembered always-accept behavior.
+L00007322	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+L00007323	- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+L00007324	- Do not bypass FileSafe or artifact permissions for project-file image sources.
+L00007325	- Do not make always-accept global across all projects, providers, users, source types, or sensitivity classes by
+L00007326	  accident.
+L00007327	- Do not create a hidden permission rule that cannot be inspected or revoked.
+L00007328	- Do not keep prompting after an applicable remembered permission exists.
+L00007329	owner_hints:
+L00007330	- Plans/FinalGUISpec.md
+L00007331	- Plans/assistant-chat-design.md
+L00007332	- Plans/Runtime_Artifacts_Panel.md
+L00007333	- Plans/UI_Command_Catalog.md
+L00007334	- Plans/Orchestrator_Page.md
+L00007335	- Plans/Permissions_System.md
+L00007336	- Plans/FileSafe.md
+L00007337	- Plans/storage-plan.md
+L00007338	- Plans/Tools.md
+L00007339	```
+L00007340	
+L00007341	### UCC-102 - Teach Guided GUI Command Taxonomy
+L00007342	
+L00007343	```yaml
+L00007344	plan_unit_id: UCC-102
+L00007345	unit_type: requirement
+L00007346	status: accepted
+L00007347	owner_doc: Plans/UI_Command_Catalog.md
+L00007348	canonical_text: Teach guided GUI commands include help-icon launch, /teach launch, natural-language summon handoff,
+L00007349	  route open, tab or panel focus, spotlight/highlight, scroll-to-field, safe read-only inspect, explain current
+L00007350	  UI, and optional Do it execution only for explicitly safe actions. Mutations require confirmation, permission
+L00007351	  gates, and activity transparency. Degraded states include missing target, stale navigation, permission denied,
+L00007352	  unavailable command, model/capability fallback, missing help entry, and user stop, each with a visible next action.
+L00007353	gui_related: true
+L00007354	gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
+L00007355	  and degraded action handling.
+L00007356	depends_on:
+L00007357	- PS-122
+L00007358	unblocks:
+L00007359	- ATS-014
+L00007360	acceptance_criteria:
+L00007361	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00007362	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00007363	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00007364	  are created by this compile.
+L00007365	validation_surfaces:
+L00007366	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00007367	- python3 scripts/pm-plan-index.py validate
+L00007368	- git diff --check
+L00007369	risk_class: teach_guided_command_drift
+L00007370	reasoning_tier: high
+L00007371	context_scope: teach_guided_gui_commands
+L00007372	implementation_surfaces:
+L00007373	- Plans/UI_Command_Catalog.md
+L00007374	- future command palette and guided overlay commands
+L00007375	node_compile_hint:
+L00007376	  mode: teach_guided_command_catalog
+L00007377	  create_worknodes: false
+L00007378	  create_nodeseeds: false
+L00007379	source_lineage:
+L00007380	- pldg-20260626-001-feature-name:atom-0097
+L00007381	- pldg-20260626-001-feature-name:atom-0098
+L00007382	- pldg-20260626-001-feature-name:atom-0139
+L00007383	- pldg-20260626-001-feature-name:atom-0140
+L00007384	- pldg-20260626-001-feature-name:atom-0142
+L00007385	- pldg-20260626-001-feature-name:atom-0143
+L00007386	- pldg-20260626-001-feature-name:atom-0144
+L00007387	- chat:teacher-feature-initial-framing
+L00007388	- Plans/FinalGUISpec.md
+L00007389	- Plans/UI_Command_Catalog.md#2.6A-Chat-thread-lifecycle-commands
+L00007390	- Plans/UI_Command_Catalog.md
+L00007391	- Plans/assistant-chat-design.md#ACD-410---Internal-Target-Payload-Navigation
+L00007392	- chat:work-through-teach-gaps
+L00007393	- Plans/FinalGUISpec.md#F3-016-help-and-contextual-affordances
+L00007394	- chat:teach-bundle-accepted-pmconcept-reference
+L00007395	- Plans/assistant-chat-design.md#6-teach
+L00007396	- Plans/FinalGUISpec.md#19.6-natural-language-invocation-feedback
+L00007397	- Plans/Permissions_System.md#2.4A-requested-vs-effective-permissioned-capability-state
+L00007398	- Plans/Permissions_System.md#approval-ui
+L00007399	- Plans/Media_Generation_and_Capabilities.md#capability-usability-semantics
+L00007400	source_atom_ids:
+L00007401	- atom-0097
+L00007402	- atom-0098
+L00007403	- atom-0139
+L00007404	- atom-0140
+L00007405	- atom-0142
+L00007406	- atom-0143
+L00007407	- atom-0144
+L00007408	decision_refs:
+L00007409	- dec-0018
+L00007410	- dec-0019
+L00007411	- dec-0020
+L00007412	- dec-0024
+L00007413	preserved_exact_tokens:
+L00007414	- help icon
+L00007415	- clicked
+L00007416	- brings the user to the assistant chat window
+L00007417	- opens a new thread
+L00007418	- Teacher
+L00007419	- teacher can control the Gui to show the user how to do things
+L00007420	- Gui
+L00007421	- show the user how
+L00007422	- OpenSubject
+L00007423	- route_target
+L00007424	- highlight
+L00007425	- spotlight
+L00007426	- Teacher mode
+L00007427	- current surface
+L00007428	- Teacher badge
+L00007429	- context chip
+L00007430	- model chip
+L00007431	- source disclosure
+L00007432	- /teach
+L00007433	- teach me
+L00007434	- show me how
+L00007435	- help me understand this
+L00007436	- what does this mean
+L00007437	- explain this screen
+L00007438	- walk me through
+L00007439	- remember that
+L00007440	- for this repo always
+L00007441	- compact disambiguation
+L00007442	- control the Gui
+L00007443	- open route
+L00007444	- focus panel
+L00007445	- scroll to section
+L00007446	- highlight control/region
+L00007447	- expand non-mutating details
+L00007448	- preview selection
+L00007449	- changing a setting
+L00007450	- saving memory
+L00007451	- approving a permission
+L00007452	- undo/rollback
+L00007453	- spotlight/outline
+L00007454	- anchored caption
+L00007455	- step counter
+L00007456	- Back
+L00007457	- Next
+L00007458	- Stop
+L00007459	- Let me try
+L00007460	- Do it
+L00007461	- return-to-chat
+L00007462	- small screens
+L00007463	- safe spacing
+L00007464	- target surface unavailable
+L00007465	- route/control no longer exists
+L00007466	- context stale
+L00007467	- selection lost
+L00007468	- permission blocked
+L00007469	- capability unavailable
+L00007470	- help entry missing
+L00007471	- model fallback/clamp
+L00007472	- user stops
+L00007473	negative_constraints:
+L00007474	- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
+L00007475	- Do not launch Teacher without preserving current surface context needed for useful help.
+L00007476	- Do not replace Teacher launch with static help pages only.
+L00007477	- Do not let Teacher perform raw uncontrolled GUI mutation outside stable UI command/route contracts.
+L00007478	- Do not allow mutating/destructive GUI actions without confirmation and capability/permission gates.
+L00007479	- Do not use stale or private panel-local route fields when the route/open contract provides canonical targets.
+L00007480	- Do not silently mutate an existing non-Teacher thread into Teacher mode.
+L00007481	- Do not lose the originating surface/control context during launch.
+L00007482	- Do not require users to know `/teach` before discovering help.
+L00007483	- Do not turn every help request into durable memory capture.
+L00007484	- Do not persist natural-language instructions without explicit confirmation.
+L00007485	- Do not guess between one-off teaching and Teach capture when the user intent is ambiguous.
+L00007486	- Do not use raw cursor/click automation as the teaching UI.
+L00007487	- Do not let Teacher execute mutating actions through `Do it` without confirmation.
+L00007488	- Do not let guided GUI actions bypass Permissions_System requested/effective disclosure.
+L00007489	- Do not obscure the target control with the explanation caption.
+L00007490	- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
+L00007491	- Do not trap the user in the overlay without Stop/return-to-chat.
+L00007492	- Do not keep stepping through a stale or missing UI target.
+L00007493	- Do not hide permission/capability/model degraded states.
+L00007494	- Do not turn degraded guidance into generic apology text without a next action.
+L00007495	owner_hints:
+L00007496	- Plans/FinalGUISpec.md
+L00007497	- Plans/UI_Command_Catalog.md
+L00007498	- Plans/assistant-chat-design.md
+L00007499	- Plans/Personas.md
+L00007500	- Plans/storage-plan.md
+L00007501	- Plans/Contracts_V0.md
+L00007502	- Plans/Permissions_System.md
+L00007503	- Plans/Commands_System.md
+L00007504	- Plans/Automated_Testing_System.md
+L00007505	- Plans/Media_Generation_and_Capabilities.md
+L00007506	- Plans/Glossary.md
+L00007507	```
+L00007508	
+L00007509	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00007510	
+L00007511	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into UI Command Catalog owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00007512	
+L00007513	### UCC-103 - Notifications And Sounds Command Catalog
+L00007514	
+L00007515	```yaml
+L00007516	plan_unit_id: UCC-103
+L00007517	unit_type: requirement
+L00007518	status: accepted
+L00007519	owner_doc: Plans/UI_Command_Catalog.md
+L00007520	canonical_text: >-
+L00007521	  Notifications and Sounds commands include `cmd.settings.open_notifications`, destination create/update/delete/toggle/test,
+L00007522	  notification mapping update, runtime override set, and sound preview/upload/pack import/asset delete/asset restore/asset
+L00007523	  export/mapping set. Destination test commands require explicit user action, enabled destination authority, rate limiting,
+L00007524	  masking, and receipt recording. Destination create/update payloads carry provider-specific profile fields from CV-298
+L00007525	  for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram while storing only credential refs for secrets. Sound
+L00007526	  preview is local only and must not send external notifications.
+L00007527	gui_related: true
+L00007528	gui_classification_reason: Defines user-visible settings, destination, mapping, preview, upload, import/export, and test-send commands.
+L00007529	depends_on: [CV-298, PS-124]
+L00007530	unblocks: [WM-039, ATS-016]
+L00007531	acceptance_criteria:
+L00007532	  - Every Notifications & Sounds GUI control routes through a stable command ID.
+L00007533	  - Destination create/update commands accept provider-specific profile payloads without exposing raw URLs or tokens.
+L00007534	  - Test-send commands are separate from local preview and cannot mutate alert state.
+L00007535	  - Sound asset commands distinguish user-uploaded assets, imported packs, built-ins, hide/disable, restore, and export behavior.
+L00007536	validation_surfaces:
+L00007537	  - python3 scripts/pm-plan-index.py validate
+L00007538	  - Notifications and Sounds command catalog fixtures
+L00007539	risk_class: notification_command_catalog_gap
+L00007540	reasoning_tier: high
+L00007541	context_scope: notifications_sounds_commands
+L00007542	implementation_surfaces:
+L00007543	  - Plans/UI_Command_Catalog.md
+L00007544	  - future Settings > General > Notifications & Sounds commands
+L00007545	node_compile_hint:
+L00007546	  mode: notifications_sounds_command_catalog
+L00007547	  create_worknodes: false
+L00007548	  create_nodeseeds: false
+L00007549	source_lineage:
+L00007550	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-settings-gui-command-wiring
+L00007551	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+L00007552	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00007553	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+L00007554	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00007555	source_atom_ids: [atom-0064, atom-0068, atom-0069]
+L00007556	preserved_exact_tokens:
+L00007557	  - "cmd.settings.open_notifications"
+L00007558	  - "cmd.notifications.destination.create"
+L00007559	  - "cmd.notifications.destination.update"
+L00007560	  - "cmd.notifications.destination.delete"
+L00007561	  - "cmd.notifications.destination.toggle"
+L00007562	  - "cmd.notifications.destination.test"
+L00007563	  - "cmd.notifications.mapping.update"
+L00007564	  - "cmd.notifications.override.set"
+L00007565	  - "cmd.sound.preview"
+L00007566	  - "cmd.sound.upload"
+L00007567	  - "cmd.sound.pack.import"
+L00007568	  - "cmd.sound.asset.delete"
+L00007569	  - "cmd.sound.asset.restore"
+L00007570	  - "cmd.sound.asset.export"
+L00007571	  - "cmd.sound.mapping.set"
+L00007572	negative_constraints:
+L00007573	  - Do not route local sound preview through external notification delivery.
+L00007574	  - Do not make test-send implicit from saving settings.
+L00007575	  - Do not create visualizer bridge aliases as UI command IDs unless they dispatch outside the iframe host bridge.
+L00007576	owner_hints:
+L00007577	  - Plans/UI_Command_Catalog.md
+L00007578	  - Plans/Wiring_Matrix.md
+L00007579	  - Plans/FinalGUISpec.md
+L00007580	  - Plans/Contracts_V0.md
+L00007581	```
+L00007582	
+L00007583	### UCC-104 - DRY Method Settings Command
+L00007584	
+L00007585	```yaml
+L00007586	plan_unit_id: UCC-104
+L00007587	unit_type: requirement
+L00007588	status: accepted
+L00007589	owner_doc: Plans/UI_Command_Catalog.md
+L00007590	canonical_text: >-
+L00007591	  The DRY Method Settings command catalog defines `cmd.settings.agent_rules.dry_method_default_guard.set` with payload
+L00007592	  `{ scope: "application", value: "enabled" | "disabled_by_user" }`, emitted event
+L00007593	  `settings.agent_rules.dry_method_default_guard.updated`, visible surfaces Settings > General > Agent Rules and
+L00007594	  Assistant Chat DRY disclosure, and help copy explaining what the toggle changes. The command turns off only PM's
+L00007595	  default reuse-first DRY guard; it does not disable explicit project/user instructions, safety, secrets, source
+L00007596	  authority, governance, permissions, source-control hygiene, or receipt provenance.
+L00007597	gui_related: true
+L00007598	gui_classification_reason: Defines a user-visible Settings command, toggle payload, event, and help copy.
+L00007599	depends_on: [CV-299, SP-223]
+L00007600	unblocks: [WM-040, ATS-018]
+L00007601	acceptance_criteria:
+L00007602	  - The DRY Method toggle has one stable command id and payload enum.
+L00007603	  - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
+L00007604	  - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
+L00007605	validation_surfaces:
+L00007606	  - python3 scripts/pm-plan-index.py validate
+L00007607	  - DRY Method settings command fixture
+L00007608	risk_class: dry_method_settings_command_gap
+L00007609	reasoning_tier: high
+L00007610	context_scope: dry_method_settings_command
+L00007611	implementation_surfaces:
+L00007612	  - Plans/UI_Command_Catalog.md
+L00007613	  - future Settings > General > Agent Rules commands
+L00007614	node_compile_hint:
+L00007615	  mode: dry_method_settings_command_catalog
+L00007616	  create_worknodes: false
+L00007617	  create_nodeseeds: false
+L00007618	source_lineage:
+L00007619	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+L00007620	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
+L00007621	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+L00007622	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00007623	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+L00007624	source_atom_ids: [atom-0073, atom-0089]
+L00007625	decision_refs: [dec-0016, dec-0017]
+L00007626	preserved_exact_tokens:
+L00007627	  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+L00007628	  - "app.agent_rules.dry_method_default_guard"
+L00007629	  - "enabled"
+L00007630	  - "disabled_by_user"
+L00007631	  - "Settings > General > Agent Rules"
+L00007632	  - "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+L00007633	negative_constraints:
+L00007634	  - Do not make DRY opt-in by default.
+L00007635	  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+L00007636	  - Do not delete DRY receipt provenance when the user disables the default guard.
+L00007637	owner_hints:
+L00007638	  - Plans/UI_Command_Catalog.md
+L00007639	  - Plans/Wiring_Matrix.md
+L00007640	  - Plans/FinalGUISpec.md
+L00007641	  - Plans/storage-plan.md
+L00007642	```
+L00007643	
+L00007644	## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+L00007645	
+L00007646	This addendum compiles first-run onboarding command obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into UI_Command_Catalog ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00007647	
+L00007648	### UCC-106 - First-Run Onboarding Command Family
+L00007649	
+L00007650	```yaml
+L00007651	plan_unit_id: UCC-106
+L00007652	unit_type: requirement
+L00007653	status: accepted
+L00007654	owner_doc: Plans/UI_Command_Catalog.md
+L00007655	canonical_text: >-
+L00007656	  First-run onboarding GUI actions use a registered onboarding command family rather than page-local button payloads.
+L00007657	  Required commands include `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`,
+L00007658	  `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`,
+L00007659	  `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`,
+L00007660	  `cmd.onboarding.open_planning_wizard`, and `cmd.health.provider_setup.open`. Payloads carry source surface, current
+L00007661	  onboarding step, selected provider/account/profile refs when applicable, return route, idempotency key, and
+L00007662	  `onboarding_setup_state` refs where relevant. Results include step transition, setup flow launched, setup skipped,
+L00007663	  Free Models review opened or deferred, Planning Wizard opened, and Health provider-setup route opened. Teacher links
+L00007664	  from onboarding normalize to the existing Teacher/Teach command routes from UCC-102 and CS-053 rather than creating a
+L00007665	  second Teacher command language.
+L00007666	gui_related: true
+L00007667	gui_classification_reason: Defines user-visible button/route command IDs and command results for first-run onboarding and Health setup actions.
+L00007668	depends_on: [F3-411, MA-066, CV-305, ACD-431, UCC-102, CS-053]
+L00007669	unblocks: [WM-041, PWIZ-017, ATS-020]
+L00007670	acceptance_criteria:
+L00007671	  - Every accepted first-run onboarding action has a stable UI command route.
+L00007672	  - Skip routing writes or references limited `onboarding_setup_state` and opens Planning Wizard without marking Health Ready.
+L00007673	  - Provider setup commands preserve return context and cannot bypass Multi-Account/provider readiness semantics.
+L00007674	  - Free Models review/defer commands are reachable only after the paid-provider prompt has occurred.
+L00007675	  - Teacher actions reuse existing Teacher/Teach command contracts and preserve current-surface context.
+L00007676	validation_surfaces:
+L00007677	  - python3 scripts/pm-plan-index.py validate
+L00007678	  - future first-run onboarding UICommand fixture
+L00007679	  - future skip-to-Planning-Wizard command idempotency fixture
+L00007680	risk_class: onboarding_command_gap
+L00007681	reasoning_tier: high
+L00007682	context_scope: first_run_onboarding_commands
+L00007683	implementation_surfaces:
+L00007684	  - Plans/UI_Command_Catalog.md
+L00007685	  - future command registry and first-run onboarding controls
+L00007686	node_compile_hint:
+L00007687	  mode: first_run_onboarding_command_catalog
+L00007688	  create_worknodes: false
+L00007689	  create_nodeseeds: false
+L00007690	source_lineage:
+L00007691	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+L00007692	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00007693	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+L00007694	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00007695	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+L00007696	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00007697	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00007698	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00007699	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+L00007700	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+L00007701	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00007702	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00007703	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00007704	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+L00007705	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+L00007706	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+L00007707	source_atom_ids: [atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
+L00007708	decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
+L00007709	preserved_exact_tokens:
+L00007710	  - "Set up a paid provider"
+L00007711	  - "Skip for now"
+L00007712	  - "Use this provider"
+L00007713	  - "Sign in"
+L00007714	  - "Set up provider"
+L00007715	  - "Reconnect"
+L00007716	  - "Review Free Models"
+L00007717	  - "Maybe later"
+L00007718	  - "Continue to Planning Wizard"
+L00007719	  - "Open Planning Wizard"
+L00007720	  - "Review setup"
+L00007721	  - "onboarding_setup_state"
+L00007722	  - "Teacher"
+L00007723	  - "/teach"
+L00007724	negative_constraints:
+L00007725	  - Do not route onboarding actions through uncataloged local command IDs.
+L00007726	  - Do not let skip-to-Planning-Wizard mark Doctor/Health as Ready.
+L00007727	  - Do not open Free Models before the paid-provider prompt has occurred.
+L00007728	  - Do not make Teacher discovery depend on slash-command knowledge.
+L00007729	  - Do not create a second Teacher command payload language separate from UCC-102 and CS-053.
+L00007730	  - Do not generate wiring JSON, WorkNodes, NodeSeeds, or executable queues during this compile phase.
+L00007731	owner_hints:
+L00007732	  - Plans/UI_Command_Catalog.md
+L00007733	  - Plans/Wiring_Matrix.md
+L00007734	  - Plans/FinalGUISpec.md
+L00007735	  - Plans/Planning_Wizard.md
+L00007736	```
+L00007737	
+L00007738	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00007739	
+L00007740	This addendum compiles containerized-host command and route obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+L00007741	
+L00007742	### UCC-105 - Containerized Host Commands And HostCapabilityCommand Envelope
+L00007743	
+L00007744	```yaml
+L00007745	plan_unit_id: UCC-105
+L00007746	unit_type: requirement
+L00007747	status: accepted
+L00007748	owner_doc: Plans/UI_Command_Catalog.md
+L00007749	canonical_text: >-
+L00007750	  Containerized-host GUI actions, Assistant Chat pivots, Orchestrator links, Run Graph access pivots, ATS host launches,
+L00007751	  tool actions, and shell-like actions use registered PM command ids and the HostCapabilityCommand envelope rather than
+L00007752	  copying a Coasts local API, terminal session model, file/service controls, or direct runtime endpoint. Command payloads
+L00007753	  carry command_id, command_kind, source_surface, requested_action, host_capability_ref, host_profile_id, host_instance_id,
+L00007754	  execution_unit_context_ref, approval_scope_key, permission_snapshot_id, FileSafe scope, network_access_policy,
+L00007755	  secret_access_policy, destructive_command_policy, preflight_required, allowed_action_ids, and expected receipt refs when
+L00007756	  relevant. HostOperationRequest remains a dispatch/request payload shape below the command envelope when needed. Docker
+L00007757	  and Kubernetes command families continue to live under cmd.docker.* and cmd.docker.k8s.* ownership, with Docker/Hosts
+L00007758	  as a routed destination rather than a new Activity Bar owner. Registered Docker/Hosts command ids include
+L00007759	  `cmd.docker.hosts.open`, `cmd.docker.host.refresh`, `cmd.docker.host.preflight`,
+L00007760	  `cmd.docker.host.profile.save`, `cmd.docker.host.session.launch`, `cmd.docker.host.instance.start`,
+L00007761	  `cmd.docker.host.instance.stop`, `cmd.docker.host.instance.restart`, `cmd.docker.host.access.open_app`,
+L00007762	  `cmd.docker.host.instance.retain`, and `cmd.docker.host.receipt.open`, in addition to existing
+L00007763	  `cmd.docker.run`, `cmd.docker.stop`, `cmd.docker.restart`, `cmd.docker.container.open`,
+L00007764	  `cmd.docker.container.view_logs`, `cmd.docker.container.attach_shell`, `cmd.docker.cleanup.scan`, and
+L00007765	  `cmd.docker.cleanup.prune` where exact semantics match.
+L00007766	gui_related: true
+L00007767	gui_classification_reason: This PlanUnit defines user-visible command routes and affordances for GUI, chat, orchestrator, and run-graph surfaces.
+L00007768	depends_on: [CV-304]
+L00007769	unblocks: [F3-410, ACD-430, OP-028, RGV-015]
+L00007770	acceptance_criteria:
+L00007771	  - Docker/Hosts commands and access pivots are registered through UI_Command_Catalog rather than ad hoc page-local payloads.
+L00007772	  - HostCapabilityCommand is the PM-owned command envelope; HostOperationRequest is only a lower-level request payload shape when needed.
+L00007773	  - cmd.docker.* and cmd.docker.k8s.* command families preserve Docker Manager command namespace ownership.
+L00007774	  - Command dispatch carries authority, FileSafe, network, secret, destructive-command, preflight, and receipt expectations before mutation.
+L00007775	  - Direct Coasts HTTP API, permissive CORS, SSE/WebSocket terminal, and file/service controls are not copied as PM command authority.
+L00007776	  - Every Docker/Hosts toolbar, card, detail-row, access, lifecycle, receipt, and cleanup action maps to one registered command id and a HostCapabilityCommand payload, or remains disabled with blocked/degraded display evidence.
+L00007777	  - Command fixtures cover missing authority, missing FileSafe scope, missing receipt expectation, stale projection mutation denial, low-confidence port access denial, and cleanup/retain receipt requirements.
+L00007778	validation_surfaces:
+L00007779	  - python3 scripts/pm-plan-index.py validate
+L00007780	  - future UI command catalog host-command fixture
+L00007781	risk_class: host_command_bypass
+L00007782	reasoning_tier: high
+L00007783	context_scope: containerized_host_command_catalog
+L00007784	implementation_surfaces:
+L00007785	  - Plans/UI_Command_Catalog.md
+L00007786	  - future command registry and routed Docker/Hosts actions
+L00007787	node_compile_hint:
+L00007788	  mode: host_capability_command_catalog
+L00007789	  create_worknodes: false
+L00007790	  create_nodeseeds: false
+L00007791	source_lineage:
+L00007792	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+L00007793	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0024
+L00007794	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00007795	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
+L00007796	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
+L00007797	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00007798	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00007799	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00007800	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0074
+L00007801	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+L00007802	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00007803	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+L00007804	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+L00007805	source_atom_ids: [atom-0023, atom-0024, atom-0041, atom-0051, atom-0056, atom-0064, atom-0073, atom-0074, atom-0075, atom-0080, atom-0081]
+L00007806	preserved_exact_tokens:
+L00007807	  - "HostCapabilityCommand"
+L00007808	  - "HostOperationRequest"
+L00007809	  - "cmd.docker.*"
+L00007810	  - "cmd.docker.k8s.*"
+L00007811	  - "command_id"
+L00007812	  - "command_kind"
+L00007813	  - "host_capability_ref"
+L00007814	  - "host_profile_id"
+L00007815	  - "execution_unit_context"
+L00007816	  - "approval_scope_key"
+L00007817	  - "permission_snapshot_id"
+L00007818	  - "FileSafe scope"
+L00007819	  - "network_access_policy"
+L00007820	  - "secret_access_policy"
+L00007821	  - "destructive_command_policy"
+L00007822	  - "required receipt refs"
+L00007823	negative_constraints:
+L00007824	  - Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal sessions, or file/service controls.
+L00007825	  - Do not let container exec bypass Executor, Permissions, FileSafe, Tools, UI_Command_Catalog, or receipts.
+L00007826	  - Do not make Docker/Hosts a new Activity Bar owner or command namespace.
+L00007827	owner_hints:
+L00007828	  - Plans/UI_Command_Catalog.md
+L00007829	  - Plans/FinalGUISpec.md
+L00007830	  - Plans/Executor_Protocol.md
+L00007831	  - Plans/Permissions_System.md
+L00007832	  - Plans/FileSafe.md
+L00007833	```
+L00007834	
+L00007835	### UCC-107 - GUI Dev Preview Command Controls
+L00007836	
+L00007837	```yaml
+L00007838	plan_unit_id: UCC-107
+L00007839	unit_type: requirement
+L00007840	status: accepted
+L00007841	owner_doc: Plans/UI_Command_Catalog.md
+L00007842	canonical_text: >-
+L00007843	  GUI development-preview command controls are limited to cmd.gui_dev_preview.reload,
+L00007844	  cmd.gui_dev_preview.fixture_mode.set, cmd.gui_dev_preview.capture_state, and
+L00007845	  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only,
+L00007846	  are compiled out or disabled in production unless explicitly configured, and must not be reused as production
+L00007847	  runtime, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container commands.
+L00007848	gui_related: true
+L00007849	gui_classification_reason: This unit defines user-visible development-preview GUI controls and command IDs.
+L00007850	depends_on:
+L00007851	- ATS-023
+L00007852	- F3-417
+L00007853	unblocks: []
+L00007854	acceptance_criteria:
+L00007855	- Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection.
+L00007856	- Production builds disable or omit these controls unless explicit configuration enables the matching dev/test surface.
+L00007857	- The commands do not grant OS-owned capabilities and do not replace production runtime command families.
+L00007858	- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created.
+L00007859	validation_surfaces:
+L00007860	- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00007861	- python3 scripts/pm-plan-index.py validate
+L00007862	risk_class: dev_preview_command_authority_leak
+L00007863	reasoning_tier: high
+L00007864	context_scope: gui_platform_currentness_repair
+L00007865	implementation_surfaces:
+L00007866	- Plans/UI_Command_Catalog.md
+L00007867	- Plans/FinalGUISpec.md
+L00007868	- Plans/Automated_Testing_System.md
+L00007869	node_compile_hint:
+L00007870	  mode: gui_dev_preview_commands_only
+L00007871	  create_worknodes: false
+L00007872	  create_nodeseeds: false
+L00007873	source_lineage:
+L00007874	- Plans/.audits/fable-20260706/currentness_check_report.json
+L00007875	preserved_exact_tokens:
+L00007876	- cmd.gui_dev_preview.reload
+L00007877	- cmd.gui_dev_preview.fixture_mode.set
+L00007878	- cmd.gui_dev_preview.capture_state
+L00007879	- cmd.gui_dev_preview.daemon_capabilities.inspect
+L00007880	negative_constraints:
+L00007881	- "Do not invent production runtime commands for dev-preview workflow."
+L00007882	- "Do not let dev-preview commands grant PTY, filesystem, process/container, CEF, tray, native-window, or browser automation authority."
+L00007883	owner_hints:
+L00007884	- Plans/UI_Command_Catalog.md
+L00007885	- Plans/FinalGUISpec.md
+L00007886	- Plans/Automated_Testing_System.md
+L00007887	```
+L00007888	
+L00007889	## GUI / PMConcept implementation-readiness repair addendum (2026-07-02)
+L00007890	
+L00007891	This addendum closes the GUI command-catalog defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00007892	
+L00007893	### Concrete PRD Builder, Planning Wizard, and Plan Compile command rows
+L00007894	
+L00007895	The command family required by UCC-098 is concrete. Production GUI controls may not use the old fixed wizard rail, `Approve & Continue`, `START`, `BUILD`, or tab-switch handlers as substitutes for these command IDs.
+L00007896	
+L00007897	| Command ID | Label / action | Required payload and guard summary | Receipt / event effect |
+L00007898	|---|---|---|---|
+L00007899	| `cmd.prd_builder.source.import` | Import PRD source | `project_id`, `source_ref`, import mode, authority snapshot, idempotency key; disabled when source is denied, too large, stale, or unsupported | PRD source import receipt and PRD projection refresh |
+L00007900	| `cmd.prd_builder.answer.upsert` | Save PRD answer | `prd_run_id`, question/section id, answer version, source refs, idempotency key; disabled when ledger sync is blocked | PRD answer receipt and projection update |
+L00007901	| `cmd.prd_builder.annotation.upsert` | Add/update annotation | document version, text anchor, action kind, selected text hash, source refs; disabled when anchor is stale and cannot remap | Annotation upsert receipt |
+L00007902	| `cmd.prd_builder.annotation.resolve` | Resolve annotation | annotation id, document version, resolution kind; disabled when annotation is already terminal or stale without remap | Annotation resolution receipt |
+L00007903	| `cmd.prd_builder.conflict.resolve` | Resolve PRD conflict | conflict id, chosen resolution, rationale, source refs; disabled when selected sources are stale or unavailable | Conflict-resolution receipt |
+L00007904	| `cmd.prd_builder.approve_for_planning_wizard` | Approve PRD for Planning Wizard | PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, idempotency key; disabled when blocking conflicts or ledger sync failure exist | Approved PRD Pack snapshot and handoff receipt |
+L00007905	| `cmd.prd_builder.pack.reopen` | Reopen PRD Pack | approved pack id/version, reason, currentness proof; disabled when reopening would bypass immutable history | Reopen receipt and new draft identity |
+L00007906	| `cmd.planning_wizard.start` | Start Planning Wizard | approved PRD Pack ref or normalized requirements input, project context snapshot, testing policy snapshot | PlanningRun created/opened |
+L00007907	| `cmd.planning_wizard.topic.open` | Open topic | PlanningRun id, topic id, expected topic map version | Topic projection selected |
+L00007908	| `cmd.planning_wizard.topic.add` | Add topic | PlanningRun id, parent/dependency refs, label, source reason, topic map version | Topic added and topic map version advanced |
+L00007909	| `cmd.planning_wizard.topic.split` | Split topic | source topic id, split descriptors, affected refs, topic map version | Topic split receipt and impact propagation |
+L00007910	| `cmd.planning_wizard.topic.merge` | Merge topics | topic ids, target label, source reason, topic map version | Topic merge receipt and impact propagation |
+L00007911	| `cmd.planning_wizard.topic.rename` | Rename topic | topic id, new label, topic map version | Topic rename receipt |
+L00007912	| `cmd.planning_wizard.topic.reorder` | Reorder topic | topic id, before/after target, topic map version | Topic order receipt |
+L00007913	| `cmd.planning_wizard.topic.mark_impacted` | Mark topic impacted | topic id, impact reason, source refs, dependency refs | Topic impact receipt and stale projection |
+L00007914	| `cmd.planning_wizard.topic.defer` | Defer topic | topic id, deferral reason, dependency/currentness refs | Topic deferred receipt |
+L00007915	| `cmd.planning_wizard.topic.reopen` | Reopen topic | topic id, reason, currentness refs | Topic reopened receipt |
+L00007916	| `cmd.planning_wizard.amendment.accept` | Accept amendment | amendment id, source refs, affected topic refs, expected topic map version | Amendment accepted and impacted topics marked |
+L00007917	| `cmd.planning_wizard.approve_and_build` | Approve And Build | final-review CAS inputs for `project_id`, `planning_run_id`, PlanningRun revision, topic map version, `approved_plan_pack_id`, pack version/hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, final audit/closure hash, approval actor, and deterministic idempotency key | Atomically writes `approval_cas_receipt`, `PlanApproved`, and `PlanCompileRun_created_or_bound`; returns durable `plan_compile_run_id` synchronously |
+L00007918	| `cmd.plan_compile.pause` | Pause Plan Compile | PlanCompileRun id, current stage token, reason | Plan Compile pause receipt |
+L00007919	| `cmd.plan_compile.resume` | Resume Plan Compile | PlanCompileRun id, currentness token, recovery route | Plan Compile resume receipt |
+L00007920	| `cmd.plan_compile.cancel` | Cancel Plan Compile | PlanCompileRun id, cancellation reason, confirmation token | Plan Compile cancellation receipt |
+L00007921	| `cmd.plan_compile.retry` | Retry Plan Compile stage | PlanCompileRun id, failed stage id, currentness token | Stage retry receipt |
+L00007922	| `cmd.plan_compile.inspect_blocker` | Inspect blocker | PlanCompileRun id, blocker id, route target | Opens blocker inspector |
+L00007923	| `cmd.plan_compile.inspect_evidence` | Inspect evidence | PlanCompileRun id, evidence ref, redaction profile | Opens redacted evidence inspector |
+L00007924	| `cmd.plan_compile.inspect_assignment` | Inspect assignment | PlanCompileRun id, assignment id | Opens assignment inspector |
+L00007925	| `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
+L00007926	| `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
+L00007927	
+L00007928	### Testing capability and visible-session command rows
+L00007929	
+L00007930	Testing policy UI is a first-class command surface, not settings prose alone.
+L00007931	
+L00007932	| Command ID | Label / action | Required payload and guard summary | Receipt / event effect |
+L00007933	|---|---|---|---|
+L00007934	| `cmd.testing.capability_policy.set` | Set testing capability policy | scope `global` or `project`, capability family, value `Auto` / `On` / `Off`, inheritance marker, authority snapshot; disabled when policy owner is unavailable or authority is missing | Effective testing policy receipt |
+L00007935	| `cmd.testing.visibility_policy.set` | Set testing visibility policy | scope, value including `show_when_possible`, redaction profile ref, background allowance | Visibility policy receipt |
+L00007936	| `cmd.testing.session.open` | Open visible test session | test session id, target surface, route, redaction profile | Visible session opened receipt |
+L00007937	| `cmd.testing.session.watch` | Watch visible test session | test session id, stream/session identity, fallback route | Watch receipt and live projection binding |
+L00007938	| `cmd.testing.session.background` | Continue testing in background | test session id, background reason, continuation policy | Background continuation receipt |
+L00007939	| `cmd.testing.session.redaction.inspect` | Inspect redaction/evidence | test session id, artifact/evidence refs, redaction profile | Redaction inspection route opened |
+L00007940	
+L00007941	### PMConcept command aliases and retirements
+L00007942	
+L00007943	| PMConcept token | Disposition |
+L00007944	|---|---|
+L00007945	| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. |
+L00007946	| `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
+L00007947	| `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
+L00007948	| `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |
+L00007949	| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. |
+L00007950	| `cmd.indexOf` | Parser false-positive from JavaScript and not a UICommand. |
+L00007951	
+L00007952	`START`, `BUILD`, and `Approve & Continue` are retired as ordinary planning/build launch labels. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch command. Post-approval runtime controls must use scoped commands such as `cmd.plan_compile.open_build`, `cmd.plan_compile.resume`, `cmd.runtime.approve`, or route/open commands with disabled reasons and receipt effects.
+L00007953	
+L00007954	## FABLE GUI command contract closure addendum (2026-07-07)
+L00007955	
+L00007956	This addendum closes the command-catalog portion of the FABLE GUI command and wiring repair. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, FileSafe behavior, storage behavior, platform specifications, or production build tasks. Existing FileManager CRUD, runtime allowed-action, PRD Builder, Planning Wizard, and Plan Compile command rows remain canonical; this addendum adds missing command families and supplies field-level payload, result, error, and receipt/event contracts for the launch-critical and GUI-command families named by the FABLE repair.
+L00007957	
+L00007958	### Command response and receipt baseline
+L00007959	
+L00007960	Every command in this addendum returns the `UICommandResponse` envelope from `Plans/Contracts_V0.md`. The field-level response minimum is `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`. Error codes are closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`. Commands that intentionally emit no persisted domain event still record a dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events.
+L00007961	
+L00007962	### Added GUI command families
+L00007963	
+L00007964	| Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
+L00007965	|---|---|---|---|---|
+L00007966	| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
+L00007967	| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
+L00007968	| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
+L00007969	| `cmd.theme.preview` | `scope`, `theme_patch`, `preview_surface`, `ttl_ms` | `preview_id`, `expires_at_utc` | `invalid_args`, `handler_unavailable` | explicit dispatch receipt |
+L00007970	| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |
+L00007971	| `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
+L00007972	| `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
+L00007973	| `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
+L00007974	| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona_id`, `selection_scope` | `invalid_args`, `stale_projection` | `persona.selected` |
+L00007975	| `cmd.persona.duplicate` | `project_id`, `source_persona_id`, `new_name`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.created` |
+L00007976	| `cmd.persona.import` | `project_id`, `source_ref`, `import_mode`, `authority_snapshot`, `idempotency_key` | `persona_id`, `persona_revision`, `import_receipt_ref` | `invalid_args`, `permission_denied`, `handler_unavailable` | `persona.imported` |
+L00007977	| `cmd.persona.export` | `project_id`, `persona_id`, `format`, `redaction_profile` | `export_ref`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.exported` |
+L00007978	| `cmd.alert.acknowledge` | `project_id`, `alert_id`, `alert_revision`, `actor_ref`, `idempotency_key` | `alert_id`, `status` | `stale_projection`, `permission_denied` | `alert.acknowledged` |
+L00007979	| `cmd.alert.snooze` | `project_id`, `alert_id`, `alert_revision`, `snooze_until_utc`, `reason`, `idempotency_key` | `alert_id`, `snooze_until_utc` | `invalid_args`, `stale_projection` | `alert.snoozed` |
+L00007980	| `cmd.alert.dismiss` | `project_id`, `alert_id`, `alert_revision`, `dismissal_reason`, `idempotency_key` | `alert_id`, `status` | `stale_projection`, `permission_denied` | `alert.dismissed` |
+L00007981	| `cmd.alert.open_source` | `project_id`, `alert_id`, `route_target`, `OpenSubject` | `route_ref`, `opened_subject_ref` | `invalid_route`, `stale_projection` | explicit route/open receipt |
+L00007982	| `cmd.alert.mute_rule` | `project_id`, `alert_rule_id`, `mute_scope`, `expires_at_utc?`, `reason`, `idempotency_key` | `alert_rule_id`, `mute_state` | `permission_denied`, `invalid_args` | `alert.rule_muted` |
+L00007983	| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` |
+L00007984	| `cmd.concern.update` | `project_id`, `concern_id`, `concern_patch`, `expected_concern_revision`, `idempotency_key` | `concern_id`, `concern_revision` | `stale_projection`, `invalid_args` | `concern.updated` |
+L00007985	| `cmd.concern.assign` | `project_id`, `concern_id`, `assignee_ref`, `expected_concern_revision`, `idempotency_key` | `concern_id`, `concern_revision`, `assignee_ref` | `permission_denied`, `stale_projection` | `concern.assigned` |
+L00007986	| `cmd.concern.resolve` | `project_id`, `concern_id`, `resolution_kind`, `evidence_refs[]`, `expected_concern_revision`, `idempotency_key` | `concern_id`, `terminal_state` | `blocked_state_required`, `stale_projection` | `concern.resolved` |
+L00007987	| `cmd.concern.reopen` | `project_id`, `concern_id`, `reopen_reason`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `permission_denied`, `stale_projection` | `concern.reopened` |
+L00007988	| `cmd.concern.link_evidence` | `project_id`, `concern_id`, `evidence_refs[]`, `expected_concern_revision`, `idempotency_key` | `concern_id`, `linked_evidence_refs[]` | `invalid_args`, `stale_projection` | `concern.evidence_linked` |
+L00007989	| `cmd.concern.promote` | `project_id`, `concern_id`, `promotion_target`, `expected_concern_revision`, `idempotency_key` | `promotion_id`, `concern_id` | `permission_denied`, `blocked_state_required`, `stale_projection` | `concern.promoted` |
+L00007990	| `cmd.model.refresh` | `project_id?`, `provider_id?`, `account_id?`, `refresh_reason`, `idempotency_key` | `model_catalog_revision`, `provider_status_refs[]` | `permission_denied`, `handler_unavailable`, `stale_projection` | `model.catalog_refreshed` |
+L00007991	| `cmd.model.list` | `project_id?`, `provider_filter?`, `capability_filter?`, `cache_policy` | `model_catalog_revision`, `model_ids[]`, `degraded_reason?` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+L00007992	| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |
+L00007993	| `cmd.chat.stop` | `thread_id`, `run_id?`, `assistant_turn_id?`, `stop_reason_code`, `idempotency_key` | `thread_id`, `stopped_ref?`, `resumable` | `blocked_state_required`, `stale_projection`, `handler_unavailable` | `chat.response_stop_requested` |
+L00007994	| `cmd.panel.undock` | `project_id?`, `panel_id`, `current_host`, `target_window?`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision`, `window_id?` | `invalid_args`, `stale_projection` | `panel.undocked` |
+L00007995	| `cmd.panel.redock` | `project_id?`, `panel_id`, `window_id?`, `target_host`, `expected_layout_revision`, `idempotency_key` | `panel_id`, `layout_revision` | `invalid_args`, `stale_projection` | `panel.redocked` |
+L00007996	| `cmd.orchestrator.pause` | `run_id`, `pause_scope`, `pause_reason`, `safe_point_required`, `idempotency_key` | `run_id`, `pause_receipt_ref`, `resumable` | `permission_denied`, `blocked_state_required`, `stale_projection` | `goal_run.stopped` |
+L00007997	| `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
+L00007998	| `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
+L00007999	| `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+L00008000	| `cmd.onboarding.free_models.refresh` | `project_id?`, `provider_filter?`, `account_id?`, `idempotency_key` | `free_model_catalog_revision`, `model_ids[]` | `handler_unavailable`, `permission_denied` | `onboarding.free_models_refreshed` |
+L00008001	| `cmd.onboarding.free_models.retry` | `project_id?`, `failed_refresh_id`, `retry_reason`, `idempotency_key` | `free_model_catalog_revision?`, `retry_receipt_ref` | `blocked_state_required`, `handler_unavailable` | `onboarding.free_models_refresh_retried` |
+L00008002	| `cmd.onboarding.free_models.setup` | `project_id?`, `provider_id`, `return_route`, `setup_intent`, `idempotency_key` | `setup_route_ref`, `return_route` | `invalid_route`, `permission_denied` | `onboarding.provider_setup_opened` |
+L00008003	
+L00008004	### Existing launch, recovery, and FileManager command contracts
+L00008005	
+L00008006	| Command family | Field-level closure |
+L00008007	|---|---|
+L00008008	| PRD/Planning launch | `cmd.prd_builder.approve_for_planning_wizard`, `cmd.planning_wizard.approve_and_build`, and `cmd.plan_compile.open_build` keep their existing command rows. Their payloads must include CAS/currentness inputs, approval actor, idempotency key, route/build identity where relevant, result identity, `UICommandResponse`, and receipt/event refs. `cmd.plan_compile.open_build` remains route/open or post-build reveal only while runtime activation is disabled; it must not emit `plan_compile.command_applied` as a fabricated success event. |
+L00008009	| Runtime allowed actions | `resume_after_prerequisite`, `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, `skip_node`, and `abort_run` map only to the existing `cmd.runtime.*` commands. Payloads carry `run_id`, `node_id?`, `blocked_sequence?`, `attempt_id?`, safe-point/worktree/baseline fields where applicable, result status, and closed error codes. Dispatch emits `node.unblocked`, `safe_point.restored`, `scheduler.pass`, `goal.replanned`, `goal_run.stopped`, or an explicit dispatch receipt; it must not emit `runtime.command_applied`. |
+L00008010	| FileManager CRUD | Existing `cmd.file.new_file`, `cmd.file.new_folder`, `cmd.file.rename`, `cmd.file.delete`, `cmd.file.copy_path`, `cmd.file.copy_nodes`, `cmd.file.cut_nodes`, `cmd.file.paste_nodes`, `cmd.file.open_with`, and `cmd.file.save_local_copy` rows remain canonical. Mutation commands emit their existing file/folder events; clipboard and open commands record explicit no-persist dispatch or route/open receipts. |
+L00008011	
+L00008012	### UCC-108 - FABLE GUI Command Families And Response Contracts
+L00008013	
+L00008014	```yaml
+L00008015	plan_unit_id: UCC-108
+L00008016	unit_type: requirement
+L00008017	status: accepted
+L00008018	owner_doc: Plans/UI_Command_Catalog.md
+L00008019	canonical_text: >-
+L00008020	  The FABLE GUI command repair registers missing theme, persona, alert, concern, model,
+L00008021	  chat send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget,
+L00008022	  Free Models onboarding, launch-chain, runtime recovery, and FileManager command
+L00008023	  contracts with field-level payload, result, error, and receipt/event requirements.
+L00008024	  Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
+L00008025	  canonical and are strengthened by the shared UICommandResponse and no fabricated
+L00008026	  command_applied event rule.
+L00008027	gui_related: true
+L00008028	gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
+L00008029	depends_on: [UCC-089, UCC-097]
+L00008030	unblocks: [WM-042, PG-061]
+L00008031	acceptance_criteria:
+L00008032	  - All command families named by the FABLE GUI repair have stable `cmd.*` IDs or explicit compatibility dispositions.
+L00008033	  - Every listed command declares payload fields, result fields, closed error handling through UICommandResponse, and receipt or event effects.
+L00008034	  - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
+L00008035	  - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
+L00008036	  - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
+L00008037	validation_surfaces:
+L00008038	  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00008039	  - python3 scripts/pm-plan-index.py validate
+L00008040	risk_class: gui_command_contract_gap
+L00008041	reasoning_tier: high
+L00008042	context_scope: fable_gui_command_wiring_gate_repair
+L00008043	implementation_surfaces:
+L00008044	  - Plans/UI_Command_Catalog.md
+L00008045	  - Plans/Wiring_Matrix.production.json
+L00008046	  - future UI command dispatcher fixtures
+L00008047	node_compile_hint:
+L00008048	  mode: gui_command_contract_closure
+L00008049	  create_worknodes: false
+L00008050	  create_nodeseeds: false
+L00008051	source_lineage:
+L00008052	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-ui-command-catalog-missing-families
+L00008053	preserved_exact_tokens:
+L00008054	  - cmd.theme.*
+L00008055	  - cmd.persona.*
+L00008056	  - cmd.alert.*
+L00008057	  - cmd.concern.*
+L00008058	  - cmd.model.refresh
+L00008059	  - cmd.model.list
+L00008060	  - cmd.chat.send
+L00008061	  - cmd.chat.stop
+L00008062	  - cmd.panel.undock
+L00008063	  - cmd.panel.redock
+L00008064	  - cmd.orchestrator.pause
+L00008065	  - cmd.orchestrator.resume
+L00008066	  - cmd.dashboard.add_widget
+L00008067	  - cmd.dashboard.catalog
+L00008068	  - resume_after_prerequisite
+L00008069	  - restore_safe_point_then_retry
+L00008070	  - start_fresh_attempt
+L00008071	  - replan
+L00008072	  - skip_node
+L00008073	  - abort_run
+L00008074	negative_constraints:
+L00008075	  - Do not duplicate existing FileManager CRUD command rows.
+L00008076	  - Do not treat command-catalog or wiring rows as runtime certification evidence.
+L00008077	  - Do not emit fabricated `*.command_applied` events.
+L00008078	owner_hints:
+L00008079	  - Plans/UI_Command_Catalog.md
+L00008080	  - Plans/Wiring_Matrix.md
+L00008081	  - Plans/Contracts_V0.md
+L00008082	```
+L00008083	
+L00008084	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00008085	
+L00008086	This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00008087	
+L00008088	- Repairs `sfk-ddc264cdea296caf349adecd`: UCC-049 through UCC-106 now inherit the strict schema overlay below. Each row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text.
+L00008089	- Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
+L00008090	
+L00008091	### UCC-049 through UCC-106 strict schema overlay
+L00008092	
+L00008093	This overlay is the owner reference for every command row from UCC-049 through UCC-106. It keeps the catalog as the command-ID SSOT while avoiding 58 duplicated payload tables. Implementers MUST resolve each row through the row range below, then through the row's concrete `cmd.*` tokens or compatibility alias notes.
+L00008094	
+L00008095	Common fields for every covered row:
+L00008096	
+L00008097	- `command_id`: every concrete `cmd.*` token in the row's `preserved_exact_tokens`; grouped or wildcard tokens are family aliases and must normalize to a concrete `cmd.*` row before dispatch.
+L00008098	- `payload_required`: `dispatch_id`, `command_id`, `source_surface`, `actor_ref`, and the row-specific identity listed below.
+L00008099	- `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific refs allowed by the owner row.
+L00008100	- `result_fields`: the shared `UICommandResponse` envelope fields `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`.
+L00008101	- `error_codes`: closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`; family owners may narrow but not expand this set without a new owner-doc row.
+L00008102	- `disabled_reason_codes`: closed to `unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, and `permission_required`.
+L00008103	- `owner_doc_ref`: this document plus the family owner named below; no handler may invent unowned payload keys or fabricate `*.command_applied` events.
+L00008104	
+L00008105	| Rows | Family owner reference | Row-specific required identity |
+L00008106	|---|---|---|
+L00008107	| `UCC-049` through `UCC-053` | Docker and Kubernetes command families in this catalog; storage and capability details remain with `Plans/FinalGUISpec.md`, `Plans/Wiring_Matrix.md`, `Plans/storage-plan.md`, and `Plans/Tools.md` ContractRefs already carried by the rows. | `container_ref?`, `image_ref?`, `compose_project_ref?`, `kubernetes_context?`, `namespace?`, and `capability_snapshot_ref` for mutating or capability-gated actions. |
+L00008108	| `UCC-054` through `UCC-055` | Project-scope worktree command family in this catalog. | `repo_id`, `worktree_id?`, `branch_ref?`, `safe_point_id?`, and `worktree_lifecycle_state` when mutating worktree state. |
+L00008109	| `UCC-056` through `UCC-060` | Assistant chat, context lens, thread worktree, and context-detail command families in this catalog. | `thread_id` plus `message_id?`, `context_lens_mode?`, `worktree_id?`, `usage_detail_ref?`, or `context_projection_ref?` according to the concrete command. |
+L00008110	| `UCC-061` through `UCC-065` | Browser and preview command family in this catalog. | `browser_session_id?`, `preview_subject_ref?`, `selection_ref?`, `screenshot_ref?`, and `agent_share_scope?` for capture/share/takeover commands. |
+L00008111	| `UCC-066` through `UCC-072` | Terminal and dev-session command families in this catalog. | `terminal_session_id?`, `pane_id?`, `dev_session_id?`, `command_ref?`, and `layout_target?` for focus, rerun, split, reveal, and recovery commands. |
+L00008112	| `UCC-073` through `UCC-076` | Chat message, code-block, rewind/revert, and activity-dimension command families in this catalog. | `thread_id`, `message_id?`, `code_block_id?`, `checkpoint_ref?`, and `activity_dimension?` for the concrete action. |
+L00008113	| `UCC-077` through `UCC-083` | Debug, web/slash dispatcher, web activity, reserved slash alias, and route-mapping command families in this catalog. | `thread_id`, `debug_session_id?`, `web_operation_id?`, `slash_command_id?`, `route_target?`, and `provider_route_ref?`; retired slash labels must normalize before dispatch. |
+L00008114	| `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families in this catalog. | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
+L00008115	| `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
+L00008116	| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
+L00008117	| `UCC-101` through `UCC-106` | Vision bridge, Teach, notification/sound, DRY settings, containerized host, and onboarding command families in this catalog. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, `host_profile_id?`, and `onboarding_step_id?` for the concrete command. |
+L00008118	
+L00008119	Compatibility-only source tokens in these rows remain searchable lineage. They do not become command IDs until the row's `command_id` rule maps them to a concrete `cmd.*` value or to an explicit `alias_of_command_id`.
+L00008120	
+L00008121	## Usage GUI Propagation Addendum - 2026-07-09
+L00008122	
+L00008123	This addendum binds Usage route/open commands to object-first UsageRecord identity. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00008124	
+L00008125	### UCC-109 - Usage Route Payload And Legacy Chat Usage Alias Contract
+L00008126	
+L00008127	```yaml
+L00008128	plan_unit_id: UCC-109
+L00008129	unit_type: command_contract
+L00008130	status: accepted
+L00008131	owner_doc: Plans/UI_Command_Catalog.md
+L00008132	canonical_text: >-
+L00008133	  Usage navigation commands normalize to object-first route/open identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target and OpenSubject plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. When usage_event_ref is present, route_target.object_kind is `usage_event` and route_target.object_id is the canonical usage event id. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize to `cmd.nav.open_usage_subject` or the thread Context Detail Pane command family before dispatch.
+L00008134	gui_related: true
+L00008135	gui_classification_reason: Usage route/open commands determine user-visible navigation from chat, artifacts, ledger, and command palette surfaces.
+L00008136	depends_on: [UCC-060, UCC-086, ACD-434, F3-418, UF-087, RAP-043, CV-316]
+L00008137	unblocks: [WM-043]
+L00008138	acceptance_criteria:
+L00008139	  - "`cmd.nav.open_usage_subject` and artifact Usage/Ledger commands preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health when present."
+L00008140	  - Payload validation fails when a Usage route with usage_event_ref does not normalize to route_target.object_kind = usage_event and a stable object_id.
+L00008141	  - Legacy callers citing `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` normalize before dispatch and never emit those IDs as canonical production command_id values.
+L00008142	  - "`cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, and `cmd.chat.close_thread_context_details` remain the thread Context Detail Pane commands; they are not aliases for app-wide Usage."
+L00008143	  - Timestamp, run-only, thread-only, or tier-only payloads may narrow filters but cannot satisfy the primary Usage route identity when usage_event_ref is available.
+L00008144	validation_surfaces:
+L00008145	  - python3 scripts/pm-plan-index.py validate
+L00008146	  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00008147	  - future UI command payload fixture suite
+L00008148	risk_class: usage_command_route_identity_drift
+L00008149	reasoning_tier: high
+L00008150	context_scope: usage_route_command_contract
+L00008151	implementation_surfaces:
+L00008152	  - Plans/UI_Command_Catalog.md
+L00008153	  - Plans/Wiring_Matrix.md
+L00008154	  - Plans/Contracts_V0.md
+L00008155	  - Plans/assistant-chat-design.md
+L00008156	node_compile_hint:
+L00008157	  mode: usage_route_payload_contract
+L00008158	  create_worknodes: false
+L00008159	  create_nodeseeds: false
+L00008160	source_lineage:
+L00008161	  - "Plans/UI_Command_Catalog.md:786-801"
+L00008162	  - "Plans/UI_Command_Catalog.md:1119-1123"
+L00008163	  - "Plans/UI_Command_Catalog.md:8088-8116"
+L00008164	  - "Plans/Runtime_Artifacts_Panel.md:281-316"
+L00008165	  - "Plans/runtime_artifact_cost_usage.schema.json:510"
+L00008166	  - "Plans/runtime_artifact_tool_llm_trace.schema.json:122-225"
+L00008167	  - "Plans/Wiring_Matrix.production.json:2674"
+L00008168	  - "Plans/Wiring_Matrix.production.json:3664"
+L00008169	  - "Plans/Wiring_Matrix.production.json:4819"
+L00008170	preserved_exact_tokens:
+L00008171	  - cmd.nav.open_usage_subject
+L00008172	  - cmd.artifacts.show_in_usage
+L00008173	  - cmd.artifacts.show_in_ledger
+L00008174	  - cmd.chat.open_thread_usage
+L00008175	  - cmd.chat.focus_thread_usage
+L00008176	  - cmd.chat.close_thread_usage
+L00008177	  - route_target.object_kind
+L00008178	  - usage_event
+L00008179	  - OpenSubject
+L00008180	  - raw_payload_ref
+L00008181	negative_constraints:
+L00008182	  - Do not register retired chat usage IDs as canonical production UICommands.
+L00008183	  - Do not route Usage by timestamp, run-only, thread-only, or tier-only filters when usage_event_ref is available.
+L00008184	  - Do not drop provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, or raw_payload_ref during artifact/usage drill-through.
+L00008185	owner_hints:
+L00008186	  - Plans/UI_Command_Catalog.md
+L00008187	  - Plans/Wiring_Matrix.md
+L00008188	  - Plans/Contracts_V0.md
+L00008189	```

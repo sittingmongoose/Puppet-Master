@@ -1,0 +1,1538 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "authority_and_digest_bindings": {
+    "bound_hash_mismatches": [],
+    "cohort_digests": {
+      "cohort-0001": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005ERSC-0001",
+          "A005ERSC-0002",
+          "A005ERSC-0003",
+          "A005ERSC-0004",
+          "A005ERSC-0005",
+          "A005ERSC-0006",
+          "A005ERSC-0007",
+          "A005ERSC-0008"
+        ],
+        "assignment_ids_digest": "2ec7bffb64314f6aa7634b2a53c462ea6c1deea45dd4167fa8a97bce4ca9c7df",
+        "feature_count": 1944,
+        "feature_refs_digest": "829d38d2683db5998b09ce04af386f92dc348a9432483ce5c5dbb9b90e871e6c",
+        "intent_subset_root_sha256": "7b5f8999906c8c81ca64853d8891f83e7ba9358959d669eb80f19a7ad297626a",
+        "packet_bytes": {
+          "max": 848799,
+          "min": 841080,
+          "total": 6756655
+        },
+        "packet_subset_root_sha256": "0aa4d234d7cb63f7382b240677d4c8698359cd00a661d5df7943ce6f7538ef6f",
+        "unique_feature_count": 1944
+      },
+      "cohort-0002": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005ERSC-0009",
+          "A005ERSC-0010",
+          "A005ERSC-0011",
+          "A005ERSC-0012",
+          "A005ERSC-0013",
+          "A005ERSC-0014",
+          "A005ERSC-0015",
+          "A005ERSC-0016"
+        ],
+        "assignment_ids_digest": "00837eb04c0e97e0ea7a34589a3f44f3d2706b5b722fd78d8f0bb24f3fb69680",
+        "feature_count": 1944,
+        "feature_refs_digest": "fe250db51c1e2424a94c030641c465a656cd87b021a0ba2e178ceae68a06a424",
+        "intent_subset_root_sha256": "a0a3e83ce0c54507f5b96fd783ef296fdedea2dd3a29bbec34f75a31bc950812",
+        "packet_bytes": {
+          "max": 848361,
+          "min": 839210,
+          "total": 6737905
+        },
+        "packet_subset_root_sha256": "858d18de8ee7753480cfd2a682e68b71bc6b98966243cb83ec5bec9ca24f0df3",
+        "unique_feature_count": 1944
+      }
+    },
+    "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+    "intent_root_sha256": "e9e009c14c3e0fb9c1ced388a3300c030822c5d7984b86923e65661e85db42fe",
+    "manifest_sha256": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295",
+    "packet_registry_sha256": "ec4df1ce8b250c76d0daba5e93a94c5318d8aea82942d55c7145eed43c200ba8",
+    "packet_root_sha256": "2ef4c307455eae300ade6c487a2816469c2551e9e8afc76014c700c2a8e29926",
+    "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+    "source_transaction_digest": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+    "v6_fail_sha256": "03897db27ebe3be42a55939dd513146a2aea05d5a9ee171937960b085316bb1a",
+    "v7_atomic8_terminal_sha256": "6a31474c4e6943e812776739cf87a7efeeba6cda1937bc0a94d645cf145839e1",
+    "v8_authority_sha256": "f36db3670c6d33f4c3bac0832ac9f788ea6193d5dacf5b4f9f608bbb1d51258c",
+    "v8_tests_sha256": "7e92eac72fc39506234b7ba6a4fac22da0d0118ca9fe6683a4b2e65d87d7652a",
+    "v8_verifier_sha256": "50ce0b82787b9b5a6ae70820a2c4dfaba723bc626ef3fdf316ee554c0a4e1c9c"
+  },
+  "authorization_effect": {
+    "activation_authorized": false,
+    "certification_credit": 0,
+    "fresh_luna_validation_required": false,
+    "launch_authorized": false,
+    "merge_credit": 0,
+    "no_activation_or_launch_authorization": true,
+    "promotion_credit": 0,
+    "spec_credit": 0
+  },
+  "candidate_controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "candidate_topology_and_source_bindings": {
+    "assignment_ids_exact": true,
+    "cohort_local_assignment_count": 8,
+    "cohort_local_assignment_ids_digest": "2ec7bffb64314f6aa7634b2a53c462ea6c1deea45dd4167fa8a97bce4ca9c7df",
+    "cohort_local_feature_count": 1944,
+    "cohort_local_feature_refs_digest": "829d38d2683db5998b09ce04af386f92dc348a9432483ce5c5dbb9b90e871e6c",
+    "cohort_local_unique_feature_count": 1944,
+    "cross_cohort_feature_overlap": 0,
+    "feature_membership_bindings_checked": 1944,
+    "feature_membership_bindings_passed": 1944,
+    "fresh_unused_identities": 8,
+    "global_feature_count": 3888,
+    "global_unique_feature_count": 3888,
+    "owner_domain_sets_exact_16": true,
+    "owner_source_schema_packet_intent_output_bindings": "PASS",
+    "source_assignment_sets_exact_24": true,
+    "status": "PASS"
+  },
+  "checker": "external_research_luna_certification_binding_v8_atomic8_cohort_0001_independent_prelaunch",
+  "cohorts": {
+    "cohort-0001": {
+      "assignment_count": 8,
+      "assignment_ids": [
+        "A005ERSC-0001",
+        "A005ERSC-0002",
+        "A005ERSC-0003",
+        "A005ERSC-0004",
+        "A005ERSC-0005",
+        "A005ERSC-0006",
+        "A005ERSC-0007",
+        "A005ERSC-0008"
+      ],
+      "assignment_ids_digest": "2ec7bffb64314f6aa7634b2a53c462ea6c1deea45dd4167fa8a97bce4ca9c7df",
+      "feature_count": 1944,
+      "feature_refs_digest": "829d38d2683db5998b09ce04af386f92dc348a9432483ce5c5dbb9b90e871e6c",
+      "intent_subset_root_sha256": "7b5f8999906c8c81ca64853d8891f83e7ba9358959d669eb80f19a7ad297626a",
+      "packet_bytes": {
+        "max": 848799,
+        "min": 841080,
+        "total": 6756655
+      },
+      "packet_subset_root_sha256": "0aa4d234d7cb63f7382b240677d4c8698359cd00a661d5df7943ce6f7538ef6f",
+      "unique_feature_count": 1944
+    },
+    "cohort-0002": {
+      "assignment_count": 8,
+      "assignment_ids": [
+        "A005ERSC-0009",
+        "A005ERSC-0010",
+        "A005ERSC-0011",
+        "A005ERSC-0012",
+        "A005ERSC-0013",
+        "A005ERSC-0014",
+        "A005ERSC-0015",
+        "A005ERSC-0016"
+      ],
+      "assignment_ids_digest": "00837eb04c0e97e0ea7a34589a3f44f3d2706b5b722fd78d8f0bb24f3fb69680",
+      "feature_count": 1944,
+      "feature_refs_digest": "fe250db51c1e2424a94c030641c465a656cd87b021a0ba2e178ceae68a06a424",
+      "intent_subset_root_sha256": "a0a3e83ce0c54507f5b96fd783ef296fdedea2dd3a29bbec34f75a31bc950812",
+      "packet_bytes": {
+        "max": 848361,
+        "min": 839210,
+        "total": 6737905
+      },
+      "packet_subset_root_sha256": "858d18de8ee7753480cfd2a682e68b71bc6b98966243cb83ec5bec9ca24f0df3",
+      "unique_feature_count": 1944
+    }
+  },
+  "common_mode_concerns": [
+    "The v8 verifier and wrapper are sealed artifacts from one preparation lineage; 648/648 is mechanical evidence and is not treated as candidate semantic proof.",
+    "The independent cohort-0001 reconstruction follows all 1,944 memberships through owner, source packet, source result, source row, registry, claim, schema, packet, intent, output, and fresh-identity bindings.",
+    "Observed bytecode caches are explicitly non-authoritative under cache reconciliation v3; the 152-file semantic tree and Draft 2020-12 runtime are the bound authority."
+  ],
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "credits": {
+    "candidate": 0,
+    "certification": 0,
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0
+  },
+  "decision": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "prelaunch_certified": true,
+    "ready_for_activation": false,
+    "reason": "PASS: exact cohort-0001 atomic8 prelaunch gate independently reconstructed and all bound checks passed; this report grants no activation or launch authorization.",
+    "return_prefix": "PMR1",
+    "unqualified_exact_cohort_gate": true
+  },
+  "errors": [],
+  "exact_assignment_records": [
+    {
+      "assignment_id": "A005ERSC-0001",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "c9b26b45bd8bcb87c8fe3bdb24115b61392654bd5dbee4bcc057adc242989067",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0001/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "4aa828dde8c6053f7db9c3857ed2755316a7906eb6d41e44e94e451dc71ce9f5",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0001/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 5,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 22,
+        "permissions_security_privacy": 53,
+        "planning_specification_governance": 24,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 17,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 7,
+        "work_nodes_tasks_goals": 2
+      },
+      "packet_bytes": 846062,
+      "packet_id": "ERSCPKT-0001",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0001.json",
+      "packet_sha256": "66b83cfb424874a8191330c1e20d7a0d2aeeaa2e1e98d7124d3dd5e91d0e566e",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0001_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 5,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 11,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 13,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 11,
+        "A005ERU-0018": 9,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 17,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 7,
+        "A005ERU-0024": 2
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0002",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "b536b169b494708e6cba92b51a1c626abd98eb977a3396dc35371b6b7da32faf",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0002/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "88b14031c7cd117a1ccf1a9f2a7fa0f6881cc6a259a752706f64f62e4d097033",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0002/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 6,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 23,
+        "permissions_security_privacy": 53,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 17,
+        "storage_artifacts_history": 16,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 6,
+        "work_nodes_tasks_goals": 2
+      },
+      "packet_bytes": 843205,
+      "packet_id": "ERSCPKT-0002",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0002.json",
+      "packet_sha256": "ecf221e05e0e6ac38c8044c83b74f23987baab83039bb5c978bc7d3a64cada65",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0002_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 6,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 12,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 13,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 8,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 16,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 6,
+        "A005ERU-0024": 2
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0003",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "7105ea724cdef3a7f6ececcbe68581c14a9d40a6fc729078240bc6231eb680bf",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0003/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "8afeaf0c4d6f2d229e41ca372a74be390e95c86bdd7ead1f27c51848f6e96f5a",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0003/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 13,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 6,
+        "cross_cutting_platform": 6,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 23,
+        "permissions_security_privacy": 53,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 15,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 7,
+        "work_nodes_tasks_goals": 1
+      },
+      "packet_bytes": 842164,
+      "packet_id": "ERSCPKT-0003",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0003.json",
+      "packet_sha256": "85f612466589b85a4cfe0cdeb9487ac0b0c4400d7726d090dc68f82e11add398",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0003_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 13,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 6,
+        "A005ERU-0004": 6,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 12,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 13,
+        "A005ERU-0013": 14,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 9,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 15,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 7,
+        "A005ERU-0024": 1
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0004",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "2aeedf77073000a31d23b457eecf36922e64d4d19431f802c497c9b6be582db9",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0004/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "cea325ecbd6c2a11aea17777b00f1aeebfe74b40686b62cf33f5c5d42431b6d5",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0004/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 6,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 11,
+        "orchestration_runtime_execution": 22,
+        "permissions_security_privacy": 53,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 16,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 7,
+        "work_nodes_tasks_goals": 2
+      },
+      "packet_bytes": 845387,
+      "packet_id": "ERSCPKT-0004",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0004.json",
+      "packet_sha256": "57fbe4b6a9e808945251780b9c5b8492d368c7d7f0de160ecd8ca73c1b675780",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0004_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 6,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 11,
+        "A005ERU-0010": 11,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 13,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 8,
+        "A005ERU-0019": 10,
+        "A005ERU-0020": 16,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 7,
+        "A005ERU-0024": 2
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0005",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "52bfdbf31196c9627509aa71bc0bcc34d79e73411a6fe6f576ee04015b041ef6",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0005/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "e04aa5c74bf75c919c7d1965d919912a8dfedc7006506f89b42ecec8c3f97ad5",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0005/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 3,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 5,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 23,
+        "permissions_security_privacy": 54,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 15,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 6,
+        "work_nodes_tasks_goals": 1
+      },
+      "packet_bytes": 845461,
+      "packet_id": "ERSCPKT-0005",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0005.json",
+      "packet_sha256": "fbc4c82540e5cfdded860c27d12c57b895da2159f603320da5a3046d88f94283",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0005_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 3,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 5,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 12,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 14,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 9,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 15,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 6,
+        "A005ERU-0024": 1
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0006",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "64eadfb403f3395fb010ac702655d9407fbb59bcda51fd1d1b129dfc13917a2d",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0006/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "a4f4ef6d6ae8b063a2d43b2f2f5d45c330e18a51657387efac477864bbe25507",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0006/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 5,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 11,
+        "orchestration_runtime_execution": 22,
+        "permissions_security_privacy": 54,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 15,
+        "tools_integrations_mcp": 21,
+        "usage_costs_quotas": 7,
+        "work_nodes_tasks_goals": 2
+      },
+      "packet_bytes": 841080,
+      "packet_id": "ERSCPKT-0006",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0006.json",
+      "packet_sha256": "7950d060991bfcab0f7e30a6c7841cab6b26925abf2c384d3d3818f8cbce7c55",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0006_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 5,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 12,
+        "A005ERU-0007": 13,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 11,
+        "A005ERU-0010": 12,
+        "A005ERU-0011": 10,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 13,
+        "A005ERU-0014": 14,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 9,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 15,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 11,
+        "A005ERU-0023": 7,
+        "A005ERU-0024": 2
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0007",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "8a9eb6506b5cd76c597015c934b240eb163e8eac7ff141ba870f33345224779e",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0007/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "2773dae25b5827b7bdf08190fdbc5c0615cad4bafdb7ac011d96aeaa89487668",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0007/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 14,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 6,
+        "cross_cutting_platform": 5,
+        "data_contracts_interchange": 16,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 1,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 22,
+        "permissions_security_privacy": 54,
+        "planning_specification_governance": 24,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 16,
+        "tools_integrations_mcp": 21,
+        "usage_costs_quotas": 6,
+        "work_nodes_tasks_goals": 1
+      },
+      "packet_bytes": 844497,
+      "packet_id": "ERSCPKT-0007",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0007.json",
+      "packet_sha256": "6a376c8757d74b7f1123247ecd99f5d889bbb3503527950573054407dde04258",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0007_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 14,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 6,
+        "A005ERU-0004": 5,
+        "A005ERU-0005": 16,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 1,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 11,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 14,
+        "A005ERU-0013": 14,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 13,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 11,
+        "A005ERU-0018": 9,
+        "A005ERU-0019": 9,
+        "A005ERU-0020": 16,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 11,
+        "A005ERU-0023": 6,
+        "A005ERU-0024": 1
+      }
+    },
+    {
+      "assignment_id": "A005ERSC-0008",
+      "bindings": {
+        "intent": "PASS",
+        "output": "PASS",
+        "owner": "PASS",
+        "packet": "PASS",
+        "schema": "PASS",
+        "source": "PASS"
+      },
+      "errors": [],
+      "feature_count": 243,
+      "feature_membership_reconstruction": {
+        "checked": 243,
+        "passed": 243
+      },
+      "feature_refs_digest": "fe99f021602734aa15eb52a1aed0b5ca982c1854ae763ee5850ed9d293e0e24b",
+      "fresh_unused_identity": true,
+      "intent_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0008/attempt-0001/dispatch_intent.json",
+      "intent_sha256": "7a496563f3d5279d64fed4b0cbedee4130b658e1465e60278d658b65a4a27570",
+      "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0008/attempts/attempt-0001",
+      "output_empty": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 13,
+        "automation_scheduling_notifications": 2,
+        "collaboration_chat_communication": 5,
+        "cross_cutting_platform": 6,
+        "data_contracts_interchange": 15,
+        "gui_ux_accessibility": 25,
+        "installation_updates_recovery": 2,
+        "observability_testing_evaluation": 12,
+        "orchestration_runtime_execution": 23,
+        "permissions_security_privacy": 53,
+        "planning_specification_governance": 25,
+        "source_control_workspace_code": 18,
+        "storage_artifacts_history": 16,
+        "tools_integrations_mcp": 20,
+        "usage_costs_quotas": 6,
+        "work_nodes_tasks_goals": 2
+      },
+      "packet_bytes": 848799,
+      "packet_id": "ERSCPKT-0008",
+      "packet_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0008.json",
+      "packet_sha256": "1ac62ef5135d7d6ccb2417cc8ce18d94b26646191a6d1db34e15876f2f3f41d2",
+      "prospective_agent_path": "/root/a005_external_research_universal_shadow_certification_0008_attempt_0001_terminal",
+      "schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+      "schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 13,
+        "A005ERU-0002": 2,
+        "A005ERU-0003": 5,
+        "A005ERU-0004": 6,
+        "A005ERU-0005": 15,
+        "A005ERU-0006": 13,
+        "A005ERU-0007": 12,
+        "A005ERU-0008": 2,
+        "A005ERU-0009": 12,
+        "A005ERU-0010": 12,
+        "A005ERU-0011": 11,
+        "A005ERU-0012": 13,
+        "A005ERU-0013": 13,
+        "A005ERU-0014": 13,
+        "A005ERU-0015": 14,
+        "A005ERU-0016": 13,
+        "A005ERU-0017": 12,
+        "A005ERU-0018": 8,
+        "A005ERU-0019": 10,
+        "A005ERU-0020": 16,
+        "A005ERU-0021": 10,
+        "A005ERU-0022": 10,
+        "A005ERU-0023": 6,
+        "A005ERU-0024": 2
+      }
+    }
+  ],
+  "input_hashes": {
+    "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff"
+    },
+    "external_research_universal_v1/A005ERU-0001/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "6ddd884b145dfcb06ea1f14bba85b4b1aca0c662f588122f5d1f57bd75de41ac"
+    },
+    "external_research_universal_v1/A005ERU-0002/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "ce52e603a8abfdb353e910f789c25d2b47d4c39a8bdf21e1f49a2e63ce5f0b07"
+    },
+    "external_research_universal_v1/A005ERU-0003/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "b274b6f76f5233a05ddb79a6e7c649adfccfaa49a5630f0c58a06e6bb0ed76f7"
+    },
+    "external_research_universal_v1/A005ERU-0004/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "cad9d940c918fc6ba510fc313c47995e5236688b10bcbe253a7cfe21c11d6ba0"
+    },
+    "external_research_universal_v1/A005ERU-0005/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7390d6db892f7cbef185aaa4ea5ac83eb025609571bde4cc0460c287f30be87f"
+    },
+    "external_research_universal_v1/A005ERU-0006/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "b4744ffc488bde4a032436e18d9f87667239a9b65cdcf7346227c701ea68986c"
+    },
+    "external_research_universal_v1/A005ERU-0007/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "fd1e77ab5a05fb3a3273a9966787bb204a33bc57929aa82a3de55a4dbc0b4a15"
+    },
+    "external_research_universal_v1/A005ERU-0008/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "8ee6500f9c9949335f4acfc4488fa173a9d89b223ffdeed3117d233d75935454"
+    },
+    "external_research_universal_v1/A005ERU-0009/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "216be5f06b863431cea33bad713b0d58dd143147fc3006638e5e6ccdd4f87148"
+    },
+    "external_research_universal_v1/A005ERU-0010/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "5cb4d50614707b15b22290296fa19494fcd8380d1c121ca1d5b94bcf2768d4a0"
+    },
+    "external_research_universal_v1/A005ERU-0011/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "502c85619b3fb323d793fa1a6804d47e045f88dfd83a1c5d6384789aa1f1148e"
+    },
+    "external_research_universal_v1/A005ERU-0012/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "1c71963d8f9faf109e3300d39f9be46b8fde38fee9dd94360fb6e034f1a48c2a"
+    },
+    "external_research_universal_v1/A005ERU-0013/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "14bf46096dc7d1faa6df1cbc4b68ccde2d9d4d9ff741ed1ca3e4816dec177d69"
+    },
+    "external_research_universal_v1/A005ERU-0014/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "25093e224d25d090d9b9e5ab1107cac6f38f02dd91281fbfab6ad666f21d5973"
+    },
+    "external_research_universal_v1/A005ERU-0015/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "3e4c8fc70bba2e931d34c4c5b0226d6d7ab2fa8384b2188411dea0e0cccb4122"
+    },
+    "external_research_universal_v1/A005ERU-0016/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "843c8724a848520ba2a18bab7f3e06cf3d0baf10c4b119f540b54ee6b6976fe8"
+    },
+    "external_research_universal_v1/A005ERU-0017/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "186a1b3ac20f82eec567165220da65b7a8a762077973104b86b171f01a629080"
+    },
+    "external_research_universal_v1/A005ERU-0018/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "112b0cacd4be87ca20935d3ac206e1b3b51b9b0bcdb1d7a9982864f9ff7ac493"
+    },
+    "external_research_universal_v1/A005ERU-0019/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "f849babf5029df5dc6b712f3e8aa488b1a13b78b6ee02088c6981fd400fac032"
+    },
+    "external_research_universal_v1/A005ERU-0020/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "2e36b6ccc3a33ab50531ec59e527f9261317601812e64855aa058ac2ecc4907d"
+    },
+    "external_research_universal_v1/A005ERU-0021/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "6c2903b5eae02fea1fd1720ee4bb0dca05d33014b7131ffe2b681efbf5d972da"
+    },
+    "external_research_universal_v1/A005ERU-0022/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "3c72f0f3d751cf13d39890eb22e8bb9940e3d90d24bfd3ddd1e2be3a6e0b9e7f"
+    },
+    "external_research_universal_v1/A005ERU-0023/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "25d3e66c09b38ce637bfa8d18db28fb83ad35555d622089fb7df86e3511ccec7"
+    },
+    "external_research_universal_v1/A005ERU-0024/attempts/attempt-0001/result.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "63da3a5ef75d06460b43171c0f0389e4dfeb82012ea5f0ff2658647ca31d3caa"
+    },
+    "master/coordination/CONCURRENCY_POLICY_V25.json": {
+      "bound_sha256": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b",
+      "match": true,
+      "sha256": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b"
+    },
+    "master/coordination/CONCURRENCY_POLICY_V26.json": {
+      "bound_sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68",
+      "match": true,
+      "sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68"
+    },
+    "master/coordination/CONCURRENT_CANONICAL_CHANGE_POLICY_V1.json": {
+      "bound_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+      "match": true,
+      "sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e"
+    },
+    "master/coordination/MODEL_LANE_ROUTING_POLICY_V2.json": {
+      "bound_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544",
+      "match": true,
+      "sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"
+    },
+    "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v3/authority.json": {
+      "bound_sha256": "f82c8796be8802ac3735c4e24c74b48b54efe2752e0a294c2844d7f98b2a03bc",
+      "match": true,
+      "sha256": "f82c8796be8802ac3735c4e24c74b48b54efe2752e0a294c2844d7f98b2a03bc"
+    },
+    "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v3/terminal-cache-reconciliation-v3.json": {
+      "bound_sha256": "1b7b88edbcba737e81a02fc81e0b87600c58e3be300f91429c9d61dec653e88e",
+      "match": true,
+      "sha256": "1b7b88edbcba737e81a02fc81e0b87600c58e3be300f91429c9d61dec653e88e"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/activation_contract.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "10c5f46b5ed4fd5c418aa2c4cd9c3323586547030c36e4ac86f29297d355ca87"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/architecture.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "027ff81d0d73c9ea04a66557d1fd9270ece11816058808e5b60b1fb1bc1813f6"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/batch_authority.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "fe18c2c3dfc80a6481701c4e79387d0221a95d81784949b354b89b7f736abe24"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/batch_manifest.jsonl": {
+      "bound_sha256": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295",
+      "match": true,
+      "sha256": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0001/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "4aa828dde8c6053f7db9c3857ed2755316a7906eb6d41e44e94e451dc71ce9f5"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0002/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "88b14031c7cd117a1ccf1a9f2a7fa0f6881cc6a259a752706f64f62e4d097033"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0003/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "8afeaf0c4d6f2d229e41ca372a74be390e95c86bdd7ead1f27c51848f6e96f5a"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0004/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "cea325ecbd6c2a11aea17777b00f1aeebfe74b40686b62cf33f5c5d42431b6d5"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0005/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "e04aa5c74bf75c919c7d1965d919912a8dfedc7006506f89b42ecec8c3f97ad5"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0006/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "a4f4ef6d6ae8b063a2d43b2f2f5d45c330e18a51657387efac477864bbe25507"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0007/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "2773dae25b5827b7bdf08190fdbc5c0615cad4bafdb7ac011d96aeaa89487668"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0008/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7a496563f3d5279d64fed4b0cbedee4130b658e1465e60278d658b65a4a27570"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0009/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "f34ac380bf8d85590105ac765fb9761616ba80f3e259142be50bd5834e717d61"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0010/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "3a787170fcb0210ea11aae1ec738f357f14ec88ffb377ca01c3f3ce2d5ea998f"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0011/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "ec58da3ab6758d8c1864b2d3fc4d0a576773c6ceeadf2c6397109bc30f3b6b75"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0012/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "efd4f9a6c551afdaf4ca14d4acc39d56f321e551ef708e296ab2658158385d9d"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0013/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "e58a66ba2decb07c8eb913a720636397e88cc527eafde37074fa3736e6a2e794"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0014/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "cb743a6b128d2780d7a72a490fc30acb3fc945a48402c0877e767c28a1357a27"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0015/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7b362bc9b6fa26164f5682418fde1d86243a61abfcf51da241220dc720e1fa3b"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/dispatch/A005ERSC-0016/attempt-0001/dispatch_intent.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "10a43da3d86c832b01d42fc28d8909b3aef72b743b3009ddde65c1a4d9a72b14"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/launch_seal.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7477cb53229aa72883296b87e9339db83b43b0c5208b3ae1be8d2d359e328ebb"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/leaf_prompt.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "18470ecb4a53a7f737b35e98debde8fef17f36ea31fe99ba73dc946cc72e8ef6"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/native_capture_contract.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "42ae6690b34249eca9a617104f223f4c9e4b41278876254be0a1eec91215da93"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packet_registry.jsonl": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "ec4df1ce8b250c76d0daba5e93a94c5318d8aea82942d55c7145eed43c200ba8"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0001.json": {
+      "bound_sha256": "66b83cfb424874a8191330c1e20d7a0d2aeeaa2e1e98d7124d3dd5e91d0e566e",
+      "match": true,
+      "sha256": "66b83cfb424874a8191330c1e20d7a0d2aeeaa2e1e98d7124d3dd5e91d0e566e"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0002.json": {
+      "bound_sha256": "ecf221e05e0e6ac38c8044c83b74f23987baab83039bb5c978bc7d3a64cada65",
+      "match": true,
+      "sha256": "ecf221e05e0e6ac38c8044c83b74f23987baab83039bb5c978bc7d3a64cada65"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0003.json": {
+      "bound_sha256": "85f612466589b85a4cfe0cdeb9487ac0b0c4400d7726d090dc68f82e11add398",
+      "match": true,
+      "sha256": "85f612466589b85a4cfe0cdeb9487ac0b0c4400d7726d090dc68f82e11add398"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0004.json": {
+      "bound_sha256": "57fbe4b6a9e808945251780b9c5b8492d368c7d7f0de160ecd8ca73c1b675780",
+      "match": true,
+      "sha256": "57fbe4b6a9e808945251780b9c5b8492d368c7d7f0de160ecd8ca73c1b675780"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0005.json": {
+      "bound_sha256": "fbc4c82540e5cfdded860c27d12c57b895da2159f603320da5a3046d88f94283",
+      "match": true,
+      "sha256": "fbc4c82540e5cfdded860c27d12c57b895da2159f603320da5a3046d88f94283"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0006.json": {
+      "bound_sha256": "7950d060991bfcab0f7e30a6c7841cab6b26925abf2c384d3d3818f8cbce7c55",
+      "match": true,
+      "sha256": "7950d060991bfcab0f7e30a6c7841cab6b26925abf2c384d3d3818f8cbce7c55"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0007.json": {
+      "bound_sha256": "6a376c8757d74b7f1123247ecd99f5d889bbb3503527950573054407dde04258",
+      "match": true,
+      "sha256": "6a376c8757d74b7f1123247ecd99f5d889bbb3503527950573054407dde04258"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0008.json": {
+      "bound_sha256": "1ac62ef5135d7d6ccb2417cc8ce18d94b26646191a6d1db34e15876f2f3f41d2",
+      "match": true,
+      "sha256": "1ac62ef5135d7d6ccb2417cc8ce18d94b26646191a6d1db34e15876f2f3f41d2"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0009.json": {
+      "bound_sha256": "06db1991efc4e63111626ba127ffe07ebb32ef1470de173aa031f86f661a1d16",
+      "match": true,
+      "sha256": "06db1991efc4e63111626ba127ffe07ebb32ef1470de173aa031f86f661a1d16"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0010.json": {
+      "bound_sha256": "bae026f85258c8a8990f0b946f2829f59ef674072b3d5677b72604cf04f0512d",
+      "match": true,
+      "sha256": "bae026f85258c8a8990f0b946f2829f59ef674072b3d5677b72604cf04f0512d"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0011.json": {
+      "bound_sha256": "761a59ce6e00306b9d65b4f1fac8242bff5fb2c4482bb5f6cfd53ed7361dd4d5",
+      "match": true,
+      "sha256": "761a59ce6e00306b9d65b4f1fac8242bff5fb2c4482bb5f6cfd53ed7361dd4d5"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0012.json": {
+      "bound_sha256": "acdd4a260b5d7fc2614e0829efaeed38e04abf1e8f03928b82b60981741625a6",
+      "match": true,
+      "sha256": "acdd4a260b5d7fc2614e0829efaeed38e04abf1e8f03928b82b60981741625a6"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0013.json": {
+      "bound_sha256": "0b52384bc6ba6e82f9e6ee03678ed6893d1aeed79a4706870766547690551dbf",
+      "match": true,
+      "sha256": "0b52384bc6ba6e82f9e6ee03678ed6893d1aeed79a4706870766547690551dbf"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0014.json": {
+      "bound_sha256": "6785250564bdddab398290d56e0b7ecd165c08208bf9c1c3f9dc7c2947dc6e1d",
+      "match": true,
+      "sha256": "6785250564bdddab398290d56e0b7ecd165c08208bf9c1c3f9dc7c2947dc6e1d"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0015.json": {
+      "bound_sha256": "a916f88c5ccb9ca29349b937e0c243e57c3ecfc1eb3c4c98f1c8efc7ec617ee3",
+      "match": true,
+      "sha256": "a916f88c5ccb9ca29349b937e0c243e57c3ecfc1eb3c4c98f1c8efc7ec617ee3"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/packets/ERSCPKT-0016.json": {
+      "bound_sha256": "7fd214d105b803a37336d70d9d19bcdc5ec31b7111f3869baac188d673aa30ab",
+      "match": true,
+      "sha256": "7fd214d105b803a37336d70d9d19bcdc5ec31b7111f3869baac188d673aa30ab"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/receipt_contract.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "9922535622d3e77cc818d40d0ba811bb5fa1bd90fe44af4315bda02a09692767"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json": {
+      "bound_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "match": true,
+      "sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v6/luna-independent-prelaunch-v6.json": {
+      "bound_sha256": "03897db27ebe3be42a55939dd513146a2aea05d5a9ee171937960b085316bb1a",
+      "match": true,
+      "sha256": "03897db27ebe3be42a55939dd513146a2aea05d5a9ee171937960b085316bb1a"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v7-atomic8/activation-transaction-v7-atomic8.schema.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "019eba5981f37949c22ffddd21edfdffd0b0b64884671dae6fb7aa7d4fe65773"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v7-atomic8/authority-v7-atomic8.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "0a0a5f8cd9c6546f398e2c0c3be9c1f506fd08919a7b9cb986cad17b2e4176ba"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v7-atomic8/terminal-preparation-report-v7-atomic8.json": {
+      "bound_sha256": "6a31474c4e6943e812776739cf87a7efeeba6cda1937bc0a94d645cf145839e1",
+      "match": true,
+      "sha256": "6a31474c4e6943e812776739cf87a7efeeba6cda1937bc0a94d645cf145839e1"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/AUTHORITY_V8.json": {
+      "bound_sha256": "f36db3670c6d33f4c3bac0832ac9f788ea6193d5dacf5b4f9f608bbb1d51258c",
+      "match": true,
+      "sha256": "f36db3670c6d33f4c3bac0832ac9f788ea6193d5dacf5b4f9f608bbb1d51258c"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/terminal-preparation-report-v8.json": {
+      "bound_sha256": "215da1678af965ef7b8035037592621c9af42d4d8749b94b4a57d1eacc13101f",
+      "match": true,
+      "sha256": "215da1678af965ef7b8035037592621c9af42d4d8749b94b4a57d1eacc13101f"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/test_binding_v8.py": {
+      "bound_sha256": "7e92eac72fc39506234b7ba6a4fac22da0d0118ca9fe6683a4b2e65d87d7652a",
+      "match": true,
+      "sha256": "7e92eac72fc39506234b7ba6a4fac22da0d0118ca9fe6683a4b2e65d87d7652a"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/verify_binding_v8.py": {
+      "bound_sha256": "50ce0b82787b9b5a6ae70820a2c4dfaba723bc626ef3fdf316ee554c0a4e1c9c",
+      "match": true,
+      "sha256": "50ce0b82787b9b5a6ae70820a2c4dfaba723bc626ef3fdf316ee554c0a4e1c9c"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/VALIDATOR_AUTHORITY_V2.json": {
+      "bound_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+      "match": true,
+      "sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/DEPENDENCY_BINDING_AUTHORITY_V1.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "5fa8f8c44cba9c0968a771a880746fd9ddcbd6985409ac99633ecb5d282856ff"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/terminal-independent-binding-report.json": {
+      "bound_sha256": "f5cb2e7cc0bb51153c606a37f2808df33a4f815270712cd1f92b427707347b37",
+      "match": true,
+      "sha256": "f5cb2e7cc0bb51153c606a37f2808df33a4f815270712cd1f92b427707347b37"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/test_universal_shadow_certification_postrun_v2.py": {
+      "bound_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+      "match": true,
+      "sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961"
+    },
+    "master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/validate_universal_shadow_certification_postrun_v2.py": {
+      "bound_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+      "match": true,
+      "sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254"
+    },
+    "master/external_research/universal-wave-0001/batch_authority.json": {
+      "bound_sha256": "ef58c6c758acf17f8bccfafae999233ad42fe2d907565d74f4319cab100db1b1",
+      "match": true,
+      "sha256": "ef58c6c758acf17f8bccfafae999233ad42fe2d907565d74f4319cab100db1b1"
+    },
+    "master/external_research/universal-wave-0001/batch_manifest.jsonl": {
+      "bound_sha256": "1df2601bc731f47ae991ec2bd5ba60f801ba7fd003473970675dccd746058e7a",
+      "match": true,
+      "sha256": "1df2601bc731f47ae991ec2bd5ba60f801ba7fd003473970675dccd746058e7a"
+    },
+    "master/external_research/universal-wave-0001/launch_seal.json": {
+      "bound_sha256": "f38acb7b88c2282465bedd3c81a9968f1fc724b1f28305509fbeaf51b5e35135",
+      "match": true,
+      "sha256": "f38acb7b88c2282465bedd3c81a9968f1fc724b1f28305509fbeaf51b5e35135"
+    },
+    "master/external_research/universal-wave-0001/leaf_prompt.json": {
+      "bound_sha256": "954e7a3984a0b1700633b8109a4d71c2fc667d4c382d82b4ab1798075e60dad4",
+      "match": true,
+      "sha256": "954e7a3984a0b1700633b8109a4d71c2fc667d4c382d82b4ab1798075e60dad4"
+    },
+    "master/external_research/universal-wave-0001/packet_registry.jsonl": {
+      "bound_sha256": "c50d489212d9f5ca14e20aa9c75cb15c55cecabea27140d29129547142c4012d",
+      "match": true,
+      "sha256": "c50d489212d9f5ca14e20aa9c75cb15c55cecabea27140d29129547142c4012d"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0001.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "af09ca6eebe9b6ab4851155b46467dbc5064deb086ba32b67de356cbc6605be1"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0002.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7960df165e9d054a1cd5d3f64bac4ef8b806b6325ff76a0ff7754a1eca9873fe"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0003.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "bf9c877692f5efa5d6c675ad8a2f1521149bd5360a1ffe471a02b2174e321ffb"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0004.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "2d45fcc4307a4ab78742accda27b233f3cf665957b0b0fecd5c3e6ff66c298de"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0005.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "9cff9c123ca5f7d4b3f9b2e0f96ed2ab24502003caab2c2fef002e562f240c35"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0006.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "664ffd431aa2715f05d93378d6a9107d876b42ea7b4f251ca114c4cd1c9f4c07"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0007.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "0850374db2d5d78ffd43ec765807dab482c8eac3c2cf8e29d99e5468fcf69c19"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0008.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "c60c2c5fd674e0854b58d3150590634f40a94a8e3784077b58c25e04b9ecfc1a"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0009.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "c841ccdf3532a203e3a5f3a2bf5146080a4e89210aa4c144eb6afb232afbb560"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0010.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "25e293cde296314c3ccd180cf4a3635c44c56dec23096117d27aad5e35d559b5"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0011.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "3fe15a967b6958bc32541fc741a7a2a0ef8054c19e1f3ca1ce31805509efb655"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0012.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "5d46eeeb54113028b6001f910df827efa52bb739523bfc4883344b8b1d3c93f7"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0013.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "cc9d3ec776d895b8cbbce56a76a4b97a633d98e41f6a7c9f2c26bf0384b47059"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0014.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "7268f2ba09b4033bfc152cc8ff63619da0310b67572e5465e21180e622d61325"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0015.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "56797eab4ffd618112f0efb8daefd77955890df4c679210960bdae1d2086ac56"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0016.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "172cb74dac8913e4a8091999715219f82736807537c72b7fdd00057f33b11d93"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0017.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "0cc9b032a98245b3db10371b2478552e44a0dad811cdf017e6b34464ec6bd721"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0018.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "2e4e39980aa8c823c892547aa827f1d35c454c67ba57a22ed12026cbae8894a2"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0019.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "53d0dde0c4a694b0db8796b425043f8b9c82bedd45ce3a7435ff364d61faca97"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0020.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "b225a72045725a733abdbc2db10fed944a1542969535f42cdba5ce7b18cc06b0"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0021.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "534fbebb1bbc7b82f765dec0b1c64f57ea531073a31b14cf62e44fe94ecb9c32"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0022.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "43464104bad3af06be9f50a9a9c817b2c4e1d8bcf9fe08ed24a1390f0042c22a"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0023.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "bd1bfdc426058121250a8b4a97f932e168965aa83af37776e177427abaeba904"
+    },
+    "master/external_research/universal-wave-0001/packets/ERUPKT-0024.json": {
+      "bound_sha256": null,
+      "match": true,
+      "sha256": "c0825ea07926d7711f9c4b93fa7ace49928753436dcc67ef3b024757972fa9c0"
+    },
+    "master/external_research/universal-wave-0001/receipt_contract.json": {
+      "bound_sha256": "edaa78bcf057c950dacc479efec42967ade3d7d6d2f070c3064ef8487d2b6ee7",
+      "match": true,
+      "sha256": "edaa78bcf057c950dacc479efec42967ade3d7d6d2f070c3064ef8487d2b6ee7"
+    },
+    "master/external_research/universal-wave-0001/runtime/native_capture.json": {
+      "bound_sha256": "70eeaf93092a05ffe36f4b5f17356bba751646b23d65eebcb567b38d051e45ee",
+      "match": true,
+      "sha256": "70eeaf93092a05ffe36f4b5f17356bba751646b23d65eebcb567b38d051e45ee"
+    },
+    "master/external_research/universal-wave-0001/schemas/external_research_universal_result.schema.json": {
+      "bound_sha256": "5fff1a72d98a8ead0f042a438538d3662132ed35823bc49d6b1ac0d9a50a06e6",
+      "match": true,
+      "sha256": "5fff1a72d98a8ead0f042a438538d3662132ed35823bc49d6b1ac0d9a50a06e6"
+    },
+    "master/external_research/universal-wave-0001/validation/activation.json": {
+      "bound_sha256": "c8c8d83e19a8ec82d869bc74528053d887a042b545afe4293f08ccf964758e3e",
+      "match": true,
+      "sha256": "c8c8d83e19a8ec82d869bc74528053d887a042b545afe4293f08ccf964758e3e"
+    },
+    "master/external_research/universal-wave-0001/validation/master-independent-prelaunch.json": {
+      "bound_sha256": "bcf0382157e8ff69fe98c8cd4743b8f23932e3834ec5d70568f5cb67979705af",
+      "match": true,
+      "sha256": "bcf0382157e8ff69fe98c8cd4743b8f23932e3834ec5d70568f5cb67979705af"
+    },
+    "master/external_research/universal-wave-0001/validation/primary-postrun.json": {
+      "bound_sha256": "1256add17ed50ffc38d2e6dfaf013fb11843e194edba0f9e0bc35b1d2593ee02",
+      "match": true,
+      "sha256": "1256add17ed50ffc38d2e6dfaf013fb11843e194edba0f9e0bc35b1d2593ee02"
+    }
+  },
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "reviewer": {
+    "additional_agents": 0,
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "retries": 0,
+    "subagents": 0
+  },
+  "schema_version": "audit005-certification-binding-v8-independent-prelaunch-cohort-0001-report-v1",
+  "scope": {
+    "activation_or_launch_authorization": false,
+    "assignments": 8,
+    "cohort_0002_semantic_validation": "not_in_scope; topology-only disjoint split check",
+    "cohort_id": "cohort-0001",
+    "features": 1944
+  },
+  "status": "PASS",
+  "terminal_preparation_pin": {
+    "bound_status": "BLOCKED_AWAITING_FRESH_LUNA_PRELAUNCH_V8_ATOMIC8",
+    "expected_raw_sha256": "215da1678af965ef7b8035037592621c9af42d4d8749b94b4a57d1eacc13101f",
+    "match": true,
+    "path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/terminal-preparation-report-v8.json",
+    "raw_sha256": "215da1678af965ef7b8035037592621c9af42d4d8749b94b4a57d1eacc13101f"
+  },
+  "tests": {
+    "cache_reconciliation_v3": {
+      "failed": 0,
+      "passed": 1042,
+      "runtime_caches_authoritative": false,
+      "runtime_files": 216,
+      "semantic_files": 152,
+      "status": "PASS",
+      "test_digest": "e0577d98788eddb401f3851e2516233248f90acbddbcba9b6ca5423027c65c38",
+      "total": 1042
+    },
+    "independent_reconstruction": {
+      "assignments": 8,
+      "cohort": "cohort-0001",
+      "features_checked": 1944,
+      "features_passed": 1944,
+      "fresh_identity_bindings_checked": 8,
+      "independent_read_toctou_stable": true,
+      "intent_bindings_checked": 8,
+      "output_bindings_checked": 8,
+      "owner_bindings_checked": 1944,
+      "packet_bindings_checked": 8,
+      "schema_bindings_checked": 8,
+      "source_assignments_loaded": 24,
+      "source_bindings_checked": 1944,
+      "status": "PASS",
+      "zero_state_checked": true
+    },
+    "sealed_v8_executable_suite": {
+      "command": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/test_binding_v8.py",
+      "exit_code": 0,
+      "schema_engine": {
+        "distribution": "jsonschema",
+        "flags": [
+          "-S",
+          "-B"
+        ],
+        "format_checker": "jsonschema.FormatChecker",
+        "meta_schema": "https://json-schema.org/draft/2020-12/schema",
+        "python": "3.12.13",
+        "runtime_caches_authoritative": false,
+        "validator": "jsonschema.Draft202012Validator",
+        "version": "4.26.0"
+      },
+      "status": "pass",
+      "tests": {
+        "failed": 0,
+        "local_live_checks": 201,
+        "passed": 648,
+        "substantive_v2_cases": 437,
+        "total": 648,
+        "wrapper_checks": 10
+      },
+      "toctou_all_inputs_stable": true,
+      "v2_suite": {
+        "bypass_reproductions": {
+          "rejected": 12,
+          "total": 12
+        },
+        "failed": 0,
+        "passed": 437,
+        "schema_fuzz": {
+          "rejected": 100,
+          "total": 100
+        },
+        "status": "pass_fail_closed",
+        "total": 437
+      },
+      "verifier_report_sha256": "35d0b79af8955f2341a90532b8fc656025a77a1fae92f1a9e3089107b9d70827",
+      "zero_state_observed": {
+        "activation_transactions": 0,
+        "credit": 0,
+        "native_capture_rows": 0,
+        "receipts": 0,
+        "results": 0
+      }
+    }
+  },
+  "unresolved_errors": [],
+  "v6_lineage": {
+    "activation_authorized": false,
+    "credits": {
+      "candidate": 0,
+      "certification": 0,
+      "coverage": 0,
+      "merge": 0,
+      "promotion": 0,
+      "spec": 0
+    },
+    "errors": [
+      "VALIDATOR_SEMANTIC_SCHEMA_BYPASS_UNRESOLVED",
+      "COMMON_MODE_V6_TEST_HARNESS_SYNTHETIC_COUNTER"
+    ],
+    "preserved_and_not_reinterpreted": true,
+    "raw_sha256": "03897db27ebe3be42a55939dd513146a2aea05d5a9ee171937960b085316bb1a",
+    "report_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v6/luna-independent-prelaunch-v6.json",
+    "status": "FAIL_CLOSED"
+  },
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "zero_state": {
+    "activation_files": 0,
+    "activation_transactions": 0,
+    "canonical_plans_written": false,
+    "certification_credit": 0,
+    "coverage_credit": 0,
+    "credit": 0,
+    "empty_output_directories": 16,
+    "generator_invoked": false,
+    "launch_attempted": false,
+    "merge_credit": 0,
+    "native_capture_files": 0,
+    "native_capture_rows": 0,
+    "output_directories": 16,
+    "promotion_credit": 0,
+    "receipts": 0,
+    "results": 0,
+    "spec_credit": 0
+  }
+}
+

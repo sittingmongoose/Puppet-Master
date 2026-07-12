@@ -1,0 +1,3050 @@
+L00005276	preserved_exact_tokens:
+L00005277	  - "`account_switch_event`"
+L00005278	  - "`switch_event_id`"
+L00005279	  - "`switch_reason`"
+L00005280	  - "`decision_kind`"
+L00005281	  - "`ts`"
+L00005282	negative_constraints:
+L00005283	  - "Account switching must not lose durable run/attempt/thread/source linkage."
+L00005284	owner_hints:
+L00005285	  - Plans/Contracts_V0.md
+L00005286	```
+L00005287	
+L00005288	### CV-051 - Project Attention Route Payload
+L00005289	
+L00005290	```yaml
+L00005291	plan_unit_id: CV-051
+L00005292	unit_type: requirement
+L00005293	status: accepted
+L00005294	owner_doc: Plans/Contracts_V0.md
+L00005295	canonical_text: >-
+L00005296	  project_attention_item carries identity, severity, owner/reason/source refs,
+L00005297	  primary and secondary route payloads, projection_trust_state, dismissibility,
+L00005298	  quieting, active, created/updated/resolved timestamps.
+L00005299	gui_related: true
+L00005300	gui_classification_reason: Project attention items, route payloads, projection trust state, dismissibility, quieting, and timestamps are visible attention UI state.
+L00005301	split_recommended: true
+L00005302	depends_on: [CV-046, CV-048]
+L00005303	unblocks: []
+L00005304	acceptance_criteria:
+L00005305	  - project_attention_item carries identity, severity, owner/reason/source refs, and route payloads.
+L00005306	  - projection_trust_state, dismissibility, quieting, active status, and timestamps remain explicit.
+L00005307	  - Project attention rows decode through the shared route model.
+L00005308	validation_surfaces:
+L00005309	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005310	  - python3 scripts/pm-plan-index.py validate
+L00005311	risk_class: project_attention_route_loss
+L00005312	reasoning_tier: high
+L00005313	context_scope: project_attention_route_payload
+L00005314	implementation_surfaces:
+L00005315	  - Plans/Contracts_V0.md
+L00005316	node_compile_hint:
+L00005317	  mode: project_attention_contract
+L00005318	  create_worknodes: false
+L00005319	source_lineage:
+L00005320	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005321	preserved_exact_tokens:
+L00005322	  - "`project_attention_item`"
+L00005323	  - "`projection_trust_state`"
+L00005324	  - "primary/secondary route payloads"
+L00005325	  - "quieting"
+L00005326	negative_constraints:
+L00005327	  - "Project attention route payloads must not bypass the shared route model."
+L00005328	owner_hints:
+L00005329	  - Plans/Contracts_V0.md
+L00005330	```
+L00005331	
+L00005332	### CV-052 - Worktree Lane Lifecycle Records
+L00005333	
+L00005334	```yaml
+L00005335	plan_unit_id: CV-052
+L00005336	unit_type: requirement
+L00005337	status: accepted
+L00005338	owner_doc: Plans/Contracts_V0.md
+L00005339	canonical_text: >-
+L00005340	  Worktree/lane lifecycle is a first-class storage family with durable worktree
+L00005341	  record, lane/worktree projection, historical archive/remove lineage,
+L00005342	  conflict/restoring states, and Git/PR restart identity; UI selection pointers
+L00005343	  are not substitutes.
+L00005344	gui_related: false
+L00005345	gui_classification_reason: This unit defines durable storage and lifecycle records rather than UI controls.
+L00005346	split_recommended: true
+L00005347	depends_on: [CV-035, CV-036]
+L00005348	unblocks: []
+L00005349	acceptance_criteria:
+L00005350	  - Worktree/lane lifecycle has durable record and projection identity.
+L00005351	  - Historical archive/remove lineage and conflict/restoring states are preserved.
+L00005352	  - Git/PR restart identity is not replaced by UI selection pointers.
+L00005353	validation_surfaces:
+L00005354	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005355	  - python3 scripts/pm-plan-index.py validate
+L00005356	risk_class: worktree_lifecycle_record_loss
+L00005357	reasoning_tier: high
+L00005358	context_scope: worktree_lane_lifecycle_records
+L00005359	implementation_surfaces:
+L00005360	  - Plans/Contracts_V0.md
+L00005361	  - Plans/storage-plan.md
+L00005362	node_compile_hint:
+L00005363	  mode: worktree_lifecycle_record
+L00005364	  create_worknodes: false
+L00005365	source_lineage:
+L00005366	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005367	preserved_exact_tokens:
+L00005368	  - "worktree/lane lifecycle"
+L00005369	  - "historical archive/remove lineage"
+L00005370	  - "conflict/restoring states"
+L00005371	negative_constraints:
+L00005372	  - "UI selection pointers are not substitutes for durable worktree/lane lifecycle records."
+L00005373	owner_hints:
+L00005374	  - Plans/Contracts_V0.md
+L00005375	```
+L00005376	
+L00005377	### CV-053 - Blocked Restart Recovery State
+L00005378	
+L00005379	```yaml
+L00005380	plan_unit_id: CV-053
+L00005381	unit_type: requirement
+L00005382	status: accepted
+L00005383	owner_doc: Plans/Contracts_V0.md
+L00005384	canonical_text: >-
+L00005385	  Approval, restart, and startup recovery preserve first-class waiting_approval
+L00005386	  blocked episodes; request_id maps 1:1 to { run_id, node_id, blocked_sequence };
+L00005387	  non-resumable attempts become stale_historical and unresolved prerequisites
+L00005388	  remain actionable.
+L00005389	gui_related: false
+L00005390	gui_classification_reason: This unit defines blocked runtime recovery identity and restart semantics.
+L00005391	split_recommended: true
+L00005392	depends_on: [CV-029]
+L00005393	unblocks: []
+L00005394	acceptance_criteria:
+L00005395	  - waiting_approval blocked episodes remain first-class across approval, restart, and startup recovery.
+L00005396	  - request_id maps 1:1 to run_id, node_id, and blocked_sequence.
+L00005397	  - Non-resumable attempts become stale_historical while unresolved prerequisites remain actionable.
+L00005398	validation_surfaces:
+L00005399	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005400	  - python3 scripts/pm-plan-index.py validate
+L00005401	risk_class: blocked_restart_state_loss
+L00005402	reasoning_tier: high
+L00005403	context_scope: blocked_restart_recovery
+L00005404	implementation_surfaces:
+L00005405	  - Plans/Contracts_V0.md
+L00005406	node_compile_hint:
+L00005407	  mode: blocked_restart_recovery
+L00005408	  create_worknodes: false
+L00005409	source_lineage:
+L00005410	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005411	preserved_exact_tokens:
+L00005412	  - "`waiting_approval`"
+L00005413	  - "`request_id`"
+L00005414	  - "`{ run_id, node_id, blocked_sequence }`"
+L00005415	  - "`stale_historical`"
+L00005416	negative_constraints:
+L00005417	  - "Restart recovery must not lose blocked episode identity."
+L00005418	owner_hints:
+L00005419	  - Plans/Contracts_V0.md
+L00005420	```
+L00005421	
+L00005422	### CV-054 - Route Target Selector Reject Rules
+L00005423	
+L00005424	```yaml
+L00005425	plan_unit_id: CV-054
+L00005426	unit_type: requirement
+L00005427	status: accepted
+L00005428	owner_doc: Plans/Contracts_V0.md
+L00005429	canonical_text: >-
+L00005430	  route_target requires project_id plus one primary selector; reject missing
+L00005431	  selector, competing subject_id and object_kind/object_id, object halves,
+L00005432	  inspector_target without object selector, conflicting tab_id, line/range, or
+L00005433	  per-surface state inside route_target.
+L00005434	gui_related: false
+L00005435	gui_classification_reason: This unit defines route_target validation and reject rules.
+L00005436	split_recommended: true
+L00005437	depends_on: [CV-031]
+L00005438	unblocks: [CV-055, CV-057, CV-058, CV-059]
+L00005439	acceptance_criteria:
+L00005440	  - route_target requires project_id plus one primary selector.
+L00005441	  - Invalid selector combinations are rejected.
+L00005442	  - line/range and per-surface state stay outside base route_target.
+L00005443	validation_surfaces:
+L00005444	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005445	  - python3 scripts/pm-plan-index.py validate
+L00005446	risk_class: route_selector_invalid_combo
+L00005447	reasoning_tier: high
+L00005448	context_scope: route_target_selector_rules
+L00005449	implementation_surfaces:
+L00005450	  - Plans/Contracts_V0.md
+L00005451	node_compile_hint:
+L00005452	  mode: route_target_validation
+L00005453	  create_worknodes: false
+L00005454	source_lineage:
+L00005455	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005456	preserved_exact_tokens:
+L00005457	  - "`route_target`"
+L00005458	  - "`project_id`"
+L00005459	  - "`subject_id`"
+L00005460	  - "`object_kind`"
+L00005461	  - "`object_id`"
+L00005462	  - "`inspector_target`"
+L00005463	  - "`tab_id`"
+L00005464	  - "`line`"
+L00005465	  - "`range`"
+L00005466	negative_constraints:
+L00005467	  - "Base route_target must not contain line/range or per-surface state."
+L00005468	owner_hints:
+L00005469	  - Plans/Contracts_V0.md
+L00005470	```
+L00005471	
+L00005472	### CV-055 - OpenFile And OpenSubject Identity Split
+L00005473	
+L00005474	```yaml
+L00005475	plan_unit_id: CV-055
+L00005476	unit_type: requirement
+L00005477	status: accepted
+L00005478	owner_doc: Plans/Contracts_V0.md
+L00005479	canonical_text: >-
+L00005480	  OpenFile { path... } remains workspace-file open; identity-native opens use
+L00005481	  OpenSubject(subject_id, open_intent), with doc:<document_id> and
+L00005482	  artifact:<artifact_id> resolving to workspace source, transient
+L00005483	  generated://<artifact_id>, or routed non-editor surfaces.
+L00005484	gui_related: false
+L00005485	gui_classification_reason: This unit defines open identity and workspace/source routing semantics.
+L00005486	split_recommended: true
+L00005487	depends_on: [CV-031, CV-054]
+L00005488	unblocks: [CV-056]
+L00005489	acceptance_criteria:
+L00005490	  - OpenFile remains the workspace-file open shape.
+L00005491	  - Identity-native opens use OpenSubject with subject_id and open_intent.
+L00005492	  - Document and artifact subjects resolve to workspace source, transient generated transport, or routed non-editor surfaces.
+L00005493	validation_surfaces:
+L00005494	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005495	  - python3 scripts/pm-plan-index.py validate
+L00005496	risk_class: open_contract_identity_fork
+L00005497	reasoning_tier: high
+L00005498	context_scope: open_file_subject_identity
+L00005499	implementation_surfaces:
+L00005500	  - Plans/Contracts_V0.md
+L00005501	node_compile_hint:
+L00005502	  mode: open_identity_contract
+L00005503	  create_worknodes: false
+L00005504	source_lineage:
+L00005505	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005506	preserved_exact_tokens:
+L00005507	  - "`OpenFile { path... }`"
+L00005508	  - "`OpenSubject`"
+L00005509	  - "`subject_id`"
+L00005510	  - "`open_intent`"
+L00005511	  - "`doc:<document_id>`"
+L00005512	  - "`artifact:<artifact_id>`"
+L00005513	  - "`generated://<artifact_id>`"
+L00005514	negative_constraints:
+L00005515	  - "OpenFile and OpenSubject must not fork into competing identity-native open contracts."
+L00005516	owner_hints:
+L00005517	  - Plans/Contracts_V0.md
+L00005518	```
+L00005519	
+L00005520	### CV-056 - Generated Transport Compatibility Disposition
+L00005521	
+L00005522	```yaml
+L00005523	plan_unit_id: CV-056
+L00005524	unit_type: compatibility_disposition
+L00005525	status: accepted
+L00005526	owner_doc: Plans/Contracts_V0.md
+L00005527	canonical_text: >-
+L00005528	  generated://<artifact_id>, open_subject, OpenArtifact, target_group?,
+L00005529	  open_mode?, and location? are transport, convenience, or compatibility only
+L00005530	  when normalized to OpenSubject, route_target, or open_intent; they do not
+L00005531	  define new identity.
+L00005532	gui_related: false
+L00005533	gui_classification_reason: This unit is a transport/alias compatibility disposition.
+L00005534	split_recommended: true
+L00005535	depends_on: [CV-055]
+L00005536	unblocks: []
+L00005537	acceptance_criteria:
+L00005538	  - Generated transport and open aliases normalize to OpenSubject, route_target, or open_intent.
+L00005539	  - Generated artifact source transports never become canonical identity.
+L00005540	  - Convenience names do not create a second OpenSubject schema.
+L00005541	validation_surfaces:
+L00005542	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005543	  - python3 scripts/pm-plan-index.py validate
+L00005544	risk_class: generated_transport_as_identity
+L00005545	reasoning_tier: high
+L00005546	context_scope: generated_transport_disposition
+L00005547	implementation_surfaces:
+L00005548	  - Plans/Contracts_V0.md
+L00005549	node_compile_hint:
+L00005550	  mode: compatibility_disposition
+L00005551	  create_worknodes: false
+L00005552	source_lineage:
+L00005553	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005554	preserved_exact_tokens:
+L00005555	  - "`generated://<artifact_id>`"
+L00005556	  - "`open_subject`"
+L00005557	  - "`OpenArtifact`"
+L00005558	  - "`target_group?`"
+L00005559	  - "`open_mode?`"
+L00005560	  - "`location?`"
+L00005561	compatibility_only_notes:
+L00005562	  - "Generated transport and open aliases are convenience/compatibility only when normalized."
+L00005563	negative_constraints:
+L00005564	  - "Generated artifact source transports never become canonical identity."
+L00005565	owner_hints:
+L00005566	  - Plans/Contracts_V0.md
+L00005567	```
+L00005568	
+L00005569	### CV-057 - Resume URL Serialized Route Transport
+L00005570	
+L00005571	```yaml
+L00005572	plan_unit_id: CV-057
+L00005573	unit_type: requirement
+L00005574	status: accepted
+L00005575	owner_doc: Plans/Contracts_V0.md
+L00005576	canonical_text: >-
+L00005577	  resume_url is serialized transport derived from route_target, narrower than
+L00005578	  internal route identity, and never a parallel stronger primitive; scope
+L00005579	  restorers such as focused_run_id and thread_id remain route fields.
+L00005580	gui_related: false
+L00005581	gui_classification_reason: This unit defines serialized route transport and scope restorer fields.
+L00005582	split_recommended: true
+L00005583	depends_on: [CV-046, CV-054]
+L00005584	unblocks: []
+L00005585	acceptance_criteria:
+L00005586	  - resume_url derives from route_target and decodes back to canonical route identity.
+L00005587	  - resume_url is narrower than internal route identity and not a stronger primitive.
+L00005588	  - focused_run_id and thread_id remain route fields, not shadow route primitives.
+L00005589	validation_surfaces:
+L00005590	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005591	  - python3 scripts/pm-plan-index.py validate
+L00005592	risk_class: resume_url_shadow_route
+L00005593	reasoning_tier: high
+L00005594	context_scope: resume_url_route_transport
+L00005595	implementation_surfaces:
+L00005596	  - Plans/Contracts_V0.md
+L00005597	node_compile_hint:
+L00005598	  mode: route_serialization_contract
+L00005599	  create_worknodes: false
+L00005600	source_lineage:
+L00005601	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005602	preserved_exact_tokens:
+L00005603	  - "`resume_url`"
+L00005604	  - "`route_target`"
+L00005605	  - "`focused_run_id`"
+L00005606	  - "`thread_id`"
+L00005607	negative_constraints:
+L00005608	  - "resume_url must not act as a shadow routing primitive."
+L00005609	owner_hints:
+L00005610	  - Plans/Contracts_V0.md
+L00005611	```
+L00005612	
+L00005613	### CV-058 - Inspector Target Closed Focus Enum
+L00005614	
+L00005615	```yaml
+L00005616	plan_unit_id: CV-058
+L00005617	unit_type: requirement
+L00005618	status: accepted
+L00005619	owner_doc: Plans/Contracts_V0.md
+L00005620	canonical_text: >-
+L00005621	  inspector_target is reusable detail-focus only, closed to summary, evidence,
+L00005622	  artifacts, history, reviews, usage, lineage, and details; message-step-line-
+L00005623	  range anchors and arbitrary tab names stay out.
+L00005624	gui_related: true
+L00005625	gui_classification_reason: Inspector detail focus values and tab/focus behavior are user-visible detail UI semantics.
+L00005626	split_recommended: true
+L00005627	depends_on: [CV-054]
+L00005628	unblocks: []
+L00005629	acceptance_criteria:
+L00005630	  - inspector_target uses the closed focus enum.
+L00005631	  - Inspector focus remains reusable detail-surface focus rather than per-surface noise.
+L00005632	  - Message-step-line-range anchors and arbitrary tab names stay outside inspector_target.
+L00005633	validation_surfaces:
+L00005634	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005635	  - python3 scripts/pm-plan-index.py validate
+L00005636	risk_class: inspector_focus_enum_drift
+L00005637	reasoning_tier: high
+L00005638	context_scope: inspector_target_enum
+L00005639	implementation_surfaces:
+L00005640	  - Plans/Contracts_V0.md
+L00005641	node_compile_hint:
+L00005642	  mode: inspector_focus_enum
+L00005643	  create_worknodes: false
+L00005644	source_lineage:
+L00005645	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005646	preserved_exact_tokens:
+L00005647	  - "`inspector_target`"
+L00005648	  - "`summary`"
+L00005649	  - "`evidence`"
+L00005650	  - "`artifacts`"
+L00005651	  - "`history`"
+L00005652	  - "`reviews`"
+L00005653	  - "`usage`"
+L00005654	  - "`lineage`"
+L00005655	  - "`details`"
+L00005656	negative_constraints:
+L00005657	  - "message-step-line-range anchors and arbitrary tab names stay out of inspector_target."
+L00005658	owner_hints:
+L00005659	  - Plans/Contracts_V0.md
+L00005660	```
+L00005661	
+L00005662	### CV-059 - Usage Route Key Normalization
+L00005663	
+L00005664	```yaml
+L00005665	plan_unit_id: CV-059
+L00005666	unit_type: constraint
+L00005667	status: accepted
+L00005668	owner_doc: Plans/Contracts_V0.md
+L00005669	canonical_text: >-
+L00005670	  Usage routes normalize usage_event_ref to object_kind = usage_event and the
+L00005671	  canonical usage event object_id; timestamp/run/thread/tier filters are
+L00005672	  degraded compatibility or narrowing, not primary route identity.
+L00005673	gui_related: false
+L00005674	gui_classification_reason: This unit defines usage route identity and compatibility filters.
+L00005675	split_recommended: true
+L00005676	depends_on: [CV-031, CV-054]
+L00005677	unblocks: []
+L00005678	acceptance_criteria:
+L00005679	  - usage_event_ref normalizes into object_kind = usage_event.
+L00005680	  - The canonical usage event is the object_id for usage routes.
+L00005681	  - Timestamp/run/thread/tier filters are not primary route identity.
+L00005682	validation_surfaces:
+L00005683	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005684	  - python3 scripts/pm-plan-index.py validate
+L00005685	risk_class: usage_route_key_drift
+L00005686	reasoning_tier: high
+L00005687	context_scope: usage_route_normalization
+L00005688	implementation_surfaces:
+L00005689	  - Plans/Contracts_V0.md
+L00005690	node_compile_hint:
+L00005691	  mode: usage_route_identity
+L00005692	  create_worknodes: false
+L00005693	source_lineage:
+L00005694	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005695	preserved_exact_tokens:
+L00005696	  - "`usage_event_ref`"
+L00005697	  - "`object_kind = usage_event`"
+L00005698	  - "`object_id`"
+L00005699	  - "`tier_id`"
+L00005700	compatibility_only_notes:
+L00005701	  - "Timestamp/run/thread/tier filters are degraded compatibility or narrowing, not primary route identity."
+L00005702	negative_constraints:
+L00005703	  - "Usage route identity must not use tier or timestamp filters as the primary key."
+L00005704	owner_hints:
+L00005705	  - Plans/Contracts_V0.md
+L00005706	```
+L00005707	
+L00005708	### CV-060 - Executor Dispatch Runtime Attribution Packet
+L00005709	
+L00005710	```yaml
+L00005711	plan_unit_id: CV-060
+L00005712	unit_type: requirement
+L00005713	status: accepted
+L00005714	owner_doc: Plans/Contracts_V0.md
+L00005715	canonical_text: >-
+L00005716	  Executor-facing dispatch requires run_id, thread_id?, node_id?, attempt_id?,
+L00005717	  execution_role?, provider_attempt_ref?, and usage_event_ref?; broad
+L00005718	  EventEnvelopeV1 compatibility wording is not enough.
+L00005719	gui_related: false
+L00005720	gui_classification_reason: This unit defines executor dispatch packet requirements.
+L00005721	split_recommended: true
+L00005722	depends_on: [CV-026, CV-038]
+L00005723	unblocks: []
+L00005724	acceptance_criteria:
+L00005725	  - Executor-facing dispatch payloads include the runtime attribution packet.
+L00005726	  - EventEnvelopeV1 broad compatibility wording does not satisfy executor-facing dispatch requirements.
+L00005727	  - Tools.md references the shared runtime attribution packet instead of treating tool events as analytics-only.
+L00005728	validation_surfaces:
+L00005729	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005730	  - python3 scripts/pm-plan-index.py validate
+L00005731	risk_class: runtime_dispatch_packet_underkeying
+L00005732	reasoning_tier: high
+L00005733	context_scope: executor_dispatch_attribution
+L00005734	implementation_surfaces:
+L00005735	  - Plans/Contracts_V0.md
+L00005736	  - Plans/Executor_Protocol.md
+L00005737	node_compile_hint:
+L00005738	  mode: executor_dispatch_packet
+L00005739	  create_worknodes: false
+L00005740	source_lineage:
+L00005741	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005742	preserved_exact_tokens:
+L00005743	  - "`run_id`"
+L00005744	  - "`thread_id?`"
+L00005745	  - "`node_id?`"
+L00005746	  - "`attempt_id?`"
+L00005747	  - "`execution_role?`"
+L00005748	  - "`provider_attempt_ref?`"
+L00005749	  - "`usage_event_ref?`"
+L00005750	  - "`EventEnvelopeV1`"
+L00005751	negative_constraints:
+L00005752	  - "EventEnvelopeV1 broad compatibility wording is not enough for executor-facing runtime dispatch."
+L00005753	owner_hints:
+L00005754	  - Plans/Contracts_V0.md
+L00005755	```
+L00005756	
+L00005757	### CV-061 - Degraded Trust Concern Escalation
+L00005758	
+L00005759	```yaml
+L00005760	plan_unit_id: CV-061
+L00005761	unit_type: requirement
+L00005762	status: accepted
+L00005763	owner_doc: Plans/Contracts_V0.md
+L00005764	canonical_text: >-
+L00005765	  degraded-trust is represented as a cross-surface concern/projection-trust
+L00005766	  state, and degraded-trust/account-health escalation routes through the shared
+L00005767	  concern record, blocked-owner, and escalation-ladder model instead of
+L00005768	  surface-local warning aliases.
+L00005769	gui_related: false
+L00005770	gui_classification_reason: This unit defines concern escalation records and owner routing rather than GUI layout or visual presentation.
+L00005771	split_recommended: true
+L00005772	depends_on: [CV-043, CV-048]
+L00005773	unblocks: []
+L00005774	acceptance_criteria:
+L00005775	  - Degraded-trust/account-health escalation uses the shared concern record model.
+L00005776	  - Blocked-owner and escalation-ladder routing are preserved as cross-surface contracts.
+L00005777	  - Surface-local warning aliases are not accepted as canonical concern routing.
+L00005778	validation_surfaces:
+L00005779	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005780	  - python3 scripts/pm-plan-index.py validate
+L00005781	risk_class: concern_escalation_alias_drift
+L00005782	reasoning_tier: high
+L00005783	context_scope: degraded_trust_concern_escalation
+L00005784	implementation_surfaces:
+L00005785	  - Plans/Contracts_V0.md
+L00005786	  - Plans/storage-plan.md
+L00005787	  - Plans/human-in-the-loop.md
+L00005788	node_compile_hint:
+L00005789	  mode: concern_escalation_contract
+L00005790	  create_worknodes: false
+L00005791	source_lineage:
+L00005792	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00005793	preserved_exact_tokens:
+L00005794	  - "`degraded-trust`"
+L00005795	  - "cross-surface concern/projection-trust state"
+L00005796	  - "blocked-owner"
+L00005797	  - "escalation-ladder"
+L00005798	negative_constraints:
+L00005799	  - "Contracts consumers must not invent surface-local warning aliases for degraded-trust/account-health escalation."
+L00005800	owner_hints:
+L00005801	  - Plans/Contracts_V0.md
+L00005802	```
+L00005803	
+L00005804	### CV-062 - First-Class Concern Record Shape
+L00005805	
+L00005806	```yaml
+L00005807	plan_unit_id: CV-062
+L00005808	unit_type: requirement
+L00005809	status: accepted
+L00005810	owner_doc: Plans/Contracts_V0.md
+L00005811	canonical_text: >-
+L00005812	  Concern is a first-class durable record distinct from review finding,
+L00005813	  annotation, blocked episode, and graph patch request, with concern identity,
+L00005814	  project/run/scope refs, evidence/source refs, lineage refs,
+L00005815	  severity/category/status, and governance metadata.
+L00005816	gui_related: false
+L00005817	gui_classification_reason: This unit defines the durable concern record schema.
+L00005818	split_recommended: true
+L00005819	depends_on: [CV-006, CV-007, CV-043]
+L00005820	unblocks: [CV-063, CV-064, CV-065, CV-066, CV-067]
+L00005821	acceptance_criteria:
+L00005822	  - Concern remains a first-class durable record separate from review finding, annotation, blocked episode, and graph patch request.
+L00005823	  - Concern records expose concern_id/project_id/run and scope refs.
+L00005824	  - Concern records preserve evidence/source refs, lineage refs, severity/category/status, and governance metadata.
+L00005825	validation_surfaces:
+L00005826	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005827	  - python3 scripts/pm-plan-index.py validate
+L00005828	risk_class: concern_record_identity_collapse
+L00005829	reasoning_tier: high
+L00005830	context_scope: first_class_concern_record
+L00005831	implementation_surfaces:
+L00005832	  - Plans/Contracts_V0.md
+L00005833	  - Plans/storage-plan.md
+L00005834	node_compile_hint:
+L00005835	  mode: concern_record_schema_contract
+L00005836	  create_worknodes: false
+L00005837	source_lineage:
+L00005838	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00005839	preserved_exact_tokens:
+L00005840	  - "Concern is a first-class durable record"
+L00005841	  - "concern_id"
+L00005842	  - "project_id"
+L00005843	  - "scope refs"
+L00005844	  - "evidence/source refs"
+L00005845	  - "lineage refs"
+L00005846	negative_constraints:
+L00005847	  - "Concern identity must not be collapsed into review findings, annotations, blocked episodes, or graph patch requests."
+L00005848	owner_hints:
+L00005849	  - Plans/Contracts_V0.md
+L00005850	```
+L00005851	
+L00005852	### CV-063 - Concern Lifecycle And Resolution Kinds
+L00005853	
+L00005854	```yaml
+L00005855	plan_unit_id: CV-063
+L00005856	unit_type: requirement
+L00005857	status: accepted
+L00005858	owner_doc: Plans/Contracts_V0.md
+L00005859	canonical_text: >-
+L00005860	  Concern lifecycle states are active, acknowledged, resolved, and dismissed,
+L00005861	  and concern resolution_kind values are fixed, accepted_risk, superseded,
+L00005862	  merged, split, invalidated, obsoleted_by_patch, and obsoleted_by_recovery.
+L00005863	gui_related: false
+L00005864	gui_classification_reason: This unit defines concern lifecycle enum semantics.
+L00005865	split_recommended: true
+L00005866	depends_on: [CV-062]
+L00005867	unblocks: [CV-064]
+L00005868	acceptance_criteria:
+L00005869	  - Concern lifecycle uses active, acknowledged, resolved, and dismissed.
+L00005870	  - resolution_kind preserves fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, and obsoleted_by_recovery.
+L00005871	  - The concern-lifecycle owner section keeps explicit active/acknowledged/resolved/dismissed semantics.
+L00005872	validation_surfaces:
+L00005873	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005874	  - python3 scripts/pm-plan-index.py validate
+L00005875	risk_class: concern_lifecycle_enum_drift
+L00005876	reasoning_tier: standard
+L00005877	context_scope: concern_lifecycle_resolution_kinds
+L00005878	implementation_surfaces:
+L00005879	  - Plans/Contracts_V0.md
+L00005880	  - Plans/storage-plan.md
+L00005881	node_compile_hint:
+L00005882	  mode: concern_lifecycle_contract
+L00005883	  create_worknodes: false
+L00005884	source_lineage:
+L00005885	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00005886	preserved_exact_tokens:
+L00005887	  - "active"
+L00005888	  - "acknowledged"
+L00005889	  - "resolved"
+L00005890	  - "dismissed"
+L00005891	  - "resolution_kind"
+L00005892	  - "accepted_risk"
+L00005893	  - "obsoleted_by_patch"
+L00005894	  - "obsoleted_by_recovery"
+L00005895	owner_hints:
+L00005896	  - Plans/Contracts_V0.md
+L00005897	```
+L00005898	
+L00005899	### CV-064 - Concern Action Authority And Confirmation
+L00005900	
+L00005901	```yaml
+L00005902	plan_unit_id: CV-064
+L00005903	unit_type: requirement
+L00005904	status: accepted
+L00005905	owner_doc: Plans/Contracts_V0.md
+L00005906	canonical_text: >-
+L00005907	  Concern actions carry actor authority, confirmation, rationale,
+L00005908	  reversibility, and audit fields, and the concern-action confirmation matrix
+L00005909	  keeps acknowledged, dismissed, resolved, and structural lineage edits as
+L00005910	  distinct actions.
+L00005911	gui_related: false
+L00005912	gui_classification_reason: This unit defines concern action authorization and audit semantics.
+L00005913	split_recommended: true
+L00005914	depends_on: [CV-063]
+L00005915	unblocks: []
+L00005916	acceptance_criteria:
+L00005917	  - Concern actions include actor authority, confirmation, rationale, reversibility, and audit fields.
+L00005918	  - Concern-action confirmation matrix requirements are preserved in the owner section.
+L00005919	  - Acknowledged, dismissed, resolved, and structural lineage edits remain distinct concern actions.
+L00005920	validation_surfaces:
+L00005921	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005922	  - python3 scripts/pm-plan-index.py validate
+L00005923	risk_class: concern_action_audit_loss
+L00005924	reasoning_tier: high
+L00005925	context_scope: concern_action_authority_confirmation
+L00005926	implementation_surfaces:
+L00005927	  - Plans/Contracts_V0.md
+L00005928	  - Plans/storage-plan.md
+L00005929	  - Plans/human-in-the-loop.md
+L00005930	node_compile_hint:
+L00005931	  mode: concern_action_authority_contract
+L00005932	  create_worknodes: false
+L00005933	source_lineage:
+L00005934	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00005935	preserved_exact_tokens:
+L00005936	  - "actor authority"
+L00005937	  - "confirmation"
+L00005938	  - "rationale"
+L00005939	  - "reversibility"
+L00005940	  - "audit fields"
+L00005941	  - "concern-action confirmation matrix"
+L00005942	negative_constraints:
+L00005943	  - "Acknowledged, dismissed, resolved, and structural lineage edits must not be collapsed into one generic concern action."
+L00005944	owner_hints:
+L00005945	  - Plans/Contracts_V0.md
+L00005946	```
+L00005947	
+L00005948	### CV-065 - Concern Linkage And Blocked Episode Relation
+L00005949	
+L00005950	```yaml
+L00005951	plan_unit_id: CV-065
+L00005952	unit_type: requirement
+L00005953	status: accepted
+L00005954	owner_doc: Plans/Contracts_V0.md
+L00005955	canonical_text: >-
+L00005956	  Concerns expose review_refs, corroboration_refs, graph_patch_refs,
+L00005957	  recovery_refs, blocked_episode_refs, and promotion_refs, while blocked
+L00005958	  episodes may reference concerns without replacing concern identity.
+L00005959	gui_related: false
+L00005960	gui_classification_reason: This unit defines concern relationship fields and blocked-episode linkage.
+L00005961	split_recommended: true
+L00005962	depends_on: [CV-029, CV-043, CV-062]
+L00005963	unblocks: []
+L00005964	acceptance_criteria:
+L00005965	  - Concern records expose review, corroboration, graph patch, recovery, blocked episode, and promotion refs.
+L00005966	  - Blocked episodes are allowed to reference concerns.
+L00005967	  - Blocked episodes do not replace concern identity.
+L00005968	validation_surfaces:
+L00005969	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005970	  - python3 scripts/pm-plan-index.py validate
+L00005971	risk_class: blocked_episode_concern_identity_loss
+L00005972	reasoning_tier: high
+L00005973	context_scope: concern_linkage_blocked_episode_relation
+L00005974	implementation_surfaces:
+L00005975	  - Plans/Contracts_V0.md
+L00005976	  - Plans/storage-plan.md
+L00005977	  - Plans/human-in-the-loop.md
+L00005978	node_compile_hint:
+L00005979	  mode: concern_linkage_contract
+L00005980	  create_worknodes: false
+L00005981	source_lineage:
+L00005982	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00005983	preserved_exact_tokens:
+L00005984	  - "review_refs"
+L00005985	  - "corroboration_refs"
+L00005986	  - "graph_patch_refs"
+L00005987	  - "recovery_refs"
+L00005988	  - "blocked_episode_refs"
+L00005989	  - "promotion_refs"
+L00005990	negative_constraints:
+L00005991	  - "Blocked episodes may reference concerns without replacing concern identity."
+L00005992	owner_hints:
+L00005993	  - Plans/Contracts_V0.md
+L00005994	```
+L00005995	
+L00005996	### CV-066 - Concern Ownership Resolver And Reassignment
+L00005997	
+L00005998	```yaml
+L00005999	plan_unit_id: CV-066
+L00006000	unit_type: requirement
+L00006001	status: accepted
+L00006002	owner_doc: Plans/Contracts_V0.md
+L00006003	canonical_text: >-
+L00006004	  Concern owner_kind/owner_ref, created_by_kind/created_by_ref, and resolver
+L00006005	  authority are separate roles; ownership may be reassigned without changing
+L00006006	  concern identity, and concern resolver remains distinct from owner/source.
+L00006007	gui_related: false
+L00006008	gui_classification_reason: This unit defines concern ownership and resolver role boundaries.
+L00006009	split_recommended: true
+L00006010	depends_on: [CV-062]
+L00006011	unblocks: [CV-067]
+L00006012	acceptance_criteria:
+L00006013	  - owner_kind/owner_ref are separate from created_by_kind/created_by_ref.
+L00006014	  - Resolver authority is distinct from owner and source roles.
+L00006015	  - Concern ownership changes do not change concern identity.
+L00006016	validation_surfaces:
+L00006017	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006018	  - python3 scripts/pm-plan-index.py validate
+L00006019	risk_class: concern_role_boundary_collapse
+L00006020	reasoning_tier: high
+L00006021	context_scope: concern_ownership_resolver_reassignment
+L00006022	implementation_surfaces:
+L00006023	  - Plans/Contracts_V0.md
+L00006024	  - Plans/storage-plan.md
+L00006025	node_compile_hint:
+L00006026	  mode: concern_role_boundary_contract
+L00006027	  create_worknodes: false
+L00006028	source_lineage:
+L00006029	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00006030	preserved_exact_tokens:
+L00006031	  - "owner_kind"
+L00006032	  - "owner_ref"
+L00006033	  - "created_by_kind"
+L00006034	  - "created_by_ref"
+L00006035	  - "concern resolver"
+L00006036	negative_constraints:
+L00006037	  - "Concern resolver must not be treated as the same role as concern owner or source."
+L00006038	  - "Concern ownership reassignment must not change concern identity."
+L00006039	owner_hints:
+L00006040	  - Plans/Contracts_V0.md
+L00006041	```
+L00006042	
+L00006043	### CV-067 - Concern Layers Heuristics And Attention Fields
+L00006044	
+L00006045	```yaml
+L00006046	plan_unit_id: CV-067
+L00006047	unit_type: requirement
+L00006048	status: accepted
+L00006049	owner_doc: Plans/Contracts_V0.md
+L00006050	canonical_text: >-
+L00006051	  concern_source_event_ref, concern_record, and concern_projection are separate
+L00006052	  structural layers; repeated-sighting decisions use source/scope/category and
+L00006053	  lineage-aware heuristics; concern-family contracts include visibility_level,
+L00006054	  attention_level, chatworthy, and blocking_effect?, with blocking_effect
+L00006055	  separate from severity.
+L00006056	gui_related: false
+L00006057	gui_classification_reason: This unit defines concern structural layers and attention fields rather than visual presentation.
+L00006058	split_recommended: true
+L00006059	depends_on: [CV-062, CV-066]
+L00006060	unblocks: []
+L00006061	acceptance_criteria:
+L00006062	  - concern_source_event_ref, concern_record, and concern_projection remain separate structural layers.
+L00006063	  - Repeated sightings use source/scope/category/lineage-aware heuristics to decide update versus new concern.
+L00006064	  - visibility_level, attention_level, chatworthy, and blocking_effect? are present in the concern-family contract.
+L00006065	  - blocking_effect remains explicitly separate from severity.
+L00006066	validation_surfaces:
+L00006067	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006068	  - python3 scripts/pm-plan-index.py validate
+L00006069	risk_class: concern_projection_attention_field_loss
+L00006070	reasoning_tier: high
+L00006071	context_scope: concern_layers_heuristics_attention
+L00006072	implementation_surfaces:
+L00006073	  - Plans/Contracts_V0.md
+L00006074	  - Plans/storage-plan.md
+L00006075	  - Plans/assistant-chat-design.md
+L00006076	node_compile_hint:
+L00006077	  mode: concern_attention_contract
+L00006078	  create_worknodes: false
+L00006079	source_lineage:
+L00006080	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+L00006081	preserved_exact_tokens:
+L00006082	  - "concern_source_event_ref"
+L00006083	  - "concern_record"
+L00006084	  - "concern_projection"
+L00006085	  - "`visibility_level`"
+L00006086	  - "`attention_level`"
+L00006087	  - "`chatworthy`"
+L00006088	  - "`blocking_effect?`"
+L00006089	negative_constraints:
+L00006090	  - "blocking_effect must stay explicitly separate from severity."
+L00006091	owner_hints:
+L00006092	  - Plans/Contracts_V0.md
+L00006093	```
+L00006094	
+L00006095	### CV-068 - Promotion Classes And Gate Evidence
+L00006096	
+L00006097	```yaml
+L00006098	plan_unit_id: CV-068
+L00006099	unit_type: requirement
+L00006100	status: accepted
+L00006101	owner_doc: Plans/Contracts_V0.md
+L00006102	canonical_text: >-
+L00006103	  lane_to_package, package_to_seam_available, and seam_complete promotions are
+L00006104	  explicit promotion classes, each with exact gate and evidence expectations.
+L00006105	gui_related: false
+L00006106	gui_classification_reason: This unit defines promotion class contracts and evidence requirements.
+L00006107	split_recommended: true
+L00006108	depends_on: [CV-025, CV-043]
+L00006109	unblocks: []
+L00006110	acceptance_criteria:
+L00006111	  - lane_to_package, package_to_seam_available, and seam_complete are defined promotion classes.
+L00006112	  - Each promotion class carries exact gate expectations.
+L00006113	  - Each promotion class carries exact evidence expectations.
+L00006114	validation_surfaces:
+L00006115	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006116	  - python3 scripts/pm-plan-index.py validate
+L00006117	risk_class: promotion_gate_evidence_ambiguity
+L00006118	reasoning_tier: standard
+L00006119	context_scope: promotion_classes_gate_evidence
+L00006120	implementation_surfaces:
+L00006121	  - Plans/Contracts_V0.md
+L00006122	  - Plans/Progression_Gates.md
+L00006123	node_compile_hint:
+L00006124	  mode: promotion_gate_contract
+L00006125	  create_worknodes: false
+L00006126	source_lineage:
+L00006127	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+L00006128	preserved_exact_tokens:
+L00006129	  - "lane_to_package"
+L00006130	  - "package_to_seam_available"
+L00006131	  - "seam_complete"
+L00006132	  - "gate/evidence expectations"
+L00006133	owner_hints:
+L00006134	  - Plans/Contracts_V0.md
+L00006135	```
+L00006136	
+L00006137	### CV-069 - Route Open Shared Payload Owner Boundary
+L00006138	
+L00006139	```yaml
+L00006140	plan_unit_id: CV-069
+L00006141	unit_type: requirement
+L00006142	status: accepted
+L00006143	owner_doc: Plans/Contracts_V0.md
+L00006144	canonical_text: >-
+L00006145	  Search, palette, widgets, recovery links, and cross-surface pivots use one
+L00006146	  shared routing/deep-link payload; resume_url is serialized transport of that
+L00006147	  route payload; Contracts_V0 owns canonical route_target and OpenSubject while
+L00006148	  Crosswalk remains limited to primitive boundary ownership and FileManager
+L00006149	  OpenFile remains narrow and path-based.
+L00006150	gui_related: false
+L00006151	gui_classification_reason: This unit defines route/open owner boundaries and payload contracts.
+L00006152	split_recommended: true
+L00006153	depends_on: [CV-031, CV-046, CV-055, CV-057]
+L00006154	unblocks: [CV-070]
+L00006155	acceptance_criteria:
+L00006156	  - One shared routing/deep-link payload is used for search, palette, widgets, recovery links, and cross-surface pivots.
+L00006157	  - resume_url is treated as serialized transport of the route payload.
+L00006158	  - Contracts_V0 owns canonical route_target and OpenSubject.
+L00006159	  - Crosswalk and FileManager remain within their narrower primitive/OpenFile boundaries.
+L00006160	validation_surfaces:
+L00006161	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006162	  - python3 scripts/pm-plan-index.py validate
+L00006163	risk_class: route_open_owner_boundary_drift
+L00006164	reasoning_tier: high
+L00006165	context_scope: route_open_shared_payload_owner_boundary
+L00006166	implementation_surfaces:
+L00006167	  - Plans/Contracts_V0.md
+L00006168	  - Plans/Crosswalk.md
+L00006169	  - Plans/FileManager.md
+L00006170	  - Plans/UI_Command_Catalog.md
+L00006171	node_compile_hint:
+L00006172	  mode: route_open_owner_boundary_contract
+L00006173	  create_worknodes: false
+L00006174	source_lineage:
+L00006175	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+L00006176	preserved_exact_tokens:
+L00006177	  - "route_target"
+L00006178	  - "OpenSubject"
+L00006179	  - "resume_url"
+L00006180	  - "Primitive:RouteTarget/OpenSubject"
+L00006181	  - "FileManager OpenFile"
+L00006182	negative_constraints:
+L00006183	  - "Crosswalk must stay limited to primitive boundary ownership."
+L00006184	  - "FileManager OpenFile must stay narrow and path-based."
+L00006185	owner_hints:
+L00006186	  - Plans/Contracts_V0.md
+L00006187	```
+L00006188	
+L00006189	### CV-070 - Route Selector And Ref-Family Normalization
+L00006190	
+L00006191	```yaml
+L00006192	plan_unit_id: CV-070
+L00006193	unit_type: requirement
+L00006194	status: accepted
+L00006195	owner_doc: Plans/Contracts_V0.md
+L00006196	canonical_text: >-
+L00006197	  Route/open normalization preserves selector precedence, reject rules, closed
+L00006198	  tab_id vocabulary, scoped resolver rules, route examples, ref-family split,
+L00006199	  resume_url demotion, and wrapper/canonical normalization, while
+L00006200	  timestamp/run/thread fallback logic remains compatibility-only.
+L00006201	gui_related: false
+L00006202	gui_classification_reason: This unit defines route selector and normalization rules.
+L00006203	split_recommended: true
+L00006204	depends_on: [CV-054, CV-056, CV-069]
+L00006205	unblocks: []
+L00006206	acceptance_criteria:
+L00006207	  - Selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, and route examples are preserved.
+L00006208	  - Ref-family split remains explicit through route/open normalization transfer.
+L00006209	  - Wrapper/canonical normalization is carried into crosswalk and wiring docs.
+L00006210	  - Timestamp/run/thread fallback logic is marked compatibility-only.
+L00006211	validation_surfaces:
+L00006212	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006213	  - python3 scripts/pm-plan-index.py validate
+L00006214	risk_class: route_selector_fallback_drift
+L00006215	reasoning_tier: high
+L00006216	context_scope: route_selector_ref_family_normalization
+L00006217	implementation_surfaces:
+L00006218	  - Plans/Contracts_V0.md
+L00006219	  - Plans/Crosswalk.md
+L00006220	  - Plans/UI_Command_Catalog.md
+L00006221	node_compile_hint:
+L00006222	  mode: route_selector_normalization_contract
+L00006223	  create_worknodes: false
+L00006224	source_lineage:
+L00006225	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+L00006226	preserved_exact_tokens:
+L00006227	  - "selector precedence"
+L00006228	  - "reject rules"
+L00006229	  - "closed tab_id vocabulary"
+L00006230	  - "scoped resolver rules"
+L00006231	  - "ref-family split"
+L00006232	  - "wrapper/canonical normalization"
+L00006233	compatibility_only_notes:
+L00006234	  - "Timestamp/run/thread fallback logic is compatibility-only inside route/open contracts."
+L00006235	negative_constraints:
+L00006236	  - "Timestamp/run/thread fallback logic must not become primary route/open identity."
+L00006237	owner_hints:
+L00006238	  - Plans/Contracts_V0.md
+L00006239	```
+L00006240	
+L00006241	### CV-071 - Blocked Runtime Owner Transfer Set
+L00006242	
+L00006243	```yaml
+L00006244	plan_unit_id: CV-071
+L00006245	unit_type: requirement
+L00006246	status: accepted
+L00006247	owner_doc: Plans/Contracts_V0.md
+L00006248	canonical_text: >-
+L00006249	  execution_role, requested_account_id, operational_identity, account-switch and
+L00006250	  pressure ownership, blocked_sequence minting, startup recovery handshake, and
+L00006251	  DAE jail/approval policy transfer into their owner and consumer docs, with
+L00006252	  usage switch-history and usage execution-role follow-through preserved.
+L00006253	gui_related: false
+L00006254	gui_classification_reason: This unit defines runtime identity and blocked-state owner transfer requirements.
+L00006255	split_recommended: true
+L00006256	depends_on: [CV-016, CV-019, CV-029, CV-053]
+L00006257	unblocks: [CV-072]
+L00006258	acceptance_criteria:
+L00006259	  - execution_role, requested_account_id, and operational_identity transfer into owner and consumer docs.
+L00006260	  - Account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy are preserved.
+L00006261	  - Usage switch-history and usage execution-role follow-through are carried forward.
+L00006262	validation_surfaces:
+L00006263	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006264	  - python3 scripts/pm-plan-index.py validate
+L00006265	risk_class: blocked_runtime_owner_transfer_loss
+L00006266	reasoning_tier: high
+L00006267	context_scope: blocked_runtime_owner_transfer
+L00006268	implementation_surfaces:
+L00006269	  - Plans/Contracts_V0.md
+L00006270	  - Plans/human-in-the-loop.md
+L00006271	  - Plans/Executor_Protocol.md
+L00006272	  - Plans/storage-plan.md
+L00006273	  - Plans/usage-feature.md
+L00006274	node_compile_hint:
+L00006275	  mode: blocked_runtime_owner_transfer_contract
+L00006276	  create_worknodes: false
+L00006277	source_lineage:
+L00006278	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+L00006279	preserved_exact_tokens:
+L00006280	  - "execution_role"
+L00006281	  - "requested_account_id"
+L00006282	  - "operational_identity"
+L00006283	  - "blocked_sequence"
+L00006284	  - "DAE jail/approval policy"
+L00006285	  - "usage switch-history"
+L00006286	owner_hints:
+L00006287	  - Plans/Contracts_V0.md
+L00006288	```
+L00006289	
+L00006290	### CV-072 - Blocked Episode Approval Scope Boundary
+L00006291	
+L00006292	```yaml
+L00006293	plan_unit_id: CV-072
+L00006294	unit_type: requirement
+L00006295	status: accepted
+L00006296	owner_doc: Plans/Contracts_V0.md
+L00006297	canonical_text: >-
+L00006298	  Blocked-episode approval scope is separate from session-wide policy scope,
+L00006299	  and approval lineage stays keyed to blocked-episode identity fields run_id,
+L00006300	  node_id, blocked_sequence, and attempt_id? rather than inferred from
+L00006301	  session-wide policy state.
+L00006302	gui_related: false
+L00006303	gui_classification_reason: This unit defines approval scope and lineage keys.
+L00006304	split_recommended: true
+L00006305	depends_on: [CV-029, CV-071]
+L00006306	unblocks: [CV-073]
+L00006307	acceptance_criteria:
+L00006308	  - Blocked-episode approval scope is separate from session-wide policy scope.
+L00006309	  - Approval lineage is keyed to run_id, node_id, blocked_sequence, and attempt_id?.
+L00006310	  - Session-wide policy state is not used to infer blocked-episode approval lineage.
+L00006311	validation_surfaces:
+L00006312	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006313	  - python3 scripts/pm-plan-index.py validate
+L00006314	risk_class: approval_scope_lineage_collapse
+L00006315	reasoning_tier: high
+L00006316	context_scope: blocked_episode_approval_scope
+L00006317	implementation_surfaces:
+L00006318	  - Plans/Contracts_V0.md
+L00006319	  - Plans/human-in-the-loop.md
+L00006320	  - Plans/Executor_Protocol.md
+L00006321	node_compile_hint:
+L00006322	  mode: approval_scope_boundary_contract
+L00006323	  create_worknodes: false
+L00006324	source_lineage:
+L00006325	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+L00006326	preserved_exact_tokens:
+L00006327	  - "`run_id`"
+L00006328	  - "`node_id`"
+L00006329	  - "`blocked_sequence`"
+L00006330	  - "`attempt_id?`"
+L00006331	negative_constraints:
+L00006332	  - "Approval lineage must not be inferred from session-wide policy state."
+L00006333	owner_hints:
+L00006334	  - Plans/Contracts_V0.md
+L00006335	```
+L00006336	
+L00006337	### CV-073 - Durable Approver Identity Events
+L00006338	
+L00006339	```yaml
+L00006340	plan_unit_id: CV-073
+L00006341	unit_type: requirement
+L00006342	status: accepted
+L00006343	owner_doc: Plans/Contracts_V0.md
+L00006344	canonical_text: >-
+L00006345	  Approval and rejection records/events persist durable approver identity fields,
+L00006346	  and /events, /history, and /rejection audit views read those records so they
+L00006347	  can explain who approved or declined rather than only that approval state
+L00006348	  changed.
+L00006349	gui_related: true
+L00006350	gui_classification_reason: This unit affects user-visible audit views for approval and rejection history.
+L00006351	split_recommended: true
+L00006352	depends_on: [CV-029, CV-072]
+L00006353	unblocks: [CV-082]
+L00006354	acceptance_criteria:
+L00006355	  - Approval and rejection records/events persist durable approver identity fields.
+L00006356	  - /events, /history, and /rejection audit views read durable approver identity.
+L00006357	  - Audit views explain who approved or declined rather than only that approval state changed.
+L00006358	validation_surfaces:
+L00006359	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006360	  - python3 scripts/pm-plan-index.py validate
+L00006361	risk_class: durable_approver_identity_loss
+L00006362	reasoning_tier: high
+L00006363	context_scope: durable_approver_identity_events
+L00006364	implementation_surfaces:
+L00006365	  - Plans/Contracts_V0.md
+L00006366	  - Plans/human-in-the-loop.md
+L00006367	  - Plans/storage-plan.md
+L00006368	  - Plans/FinalGUISpec.md
+L00006369	node_compile_hint:
+L00006370	  mode: approver_identity_event_contract
+L00006371	  create_worknodes: false
+L00006372	source_lineage:
+L00006373	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+L00006374	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006375	preserved_exact_tokens:
+L00006376	  - "approver identity fields"
+L00006377	  - "`/events`"
+L00006378	  - "`/history`"
+L00006379	  - "`/rejection`"
+L00006380	negative_constraints:
+L00006381	  - "Audit views must not only report that an approval state changed when durable approver identity is available."
+L00006382	owner_hints:
+L00006383	  - Plans/Contracts_V0.md
+L00006384	```
+L00006385	
+L00006386	### CV-074 - Lifecycle Reason Code Fields
+L00006387	
+L00006388	```yaml
+L00006389	plan_unit_id: CV-074
+L00006390	unit_type: requirement
+L00006391	status: accepted
+L00006392	owner_doc: Plans/Contracts_V0.md
+L00006393	canonical_text: >-
+L00006394	  Debug and investigation lifecycle events that affect stop, retry, resume, or
+L00006395	  user-attention state carry stop_reason_code, attention_required_reason_code,
+L00006396	  and budget_kind fields when applicable so storage, UI, exported bundles, and
+L00006397	  prompt assembly preserve the same machine-readable reason without parsing
+L00006398	  prose.
+L00006399	gui_related: true
+L00006400	gui_classification_reason: This unit affects UI-visible lifecycle reasons and exported/prompt-facing user-attention state.
+L00006401	split_recommended: true
+L00006402	depends_on: [CV-026, CV-044]
+L00006403	unblocks: []
+L00006404	acceptance_criteria:
+L00006405	  - Lifecycle events affecting stop, retry, resume, or user-attention state carry machine-readable reason fields when applicable.
+L00006406	  - stop_reason_code, attention_required_reason_code, and budget_kind are preserved for storage, UI, exported bundles, and prompt assembly.
+L00006407	  - Consumers do not need to parse prose to recover lifecycle reasons.
+L00006408	validation_surfaces:
+L00006409	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006410	  - python3 scripts/pm-plan-index.py validate
+L00006411	risk_class: lifecycle_reason_prose_parsing
+L00006412	reasoning_tier: high
+L00006413	context_scope: lifecycle_reason_code_fields
+L00006414	implementation_surfaces:
+L00006415	  - Plans/Contracts_V0.md
+L00006416	  - Plans/storage-plan.md
+L00006417	  - Plans/UI_Command_Catalog.md
+L00006418	  - Plans/assistant-chat-design.md
+L00006419	node_compile_hint:
+L00006420	  mode: lifecycle_reason_code_contract
+L00006421	  create_worknodes: false
+L00006422	source_lineage:
+L00006423	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006424	preserved_exact_tokens:
+L00006425	  - "`stop_reason_code`"
+L00006426	  - "`attention_required_reason_code`"
+L00006427	  - "`budget_kind`"
+L00006428	negative_constraints:
+L00006429	  - "Lifecycle reason recovery must not depend on parsing prose."
+L00006430	owner_hints:
+L00006431	  - Plans/Contracts_V0.md
+L00006432	```
+L00006433	
+L00006434	### CV-075 - Task Lifecycle Durability Over Projections
+L00006435	
+L00006436	```yaml
+L00006437	plan_unit_id: CV-075
+L00006438	unit_type: requirement
+L00006439	status: accepted
+L00006440	owner_doc: Plans/Contracts_V0.md
+L00006441	canonical_text: >-
+L00006442	  Task lifecycle events persist in thread history and storage through the
+L00006443	  canonical event stream; task cards and thread projections may render
+L00006444	  subagent/task progress, HITL, plan/TODO transitions, and completion or blocked
+L00006445	  outcomes, but those projections do not replace durable event records.
+L00006446	gui_related: true
+L00006447	gui_classification_reason: This unit governs user-visible task cards and thread projections against durable event records.
+L00006448	split_recommended: true
+L00006449	depends_on: [CV-026, CV-044]
+L00006450	unblocks: [CV-077]
+L00006451	acceptance_criteria:
+L00006452	  - Task lifecycle events persist in thread history and storage through the canonical event stream.
+L00006453	  - Task cards and thread projections may render task progress, HITL, plan/TODO transitions, and outcomes.
+L00006454	  - Task cards and thread projections do not replace durable event records.
+L00006455	validation_surfaces:
+L00006456	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006457	  - python3 scripts/pm-plan-index.py validate
+L00006458	risk_class: task_projection_persistence_confusion
+L00006459	reasoning_tier: high
+L00006460	context_scope: task_lifecycle_event_durability
+L00006461	implementation_surfaces:
+L00006462	  - Plans/Contracts_V0.md
+L00006463	  - Plans/storage-plan.md
+L00006464	  - Plans/assistant-chat-design.md
+L00006465	  - Plans/FinalGUISpec.md
+L00006466	node_compile_hint:
+L00006467	  mode: task_lifecycle_durability_contract
+L00006468	  create_worknodes: false
+L00006469	source_lineage:
+L00006470	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006471	preserved_exact_tokens:
+L00006472	  - "thread history"
+L00006473	  - "canonical event stream"
+L00006474	  - "task cards"
+L00006475	  - "thread projections"
+L00006476	  - "plan/TODO transitions"
+L00006477	negative_constraints:
+L00006478	  - "Task cards and thread projections do not replace durable event records."
+L00006479	owner_hints:
+L00006480	  - Plans/Contracts_V0.md
+L00006481	```
+L00006482	
+L00006483	### CV-076 - Seglog Event Family Coverage
+L00006484	
+L00006485	```yaml
+L00006486	plan_unit_id: CV-076
+L00006487	unit_type: requirement
+L00006488	status: accepted
+L00006489	owner_doc: Plans/Contracts_V0.md
+L00006490	canonical_text: >-
+L00006491	  The Seglog contract continues to cover 10 event families: tools, usage, HITL,
+L00006492	  plan/todo, subagent, rollback, persona, background, runtime lifecycle, and
+L00006493	  recovery/blocked-state events.
+L00006494	gui_related: false
+L00006495	gui_classification_reason: This unit defines persisted event family coverage.
+L00006496	split_recommended: true
+L00006497	depends_on: [CV-026, CV-044]
+L00006498	unblocks: [CV-078]
+L00006499	acceptance_criteria:
+L00006500	  - Seglog coverage remains 10 event families.
+L00006501	  - tools, usage, HITL, plan/todo, subagent, rollback, persona, background, runtime lifecycle, and recovery/blocked-state are preserved.
+L00006502	  - Event family coverage stays visible to storage and event-stream consumers.
+L00006503	validation_surfaces:
+L00006504	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006505	  - python3 scripts/pm-plan-index.py validate
+L00006506	risk_class: seglog_family_coverage_loss
+L00006507	reasoning_tier: standard
+L00006508	context_scope: seglog_event_family_coverage
+L00006509	implementation_surfaces:
+L00006510	  - Plans/Contracts_V0.md
+L00006511	  - Plans/storage-plan.md
+L00006512	node_compile_hint:
+L00006513	  mode: seglog_event_family_contract
+L00006514	  create_worknodes: false
+L00006515	source_lineage:
+L00006516	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006517	preserved_exact_tokens:
+L00006518	  - "10 event families"
+L00006519	  - "tools"
+L00006520	  - "usage"
+L00006521	  - "HITL"
+L00006522	  - "plan/todo"
+L00006523	  - "subagent"
+L00006524	  - "rollback"
+L00006525	  - "persona"
+L00006526	  - "background"
+L00006527	  - "runtime lifecycle"
+L00006528	  - "recovery/blocked-state events"
+L00006529	owner_hints:
+L00006530	  - Plans/Contracts_V0.md
+L00006531	```
+L00006532	
+L00006533	### CV-077 - Bundle Annotation And Selection Handoff
+L00006534	
+L00006535	```yaml
+L00006536	plan_unit_id: CV-077
+L00006537	unit_type: requirement
+L00006538	status: accepted
+L00006539	owner_doc: Plans/Contracts_V0.md
+L00006540	canonical_text: >-
+L00006541	  Document annotation events reuse the existing bundle-note event family for
+L00006542	  durable annotation lifecycle and audit transitions, while
+L00006543	  bundle.selection_sent_to_chat is a separate event that prepares visible chat
+L00006544	  context with requested/effective target, provenance, and bounded selection
+L00006545	  excerpt without mutating durable annotation state by itself.
+L00006546	gui_related: true
+L00006547	gui_classification_reason: This unit affects visible chat handoff and annotation-state projections.
+L00006548	split_recommended: true
+L00006549	depends_on: [CV-075]
+L00006550	unblocks: [CV-082]
+L00006551	acceptance_criteria:
+L00006552	  - Document annotation events reuse the bundle-note event family for durable annotation lifecycle and audit transitions.
+L00006553	  - bundle.selection_sent_to_chat remains a separate event from durable annotation state changes.
+L00006554	  - Selection handoff payloads include requested chat target, effective resolved target, document provenance, and bounded selection excerpt.
+L00006555	  - Selection handoff prepares visible chat context but does not mutate durable annotation state by itself.
+L00006556	validation_surfaces:
+L00006557	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006558	  - python3 scripts/pm-plan-index.py validate
+L00006559	risk_class: bundle_selection_annotation_state_confusion
+L00006560	reasoning_tier: high
+L00006561	context_scope: bundle_annotation_selection_handoff
+L00006562	implementation_surfaces:
+L00006563	  - Plans/Contracts_V0.md
+L00006564	  - Plans/storage-plan.md
+L00006565	  - Plans/assistant-chat-design.md
+L00006566	node_compile_hint:
+L00006567	  mode: bundle_selection_handoff_contract
+L00006568	  create_worknodes: false
+L00006569	source_lineage:
+L00006570	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006571	preserved_exact_tokens:
+L00006572	  - "`bundle-note`"
+L00006573	  - "`bundle.selection_sent_to_chat`"
+L00006574	  - "requested chat target"
+L00006575	  - "effective resolved target"
+L00006576	  - "document provenance"
+L00006577	  - "bounded selection excerpt"
+L00006578	negative_constraints:
+L00006579	  - "bundle.selection_sent_to_chat must not mutate durable annotation state by itself."
+L00006580	owner_hints:
+L00006581	  - Plans/Contracts_V0.md
+L00006582	```
+L00006583	
+L00006584	### CV-078 - Runtime Event Catalog Boundary
+L00006585	
+L00006586	```yaml
+L00006587	plan_unit_id: CV-078
+L00006588	unit_type: requirement
+L00006589	status: accepted
+L00006590	owner_doc: Plans/Contracts_V0.md
+L00006591	canonical_text: >-
+L00006592	  Contracts registers persisted event names, producer/consumer boundaries, and
+L00006593	  cross-contract payload minima, while storage-plan owns concrete persisted
+L00006594	  payload schemas, segment/projector mechanics, retention, and janitor cleanup.
+L00006595	gui_related: false
+L00006596	gui_classification_reason: This unit defines persisted event catalog ownership boundaries.
+L00006597	split_recommended: true
+L00006598	depends_on: [CV-026, CV-044, CV-076]
+L00006599	unblocks: [CV-079, CV-080, CV-081, CV-082, CV-083]
+L00006600	acceptance_criteria:
+L00006601	  - Contracts_V0 registers persisted event names, producer/consumer boundaries, and cross-contract payload minima.
+L00006602	  - storage-plan owns concrete persisted payload schemas, segment/projector mechanics, retention, and janitor cleanup.
+L00006603	  - Event family payload detail remains with the producer docs named by the runtime event catalog.
+L00006604	validation_surfaces:
+L00006605	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006606	  - python3 scripts/pm-plan-index.py validate
+L00006607	risk_class: event_catalog_payload_owner_drift
+L00006608	reasoning_tier: high
+L00006609	context_scope: runtime_event_catalog_boundary
+L00006610	implementation_surfaces:
+L00006611	  - Plans/Contracts_V0.md
+L00006612	  - Plans/storage-plan.md
+L00006613	node_compile_hint:
+L00006614	  mode: runtime_event_catalog_boundary_contract
+L00006615	  create_worknodes: false
+L00006616	source_lineage:
+L00006617	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006618	preserved_exact_tokens:
+L00006619	  - "persisted event names"
+L00006620	  - "producer/consumer boundaries"
+L00006621	  - "cross-contract payload minima"
+L00006622	  - "segment/projector mechanics"
+L00006623	  - "retention"
+L00006624	  - "janitor cleanup"
+L00006625	negative_constraints:
+L00006626	  - "Contracts_V0 must not re-own concrete persisted event-type payload schemas that storage-plan owns."
+L00006627	owner_hints:
+L00006628	  - Plans/Contracts_V0.md
+L00006629	```
+L00006630	
+L00006631	### CV-079 - Core Execution Tool Worktree Event Minima
+L00006632	
+L00006633	```yaml
+L00006634	plan_unit_id: CV-079
+L00006635	unit_type: requirement
+L00006636	status: accepted
+L00006637	owner_doc: Plans/Contracts_V0.md
+L00006638	canonical_text: >-
+L00006639	  Core runtime event minima preserve seglog.event_appended, run.started,
+L00006640	  run.completed, node.started, node.completed, tool.execution_started,
+L00006641	  tool.execution_completed, worktree.created, and worktree.deleted identity,
+L00006642	  outcome, evidence/artifact, and cleanup fields.
+L00006643	gui_related: false
+L00006644	gui_classification_reason: This unit defines persisted runtime event payload minima.
+L00006645	split_recommended: true
+L00006646	depends_on: [CV-078]
+L00006647	unblocks: []
+L00006648	acceptance_criteria:
+L00006649	  - seglog.event_appended preserves seq, appended event type, event_ref, segment_ref, writer_id?, and ts minima.
+L00006650	  - run.*, node.*, and tool.execution_* events preserve the listed runtime identity, attempt, outcome, evidence/artifact, usage/result, and timing minima.
+L00006651	  - worktree.created and worktree.deleted preserve worktree identity, branch/path, cleanup reason, grace period, lock and safe-point fields.
+L00006652	validation_surfaces:
+L00006653	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006654	  - python3 scripts/pm-plan-index.py validate
+L00006655	risk_class: core_runtime_event_minima_loss
+L00006656	reasoning_tier: high
+L00006657	context_scope: core_execution_tool_worktree_event_minima
+L00006658	implementation_surfaces:
+L00006659	  - Plans/Contracts_V0.md
+L00006660	  - Plans/storage-plan.md
+L00006661	  - Plans/Executor_Protocol.md
+L00006662	node_compile_hint:
+L00006663	  mode: runtime_event_minima_contract
+L00006664	  create_worknodes: false
+L00006665	source_lineage:
+L00006666	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006667	preserved_exact_tokens:
+L00006668	  - "`seglog.event_appended`"
+L00006669	  - "`run.started`"
+L00006670	  - "`run.completed`"
+L00006671	  - "`node.started`"
+L00006672	  - "`node.completed`"
+L00006673	  - "`tool.execution_started`"
+L00006674	  - "`tool.execution_completed`"
+L00006675	  - "`worktree.created`"
+L00006676	  - "`worktree.deleted`"
+L00006677	owner_hints:
+L00006678	  - Plans/Contracts_V0.md
+L00006679	```
+L00006680	
+L00006681	### CV-080 - Gate Event Score Ownership
+L00006682	
+L00006683	```yaml
+L00006684	plan_unit_id: CV-080
+L00006685	unit_type: requirement
+L00006686	status: accepted
+L00006687	owner_doc: Plans/Contracts_V0.md
+L00006688	canonical_text: >-
+L00006689	  Gate event payload minima preserve gate identity, runtime identity, score?,
+L00006690	  score_threshold?, failure_reason_code, and evidence refs; when score fields
+L00006691	  are exposed, they reference Executor_Protocol dispatch score tuples while
+L00006692	  Progression_Gates remains semantic owner for gate evaluation rules.
+L00006693	gui_related: false
+L00006694	gui_classification_reason: This unit defines gate event payload and owner boundaries.
+L00006695	split_recommended: true
+L00006696	depends_on: [CV-060, CV-078]
+L00006697	unblocks: []
+L00006698	acceptance_criteria:
+L00006699	  - gate.evaluation_started, gate.passed, and gate.failed preserve gate/runtime/attempt/score/evidence minima.
+L00006700	  - score? and score_threshold? reference the Executor_Protocol dispatch score tuple.
+L00006701	  - Progression_Gates remains the semantic owner for gate evaluation rules.
+L00006702	validation_surfaces:
+L00006703	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006704	  - python3 scripts/pm-plan-index.py validate
+L00006705	risk_class: gate_event_score_owner_drift
+L00006706	reasoning_tier: high
+L00006707	context_scope: gate_event_score_ownership
+L00006708	implementation_surfaces:
+L00006709	  - Plans/Contracts_V0.md
+L00006710	  - Plans/Executor_Protocol.md
+L00006711	  - Plans/Progression_Gates.md
+L00006712	node_compile_hint:
+L00006713	  mode: gate_event_score_contract
+L00006714	  create_worknodes: false
+L00006715	source_lineage:
+L00006716	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006717	preserved_exact_tokens:
+L00006718	  - "`gate.evaluation_started`"
+L00006719	  - "`gate.passed`"
+L00006720	  - "`gate.failed`"
+L00006721	  - "`score?`"
+L00006722	  - "`score_threshold?`"
+L00006723	  - "`failure_reason_code`"
+L00006724	negative_constraints:
+L00006725	  - "Contracts_V0 gate event payloads must not re-own Progression_Gates evaluation semantics."
+L00006726	owner_hints:
+L00006727	  - Plans/Contracts_V0.md
+L00006728	```
+L00006729	
+L00006730	### CV-081 - LSP Platform Memory Lifecycle Events
+L00006731	
+L00006732	```yaml
+L00006733	plan_unit_id: CV-081
+L00006734	unit_type: requirement
+L00006735	status: accepted
+L00006736	owner_doc: Plans/Contracts_V0.md
+L00006737	canonical_text: >-
+L00006738	  Runtime event catalog minima preserve lsp.server.lifecycle_changed,
+L00006739	  platform.capability_evaluated, and memory.gist_state_changed; legacy
+L00006740	  lsp.server_started and lsp.server_crashed normalize to
+L00006741	  lsp.server.lifecycle_changed with state and state_reason? rather than forking
+L00006742	  a second LSP lifecycle family.
+L00006743	gui_related: false
+L00006744	gui_classification_reason: This unit defines non-visual lifecycle event normalization.
+L00006745	split_recommended: true
+L00006746	depends_on: [CV-078]
+L00006747	unblocks: []
+L00006748	acceptance_criteria:
+L00006749	  - lsp.server.lifecycle_changed preserves platform/root/session/state payload minima.
+L00006750	  - platform.capability_evaluated and memory.gist_state_changed preserve capability and verification-state minima.
+L00006751	  - Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed.
+L00006752	validation_surfaces:
+L00006753	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006754	  - python3 scripts/pm-plan-index.py validate
+L00006755	risk_class: lifecycle_event_alias_forking
+L00006756	reasoning_tier: high
+L00006757	context_scope: lsp_platform_memory_lifecycle_events
+L00006758	implementation_surfaces:
+L00006759	  - Plans/Contracts_V0.md
+L00006760	  - Plans/storage-plan.md
+L00006761	  - Plans/LSPSupport.md
+L00006762	  - Plans/newtools.md
+L00006763	  - Plans/orchestrator-subagent-integration.md
+L00006764	  - Plans/assistant-memory-subsystem.md
+L00006765	node_compile_hint:
+L00006766	  mode: lifecycle_event_normalization_contract
+L00006767	  create_worknodes: false
+L00006768	source_lineage:
+L00006769	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006770	preserved_exact_tokens:
+L00006771	  - "`lsp.server.lifecycle_changed`"
+L00006772	  - "`platform.capability_evaluated`"
+L00006773	  - "`memory.gist_state_changed`"
+L00006774	  - "`lsp.server_started`"
+L00006775	  - "`lsp.server_crashed`"
+L00006776	  - "`state_reason?`"
+L00006777	compatibility_only_notes:
+L00006778	  - "Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed."
+L00006779	negative_constraints:
+L00006780	  - "Producers must not fork a second LSP lifecycle family when the normalized event can carry the transition."
+L00006781	owner_hints:
+L00006782	  - Plans/Contracts_V0.md
+L00006783	```
+L00006784	
+L00006785	### CV-082 - Bundle Revision And Approval Event Minima
+L00006786	
+L00006787	```yaml
+L00006788	plan_unit_id: CV-082
+L00006789	unit_type: requirement
+L00006790	status: accepted
+L00006791	owner_doc: Plans/Contracts_V0.md
+L00006792	canonical_text: >-
+L00006793	  Runtime event catalog minima preserve bundle annotation, selection, revision,
+L00006794	  and approval requested/granted/denied/timeout events, including bundle/doc and
+L00006795	  annotation/revision identity, requested/effective capability or chat target,
+L00006796	  approval_scope_key, ordered allowed_action_ids[], approver_identity, rationale
+L00006797	  or denial reason, timeout class, and safe_point_id? where applicable.
+L00006798	gui_related: true
+L00006799	gui_classification_reason: This unit affects user-visible bundle, chat, approval, and audit event projections.
+L00006800	split_recommended: true
+L00006801	depends_on: [CV-073, CV-077, CV-078]
+L00006802	unblocks: []
+L00006803	acceptance_criteria:
+L00006804	  - bundle.annotation_state_changed, bundle.selection_sent_to_chat, and bundle.revision_requested preserve their listed identity and target/capability minima.
+L00006805	  - approval.requested, approval.granted, approval.denied, and approval.timeout preserve blocked approval scope and identity minima.
+L00006806	  - allowed_action_ids[], approval_scope_key, approver_identity, and safe_point_id? remain explicit where applicable.
+L00006807	validation_surfaces:
+L00006808	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006809	  - python3 scripts/pm-plan-index.py validate
+L00006810	risk_class: bundle_approval_event_minima_loss
+L00006811	reasoning_tier: high
+L00006812	context_scope: bundle_revision_approval_event_minima
+L00006813	implementation_surfaces:
+L00006814	  - Plans/Contracts_V0.md
+L00006815	  - Plans/storage-plan.md
+L00006816	  - Plans/assistant-chat-design.md
+L00006817	  - Plans/human-in-the-loop.md
+L00006818	node_compile_hint:
+L00006819	  mode: bundle_approval_event_minima_contract
+L00006820	  create_worknodes: false
+L00006821	source_lineage:
+L00006822	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006823	preserved_exact_tokens:
+L00006824	  - "`bundle.annotation_state_changed`"
+L00006825	  - "`bundle.selection_sent_to_chat`"
+L00006826	  - "`bundle.revision_requested`"
+L00006827	  - "`approval.requested`"
+L00006828	  - "`approval.granted`"
+L00006829	  - "`approval.denied`"
+L00006830	  - "`approval.timeout`"
+L00006831	  - "`allowed_action_ids[]`"
+L00006832	  - "`approval_scope_key`"
+L00006833	  - "`approver_identity`"
+L00006834	  - "`safe_point_id?`"
+L00006835	owner_hints:
+L00006836	  - Plans/Contracts_V0.md
+L00006837	```
+L00006838	
+L00006839	### CV-083 - Append Observability Retention Boundary
+L00006840	
+L00006841	```yaml
+L00006842	plan_unit_id: CV-083
+L00006843	unit_type: requirement
+L00006844	status: accepted
+L00006845	owner_doc: Plans/Contracts_V0.md
+L00006846	canonical_text: >-
+L00006847	  seglog.event_appended records append observability only and must not replace
+L00006848	  the appended event itself; runtime event records may carry ttl_policy_ref?,
+L00006849	  retention_anchor_kind?, and retention_anchor_at_utc?, while storage owns TTL
+L00006850	  defaults, max-cardinality bounds, janitor cleanup triggers, legal-hold
+L00006851	  exceptions, and the prohibition on inferring retention from file mtime.
+L00006852	gui_related: false
+L00006853	gui_classification_reason: This unit defines persistence and retention ownership boundaries.
+L00006854	split_recommended: true
+L00006855	depends_on: [CV-078]
+L00006856	unblocks: []
+L00006857	acceptance_criteria:
+L00006858	  - seglog.event_appended is append observability only.
+L00006859	  - Runtime event records may carry ttl_policy_ref?, retention_anchor_kind?, and retention_anchor_at_utc?.
+L00006860	  - Storage owns default TTL values, max-cardinality bounds, janitor cleanup triggers, and legal-hold exceptions.
+L00006861	  - Retention is not inferred from file mtime.
+L00006862	validation_surfaces:
+L00006863	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006864	  - python3 scripts/pm-plan-index.py validate
+L00006865	risk_class: append_observability_retention_boundary_drift
+L00006866	reasoning_tier: high
+L00006867	context_scope: append_observability_retention_boundary
+L00006868	implementation_surfaces:
+L00006869	  - Plans/Contracts_V0.md
+L00006870	  - Plans/storage-plan.md
+L00006871	node_compile_hint:
+L00006872	  mode: append_observability_retention_contract
+L00006873	  create_worknodes: false
+L00006874	source_lineage:
+L00006875	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006876	preserved_exact_tokens:
+L00006877	  - "`seglog.event_appended`"
+L00006878	  - "`ttl_policy_ref?`"
+L00006879	  - "`retention_anchor_kind?`"
+L00006880	  - "`retention_anchor_at_utc?`"
+L00006881	  - "legal-hold exceptions"
+L00006882	  - "file mtime"
+L00006883	negative_constraints:
+L00006884	  - "seglog.event_appended must not replace the appended event itself."
+L00006885	  - "Retention defaults, bounds, janitor cleanup, and legal-hold exceptions must not be inferred from file mtime."
+L00006886	owner_hints:
+L00006887	  - Plans/Contracts_V0.md
+L00006888	```
+L00006889	
+L00006890	### CV-084 - Assistant Worktree Event Ownership
+L00006891	
+L00006892	```yaml
+L00006893	plan_unit_id: CV-084
+L00006894	unit_type: requirement
+L00006895	status: accepted
+L00006896	owner_doc: Plans/Contracts_V0.md
+L00006897	canonical_text: >-
+L00006898	  Assistant worktree seglog events keep assistant-worktree lifecycle local while
+L00006899	  shared record ownership points back to storage canonical records instead of
+L00006900	  restating those record families locally.
+L00006901	gui_related: false
+L00006902	gui_classification_reason: This unit defines assistant worktree event ownership boundaries.
+L00006903	split_recommended: true
+L00006904	depends_on: [CV-078]
+L00006905	unblocks: [CV-085, CV-086]
+L00006906	acceptance_criteria:
+L00006907	  - Assistant worktree lifecycle events remain local to the assistant-worktree event family.
+L00006908	  - Shared record ownership points back to storage canonical records.
+L00006909	  - Contracts links to storage-plan canonical record families instead of restating them locally.
+L00006910	validation_surfaces:
+L00006911	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006912	  - python3 scripts/pm-plan-index.py validate
+L00006913	risk_class: assistant_worktree_record_owner_duplication
+L00006914	reasoning_tier: standard
+L00006915	context_scope: assistant_worktree_event_ownership
+L00006916	implementation_surfaces:
+L00006917	  - Plans/Contracts_V0.md
+L00006918	  - Plans/storage-plan.md
+L00006919	  - Plans/assistant-chat-design.md
+L00006920	node_compile_hint:
+L00006921	  mode: assistant_worktree_event_owner_contract
+L00006922	  create_worknodes: false
+L00006923	source_lineage:
+L00006924	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0033
+L00006925	preserved_exact_tokens:
+L00006926	  - "assistant-worktree lifecycle"
+L00006927	  - "Plans/storage-plan.md#Canonical records"
+L00006928	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md"
+L00006929	negative_constraints:
+L00006930	  - "Assistant worktree events must not restate storage canonical record families locally."
+L00006931	owner_hints:
+L00006932	  - Plans/Contracts_V0.md
+L00006933	```
+L00006934	
+L00006935	### CV-085 - Assistant Worktree Name Normalization
+L00006936	
+L00006937	```yaml
+L00006938	plan_unit_id: CV-085
+L00006939	unit_type: requirement
+L00006940	status: accepted
+L00006941	owner_doc: Plans/Contracts_V0.md
+L00006942	canonical_text: >-
+L00006943	  Assistant worktree event names use underscore-separated chat.thread_worktree_*
+L00006944	  names that match existing chat seglog convention; dot-namespaced proposals
+L00006945	  such as chat.thread.worktree_bound are migration/review aliases only and MUST
+L00006946	  normalize before persistence.
+L00006947	gui_related: false
+L00006948	gui_classification_reason: This unit defines persisted event naming normalization.
+L00006949	split_recommended: true
+L00006950	depends_on: [CV-084]
+L00006951	unblocks: [CV-086]
+L00006952	acceptance_criteria:
+L00006953	  - chat.thread_worktree_* underscore names are canonical for persisted assistant worktree events.
+L00006954	  - Dot-namespaced assistant worktree names remain migration/review aliases only.
+L00006955	  - Producers normalize dot-namespaced aliases before persistence.
+L00006956	validation_surfaces:
+L00006957	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006958	  - python3 scripts/pm-plan-index.py validate
+L00006959	risk_class: assistant_worktree_event_name_alias_persistence
+L00006960	reasoning_tier: high
+L00006961	context_scope: assistant_worktree_event_name_normalization
+L00006962	implementation_surfaces:
+L00006963	  - Plans/Contracts_V0.md
+L00006964	  - Plans/storage-plan.md
+L00006965	  - Plans/assistant-chat-design.md
+L00006966	node_compile_hint:
+L00006967	  mode: assistant_worktree_event_name_contract
+L00006968	  create_worknodes: false
+L00006969	source_lineage:
+L00006970	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0033
+L00006971	preserved_exact_tokens:
+L00006972	  - "`chat.thread_created`"
+L00006973	  - "`chat.thread_archived`"
+L00006974	  - "`chat.thread_deleted`"
+L00006975	  - "`chat.thread_worktree_*`"
+L00006976	  - "`chat.thread.worktree_bound`"
+L00006977	compatibility_only_notes:
+L00006978	  - "Dot-namespaced assistant worktree proposals are migration/review aliases only."
+L00006979	negative_constraints:
+L00006980	  - "Dot-namespaced assistant worktree aliases must not persist without normalization."
+L00006981	owner_hints:
+L00006982	  - Plans/Contracts_V0.md
+L00006983	```
+L00006984	
+L00006985	### CV-086 - Assistant Worktree Event Registrations
+L00006986	
+L00006987	```yaml
+L00006988	plan_unit_id: CV-086
+L00006989	unit_type: requirement
+L00006990	status: accepted
+L00006991	owner_doc: Plans/Contracts_V0.md
+L00006992	canonical_text: >-
+L00006993	  Minimum assistant worktree event registrations preserve bound, unbound,
+L00006994	  renamed, create_failed, merged, merge_failed, pr_created, pr_failed,
+L00006995	  pre_merge_test_started, pre_merge_test_passed, and pre_merge_test_failed
+L00006996	  payloads, and chat.thread_worktree_pr_failed.phase is the exact enum
+L00006997	  push | api.
+L00006998	gui_related: false
+L00006999	gui_classification_reason: This unit defines persisted assistant worktree event registration payloads.
+L00007000	split_recommended: true
+L00007001	depends_on: [CV-084, CV-085]
+L00007002	unblocks: []
+L00007003	acceptance_criteria:
+L00007004	  - All minimum chat.thread_worktree_* event registrations from the source table are preserved.
+L00007005	  - Event payload minima include thread_id, worktree_id, branch/path/target, strategy, command/test details, result, error, conflict, duration, and override fields where listed.
+L00007006	  - chat.thread_worktree_pr_failed.phase uses the exact enum push | api with preserved meaning.
+L00007007	validation_surfaces:
+L00007008	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007009	  - python3 scripts/pm-plan-index.py validate
+L00007010	risk_class: assistant_worktree_event_registration_loss
+L00007011	reasoning_tier: high
+L00007012	context_scope: assistant_worktree_event_registrations
+L00007013	implementation_surfaces:
+L00007014	  - Plans/Contracts_V0.md
+L00007015	  - Plans/storage-plan.md
+L00007016	  - Plans/assistant-chat-design.md
+L00007017	node_compile_hint:
+L00007018	  mode: assistant_worktree_event_registration_contract
+L00007019	  create_worknodes: false
+L00007020	source_lineage:
+L00007021	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0033
+L00007022	preserved_exact_tokens:
+L00007023	  - "`chat.thread_worktree_bound`"
+L00007024	  - "`chat.thread_worktree_unbound`"
+L00007025	  - "`chat.thread_worktree_renamed`"
+L00007026	  - "`chat.thread_worktree_create_failed`"
+L00007027	  - "`chat.thread_worktree_merged`"
+L00007028	  - "`chat.thread_worktree_merge_failed`"
+L00007029	  - "`chat.thread_worktree_pr_created`"
+L00007030	  - "`chat.thread_worktree_pr_failed`"
+L00007031	  - "`chat.thread_worktree_pre_merge_test_started`"
+L00007032	  - "`chat.thread_worktree_pre_merge_test_passed`"
+L00007033	  - "`chat.thread_worktree_pre_merge_test_failed`"
+L00007034	  - "`push | api`"
+L00007035	owner_hints:
+L00007036	  - Plans/Contracts_V0.md
+L00007037	```
+L00007038	
+L00007039	### CV-087 - EventEnvelopeV1 Compatibility Envelope
+L00007040	
+L00007041	```yaml
+L00007042	plan_unit_id: CV-087
+L00007043	unit_type: requirement
+L00007044	status: accepted
+L00007045	owner_doc: Plans/Contracts_V0.md
+L00007046	canonical_text: >-
+L00007047	  EventEnvelopeV1 is a minimal intermediate compatibility envelope with ts,
+L00007048	  seq, type, and payload; writers should include run_id and thread_id whenever
+L00007049	  available, readers must tolerate both envelope shapes, and projectors should
+L00007050	  upgrade in-memory to EventRecord form.
+L00007051	gui_related: false
+L00007052	gui_classification_reason: This unit defines event envelope compatibility fields and reader/writer behavior.
+L00007053	split_recommended: true
+L00007054	depends_on: [CV-002, CV-060]
+L00007055	unblocks: [CV-088, CV-089]
+L00007056	acceptance_criteria:
+L00007057	  - EventEnvelopeV1 preserves ts, seq, type, and payload as the minimal envelope.
+L00007058	  - Writers should include run_id and thread_id whenever available.
+L00007059	  - Readers tolerate both envelope shapes and projectors upgrade in-memory to EventRecord form.
+L00007060	validation_surfaces:
+L00007061	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007062	  - python3 scripts/pm-plan-index.py validate
+L00007063	risk_class: event_envelope_compatibility_break
+L00007064	reasoning_tier: standard
+L00007065	context_scope: event_envelope_v1_compatibility
+L00007066	implementation_surfaces:
+L00007067	  - Plans/Contracts_V0.md
+L00007068	  - Plans/storage-plan.md
+L00007069	node_compile_hint:
+L00007070	  mode: event_envelope_compatibility_contract
+L00007071	  create_worknodes: false
+L00007072	source_lineage:
+L00007073	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0034
+L00007074	preserved_exact_tokens:
+L00007075	  - "`EventEnvelopeV1`"
+L00007076	  - "`ts`"
+L00007077	  - "`seq`"
+L00007078	  - "`type`"
+L00007079	  - "`payload`"
+L00007080	  - "`run_id`"
+L00007081	  - "`thread_id`"
+L00007082	  - "`EventRecord`"
+L00007083	  - "ContractRef: ContractName:Plans/Contracts_V0.md#EventEnvelopeV1, PolicyRule:Decision_Policy.md§2"
+L00007084	compatibility_only_notes:
+L00007085	  - "EventEnvelopeV1 is the minimal compatibility envelope used by some plans as an intermediate format."
+L00007086	owner_hints:
+L00007087	  - Plans/Contracts_V0.md
+L00007088	```
+L00007089	
+L00007090	### CV-088 - EventRecord Payload Schema Ownership Split
+L00007091	
+L00007092	```yaml
+L00007093	plan_unit_id: CV-088
+L00007094	unit_type: requirement
+L00007095	status: accepted
+L00007096	owner_doc: Plans/Contracts_V0.md
+L00007097	canonical_text: >-
+L00007098	  Contracts_V0 owns the canonical persisted EventRecord envelope and
+L00007099	  cross-cutting auth/event contracts, while storage-plan owns concrete
+L00007100	  persisted event-type payload schemas so writers, projectors, analytics, and
+L00007101	  generated docs share one payload SSOT.
+L00007102	gui_related: false
+L00007103	gui_classification_reason: This unit defines persisted event schema ownership boundaries.
+L00007104	split_recommended: true
+L00007105	depends_on: [CV-078, CV-087]
+L00007106	unblocks: []
+L00007107	acceptance_criteria:
+L00007108	  - Contracts_V0 owns EventRecord and cross-cutting auth/event contracts.
+L00007109	  - storage-plan owns concrete persisted event-type payload schemas.
+L00007110	  - Writers, projectors, analytics, and generated docs share one payload SSOT.
+L00007111	validation_surfaces:
+L00007112	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007113	  - python3 scripts/pm-plan-index.py validate
+L00007114	risk_class: event_payload_schema_owner_split_drift
+L00007115	reasoning_tier: high
+L00007116	context_scope: eventrecord_payload_schema_owner_split
+L00007117	implementation_surfaces:
+L00007118	  - Plans/Contracts_V0.md
+L00007119	  - Plans/storage-plan.md
+L00007120	node_compile_hint:
+L00007121	  mode: eventrecord_schema_owner_boundary
+L00007122	  create_worknodes: false
+L00007123	source_lineage:
+L00007124	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0034
+L00007125	preserved_exact_tokens:
+L00007126	  - "`EventRecord`"
+L00007127	  - "Payload schema ownership"
+L00007128	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord"
+L00007129	negative_constraints:
+L00007130	  - "Concrete persisted event-type payload schemas must not be moved out of storage-plan ownership."
+L00007131	owner_hints:
+L00007132	  - Plans/Contracts_V0.md
+L00007133	```
+L00007134	
+L00007135	### CV-089 - Provider Stream Persistence Boundary
+L00007136	
+L00007137	```yaml
+L00007138	plan_unit_id: CV-089
+L00007139	unit_type: requirement
+L00007140	status: accepted
+L00007141	owner_doc: Plans/Contracts_V0.md
+L00007142	canonical_text: >-
+L00007143	  Providers emit a normalized stream for live UI consumption; persistent
+L00007144	  storage remains governed by EventRecord; CLI_Bridged_Providers owns the full
+L00007145	  normalized provider stream schema, while Contracts_V0 asserts the boundary
+L00007146	  that normalized provider stream events are transport-facing and seglog events
+L00007147	  are persistence-facing.
+L00007148	gui_related: true
+L00007149	gui_classification_reason: This unit affects live UI consumption of provider stream events.
+L00007150	split_recommended: true
+L00007151	depends_on: [CV-002, CV-087]
+L00007152	unblocks: [CV-090, CV-091, CV-092]
+L00007153	acceptance_criteria:
+L00007154	  - Provider normalized streams serve live UI consumption.
+L00007155	  - Persistent storage remains governed by EventRecord.
+L00007156	  - CLI_Bridged_Providers owns the full normalized provider stream schema.
+L00007157	  - Contracts_V0 preserves the transport-facing versus persistence-facing boundary.
+L00007158	validation_surfaces:
+L00007159	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007160	  - python3 scripts/pm-plan-index.py validate
+L00007161	risk_class: provider_stream_persistence_boundary_confusion
+L00007162	reasoning_tier: high
+L00007163	context_scope: provider_stream_persistence_boundary
+L00007164	implementation_surfaces:
+L00007165	  - Plans/Contracts_V0.md
+L00007166	  - Plans/CLI_Bridged_Providers.md
+L00007167	  - Plans/Provider_OpenCode.md
+L00007168	  - Plans/Tools.md
+L00007169	node_compile_hint:
+L00007170	  mode: provider_stream_persistence_boundary_contract
+L00007171	  create_worknodes: false
+L00007172	source_lineage:
+L00007173	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007174	preserved_exact_tokens:
+L00007175	  - "normalized stream"
+L00007176	  - "live UI consumption"
+L00007177	  - "`EventRecord`"
+L00007178	  - "transport-facing"
+L00007179	  - "persistence-facing"
+L00007180	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md"
+L00007181	owner_hints:
+L00007182	  - Plans/Contracts_V0.md
+L00007183	```
+L00007184	
+L00007185	### CV-090 - Unified Provider Facade Across Transports
+L00007186	
+L00007187	```yaml
+L00007188	plan_unit_id: CV-090
+L00007189	unit_type: requirement
+L00007190	status: accepted
+L00007191	owner_doc: Plans/Contracts_V0.md
+L00007192	canonical_text: >-
+L00007193	  CLI-bridged, server-bridged, and direct-provider implementations conform to
+L00007194	  one unified Provider facade/trait contract with capability flags and
+L00007195	  tool-policy inputs defined at the Provider boundary.
+L00007196	gui_related: false
+L00007197	gui_classification_reason: This unit defines provider runtime boundary contracts.
+L00007198	split_recommended: true
+L00007199	depends_on: [CV-089]
+L00007200	unblocks: [CV-091, CV-092, CV-093]
+L00007201	acceptance_criteria:
+L00007202	  - CLI-bridged providers conform to the unified Provider facade/trait.
+L00007203	  - Server-bridged providers conform to the unified Provider facade/trait.
+L00007204	  - Direct-provider integrations conform to the unified Provider facade/trait.
+L00007205	  - Capability flags and tool-policy inputs are defined at the Provider boundary.
+L00007206	validation_surfaces:
+L00007207	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007208	  - python3 scripts/pm-plan-index.py validate
+L00007209	risk_class: provider_facade_transport_forking
+L00007210	reasoning_tier: high
+L00007211	context_scope: unified_provider_facade_transports
+L00007212	implementation_surfaces:
+L00007213	  - Plans/Contracts_V0.md
+L00007214	  - Plans/CLI_Bridged_Providers.md
+L00007215	  - Plans/Provider_OpenCode.md
+L00007216	  - Plans/Tools.md
+L00007217	node_compile_hint:
+L00007218	  mode: provider_facade_contract
+L00007219	  create_worknodes: false
+L00007220	source_lineage:
+L00007221	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007222	preserved_exact_tokens:
+L00007223	  - "CLI-bridged"
+L00007224	  - "server-bridged"
+L00007225	  - "direct-provider"
+L00007226	  - "Provider facade/trait"
+L00007227	  - "capability flags"
+L00007228	  - "tool-policy inputs"
+L00007229	owner_hints:
+L00007230	  - Plans/Contracts_V0.md
+L00007231	```
+L00007232	
+L00007233	### CV-091 - Provider Consumer Normalization And Tool Access
+L00007234	
+L00007235	```yaml
+L00007236	plan_unit_id: CV-091
+L00007237	unit_type: requirement
+L00007238	status: accepted
+L00007239	owner_doc: Plans/Contracts_V0.md
+L00007240	canonical_text: >-
+L00007241	  UI and orchestrator consumers must not special-case provider transport or
+L00007242	  brand beyond configuration fields; provider-originated events and tool-call
+L00007243	  lifecycle signals normalize before consumers or persistence mapping; PM
+L00007244	  bundling and PM skill tool access remain available regardless of provider
+L00007245	  transport.
+L00007246	gui_related: true
+L00007247	gui_classification_reason: This unit constrains UI provider consumption and user-visible tool access behavior.
+L00007248	split_recommended: true
+L00007249	depends_on: [CV-089, CV-090]
+L00007250	unblocks: [CV-096]
+L00007251	acceptance_criteria:
+L00007252	  - UI and orchestrator consumers do not special-case provider transport or brand beyond configuration fields.
+L00007253	  - Provider-originated events and tool-call lifecycle signals normalize before reaching consumers or persistence mapping.
+L00007254	  - PM bundling and PM skill tool access are preserved regardless of provider transport.
+L00007255	validation_surfaces:
+L00007256	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007257	  - python3 scripts/pm-plan-index.py validate
+L00007258	risk_class: provider_consumer_transport_special_casing
+L00007259	reasoning_tier: high
+L00007260	context_scope: provider_consumer_normalization_tool_access
+L00007261	implementation_surfaces:
+L00007262	  - Plans/Contracts_V0.md
+L00007263	  - Plans/UI_Command_Catalog.md
+L00007264	  - Plans/CLI_Bridged_Providers.md
+L00007265	  - Plans/Provider_OpenCode.md
+L00007266	  - Plans/Tools.md
+L00007267	node_compile_hint:
+L00007268	  mode: provider_consumer_normalization_contract
+L00007269	  create_worknodes: false
+L00007270	source_lineage:
+L00007271	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007272	preserved_exact_tokens:
+L00007273	  - "UI and orchestrator consumers"
+L00007274	  - "provider transport"
+L00007275	  - "provider brand"
+L00007276	  - "provider configuration fields"
+L00007277	  - "PM bundling"
+L00007278	  - "PM skill tool access"
+L00007279	negative_constraints:
+L00007280	  - "UI and orchestrator consumers must not special-case provider transport or provider brand beyond provider configuration fields."
+L00007281	  - "Transport selection must not remove built-in PM tool availability."
+L00007282	owner_hints:
+L00007283	  - Plans/Contracts_V0.md
+L00007284	```
+L00007285	
+L00007286	### CV-092 - Provider Transport Version Governance
+L00007287	
+L00007288	```yaml
+L00007289	plan_unit_id: CV-092
+L00007290	unit_type: requirement
+L00007291	status: accepted
+L00007292	owner_doc: Plans/Contracts_V0.md
+L00007293	canonical_text: >-
+L00007294	  Provider and stream seams require explicit contract-version governance, and a
+L00007295	  transport adapter must not invent adapter-local shadow fields for actor,
+L00007296	  account, or trust categories before a contract-versioned owner path exists
+L00007297	  for persistence or UI projections.
+L00007298	gui_related: false
+L00007299	gui_classification_reason: This unit defines provider contract governance and adapter field boundaries.
+L00007300	split_recommended: true
+L00007301	depends_on: [CV-089, CV-090]
+L00007302	unblocks: [CV-093, CV-094, CV-096]
+L00007303	acceptance_criteria:
+L00007304	  - Provider and stream seams have explicit contract-version governance.
+L00007305	  - Transport adapters do not invent adapter-local actor/account/trust shadow fields.
+L00007306	  - New provider fields have a contract-versioned owner path before persistence or UI projections consume them.
+L00007307	validation_surfaces:
+L00007308	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007309	  - python3 scripts/pm-plan-index.py validate
+L00007310	risk_class: provider_transport_shadow_field_drift
+L00007311	reasoning_tier: high
+L00007312	context_scope: provider_transport_version_governance
+L00007313	implementation_surfaces:
+L00007314	  - Plans/Contracts_V0.md
+L00007315	  - Plans/CLI_Bridged_Providers.md
+L00007316	  - Plans/Provider_OpenCode.md
+L00007317	  - Plans/Models_System.md
+L00007318	node_compile_hint:
+L00007319	  mode: provider_transport_governance_contract
+L00007320	  create_worknodes: false
+L00007321	source_lineage:
+L00007322	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007323	preserved_exact_tokens:
+L00007324	  - "contract-version governance"
+L00007325	  - "actor/account/trust categories"
+L00007326	  - "adapter-local shadow fields"
+L00007327	negative_constraints:
+L00007328	  - "A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories."
+L00007329	owner_hints:
+L00007330	  - Plans/Contracts_V0.md
+L00007331	```
+L00007332	
+L00007333	### CV-093 - Provider Transport Enum And Class Mapping
+L00007334	
+L00007335	```yaml
+L00007336	plan_unit_id: CV-093
+L00007337	unit_type: requirement
+L00007338	status: accepted
+L00007339	owner_doc: Plans/Contracts_V0.md
+L00007340	canonical_text: >-
+L00007341	  Provider transport classes are CLI-bridged, server-bridged, and
+L00007342	  direct-provider, and the canonical implementation enum is ProviderTransport =
+L00007343	  CliBridge | DirectApi | ServerBridge with CliBridge mapping to CLI-bridged,
+L00007344	  DirectApi mapping to direct-provider, and ServerBridge mapping to
+L00007345	  server-bridged.
+L00007346	gui_related: false
+L00007347	gui_classification_reason: This unit defines provider transport enum and class mapping.
+L00007348	split_recommended: true
+L00007349	depends_on: [CV-090, CV-092]
+L00007350	unblocks: [CV-094, CV-095, CV-096]
+L00007351	acceptance_criteria:
+L00007352	  - Provider transport classes are CLI-bridged, server-bridged, and direct-provider.
+L00007353	  - ProviderTransport = CliBridge | DirectApi | ServerBridge is the canonical implementation enum.
+L00007354	  - CliBridge, DirectApi, and ServerBridge retain their exact class mappings.
+L00007355	validation_surfaces:
+L00007356	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007357	  - python3 scripts/pm-plan-index.py validate
+L00007358	risk_class: provider_transport_enum_mapping_drift
+L00007359	reasoning_tier: standard
+L00007360	context_scope: provider_transport_enum_mapping
+L00007361	implementation_surfaces:
+L00007362	  - Plans/Contracts_V0.md
+L00007363	  - Plans/CLI_Bridged_Providers.md
+L00007364	  - Plans/Provider_OpenCode.md
+L00007365	  - Plans/Models_System.md
+L00007366	node_compile_hint:
+L00007367	  mode: provider_transport_enum_contract
+L00007368	  create_worknodes: false
+L00007369	source_lineage:
+L00007370	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007371	preserved_exact_tokens:
+L00007372	  - "ProviderTransport = CliBridge | DirectApi | ServerBridge"
+L00007373	  - "`CliBridge`"
+L00007374	  - "`DirectApi`"
+L00007375	  - "`ServerBridge`"
+L00007376	  - "CLI-bridged"
+L00007377	  - "direct-provider"
+L00007378	  - "server-bridged"
+L00007379	owner_hints:
+L00007380	  - Plans/Contracts_V0.md
+L00007381	```
+L00007382	
+L00007383	### CV-094 - Provider Support-State And Provenance Dispositions
+L00007384	
+L00007385	```yaml
+L00007386	plan_unit_id: CV-094
+L00007387	unit_type: requirement
+L00007388	status: accepted
+L00007389	owner_doc: Plans/Contracts_V0.md
+L00007390	canonical_text: >-
+L00007391	  Provider support-state projections use closed values native,
+L00007392	  native_projected, and projected plus explicit evidence dispositions for
+L00007393	  verified, unverified, unsupported, disabled, capability-gated,
+L00007394	  separate-profile, source-lineage-only, and retired/source-lineage states.
+L00007395	  Direct-provider catalog candidates such as Alibaba/Qwen, MiniMax, Kimi,
+L00007396	  Z.AI/Zhipu, Cursor, GitHub Copilot, and OpenAI/Codex must not be promoted
+L00007397	  from catalog visibility alone; local end-to-end prompt output or explicit
+L00007398	  route proof is required for green implementation-ready status. Legacy
+L00007399	  CLI/runtime outputs plus CLI auth/import notes are migration provenance while
+L00007400	  /import, /runtime, PM skill access, and copilot_github auth realm are
+L00007401	  preserved.
+L00007402	gui_related: true
+L00007403	gui_classification_reason: This unit affects provider support-state projections visible to UI/help surfaces.
+L00007404	split_recommended: true
+L00007405	depends_on: [CV-092, CV-093]
+L00007406	unblocks: []
+L00007407	acceptance_criteria:
+L00007408	  - Provider support-state projections use native, native_projected, and projected.
+L00007409	  - Direct-provider catalog candidates remain lower-confidence until route-specific local end-to-end proof or explicit primary-source route proof exists.
+L00007410	  - Capability-gated, unsupported, disabled, unverified, source-lineage-only, separate-profile, and retired/source-lineage states remain distinct.
+L00007411	  - Legacy CLI/runtime outputs plus CLI auth/import notes remain migration provenance.
+L00007412	  - /import, /runtime, PM skill access, and copilot_github auth realm are preserved.
+L00007413	validation_surfaces:
+L00007414	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007415	  - python3 scripts/pm-plan-index.py validate
+L00007416	risk_class: provider_support_state_provenance_drift
+L00007417	reasoning_tier: high
+L00007418	context_scope: provider_support_state_provenance
+L00007419	implementation_surfaces:
+L00007420	  - Plans/Contracts_V0.md
+L00007421	  - Plans/CLI_Bridged_Providers.md
+L00007422	  - Plans/Provider_OpenCode.md
+L00007423	  - Plans/Models_System.md
+L00007424	  - Plans/UI_Command_Catalog.md
+L00007425	node_compile_hint:
+L00007426	  mode: provider_support_state_contract
+L00007427	  create_worknodes: false
+L00007428	source_lineage:
+L00007429	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007430	preserved_exact_tokens:
+L00007431	  - "`native`"
+L00007432	  - "`native_projected`"
+L00007433	  - "`projected`"
+L00007434	  - "Alibaba"
+L00007435	  - "MiniMax"
+L00007436	  - "Kimi"
+L00007437	  - "Z.AI"
+L00007438	  - "Zhipu"
+L00007439	  - "Cursor"
+L00007440	  - "GitHub Copilot"
+L00007441	  - "OpenAI/Codex"
+L00007442	  - "verified"
+L00007443	  - "unverified"
+L00007444	  - "unsupported"
+L00007445	  - "disabled"
+L00007446	  - "capability-gated"
+L00007447	  - "separate-profile"
+L00007448	  - "source-lineage-only"
+L00007449	  - "retired/source-lineage"
+L00007450	  - "`/import`"
+L00007451	  - "`/runtime`"
+L00007452	  - "`copilot_github`"
+L00007453	compatibility_only_notes:
+L00007454	  - "Legacy CLI/runtime outputs plus CLI auth/import notes are migration provenance."
+L00007455	negative_constraints:
+L00007456	  - "Unverified direct-provider catalog candidates must not be promoted as implementation-ready PM direct providers."
+L00007457	  - "Catalog visibility, HTTP 200 model listing, or OpenCode-routed proof alone must not be treated as direct-provider closure evidence."
+L00007458	owner_hints:
+L00007459	  - Plans/Contracts_V0.md
+L00007460	```
+L00007461	
+L00007462	### CV-095 - Transport-Specific Stream Completion Rules
+L00007463	
+L00007464	```yaml
+L00007465	plan_unit_id: CV-095
+L00007466	unit_type: requirement
+L00007467	status: accepted
+L00007468	owner_doc: Plans/Contracts_V0.md
+L00007469	canonical_text: >-
+L00007470	  Server-bridged providers use HTTP REST endpoints and SSE event streams,
+L00007471	  CLI-bridged providers use CLI event outputs and adapter parsing, and
+L00007472	  direct-provider integrations may use provider HTTP/gRPC endpoints directly
+L00007473	  while emitting the same normalized event types; Gemini/Vertex requires schema
+L00007474	  sanitizer and post-tool loop evidence, and OpenCode EXEC adapters enumerate
+L00007475	  terminal finish reasons before marking a stream complete.
+L00007476	gui_related: false
+L00007477	gui_classification_reason: This unit defines provider transport and stream-completion runtime rules.
+L00007478	split_recommended: true
+L00007479	depends_on: [CV-093]
+L00007480	unblocks: []
+L00007481	acceptance_criteria:
+L00007482	  - Server-bridged, CLI-bridged, and direct-provider transport-specific notes are preserved.
+L00007483	  - Direct-provider integrations emit the same normalized event types.
+L00007484	  - Gemini/Vertex uses schema sanitizer and post-tool loop rules, and finish_reason alone is insufficient evidence of completion.
+L00007485	  - OpenCode EXEC adapters distinguish content-filter, safety, and unknown empty-content terminal cases before marking streams complete.
+L00007486	validation_surfaces:
+L00007487	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007488	  - python3 scripts/pm-plan-index.py validate
+L00007489	risk_class: provider_stream_completion_rule_loss
+L00007490	reasoning_tier: high
+L00007491	context_scope: transport_specific_stream_completion
+L00007492	implementation_surfaces:
+L00007493	  - Plans/Contracts_V0.md
+L00007494	  - Plans/CLI_Bridged_Providers.md
+L00007495	  - Plans/Provider_OpenCode.md
+L00007496	  - Plans/Models_System.md
+L00007497	node_compile_hint:
+L00007498	  mode: provider_stream_completion_contract
+L00007499	  create_worknodes: false
+L00007500	source_lineage:
+L00007501	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007502	preserved_exact_tokens:
+L00007503	  - "HTTP REST endpoints"
+L00007504	  - "SSE event streams"
+L00007505	  - "CLI event outputs"
+L00007506	  - "provider HTTP/gRPC endpoints"
+L00007507	  - "`text_delta`"
+L00007508	  - "`tool_use`"
+L00007509	  - "`tool_result`"
+L00007510	  - "`usage`"
+L00007511	  - "`done`"
+L00007512	  - "`Gemini/Vertex`"
+L00007513	  - "`FinishReasonContentFilter`"
+L00007514	  - "`FinishReasonSafety`"
+L00007515	  - "`FinishReasonUnknown`"
+L00007516	negative_constraints:
+L00007517	  - "Provider finish_reason alone is not sufficient evidence that tool execution, tool-result ingestion, or response continuation is complete."
+L00007518	  - "FinishReasonUnknown with empty content is an error path rather than normal completion."
+L00007519	owner_hints:
+L00007520	  - Plans/Contracts_V0.md
+L00007521	```
+L00007522	
+L00007523	### CV-096 - Provider Consumption And Platform Vocabulary Safety
+L00007524	
+L00007525	```yaml
+L00007526	plan_unit_id: CV-096
+L00007527	unit_type: requirement
+L00007528	status: accepted
+L00007529	owner_doc: Plans/Contracts_V0.md
+L00007530	canonical_text: >-
+L00007531	  Consumers do not branch on provider transport class because all provider
+L00007532	  output is consumed through the unified normalized stream, and
+L00007533	  vocabulary-safe persisted contracts must not replace requested_platform or
+L00007534	  effective_platform with provider_entry_id, which may accompany but not rewrite
+L00007535	  requested/effective platform fields.
+L00007536	gui_related: false
+L00007537	gui_classification_reason: This unit defines provider consumption and persisted vocabulary constraints rather than visual presentation.
+L00007538	split_recommended: true
+L00007539	depends_on: [CV-091, CV-092, CV-093]
+L00007540	unblocks: []
+L00007541	acceptance_criteria:
+L00007542	  - Consumers do not branch on transport class.
+L00007543	  - All provider output is consumed through the unified normalized stream.
+L00007544	  - requested_platform and effective_platform are not replaced with provider_entry_id.
+L00007545	  - provider_entry_id may accompany but not rewrite requested/effective platform fields.
+L00007546	validation_surfaces:
+L00007547	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007548	  - python3 scripts/pm-plan-index.py validate
+L00007549	risk_class: provider_platform_vocabulary_rewrite
+L00007550	reasoning_tier: high
+L00007551	context_scope: provider_consumption_platform_vocabulary
+L00007552	implementation_surfaces:
+L00007553	  - Plans/Contracts_V0.md
+L00007554	  - Plans/CLI_Bridged_Providers.md
+L00007555	  - Plans/Provider_OpenCode.md
+L00007556	  - Plans/Models_System.md
+L00007557	  - Plans/storage-plan.md
+L00007558	node_compile_hint:
+L00007559	  mode: provider_platform_vocabulary_contract
+L00007560	  create_worknodes: false
+L00007561	source_lineage:
+L00007562	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007563	preserved_exact_tokens:
+L00007564	  - "unified normalized stream"
+L00007565	  - "`requested_platform`"
+L00007566	  - "`effective_platform`"
+L00007567	  - "`provider_entry_id`"
+L00007568	  - "ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md"
+L00007569	negative_constraints:
+L00007570	  - "Consumers must not branch on transport class."
+L00007571	  - "Vocabulary-safe persisted contracts must not replace requested_platform or effective_platform with provider_entry_id."
+L00007572	owner_hints:
+L00007573	  - Plans/Contracts_V0.md
+L00007574	```
+L00007575	
+L00007576	### CV-097 - Tool Invoked Attribution Payload
+L00007577	
+L00007578	```yaml
+L00007579	plan_unit_id: CV-097
+L00007580	unit_type: requirement
+L00007581	status: accepted
+L00007582	owner_doc: Plans/Contracts_V0.md
+L00007583	canonical_text: >-
+L00007584	  tool.invoked persisted payloads carry runtime/tool/artifact attribution
+L00007585	  directly, including attempt_id as the canonical local runtime anchor and
+L00007586	  explicit subordinate bridge refs such as provider_attempt_ref and
+L00007587	  usage_event_ref.
+L00007588	gui_related: false
+L00007589	gui_classification_reason: This unit defines persisted tool invocation payload identity rather than GUI presentation.
+L00007590	split_recommended: true
+L00007591	depends_on: [CV-038, CV-060, CV-078]
+L00007592	unblocks: [CV-111]
+L00007593	acceptance_criteria:
+L00007594	  - tool.invoked payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref.
+L00007595	  - Analytics-thin tool events are rejected as insufficient.
+L00007596	  - Requested identity fields may accompany effective identity without replacing effective_account_id or operational_identity.
+L00007597	validation_surfaces:
+L00007598	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007599	  - python3 scripts/pm-plan-index.py validate
+L00007600	risk_class: tool_invoked_attribution_underkeying
+L00007601	reasoning_tier: high
+L00007602	context_scope: tool_invoked_attribution_payload
+L00007603	implementation_surfaces:
+L00007604	  - Plans/Contracts_V0.md
+L00007605	  - Plans/Tools.md
+L00007606	  - Plans/Runtime_Artifacts_Panel.md
+L00007607	  - Plans/usage-feature.md
+L00007608	node_compile_hint:
+L00007609	  mode: tool_event_payload_contract
+L00007610	  create_worknodes: false
+L00007611	source_lineage:
+L00007612	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+L00007613	preserved_exact_tokens:
+L00007614	  - "`tool.invoked`"
+L00007615	  - "`node_id`"
+L00007616	  - "`attempt_id`"
+L00007617	  - "`tool_use_id`"
+L00007618	  - "`provider_attempt_ref`"
+L00007619	  - "`usage_event_ref`"
+L00007620	  - "`requested_account_id?`"
+L00007621	  - "`actor_kind`"
+L00007622	  - "ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md"
+L00007623	  - "ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+L00007624	negative_constraints:
+L00007625	  - "Analytics-thin tool events are no longer sufficient."
+L00007626	  - "Provider-side bridge refs must stay subordinate to attempt_id."
+L00007627	owner_hints:
+L00007628	  - Plans/Contracts_V0.md
+L00007629	```
+L00007630	
+L00007631	### CV-098 - Tool Denied Attribution Payload
+L00007632	
+L00007633	```yaml
+L00007634	plan_unit_id: CV-098
+L00007635	unit_type: requirement
+L00007636	status: accepted
+L00007637	owner_doc: Plans/Contracts_V0.md
+L00007638	canonical_text: >-
+L00007639	  tool.denied payloads preserve the same runtime/tool/artifact attribution
+L00007640	  envelope for denied actions so permission and policy denials remain
+L00007641	  explainable without consumer-local actor or account fields.
+L00007642	gui_related: false
+L00007643	gui_classification_reason: This unit defines denied tool event payload identity rather than visual presentation.
+L00007644	split_recommended: true
+L00007645	depends_on: [CV-038, CV-078, CV-097]
+L00007646	unblocks: [CV-111]
+L00007647	acceptance_criteria:
+L00007648	  - tool.denied payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref.
+L00007649	  - Permission and denial surfaces expose effective actor and account identity.
+L00007650	  - Requested account, permission, or policy routing fields preserve the rejected request envelope.
+L00007651	validation_surfaces:
+L00007652	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007653	  - python3 scripts/pm-plan-index.py validate
+L00007654	risk_class: tool_denied_attribution_loss
+L00007655	reasoning_tier: high
+L00007656	context_scope: tool_denied_attribution_payload
+L00007657	implementation_surfaces:
+L00007658	  - Plans/Contracts_V0.md
+L00007659	  - Plans/Tools.md
+L00007660	  - Plans/Runtime_Artifacts_Panel.md
+L00007661	node_compile_hint:
+L00007662	  mode: tool_denied_payload_contract
+L00007663	  create_worknodes: false
+L00007664	source_lineage:
+L00007665	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+L00007666	preserved_exact_tokens:
+L00007667	  - "`tool.denied`"
+L00007668	  - "`effective_account_id`"
+L00007669	  - "`operational_identity`"
+L00007670	  - "`requested_account_binding?`"
+L00007671	  - "`actor_ref?`"
+L00007672	  - "ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+L00007673	negative_constraints:
+L00007674	  - "Denial consumers must not invent local actor fields."
+L00007675	owner_hints:
+L00007676	  - Plans/Contracts_V0.md
+L00007677	```
+L00007678	
+L00007679	### CV-099 - Auditor Cycle Report Event Payload
+L00007680	
+L00007681	```yaml
+L00007682	plan_unit_id: CV-099
+L00007683	unit_type: requirement
+L00007684	status: accepted
+L00007685	owner_doc: Plans/Contracts_V0.md
+L00007686	canonical_text: >-
+L00007687	  Requirements-quality workflow state persists as stable event payload fields
+L00007688	  anchored to auditor_cycle_report and launch handoff lineage. Legacy
+L00007689	  validation_pass_report records are compatibility mirrors only with
+L00007690	  compatibility_only true and cycle_report_ref, and pass_verdict supports
+L00007691	  skipped where the compatibility flow requires it.
+L00007692	gui_related: false
+L00007693	gui_classification_reason: This unit defines persisted validation workflow event payloads.
+L00007694	split_recommended: true
+L00007695	depends_on: [CV-039, CV-060]
+L00007696	unblocks: []
+L00007697	acceptance_criteria:
+L00007698	  - auditor_cycle_report, workflow_run_id, pass_verdict, and verdict_reason fields are canonical.
+L00007699	  - Legacy validation_pass_report mirrors preserve pass_number and pass_name only with compatibility_only true and cycle_report_ref.
+L00007700	  - Phase plan, staged bundle, requirements quality report, runtime identity, and run lineage fields are preserved.
+L00007701	  - pass_verdict supports skipped where the flow requires it.
+L00007702	  - Accepted or final pass output bridges into launched execution.
+L00007703	validation_surfaces:
+L00007704	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007705	  - python3 scripts/pm-plan-index.py validate
+L00007706	risk_class: validation_pass_event_lineage_loss
+L00007707	reasoning_tier: high
+L00007708	context_scope: auditor_cycle_report_event_payload
+L00007709	implementation_surfaces:
+L00007710	  - Plans/Contracts_V0.md
+L00007711	  - Plans/Project_Output_Artifacts.md
+L00007712	  - Plans/chain-wizard-flexibility.md
+L00007713	node_compile_hint:
+L00007714	  mode: validation_pass_event_contract
+L00007715	  create_worknodes: false
+L00007716	source_lineage:
+L00007717	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+L00007718	preserved_exact_tokens:
+L00007719	  - "`auditor_cycle_report`"
+L00007720	  - "`validation_pass_report`"
+L00007721	  - "`cycle_report_ref`"
+L00007722	  - "`compatibility_only`"
+L00007723	  - "`workflow_run_id`"
+L00007724	  - "`pass_number`"
+L00007725	  - "`pass_verdict`"
+L00007726	  - "`phase_plan_ref`"
+L00007727	  - "`staged_bundle_ref`"
+L00007728	  - "`requirements_quality_report_ref`"
+L00007729	  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+L00007730	negative_constraints:
+L00007731	  - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
+L00007732	  - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."
+L00007733	owner_hints:
+L00007734	  - Plans/Contracts_V0.md
+L00007735	```
+L00007736	
+L00007737	### CV-100 - Inspection Refs And Resume Transport Boundary
+L00007738	
+L00007739	```yaml
+L00007740	plan_unit_id: CV-100
+L00007741	unit_type: requirement
+L00007742	status: accepted
+L00007743	owner_doc: Plans/Contracts_V0.md
+L00007744	canonical_text: >-
+L00007745	  Inspection and provenance refs stay attached to persisted events and records,
+L00007746	  while resume_url is transport-only serialized route_target and must not
+L00007747	  replace route/open navigation identity or become interchangeable with
+L00007748	  detail_ref and report_ref.
+L00007749	gui_related: false
+L00007750	gui_classification_reason: This unit defines event reference and route transport boundaries.
+L00007751	split_recommended: true
+L00007752	depends_on: [CV-057, CV-069, CV-070]
+L00007753	unblocks: []
+L00007754	acceptance_criteria:
+L00007755	  - detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, and kubernetes_refs stay event/record payload fields.
+L00007756	  - route/open contracts own navigation identity.
+L00007757	  - resume_url remains transport-only serialized resume/open handoff.
+L00007758	  - detail_ref, report_ref, and resume_url are not treated as interchangeable open-this-thing fields.
+L00007759	validation_surfaces:
+L00007760	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007761	  - python3 scripts/pm-plan-index.py validate
+L00007762	risk_class: inspection_ref_route_transport_confusion
+L00007763	reasoning_tier: high
+L00007764	context_scope: inspection_refs_resume_transport
+L00007765	implementation_surfaces:
+L00007766	  - Plans/Contracts_V0.md
+L00007767	  - Plans/storage-plan.md
+L00007768	  - Plans/UI_Command_Catalog.md
+L00007769	node_compile_hint:
+L00007770	  mode: inspection_ref_route_boundary_contract
+L00007771	  create_worknodes: false
+L00007772	source_lineage:
+L00007773	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+L00007774	preserved_exact_tokens:
+L00007775	  - "`detail_ref`"
+L00007776	  - "`report_ref`"
+L00007777	  - "`evidence_ref`"
+L00007778	  - "`workflow_refs`"
+L00007779	  - "`docker_refs`"
+L00007780	  - "`kubernetes_refs`"
+L00007781	  - "`resume_url`"
+L00007782	  - "`route_target`"
+L00007783	  - "ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#7.3 `route_target`"
+L00007784	negative_constraints:
+L00007785	  - "detail_ref, report_ref, and resume_url are not interchangeable open-this-thing fields."
+L00007786	owner_hints:
+L00007787	  - Plans/Contracts_V0.md
+L00007788	```
+L00007789	
+L00007790	### CV-101 - Tool-Specific Payload Extension Owner And Lineage
+L00007791	
+L00007792	```yaml
+L00007793	plan_unit_id: CV-101
+L00007794	unit_type: requirement
+L00007795	status: accepted
+L00007796	owner_doc: Plans/Contracts_V0.md
+L00007797	canonical_text: >-
+L00007798	  Contracts owns tool-specific payload extensions for /Runtime, /web,
+L00007799	  /tools/chat, and /section consumers, preserving transfer lineage and
+L00007800	  obligations while retaining /retire lineage only as evidence when stale
+L00007801	  aliases are replaced.
+L00007802	gui_related: false
+L00007803	gui_classification_reason: This unit defines tool payload extension ownership and migration lineage.
+L00007804	split_recommended: true
+L00007805	depends_on: [CV-078]
+L00007806	unblocks: [CV-102, CV-103, CV-107, CV-111, CV-115]
+L00007807	acceptance_criteria:
+L00007808	  - Tool-specific payload extension ownership for /Runtime, /web, /tools/chat, and /section is preserved.
+L00007809	  - Transfer lineage tokens for assistant worktree, common web output, question schema, and listed obligations remain audit-visible.
+L00007810	  - /retire lineage is evidence only when stale aliases are replaced.
+L00007811	validation_surfaces:
+L00007812	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007813	  - python3 scripts/pm-plan-index.py validate
+L00007814	risk_class: tool_payload_extension_owner_drift
+L00007815	reasoning_tier: standard
+L00007816	context_scope: tool_specific_payload_extension_owner
+L00007817	implementation_surfaces:
+L00007818	  - Plans/Contracts_V0.md
+L00007819	  - Plans/Tools.md
+L00007820	  - Plans/assistant-chat-design.md
+L00007821	node_compile_hint:
+L00007822	  mode: tool_payload_extension_owner_contract
+L00007823	  create_worknodes: false
+L00007824	source_lineage:
+L00007825	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0038
+L00007826	preserved_exact_tokens:
+L00007827	  - "`/Runtime`"
+L00007828	  - "`/web`"
+L00007829	  - "`/tools/chat`"
+L00007830	  - "`/section`"
+L00007831	  - "`obl-043`"
+L00007832	  - "`obl-044`"
+L00007833	  - "`obl-054`"
+L00007834	  - "`obl-055`"
+L00007835	  - "`obl-056`"
+L00007836	  - "`obl-066`"
+L00007837	  - "`obl-068`"
+L00007838	  - "`obl-009`"
+L00007839	  - "`obl-021`"
+L00007840	  - "`obl-040`"
+L00007841	compatibility_only_notes:
+L00007842	  - "/retire lineage is retained only as evidence when stale aliases are replaced."
+L00007843	negative_constraints:
+L00007844	  - "Retired aliases are not live canon."
+L00007845	owner_hints:
+L00007846	  - Plans/Contracts_V0.md
+L00007847	```
+L00007848	
+L00007849	### CV-102 - WebAction Carry-Through Compatibility Fields
+L00007850	
+L00007851	```yaml
+L00007852	plan_unit_id: CV-102
+L00007853	unit_type: requirement
+L00007854	status: accepted
+L00007855	owner_doc: Plans/Contracts_V0.md
+L00007856	canonical_text: >-
+L00007857	  /WebAction/web-output/error carry-through keeps question responses, WebAction
+L00007858	  output, and web error payloads aligned on the canonical fields answers,
+L00007859	  answer_text?, value?, description?, tool_use_id, and adapter_id rather than
+L00007860	  creating separate local schemas.
+L00007861	gui_related: false
+L00007862	gui_classification_reason: This unit defines shared payload compatibility fields.
+L00007863	split_recommended: true
+L00007864	depends_on: [CV-101]
+L00007865	unblocks: []
+L00007866	acceptance_criteria:
+L00007867	  - 'answers[] remains compatibility shorthand for answers: Array<{question_id, values: string[]}>.'
+L00007868	  - 'answer_text?, value?: string, description?: string, tool_use_id, and adapter_id remain canonical payload fields.'
+L00007869	  - Compatibility shorthand is normalized before persistence.
+L00007870	validation_surfaces:
+L00007871	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007872	  - python3 scripts/pm-plan-index.py validate
+L00007873	risk_class: webaction_payload_schema_fork
+L00007874	reasoning_tier: standard
+L00007875	context_scope: webaction_carry_through_fields
+L00007876	implementation_surfaces:
+L00007877	  - Plans/Contracts_V0.md
+L00007878	  - Plans/Tools.md
+L00007879	  - Plans/assistant-chat-design.md
+L00007880	node_compile_hint:
+L00007881	  mode: webaction_compatibility_payload_contract
+L00007882	  create_worknodes: false
+L00007883	source_lineage:
+L00007884	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0038
+L00007885	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+L00007886	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0044
+L00007887	preserved_exact_tokens:
+L00007888	  - "`/WebAction/web-output/error`"
+L00007889	  - "`answers[]`"
+L00007890	  - "`answers: Array<{question_id, values: string[]}>`"
+L00007891	  - "`answer_text?`"
+L00007892	  - "`value?: string`"
+L00007893	  - "`description?: string`"
+L00007894	  - "`tool_use_id`"
+L00007895	  - "`adapter_id`"
+L00007896	compatibility_only_notes:
+L00007897	  - "answers[] is compatibility shorthand for answers: Array<{question_id, values: string[]}>."
+L00007898	negative_constraints:
+L00007899	  - "Compatibility shorthand must not persist as a separate schema."
+L00007900	owner_hints:
+L00007901	  - Plans/Contracts_V0.md
+L00007902	```
+L00007903	
+L00007904	### CV-103 - Common Web Provenance Provider And Execution Path Fields
+L00007905	
+L00007906	```yaml
+L00007907	plan_unit_id: CV-103
+L00007908	unit_type: requirement
+L00007909	status: accepted
+L00007910	owner_doc: Plans/Contracts_V0.md
+L00007911	canonical_text: >-
+L00007912	  Common web payloads carry provenance, provider, adapter, cache/rate-limit,
+L00007913	  support metadata, and execution_path facts so routing and audit consumers can
+L00007914	  distinguish provider and PM execution paths without inferring execution from
+L00007915	  display labels.
+L00007916	gui_related: true
+L00007917	gui_classification_reason: This unit affects web activity displays and user-visible provenance badges.
+L00007918	split_recommended: true
+L00007919	depends_on: [CV-101]
+L00007920	unblocks: [CV-104, CV-105, CV-111]
+L00007921	acceptance_criteria:
+L00007922	  - source_refs[], citation_refs[], provenance_refs[], requested_provider, effective_provider, adapter_id, provider_attempt_ref?, cache_state, and rate_limit_state are preserved.
+L00007923	  - /batch, anti-bot, and /stability support metadata are preserved when providers expose those facts.
+L00007924	  - execution_path?: string preserves the listed provider and PM execution paths.
+L00007925	  - Routing and audit consumers do not infer execution from display labels.
+L00007926	validation_surfaces:
+L00007927	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007928	  - python3 scripts/pm-plan-index.py validate
+L00007929	risk_class: web_provenance_execution_path_loss
+L00007930	reasoning_tier: high
+L00007931	context_scope: common_web_provenance_execution_path
+L00007932	implementation_surfaces:
+L00007933	  - Plans/Contracts_V0.md
+L00007934	  - Plans/Tools.md
+L00007935	  - Plans/Runtime_Artifacts_Panel.md
+L00007936	  - Plans/storage-plan.md
+L00007937	node_compile_hint:
+L00007938	  mode: web_provenance_provider_contract
+L00007939	  create_worknodes: false
+L00007940	source_lineage:
+L00007941	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+L00007942	preserved_exact_tokens:
+L00007943	  - "`source_refs[]`"
+L00007944	  - "`citation_refs[]`"
+L00007945	  - "`provenance_refs[]`"
+L00007946	  - "`requested_provider`"
+L00007947	  - "`effective_provider`"
+L00007948	  - "`adapter_id`"
+L00007949	  - "`cache_state`"
+L00007950	  - "`rate_limit_state`"
+L00007951	  - "`provider_search_native`"
+L00007952	  - "`pm_research_composed`"
+L00007953	negative_constraints:
+L00007954	  - "Routing and audit consumers must not infer execution from display labels."
+L00007955	owner_hints:
+L00007956	  - Plans/Contracts_V0.md
+L00007957	```
+L00007958	
+L00007959	### CV-104 - Provider-Backed Web Fields And Firecrawl Alias Retirement
+L00007960	
+L00007961	```yaml
+L00007962	plan_unit_id: CV-104
+L00007963	unit_type: compatibility_disposition
+L00007964	status: accepted
+L00007965	owner_doc: Plans/Contracts_V0.md
+L00007966	canonical_text: >-
+L00007967	  Provider-backed web adapters may report subordinate provider fields, while
+L00007968	  Firecrawl-specific fields remain PM web output payload extensions and legacy
+L00007969	  scrape_id is retired as an incorrect alias rather than becoming a separate
+L00007970	  Firecrawl-owned event family.
+L00007971	gui_related: false
+L00007972	gui_classification_reason: This unit defines provider-backed payload fields and alias retirement.
+L00007973	split_recommended: true
+L00007974	depends_on: [CV-103]
+L00007975	unblocks: []
+L00007976	acceptance_criteria:
+L00007977	  - credits_used, provider request IDs, and provider-cache outcomes remain subordinate to the PM web output contract.
+L00007978	  - firecrawl_credits_used, firecrawl_cache_state, and firecrawl_scrape_id remain the exact Firecrawl-specific subordinate fields.
+L00007979	  - legacy scrape_id is retained only as a retired incorrect alias.
+L00007980	  - Firecrawl-specific fields do not create a separate Firecrawl-owned event family.
+L00007981	validation_surfaces:
+L00007982	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007983	  - python3 scripts/pm-plan-index.py validate
+L00007984	risk_class: firecrawl_event_family_fork
+L00007985	reasoning_tier: high
+L00007986	context_scope: provider_backed_web_firecrawl_fields
+L00007987	implementation_surfaces:
+L00007988	  - Plans/Contracts_V0.md
+L00007989	  - Plans/Tools.md
+L00007990	node_compile_hint:
+L00007991	  mode: web_provider_field_compatibility_disposition
+L00007992	  create_worknodes: false
+L00007993	source_lineage:
+L00007994	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+L00007995	preserved_exact_tokens:
+L00007996	  - "`credits_used`"
+L00007997	  - "`firecrawl_credits_used`"
+L00007998	  - "`firecrawl_cache_state`"
+L00007999	  - "`firecrawl_scrape_id`"
+L00008000	  - "`creditsUsed`"
+L00008001	  - "`metadata.cacheState`"
+L00008002	  - "`data.metadata.scrapeId`"
+L00008003	  - "`scrape_id`"
+L00008004	compatibility_only_notes:
+L00008005	  - "legacy scrape_id is a retired incorrect alias."
+L00008006	negative_constraints:
+L00008007	  - "Firecrawl-specific subordinate fields are payload extensions under this contract, not a separate Firecrawl-owned event family."
+L00008008	owner_hints:
+L00008009	  - Plans/Contracts_V0.md
+L00008010	```
+L00008011	
+L00008012	### CV-105 - Web Operation Input Quality And Provenance Badge Contract
+L00008013	
+L00008014	```yaml
+L00008015	plan_unit_id: CV-105
+L00008016	unit_type: requirement
+L00008017	status: accepted
+L00008018	owner_doc: Plans/Contracts_V0.md
+L00008019	canonical_text: >-
+L00008020	  Web output preserves result_quality_hint, structured operation_input, and
+L00008021	  underscore provenance_badge values for stable joins across contracts, storage,
+L00008022	  and web activity displays, while provider_scrape remains a proposed extension
+L00008023	  caveat where narrowed locked sets are required.
+L00008024	gui_related: true
+L00008025	gui_classification_reason: This unit affects web activity display provenance and quality labels.
+L00008026	split_recommended: true
+L00008027	depends_on: [CV-103]
+L00008028	unblocks: [CV-112]
+L00008029	acceptance_criteria:
+L00008030	  - result_quality_hint preserves search_snippets_only, extracted_pages, site_reader_pages, and research_synthesis.
+L00008031	  - operation_input remains a structured object for routing, audit, replay, and provenance joins.
+L00008032	  - provenance_badge uses canonical underscore values for stable joins.
+L00008033	  - provider_scrape remains marked as a provider-specific proposed extension pending harmonization where narrowed locked sets are required.
+L00008034	validation_surfaces:
+L00008035	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008036	  - python3 scripts/pm-plan-index.py validate
+L00008037	risk_class: web_provenance_badge_drift
+L00008038	reasoning_tier: high
+L00008039	context_scope: web_operation_input_quality_provenance_badge
+L00008040	implementation_surfaces:
+L00008041	  - Plans/Contracts_V0.md
+L00008042	  - Plans/storage-plan.md
+L00008043	  - Plans/Runtime_Artifacts_Panel.md
+L00008044	node_compile_hint:
+L00008045	  mode: web_quality_provenance_badge_contract
+L00008046	  create_worknodes: false
+L00008047	source_lineage:
+L00008048	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+L00008049	preserved_exact_tokens:
+L00008050	  - "`result_quality_hint`"
+L00008051	  - "`search_snippets_only`"
+L00008052	  - "`extracted_pages`"
+L00008053	  - "`site_reader_pages`"
+L00008054	  - "`research_synthesis`"
+L00008055	  - "`operation_input`"
+L00008056	  - "`provenance_badge`"
+L00008057	  - "`site_reader`"
+L00008058	  - "`provider_scrape`"
+L00008059	compatibility_only_notes:
+L00008060	  - "Legacy `web_input` normalizes to `operation_input`."
+L00008061	  - "provider_scrape is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization."
+L00008062	negative_constraints:
+L00008063	  - "operation_input is not a preview string and must not be flattened into display text."
+L00008064	owner_hints:
+L00008065	  - Plans/Contracts_V0.md
+L00008066	```
+L00008067	
+L00008068	### CV-106 - Prompt-Based Web Action Payload Cost Dimensions
+L00008069	
+L00008070	```yaml
+L00008071	plan_unit_id: CV-106
+L00008072	unit_type: requirement
+L00008073	status: accepted
+L00008074	owner_doc: Plans/Contracts_V0.md
+L00008075	canonical_text: >-
+L00008076	  Prompt-based web action payloads use prompt: string for natural-language
+L00008077	  browser or research instructions, keep the action path agent-friendly, and
+L00008078	  record provider cost dimensions such as credits per /min or /clicks/extracts
+L00008079	  when providers report them.
+L00008080	gui_related: false
+L00008081	gui_classification_reason: This unit defines prompt-based web action payload fields.
+L00008082	split_recommended: true
+L00008083	depends_on: [CV-103]
+L00008084	unblocks: []
+L00008085	acceptance_criteria:
+L00008086	  - Prompt-based web action payloads use prompt: string.
+L00008087	  - Browser and research action paths remain agent-friendly.
+L00008088	  - Provider cost dimensions are recorded when providers report them.
+L00008089	validation_surfaces:
+L00008090	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008091	  - python3 scripts/pm-plan-index.py validate
+L00008092	risk_class: prompt_web_action_payload_loss
+L00008093	reasoning_tier: standard
+L00008094	context_scope: prompt_based_web_action_payload
+L00008095	implementation_surfaces:
+L00008096	  - Plans/Contracts_V0.md
+L00008097	  - Plans/Tools.md
+L00008098	node_compile_hint:
+L00008099	  mode: prompt_web_action_payload_contract
+L00008100	  create_worknodes: false
+L00008101	source_lineage:
+L00008102	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+L00008103	preserved_exact_tokens:
+L00008104	  - "`prompt: string`"
+L00008105	  - "`/min`"
+L00008106	  - "`/clicks/extracts`"
+L00008107	owner_hints:
+L00008108	  - Plans/Contracts_V0.md
+L00008109	```
+L00008110	
+L00008111	### CV-107 - Question Lifecycle Runtime UI State Mapping
+L00008112	
+L00008113	```yaml
+L00008114	plan_unit_id: CV-107
+L00008115	unit_type: requirement
+L00008116	status: accepted
+L00008117	owner_doc: Plans/Contracts_V0.md
+L00008118	canonical_text: >-
+L00008119	  Question and /questionnaire payloads share one lifecycle contract that maps
+L00008120	  runtime pending/active outcomes to UI lifecycle states without losing
+L00008121	  terminal or explicitly restorable question outcomes.
+L00008122	gui_related: true
+L00008123	gui_classification_reason: This unit defines user-visible question and questionnaire lifecycle states.
+L00008124	split_recommended: true
+L00008125	depends_on: [CV-101]
+L00008126	unblocks: [CV-108, CV-109, CV-110]
+L00008127	acceptance_criteria:
+L00008128	  - Allowed flow states draft, incomplete, ready_to_submit, submitted, and paused are preserved.
+L00008129	  - Runtime state transitions from pending to active and from active to answered, submitted, dismissed, or expired are preserved.
+L00008130	  - UI lifecycle mapping from runtime state to draft, incomplete, ready_to_submit, submitted, and paused is preserved.
+L00008131	  - answered, submitted, dismissed, and expired remain terminal or explicitly restorable according to the owning surface.
+L00008132	validation_surfaces:
+L00008133	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008134	  - python3 scripts/pm-plan-index.py validate
+L00008135	risk_class: question_lifecycle_state_drift
+L00008136	reasoning_tier: high
+L00008137	context_scope: question_lifecycle_runtime_ui_mapping
+L00008138	implementation_surfaces:
+L00008139	  - Plans/Contracts_V0.md
+L00008140	  - Plans/assistant-chat-design.md
+L00008141	  - Plans/FinalGUISpec.md
+L00008142	node_compile_hint:
+L00008143	  mode: question_lifecycle_contract
+L00008144	  create_worknodes: false
+L00008145	source_lineage:
+L00008146	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+L00008147	preserved_exact_tokens:
+L00008148	  - "`draft`"
+L00008149	  - "`incomplete`"
+L00008150	  - "`ready_to_submit`"
+L00008151	  - "`submitted`"
+L00008152	  - "`paused`"
+L00008153	  - "`pending`"
+L00008154	  - "`active`"
+L00008155	  - "`answered`"
+L00008156	  - "`dismissed`"
+L00008157	  - "`expired`"
+L00008158	owner_hints:
+L00008159	  - Plans/Contracts_V0.md
+L00008160	```
+L00008161	
+L00008162	### CV-108 - Structured Question Responses And Option Wire Format
+L00008163	
+L00008164	```yaml
+L00008165	plan_unit_id: CV-108
+L00008166	unit_type: requirement
+L00008167	status: accepted
+L00008168	owner_doc: Plans/Contracts_V0.md
+L00008169	canonical_text: >-
+L00008170	  Question responses use structured answers arrays, locked option object-array
+L00008171	  wire format, and distinct draft_value? and default_values? fields owned by
+L00008172	  Contracts; chat renders and collects these fields without owning the contract
+L00008173	  semantics.
+L00008174	gui_related: true
+L00008175	gui_classification_reason: This unit affects user-visible question rendering and response collection.
+L00008176	split_recommended: true
+L00008177	depends_on: [CV-102, CV-107]
+L00008178	unblocks: []
+L00008179	acceptance_criteria:
+L00008180	  - 'Structured multi-answer submission uses answers: Array<{question_id, values: string[], source?: "option" | "other" | "freeform"}>.'
+L00008181	  - 'Question item/action payload fields preserve question_id, draft_value?, default_values?, response_kind, validation_state, value?: string, description?: string, tool_use_id, adapter_id, and adapter_selection_reason.'
+L00008182	  - 'options format is locked as Array<{id: string, label: string, description?: string}>.'
+L00008183	  - string[] remains backwards-compatible only for legacy single_question inputs and is auto-expanded before persistence or rendering.
+L00008184	validation_surfaces:
+L00008185	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008186	  - python3 scripts/pm-plan-index.py validate
+L00008187	risk_class: question_response_wire_format_drift
+L00008188	reasoning_tier: high
+L00008189	context_scope: structured_question_response_options
+L00008190	implementation_surfaces:
+L00008191	  - Plans/Contracts_V0.md
+L00008192	  - Plans/assistant-chat-design.md
+L00008193	  - Plans/Tools.md
+L00008194	node_compile_hint:
+L00008195	  mode: question_response_wire_contract
+L00008196	  create_worknodes: false
+L00008197	source_lineage:
+L00008198	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+L00008199	preserved_exact_tokens:
+L00008200	  - "answers: Array<{question_id, values: string[], source?: \"option\" | \"other\" | \"freeform\"}>"
+L00008201	  - "`draft_value?`"
+L00008202	  - "`default_values?`"
+L00008203	  - "options?: Array<{id, label, description?}>"
+L00008204	  - "Array<{id: string, label: string, description?: string}>"
+L00008205	  - "`response_kind?: \"selection\" | \"freeform\" | \"mixed\"`"
+L00008206	  - "`validation_state?: \"valid\" | \"invalid\" | \"pending\"`"
+L00008207	compatibility_only_notes:
+L00008208	  - "string[] remains backwards-compatible only for legacy single_question inputs."
+L00008209	negative_constraints:
+L00008210	  - "Chat renders and collects these fields, but does not own the contract itself, the canonical field list, or the resolution semantics."
+L00008211	owner_hints:
+L00008212	  - Plans/Contracts_V0.md
+L00008213	```
+L00008214	
+L00008215	### CV-109 - Question Envelope Alias And Clarification Event Normalization
+L00008216	
+L00008217	```yaml
+L00008218	plan_unit_id: CV-109
+L00008219	unit_type: compatibility_disposition
+L00008220	status: accepted
+L00008221	owner_doc: Plans/Contracts_V0.md
+L00008222	canonical_text: >-
+L00008223	  Question envelopes normalize allow_other to allow_freeform, and the persisted
+L00008224	  requirements.clarification_requested event carries blocked requirements
+L00008225	  lineage into the questionnaire payload and answers contract before persistence
+L00008226	  or resolution.
+L00008227	gui_related: false
+L00008228	gui_classification_reason: This unit defines question envelope compatibility and persisted clarification events.
+L00008229	split_recommended: true
+L00008230	depends_on: [CV-099, CV-108]
+L00008231	unblocks: []
+L00008232	acceptance_criteria:
+L00008233	  - Question input envelopes preserve mode single_question or questionnaire and the allowed output status values.
+L00008234	  - allow_other is accepted only as a compatibility input and normalized to allow_freeform before persistence, validation, or rendering.
+L00008235	  - requirements.clarification_requested carries wizard_id, thread_id, and question_ids[] from the blocked requirements report.
+L00008236	  - Legacy single-question tool shapes normalize into the questionnaire payload and answers[] contract.
+L00008237	validation_surfaces:
+L00008238	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008239	  - python3 scripts/pm-plan-index.py validate
+L00008240	risk_class: question_alias_persistence_drift
+L00008241	reasoning_tier: high
+L00008242	context_scope: question_envelope_clarification_event
+L00008243	implementation_surfaces:
+L00008244	  - Plans/Contracts_V0.md
+L00008245	  - Plans/Project_Output_Artifacts.md
+L00008246	  - Plans/assistant-chat-design.md
+L00008247	node_compile_hint:
+L00008248	  mode: question_alias_clarification_contract
+L00008249	  create_worknodes: false
+L00008250	source_lineage:
+L00008251	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+L00008252	preserved_exact_tokens:
+L00008253	  - "`mode: \"single_question\" | \"questionnaire\"`"
+L00008254	  - "`allow_other`"
+L00008255	  - "`allow_freeform`"
+L00008256	  - "`requirements.clarification_requested`"
+L00008257	  - "`wizard_id`"
+L00008258	  - "`thread_id`"
+L00008259	  - "`question_ids[]`"
+L00008260	  - "`header?: string`"
+L00008261	  - "`text: string`"
+L00008262	  - "`answer: string`"
+L00008263	compatibility_only_notes:
+L00008264	  - "allow_other is a deprecated alias for canonical allow_freeform."
+L00008265	negative_constraints:
+L00008266	  - "Deprecated allow_other must not persist as canonical."
+L00008267	owner_hints:
+L00008268	  - Plans/Contracts_V0.md
+L00008269	```
+L00008270	
+L00008271	### CV-110 - Subagent Question Escalation Prohibition
+L00008272	
+L00008273	```yaml
+L00008274	plan_unit_id: CV-110
+L00008275	unit_type: constraint
+L00008276	status: accepted
+L00008277	owner_doc: Plans/Contracts_V0.md
+L00008278	canonical_text: >-
+L00008279	  Subagents must not invoke the question tool to address users directly; they
+L00008280	  escalate to the parent orchestrator, and the parent decides whether to surface
+L00008281	  the question to the user.
+L00008282	gui_related: false
+L00008283	gui_classification_reason: This unit defines orchestration authority for user-facing questions.
+L00008284	split_recommended: true
+L00008285	depends_on: [CV-107]
+L00008286	unblocks: []
+L00008287	acceptance_criteria:
+L00008288	  - Subagents do not invoke the question tool to address users directly.
+L00008289	  - Subagents escalate user questions to the parent orchestrator.
+L00008290	  - Parent orchestrator owns the decision to surface the question to the user.
+L00008291	validation_surfaces:
+L00008292	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008293	  - python3 scripts/pm-plan-index.py validate
+L00008294	risk_class: subagent_direct_user_question
+L00008295	reasoning_tier: high
+L00008296	context_scope: subagent_question_escalation
+L00008297	implementation_surfaces:
+L00008298	  - Plans/Contracts_V0.md
+L00008299	  - Plans/assistant-chat-design.md
+L00008300	node_compile_hint:
+L00008301	  mode: subagent_question_escalation_constraint
+L00008302	  create_worknodes: false
+L00008303	source_lineage:
+L00008304	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+L00008305	preserved_exact_tokens:
+L00008306	  - "Subagents MUST NOT invoke the `question` tool"
+L00008307	  - "assistant-chat-design.md §15.2"
+L00008308	negative_constraints:
+L00008309	  - "Subagents must not address users directly through the question tool."
+L00008310	owner_hints:
+L00008311	  - Plans/Contracts_V0.md
+L00008312	```
+L00008313	
+L00008314	### CV-111 - Web Operation Tool Event Family Boundary
+L00008315	
+L00008316	```yaml
+L00008317	plan_unit_id: CV-111
+L00008318	unit_type: constraint
+L00008319	status: accepted
+L00008320	owner_doc: Plans/Contracts_V0.md
+L00008321	canonical_text: >-
+L00008322	  Web operations use the existing tool.invoked and tool.denied event families;
+L00008323	  web.operation and web.operation.* vocabulary is reserved for payload
+L00008324	  classification only, with web-specific fields under payload.meta.
+L00008325	gui_related: false

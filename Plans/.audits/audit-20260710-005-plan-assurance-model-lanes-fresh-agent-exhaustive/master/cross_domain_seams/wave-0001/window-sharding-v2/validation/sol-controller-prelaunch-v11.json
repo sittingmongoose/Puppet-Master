@@ -1,0 +1,66 @@
+{
+  "activation_granted": false,
+  "atomic32_forbidden": true,
+  "atomic_transaction_size": 16,
+  "authorized_cohorts": [],
+  "cohorts_0003_0004_untouched": true,
+  "credits": {
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0
+  },
+  "errors": [
+    "fresh-frozen-tests",
+    "fresh-frozen-verifier",
+    "parent-spawn-cardinality"
+  ],
+  "fresh_frozen_tests": {
+    "counts": null,
+    "status": "fail",
+    "test_digest": null
+  },
+  "fresh_frozen_verifier": {
+    "errors": [
+      "",
+      "Traceback (most recent call last):\n  File \"/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/tools/verify_prelaunch_v2.py\", line 144, in <module>\n    r=verify(); print(json.dumps(r,indent=2,sort_keys=True)); raise SystemExit(0 if r[\"status\"]==\"pass\" else 1)\n      ^^^^^^^^\n  File \"/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/tools/verify_prelaunch_v2.py\", line 122, in verify\n    scan=subprocess.run([\"rg\",\"-l\",\"--fixed-strings\",prefix,str(ROOT)],text=True,capture_output=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: 'rg'\n"
+    ],
+    "status": "fail"
+  },
+  "frozen_inputs": {
+    "cache_reconciliation_report_sha256": "bfb3a7fc8a3723994f23930085f5989848c1aac85b4a6b39ed4dc0d15e0b3782",
+    "terminal_report_sha256": "1e8af80b32fb1d998d4f1bdb24f049f26f93b6c25892a60b96982bd17bc052c9"
+  },
+  "gate_passed": false,
+  "luna_readiness_report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/validation/luna-independent-prelaunch-v3.json",
+  "luna_readiness_report_sha256": "a2913d9a26bc2ada12e72347b6bdf4d167e43644d713a5060f82b132f4bc3207",
+  "native_routing_evidence": {},
+  "policies": {
+    "concurrent_change_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+    "routing_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544",
+    "v11_sha256": "6717f715c8a32dea88d7e79e70fca87aeb4a0b637853da3742c5c6e6a0c9a086"
+  },
+  "reconstruction": {
+    "assignments": 64,
+    "edges": 9365,
+    "intent_root": "71bf3876173c55760b90a7426be98c04cee7057d7ed9e4ed8f2b265703227790",
+    "intents": 64,
+    "packet_bytes_max": 701967,
+    "packet_bytes_min": 626266,
+    "packet_root": "334ca260dbfbf86435a0302ba6d815c48d4f61399a0a117820a3fa5bc3482e10",
+    "packets": 64,
+    "source_features": 2495,
+    "unique_edges": 9365
+  },
+  "schema_version": "cross-domain-seam-window-v2-sol-controller-prelaunch-v11",
+  "status": "FAIL_CLOSED_LAUNCH_ZERO",
+  "zero_state": {
+    "activations": 0,
+    "credit": 0,
+    "empty_outputs": 64,
+    "native_capture_rows": 0,
+    "receipts": 0,
+    "results": 0
+  }
+}

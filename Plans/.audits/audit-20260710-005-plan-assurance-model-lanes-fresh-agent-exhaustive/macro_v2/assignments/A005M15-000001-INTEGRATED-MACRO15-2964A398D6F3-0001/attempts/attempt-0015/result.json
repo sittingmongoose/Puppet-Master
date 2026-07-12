@@ -1,0 +1,680 @@
+{
+  "assignment_id": "A005M15-000001-INTEGRATED-MACRO15-2964A398D6F3-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "none_closed_world_schema_envelope",
+      "impact": "The root contract is closed-world and requires every named evidence section, preventing undeclared root-level claims from silently entering a valid closure-evidence document.",
+      "item_id": "M15-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The schema identifies a Draft 2020-12 object contract, fixes its identity and title, rejects additional root properties, and requires the complete named top-level evidence surface.",
+      "title": "Closed-world root evidence envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "authority",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"const\": false",
+          "line_end": 56,
+          "line_start": 56,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "          \"const\": true",
+          "line_end": 62,
+          "line_start": 62,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "none_explicit_non_executable_boundary",
+      "impact": "A conforming evidence document cannot authorize ordinary WorkNodes or NodeSeeds and must preserve the executable-lifecycle certification requirement.",
+      "item_id": "M15-002",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The buildability policy encodes a hard non-executable authority boundary: the buildability gate remains false, ordinary product WorkNodes and NodeSeeds remain disallowed, and PNC019 certification remains required.",
+      "title": "Buildability remains explicitly disabled"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "operations",
+        "acceptance_oracles",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"worknodes\": { \"const\": 0 },",
+          "line_end": 80,
+          "line_start": 80,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"production_build_tasks\": { \"const\": 0 }",
+          "line_end": 87,
+          "line_start": 87,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "none_forbidden_artifact_oracle",
+      "impact": "The closure artifact has a direct structural oracle that fails if any forbidden implementation or execution artifact count is nonzero.",
+      "item_id": "M15-003",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "All eight forbidden artifact categories are required and fixed to zero, including WorkNodes, implementation files, runtime launches, and production build tasks.",
+      "title": "Forbidden artifact counts are machine-fixed to zero"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"closed_blocker_families\": {",
+          "line_end": 90,
+          "line_start": 90,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "    \"remaining_blocker_families\": {",
+          "line_end": 93,
+          "line_start": 93,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "missing_cross_field_blocker_partition_invariant",
+      "impact": "A schema-valid artifact can list the same family as both closed and remaining, omit a closure record for a closed family, or provide a closure record for an unlisted family, undermining closure-state correctness.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema independently validates closed_blocker_families, remaining_blocker_families, and closure_records but declares no disjointness, exhaustiveness, or membership correspondence among them.",
+      "title": "Blocker closure collections are not cross-validated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "propagation",
+        "missing_callers_consumers",
+        "concurrency_races",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"required\": [\"event_type\", \"payload_schema_id\", \"payload_contract_ref\", \"producer\", \"consumers\", \"negative_fixture\"],",
+          "line_end": 117,
+          "line_start": 117,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "missing_registry_identity_and_reference_integrity",
+      "impact": "Duplicate or conflicting event contracts and dangling schema or fixture references remain schema-valid, so producers and consumers can disagree despite a passing structural check.",
+      "item_id": "M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Payload contract records require ownership, consumer, schema, and negative-fixture strings, but the array has no uniqueness rule and the schema does not resolve or verify the referenced contracts and fixtures.",
+      "title": "Event payload registry lacks identity and reference integrity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"cancellation_contract\": {\"$ref\": \"#/$defs/non_empty_string\"},",
+          "line_end": 178,
+          "line_start": 178,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"quota_error_degraded_contract\": {\"$ref\": \"#/$defs/non_empty_string\"},",
+          "line_end": 180,
+          "line_start": 180,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "freeform_provider_lifecycle_contracts",
+      "impact": "Mutually inconsistent cancellation, retry, quota-degradation, tool-call, and redaction claims can all validate; ordering, idempotency, race handling, rollback, and observable terminal states are not falsifiable here.",
+      "item_id": "M15-006",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Provider-stream lifecycle and recovery obligations are represented only as non-empty strings rather than structured state, transition, error, timing, retry, cancellation, or redaction assertions.",
+      "title": "Provider failure and recovery semantics are not machine-checkable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"state_selector\": {\"$ref\": \"#/$defs/non_empty_string\"},",
+          "line_end": 220,
+          "line_start": 220,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"failure_projections\": {\"$ref\": \"#/$defs/string_list\"},",
+          "line_end": 228,
+          "line_start": 228,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "freeform_gui_state_and_failure_wiring",
+      "impact": "A valid artifact can claim GUI wiring without proving that enabled, disabled, pending, failed, permission-denied, or stale states map to the correct handler behavior and visible projection; accessibility and localization obligations are also absent.",
+      "item_id": "M15-007",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The GUI wiring section requires command, selector, disabled reason, handler, permission, result, failure projection, and Slint binding fields, but each is only a non-empty string or string list with no relational or state-machine checks.",
+      "title": "GUI truth is asserted but not structurally proven"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"preservation_only_acceptance_allowed\": {\"const\": false},",
+          "line_end": 243,
+          "line_start": 243,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"lineage_only_terms_are_not_behavioral\": {\"const\": true},",
+          "line_end": 244,
+          "line_start": 244,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "none_behavioral_acceptance_boundary",
+      "impact": "The contract prevents source-lineage preservation from being accepted as implementation behavior and requires implementation-targeted acceptance material.",
+      "item_id": "M15-008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Preservation-only acceptance is explicitly forbidden and lineage-only terms are explicitly non-behavioral.",
+      "title": "Lineage is not accepted as behavioral proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [\"cas_fields\", \"reject_stale_but_valid_json\", \"negative_cases\", \"refresh_routes\", \"receipt_rule\"],",
+          "line_end": 296,
+          "line_start": 296,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"reject_stale_but_valid_json\": {\"const\": true},",
+          "line_end": 299,
+          "line_start": 299,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "unbound_currentness_and_cas_oracles",
+      "impact": "The artifact must say stale JSON is rejected but can supply arbitrary CAS fields, negative cases, refresh routes, and receipt text; the schema cannot prove atomic comparison, race behavior, refresh success, or receipt freshness.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Currentness requires a stale-rejection flag plus named CAS, negative-case, refresh-route, and receipt fields, but those obligations are unstructured strings and lists with no cross-field or executable comparison oracle.",
+      "title": "Currentness claims lack enforceable CAS semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "scale_performance",
+        "untrusted_inputs",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"minLength\": 1",
+          "line_end": 309,
+          "line_start": 309,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "    \"string_list\": {",
+          "line_end": 311,
+          "line_start": 311,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "weak_shared_string_primitives",
+      "impact": "Whitespace-only identifiers and claims, duplicate list entries, and unbounded strings or arrays can validate throughout owners, refs, consumers, fixtures, GUI wiring, and lifecycle contracts, weakening integrity and exposing avoidable resource-amplification risk.",
+      "item_id": "M15-010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The shared non_empty_string primitive checks only minLength 1, while string_list checks only array type, minItems 1, and those strings; neither whitespace, uniqueness, format, nor size limits are constrained.",
+      "title": "Shared primitives admit low-integrity and unbounded values"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"minItems\": 1,",
+          "line_end": 336,
+          "line_start": 336,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "terminal_empty_blocker_state_unrepresentable",
+      "impact": "Because both closed_blocker_families and remaining_blocker_families use this required non-empty list type, a legitimate terminal state with zero remaining blocker families cannot conform; the schema hard-codes perpetual remaining work.",
+      "item_id": "M15-011",
+      "item_type": "state_transition",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "family_list requires at least one member and is used by both closed and remaining blocker collections, making an empty remaining-blocker terminal state structurally impossible.",
+      "title": "No-remaining-blockers state cannot be represented"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [",
+          "line_end": 345,
+          "line_start": 345,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "          \"const\": \"closed_non_executable_spec_schema_fixture\"",
+          "line_end": 357,
+          "line_start": 357,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "closure_record_evidence_not_resolved_or_unique",
+      "impact": "Duplicate family closure records, missing referenced evidence, or validator references that do not actually certify the family can remain schema-valid, so closure status is asserted rather than demonstrated.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "A closure record fixes its status token and requires evidence, validator, and boundary strings, but the schema neither enforces one record per family nor resolves those references or tests their relationship to the declared blocker family.",
+      "title": "Closure records lack uniqueness and evidence resolution"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"required\": [",
+          "line_end": 409,
+          "line_start": 409,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        },
+        {
+          "exact_quote": "        \"negative_case\": {",
+          "line_end": 434,
+          "line_start": 434,
+          "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+        }
+      ],
+      "gap_kind": "freeform_fixture_without_executable_oracle",
+      "impact": "Persistence and security fixtures can be internally contradictory, omit timing and rollback semantics, or name unverifiable owners while still passing; negative and partial-failure coverage is not executable from this shape alone.",
+      "item_id": "M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The shared fixture shape requires given, when, then, negative_case, and owner_refs, but every semantic field is an unconstrained non-empty string and no expected state, error code, side effect, rollback, or oracle structure is defined.",
+      "title": "Fixture prose is not a falsifiable behavioral oracle"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        305
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005",
+        "M15-006",
+        "M15-007",
+        "M15-008",
+        "M15-009"
+      ],
+      "reviewed": true,
+      "summary": "The root schema establishes a strict non-executable closure-evidence envelope and explicit no-build authority boundaries, but most lifecycle, GUI, event, closure-coherence, and currentness semantics remain freeform or cross-field-unverified.",
+      "window_id": "WIN-2964A398D6F3-0001"
+    },
+    {
+      "core_range": [
+        306,
+        443
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-010",
+        "M15-011",
+        "M15-012",
+        "M15-013"
+      ],
+      "reviewed": true,
+      "summary": "The shared definitions enumerate blocker families and close object shapes, but weak string primitives, mandatory non-empty family lists, unresolved closure references, and prose-only fixtures leave terminal-state and falsifiability gaps.",
+      "window_id": "WIN-2964A398D6F3-0002"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-2964A398D6F3-0001",
+    "document_path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "micro_window_ids": [
+      "WIN-2964A398D6F3-0001",
+      "WIN-2964A398D6F3-0002"
+    ],
+    "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines the disjoint and exhaustive relationship among closed blocker families, remaining blocker families, and closure records?",
+      "Which validator resolves evidence_refs, validator_refs, payload_contract_ref, schema_ref, negative_fixture, owner_refs, GUI handler locations, and currentness receipts against current canonical artifacts?",
+      "Which executable lifecycle contract defines provider ordering, cancellation races, retry idempotency, partial failure, rollback, quota degradation, and terminal-state observability?",
+      "Is an empty remaining_blocker_families array a required terminal closure state, and if so which schema owns that representation?"
+    ],
+    "feature_family_keys": [
+      "non_executable_implementation_readiness_closure",
+      "blocker_family_closure_partition",
+      "event_and_artifact_payload_registry",
+      "provider_stream_lifecycle",
+      "gui_command_wiring_truth",
+      "behavioral_acceptance",
+      "currentness_and_cas",
+      "persistence_and_security_fixtures"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 cross-array disjointness and uniqueness patterns",
+      "schema designs for executable Given When Then fixtures and negative oracles",
+      "provider streaming state machine cancellation retry and partial failure contracts",
+      "content-addressed evidence currentness CAS receipt validation patterns",
+      "GUI command enablement failure projection accessibility and localization contract schemas"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000001_attempt_0015_terminal"
+}

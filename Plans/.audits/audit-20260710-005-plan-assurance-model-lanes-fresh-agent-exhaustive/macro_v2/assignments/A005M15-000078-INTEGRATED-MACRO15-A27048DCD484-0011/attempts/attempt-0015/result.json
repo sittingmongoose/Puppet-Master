@@ -1,0 +1,613 @@
+{
+  "assignment_id": "A005M15-000078-INTEGRATED-MACRO15-A27048DCD484-0011",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "gui_truth",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 33676,
+          "line_start": 33676,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_fixture_boundary",
+      "impact": "Show Terminal and the neighboring terminal panel controls cannot be treated as production capabilities or acceptance evidence until a real state contract replaces the demo fixture behavior.",
+      "item_id": "M15-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The reconciliation explicitly classifies the terminal-demo controls as concept fixtures and sets a hard non-promotion boundary: mock handlers are not acceptance evidence without a real state contract.",
+      "title": "Terminal demo controls are explicitly non-production"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "gui_truth",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 33723,
+          "line_start": 33723,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 33724,
+          "line_start": 33724,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "identified_accessibility_gap",
+      "impact": "Info-icon disclosure controls are not keyboard-operable or semantically exposed, so a production implementation copied from this concept would exclude keyboard and assistive-technology users.",
+      "item_id": "M15-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The inventory directly identifies missing roles and missing keyboard parity on clickable info-icon spans; production ownership must repair both and test the resulting interaction.",
+      "title": "Clickable info icons lack role and keyboard parity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"onclick\": \"PM_TERMINAL_DEMO.dispatch('cmd.runtime.restore_safe_point_then_retry',{demo:true})\"",
+          "line_end": 33941,
+          "line_start": 33941,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 33955,
+          "line_start": 33955,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "destructive_recovery_contract_absent",
+      "impact": "Restore-and-retry and branch-from-restore can alter recovery history, but the excerpt supplies only demo dispatches and no production authorization, confirmation, atomicity, partial-failure, rollback, or receipt oracle.",
+      "item_id": "M15-003",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The destructive recovery actions are deliberately fixture-only; a canonical owner must define valid preconditions, authority, transitions, partial-failure behavior, rollback semantics, durable receipts, and falsifiable tests before promotion.",
+      "title": "Recovery actions lack a production safety contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 33872,
+          "line_start": 33872,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_promotion_oracle",
+      "impact": "The explicit gate prevents builders from inferring production authority from concept controls and makes owner acceptance plus command, state, receipt, and test evidence mandatory.",
+      "item_id": "M15-004",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Promotion is objectively gated on two conditions: acceptance by a canonical owner document and a production wiring row containing command, state, receipt, and test evidence.",
+      "title": "Owner acceptance and production wiring are the promotion oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "gui_truth",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 34061,
+          "line_start": 34061,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 34062,
+          "line_start": 34062,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "identified_accessibility_gap",
+      "impact": "The clickable problems-count span is not represented as an operable semantic control and has no keyboard-equivalent activation path.",
+      "item_id": "M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-089",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The problems-footer concept control repeats the explicit role and keyboard-parity defects; production GUI acceptance must require semantic control exposure and keyboard behavior.",
+      "title": "Problems footer is mouse-only and roleless"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"pmconcept_role\": \"concept_source_lineage_only_not_implementation_evidence\",",
+          "line_end": 34187,
+          "line_start": 34187,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"Plans/Planning_Wizard.md:Approve And Build\",",
+          "line_end": 34189,
+          "line_start": 34189,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_authority_boundary",
+      "impact": "GUI builders and downstream consumers are directed to final owner documents, preventing PMConcept from silently becoming implementation authority.",
+      "item_id": "M15-006",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "STRUCTURAL:$.final_gui_ownership"
+      ],
+      "statement": "PMConcept is expressly limited to concept source lineage; Planning Wizard, Orchestrator, Automated Testing, Final GUI, Wiring Matrix, and other named owner contracts retain production GUI authority.",
+      "title": "Final GUI authority remains outside PMConcept"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "propagation",
+        "operations",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"Plans/FinalGUISpec.md#pmconcept-remains-concept-source-lineage-input-only\",",
+          "line_end": 34179,
+          "line_start": 34179,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "    \"Plans/Wiring_Matrix.production.json\",",
+          "line_end": 34183,
+          "line_start": 34183,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_source_lineage",
+      "impact": "The evidence-reference array gives consumers concrete cross-document destinations for final GUI rules, launch ownership, visible testing, production wiring, and command readiness.",
+      "item_id": "M15-007",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_evidence_refs",
+        "STRUCTURAL:$.source_evidence_refs"
+      ],
+      "statement": "The reconciliation binds its conclusions to six named owner artifacts, making the cross-document handoff explicit rather than leaving consumers to infer authority from the concept file.",
+      "title": "Source evidence references name the canonical consumers"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "gui_misleading_states",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"runtime_build_status_text\": \"Running/build success/Compile READY/Handoff READY/Approve And Build text in PMConcept is mock status copy unless reconciled through Plan_To_Node_Compilation, Orchestrator_Page, Executor_Protocol, Goal_Runtime_System, and Wiring_Matrix production contracts.\"",
+          "line_end": 34209,
+          "line_start": 34209,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "mock_status_must_not_project_runtime_truth",
+      "impact": "Treating concept copy as live truth could falsely present builds, compiles, handoffs, or approvals as complete without authoritative runtime state and receipts.",
+      "item_id": "M15-008",
+      "item_type": "gui_truth",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "STRUCTURAL:$.final_gui_ownership"
+      ],
+      "statement": "All success and readiness language in PMConcept remains mock copy until the named runtime and wiring contracts reconcile it to production state and evidence.",
+      "title": "Mock readiness text cannot represent runtime truth"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"source_sha256\": \"80a19bfb97f817a2faaf70d5a50963e8553117d13a5e6c8a05c0dd3b3f6e3e06\",",
+          "line_end": 34177,
+          "line_start": 34177,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_source_identity",
+      "impact": "The root-level source digest provides a machine-comparable identity for the concept input that this reconciliation describes.",
+      "item_id": "M15-009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_sha256",
+        "SEMANTIC:JSON_SUFFIX:Plans/PMConcept_Control_Reconciliation.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.source_sha256"
+      ],
+      "statement": "The reconciliation closes with an explicit SHA-256 binding for its source, supporting detection of source drift across later review or migration cycles.",
+      "title": "Reconciliation records source identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"stale_toolchain_strings\": \"Concepts/PMConcept.html may contain old rustc/slint/cargo transcript strings such as rustc 1.84.0, slint v1.5.1, and slint v1.8.0; these are synthetic fixture transcript text and not the current Puppet Master Rust/Slint target.\"",
+          "line_end": 34208,
+          "line_start": 34208,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"disposition\": \"Current toolchain target is owned by Plans/FinalGUISpec.md, Plans/BinaryLocator_Spec.md, and current owner docs; PMConcept.html is not toolchain evidence.\"",
+          "line_end": 34218,
+          "line_start": 34218,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_toolchain_authority_boundary",
+      "impact": "Builders cannot use stale fixture transcripts to select dependencies or claim compatibility; current owner documents remain the authority for toolchain migration and acceptance.",
+      "item_id": "M15-010",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "STRUCTURAL:$.final_gui_ownership"
+      ],
+      "statement": "Old Rust and Slint strings are explicitly synthetic, while current toolchain authority is delegated to FinalGUISpec, BinaryLocator, and other current owner documents.",
+      "title": "Stale fixture toolchains are not compatibility evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "security_privacy",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"local_secret_or_account_values\": \"Local paths, localhost/staging hosts, email-like values, and sk- style tokens are concept fixtures only and cannot satisfy production evidence.\"",
+          "line_end": 34210,
+          "line_start": 34210,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none_explicit_sensitive_fixture_boundary",
+      "impact": "Local-looking paths, hosts, accounts, and token-shaped strings cannot be mistaken for valid production configuration, credentials, or privacy evidence.",
+      "item_id": "M15-011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "STRUCTURAL:$.final_gui_ownership"
+      ],
+      "statement": "The reconciliation places all secret-, host-, account-, and path-like PMConcept values outside production evidence and therefore outside production trust decisions.",
+      "title": "Sensitive-looking concept values have no production authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 34119,
+          "line_start": 34119,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "unwired_control_negative_space",
+      "impact": "Copy, Edit, Resend, Resume Wizard, terminal reveal, tab switching, and recovery controls cannot be implemented from this inventory because their production caller and consumer contracts, input and output schemas, valid states, authority checks, concurrency rules, offline and partial-failure behavior, localization and scale bounds, receipts, and tests are intentionally absent here.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-089",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The excerpt correctly blocks promotion but leaves the production semantics of the listed controls to canonical owners. None of the missing behavior, I/O, state, authority, failure, concurrency, recovery, privacy, offline, scaling, localization, observability, or test decisions is safe builder discretion.",
+      "title": "Unwired controls retain broad production-contract unknowns"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        33652,
+        34041
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-088",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all controls from Show Terminal through the final info-icon row. The segment establishes concept-fixture and owner-adjudicated boundaries, identifies repeated accessibility defects, exposes destructive recovery actions as uncontracted demos, and defines owner acceptance plus production wiring evidence as the promotion oracle.",
+      "window_id": "WIN-A27048DCD484-0089"
+    },
+    {
+      "core_range": [
+        34042,
+        34221
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-089",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_sha256",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:source_evidence_refs",
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:final_gui_ownership",
+        "SEMANTIC:JSON_SUFFIX:Plans/PMConcept_Control_Reconciliation.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.controls",
+        "STRUCTURAL:$.final_gui_ownership",
+        "STRUCTURAL:$.source_evidence_refs",
+        "STRUCTURAL:$.source_sha256"
+      ],
+      "item_ids": [
+        "M15-005",
+        "M15-006",
+        "M15-007",
+        "M15-008",
+        "M15-009",
+        "M15-010",
+        "M15-011",
+        "M15-012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the problems footer, message controls, info icon, root source binding, source evidence references, final GUI ownership map, fixture dispositions, and toolchain currentness. The segment preserves PMConcept as source lineage only, routes authority to owner documents, rejects mock statuses and sensitive-looking fixture values as production evidence, and leaves unwired control semantics explicitly unresolved for production owners.",
+      "window_id": "WIN-A27048DCD484-0090"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0011",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": [
+      "WIN-A27048DCD484-0089",
+      "WIN-A27048DCD484-0090"
+    ],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do the named owner documents define production commands, state transitions, receipts, and tests for every concept-only Copy, Edit, Resend, Resume Wizard, terminal, problems, restore, and branch control?",
+      "Do production owner contracts require semantic roles and keyboard parity for every clickable span identified by this reconciliation?",
+      "Which canonical runtime receipt is the sole authority for Running, Compile READY, Handoff READY, and Approve And Build projections?",
+      "Where are authorization, confirmation, atomicity, partial-failure, and rollback rules defined for restore-safe-point and branch-from-restore actions?"
+    ],
+    "feature_family_keys": [
+      "pmconcept-control-reconciliation",
+      "terminal-and-problems-controls",
+      "recovery-and-branch-actions",
+      "final-gui-authority",
+      "production-wiring-evidence",
+      "accessibility-control-semantics",
+      "runtime-status-truth",
+      "toolchain-currentness"
+    ],
+    "research_queries": [
+      "accessible disclosure and status-control patterns for keyboard and assistive technology",
+      "safe recovery restore and branch workflows with idempotency rollback and durable receipts",
+      "GUI runtime status projection contracts that prevent stale or optimistic readiness states",
+      "localization and overflow testing for compact terminal and message action controls"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000078_attempt_0015_terminal"
+}

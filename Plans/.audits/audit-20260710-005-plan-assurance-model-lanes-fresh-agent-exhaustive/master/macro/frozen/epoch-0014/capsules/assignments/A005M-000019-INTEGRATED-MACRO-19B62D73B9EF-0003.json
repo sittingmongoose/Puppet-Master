@@ -1,0 +1,418 @@
+{
+  "assignment_id": "A005M-000019-INTEGRATED-MACRO-19B62D73B9EF-0003",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    2246,
+    5287
+  ],
+  "bundle_id": "MACRO-19B62D73B9EF-0003",
+  "context_ranges": [
+    [
+      2234,
+      2245
+    ],
+    [
+      5288,
+      5299
+    ]
+  ],
+  "document_path": "Plans/Contracts_V0.md",
+  "micro_window_ids": [
+    "WIN-19B62D73B9EF-0009",
+    "WIN-19B62D73B9EF-0010",
+    "WIN-19B62D73B9EF-0011",
+    "WIN-19B62D73B9EF-0012",
+    "WIN-19B62D73B9EF-0013",
+    "WIN-19B62D73B9EF-0014",
+    "WIN-19B62D73B9EF-0015",
+    "WIN-19B62D73B9EF-0016"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        2246,
+        2634
+      ],
+      "core_sha256": "8b92865e11c284cc0e98d65465d5163903d2fa34096234a07ea81dcb89808f85",
+      "plan_unit_ids": [
+        "CV-294"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-294",
+        "SEMANTIC:PLANUNIT:CV-294:CONT-004"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-294:CONT-004"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5353,
+      "window_id": "WIN-19B62D73B9EF-0009"
+    },
+    {
+      "core_range": [
+        2635,
+        3017
+      ],
+      "core_sha256": "5177fe5ba4016b2809d65f4adcb544df923cd8051cb95576c50d44ea25a119ec",
+      "plan_unit_ids": [
+        "CV-002",
+        "CV-003",
+        "CV-294"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-002",
+        "PLANUNIT:CV-003",
+        "PLANUNIT:CV-294",
+        "SEMANTIC:PLANUNIT:CV-294:CONT-005",
+        "SEMANTIC:PLANUNIT:CV-002",
+        "SEMANTIC:PLANUNIT:CV-003"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-294:CONT-005",
+        "PLANUNIT:CV-002",
+        "PLANUNIT:CV-003"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10694,
+      "window_id": "WIN-19B62D73B9EF-0010"
+    },
+    {
+      "core_range": [
+        3018,
+        3400
+      ],
+      "core_sha256": "c2a7d5f2e277021e5353fc3c0f12a2b5b454678e13868671d3eb0d3db3ef5a3a",
+      "plan_unit_ids": [
+        "CV-004",
+        "CV-005",
+        "CV-006",
+        "CV-007",
+        "CV-008",
+        "CV-009",
+        "CV-010"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-004",
+        "PLANUNIT:CV-005",
+        "PLANUNIT:CV-006",
+        "PLANUNIT:CV-007",
+        "PLANUNIT:CV-008",
+        "PLANUNIT:CV-009",
+        "PLANUNIT:CV-010",
+        "SEMANTIC:PLANUNIT:CV-004",
+        "SEMANTIC:PLANUNIT:CV-005",
+        "SEMANTIC:PLANUNIT:CV-006",
+        "SEMANTIC:PLANUNIT:CV-007",
+        "SEMANTIC:PLANUNIT:CV-008",
+        "SEMANTIC:PLANUNIT:CV-009",
+        "SEMANTIC:PLANUNIT:CV-010"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-004",
+        "PLANUNIT:CV-005",
+        "PLANUNIT:CV-006",
+        "PLANUNIT:CV-007",
+        "PLANUNIT:CV-008",
+        "PLANUNIT:CV-009",
+        "PLANUNIT:CV-010"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5100,
+      "window_id": "WIN-19B62D73B9EF-0011"
+    },
+    {
+      "core_range": [
+        3401,
+        3775
+      ],
+      "core_sha256": "87834396107afb5f629a36dcee51a6525e8f77251d23da75443f00dbdba654e4",
+      "plan_unit_ids": [
+        "CV-011",
+        "CV-012",
+        "CV-013",
+        "CV-014",
+        "CV-015",
+        "CV-016",
+        "CV-017",
+        "CV-018"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-011",
+        "PLANUNIT:CV-012",
+        "PLANUNIT:CV-013",
+        "PLANUNIT:CV-014",
+        "PLANUNIT:CV-015",
+        "PLANUNIT:CV-016",
+        "PLANUNIT:CV-017",
+        "PLANUNIT:CV-018",
+        "SEMANTIC:PLANUNIT:CV-011",
+        "SEMANTIC:PLANUNIT:CV-012",
+        "SEMANTIC:PLANUNIT:CV-013",
+        "SEMANTIC:PLANUNIT:CV-014",
+        "SEMANTIC:PLANUNIT:CV-015",
+        "SEMANTIC:PLANUNIT:CV-016",
+        "SEMANTIC:PLANUNIT:CV-017",
+        "SEMANTIC:PLANUNIT:CV-018"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-011",
+        "PLANUNIT:CV-012",
+        "PLANUNIT:CV-013",
+        "PLANUNIT:CV-014",
+        "PLANUNIT:CV-015",
+        "PLANUNIT:CV-016",
+        "PLANUNIT:CV-017",
+        "PLANUNIT:CV-018"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5056,
+      "window_id": "WIN-19B62D73B9EF-0012"
+    },
+    {
+      "core_range": [
+        3776,
+        4150
+      ],
+      "core_sha256": "61a9e1af47f5b9f7af0d0e9475e3674f5e3b94dd5d674087ac4f50cfbd1c0778",
+      "plan_unit_ids": [
+        "CV-019",
+        "CV-020",
+        "CV-021",
+        "CV-022",
+        "CV-023",
+        "CV-024",
+        "CV-025",
+        "CV-026"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-019",
+        "PLANUNIT:CV-020",
+        "PLANUNIT:CV-021",
+        "PLANUNIT:CV-022",
+        "PLANUNIT:CV-023",
+        "PLANUNIT:CV-024",
+        "PLANUNIT:CV-025",
+        "PLANUNIT:CV-026",
+        "SEMANTIC:PLANUNIT:CV-019",
+        "SEMANTIC:PLANUNIT:CV-020",
+        "SEMANTIC:PLANUNIT:CV-021",
+        "SEMANTIC:PLANUNIT:CV-022",
+        "SEMANTIC:PLANUNIT:CV-023",
+        "SEMANTIC:PLANUNIT:CV-024",
+        "SEMANTIC:PLANUNIT:CV-025",
+        "SEMANTIC:PLANUNIT:CV-026"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-019",
+        "PLANUNIT:CV-020",
+        "PLANUNIT:CV-021",
+        "PLANUNIT:CV-022",
+        "PLANUNIT:CV-023",
+        "PLANUNIT:CV-024",
+        "PLANUNIT:CV-025",
+        "PLANUNIT:CV-026"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4944,
+      "window_id": "WIN-19B62D73B9EF-0013"
+    },
+    {
+      "core_range": [
+        4151,
+        4535
+      ],
+      "core_sha256": "e9a8a28fb2d8a5a6ff8a7523f796d1e9fe7fb2f7b1be0b6540b60683230b2161",
+      "plan_unit_ids": [
+        "CV-027",
+        "CV-028",
+        "CV-029",
+        "CV-030",
+        "CV-031",
+        "CV-032",
+        "CV-033",
+        "CV-034"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-027",
+        "PLANUNIT:CV-028",
+        "PLANUNIT:CV-029",
+        "PLANUNIT:CV-030",
+        "PLANUNIT:CV-031",
+        "PLANUNIT:CV-032",
+        "PLANUNIT:CV-033",
+        "PLANUNIT:CV-034",
+        "SEMANTIC:PLANUNIT:CV-027",
+        "SEMANTIC:PLANUNIT:CV-028",
+        "SEMANTIC:PLANUNIT:CV-029",
+        "SEMANTIC:PLANUNIT:CV-030",
+        "SEMANTIC:PLANUNIT:CV-031",
+        "SEMANTIC:PLANUNIT:CV-032",
+        "SEMANTIC:PLANUNIT:CV-033",
+        "SEMANTIC:PLANUNIT:CV-034"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-027",
+        "PLANUNIT:CV-028",
+        "PLANUNIT:CV-029",
+        "PLANUNIT:CV-030",
+        "PLANUNIT:CV-031",
+        "PLANUNIT:CV-032",
+        "PLANUNIT:CV-033",
+        "PLANUNIT:CV-034"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4944,
+      "window_id": "WIN-19B62D73B9EF-0014"
+    },
+    {
+      "core_range": [
+        4536,
+        4921
+      ],
+      "core_sha256": "fe766f9c8f3f7b5042bf2ead843ab4ee2d165071aaa043d59efb9088861c67d2",
+      "plan_unit_ids": [
+        "CV-035",
+        "CV-036",
+        "CV-037",
+        "CV-038",
+        "CV-039",
+        "CV-040",
+        "CV-041",
+        "CV-042"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-035",
+        "PLANUNIT:CV-036",
+        "PLANUNIT:CV-037",
+        "PLANUNIT:CV-038",
+        "PLANUNIT:CV-039",
+        "PLANUNIT:CV-040",
+        "PLANUNIT:CV-041",
+        "PLANUNIT:CV-042",
+        "SEMANTIC:PLANUNIT:CV-035",
+        "SEMANTIC:PLANUNIT:CV-036",
+        "SEMANTIC:PLANUNIT:CV-037",
+        "SEMANTIC:PLANUNIT:CV-038",
+        "SEMANTIC:PLANUNIT:CV-039",
+        "SEMANTIC:PLANUNIT:CV-040",
+        "SEMANTIC:PLANUNIT:CV-041",
+        "SEMANTIC:PLANUNIT:CV-042"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-035",
+        "PLANUNIT:CV-036",
+        "PLANUNIT:CV-037",
+        "PLANUNIT:CV-038",
+        "PLANUNIT:CV-039",
+        "PLANUNIT:CV-040",
+        "PLANUNIT:CV-041",
+        "PLANUNIT:CV-042"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4901,
+      "window_id": "WIN-19B62D73B9EF-0015"
+    },
+    {
+      "core_range": [
+        4922,
+        5287
+      ],
+      "core_sha256": "065e7ff5b76f430d61e1b0a7b2770c7ea9da1aa35d71dfba0c84b224103c5bf1",
+      "plan_unit_ids": [
+        "CV-043",
+        "CV-044",
+        "CV-045",
+        "CV-046",
+        "CV-047",
+        "CV-048",
+        "CV-049",
+        "CV-050"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CV-043",
+        "PLANUNIT:CV-044",
+        "PLANUNIT:CV-045",
+        "PLANUNIT:CV-046",
+        "PLANUNIT:CV-047",
+        "PLANUNIT:CV-048",
+        "PLANUNIT:CV-049",
+        "PLANUNIT:CV-050",
+        "SEMANTIC:PLANUNIT:CV-043",
+        "SEMANTIC:PLANUNIT:CV-044",
+        "SEMANTIC:PLANUNIT:CV-045",
+        "SEMANTIC:PLANUNIT:CV-046",
+        "SEMANTIC:PLANUNIT:CV-047",
+        "SEMANTIC:PLANUNIT:CV-048",
+        "SEMANTIC:PLANUNIT:CV-049",
+        "SEMANTIC:PLANUNIT:CV-050"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CV-043",
+        "PLANUNIT:CV-044",
+        "PLANUNIT:CV-045",
+        "PLANUNIT:CV-046",
+        "PLANUNIT:CV-047",
+        "PLANUNIT:CV-048",
+        "PLANUNIT:CV-049",
+        "PLANUNIT:CV-050"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4534,
+      "window_id": "WIN-19B62D73B9EF-0016"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/2a/2ab935e605e05ab4247c077bd02970b171241feb495bc5dddca9532e525a7b8b.txt",
+  "source_excerpt_sha256": "2ab935e605e05ab4247c077bd02970b171241feb495bc5dddca9532e525a7b8b",
+  "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5",
+  "token_estimate": 45526
+}

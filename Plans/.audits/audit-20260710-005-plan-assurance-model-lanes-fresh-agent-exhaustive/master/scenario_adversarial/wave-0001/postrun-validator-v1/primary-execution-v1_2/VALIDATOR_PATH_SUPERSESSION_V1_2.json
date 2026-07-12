@@ -1,0 +1,10 @@
+{
+  "schema_version": "scenario-adversarial-primary-validator-path-supersession-v1-2",
+  "status": "AUTHORIZED_FOR_COHORT_0001_PRIMARY_ONLY",
+  "preserved_v1_1_fail_report_sha256": "97dd13ec81f4331b1db14076759731acaa3f164f34c2f1a135e2919361f598a0",
+  "localized_defect": "The v1_1 adapter retained the manifest-relative result_path argument while production receipts bind the intent-authoritative absolute output/result paths.",
+  "correction": "Resolve result_path once before invoking every preserved receipt check; remove no schema or semantic check.",
+  "semantic_checks_removed": 0,
+  "schema_checks_removed": 0,
+  "credit": 0
+}

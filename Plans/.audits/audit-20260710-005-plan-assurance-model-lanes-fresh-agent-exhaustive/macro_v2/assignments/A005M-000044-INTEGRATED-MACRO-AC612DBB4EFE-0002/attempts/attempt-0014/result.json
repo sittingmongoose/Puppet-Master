@@ -1,0 +1,1042 @@
+{
+  "schema_version": "macro-review-result-v1",
+  "assignment_id": "A005M-000044-INTEGRATED-MACRO-AC612DBB4EFE-0002",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "task_thread_id": "/root/a005m_000044_attempt_0014_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "phase": "blind_macro_window_review",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/FinalGUISpec.md",
+    "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+    "source_excerpt_ref": "capsules/source/b7/b7654924f231a397181800ab4a54abdabd8f44b2311ead93aacd030622b734d8.txt",
+    "source_excerpt_sha256": "b7654924f231a397181800ab4a54abdabd8f44b2311ead93aacd030622b734d8",
+    "source_excerpt_sha256_verified": true,
+    "capsule_sha256": "2a3b79a3c2ab71d39e8d9ae259605b4950350e1406fe715b7deefd4f0c7ce819",
+    "capsule_sha256_verified": true,
+    "assignment_record_sha256": "21b379b5928973a528bfdeb5faf26286d432087fa66dfdad2790717e2c848995",
+    "identity_match_verified": true,
+    "segment_core_sha256_verification": [
+      {
+        "window_id": "WIN-AC612DBB4EFE-0006",
+        "core_range": [1495, 1845],
+        "expected": "027bf241ef489438a52e731237f6b27b2daa3b46933914e5f6993246b7232622",
+        "actual": "027bf241ef489438a52e731237f6b27b2daa3b46933914e5f6993246b7232622",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-AC612DBB4EFE-0007",
+        "core_range": [1846, 2139],
+        "expected": "98c489c0c6dedc6d9b88bb9e3be07849f579767f586a6c9eaa9dfd86d32e75ef",
+        "actual": "98c489c0c6dedc6d9b88bb9e3be07849f579767f586a6c9eaa9dfd86d32e75ef",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-AC612DBB4EFE-0008",
+        "core_range": [2140, 2524],
+        "expected": "3f9d2a0c70bee7d4268512e85d6e3a1b63d628975bc5127e409e0beaeb253da3",
+        "actual": "3f9d2a0c70bee7d4268512e85d6e3a1b63d628975bc5127e409e0beaeb253da3",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-AC612DBB4EFE-0009",
+        "core_range": [2525, 2895],
+        "expected": "fbe469dc22af3e15f0d3eb64bde42a9e9e64168727a1c7652a9b2dcfe5b8945a",
+        "actual": "fbe469dc22af3e15f0d3eb64bde42a9e9e64168727a1c7652a9b2dcfe5b8945a",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-AC612DBB4EFE-0010",
+        "core_range": [2896, 3290],
+        "expected": "c7d3550cfb009611a3b26d04be09090c1466ffefe4193c1d13f003e29c56b1e4",
+        "actual": "c7d3550cfb009611a3b26d04be09090c1466ffefe4193c1d13f003e29c56b1e4",
+        "verified": true
+      }
+    ]
+  },
+  "coverage": {
+    "assigned_core_range": [1495, 3290],
+    "assigned_core_line_count": 1796,
+    "context_ranges": [[1483, 1494], [3291, 3302]],
+    "context_line_count": 24,
+    "all_core_lines_reviewed": true,
+    "all_context_lines_reviewed": true,
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "required_dimensions": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ],
+    "dimension_item_map": {
+      "behavior": ["M44-003", "M44-006", "M44-015", "M44-025", "M44-037", "M44-045", "M44-049"],
+      "capabilities": ["M44-006", "M44-016", "M44-019", "M44-034", "M44-037"],
+      "inputs_outputs": ["M44-007", "M44-016", "M44-027", "M44-038", "M44-048"],
+      "contracts": ["M44-001", "M44-008", "M44-012", "M44-016", "M44-021", "M44-033", "M44-049"],
+      "states_transitions": ["M44-002", "M44-004", "M44-013", "M44-012", "M44-025", "M44-045", "M44-049"],
+      "authority": ["M44-003", "M44-006", "M44-012", "M44-037", "M44-039", "M44-041", "M44-049"],
+      "ownership": ["M44-003", "M44-006", "M44-037", "M44-049"],
+      "consumers": ["M44-003", "M44-006", "M44-028", "M44-037"],
+      "gui_truth": ["M44-004", "M44-008", "M44-015", "M44-034", "M44-037", "M44-045", "M44-049"],
+      "failures_recovery": ["M44-004", "M44-005", "M44-015", "M44-025", "M44-042", "M44-051"],
+      "security_privacy": ["M44-007", "M44-009", "M44-015", "M44-023", "M44-032", "M44-036", "M44-038", "M44-039", "M44-040", "M44-041", "M44-042", "M44-048"],
+      "propagation": ["M44-004", "M44-012", "M44-013", "M44-014", "M44-037"],
+      "operations": ["M44-017", "M44-021", "M44-025", "M44-028", "M44-042"],
+      "scale_performance": ["M44-017", "M44-020", "M44-028", "M44-031", "M44-042"],
+      "compatibility_migration": ["M44-011", "M44-019", "M44-026", "M44-029", "M44-030", "M44-033"],
+      "acceptance_oracles": ["M44-017", "M44-027", "M44-035", "M44-045", "M44-047", "M44-051"],
+      "builder_discretion": ["M44-002", "M44-004", "M44-013", "M44-014", "M44-018", "M44-020", "M44-031", "M44-035", "M44-044", "M44-046"],
+      "ambiguity_unknowns": ["M44-002", "M44-013", "M44-024", "M44-035", "M44-044"],
+      "missing_callers_consumers": ["M44-003", "M44-024", "M44-028"],
+      "invalid_states_transitions": ["M44-002", "M44-004", "M44-010", "M44-012", "M44-024", "M44-049"],
+      "concurrency_races": ["M44-005", "M44-007", "M44-013", "M44-014", "M44-024", "M44-039"],
+      "partial_failure": ["M44-004", "M44-005", "M44-013", "M44-025", "M44-042"],
+      "recovery_rollback": ["M44-005", "M44-011", "M44-013", "M44-025", "M44-042", "M44-051"],
+      "authority_boundaries": ["M44-003", "M44-006", "M44-012", "M44-037", "M44-039", "M44-041", "M44-049"],
+      "privacy_data_lifecycle": ["M44-009", "M44-023", "M44-036", "M44-038", "M44-040", "M44-048"],
+      "untrusted_inputs": ["M44-007", "M44-015", "M44-023", "M44-032", "M44-038", "M44-041"],
+      "gui_misleading_states": ["M44-004", "M44-015", "M44-034", "M44-049", "M44-050", "M44-051"],
+      "offline_network_loss": ["M44-025", "M44-028", "M44-032", "M44-042"],
+      "scale_limits": ["M44-017", "M44-020", "M44-028", "M44-031", "M44-042"],
+      "accessibility": ["M44-008", "M44-018", "M44-017", "M44-043"],
+      "localization": ["M44-018"],
+      "observability_support": ["M44-003", "M44-009", "M44-015", "M44-025", "M44-028", "M44-034", "M44-042", "M44-049"],
+      "destructive_actions": ["M44-005", "M44-014", "M44-015", "M44-026", "M44-039"],
+      "cross_document_seams": ["M44-006", "M44-024", "M44-030", "M44-033", "M44-037"],
+      "test_falsifiability": ["M44-017", "M44-027", "M44-029", "M44-035", "M44-047", "M44-051"],
+      "unknown_unknowns": ["M44-024", "M44-035", "M44-044"]
+    }
+  },
+  "segments": [
+    {
+      "window_id": "WIN-AC612DBB4EFE-0006",
+      "core_range": [1495, 1845],
+      "required_source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "item_ids": ["M44-001", "M44-002", "M44-003", "M44-004", "M44-005", "M44-006", "M44-007", "M44-008", "M44-009", "M44-010"]
+    },
+    {
+      "window_id": "WIN-AC612DBB4EFE-0007",
+      "core_range": [1846, 2139],
+      "required_source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "item_ids": ["M44-011", "M44-012", "M44-013", "M44-014", "M44-015", "M44-016", "M44-017", "M44-018"]
+    },
+    {
+      "window_id": "WIN-AC612DBB4EFE-0008",
+      "core_range": [2140, 2524],
+      "required_source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "item_ids": ["M44-019", "M44-020", "M44-021", "M44-022", "M44-023", "M44-024", "M44-025", "M44-026", "M44-027"]
+    },
+    {
+      "window_id": "WIN-AC612DBB4EFE-0009",
+      "core_range": [2525, 2895],
+      "required_source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "item_ids": ["M44-028", "M44-029", "M44-030", "M44-031", "M44-032", "M44-033", "M44-034", "M44-035", "M44-036"]
+    },
+    {
+      "window_id": "WIN-AC612DBB4EFE-0010",
+      "core_range": [2896, 3290],
+      "required_source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "item_ids": ["M44-030", "M44-037", "M44-038", "M44-039", "M44-040", "M44-041", "M44-042", "M44-043", "M44-044", "M44-045", "M44-046", "M44-047", "M44-048", "M44-049", "M44-050", "M44-051"]
+    }
+  ],
+  "items": [
+    {
+      "item_id": "M44-001",
+      "item_type": "contract",
+      "title": "Concern severity and blocking effect are deliberately orthogonal",
+      "statement": "The concern model preserves operational stop/go impact separately from seriousness, preventing a high-severity advisory from being silently treated as a hard block or a lower-severity blocker from being hidden.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "states_transitions", "gui_truth"],
+      "impact": "This is a strong explicit non-gap that gives all mirrored surfaces a common truth model.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 1512, "line_end": 1512, "exact_quote": "`blocking_effect` stays explicitly separate from `severity`; it explains operational stop/go impact rather than concern seriousness.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-002",
+      "item_type": "gap",
+      "title": "Concern action and status transitions lack a closed transition contract",
+      "statement": "The record shape names status and distinct actions, but this window never closes the concern-status enum, legal source-to-target transitions, actor-specific preconditions, idempotency, or stale-write behavior when two surfaces act on one concern.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_state_machine",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "authority", "invalid_states_transitions", "concurrency_races", "ambiguity_unknowns", "builder_discretion"],
+      "impact": "Independent implementations can accept conflicting dismiss/resolve/lineage mutations, lose rationale, or display divergent status after concurrent actions.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1486, "line_end": 1486, "exact_quote": "Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1508, "line_end": 1510, "exact_quote": "- `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`\n- `owner_kind`, `owner_ref`, `created_by_kind`, `created_by_ref`, `resolver_ref?`\n- `governance`: authority policy, confirmation policy, rationale policy, audit refs", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-003",
+      "item_type": "consumer",
+      "title": "Incident roots and owning surfaces are explicit",
+      "statement": "Cascades have one root incident and derivative children, while common issue classes have fixed owning surfaces and mirrors deep-link instead of mutating through competing flows.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "ownership", "consumers", "authority", "missing_callers_consumers", "observability_support"],
+      "impact": "This reduces duplicate remediation and makes root-cause-first operation testable across Dashboard, Orchestrator, GitHub Actions, and Docker Manager.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1518, "line_end": 1518, "exact_quote": "Command-originated and runtime-originated notifications use incident bundling when one failure creates a cascade. A cascade uses a `parent-incident` model: one primary alert owns the root cause, child issues attach as related consequences, and CTAs prioritize fixing the root cause before derivative failures. Child consequence CTAs may appear only after the root-cause CTA.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1530, "line_end": 1530, "exact_quote": "Primary owner routing is fixed for common issue classes. Run-blocking issues open Orchestrator and its CTA stack; branch and workflow issues open GitHub Actions; runtime, `/container/rollout`, and Kubernetes issues open Docker Manager; global degraded infrastructure opens the status bar detail and Dashboard. Mirror surfaces show the same attention item as a deep link to the owner rather than offering a competing remediation flow.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-004",
+      "item_type": "gap",
+      "title": "Alert coalescing, muting, and auto-resolution lack safety algorithms",
+      "statement": "The GUI contract relies on root-cause coalescing, safe muting, and healthy-refresh auto-resolution without defining key scope/collision rules, safety authority, freshness thresholds, hysteresis, or behavior under flapping and stale observations.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_failure_policy",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "failures_recovery", "partial_failure", "propagation", "gui_misleading_states", "builder_discretion"],
+      "impact": "Unrelated incidents can be coalesced or muted, and a stale or transient healthy sample can clear a real blocker across mirrors.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1524, "line_end": 1524, "exact_quote": "Runtime alert lifecycle defines `/auto-resolution`: an alert may auto-resolve on healthy refresh, downgrade to historical `/seen` after acknowledgment, and clear badges consistently across mirrored surfaces. Persistent non-blocking issues support `per-alert` `acknowledge`, `snooze`, and `/snooze/mute`; `mute by root_cause_key` is allowed only where safe. A mute or snooze must not suppress blocking confirmations or `security-sensitive` failures, and muted issues remain visible in owning surfaces while stopping repeated interruptions.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1528, "line_end": 1528, "exact_quote": "Active attention rows render from `attention_key` plus `root_cause_key`: `attention_key` controls the visible thread/route, and `root_cause_key` controls `/coalescing`. Repeated sightings with the same root cause update the existing attention thread, while interruptive notification surfaces fire again only when severity or state changes.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1534, "line_end": 1534, "exact_quote": "When mirrored surfaces disagree, each issue class declares freshness/authority order (`/authority`). Secondary surfaces with older data say `updating` or `state may be outdated` instead of presenting conflicting definitive copy.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-005",
+      "item_type": "gap",
+      "title": "Bulk mutation results are rich but execution consistency is not closed",
+      "statement": "Target preview, partial success, per-target failures, and rollback disclosure are required, but the contract omits snapshot/version binding, stale-target handling, idempotency, cancellation timing, rollback ordering, and the state reached when rollback itself partially fails.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_transaction_semantics",
+      "builder_discretion": true,
+      "dimensions": ["concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "failures_recovery"],
+      "impact": "A confirmed preview can diverge from execution, leaving mixed repository/runtime state with no deterministic repair path.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 1536, "line_end": 1536, "exact_quote": "Bulk action families include stage/unstage/discard (`/unstage/discard`), rerun/cancel, cleanup/prune (`/prune`), apply/delete, and pin/unpin. Before execution, every bulk action shows target preview plus scope summary/count (`/count`). Completion state represents result state, `partial-success`, and a `per-target` failure list; when possible, the action exposes rollback/undo expectations, and when rollback is unavailable the UI says so before execution. Bulk action history and `/exported` views preserve the same per-target result state and spawned attempt/remediation refs used by receipt/evidence records.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-006",
+      "item_type": "feature",
+      "title": "Chat, editor, browser, and runtime ownership is intentionally separated",
+      "statement": "The window establishes stable streaming-message identity, owner-routed shell panes, Rust-owned workspace truth, and canonical browser-session identities rather than chat-local or view-local copies.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "capabilities", "authority", "ownership", "consumers", "cross_document_seams"],
+      "impact": "The separation gives implementers a coherent ownership boundary and prevents per-surface state forks.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1606, "line_end": 1609, "exact_quote": "- scrollable virtualized list of user, assistant, system, tool, approval, and activity message blocks aligned with the taxonomy in `Plans/assistant-chat-design.md`\n- stable message identity so streaming updates mutate existing rows rather than replacing the full list\n- inline `activity-card` rendering for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts; compact activity cards show 5 lines, expanded cards show 15 lines, and expanded log/detail views cap at 50 lines before routing to the owning surface\n- sticky unread marker, `New messages below`, and a `jump-to-latest` badge when the user is scrolled away from the bottom; `/auto-follow` state controls whether streaming output follows the latest row", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1667, "line_end": 1670, "exact_quote": "- Rust + Slint implementation keeps workspace services, buffers, diff, indexing, remote/session state, persistence, AI orchestration, and durable AI task/artifact records in Rust-owned core services; Slint owns pane layout, tree/list/status surfaces, workbench `/pane/review/task` chrome, and cross-platform shell behavior rather than text `/render` logic, and specialized renderers stay bounded to preview surfaces. Cross-platform-safe IDE acceptance covers `/LSP/remote/auth` degradation, `/clipboard/session` behavior, `/rendering/DPI`, IME/input, path/symlink semantics, file watching/refresh, drag/drop, and macOS, Linux, Windows, and WSL portability.\n- Browser/session fallback language must stay aligned with `FinalGUISpec.md:1539-1555`, `FileManager.md:391-415`, and `Section15_MVP_Promoted_Features_Spec.md:758`: browser hosting is `/editor-tab-first`, detached-window-capable, and bottom-panel-adjacent only. `runtime_unavailable` and degraded browser capability messaging replace `/screenshot` substitution as a pseudo-browser.\n- Workspace-backed preview/browser flows preserve logical subject identity instead of retargeting to an over-cap or `/LRU` slot. `Open` on HTML stays source/editor mode, `Open in Browser` creates or opens `workspace_preview`, `Open in Detached Browser` creates or opens `detached_preview`, and split browser layout is layout state after open. Click-to-context, `/capture`, screenshots, share-with-agent, takeover, promotion, reopen, `/retry/keep-closed`, DevTools-adjacent panes, and source-mutation privilege route through canonical browser/session commands keyed by `browser_session_id`.\n- Legacy `preview_mode` and `browser_panel` labels are compatibility aliases only. Command and storage routing use `cmd.browser.*` entries such as `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, and `cmd.browser.focus_browser_tab`, with `workspace_preview`, `detached_preview`, `preview_subject_id`, `browser_session_id`, and `normal_browsing` as the canonical session vocabulary; `Bottom Panel Browser`, generic `Browser tab`, bottom-panel-primary, and normal-browsing wording are not canonical owners for built-in browser or click-to-context flows.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-007",
+      "item_type": "gap",
+      "title": "Workspace-node mutation does not close hostile path and TOCTOU behavior",
+      "statement": "Paste and drop share validation/conflict resolution, but the window does not define symlink traversal, path canonicalization, remote-host trust, overwrite races, destination changes between preview and apply, or permission revalidation at mutation time.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "security_boundary_omission",
+      "builder_discretion": true,
+      "dimensions": ["inputs_outputs", "security_privacy", "untrusted_inputs", "concurrency_races", "authority_boundaries"],
+      "impact": "Crafted paths or concurrent filesystem changes could escape the intended workspace or overwrite the wrong target.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1646, "line_end": 1647, "exact_quote": "- Tree-level actions include `New file`, `New folder`, `Rename`, `Delete`, Copy full path, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/Cut/Paste` for workspace nodes. `cmd.file` / `cmd.file.*` is the command-family for workspace-node actions, and missing actions must not remain anonymous context-menu-only behavior; terminal reveal actions stay in the terminal family, with `Open in Terminal` using `cmd.terminal.open` and `Show Terminal` using `cmd.terminal.show`.\n- Workspace-node clipboard is a dedicated file-operation model: paste and `/drop` reuse one path-validation plus conflict-resolution engine, cut-pending state remains visibly armed until paste or clear, and successful paste uses the same progress and toast feedback as drag/drop instead of a second feedback path.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-008",
+      "item_type": "gui",
+      "title": "Annotation actions preserve source eligibility and accessible status",
+      "statement": "Durable annotations require stable semantic anchors; source-less renders fall back to send-to-chat, keyboard access is explicit, and status changes are announced without hiding annotation identity.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["gui_truth", "accessibility", "contracts", "states_transitions"],
+      "impact": "This avoids pretending a transient visual selection is a durable source mutation and provides a meaningful non-pointer path.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1682, "line_end": 1684, "exact_quote": "- source-backed document selections expose the `Annotations` Menu through pointer context-menu and keyboard `Shift+F10`\n- read-only `/no-source-map` and `/internal` preview renders may expose `Send selection to chat`, but durable annotation actions stay disabled unless stable semantic anchor IDs are available\n- `Send selection to chat` creates a visible `pre-send` removable context chip `/pill` in the owning `chat-input-area`, above the textarea `/composer` shell and below any queued intervention block; the chip shows doc name `/path`, bounded excerpt, `/provenance`, and a removal affordance before send. When a document pane belongs to Interview, Assistant, or `document-viewer` chat, the UI makes the target chat obvious; if ambiguous, the action opens a small target picker instead of silently routing elsewhere, and the default is the page-owned chat panel, opening or pulsing that panel when hidden.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1695, "line_end": 1698, "exact_quote": "- notes persist via `note_record.v1:{bundle_id}:{note_id}` and remain linkable from bundle review surfaces\n- the annotation drawer/list announces per-annotation status changes through a `/live-region`\n- user-facing status labels map to `addressed`, `still_open`, and `cannot_apply` without hiding the underlying annotation id\n- v1 plan-graph, generic read-only, and other no-source-map previews are `send-to-chat-only` for selections unless they define stable anchor IDs", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-009",
+      "item_type": "gap",
+      "title": "Log/audit export has no redaction or data-lifecycle contract",
+      "statement": "The inspector supports search, drill-down, and export of tool, URL, task, and full-payload references, but this window does not define permission gates, secret/PII redaction, export scope preview, retention, or revocation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle_omission",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "observability_support", "destructive_actions"],
+      "impact": "A support/export workflow can disclose credentials, browsing data, source snippets, or cross-project activity beyond the intended audience.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 1718, "line_end": 1718, "exact_quote": "PM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector. Summary rows use a 5-item compact format: operation label, short query or `/url/task` preview, success/failure status, fallback note when present, and source/page counts when present. Full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs. Supported interactions include `/filter/drill-down`, filter by event family, search by tool or `/operation`, time-range queries, drill-down, and export. `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-010",
+      "item_type": "gap",
+      "title": "Bundle approval semantics conflict with the named all-notes-resolved state",
+      "statement": "Approval may proceed when every note is resolved, responded to, or dismissed, while the preceding state is named `all_notes_resolved`; the window does not define whether responded/dismissed notes count as resolved, who may dismiss them, or how concurrent resubmission affects the gate.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_semantics_conflict",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "authority", "concurrency_races", "acceptance_oracles"],
+      "impact": "A bundle can be labeled all-notes-resolved and approved while a substantive issue remains merely answered or dismissed under an undefined authority policy.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-004"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 1751, "line_end": 1754, "exact_quote": "- `Resubmit` in bundle review sends all unresolved notes as revision context\n- final approval is blocked until every note is resolved, responded to, or dismissed\n- bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`\n- bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-011",
+      "item_type": "contract",
+      "title": "Persistence and context provenance boundaries are explicit",
+      "statement": "Persisted state requires stable keys and forward rewrites, view state cannot replace route identity, and context compaction/restoration must disclose removed, summarized, or rehydrated content.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "compatibility_migration", "recovery_rollback", "privacy_data_lifecycle"],
+      "impact": "These rules protect canonical identity and make context loss visible rather than silently reconstructing it.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1847, "line_end": 1853, "exact_quote": "- ephemeral state may be discarded on restart unless explicitly promoted\n- persisted state must have stable keys and versioned migrations\n- migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family\n- Shell persistence keeps `/floating`, `/document`, `/chat/editor`, workspace-tab identity, per-project `project_state`, per-surface `source_control.project_state.{project_id}`, and `/file-tree/chat` restore state in narrow project shell records, not in canonical blocked or `/attention` truth.\n- `FinalGUISpec.md` treats `widget_layout:v1:orchestrator:progress` as a `Progress` layout key layered from `app-global` defaults plus `project-scoped` overrides under `project_state:v1:{project_id}`; it is not a page-global record and `widget_layout` entries must name `project_id` when they depend on project state.\n- Per-surface state may persist `line`, `range`, `active_subview`, compare target, panel layout, browser tab state, and widget layout only as view state; it must not replace canonical route identity.\n- FileManager restore and handoff state preserves `repo_id`, `worktree_id`, identity-backed `/history/checkpoint` references, and backend-driven restore pipelines rather than treating path opens as the only canonical document identity.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1860, "line_end": 1862, "exact_quote": "- each context block has stable identity and owner surface\n- context usage counters and token summaries derive from canonical usage/state projections\n- pruning, compaction, and restoration rules must disclose what was removed, summarized, or rehydrated", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-012",
+      "item_type": "state",
+      "title": "Agent-Config projection control states and user-visible meanings are closed",
+      "statement": "Each provider-native target is controlled, manually overridden, or projection-failed, with target-local detachment and explicit retry instead of false currentness.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["states_transitions", "contracts", "authority", "capabilities", "gui_truth"],
+      "impact": "The three-state model provides a clear requested/effective trust boundary per projection target.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1870, "line_end": 1878, "exact_quote": "Per-target control state is closed to:\n- `controlled`\n- `manual_override`\n- `projection_failed`\n\nRules:\n- `controlled` means PM owns semantic sync for that target and regenerates provider-native projection text from the canonical instruction editor.\n- `manual_override` means the target has been detached by the user; the GUI must show that semantic sync is broken for that target only.\n- `projection_failed` means PM could not generate or write the target projection and must expose repair/retry actions without pretending the target is current.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1880, "line_end": 1880, "exact_quote": "The visible label for `manual_override` is Manual Override. Direct edits to a PM-controlled provider-native projection target require switching only that target to Manual Override first; otherwise the GUI treats the edit as a canonical-source change and regenerates provider projections.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-013",
+      "item_type": "gap",
+      "title": "Instruction projection sync lacks revision, fan-out, and partial-failure semantics",
+      "statement": "The states explain intent but omit source/target revision IDs, compare-and-swap behavior, multi-target regeneration order, concurrent external edit detection, rollback, and what is current when only some provider writes succeed.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_propagation_protocol",
+      "builder_discretion": true,
+      "dimensions": ["propagation", "concurrency_races", "partial_failure", "recovery_rollback", "ambiguity_unknowns", "builder_discretion"],
+      "impact": "A canonical edit can overwrite a newer provider-native change or present mixed projection versions without a deterministic reconciliation path.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1876, "line_end": 1878, "exact_quote": "- `controlled` means PM owns semantic sync for that target and regenerates provider-native projection text from the canonical instruction editor.\n- `manual_override` means the target has been detached by the user; the GUI must show that semantic sync is broken for that target only.\n- `projection_failed` means PM could not generate or write the target projection and must expose repair/retry actions without pretending the target is current.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-014",
+      "item_type": "gap",
+      "title": "Confirmation levels and event refresh omit deterministic policy and ordering",
+      "statement": "Four confirmation levels are named and event-driven refresh is canonical, but no closed action-to-level matrix, hard-gate mechanics, event sequence/version rules, duplicate handling, or out-of-order reconciliation is defined in this window.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_policy_and_event_ordering",
+      "builder_discretion": true,
+      "dimensions": ["destructive_actions", "authority", "propagation", "concurrency_races", "builder_discretion"],
+      "impact": "Two compliant builders can require materially different confirmations, and late provider/filesystem events can overwrite newer canonical UI state.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1890, "line_end": 1896, "exact_quote": "Destructive or irreversible actions require confirmation with explicit consequence copy, especially for delete, reset, merge, publish, repository creation, and credential removal flows.\n\nEvery action surface classifies confirmation level as `none`, `light`, `strong`, or `hard_gate` and separately records reversibility, so navigation-only affordances, low-risk state changes, destructive mutations, and runtime-blocked recovery gates do not share one generic confirmation dialog.\n\nThe `light` confirmation level covers `moderate-impact` actions where accidental activation is plausible and a short confirm or inline affordance is enough.\n\nConcern actions map acknowledgement and `/dismiss` to `light` or `strong` confirmation according to severity and `/blocking` effect, while merge and `/split` always use `strong` because they alter structural lineage.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1928, "line_end": 1931, "exact_quote": "Event-driven updates are canonical. UI state refresh happens on relevant runtime, filesystem, or provider events rather than generic timers.\n\nException:\n- polling is acceptable for external systems that do not provide push updates, such as GitHub Actions status checks; those intervals are freshness aids only and must not become the correctness model for the rest of the shell", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-015",
+      "item_type": "behavior",
+      "title": "Failure presentation, approval context, and clipboard families avoid misleading equivalence",
+      "statement": "The GUI preserves prior validated content during refresh, distinguishes inline/toast/blocking errors, keeps approval provenance, and separates text, file, chat, export, download, and remote-transfer clipboard semantics.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "failures_recovery", "gui_misleading_states", "authority_boundaries", "security_privacy", "untrusted_inputs", "destructive_actions", "observability_support"],
+      "impact": "These are strong safety boundaries against hidden side effects, stale definitive copy, and accidental reuse of permissions across similarly labeled actions.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1908, "line_end": 1916, "exact_quote": "- skeleton screens for panel/page loads\n- inline spinners or progress indicators for discrete actions\n- keep prior validated content visible with stale/degraded labels when a refresh is in progress\n\n### 10.4 Error display\n\n- inline errors for field validation\n- toast notifications for transient non-blocking failures\n- blocking dialogs for failures that prevent forward progress or risk destructive ambiguity", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1935, "line_end": 1941, "exact_quote": "Sensitive operations requiring approval must present:\n- explicit action summary\n- affected resources\n- approval / deny actions\n- audit trail link back to the originating thread, run, or bundle\n\nApproval surfaces must preserve context and never auto-approve hidden follow-up side effects.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1947, "line_end": 1947, "exact_quote": "Copy, paste, share, and export actions must keep their payload families separate even when the user-visible labels look similar. Text clipboard, file-operation clipboard, chat context insertion, OS export, `/download`, remote-host transfer, and `/paste/share` flows carry different permissions, undo models, remote availability, and confirmation copy.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-016",
+      "item_type": "contract",
+      "title": "LSP operation inputs, outputs, aliases, and mutation gate are explicit",
+      "statement": "The window distinguishes the nine read operations from diagnostics context and approval-gated rename, with normalized query/path/position/newName inputs and a four-state result envelope.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["capabilities", "inputs_outputs", "contracts", "authority_boundaries"],
+      "impact": "This supplies a falsifiable GUI-to-owner contract without treating a compatibility token list as an independent schema.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1967, "line_end": 1968, "exact_quote": "- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.\n- LSP GUI consumers preserve the nine `read-op` set by long-name and short-name aliases only as display/compatibility labels; canonical operations remain owner names, `diagnostics` is context/panel data, and `rename` is approval-gated.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 1991, "line_end": 1997, "exact_quote": "- ok | partial | unavailable | error\n- `workspaceSymbol` requires `query`\n- Position-based operations use `path` + `position`.\n- `rename` requires `path` + `position` + `newName`.\n- `rename` is approval-gated because it applies edits.\n\nCompatibility/source-lineage disposition: this extract preserves source tokens for LSP GUI display and compatibility search. Treat operation names, aliases, status values, and approval rules by their typed role through the Core rules and owner LSP contract; do not read the `Fields:` list as a standalone schema.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-017",
+      "item_type": "oracle",
+      "title": "Anti-flicker and terminal throughput behavior has measurable implementation guidance",
+      "statement": "Stable IDs, row-level mutation, one event-loop batch, bounded Rust ring buffers, and a 30-fps/33-ms projection cap form concrete performance and continuity oracles.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["scale_performance", "scale_limits", "operations", "test_falsifiability", "acceptance_oracles", "accessibility"],
+      "impact": "A builder can test scroll preservation, list reconciliation, UI-thread load, and bounded terminal projection memory directly.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2020, "line_end": 2036, "exact_quote": "- When new items are added to a `VecModel` (e.g., chat messages, log lists, evidence lists, or bounded terminal transcript projections), preserve the current scroll position unless the user is scrolled to the bottom\n- If scrolled to bottom: auto-scroll to show new content\n- If scrolled up (reviewing history): hold position; show a \"New messages below\" indicator\n- Implementation: Track `viewport-y` property on `ListView`; only update if at bottom threshold\n\n**Batch UI updates:**\n- When multiple properties change simultaneously (e.g., orchestrator status + progress + transcript projection updates), batch them into a single `invoke_from_event_loop` call to prevent partial renders\n- Example: Do NOT call `invoke_from_event_loop` three times for three properties; collect changes, then apply all in one call\n\n**Stable list keys:**\n- Each item in a `VecModel` has a stable ID (not just an index) so that Slint can reconcile updates without destroying and recreating all items\n- When updating a list item, modify the existing model entry rather than clearing and rebuilding the entire model\n\n**Avoid full-model replacement:**\n- Never call `VecModel::clear()` + re-add all items when only one item changed\n- Use `VecModel::set_row_data()` for individual item updates\n- Use `VecModel::push()` / `VecModel::remove()` for additions/removals", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2047, "line_end": 2051, "exact_quote": "- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing.\n- Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.\n- When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.\n- Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.\n- high-volume terminal output uses ring-buffer backed `/virtualized` projections so 4-split terminal panes keep layout ratios stable while the live core remains off the UI thread.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-018",
+      "item_type": "gap",
+      "title": "Accessibility fallback and localization remain incomplete",
+      "statement": "The spec acknowledges limited screen-reader support and offers roles/labels only where Slint exposes them, but gives no fallback acceptance oracle for complex trees/tables/editor/browser surfaces. It also hard-codes substantial English status/action copy without a localization key, expansion, pluralization, bidirectional-text, or translated-accessible-name contract.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "omitted_accessibility_and_localization_contract",
+      "builder_discretion": true,
+      "dimensions": ["accessibility", "localization", "builder_discretion", "gui_truth"],
+      "impact": "Core workflows may be unusable to screen-reader users and translated builds can break compact layouts or diverge from canonical state language.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-005"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2118, "line_end": 2129, "exact_quote": "- All interactive elements reachable via Tab navigation\n- Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar\n- Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item\n- Type-ahead filtering where appropriate (thread list, project list, file tree)\n\n### 13.4 Screen Reader Support\n\nSlint's screen reader support is limited. Mitigations:\n- Set `accessible-role` and `accessible-label` properties on all interactive components where available in current stable Slint\n- Panel state (docked/floating) announced via accessible labels\n- Theme name available to assistive technology\n- Keyboard shortcuts prominently documented and discoverable via command palette", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2061, "line_end": 2066, "exact_quote": "| >= 1360px | **Full layout:** All panels visible at comfortable widths |\n| 1080-1359px | **Compact:** Side panel at minimum (240px); bottom panel compact |\n| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab; bottom panel collapses to header row (24px) |\n| < 720px | **Single-column:** Activity bar only; panels accessible as overlays/drawers from activity bar icons |\n\nAt narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`, `AnnotationActionMenu`, and `ContextChipStrip` collapse into overlay/drawer patterns without hiding keyboard access or breaking `keyboard-shortcut` expectations.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-019",
+      "item_type": "feature",
+      "title": "Rust/Slint module decomposition and bounded models are concrete",
+      "statement": "The file organization separates Slint views/panels/windows from Rust bridges, stateful services, effects, browser/debug/SSH integrations, and bounded list/terminal projection models.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["capabilities", "ownership", "operations", "compatibility_migration", "scale_performance"],
+      "impact": "The architecture gives builders a concrete placement model and explicitly keeps live terminal rendering outside normal list widgets.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2190, "line_end": 2207, "exact_quote": "|   +-- panels/                       # Detachable panel content and shared runtime/browser hosts\n|   |   +-- chat_panel.slint\n|   |   +-- file_manager_panel.slint\n|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debugger panes plus runtime-adjacent panes\n|   |   +-- browser_panel.slint         # NEW - Shared webview host reused by workspace-tab and detached browser surfaces\n|   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)\n|   +-- windows/                      # Secondary windows\n|       +-- floating_panel.slint\n|       +-- about.slint\n+-- src/\n    +-- main.rs                       # Entry point, BackendSelector\n    +-- app.rs                        # AppState, message routing\n    +-- bridge/                       # Slint <-> Rust binding layer\n    |   +-- mod.rs\n    |   +-- theme_bridge.rs           # ThemeVariant -> Theme global sync\n    |   +-- model_bridge.rs           # VecModel setup, model factories\n    |   +-- callback_bridge.rs        # Slint callback -> Rust handler wiring\n    |   +-- window_bridge.rs          # Multi-window lifecycle", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2276, "line_end": 2276, "exact_quote": "Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer, diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-020",
+      "item_type": "gap",
+      "title": "Conditional view destruction has no state/focus preservation contract",
+      "statement": "The plan says hidden widget trees are destroyed and recreated with zero runtime cost, but does not enumerate which local state, focus, selection, in-flight operation, or accessibility context must be externalized before destruction, nor provide a test for the absolute zero-cost claim.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "underspecified_lifecycle",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "scale_performance", "scale_limits", "accessibility", "builder_discretion", "test_falsifiability"],
+      "impact": "Page switching can silently reset ephemeral work or focus while builders make incompatible choices about which state survives.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2262, "line_end": 2271, "exact_quote": "Use conditional `if` blocks for lazy view rendering:\n\n```slint\nif root.current-page == 0 : DashboardView { /* ... */ }\nif root.current-page == 1 : ProjectsView { /* ... */ }\nif root.current-page == 2 : SettingsView { /* ... */ }\n// ... etc\n```\n\nHidden views have zero runtime cost. Widget trees are destroyed when the condition becomes false and recreated when true.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-021",
+      "item_type": "state",
+      "title": "GUI persistence keys are largely scoped, versioned, and owner-bound",
+      "statement": "The persistence table distinguishes shell caches from canonical records and keys editor, search, review, browser, LSP, provider, terminal, and remote state by relevant project/host/session identities.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "states_transitions", "operations", "privacy_data_lifecycle"],
+      "impact": "Most durable UI state has explicit scope and write cadence, reducing accidental cross-project reuse.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2292, "line_end": 2297, "exact_quote": "| `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |\n| `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |\n| `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |\n| `project_state:v1:{project_id}` | Lightweight shell/UX projection cache, not a canonical state store: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |\n| `gha_panel_state.v1:{project_id}` | GitHub Actions panel UI state: account-sensitive pins, filters, auto-refresh preference, collapsed groups, and last viewed run partitioned by effective account or invalidated on account switch | On change (debounced 250ms) |\n| `artifact_panel_state.v1:{project_id}` | Artifacts panel UI state: expanded groups, selected artifact, compare target, and preview mode | On change (debounced 250ms) |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2326, "line_end": 2333, "exact_quote": "| `preview_state.v1:{project_id}:{preview_subject_id}` | Preview UI state keyed by document/artifact subject: mode, attached surface, export prefs, scroll sync, and last error | On change (debounced 300ms) |\n| `preview_source_artifact.v1:{project_id}:{artifact_id}` | Artifact-backed preview metadata and source linkage | On change |\n| `browser_session_state.v1:{project_id}:{browser_session_id}` | Browser session state: session class, workspace tab, preview subject, requested/effective runtime and capabilities, blocked actions, profile scope, restore policy, and last error | On change (debounced 300ms) |\n| `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state, including persistent profiles requested as `profile: { name: string, saveChanges: boolean }`, `saveChanges` writeback state, and cookies/localStorage scope | On change (debounced 500ms) |\n| `editor_unsaved_buffer.v1:{project_id}:{document_id}` | Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time | On change (debounced 500ms) |\n| `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |\n| `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |\n| `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-022",
+      "item_type": "gap",
+      "title": "Startup restore reads keys absent from the declared GUI persistence catalog",
+      "statement": "Startup requires `hotreload_state:v1:{project_id}` and `onboarding:v1`, but neither appears in the preceding §15.1 key catalog even though the section says it lists keys required for GUI persistence.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "internal_inventory_omission",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "states_transitions", "compatibility_migration", "test_falsifiability"],
+      "impact": "A schema-driven implementation or migration verifier can omit required restore state or fail startup on undocumented records.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2353, "line_end": 2353, "exact_quote": "- §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2381, "line_end": 2382, "exact_quote": "8. Read `hotreload_state:v1:{project_id}` and rehydrate dev-session UI state as historical or verified-live state.\n9. Read `onboarding:v1` and determine whether tour or first-run hints should show.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-023",
+      "item_type": "gap",
+      "title": "Browser-profile and web-operation records lack a complete privacy lifecycle",
+      "statement": "The schema persists cookies/localStorage, history/bookmarks, and web-operation child-run payloads, but this window does not define encryption, retention, logout/account-switch invalidation, selective clearing, export/redaction, or a versioned scoped key for `web_operation_payload`.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_and_key_scope_omission",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "inputs_outputs", "authority_boundaries"],
+      "impact": "Authentication material and browsing/query history can outlive their intended session or collide across projects/accounts, and support/export paths may expose them.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2329, "line_end": 2329, "exact_quote": "| `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state, including persistent profiles requested as `profile: { name: string, saveChanges: boolean }`, `saveChanges` writeback state, and cookies/localStorage scope | On change (debounced 500ms) |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2340, "line_end": 2340, "exact_quote": "| `web_operation_payload` | Stored child-run metadata for web search, fetch/read, extract, research, crawl, and map summaries referenced by GUI projections; `read` is the semantic `web_operation` for the `webfetch` tool. | On completion/update |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-024",
+      "item_type": "unknown",
+      "title": "Terminal summary keys and canonical records have no local conflict-resolution algorithm",
+      "statement": "The GUI-facing terminal layout/session rows are declared compatibility summaries and canonical detailed key families are imported from storage, yet startup reads both. This window says to resolve through the catalog but does not state precedence, version matching, corruption handling, or the consumer responsible for repairing disagreement.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_unresolved_seam",
+      "builder_discretion": true,
+      "dimensions": ["cross_document_seams", "ambiguity_unknowns", "unknown_unknowns", "concurrency_races", "invalid_states_transitions", "missing_callers_consumers"],
+      "impact": "Restore may combine topology from one revision with sessions from another, producing wrong focus or a misleading liveness presentation.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2355, "line_end": 2355, "exact_quote": "- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2380, "line_end": 2380, "exact_quote": "7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-025",
+      "item_type": "failure_recovery",
+      "title": "Crash recovery refuses to invent live external continuity",
+      "statement": "Terminal, privileged attachment, log-stream, hosted-run, and historical-inspection restore paths distinguish structural restore from verified liveness and preserve interruption/gap classifications.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["failures_recovery", "operations", "offline_network_loss", "partial_failure", "recovery_rollback", "observability_support"],
+      "impact": "This is a strong explicit non-gap against false live badges and lost evidence after restart or network interruption.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2410, "line_end": 2418, "exact_quote": "- terminal sections, tabs, panes, labels, pin state, and selected focus restore from durable terminal workspace state\n- terminal sessions restore only as verified-live or historical records; Puppet Master MUST NOT fake live PTY continuity after restart\n- canonical recovery outcomes are `restored_live`, `restored_exited`, `restored_disconnected`, and `restored_without_history`\n- dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs\n- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab\n- Restart recovery treats privileged interactive sessions as crash-interrupted unless liveness is revalidated. `docker exec/attach`, `kubectl exec`, and `kubectl port-forward` sessions never `auto-resume` a live attachment after crash or restart. They restore as `interrupted_session` records with target identity, last-known timestamps, the source-specific blind-spot window, and a `Reconnect / Start new session` CTA; prior buffers remain historical evidence, not proof of a live attachment.\n- A restored `log_stream_session` stores source identity plus resume cursor or `/bookmark` semantics. Source-specific resume requires the exact cursor when the backend has one, best-effort tail timestamp when it does not, or a metadata-only reopen state when no cursor model exists. GitHub Actions restart recovery distinguishes `remote run still executing`, `remote run completed while app was down`, and `local observation interrupted`: the GUI restores selection context, shows a gap marker if logs advanced while the app was down, and does not claim uninterrupted local stream continuity.\n- Receipt finalization for crash-interrupted operation observers uses explicit lifecycle states `started`, `observation_interrupted`, `reconciled_completed`, `reconciled_failed`, and `abandoned_unknown` for exec and `/attach`, port-forward, log streams, `workflow-run` observation, and publish `/deploy` follow chains. Orchestrator `/restart` reconciliation uses `external-continuity` classifications `resumable_local`, `externally_continued`, `externally_completed`, `stale_historical`, and `unknown_after_crash` when hosted runs, containers, or Kubernetes rollouts continued while the UI observer was down.\n- Historical inspection restore persists selected `run_id`, selected tab, selected node `/attempt`, history filters, graph `/detail` focus, and selected receipt `/detail` drawer. If the selected historical target no longer resolves, the GUI restores a labeled degraded `historical_view` or `paused_snapshot` rather than switching to the current active run; restored `follow` intent still requires source revalidation before a live stream is claimed.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-026",
+      "item_type": "gap",
+      "title": "Destructive chat rewind and unchanged-persistence claim are not reconciled",
+      "statement": "Edit and Resend discard all later history/work without an explicit confirmation, receipt, checkpoint, or undo rule here. Separately, §16.3 says persistence remains unchanged even though this window defines dashboard and terminal migration rewrites, producing an internal migration contradiction.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "destructive_action_and_migration_contradiction",
+      "builder_discretion": true,
+      "dimensions": ["destructive_actions", "recovery_rollback", "compatibility_migration", "contracts", "invalid_states_transitions"],
+      "impact": "Users can lose later work without a specified recovery path, while builders cannot know whether persistence migrations are in scope or prohibited.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2423, "line_end": 2429, "exact_quote": "- Stop/Edit/Resend attach ONLY to most recent user-sent message\n- Edit restores content into composer and discards all later history/work\n- Resend retries the most recent message and discards all later history/work\n- FIFO, max 2 queued messages\n- Stop does NOT clear the queue\n- Stop becomes disabled when a run completes and no next message is queued\n- queue state is transient and is not restored across reload or restart", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2490, "line_end": 2490, "exact_quote": "All current data types (AppTheme, Page, CurrentItem, ProgressState, OutputLine, BudgetDisplayInfo, DoctorCheckResult, etc.) remain in Rust. Only their Slint representations (via properties and models) change. The backend event system, orchestrator state, and persistence remain unchanged.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2376, "line_end": 2380, "exact_quote": "3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.\n4. Read `activity_bar_order:v1` and restore icon order.\n5. Read `editor_state:v1:{project}` and restore open tabs.\n6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.\n7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-027",
+      "item_type": "oracle",
+      "title": "Clipboard migration has a closed build and scenario gate",
+      "statement": "PASS requires native editing clipboard behavior, read-only copy without paste insertion, removal of custom text clipboard state, narrowly scoped non-text helpers, and a successful Rust build, followed by explicit GUI scenarios.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "inputs_outputs", "security_privacy"],
+      "impact": "The migration outcome is directly falsifiable and prevents a silent custom clipboard fork.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2495, "line_end": 2503, "exact_quote": "Clipboard migration gate status is **PASS** only when all required criteria below are true.\n\n**Pass/Fail criteria (all REQUIRED):**\n- [ ] Native Copy/Paste/Select All behavior works in File Editor input, chat composer input, and terminal command input (if editable).\n- [ ] Read-only terminal/log output supports selection/copy and does not accept editable paste behavior.\n- [ ] No custom text-widget clipboard handler remains in the migration target.\n- [ ] Non-text copy exceptions remain explicitly scoped to `ClipboardHelper` path/value contexts only.\n- [ ] Rebuild branch passes type/build verification.\nContractRef: ContractName:Plans/FinalGUISpec.md#10.9.1, ContractName:Plans/DRY_Rules.md#7, SchemaID:Spec_Lock.json#locked_decisions.ui", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2513, "line_end": 2519, "exact_quote": "| Scenario | Expected result |\n|----------|-----------------|\n| Editor clipboard shortcuts + context menu | Ctrl/Cmd+A/C/X/V and context Copy/Paste/Select All behave natively |\n| Chat composer clipboard shortcuts + context menu | Same behavior and parity as editor |\n| Terminal command input clipboard actions | Native clipboard behavior on editable command input |\n| Terminal/log read-only output copy/paste behavior | Selection/copy works; paste is not treated as editable insertion |\n| Non-text Copy Path/Copy Value | Clipboard receives exact path/value via `ClipboardHelper` only |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-028",
+      "item_type": "explicit_non_gap",
+      "title": "Operational risk table covers major performance, network, and platform failures",
+      "statement": "The risk register explicitly addresses multi-window races, terminal event-loop pressure, remote LSP identity, SSH disconnect, offline catalog use, file-watcher limits, browser runtime loss, and platform-specific rendering/window behavior.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["operations", "scale_performance", "scale_limits", "offline_network_loss", "observability_support", "missing_callers_consumers"],
+      "impact": "The implementation has concrete degraded-state expectations instead of assuming continuously healthy local services.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2538, "line_end": 2555, "exact_quote": "| **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |\n| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show \"Load earlier messages\" button. |\n| **Theme global property update batching** | Low | Switching 20+ theme properties could cause intermediate re-renders. Mitigation: Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback. |\n| **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |\n| **Floating window data sync race conditions** | High | Multiple windows reading/writing the same VecModel can race. Mitigation: All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place. |\n| **LSP server lifecycle management** | Medium | Multiple LSP servers may exist across local and remote hosts. Mitigation: Key server supervision by `(host_id, server_id, root_identity)`, launch lazily on file open, restart boundedly on crashes, and expose stale/degraded/unavailable state instead of silently mirroring remote projects locally. |\n| **External drag-and-drop platform APIs** | Medium | Requires platform-specific integration (Windows IDropTarget, macOS NSDraggingDestination, Linux Xdnd/Wayland). Mitigation: Abstract behind a trait; implement per-platform. If Slint exposes native drop events, use those instead. Test on all three platforms. |\n| **HTML preview webview** | Medium | Embedding a `/webview` for HTML hot-reload preview may conflict with the Skia renderer pipeline. Mitigation: Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. If runtime support is unavailable, surface `runtime_unavailable` plus remediation and degraded browser capability messaging instead of substituting static HTML snapshots or screenshots as pseudo-browser behavior. |\n| **Steer submission mid-stream injection** | Medium | Injecting a new user message while the assistant is actively generating requires careful stream handling. Mitigation: Buffer the steer message; on next token boundary, prepend the steer to the ongoing context. Test that partial generation + steer produces coherent output. |\n| **Webview embedding (`wry`) conflicts** | High | Browser and HTML preview surfaces embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host. |\n| **DAP debugger reliability** | Medium | Debug adapter communication is asynchronous and adapters may crash, hang, or produce unexpected output. Mitigation: Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in the Debugger surface when adapter is unresponsive. Cap concurrent debug sessions to 1 per project. |\n| **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects. |\n| **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show \"Catalog may be outdated\" banner when using cached data. All catalog operations work offline with cached index. |\n| **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show \"(audio unavailable)\" label). No error toasts for missing audio. |\n| **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. |\n| **Settings page tab count (24 tabs)** | Medium | `Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels; live Settings uses the §7.4.4 19-tab registry. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette \"Open setting: {name}\" jumps directly to the relevant tab and scrolls to the field. |\n| **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |\n| **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-029",
+      "item_type": "gap",
+      "title": "Dashboard interaction scope contradicts the no-deferral and widget-grid requirements",
+      "statement": "The risk table makes click-to-swap the MVP and full drag-and-drop an enhancement, but the same segment declares every former future item MVP with no deferrals and Appendix C requires drag-to-reorder plus edge resizing.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "direct_internal_contradiction",
+      "builder_discretion": false,
+      "dimensions": ["compatibility_migration", "acceptance_oracles", "test_falsifiability", "gui_truth"],
+      "impact": "A builder cannot know whether shipping click-to-swap without resizing is conformant MVP behavior.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2541, "line_end": 2541, "exact_quote": "| **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2584, "line_end": 2584, "exact_quote": "No features in this specification are deferred.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2653, "line_end": 2658, "exact_quote": "The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (drag-to-swap, fixed card sizes) to a full **widget grid** with grid-based resizing:\n\n**What changes from section 7.2:**\n- Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.\n- Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).\n- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-030",
+      "item_type": "gap",
+      "title": "Browser implementation is simultaneously crate-specific and capability-first",
+      "statement": "The module layout and risk mitigations prescribe `wry`, while the locked decision explicitly says the runtime contract is capability-first and must not hard-lock stale `wry` wording; later GUI rules prescribe a bundled CEF-class runtime. The implementation authority is therefore internally inconsistent.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "architecture_authority_contradiction",
+      "builder_discretion": true,
+      "dimensions": ["cross_document_seams", "compatibility_migration", "builder_discretion", "capabilities", "unknown_unknowns"],
+      "impact": "Builders may select incompatible browser stacks or treat a non-normative crate as locked, undermining cross-platform acceptance and update strategy.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-006", "SEMANTIC:PLANUNIT:F3-401:CONT-007", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2223, "line_end": 2227, "exact_quote": "    +-- browser/                      # NEW - Browser tab webview integration\n    |   +-- mod.rs\n    |   +-- webview.rs                # wry webview lifecycle, URL navigation\n    |   +-- bookmarks.rs              # Bookmark persistence\n    |   +-- context_capture.rs        # Click-to-context element capture", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2545, "line_end": 2547, "exact_quote": "| **HTML preview webview** | Medium | Embedding a `/webview` for HTML hot-reload preview may conflict with the Skia renderer pipeline. Mitigation: Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. If runtime support is unavailable, surface `runtime_unavailable` plus remediation and degraded browser capability messaging instead of substituting static HTML snapshots or screenshots as pseudo-browser behavior. |\n| **Steer submission mid-stream injection** | Medium | Injecting a new user message while the assistant is actively generating requires careful stream handling. Mitigation: Buffer the steer message; on next token boundary, prepend the steer to the ongoing context. Test that partial generation + steer produces coherent output. |\n| **Webview embedding (`wry`) conflicts** | High | Browser and HTML preview surfaces embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host. |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2640, "line_end": 2640, "exact_quote": "13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2974, "line_end": 2974, "exact_quote": "- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-031",
+      "item_type": "gap",
+      "title": "Chat retention limit remains an example rather than a contract",
+      "statement": "The only per-thread memory bound is a soft-cap example of 5000 messages, with no canonical count/byte/token threshold, archive paging consistency, search behavior, attachment handling, or disk-retention limit.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_limit_builder_discretion",
+      "builder_discretion": true,
+      "dimensions": ["scale_performance", "scale_limits", "privacy_data_lifecycle", "builder_discretion"],
+      "impact": "Implementations can diverge materially in memory use, offline storage growth, history completeness, and privacy retention.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2539, "line_end": 2539, "exact_quote": "| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show \"Load earlier messages\" button. |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-032",
+      "item_type": "gap",
+      "title": "Offline catalog fallback has no authenticity or rollback policy",
+      "statement": "Bundled and cached indexes are required for offline operation, but the spec does not require signature verification, origin/version display, anti-rollback, package integrity checks, or behavior when cache validation fails.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_supply_chain_input",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "untrusted_inputs", "offline_network_loss", "operations", "recovery_rollback"],
+      "impact": "A stale or tampered index can drive one-click installation of untrusted content while appearing as normal offline behavior.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2550, "line_end": 2550, "exact_quote": "| **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show \"Catalog may be outdated\" banner when using cached data. All catalog operations work offline with cached index. |", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-033",
+      "item_type": "contract",
+      "title": "Promoted scope, widget-catalog layers, and dashboard-key migration are explicit",
+      "statement": "Former future features are declared MVP, Dashboard selection is limited to owner-promoted named widgets, atomic components remain distinct from composed page widgets, and the old dashboard key is one-way migration input.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "compatibility_migration", "cross_document_seams", "capabilities"],
+      "impact": "These boundaries prevent widget-ID invention and dual-write persistence after migration.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2561, "line_end": 2564, "exact_quote": "Ledger directionality is closed for items `#18`, `#19`, `#28`, `#29`, `#31`, `#36`, `#50`, `#52`, and `#56`: these items are locked requirements, not directional ideas. Only sections explicitly labeled `FUTURE FEATURE` or `OPEN QUESTION` remain open by intent.\n\n\nAll items previously listed as future considerations are MVP scope and are fully specified in their owner docs:", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2694, "line_end": 2700, "exact_quote": "Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.\n\n### C.4.1 Larger Widget Library Compatibility Note\n\nEarlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.\n\nDashboard customization still uses the explicit **\"Add Widget\"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2718, "line_end": 2723, "exact_quote": "1. **On first load** after the widget system upgrade:\n   - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.\n   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding named Widget Catalog ID from C.4, assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.\n   - Treat `dashboard_layout:v1` as deprecated migration input only; it does not remain canonical after migration completes.\n2. **Future reads** use `widget_layout:v1:dashboard` only.\n3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-034",
+      "item_type": "gui",
+      "title": "Persona compatibility and requested/effective disclosure are strong",
+      "statement": "Provider control support is visible as supported/partial/unsupported, runtime surfaces show requested and effective identities, and honored/skipped/clamped outcomes include values and reasons with durable history.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["gui_truth", "capabilities", "observability_support", "acceptance_oracles", "states_transitions"],
+      "impact": "The GUI cannot silently imply a provider honored a control, and post-run audits retain the same discrepancy shown live.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2742, "line_end": 2754, "exact_quote": "The Persona editor MUST show provider support state for Persona controls.\n\nSupport states:\n- `supported`\n- `partially supported`\n- `unsupported`\n\nFor each control (platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents), the editor must:\n- show normal editing when supported,\n- show warning styling and explanatory tooltip when partially supported,\n- show disabled control plus explanation when unsupported.\n\n`talkativeness` is a Persona instruction-layer control rather than a transport/runtime sampling knob. Its support state follows Persona prompt-body support: if a provider can apply Persona prompt instructions, it can apply `talkativeness`.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2847, "line_end": 2853, "exact_quote": "#### 19.7.1 Disclosure mechanics\n\n- **Honored** = requested control applied as requested. **Skipped** = ignored entirely. **Clamped** = partially honored but changed to a supported value/range.\n- Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.\n- When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.\n- When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.\n- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-035",
+      "item_type": "unknown",
+      "title": "Persona capability freshness and per-mapping runtime selection remain unresolved",
+      "statement": "The matrix gives coarse provider rows and examples, but does not bind support to provider/model/version/account capability evidence, freshness, or unknown state. Mapping Persona defaults is required, while per-mapping platform/model selection and compatibility warnings use `should`, leaving that material sub-capability and its fallback behavior to builders.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "capability_provenance_and_normativity_gap",
+      "builder_discretion": true,
+      "dimensions": ["ambiguity_unknowns", "unknown_unknowns", "builder_discretion", "gui_misleading_states", "test_falsifiability", "cross_document_seams"],
+      "impact": "A stale matrix can enable unsupported controls or disable supported ones, and implementations may omit the per-stage/provider selection needed to make requested defaults executable and explainable.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2756, "line_end": 2760, "exact_quote": "Minimum provider rows to display:\n- Claude Code\n- Cursor CLI\n- OpenCode\n- Direct/API providers", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2788, "line_end": 2791, "exact_quote": "The editor should be able to communicate states like:\n- `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`\n- `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`\n- `Direct/API providers: strongest support for exact runtime controls.`", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2855, "line_end": 2863, "exact_quote": "### 19.8 Interview/Builder/Orchestrator mapping editors\n\nSettings or surface-specific configuration must support mapping Persona defaults to:\n- Interview stages/phases,\n- Requirements Builder steps/passes,\n- Orchestrator node/package/lane/seam mappings,\n- Multi-Pass review passes.\n\nThese editors should also allow platform/model selection per mapping and show compatibility warnings.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-036",
+      "item_type": "gap",
+      "title": "Agent trace summaries expose artifact lineage without a sensitivity policy",
+      "statement": "Run surfaces may expose `artifact_refs[]` in trace summaries, but the window provides no per-artifact authorization, redaction, cross-project/account boundary, retention, or safe dereference rule.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_authorization_omission",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "authority_boundaries", "observability_support"],
+      "impact": "A compact operator card can become a route to sensitive child-agent artifacts for viewers who may only be authorized to see aggregate status.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-007"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2824, "line_end": 2824, "exact_quote": "Debug and run activity surfaces expose an `agent_trace_summary` with `subagent_count`, `tool_span_count`, `failed_attempt_count`, and `artifact_refs[]` so operator-facing cards can summarize agent work without expanding raw traces by default.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-037",
+      "item_type": "authority",
+      "title": "Browser subject, session class, host surface, and command identity are coherent",
+      "statement": "Normal browsing is editor/workspace-tab-first, detached and automation/auth sessions remain explicit, bottom panes are adjuncts, and all open/takeover/promotion/recovery actions target canonical `browser_session_id` identities.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "capabilities", "authority", "ownership", "consumers", "propagation", "cross_document_seams"],
+      "impact": "This prevents session identity from migrating silently between chat, editor, detached windows, and bottom-panel tooling.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2901, "line_end": 2908, "exact_quote": "- detached preview/browser windows are part of the intended UX and are not described as degraded workarounds\n- the editor/workspace tab surface is the canonical in-shell host for normal browsing and HTML preview\n- the bottom panel must not be described as the primary browser host\n- HTML/browser mode must visually read as a real browser-capable surface rather than as a static Markdown preview\n- users must be able to watch agent-driven browser/testing sessions live when automation is running visibly\n- docked DevTools is the default and lives inside the currently focused browser session surface; detached DevTools is an alternate layout\n- Browser/rendered mode carries the required/desired browser capability set: it must open browser-handled content, support highlight/select browser content and screenshot capture into chat through visible chips, allow agent control to fully navigate/use user-locked web-app and website flows through named actions, preserve web-app compatibility including DevTools plus screenshot / console / network inspection, and expose DevTools on Linux, macOS, and Windows.\n- Session-class UX distinguishes the same visible browser session the user watches, a separate visible automation window/tab, and hidden/ephemeral automation sessions; hidden/ephemeral sessions are allowed only as separate `automation_session` surfaces with an open/watch affordance, user-facing browser tabs remain the default visible host, and `Open in Detached Browser` is the explicit command when a separate window is needed.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2965, "line_end": 2968, "exact_quote": "Rules:\n- actions surfaced from the bottom panel must focus or act on the owning browser session rather than invent a separate browser identity\n- browser open, detached-open, takeover, promotion, and recovery actions always target the canonical browser session model\n- PM browser chrome and any bottom-panel browser-adjacent actions may expose DevTools entry/bridge actions (`Open DevTools`, `Toggle DevTools Dock`, `Focus Browser`) or evidence actions; deeper inspection tools live inside the DevTools UI itself, and these actions must act on the owning `browser_session_id` without making the bottom panel the primary browsing session.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-038",
+      "item_type": "explicit_non_gap",
+      "title": "Browser-derived context and renderable chat content have visible safety gates",
+      "statement": "Capture chips are bounded, removable/revocable, blocked/expired when needed, and serialize only on send; chat renders Markdown/Mermaid with visible errors but never executes arbitrary message HTML.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["inputs_outputs", "security_privacy", "untrusted_inputs", "gui_truth", "behavior"],
+      "impact": "This prevents selection/capture from becoming an invisible message attachment or arbitrary active-content execution path.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2893, "line_end": 2893, "exact_quote": "Browser-derived capture chips in the Chat Panel appear in the composer chip strip with a bounded preview, page/source label, capture kind, remove/revoke affordance, and blocked/expired state when applicable. They serialize only when the user sends the message and only through the corresponding structured attachment path.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2915, "line_end": 2922, "exact_quote": "Chat messages that contain renderable Markdown/Mermaid content must support:\n\n- readable Markdown formatting\n- native Mermaid diagram cards where Mermaid syntax is detected\n- actions for copy source, open in editor, open detached preview, and export diagram where relevant\n- visible error states for malformed Mermaid instead of silent raw-block disappearance\n\nChat must not execute arbitrary HTML from message content.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-039",
+      "item_type": "gap",
+      "title": "Agent takeover lacks a user-agent concurrency and revocation state machine",
+      "statement": "The GUI promises pause/continue/stop/resume, least privilege, and visible takeover, but does not define who owns input at each state, simultaneous user/agent event ordering, queued input, immediate revocation, dead-man timeout, partial navigation side effects, or audit receipt boundaries.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_and_concurrency_state_machine_omission",
+      "builder_discretion": true,
+      "dimensions": ["authority_boundaries", "concurrency_races", "destructive_actions", "partial_failure", "security_privacy"],
+      "impact": "User and agent actions can race in authenticated sessions, causing unintended purchases, submissions, credential changes, or navigation with no deterministic stop semantics.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2897, "line_end": 2898, "exact_quote": "- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.\n- Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3000, "line_end": 3000, "exact_quote": "- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-040",
+      "item_type": "gap",
+      "title": "Automation/auth promotion does not define profile and storage isolation",
+      "statement": "Session classes and promotion are visible, but the window does not specify whether cookies, localStorage, downloads, credentials, permissions, history, DevTools state, or capture grants migrate, remain isolated, or are scrubbed when automation/auth becomes normal browsing.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle_transition_omission",
+      "builder_discretion": true,
+      "dimensions": ["privacy_data_lifecycle", "security_privacy", "states_transitions", "authority_boundaries"],
+      "impact": "Promotion can leak authenticated state across session classes or silently retain automation privileges in a user-facing profile.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2908, "line_end": 2908, "exact_quote": "- Session-class UX distinguishes the same visible browser session the user watches, a separate visible automation window/tab, and hidden/ephemeral automation sessions; hidden/ephemeral sessions are allowed only as separate `automation_session` surfaces with an open/watch affordance, user-facing browser tabs remain the default visible host, and `Open in Detached Browser` is the explicit command when a separate window is needed.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3000, "line_end": 3000, "exact_quote": "- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-041",
+      "item_type": "gap",
+      "title": "Workspace binding is the privilege boundary but has no trust-validation contract",
+      "statement": "An arbitrary URL is diagnose/verify-only until bound to a workspace target, after which durable-fix actions may appear; the binding inputs, authority, confirmation, origin/path validation, revocation, and protection against malicious pages claiming workspace identity are not defined here.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_input_privilege_escalation_boundary",
+      "builder_discretion": true,
+      "dimensions": ["untrusted_inputs", "authority_boundaries", "security_privacy", "inputs_outputs", "destructive_actions"],
+      "impact": "A hostile page or incorrect target association can cross from observation into source mutation authority.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2900, "line_end": 2900, "exact_quote": "- An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-042",
+      "item_type": "gap",
+      "title": "Bundled browser runtime recovery omits integrity and rollback semantics",
+      "statement": "The GUI must disclose size impact, install/update verification failure, runtime-unavailable remediation, and cross-platform hosting, but does not require signed runtime provenance, pin/version display, atomic update, rollback, quarantine, offline reinstall, or partial-update recovery.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "operations_supply_chain_recovery_omission",
+      "builder_discretion": true,
+      "dimensions": ["operations", "offline_network_loss", "recovery_rollback", "partial_failure", "security_privacy", "scale_limits", "observability_support"],
+      "impact": "A damaged or tampered approximately 1 GB runtime can leave browsing unavailable or unsafe with no deterministic recovery path.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2974, "line_end": 2982, "exact_quote": "- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux\n- native child-window embedding is the baseline host strategy; offscreen rendering is secondary\n- if the implementation uses a CEF wrapper such as `wef`, user-visible chrome must still present the feature as PM-managed browser capability rather than wrapper branding\n- setup, Doctor, update, and installer surfaces must disclose a selected CEF path's roughly ~1 GB app-size impact and provide remediation when runtime install/update verification fails\n- offscreen rendering may support capture, evidence, and degraded rendering workflows, but it must not replace the native child-window baseline for the canonical visible browser host\n- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session\n- GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions\n- when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable\n- the UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-043",
+      "item_type": "gap",
+      "title": "Embedded native browser and DevTools accessibility is unspecified",
+      "statement": "Preview controls and diagram actions must be keyboard reachable, but the spec does not define focus transfer, focus return, keyboard escape, screen-reader exposure, zoom/text scaling, high-contrast behavior, or accessibility across native child browser and detached DevTools windows.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility_surface_seam_omission",
+      "builder_discretion": true,
+      "dimensions": ["accessibility", "cross_document_seams", "gui_truth", "builder_discretion"],
+      "impact": "The primary browser workflow can trap keyboard focus or become opaque to assistive technology despite accessible outer Slint chrome.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2975, "line_end": 2979, "exact_quote": "- native child-window embedding is the baseline host strategy; offscreen rendering is secondary\n- if the implementation uses a CEF wrapper such as `wef`, user-visible chrome must still present the feature as PM-managed browser capability rather than wrapper branding\n- setup, Doctor, update, and installer surfaces must disclose a selected CEF path's roughly ~1 GB app-size impact and provide remediation when runtime install/update verification fails\n- offscreen rendering may support capture, evidence, and degraded rendering workflows, but it must not replace the native child-window baseline for the canonical visible browser host\n- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 2988, "line_end": 2991, "exact_quote": "- Use lazy rendering and virtualization for long message streams and large documents.\n- Preserve scroll positions where feasible when re-rendering preview content.\n- Preview controls must be keyboard reachable.\n- Diagram export/open/source actions must have explicit labels and accessible tooltips/text.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-044",
+      "item_type": "unknown",
+      "title": "Context Lens names controls but not their semantic effects",
+      "statement": "Placement, multi-select support, and the labels Mute/Focus/Subcompact/Turn Off are fixed, but this window does not define selection inputs, scope, precedence, duration, reversibility, persistence, interaction with compaction, or what content each action excludes or emphasizes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "semantic_contract_absent",
+      "builder_discretion": true,
+      "dimensions": ["ambiguity_unknowns", "unknown_unknowns", "builder_discretion", "states_transitions", "privacy_data_lifecycle"],
+      "impact": "The same visible control can produce incompatible context behavior, including silent omission of relevant or sensitive material.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 2924, "line_end": 2924, "exact_quote": "Context Lens placement is fixed in the Chat panel: the control lives in the top-right of the chat window immediately to the right of the search bar, renders as an icon plus dropdown arrow, supports multi-select in all modes, and exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-045",
+      "item_type": "state",
+      "title": "Plan approval and TODO authority are explicit and durable",
+      "statement": "Plan execution requires explicit approval, the sticky plan panel is the authoritative tracker, TODO identity survives execution topology, and plan lifecycle states remain visible and restorable.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["states_transitions", "authority", "behavior", "gui_truth", "acceptance_oracles"],
+      "impact": "Inline progress cannot silently replace the canonical plan, and subagent/crew execution retains stable TODO identity.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3024, "line_end": 3029, "exact_quote": "**Plan** UI expectations:\n- lightweight plan artifact in thread\n- sticky plan panel remains visible in chat\n- normalized TODO list is visible before approval\n- users may revise TODO structure before approval\n- execution begins only after explicit approval", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3041, "line_end": 3046, "exact_quote": "**Shared TODO tracker rules:**\n- the sticky plan panel is the authoritative TODO tracker\n- inline chat updates are milestone-style, not a competing tracker\n- TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`\n- the same TODO identity must survive single-agent, subagent, and crew execution\n- plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-046",
+      "item_type": "gap",
+      "title": "Plan Thoroughness labels do not close operational semantics",
+      "statement": "Light/Balanced/Comprehensive and a Balanced default are fixed, but no input/output differences, research/decomposition depth, token/time budget, model capability fallback, cancellation behavior, partial-result state, or measurable distinction between Plan and Deep Plan at equal PT is specified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "builder_discretion_over_core_behavior",
+      "builder_discretion": true,
+      "dimensions": ["behavior", "capabilities", "scale_limits", "partial_failure", "builder_discretion", "test_falsifiability"],
+      "impact": "The selector can become cosmetic, and providers/builders can implement materially different cost and quality behavior under identical labels.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 3015, "line_end": 3020, "exact_quote": "PT control contract:\n- control type: segmented control, dropdown, or equivalent compact selector\n- canonical labels: `Light`, `Balanced`, `Comprehensive`\n- default selection: `Balanced`\n- Deep Plan and Plan share the same PT labels\n- tooltip/help copy must explain that Deep Plan is more intensive than Plan at the same PT", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-047",
+      "item_type": "gap",
+      "title": "Deterministic annotation re-anchoring has no falsifiable algorithm or orphan state",
+      "statement": "Deep Plan requires deterministic re-anchoring and no silent loss, but does not define anchor identity, matching priority, edit-conflict detection, orphan/ambiguous states, user repair, or pass criteria when duplicate text and structural rewrites occur.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracle_incomplete",
+      "builder_discretion": true,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "states_transitions", "invalid_states_transitions", "recovery_rollback"],
+      "impact": "Implementations can claim deterministic behavior while attaching a note to the wrong text or silently choosing among ambiguous anchors.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 3054, "line_end": 3060, "exact_quote": "Required behavior:\n- highlight text -> annotation action palette\n- annotation markers in margin + annotation list/drawer\n- `Resubmit with Annotations` launches targeted revision for the plan document\n- deterministic annotation re-anchoring after edits\n- no silent annotation loss\n- no automatic Multi-Pass Review requirement before plan approval/execution", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-048",
+      "item_type": "gap",
+      "title": "Wizard import omits provenance selection and privacy lifecycle",
+      "statement": "The handoff visibly reports goal, scope, plan presence, open-question count, and GUI hint, but does not require per-source provenance, user selection/removal before import, sensitive-content redaction, attachment limits, retention, revocation, or authority checks when project context differs.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_and_provenance_omission",
+      "builder_discretion": true,
+      "dimensions": ["privacy_data_lifecycle", "security_privacy", "inputs_outputs", "authority_boundaries", "untrusted_inputs"],
+      "impact": "A chat-to-wizard transition can carry unrelated secrets or stale context into durable planning records without a reviewable provenance boundary.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3085, "line_end": 3098, "exact_quote": "If the user accepts the recommendation:\n- switch to the Planning Wizard intake/interview flow\n- show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)\n- show whether a plan artifact was included\n- show the imported goal/scope summary\n\nRecommended imported-context panel contents:\n- user goal\n- scope summary\n- included plan yes/no\n- open questions count\n- `has_gui` hint when known\n\nIf a project is already active, the wizard should open on the preloaded feature/enhancement path rather than on a blank intent picker.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-049",
+      "item_type": "contract",
+      "title": "Canonical blocked GUI preserves episodes, action authority, and overlay semantics",
+      "statement": "The canonical section distinguishes blocked from attention and lifecycle, keeps simultaneous episodes separate, uses ordered catalog-bound action IDs, preserves actor-specific state machines, and requires visually distinct retry/remediation/failure presentations.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "gui_truth", "observability_support", "invalid_states_transitions"],
+      "impact": "This prevents per-surface blocked schemas and misleading collapse of runtime overlays into run-graph lifecycle states.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3258, "line_end": 3273, "exact_quote": "## Canonical Blocked/Recovery Behavior\nThis section is the canonical GUI summary for blocked and recovery surfaces.\n\n### Dashboard Action Required\nBlocked and recovery UI binds to canonical blocked projections and HITL records.\n- `wizard_blocked` is a first-class card alongside `wizard_attention_required`\n- blocked cards use the fields `card_type`, `wizard_id`, `wizard_step`, `blocked_reason_code`, `report_ref`, `resume_url`, and optional `thread_id`\n- `wizard_blocked` uses more severe visual treatment than `wizard_attention_required`\n- primary action: `Resume Wizard`\n- secondary action: `View report`\n- auto-dismiss only when the wizard leaves `blocked`\n- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`\n- blocked payloads use ordered `allowed_action_ids[]`\n- blocked episodes remain distinct when more than one is active\n- GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog\n- Blocked and attention-required remain distinct; `wizard-blocked` cards outrank `wizard-attention-required`, thread badges preserve highest severity and blocked counts, usage warnings preserve thresholds, quiet periods, and clear actions, and all-nodes-blocked can escalate by elapsed time.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"},
+        {"path": "Plans/FinalGUISpec.md", "line_start": 3275, "line_end": 3289, "exact_quote": "### Thread and run status taxonomy\n`waiting_approval` and other blocked reasons are runtime overlays, not replacement run-graph lifecycle states.\n- lifecycle remains the graph-progress contract\n- blocked, backoff, retry, remediation, and approval-pending are rendered from runtime projections\n- requested vs effective persona/platform/model remains visible where runtime substitution occurred\n\n### Scope rule\nThe GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.\n\nThe shared blocked/remediation taxonomy preserves actor-specific state machines and object identities: assistant, interview/builder, runtime, and Orchestrator actors consume common blocked fields without collapsing their lifecycle models.\n\n### Visual distinction\n- blocked episodes are visually distinct from ordinary paused/idle states\n- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate\n- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}
+      ]
+    },
+    {
+      "item_id": "M44-050",
+      "item_type": "gap",
+      "title": "Elapsed-time blocked escalation has no clock or threshold policy",
+      "statement": "The canonical summary allows all-nodes-blocked escalation by elapsed time but does not define start/reset timestamps, pause/offline treatment, thresholds, persistence across restart, severity targets, owner authority, or duplicate notification suppression.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_aging_state_machine",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "failures_recovery", "gui_misleading_states", "builder_discretion", "offline_network_loss"],
+      "impact": "The same blocked episode can escalate differently across restarts and surfaces, creating noisy or missing intervention signals.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 3273, "line_end": 3273, "exact_quote": "- Blocked and attention-required remain distinct; `wizard-blocked` cards outrank `wizard-attention-required`, thread badges preserve highest severity and blocked counts, usage warnings preserve thresholds, quiet periods, and clear actions, and all-nodes-blocked can escalate by elapsed time.", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    },
+    {
+      "item_id": "M44-051",
+      "item_type": "failure_recovery",
+      "title": "Safe-point recovery wording prevents false restore semantics",
+      "statement": "Safe points remain runtime recovery anchors, retry-from-safe-point is distinct from a fresh attempt, and the unavailable action is disabled with an explanation rather than implying hidden fallback.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": false,
+      "dimensions": ["failures_recovery", "recovery_rollback", "gui_misleading_states", "acceptance_oracles", "test_falsifiability"],
+      "impact": "Users cannot mistake an internal execution anchor for a user-managed restore point or unknowingly start a different retry class.",
+      "source_unit_refs": ["PLANUNIT:F3-401", "SEMANTIC:PLANUNIT:F3-401:CONT-008"],
+      "evidence": [{"path": "Plans/FinalGUISpec.md", "line_start": 3299, "line_end": 3301, "exact_quote": "- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points\n- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`\n- if no valid safe point exists, `Retry from safe point` is disabled with an explanation", "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"}]
+    }
+  ],
+  "synthesis": {
+    "verdict": "material_assurance_gaps_found",
+    "summary": "The macro is unusually strong on GUI ownership, canonical identity, requested/effective disclosure, crash-truthfulness, bounded terminal rendering, explicit blocked overlays, and several measurable acceptance gates. Material blockers remain in state-machine closure, transaction/concurrency semantics, browser authority and privacy boundaries, persistence inventory/precedence, accessibility/localization, and direct internal contradictions around dashboard drag behavior, persistence change, and browser implementation authority.",
+    "highest_risk_item_ids": ["M44-023", "M44-039", "M44-040", "M44-041"],
+    "priority_repair_item_ids": ["M44-002", "M44-004", "M44-005", "M44-007", "M44-009", "M44-010", "M44-013", "M44-014", "M44-018", "M44-022", "M44-023", "M44-024", "M44-026", "M44-029", "M44-030", "M44-032", "M44-035", "M44-036", "M44-039", "M44-040", "M44-041", "M44-042", "M44-043", "M44-044", "M44-046", "M44-047", "M44-048", "M44-050"],
+    "explicit_strength_item_ids": ["M44-001", "M44-003", "M44-006", "M44-008", "M44-011", "M44-012", "M44-015", "M44-016", "M44-017", "M44-019", "M44-021", "M44-025", "M44-027", "M44-028", "M44-033", "M44-034", "M44-037", "M44-038", "M44-045", "M44-049", "M44-051"],
+    "cross_segment_conflicts": [
+      "Dashboard click-to-swap MVP versus required drag-to-reorder/resizing and no deferrals.",
+      "wry-specific module/risk wording versus capability-first non-crate-locked browser authority and later CEF-class runtime expectation.",
+      "Persistence remains unchanged versus explicit dashboard and terminal migration rewrites."
+    ]
+  },
+  "self_attestation": {
+    "assignment_identity": {
+      "assignment_id": "A005M-000044-INTEGRATED-MACRO-AC612DBB4EFE-0002",
+      "attempt_id": "attempt-0014",
+      "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+      "bundle_id": "MACRO-AC612DBB4EFE-0002",
+      "epoch_id": "epoch-0014",
+      "task_thread_id": "/root/a005m_000044_attempt_0014_terminal",
+      "matched": true
+    },
+    "read_every_assigned_core_line": true,
+    "read_every_context_line": true,
+    "accounted_for_every_required_source_unit_ref": true,
+    "applied_exact_behavior_lens": true,
+    "applied_adversarial_negative_space_lens": true,
+    "read_only_dispatch_intent_capsule_schema_and_single_source_excerpt": true,
+    "read_prior_audits": false,
+    "read_peer_results": false,
+    "read_unrelated_sources": false,
+    "performed_external_research": false,
+    "spawned_descendants": false,
+    "messaged_other_agents": false,
+    "modified_canonical_plans": false,
+    "wrote_terminal_seal": false,
+    "output_regular_json_file_count": 1
+  }
+}

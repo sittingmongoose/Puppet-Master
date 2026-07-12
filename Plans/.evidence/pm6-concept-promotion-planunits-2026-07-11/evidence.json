@@ -1,0 +1,269 @@
+{
+  "artifacts": [
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "sha256": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0"
+    },
+    {
+      "path": "Plans/PRD_Builder.md",
+      "sha256": "27dacbbe7a1bcad074c650e89c8411bf044858dcacfeb0236b7b9492a590cbda"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "0c52e700714839fefab1f760a7aca55bbb0e19ab2792961fca22bdb4996286ed"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "91ceb0b84346e06aa77a9ca7e76733084171803bd4481920f4e73ddbf650b2d3"
+    }
+  ],
+  "checks": [
+    {
+      "details": "pass",
+      "name": "plan-index-validate",
+      "result": "PASS"
+    },
+    {
+      "details": "92 configured docs and 1565 shards checked with no failures after regeneration.",
+      "name": "shard-check",
+      "result": "PASS"
+    },
+    {
+      "details": "pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary (live_plan_unit_count=5540).",
+      "name": "plan-migration-validate",
+      "result": "PASS"
+    },
+    {
+      "details": "Sole failing subcheck is json_syntax on four pre-existing corrupted files under Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners (runner-07 failed_attempts.jsonl and fresh_agent_assignment_registry.jsonl with stray '+' diff prefixes; two runner-08 raw_results attempt-03 JSON files containing prose), all committed in 4505787fa on 2026-07-10 before this change and not touched by it; the other 24 subchecks, including verify_spec_lock, validate_plan_graph, validate_auto_decisions, validate_evidence, validate_implementation_readiness, validate_plan_migration, validate_audit_closure, validate_audit_status_index, and check_shards, all pass.",
+      "name": "run-gates",
+      "result": "FAIL"
+    },
+    {
+      "details": "Buildability gate report regenerated with current owner-doc hashes; PNC-019 receipt re-certified after the Planning_Wizard.md edit.",
+      "name": "validate-implementation-readiness",
+      "result": "PASS"
+    },
+    {
+      "details": "Concepts/pm6-build remains concept/source-lineage only per Plans/usage-feature.md; promoted behaviors are restated in live owner docs.",
+      "name": "pmconcept-concept-scope",
+      "result": "PASS"
+    },
+    {
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created.",
+      "name": "no-node-artifacts-created",
+      "result": "PASS"
+    },
+    {
+      "details": "python3 scripts/pm-plans-verify.py audit-governance exits 0 after the PMConcept6 promotion seal.",
+      "name": "audit-governance",
+      "result": "PASS"
+    }
+  ],
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status=pass; plan_unit_count=5540; node_readiness_status=ready_for_node_compile; coverage_status=pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "92 configured docs and 1565 shards generated from live Plans."
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal",
+      "exit_code": 0,
+      "stdout_excerpt": "live_plan_unit_count=5540 after PWIZ-019, F3-419, F3-420, F3-421 additions"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json --evidence Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json --record-command \"python3 scripts/pm-plan-index.py validate\" --check-detail \"plan-index-validate|||pass\" --no-node-artifacts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py refresh-hashes",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 1,
+      "stdout_excerpt": "24 of 25 subchecks pass; sole failure is json_syntax on four pre-existing corrupted audit-20260709-004 runner output files committed in 4505787fa (2026-07-10) before this session and untouched by this change."
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --evidence <eight stale historical evidence bundles> (transitive artifact-hash refresh)",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --evidence Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json --evidence Plans/.evidence/tier-0c-2-storage-value-registry/evidence.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-status-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-status-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance",
+      "exit_code": 0
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "SchemaID:pm.auto_decisions.schema.v1",
+    "SchemaID:pm.evidence.schema.v1",
+    "Gate:GATE-001"
+  ],
+  "created_at_utc": "2026-07-12T02:26:57Z",
+  "events": {
+    "event_refs": [
+      {
+        "note": "Plans/auto_decisions.jsonl",
+        "ref": "dec-2026-07-11-pm6-concept-promotion-planunits-seal",
+        "source": "jsonl"
+      }
+    ]
+  },
+  "evidence_id": "evidence.pm6-concept-promotion-planunits-2026-07-11",
+  "files_changed": [
+    {
+      "change_type": "modified",
+      "note": "Added PWIZ-019; edited PWIZ-003, PWIZ-007, PWIZ-013 canonical_text.",
+      "path": "Plans/Planning_Wizard.md"
+    },
+    {
+      "change_type": "modified",
+      "note": "Edited PRDB-002 canonical_text (requirements entry surface).",
+      "path": "Plans/PRD_Builder.md"
+    },
+    {
+      "change_type": "modified",
+      "note": "Added F3-419, F3-420, F3-421; edited F3-318 canonical_text; F3-132 verified no-edit.",
+      "path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/Spec_Lock.json"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/auto_decisions.jsonl"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+    },
+    {
+      "change_type": "modified",
+      "note": "Regenerated shard set including new addendum shard 018.",
+      "path": "Plans/_shards/planning_wizard"
+    },
+    {
+      "change_type": "modified",
+      "note": "Regenerated shard set after PRDB-002 edit.",
+      "path": "Plans/_shards/prd_builder"
+    },
+    {
+      "change_type": "modified",
+      "note": "Regenerated shard set including new addendum shard 057.",
+      "path": "Plans/_shards/finalguispec"
+    },
+    {
+      "change_type": "modified",
+      "note": "Full shard regeneration refreshed manifests and indexes for all configured docs.",
+      "path": "Plans/_shards"
+    },
+    {
+      "change_type": "modified",
+      "note": "Plan index artifacts regenerated for 5540 PlanUnits.",
+      "path": "Plans/.plan_index"
+    },
+    {
+      "change_type": "modified",
+      "note": "PNC-019 harness re-run after Planning_Wizard.md owner-doc edit.",
+      "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json"
+    },
+    {
+      "change_type": "modified",
+      "note": "Implementation readiness regenerated with current owner-doc hashes.",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    {
+      "change_type": "modified",
+      "note": "Plan-sharding evidence synced to the regenerated shard report.",
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+    },
+    {
+      "change_type": "modified",
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/shard_report.json"
+    },
+    {
+      "change_type": "modified",
+      "note": "Owner/closure evidence hashes refreshed after doc, lock, and decision updates.",
+      "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+    },
+    {
+      "change_type": "added",
+      "path": "Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json"
+    }
+  ],
+  "node": {
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build",
+    "node_id": "pm.build-governance.spec-lock-support-refresh"
+  },
+  "reproducibility": {
+    "note": "Deterministic local governance refresh over the live Plans tree; inputs_hash recipe recorded in the auto decision rationale.",
+    "snapshot_ref": "git:7f57ffda79c88878816fee922d85fbed29567f97"
+  },
+  "schema_id": "pm.evidence.schema.v1",
+  "summary": "PMConcept6 concept promotion added PWIZ-019, F3-419, F3-420, and F3-421 and edited PWIZ-003, PWIZ-007, PWIZ-013, PRDB-002, and F3-318 (5536 to 5540 live PlanUnits), then refreshed shards, migration hashes, final summary, plan index, readiness artifacts, auto decision provenance, and Spec Lock through the deterministic governance seal.",
+  "tool_calls": [
+    {
+      "count": 20,
+      "tool_id": "local-python"
+    }
+  ]
+}

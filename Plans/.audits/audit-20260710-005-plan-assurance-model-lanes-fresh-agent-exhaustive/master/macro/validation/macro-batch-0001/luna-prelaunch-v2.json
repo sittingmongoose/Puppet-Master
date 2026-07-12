@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "macro_batch_luna_controller_v1",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "batch_id": "macro-batch-0001",
+  "epoch_id": "epoch-0014",
+  "status": "pass",
+  "errors": [],
+  "assignment_count": 24,
+  "micro_window_count": 148,
+  "batch_manifest_sha256": "9b23010625311ce47cbd391dfa014340fc0a57c084c5ebbc97ca7245236ef5c9",
+  "authority_sha256": "5b0e2bc296cffafd10d0334a041003512dca9a0fa8f87063e98c16b9c7083c05",
+  "activation_sha256": "cc96784a17d5e5515c5e7b5a74940c50236c55dd05a39695086602e430983c27",
+  "controller_lineage_note": "Rebound from the old Sol controller to persistent same-directory Luna successor 019f4f5e-96c6-7893-8c94-ce2c1b760d6c. The verifier confirms 24 outputs empty and zero receipts; batch manifest and activation are unchanged, with controller lineage reflected only in controller_thread_id and derived receipt-contract/authority hashes."
+}

@@ -563,6 +563,16 @@
    "expected_shape": "<script id=\"pm6-js-usage\">\u2026</script>"
   },
   {
+   "file": "29x-pm6-js-chat-data.part.html",
+   "kind": "new-stub-js",
+   "name": "pm6-js-chat-data",
+   "marker": null,
+   "marker_rule": "stub",
+   "owner": "chat",
+   "insertion": "after part 29; globals FIRST, demo-engine SECOND, then listed order",
+   "expected_shape": "<script id=\"pm6-js-chat-data\">\u2026</script> (thread display data; must stay BEFORE pm6-js-chat, which renders it)"
+  },
+  {
    "file": "29x-pm6-js-chat.part.html",
    "kind": "new-stub-js",
    "name": "pm6-js-chat",

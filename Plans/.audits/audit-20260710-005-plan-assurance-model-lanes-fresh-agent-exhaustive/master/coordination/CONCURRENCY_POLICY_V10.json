@@ -1,0 +1,87 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v10",
+  "status": "ACTIVE_PROSPECTIVE_ROLLING_40",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V9.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "69 percent usage remained roughly two hours into the five-hour window; increase productive pace while preserving accuracy and finish the audit faster",
+  "quota_snapshot": {
+    "remaining_percent": 69,
+    "elapsed_hours_approximate": 2.0,
+    "observed_used_percent_per_hour_approximate": 15.5,
+    "remaining_hours_approximate": 3.0,
+    "target_end_remaining_percent": 2,
+    "required_used_percent_per_hour_from_snapshot_approximate": 22.33
+  },
+  "operating_target": {
+    "maximum_active_semantic_leaves": 40,
+    "preferred_active_range": [
+      32,
+      40
+    ],
+    "atomic_transaction_cap": 16,
+    "composition": "separately prepared, activated, receipted and validated transactions of at most 16 leaves; reach 40 only by overlapping disjoint transactions such as 16 plus 16 plus 8",
+    "single_atomic_40_launch_forbidden": true,
+    "reset_pause": false
+  },
+  "utilization_control": {
+    "five_hour_target_used_percent": 98,
+    "target_average_used_percent_per_hour": 19.6,
+    "required_rate_from_latest_snapshot_percent_per_hour": 22.33,
+    "next_measurement_minutes": 30,
+    "if_projected_end_remaining_percent_above_8": "maintain rolling 40 and eliminate discretionary gate idle time",
+    "if_projected_end_remaining_percent_between_2_and_8": "maintain rolling 32 to 40",
+    "if_projected_end_remaining_percent_below_2_or_capacity_failures_exceed_10_percent": "downshift the next not-yet-activated transaction to 24 total active leaves",
+    "never_interrupt_valid_in_flight_work": true
+  },
+  "pipeline": {
+    "prepare_next_transaction_while_current_transaction_runs": true,
+    "independent_validation_may_overlap_disjoint_semantic_transaction": true,
+    "candidate_outputs_remain_zero_credit_until_independently_validated": true,
+    "retry_only_invalid_or_unlaunched_assignments_with_fresh_identities": true,
+    "no_duplicate_assignment_or_result_namespace": true,
+    "no_synthetic_usage_work": true
+  },
+  "prospective_transactions": {
+    "cross_cutting_recovery": {
+      "leaf_count": 2,
+      "assignment_ids": [
+        "ER-0003",
+        "ER-0008"
+      ],
+      "hard_gate": "fresh attempt-0006 independent Luna prelaunch"
+    },
+    "universal_research_certification": {
+      "leaf_count": 16,
+      "hard_gate": "fresh independent prelaunch positively binds validator-v2 and dependency-binding-v1"
+    },
+    "scenario_adversarial": {
+      "leaf_count": 16,
+      "cohorts": [
+        "cohort-0001",
+        "cohort-0002"
+      ],
+      "hard_gate": "independent cumulative cross-cutting research checkpoint is 8 of 8"
+    },
+    "cross_domain_seam_adjudication": {
+      "leaf_count": 8,
+      "scope": "disjoint adjudication of already-discovered cross-shard merge candidates and cross-domain seams using owner-merge and universal-research evidence",
+      "hard_gate": "new immutable exact-membership manifest, zero overlap, source-evidence contract and independent prelaunch",
+      "promotion_credit_before_postrun": 0
+    }
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "dependency_bypass_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

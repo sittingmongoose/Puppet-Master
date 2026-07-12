@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:a005:universal-shadow-certification:atomic8-prelaunch-report:v31",
+  "title": "Audit005 V31 atomic8 prelaunch report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit_id", "wave_id", "attempt_id", "slot_id", "cohort_id", "status", "authority_sha256", "manifest_sha256", "primary_postrun_sha256", "primary_rejected_set_report_sha256", "assignment_ids", "atomic_size", "errors", "zero_state", "activation_authorized", "launch_authorized", "credit"],
+  "properties": {
+    "schema_version": {"const": "universal-shadow-certification-atomic8-prelaunch-report-v31-v1"},
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "wave_id": {"const": "universal-shadow-certification-wave-0001"},
+    "attempt_id": {"const": "attempt-0002"},
+    "slot_id": {"enum": ["c1-atomic8-prelaunch", "c2-atomic8-prelaunch"]},
+    "cohort_id": {"enum": ["cohort-0001", "cohort-0002"]},
+    "status": {"const": "PASS"},
+    "authority_sha256": {"$ref": "#/$defs/sha256"},
+    "manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "primary_postrun_sha256": {"$ref": "#/$defs/sha256"},
+    "primary_rejected_set_report_sha256": {"$ref": "#/$defs/sha256"},
+    "assignment_ids": {"type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "items": {"type": "string", "pattern": "^A005ERSC-[0-9]{4}$"}},
+    "atomic_size": {"const": 8},
+    "errors": {"type": "array", "maxItems": 0},
+    "zero_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["empty_output_directories", "results", "receipts", "runtime_native_capture_rows", "activation_transactions", "credit"],
+      "properties": {
+        "empty_output_directories": {"const": 8},
+        "results": {"const": 0},
+        "receipts": {"const": 0},
+        "runtime_native_capture_rows": {"const": 0},
+        "activation_transactions": {"const": 0},
+        "credit": {"const": 0}
+      }
+    },
+    "activation_authorized": {"const": false},
+    "launch_authorized": {"const": false},
+    "credit": {"const": 0}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

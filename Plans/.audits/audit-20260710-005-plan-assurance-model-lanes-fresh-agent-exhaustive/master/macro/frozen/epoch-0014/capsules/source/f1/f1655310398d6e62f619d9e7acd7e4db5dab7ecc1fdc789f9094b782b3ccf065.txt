@@ -1,0 +1,2703 @@
+L00002794	  - Do not guess localhost URLs when port_access_record evidence is missing or low-confidence.
+L00002795	owner_hints:
+L00002796	  - Plans/assistant-chat-design.md
+L00002797	  - Plans/FinalGUISpec.md
+L00002798	  - Plans/UI_Command_Catalog.md
+L00002799	  - Plans/Runtime_Artifacts_Panel.md
+L00002800	```
+L00002801	
+L00002802	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00002803	
+L00002804	This addendum compiles accepted provider-update ledger atoms into Assistant Chat consumer requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00002805	
+L00002806	### ACD-424 - Chat Provider Model Effort And Media Route Consumers
+L00002807	
+L00002808	```yaml
+L00002809	plan_unit_id: ACD-424
+L00002810	unit_type: requirement
+L00002811	status: accepted
+L00002812	owner_doc: Plans/assistant-chat-design.md
+L00002813	canonical_text: >-
+L00002814	  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy `platform_specs`. Chat media controls consume route-specific image-generation eligibility from the GUI/Settings and Media owners, including OpenAI/Codex route families, MiniMax `image-01`, Gemini Direct where verified, and Antigravity OAuth/internal `gemini-3.1-flash-image`, while public text-only `agy` rows remain capability metadata and not generated-image engines unless exact artifact proof exists. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.
+L00002815	gui_related: true
+L00002816	gui_classification_reason: Assistant Chat header, composer, and status controls are user-visible UI behavior.
+L00002817	depends_on: [F3-400, F3-401, MS-113, MS-115, CV-293]
+L00002818	unblocks: []
+L00002819	acceptance_criteria:
+L00002820	  - Chat surfaces consume provider/model/account/effort capability data from owner schemas.
+L00002821	  - Requested and effective thinking effort are visible when they differ or are unsupported.
+L00002822	  - Media input/generation controls reflect route-specific capability state.
+L00002823	  - Chat does not use legacy `platform_specs` as the provider/model support source of truth.
+L00002824	  - Chat does not turn public text-only `agy` model rows into generated-image engines.
+L00002825	validation_surfaces:
+L00002826	  - python3 scripts/pm-plan-index.py validate
+L00002827	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00002828	risk_class: assistant_chat_provider_capability_drift
+L00002829	reasoning_tier: standard
+L00002830	context_scope: assistant_chat_provider_consumers
+L00002831	implementation_surfaces: [Plans/assistant-chat-design.md, future assistant chat header, future composer, future run status UI]
+L00002832	node_compile_hint: {mode: assistant_chat_provider_selector_consumer, create_worknodes: false, create_nodeseeds: false}
+L00002833	source_lineage:
+L00002834	  - pldg-20260624-001-provider-updates:atom-0018
+L00002835	  - pldg-20260624-001-provider-updates:atom-0118
+L00002836	  - pldg-20260624-001-provider-updates:atom-0119
+L00002837	  - pldg-20260624-001-provider-updates:atom-0142
+L00002838	  - pldg-20260624-001-provider-updates:atom-0143
+L00002839	  - pldg-20260624-001-provider-updates:atom-0144
+L00002840	source_atom_ids: [atom-0018, atom-0033, atom-0035, atom-0046, atom-0048, atom-0103, atom-0105, atom-0106, atom-0117, atom-0118, atom-0119, atom-0122, atom-0130, atom-0135, atom-0138, atom-0139, atom-0142, atom-0143, atom-0144]
+L00002841	preserved_exact_tokens: ["provider/model selectors", "thinking effort", "requested", "effective", "platform_specs", "unsupported", "clamped", "gated", "unverified", "fallback", "ACD-424", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "image-01", "gemini-3.1-flash-image", "agy models(The ones that actually support media generation)"]
+L00002842	negative_constraints:
+L00002843	  - Do not make Assistant Chat the owner of provider catalog or media capability truth.
+L00002844	  - Do not infer current provider support from legacy `platform_specs` rows.
+L00002845	  - Do not hide unsupported or clamped effort outcomes.
+L00002846	  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+L00002847	  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
+L00002848	owner_hints: [Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Models_System.md, Plans/Contracts_V0.md]
+L00002849	```
+L00002850	
+L00002851	Inline diagnostics may render the same persisted object as `json { "Changes": true, "Worktrees": false, "Branches/Stash": false, "History": false, "Graph": false }`.
+L00002852	
+L00002853	The fixed section order is Changes, Worktrees, Branches/Stash, History, Graph; user reordering is outside MVP, scroll position is not persisted, and each project's `accordion_state` is independent.
+L00002854	
+L00002855	Source Control owns the Worktrees row layout and filters that Assistant Chat links to. The accordion uses a two-level scroll model: expanded sections may scroll internally under their max-height, and the outer accordion container scrolls when combined section content exceeds the panel. The Worktrees filter is `All | Threads | Orchestrator | Manual`; its per-project state persists at `config:project:{pid}:source_control.worktree_filter` as `worktree_filter`, defaults to `All`, and is not shared across projects.
+L00002856	
+L00002857	### W.1 Chat header worktree button
+L00002858	
+L00002859	**Placement:** Chat header strip, after the Reasoning/effort control (rightmost existing control). The header strip currently contains: Platform, Model, Reasoning/effort. The Worktree button is appended after these. Mode buttons (Ask, Agent, Debug, Plan, Deep Plan) are separate from the header strip and not adjacent to this button.
+L00002860	
+L00002861	**Visual states:**
+L00002862	- **Unbound (default):** Dimmed worktree glyph icon. No label text. Tooltip: "No worktree — click to create"
+L00002863	- **Bound, clean:** Lit/active worktree glyph icon. Tooltip shows branch name. No label text.
+L00002864	- **Bound, dirty:** Lit worktree glyph with a small dot indicator (same pattern as unsaved-file dot in editor tabs). Tooltip: branch name + "uncommitted changes"
+L00002865	- **Bound, conflict:** Lit worktree glyph with warning indicator (triangle). Tooltip: branch name + "merge conflict"
+L00002866	
+L00002867	Icon colors resolve through theme tokens (`icon-secondary`, `accent-warning`, `accent-error`), not hardcoded hex values. Icon is ~32px and follows existing header overflow/min-width pattern.
+L00002868	
+L00002869	Status bindings expose `dirty_state`/`/dirty_state` and `conflict_state`/`/conflict_state` to the icon renderer for compatibility with older state labels; canonical rendering still reads from `worktree_projection.v1:{project_id}:{worktree_id}`. All worktree controls have accessible labels, and create, unbind, remove, dirty-state, conflict-state, and creation-failed changes are announced through `aria-live="polite"`. Narrow Source Control worktree filters and overflow actions degrade to icon-only controls rather than wrapping text into the compact chat header.
+L00002870	
+L00002871	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+L00002872	
+L00002873	**Dropdown contents when NO worktree bound:**
+L00002874	
+L00002875	| Row | Type | Action |
+L00002876	|-----|------|--------|
+L00002877	| `None` | Selected label | No action (current state) |
+L00002878	| `Create Worktree…` | Action row | Opens Create Worktree dialog |
+L00002879	
+L00002880	**Dropdown contents when worktree IS bound:**
+L00002881	
+L00002882	| Row | Type | Action |
+L00002883	|-----|------|--------|
+L00002884	| Branch name | Info label (e.g. `assistant/fix-auth-bug`) | No action |
+L00002885	| Path | Info sublabel (truncated, e.g. `.puppet-master/worktrees/thread-a1b2c3d4`) | No action |
+L00002886	| Status | Pill (clean/dirty/conflict) | No action |
+L00002887	| separator | --- | --- |
+L00002888	| `Unbind` | Action row | Detaches worktree from thread; worktree remains on disk |
+L00002889	| `Merge into Base…` | Action row | Opens merge confirmation dialog (squash/merge/rebase) |
+L00002890	| `Create PR…` | Action row | Opens PR creation panel with pre-filled fields |
+L00002891	| `Remove Worktree` | Action row (destructive) | Detaches AND prunes; shows confirmation if dirty |
+L00002892	
+L00002893	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+L00002894	
+L00002895	**Behavior rules:**
+L00002896	- Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
+L00002897	- While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
+L00002898	- `Unbind` sets thread binding to None; agent's next turn uses main project dir
+L00002899	- `Remove Worktree` calls `WorktreeManager::remove_worktree`, then sets binding to None
+L00002900	- Remove is blocked with error toast if worktree has an active run in any thread or orch tier
+L00002901	- The button is visible in all chat modes (Ask, Agent, Debug, Plan, Deep Plan)
+L00002902	- Hidden when the active project has no git repository
+L00002903	
+L00002904	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/WorktreeGitImprovement.md
+L00002905	
+L00002906	### W.2 Thread-to-worktree binding data model
+L00002907	
+L00002908	Thread-to-worktree binding is durable, explicit, and identity-bearing.
+L00002909	
+L00002910	**New redb key family:**
+L00002911	- Key: `thread_state:{thread_id}:worktree_binding`
+L00002912	- Value (JSON):
+L00002913	```json
+L00002914	{
+L00002915	  "worktree_id": "wt-abc123",
+L00002916	  "branch_name": "assistant/fix-auth-bug",
+L00002917	  "worktree_path": ".puppet-master/worktrees/thread-a1b2c3d4",
+L00002918	  "bound_at_utc": "2026-03-26T02:45:00Z",
+L00002919	  "binding_origin": "manual | auto_create",
+L00002920	  "temp_branch_name": "assistant/thread-a1b2c3d4"
+L00002921	}
+L00002922	```
+L00002923	`temp_branch_name` tracks the original temporary branch name assigned before title generation. For UI display, always use `branch_name`; `temp_branch_name` is internal bookkeeping only. Assistant thread worktree filesystem paths are generated as `.puppet-master/worktrees/thread-{short_id}` from the bound thread id and append numeric suffixes such as `thread-{short_id}-2` when that directory already exists; `worktree_id` remains the stable record identity and MUST NOT make `wt-*` the filesystem path model.
+L00002924	
+L00002925	**Inverse lookup (for 1:1 enforcement):**
+L00002926	- Key: `worktree_binding_reverse:{worktree_id}`
+L00002927	- Value: `thread_id`
+L00002928	- Used to quickly check whether a worktree is already bound to another thread.
+L00002929	
+L00002930	**Binding rebuild logic:** Projectors replay `chat.thread_worktree_bound` and `chat.thread_worktree_unbound` events in sequence order to reconstruct current binding state. The last event for a given `thread_id` determines whether a binding exists and which `worktree_id` it references.
+L00002931	
+L00002932	**Worktree record extension (existing `worktree_record.v1`):**
+L00002933	- Add optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`.
+L00002934	- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set.
+L00002935	
+L00002936	**Startup revalidation:** After PM startup rehydrates thread state from redb/seglog, the next focus of a thread with `thread_state:{thread_id}:worktree_binding` lazily verifies that the recorded path exists and appears in `git worktree list`. If the path is missing, PM auto-unbinds by deleting the binding and reverse lookup, emits `chat.thread_worktree_unbound` with `reason=path_missing`, and notifies the user; it does not silently re-create the missing worktree.
+L00002937	
+L00002938	**Worktree-aware same-file identity rules:**
+L00002939	- The canonical file identity for thread-bound chat, debug, Source Control, and GitHub pivots is `{ repo_id, worktree_id, relative_path }`; path alone is not sufficient.
+L00002940	- The same relative path in two worktrees is treated as two different open subjects unless a compare session explicitly binds them together.
+L00002941	- Thread-scoped opens default to the thread's bound `worktree_id`. If the thread has no bound worktree, the UI may fall back to the currently selected worktree but must label that fallback explicitly.
+L00002942	- Historical cards, receipts, and debug evidence remain pinned to the captured `worktree_id` even if the thread later rebinds to a different worktree.
+L00002943	- Merge-back, compare, and PR creation flows may intentionally bridge the bound worktree to a base branch, but they must preserve both identities rather than collapsing them into one generic path.
+L00002944	- At turn-start, Chat populates and freezes `execution_unit_context.worktree_id` plus `working_directory` for the whole turn; safe points include worktree snapshot fields `worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`.
+L00002945	- Project switch marks the worktree binding inactive rather than unbound; the button stays disabled until switch-back, then reactivates against the same binding.
+L00002946	
+L00002947	**1:1 enforcement:** One worktree per thread, one thread per worktree. If a user tries to bind a worktree already bound to another thread, the action is blocked with an explicit error and a deep link to the owning thread when available.
+L00002948	
+L00002949	**Mode-worktree invariant:** Worktree binding is thread-level state, orthogonal to Ask, Agent, Debug, Plan, and Deep Plan mode. Mode transitions never rebind, unbind, or change the frozen `working_directory` for an in-flight turn; the next turn observes the same bound worktree unless the user explicitly changes the binding.
+L00002950	
+L00002951	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md
+L00002952	### W.3 Create worktree dialog
+L00002953	
+L00002954	**Trigger:** "Create Worktree…" action from chat header dropdown.
+L00002955	
+L00002956	**Dialog fields:**
+L00002957	
+L00002958	| Field | Type | Default | Validation |
+L00002959	|-------|------|---------|------------|
+L00002960	| Branch name | Text input | `assistant/thread-<short_id>` (temp name) | Must be valid git branch name. If branch already exists: advisory warning (user can Create Anyway or change name). |
+L00002961	| Base ref | Dropdown | Value of `branching.assistant_worktree_base_ref` or `branching.base_branch` if empty | Must be an existing branch/ref |
+L00002962	
+L00002963	**Buttons:** `Create` (primary), `Cancel` (secondary)
+L00002964	
+L00002965	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md
+L00002966	
+L00002967	**Create flow:**
+L00002968	1. User clicks `Create Worktree…` in dropdown
+L00002969	2. Dialog opens with pre-filled temp branch name and base ref
+L00002970	3. User optionally edits branch name and/or base ref
+L00002971	4. User clicks Create
+L00002972	5. Backend calls `WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)` where `worktree_path` is auto-generated under `.puppet-master/worktrees/thread-{short_id}` with a numeric suffix such as `thread-{short_id}-2` if the directory already exists
+L00002973	6. On success: new `worktree_record` written to redb; `thread_state:{thread_id}:worktree_binding` written; `chat.thread_worktree_bound` seglog event emitted; dialog closes; chat header button updates to bound state
+L00002974	7. On failure: dialog stays open with inline error (e.g. "Branch already exists", "Git error: ..."); retry or cancel
+L00002975	8. Thread selector icon appears immediately on binding
+L00002976	
+L00002977	Worktree creation and removal entrypoints are always user-initiated (chat header dropdown, slash command, or Source Control action) or system-initiated through the auto-create setting. The AI agent never invokes worktree creation or removal as a direct tool call.
+L00002978	
+L00002979	**Branch name collision in create dialog:** Warning in dialog: "Branch '{name}' already exists. Creating a worktree on the same branch as another worktree may cause interference." Buttons: "Create Anyway" (proceeds) / "Use Different Branch" (clears field, focuses input). Advisory only.
+L00002980	
+L00002981	**Loading state:** While creation is in progress: chat header button icon shows a subtle pulse/loading indicator; dropdown is disabled; dialog Create button disabled + loading ("Creating…"). On success: dialog closes, button transitions to bound. On failure: dialog returns to interactive with inline error.
+L00002982	
+L00002983	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md
+L00002984	
+L00002985	### W.4 Auto-create flow (when setting is on)
+L00002986	
+L00002987	**Trigger:** New thread creation while `branching.assistant_auto_worktree` is `true`.
+L00002988	
+L00002989	**Step by step:**
+L00002990	1. User creates new thread (via `cmd.chat.new` or first message in fresh chat)
+L00002991	2. Chat runtime checks `branching.assistant_auto_worktree` setting
+L00002992	3. If true: Chat runtime calls `WorktreeManager::create_worktree(temp_branch_name, base_ref)` synchronously BEFORE first turn dispatch
+L00002993	4. On success: binding created immediately; thread starts with worktree active
+L00002994	5. On failure: thread created without worktree; warning toast "Could not create worktree: {error}. Thread will use project root."; user can manually create later via dropdown
+L00002995	6. **Title rename flow:** Triggered by the `chat.thread_title_generated` event. System then:
+L00002996	   a. Sanitize title for git branch name (lowercase, replace spaces with hyphens, strip invalid chars, truncate to 50 chars). Examples: `Fix Auth Bug` becomes `fix-auth-bug`, `User's Login (v2)` becomes `users-login-v2`, and a title that strips to empty falls back to a `thread-a1b2c3d4`-style short-id seed.
+L00002997	   b. Compute target: `assistant/<sanitized_title>`
+L00002998	   c. If target branch name exists: auto-append `-2`, `-3`, etc. until unique (silent — no user dialog since this is auto-create)
+L00002999	   d. Call `git branch -m <temp_name> <target_name>` inside the worktree
+L00003000	   e. Update `worktree_record` and `thread_state` binding with new branch name
+L00003001	   f. Emit `chat.thread_worktree_renamed` seglog event
+L00003002	   g. On rename failure: keep temp name, no user interruption, log warning
+L00003003	
+L00003004	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+L00003005	
+L00003006	**Ownership:** Chat runtime owns the auto-create call. Executor never invokes WorktreeManager directly for thread worktree creation.
+L00003007	
+L00003008	**Concurrent auto-create:** `WorktreeManager::create_worktree` is serialized per project (mutex/lock) to prevent racing. The reverse lookup key write is atomic (redb transaction). If a create fails due to race, auto-create retry logic attempts with the next suffix. Auto-create does NOT retry on non-race failures.
+L00003009	
+L00003010	Title-less threads keep the temporary branch name `assistant/thread-{short_id}` and worktree path suffix `/thread-{short_id}` indefinitely until the user renames through Git or the title rename flow succeeds.
+L00003011	
+L00003012	### W.5 Settings — Branching tab
+L00003013	
+L00003014	**New settings (project-level, persisted in redb):**
+L00003015	
+L00003016	| Setting key (redb) | Type | Default | UI label | Description |
+L00003017	|-----|------|---------|----------|-------------|
+L00003018	| `config:project:{pid}:branching.assistant_auto_worktree` | bool | `false` | "Auto-create worktree for new assistant threads" | When true, new threads auto-create a worktree |
+L00003019	| `config:project:{pid}:branching.assistant_worktree_cleanup_default` | enum(`ask`, `keep`, `remove`) | `ask` | "When deleting a thread with a worktree" | Default cleanup behavior; `ask` shows modal |
+L00003020	| `config:project:{pid}:branching.assistant_worktree_base_ref` | string | `""` (empty = use `base_branch`) | "Base branch for assistant worktrees" | Override base ref; empty inherits from branching.base_branch |
+L00003021	| `config:project:{pid}:file_manager.worktree_follow_thread` | bool | `true` | "File manager follows active thread's worktree" | When true, file manager switches on thread focus |
+L00003022	| `config:project:{pid}:branching.worktree_warning_threshold` | integer | `10` | "Worktree count warning threshold" | Show advisory toast when total worktrees exceed this count; 0 = disabled |
+L00003023	| `config:project:{pid}:branching.worktree_create_timeout_s` | integer | `30` | "Worktree creation timeout (seconds)" | Abort `git worktree add` if it exceeds this duration |
+L00003024	| `config:project:{pid}:branching.assistant_worktree_pre_merge_test` | bool | `true` | "Run tests before merging worktree" | When true, runs test command and blocks merge on failure |
+L00003025	| `config:project:{pid}:branching.assistant_worktree_pre_merge_cmd` | string | `""` (empty = auto-detect) | "Pre-merge test command" | Override auto-detected test command |
+L00003026	| `config:project:{pid}:branching.worktree_pre_merge_test_timeout_s` | integer | `300` | "Pre-merge test timeout (seconds)" | Abort test run if it exceeds this duration |
+L00003027	| `config:project:{pid}:branching.assistant_worktree_pre_merge_test_target` | enum(`merged_result`, `branch_only`) | `merged_result` | "What to test before merge" | `merged_result` tests integrated state; `branch_only` tests branch in isolation |
+L00003028	
+L00003029	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00003030	
+L00003031	**UI placement:** Settings > Branching tab, new subsection "Assistant Worktrees" below existing branching controls. Settings grouped into visual sub-groups:
+L00003032	- **Creation:** auto_worktree, base_ref, create_timeout_s
+L00003033	- **Merge & Testing:** pre_merge_test, pre_merge_cmd, pre_merge_test_timeout_s, pre_merge_test_target
+L00003034	- **Behavior:** cleanup_default, file_manager.worktree_follow_thread, warning_threshold
+L00003035	
+L00003036	**Namespace note:** `file_manager.worktree_follow_thread` uses the `file_manager.*` namespace (not `branching.*`) because it controls file manager behavior. `assistant_worktree_*` prefix = assistant-specific; `worktree_*` prefix = generic all-worktree settings.
+L00003037	
+L00003038	**Settings validation:**
+L00003039	
+L00003040	| Setting key | Min | Max | Zero behavior | Widget |
+L00003041	|-------------|-----|-----|---------------|--------|
+L00003042	| `worktree_warning_threshold` | 0 | 100 | Disabled (no warning) | Numeric stepper |
+L00003043	| `worktree_create_timeout_s` | 5 | 300 | Clamp to 5 | Numeric stepper |
+L00003044	| `worktree_pre_merge_test_timeout_s` | 30 | 1800 | Clamp to 30 | Numeric stepper |
+L00003045	
+L00003046	Out-of-range values from settings file edits are clamped to nearest valid bound on load with a log warning.
+L00003047	
+L00003048	### W.6 Thread selector — worktree icon
+L00003049	
+L00003050	**Position:** Left gutter of thread row, vertically below the status badge (running/blocked/attention).
+L00003051	
+L00003052	- **Icon:** Theme-consistent branch/tree glyph from icon set (not emoji)
+L00003053	- **Compact row slot:** In compact/default thread rows, the worktree glyph occupies the `wt_icon` slot before the branch label (for example, `assistant/fix-auth`) and the chevron; the second line carries status plus owner copy such as `dirty · Thread: Auth fix`.
+L00003054	- **Visibility:** Present only when thread has a worktree binding; absent (no placeholder) when unbound
+L00003055	- **Hover tooltip:** Line 1: Branch name. Line 2: Status pill text (clean/dirty/conflict). Line 3: Worktree path.
+L00003056	- **Icon color/state:** Clean: `icon-secondary`. Dirty: `accent-warning`. Conflict: `accent-error`.
+L00003057	- When an owner label is shown, its exact copy is `Thread: <thread_title>`, `Orch: <tier_label>`, or `Manual`; tooltips preserve the full `thread_title` or `tier_label`.
+L00003058	
+L00003059	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+L00003060	
+L00003061	**Status source:** Chat header icon and thread selector icon read from `worktree_projection.v1:{project_id}:{worktree_id}` which includes `dirty_state` and `conflict_state` fields. UI subscribes to projection changes via standard reactive binding. If `projection_freshness = stale`: icon shows last-known state with subtle desaturation; tooltip appends "(status may be outdated)".
+L00003062	
+L00003063	### W.7 Cleanup flow (thread delete)
+L00003064	
+L00003065	**Cleanup-on-delete canon:** Cleanup choices are part of the existing thread-delete confirmation path, not an automatic completed-thread cleanup path. Delete first checks `thread_state:{thread_id}:worktree_binding`; when no binding exists, the standard delete confirmation applies, and when a binding exists, keep/remove behavior follows `branching.assistant_worktree_cleanup_default`. Keep unbinds the thread and leaves the worktree on disk, while remove unbinds and prunes the worktree through `WorktreeManager` after dirty/active-run safeguards.
+L00003066	
+L00003067	Thread worktree cleanup is scoped to thread delete, not archive/unarchive lifecycle changes. The extended delete confirmation presents `Keep worktree on disk` and `Remove worktree` choices; dirty worktrees include a dirty-check confirmation sublabel, the default choice is configured in Settings > Branching by `branching.assistant_worktree_cleanup_default`, and after cleanup action completes the system emits `chat.thread_worktree_unbound` with the appropriate `reason`.
+L00003068	
+L00003069	When the extended delete confirmation uses explicit button copy, `Delete and keep worktree` deletes the thread, unbinds it, and leaves the worktree on disk as orphaned/manual Source Control inventory. `Delete and remove worktree` deletes the thread, unbinds it, and prunes the worktree; if the worktree is dirty and the user chooses that destructive option, PM uses `git worktree remove --force <path>` plus `git branch -D <branch>` after the warning label has been shown.
+L00003070	
+L00003071	Unbind has no dedicated undo in MVP: the worktree remains on disk as a manual worktree, and any future undo toast is post-MVP rather than part of the initial cleanup flow.
+L00003072	
+L00003073	
+L00003074	**Trigger:** Thread is deleted while it has a worktree binding.
+L00003075	
+L00003076	**Integration:** Cleanup options are embedded into the existing delete confirmation dialog — not shown as a separate modal.
+L00003077	
+L00003078	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00003079	
+L00003080	**Flow:**
+L00003081	1. User initiates thread delete
+L00003082	2. System checks `thread_state:{thread_id}:worktree_binding`
+L00003083	3. If no binding: standard delete confirmation, proceed normally
+L00003084	4. If binding exists, check `branching.assistant_worktree_cleanup_default` setting:
+L00003085	   - `ask` (default): show extended delete confirmation
+L00003086	   - `keep`: standard confirmation; on confirm, silently unbind, keep worktree on disk
+L00003087	   - `remove`: standard confirmation; on confirm, silently remove worktree if clean; if dirty, fall through to `ask` behavior
+L00003088	5. **Extended delete confirmation (when `ask`):**
+L00003089	   - Title: "Delete thread?"
+L00003090	   - Body: "This thread is bound to worktree `assistant/fix-auth-bug`."
+L00003091	   - If dirty: additional warning line: "This worktree has uncommitted changes."
+L00003092	   - Button 1: "Delete and keep worktree" (secondary style)
+L00003093	   - Button 2: "Delete and remove worktree" (destructive style; if dirty, label becomes "Delete and remove worktree (has changes)")
+L00003094	   - Button 3: "Cancel" (tertiary style, default focus)
+L00003095	6. Force-remove dirty worktree uses `git worktree remove --force <path>` + `git branch -D <branch>`
+L00003096	7. After cleanup: `chat.thread_worktree_unbound` seglog event emitted with appropriate `reason`
+L00003097	
+L00003098	### W.8 Merge-back flow
+L00003099	
+L00003100	When a thread reaches `completed` or `failed` status while it still has a bound worktree, Assistant Chat performs no automatic unbind or cleanup. The worktree remains available for Merge and PR creation; dirty completed or failed worktrees surface in Source Control with combined status such as `dirty · completed` or `dirty · failed`, while the thread selector keeps the standard worktree icon. Users release the worktree only through explicit thread delete cleanup or unbind, and completion may toast: "Thread completed. Worktree has uncommitted changes — merge or clean up when ready."
+L00003101	
+L00003102	There is no auto-cleanup for `completed` or `failed` threads.
+L00003103	
+L00003104	**Four access paths (all equivalent in outcome):**
+L00003105	
+L00003106	| Path | Entry point | Notes |
+L00003107	|------|-------------|-------|
+L00003108	| Chat header dropdown | "Merge into Base…" / "Create PR…" actions | Primary UI path |
+L00003109	| Source Control worktree section | "Merge" / "Create PR" buttons in expanded worktree row | Secondary UI path |
+L00003110	| Slash commands | `/worktree merge [--squash\|--rebase]`, `/worktree pr` | Keyboard-driven; default squash |
+L00003111	| Natural language in chat | User says "merge my changes into main" | Agent triggers dialog pre-filled with inferred strategy |
+L00003112	
+L00003113	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+L00003114	
+L00003115	Compare buttons open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`. Source Control merge buttons route through the same `cmd.chat.worktree.merge` command with `thread_id=null` for non-thread worktrees; the command handler detects null `thread_id` and omits thread-specific behaviors such as unbind, thread status update, or chat notification.
+L00003116	
+L00003117	#### W.8.1 Merge confirmation dialog
+L00003118	
+L00003119	| Field | Type | Default | Notes |
+L00003120	|-------|------|---------|-------|
+L00003121	| Strategy | Segmented control: `Squash` / `Merge` / `Rebase` | `Squash` | Squash = single clean commit; Merge = merge commit preserving history; Rebase = replay on top of base |
+L00003122	| Target branch | Dropdown | From `branching.assistant_worktree_base_ref` or `branching.base_branch` | Must be existing local branch |
+L00003123	| Commit message | Text area (multi-line) | Auto-generated per strategy | Editable; only shown for Squash and Merge (hidden for Rebase) |
+L00003124	
+L00003125	**Buttons:** `Merge` (primary, label changes per strategy), `Cancel`
+L00003126	
+L00003127	**Dialog reactive behavior:** Squash selected → commit message visible (concatenated commits). Merge selected → commit message visible ("Merge assistant/{title} into {target}"). Rebase selected → commit message hidden. User edits preserved across strategy switches.
+L00003128	
+L00003129	After the user confirms strategy, target branch, and commit message, the dialog enters a strategy-specific loading state ("Merging...", "Squashing...", or "Rebasing..."): the strategy segmented control and target branch dropdown are disabled, the commit message textarea is read-only/greyed when shown, the Merge button shows a loading spinner with a strategy-specific label, and Cancel remains enabled for user abort.
+L00003130	
+L00003131	#### W.8.2 Pre-merge guards
+L00003132	
+L00003133	| Condition | Behavior |
+L00003134	|-----------|----------|
+L00003135	| Worktree has uncommitted changes | Block merge. Warning: "Worktree has uncommitted changes. Commit or stash before merging." Button disabled. |
+L00003136	| Worktree has merge conflicts | Block merge. Warning: "Resolve existing conflicts before merging." Button disabled. |
+L00003137	| Active run in worktree | Block merge. "Cannot merge while a run is active." |
+L00003138	| Target branch deleted | Error if deleted between dialog open and confirm |
+L00003139	| Worktree on detached HEAD | Block merge/PR, including when a user ran `git checkout <sha>` in the worktree terminal. "Cannot merge: worktree is on a detached HEAD. Checkout a branch first." |
+L00003140	| Main repo dirty (squash/merge + merged_result) | Block. "Cannot run pre-merge test: main repo has uncommitted changes." |
+L00003141	
+L00003142	Detached HEAD recovery is explicit: the user can run `git checkout -b <branch>` in a terminal, or unbind and re-creates a named-branch worktree through the normal create flow.
+L00003143	
+L00003144	#### W.8.3 Merge execution
+L00003145	
+L00003146	**Critical:** Merge executes in the main repo working tree, NOT inside the worktree. This is consistent with WorktreeGitImprovement.md `merge_worktree()` operating from the main repo context: the worktree branch is merged INTO the target branch in the main repo. Exception: Rebase is a two-phase operation: step 1 (`git rebase` / `git rebase {target}`) runs in the worktree, and step 3 (`git merge --ff-only`) runs in the main repo.
+L00003147	
+L00003148	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+L00003149	
+L00003150	**Exclusive merge lock:** `.git/pm-merge.lock` (main repo). Acquired BEFORE guard checks for atomicity. Guards fail → lock released immediately. Lock held → ALL merge buttons project-wide disabled.
+L00003151	
+L00003152	Worktree command when-clause conditions are UI pre-checks only; Merge uses a two-phase check in which `.git/pm-merge.lock` is acquired first, then dirty/conflict/active-run/detached-HEAD guards are re-checked atomically before mutation.
+L00003153	
+L00003154	The lock lives under the main repo `.git/` directory; acquiring `.git/pm-merge.lock` is the FIRST merge-execution step and makes the guard-check plus execution atomic.
+L00003155	
+L00003156	This guard-to-lock atomicity includes the detached HEAD guard: after the lock is held, PM re-reads the worktree HEAD state before merge, rebase, PR, or pre-merge test mutation proceeds.
+L00003157	
+L00003158	The UI pre-check `/disabling` state is advisory only: all pre-checks are re-checked atomically AFTER lock acquisition. For Rebase, the lock covers the ENTIRE sequence from worktree rebase through tests to main repo ff-merge.
+L00003159	
+L00003160	**Lock file format:** `{ "pid": <int>, "started_utc": "<ISO8601>", "worktree_id": "<string>", "strategy": "<string>" }`
+L00003161	
+L00003162	**Stale lock recovery:** On startup (lazy), if PID dead or lock older than 5 minutes → auto-remove. The stale lock is auto-removed before new merge execution proceeds. Toast: "Stale merge lock cleaned up."
+L00003163	
+L00003164	**Execution steps (when pre-merge test disabled):**
+L00003165	- **Squash:** `git checkout {target}` → `git merge --squash {branch}` → `git commit -m "{message}"`
+L00003166	- **Merge:** `git checkout {target}` → `git merge --no-ff {branch} -m "{message}"`
+L00003167	- **Rebase:** (in worktree) `git rebase {target}` → (in main repo) `git checkout {target}` → `git merge --ff-only {branch}`
+L00003168	
+L00003169	Canonical command templates may use `{worktree_branch}` for the same source branch: `git merge --squash {worktree_branch}`, `git merge --no-ff {worktree_branch} -m "{message}"`, and `git merge --ff-only {worktree_branch}`.
+L00003170	
+L00003171	**Auto-fetch:** Before any merge strategy, the backend runs `git fetch origin {target_branch}` in the main repo so the local target is up-to-date. If fetch fails because there is no remote or the user is offline, merge proceeds with local state and shows an advisory toast.
+L00003172	
+L00003173	**Rebase is non-interactive only.** The dialog runs plain `git rebase` / `git rebase {target}`; interactive `git rebase -i`, `-i`, pick/squash/fixup, and `/squash/fixup` workflows are terminal-only.
+L00003174	
+L00003175	**Commit authorship:** User's git identity (`user.name`/`user.email`). No AI co-author injection.
+L00003176	
+L00003177	**Git hooks:** NOT bypassed. Hook failure = merge failure with Retry/Cancel. Standard commit hooks run at their normal Git trigger points during the merge/commit step after any pre-merge test passes; `pre-merge-commit` runs during `git merge --no-ff` commit and gets the same treatment as pre-commit failure. For `prepare-commit-msg`, PM's provided commit message is the initial value; hooks may append/modify it before the commit is finalized. If hooks modify files, for example auto-formatting in a pre-commit hook, the test gate tests the PRE-hook state; hooks run after test pass as part of the commit pipeline, not the test pipeline.
+L00003178	
+L00003179	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+L00003180	
+L00003181	#### W.8.4 Post-merge behavior
+L00003182	
+L00003183	Modal: "Branch `assistant/{title}` has been merged into `{target}`."
+L00003184	- "Keep worktree" — worktree remains bound
+L00003185	- "Remove worktree" — unbind + prune
+L00003186	- "Cancel" — dismiss, worktree stays
+L00003187	
+L00003188	Default follows `branching.assistant_worktree_cleanup_default` setting.
+L00003189	
+L00003190	**No undo for completed merge.** User can `git reset`/`git revert` via terminal or agent bash.
+L00003191	
+L00003192	#### W.8.5 Conflict resolution
+L00003193	
+L00003194	- **UI-initiated:** Conflict markers in files route to `Source Control > Changes` and open the Conflict assistant through `cmd.source_control.open_conflict`; applying a concrete choice may fall through to existing `cmd.git.conflict_apply_resolution`, while lower-level `cmd.git.*` operations may support diff or hunk mechanics but are not the GUI entrypoint
+L00003195	- **Natural-language-initiated (NL-initiated):** Agent resolves conversationally by reading markers, explaining choices, and proposing edits via file editing tools; semantic resolution requires explicit user approval and then follows the Source Control Conflict assistant flow
+L00003196	- **Rebase conflicts during `git rebase {target}`:** Auto-abort (`git rebase --abort`). Dialog shows error. Tests never run. Lock released.
+L00003197	
+L00003198	Assistant-bound worktree conflicts consume the Source Control owner flow instead of defining a second chat-local conflict UI. When a merge, `/rebase/worktree`, or worktree operation blocks on conflicts, chat surfaces the affected file list and routes `Open Conflict Assistant` to `Source Control > Changes` through `cmd.source_control.open_conflict`; pre-merge review pivots may open `cmd.source_control.open_review` with the current worktree and target branch as the compare pair. Natural-language assistance may explain conflict choices and propose edits, but semantic resolution still requires explicit user approval and follows the Source Control `/disabled`, `/settings`, and per-project preference rules.
+L00003199	
+L00003200	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md
+L00003201	
+L00003202	#### W.8.6 Create PR flow
+L00003203	
+L00003204	Opens existing PR creation panel from GitHub_Integration.md §B with pre-filled fields: title (thread title), body (commit messages), target branch, source branch.
+L00003205	
+L00003206	**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure → error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.
+L00003207	
+L00003208	**Guard:** Requires configured GitHub remote.
+L00003209	
+L00003210	If the PR API call fails after push, the PR panel does not open; Chat shows "PR creation failed: {error}" and emits `chat.thread_worktree_pr_failed` with `phase=api`.
+L00003211	
+L00003212	**Post-PR:** Worktree stays bound (PR open, may push more commits). No cleanup modal.
+L00003213	
+L00003214	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+L00003215	
+L00003216	#### W.8.7 Natural language merge
+L00003217	
+L00003218	The agent emits a structured system action `{ "action": "cmd.chat.worktree.merge", "params": { "strategy": "squash|merge|rebase", "target_branch": "string", "commit_message": "string" } }`. This follows the same structured-command pattern as `cmd.chat.revert`; the agent does not run merge directly via bash. PM shows dialog pre-filled with agent's parameters. The merge is user-confirmed regardless of entry path: even yolo or auto-approve posture still shows the dialog before mutation.
+L00003219	
+L00003220	For example, "merge my changes into main" may emit `{ "action": "cmd.chat.worktree.merge", "params": { "strategy": "squash", "target_branch": "main" } }` after resolving intent and parameters.
+L00003221	
+L00003222	Before emitting the action, the agent may run `git status` through its normal tools; the tool context auto-scopes that check to the bound worktree through `working_directory` / `/cwd`.
+L00003223	
+L00003224	**Mode guard:** Agent-NL invocation is rejected when the current mode is `ask` or `plan` with the exact error "Merge is not available via assistant in {mode} mode. Use the Merge button in the chat header dropdown." User UI clicks always allowed.
+L00003225	
+L00003226	**Chaining:** Agent can chain commit → merge → cleanup in single conversational exchange.
+L00003227	
+L00003228	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Modes.md
+L00003229	
+L00003230	### W.9 Pre-merge test gate
+L00003231	
+L00003232	**Purpose:** Before committing a merge, run the project's test suite against the merged result to verify integration.
+L00003233	
+L00003234	**Settings:** `branching.assistant_worktree_pre_merge_test` (bool, default true), `branching.assistant_worktree_pre_merge_cmd` (string, default empty = auto-detect), `branching.worktree_pre_merge_test_timeout_s` (int, default 300, clamped [30, 1800]), `branching.assistant_worktree_pre_merge_test_target` (enum `merged_result` (default, recommended) | `branch_only`).
+L00003235	
+L00003236	When `branching.assistant_worktree_pre_merge_cmd` is set, PM runs that exact command. When it is empty, PM auto-detects the command from project files using the rules below.
+L00003237	
+L00003238	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00003239	
+L00003240	#### W.9.1 Auto-detection of test command
+L00003241	
+L00003242	When `branching.assistant_worktree_pre_merge_cmd` is empty, detection requires verification that the relevant script/target actually exists, not just that a configuration file is present; rows marked file-presence-sufficient below are explicit convention-backed exceptions.
+L00003243	
+L00003244	| File detected | Verification | Inferred command | Priority |
+L00003245	|---------------|-------------|-----------------|----------|
+L00003246	| `package.json` | `scripts.test` field exists and non-empty | `npm test` | 1 |
+L00003247	| `Cargo.toml` | File presence | `cargo test` | 2 |
+L00003248	| `pyproject.toml` | `[tool.pytest]` or `pytest` in deps | `pytest` | 3 |
+L00003249	| `setup.py` or `setup.cfg` | File presence | `python -m pytest` | 4 |
+L00003250	| `Makefile` | Contains `test:` target | `make test` | 5 |
+L00003251	| `build.gradle` or `build.gradle.kts` | File presence | `./gradlew test` | 6 |
+L00003252	| `pom.xml` | File presence | `mvn test` | 7 |
+L00003253	| `Gemfile` | File presence | `bundle exec rake test` | 8 |
+L00003254	| `go.mod` | File presence | `go test ./...` | 9 |
+L00003255	
+L00003256	Multiple matches → highest priority. Persisted command overrides auto-detection. Clear setting to re-run auto-detect.
+L00003257	
+L00003258	**First run:** Auto-detected command shown pre-filled; "Change" link for inline edit; confirmed command persisted.
+L00003259	
+L00003260	**No detection + enabled:** Info row "No test command detected" with Settings link. Test step skipped (merge NOT blocked).
+L00003261	
+L00003262	#### W.9.2 Execution flow with test gate
+L00003263	
+L00003264	**For `merged_result` target (default):**
+L00003265	
+L00003266	| Strategy | Steps |
+L00003267	|----------|-------|
+L00003268	| **Squash** | Fetch → checkout target → `git merge --squash {branch}` → **run tests** (staged, uncommitted) → pass: `git commit` / fail: `git reset --hard HEAD` |
+L00003269	| **Merge** | Fetch → checkout target → `git merge --no-ff --no-commit {branch}` → **run tests** → pass: `git commit` / fail: `git merge --abort` |
+L00003270	| **Rebase** | (worktree) `git rebase {target}` → **run tests** against the post-rebase worktree state → pass: (main) `git checkout {target}` → `git merge --ff-only {branch}` / fail: `git rebase --abort` |
+L00003271	
+L00003272	The no-commit invariant for Squash/Merge is that tests run before any merge result is committed: Merge uses explicit `--no-commit`, while Squash uses `git merge --squash` to leave the merged result staged and uncommitted.
+L00003273	
+L00003274	**For `branch_only` target:** Tests run in worktree against branch as-is BEFORE any merge/rebase operation. Failure blocks merge (with override). Rebase + branch_only: tests run BEFORE rebase begins. This preserves branch_only semantics: test the branch in isolation before any `/rebase` or merge/rebase mutation starts.
+L00003275	
+L00003276	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+L00003277	
+L00003278	#### W.9.3 Test dialog UX
+L00003279	
+L00003280	Dialog transitions in-place to test phase. Fields become read-only. Live output in scrollable monospace region (~200px max-height). Cancel aborts test + cleanup. Auto-detect VERIFIES script/target existence before first-run prefill; package.json checks `scripts.test`, and Makefile checks for a `test:` target.
+L00003281	
+L00003282	- **Pass (exit 0):** Auto-proceed to commit. Brief "Tests passed" indicator.
+L00003283	- **Fail (exit ≠ 0):** Red header "Tests failed" + full output + "Merge Anyway" (secondary/destructive) + "Cancel" (primary). Override proceeds to commit; seglog records override.
+L00003284	- **Timeout:** Same UI as failure.
+L00003285	- **Process error:** Same UI with error message.
+L00003286	
+L00003287	Clean abort paths keep the repo out of a half-committed state: Squash cleanup uses `git reset --hard HEAD`, Merge cleanup uses `git merge --abort`, and Rebase cleanup uses `git rebase --abort`.
+L00003288	
+L00003289	**Test execution environment:** Working directory depends on strategy and target. Shell: `/bin/sh -c "{command}"` (Unix), `cmd /c "{command}"` (Windows). No PM environment injection. Stdout + stderr merged. Remote SSH: executes on remote host.
+L00003290	
+L00003291	**Output handling:** 1MB cap; ANSI stripped; UTF-8 lossy decode; CRLF normalized to LF.
+L00003292	
+L00003293	**Crash recovery:** Orphaned test process. Main repo in transitional state. WorktreeManager reconciliation detects `.git/MERGE_HEAD` or `.git/rebase-merge/` on next launch.
+L00003294	
+L00003295	**Test gate does NOT apply to PR creation** (delegates to GitHub CI).
+L00003296	
+L00003297	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+L00003298	
+L00003299	### W.10 Seglog events (11 total)
+L00003300	
+L00003301	| Event type | Fields | Description |
+L00003302	|------------|--------|-------------|
+L00003303	| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` (`manual` \| `auto_create`) | Thread bound to worktree |
+L00003304	| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`, `user_remove`, `thread_delete`, `path_missing`) | Thread unbound from worktree |
+L00003305	| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | Branch renamed after title generation |
+L00003306	| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | Worktree creation failed |
+L00003307	| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` | Worktree branch merged |
+L00003308	| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` | Merge attempt failed |
+L00003309	| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | PR created |
+L00003310	| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push` \| `api`) | PR creation failed |
+L00003311	| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` | Pre-merge test started |
+L00003312	| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | Tests passed |
+L00003313	| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` | Tests failed |
+L00003314	
+L00003315	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00003316	
+L00003317	### W.11 Command catalog
+L00003318	
+L00003319	| Command ID | Slash command | Parameters | Surface |
+L00003320	|------------|---------------|------------|---------|
+L00003321	| `cmd.chat.worktree.create` | `/worktree create` | `{ thread_id, branch_name?, base_ref? }` | Chat dropdown, command palette |
+L00003322	| `cmd.chat.worktree.unbind` | `/worktree unbind` | `{ thread_id }` | Chat dropdown, command palette |
+L00003323	| `cmd.chat.worktree.remove` | `/worktree remove` | `{ thread_id }` | Chat dropdown, command palette |
+L00003324	| `cmd.chat.worktree.merge` | `/worktree merge [--squash\|--rebase]` | `{ thread_id, strategy?, target_branch?, message? }` | Chat dropdown, SC, command palette |
+L00003325	| `cmd.chat.worktree.pr` | `/worktree pr` | `{ thread_id, title?, body?, target_branch? }` | Chat dropdown, SC, command palette |
+L00003326	| `cmd.chat.worktree.info` | `/worktree` | `{ thread_id }` | Chat, command palette |
+L00003327	
+L00003328	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+L00003329	
+L00003330	**Command visibility/enablement conditions:**
+L00003331	
+L00003332	| Command | Visible when | Enabled when |
+L00003333	|---------|-------------|-------------|
+L00003334	| `cmd.chat.worktree.create` | No binding AND project has git | Always (when visible) |
+L00003335	| `cmd.chat.worktree.unbind` | Has binding | No active run |
+L00003336	| `cmd.chat.worktree.remove` | Has binding | No active run |
+L00003337	| `cmd.chat.worktree.merge` | Has binding (or SC row) | No active run AND no merge lock AND not dirty AND no conflicts AND not detached HEAD |
+L00003338	| `cmd.chat.worktree.pr` | Has binding AND has GitHub remote | No active run AND not detached HEAD |
+L00003339	| `cmd.chat.worktree.info` | Has binding | Always (read-only) |
+L00003340	
+L00003341	`/worktree merge` is one command with `--squash` and `--rebase` flags; separate slash commands are not introduced.
+L00003342	
+L00003343	### W.12 File manager worktree context
+L00003344	
+L00003345	When user switches to a thread with a worktree binding (and `file_manager.worktree_follow_thread` is `true`), the file manager switches root to show the worktree's file tree.
+L00003346	
+L00003347	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+L00003348	
+L00003349	**Breadcrumb indicator:** Worktree glyph + branch name + swap toggle icon at top of file manager tree. Clicking swap toggles between worktree root and main project root. Binary toggle. Toggle resets on ANY thread switch.
+L00003350	
+L00003351	**Accessible label:** "Viewing worktree assistant/fix-auth. Click to switch to project root." (and inverse)
+L00003352	
+L00003353	**Rules:**
+L00003354	- Open editor tabs NOT affected by root switch — tabs retain own paths
+L00003355	- File manager search scope follows current file manager root
+L00003356	- `@file` resolves relative to thread's `working_directory` (worktree root when bound)
+L00003357	- MCP tools and `/providers` receive the thread worktree path as `working_directory` when a worktree binding is active.
+L00003358	- Quick-open (Ctrl+P) remains project-scoped regardless of worktree context
+L00003359	- If thread unbound mid-session: file manager falls back to project root with toast "Worktree unbound — showing project root."
+L00003360	
+L00003361	File-edit card path semantics follow the same execution context: chat file-edit cards display paths relative to the active `working_directory`, so a bound thread naturally shows worktree-relative paths without rewriting captured absolute mutation-log paths.
+L00003362	
+L00003363	### W.13 LSP worktree awareness
+L00003364	
+L00003365	LSP sessions are already keyed by `(host_id, server_id, root_identity)`. Different worktree path = different root_identity = naturally separate LSP session. No new keying model needed.
+L00003366	
+L00003367	ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
+L00003368	
+L00003369	**Thread focus change flow:** File manager root changes → LSP client sends `workspace/didChangeWorkspaceFolders` or new session initialized (lazy). Diagnostics/hover/completion operate against worktree file state.
+L00003370	
+L00003371	**LSP session lifecycle:** Created on first file open from worktree. Idle-collected after 5 minutes with no open files (configurable). Destroyed when worktree removed.
+L00003372	
+L00003373	### W.14 Remote SSH projects
+L00003374	
+L00003375	Worktree creation follows project host authority. For remote SSH projects, `WorktreeManager` executes on remote host via SSH subprocess. No silent local fallback. All paths (worktree, FileSafe working_directory, terminal cwd) use remote filesystem.
+L00003376	
+L00003377	Remote-mode projects are remote-host-scoped. PM MUST NOT create a silent local checkout `/mirror` as primary authority, and remote editing is not a download-edit-upload flow unless an explicit degraded `/offline` cache path is surfaced. File Manager and `/editor/FileSafe` read and write the remote filesystem, listing uses SFTP by default with SSH `find`/`ls` fallback, terminal sessions bind to remote PTY `/session-supervision`, and provider CLIs execute on the remote host while stdout/stderr stream back over SSH. Exact terminal host/process details belong to `seam-terminal-runtime-environment`, but chat, worktree, and dev-status surfaces must disclose the effective remote host instead of silently launching local equivalents.
+L00003378	Missing remote provider CLIs surface as degraded or unavailable provider capability: PM may probe or run configured provider CLIs on the remote host, but it MUST NOT auto-install a missing provider CLI without explicit user consent and provisioning confirmation, and it MUST NOT retarget provider execution to a local CLI as a silent fallback.
+L00003379	
+L00003380	`GitHub_Integration.md §C` remains the owner of remote host identity, SSH reconnect policy, and remote-means-remote execution semantics. Assistant chat consumes that host-scoped context alongside File Manager, editor, terminal, and LSP: chat actions that target remote files use the shared remote-state vocabulary for `offline`, `stale`, `retrying`, `/pending-write`, and `read-only` situations and must never silently substitute local host behavior for a remote-mode project.
+L00003381	
+L00003382	The `/file-manager/remote/review/runtime` seam stays implementation-ready through owner-doc handoffs: FileManager owns file-tree identity and remote file operations, Source Control/review owns compare and hunk review, Terminal/runtime owns PTY and process execution, and assistant chat owns only preview, reveal, and confirmation surfaces.
+L00003383	
+L00003384	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Executor_Protocol.md
+L00003385	
+L00003386	### W.15 Error handling
+L00003387	
+L00003388	| Error scenario | User-visible behavior |
+L00003389	|---------------|----------------------|
+L00003390	| `create_worktree` fails | Dialog stays open with inline error; retry or cancel |
+L00003391	| Auto-create fails | Thread created without worktree; warning toast |
+L00003392	| Branch rename fails after title gen | Keep temp name; no user interruption; log warning |
+L00003393	| Worktree path no longer exists | On next focus: detect, toast, auto-unbind with reason `path_missing`; PM does not re-create the missing worktree |
+L00003394	| Remove blocked by active run | Error toast; Remove button disabled |
+L00003395	| Branch name collision | Auto-append `-2`, `-3`… up to 10 attempts; dialog error if all collide |
+L00003396	| 1:1 violation attempt | Error toast "Already bound to thread '{title}'" |
+L00003397	| Merge fails mid-operation | Dialog shows inline error, main repo state is unchanged when git merge auto-aborts, and the dialog stays open for Retry or Cancel; after fixing the cause, the user re-triggers merge |
+L00003398	| Merge conflict | Dialog closes; conflict markers in files; SC highlights; existing resolution flow |
+L00003399	| Concurrent merge (lock contention) | Error toast "Another merge in progress"; all Merge buttons disabled |
+L00003400	| Test not found | Dialog shows error; Retry / Merge Anyway / Cancel |
+L00003401	| Test timed out | Dialog shows timeout + Merge Anyway / Cancel |
+L00003402	| Test output > 1MB | "[OUTPUT TRUNCATED]"; does not affect pass/fail |
+L00003403	| Detached HEAD: merge/PR | Dialog error; buttons disabled |
+L00003404	| Git hook rejects commit | "Merge failed: {hook} rejected commit"; Retry / Cancel |
+L00003405	| Stale merge lock at startup | Auto-remove if PID dead or >5 min; advisory toast |
+L00003406	| Project switch with bound worktree | Button disabled; tooltip "Worktree belongs to project '{name}'"; no auto-unbind |
+L00003407	| Worktree unbound mid-merge dialog | `binding-disappears-mid-dialog` FINAL behavior: dialog shows error and closes; no merge executes after the when-clause and binding re-check fail |
+L00003408	| Revert with deleted worktree path | File-not-found error |
+L00003409	
+L00003410	### W.16 Acceptance criteria
+L00003411	
+L00003412	**Chat header worktree button:** (AC-1) Button visible in all modes; (AC-2) Dropdown correct per binding state; (AC-3) Create dialog works; (AC-4) Unbind detaches without deleting; (AC-5) Remove detaches and prunes; (AC-6) Icon state updates reactively; (AC-7) Binding change applies next turn; (AC-8) Read-only during in-flight turn.
+L00003413	
+L00003414	**Settings:** (AC-9) Auto-create toggle works; (AC-10) Cleanup default controls modal; (AC-11) FM follow setting works; (AC-12) Settings persist across restart.
+L00003415	
+L00003416	**Thread selector icon:** (AC-13) Appears on bind; (AC-14) Disappears on unbind; (AC-15) Color reflects status; (AC-16) Tooltip shows info.
+L00003417	
+L00003418	**File manager:** (AC-25) Switches root on focus change; (AC-26) Breadcrumb toggle works; (AC-27) Toggle resets on switch; (AC-28) Editor tabs unaffected.
+L00003419	
+L00003420	**LSP:** (AC-29) Diagnostics reflect worktree state; (AC-30) Lazy-init per worktree; (AC-31) Idle-collected.
+L00003421	
+L00003422	**Lifecycle:** (AC-32) Auto-create temp name + rename; (AC-33) Collision suffix; (AC-34) Cleanup modal on delete; (AC-35) 1:1 enforced.
+L00003423	
+L00003424	**Merge-back:** (AC-66) Merge dialog with strategy; (AC-67) PR panel with pre-fill; (AC-68) SC row buttons; (AC-69) Slash commands work; (AC-70) NL merge shows dialog; (AC-71) Dirty blocks merge; (AC-72) Conflict resolution; (AC-73) Post-merge cleanup; (AC-77) All modes including Debug; (AC-83) NL merge requires confirmation even in yolo; (AC-84) Ask/Plan NL guard.
+L00003425	
+L00003426	**Pre-merge test gate:** (AC-86) Tests merged result; (AC-87) Auto-detect; (AC-88) First-run pre-fill; (AC-89) Failure override UI; (AC-92) Clean rollback; (AC-94) Not for PR; (AC-95) Exclusive lock; (AC-99) Remote SSH executes remotely.
+L00003427	
+L00003428	### W.17 Non-goals (explicit)
+L00003429	
+L00003430	- No emojis in the GUI
+L00003431	- No changes to orchestrator's own worktree management (lanes, tiers)
+L00003432	- Git submodules out of scope
+L00003433	- No "Bind Existing" in MVP; binding an arbitrary pre-existing manual or orch-owned worktree would break the 1:1 ownership model because orch-owned worktrees carry `owner_node_id` lineage and manual worktrees have no Assistant thread owner
+L00003434	- No undo for unbind or merge in MVP
+L00003435	- No per-merge command override in MVP
+L00003436	- App uninstall does NOT auto-clean worktrees
+L00003437	- No inline chat history markers for worktree context changes
+L00003438	- Terminal context (cwd) for worktree-bound threads follows worktree path; no special terminal management
+L00003439	- Changes section always shows main repo (worktree-scoping Changes is not MVP)
+L00003440	- No thread export of worktree binding metadata
+L00003441	- No orchestrator-to-assistant worktree transfer on handoff
+L00003442	## Shared actor-boundary, route payload, and blocked_notice packet
+L00003443	
+L00003444	
+L00003445	### Actor boundary and runtime identity
+L00003446	- Assistant chat actors share runtime identity semantics with Orchestrator and Interview agents.
+L00003447	- Chat actors remain chat/session actors; they do not become nodes or lanes merely because they delegate to subagents.
+L00003448	- Requested/effective runtime identity, `execution_role`, and `operational_identity` are visible on chat-facing surfaces and in delegated child-run handoffs.
+L00003449	
+L00003450	`execution_role` identifies the runtime actor; `operational_identity` identifies the side-effect identity or target context used by the action. `package-overseer` and seam-overseer identities are named runtime actors for handoff/display; they are not ordinary delegated subagents merely because a chat thread shows them.
+L00003451	
+L00003452	### Canonical route payload
+L00003453	- Chat context includes route args from the parent run or session.
+L00003454	- Route args govern which tools and subagents are accessible within the chat session.
+L00003455	- Route args are immutable for the duration of the chat session; dynamic route changes are prohibited.
+L00003456	
+L00003457	### blocked_notice packet
+L00003458	- When a chat query cannot be resolved within the current route/context, a structured blocked_notice packet is emitted.
+L00003459	- The blocked_notice includes the blocked query, the blocker reason, and a fallback resolution path (escalate to human, delegate to full Orchestrator, etc.).
+L00003460	- Blocked notices are distinct from errors; they indicate that the chat agent is functioning correctly but the requested work is out of scope.
+L00003461	
+L00003462	`blocked_notice` packets include the blocked reason, detail ref, `/attempt` and node references when applicable, preserved-local-work summary, and ordered `allowed_action_ids[]` / `allowed_action_ids` action rendering. `wizard.blocked` and `node.blocked` consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state.
+L00003463	
+L00003464	## Shared Conversational Actor Runtime Identity
+L00003465	
+L00003466	Assistant chat, interview, requirements-doc-builder, and PRD builder share `/account/usage/runtime` identity behavior without becoming orchestration nodes, `/packages/seams`, `Feature Seams`, `Work Packages`, graph `Nodes`, graph-plan actors, lane-pool objects, or package `/seam-governance` objects. They share requested/effective provider/model/persona/account/auth semantics, selection reason, skipped `/honored` disclosure, blocked `/retry/remediation/degradation` taxonomy, shared activity `/event-stream` infrastructure, and requested/effective `/model/effort/persona` display, while remaining conversational actors for `/brainstorming`, decision-forming, document-handling, conversational-to-structured questioning, topic-by-topic closure, and traditional requirements documents `/artifacts` under the relevant `/rules` and `/contract`. The requirements-doc-builder and PRD flows are document-production surfaces, not orchestration-style HITL escalation routes.
+L00003467	
+L00003468	Blocked `/HITL/critical` Orchestrator events may open a chat-thread resolution-thread, but that pattern must not be projected back onto ordinary assistant, interview, or `/interviewer/requirements-builder` conversation. Those conversational actors already operate directly in chat and share `/account/usage` runtime behavior without becoming Orchestrator-style resolution objects.
+L00003469	
+L00003470	Runtime recovery seams that affect chat must preserve `Architecture_Invariants.md` / `Architecture_Invariants`, `Decision_Log.md` / `Decision_Log`, `MiscPlan.md`, and `FileSafe.md` as adjacent owners for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust versus scheduler authority, safe-point lineage exactness, pre-cleanup ordering, deferred-run resume validity, DAE `/post-scan` blocked phases, orphan cleanup, and `/remediation` ordering. Under-documentation in those adjacent docs must not soften chat's own `/effective` identity and safe-point rules.
+L00003471	
+L00003472	The execution-policy `/UI` split is explicit: worker kind and retry-context policy are separate settings, chat is a requested-identity override surface, and requested-vs-effective identity must align across chat actors and orchestration actors. The seam covers agent vs subagent, fresh vs reused retry worker, overseer delegation `/off`, delegated-worker provider/model/effort policy, requested-identity display, execution_role, actor_kind, `/platform/model-level` identity, `/account/switch` identity, and requested/effective `/account` disclosure.
+L00003473	
+L00003474	Cross-doc parity references are `Plans/assistant-chat-design.md`, `/assistant-chat-design.md`, `Plans/interview-subagent-integration.md`, and `/interview-subagent-integration.md`; both docs must expose `/account` behavior for conversational actors sharing provider runtime.
+L00003475	
+L00003476	`package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries.
+L00003477	
+L00003478	`auto` persona or model selection must never appear as an opaque state with no resolved `/reason`; historical runs preserve the resolved effective persona and reason from the time of execution.
+L00003479	
+L00003480	## Chat Route, Permission, and History Behaviors
+L00003481	
+L00003482	Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. `always`, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; `Permissions_System.md` / `Permissions_System` default-deny hints for `todoread` and `todowrite` must narrow by execution-entity, actor-scoped context, and `/member/lane/account-bounded` permissions.
+L00003483	
+L00003484	Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed`, which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
+L00003485	
+L00003486	`History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
+L00003487	
+L00003488	Graph and history consumers use viewport culling with overscan, table virtualization, per-generation layout caching, incremental row `/item` updates, and frame-cadence burst throttling; when rectangle-based rendering falls below target performance, the fallback is canvas-style rendering.
+L00003489	
+L00003490	A CtA card, blocked notice, search result, artifact pivot, thread usage jump, and legacy thread-usage command aliases all restore destination and scope using the same internal payload model. Command palette entries, search results, artifact deep-links, blocked notices, and FileManager / `/Editor` opens all resolve through this internal target model rather than chat-local navigation. Legacy `cmd.chat.focus_thread_usage` citations normalize to route/open Usage or the editor-tab Context Detail Pane; the old command ID is compatibility-only and must not remain a canonical dispatch target. Blocked notices are rendered from `allowed_action_ids[]`, `allowed_action_ids`, and blocked metadata; `assistant-chat-design.md` / `assistant-chat-design` must not invent thread-local recovery semantics.
+L00003491	
+L00003492	Route catalog policy is deterministic. Do not make a large public `cmd.nav.*` or `cmd.nav` family the main catalog-facing answer. Do not use hedge words such as `optional` or `maybe` when stating canonical direction. State allowed serialized data classes directly: wizard-step detail is a narrow serialized anchor, not a top-level base route field. `OpenFile` stays path `/editor` scoped; `OpenSubject` is the identity-open contract consumed by FileManager and assistant chat.
+L00003493	
+L00003494	owner-consumer reconciliation treats these gaps as spec-integrity failures, not fresh design space. The remaining work is reconciliation-order implementation, not open-ended research or model invention.
+L00003495	
+L00003496	## Owner / Consumer Map
+L00003497	
+L00003498	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/assistant-chat-design.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00003499	
+L00003500	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00003501	
+L00003502	## PlanUnits
+L00003503	
+L00003504	### ACD-001 - Assistant & Chat UI -- Design Plan Source-Preserving PlanUnit
+L00003505	
+L00003506	```yaml
+L00003507	plan_unit_id: ACD-001
+L00003508	unit_type: compatibility_disposition
+L00003509	status: accepted
+L00003510	owner_doc: Plans/assistant-chat-design.md
+L00003511	canonical_text: >-
+L00003512	  The former doc-level source-preserving bridge is retired in place after
+L00003513	  Phase 2B atomized assistant-chat-design-S0001 through
+L00003514	  assistant-chat-design-S0182 into ACD-002 through ACD-412. ACD-001 remains
+L00003515	  only as migration lineage for the retired bridge span and must not re-own
+L00003516	  atomized source coverage.
+L00003517	gui_related: false
+L00003518	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+L00003519	split_recommended: false
+L00003520	depends_on: []
+L00003521	unblocks: []
+L00003522	acceptance_criteria:
+L00003523	  - ACD-001 no longer uses the source-preserving PlanUnit compile hint.
+L00003524	  - Prior source coverage remains carried by ACD-002 through ACD-412.
+L00003525	  - The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00003526	  - Coverage for the retired bridge is recorded in the Phase 2B batch 010 coverage map.
+L00003527	validation_surfaces:
+L00003528	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003529	  - python3 scripts/pm-plan-index.py validate
+L00003530	risk_class: migration_lineage
+L00003531	reasoning_tier: standard
+L00003532	context_scope: plan_standardization
+L00003533	implementation_surfaces:
+L00003534	  - Plans/assistant-chat-design.md
+L00003535	node_compile_hint:
+L00003536	  mode: source_preserving_bridge_retired
+L00003537	  create_worknodes: false
+L00003538	source_lineage:
+L00003539	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0183
+L00003540	preserved_exact_tokens:
+L00003541	  - "ACD-001"
+L00003542	  - "source_preserving_planunit"
+L00003543	  - "ACD-002"
+L00003544	  - "ACD-412"
+L00003545	negative_constraints:
+L00003546	  - "Do not remap atomized assistant-chat-design spans back to ACD-001."
+L00003547	  - "Do not treat the retired bridge as implementation-ready product coverage."
+L00003548	  - "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+L00003549	compatibility_only_notes:
+L00003550	  - "The old source-preserving bridge is retained only so migration lineage and historical references to ACD-001 remain auditable."
+L00003551	owner_hints:
+L00003552	  - Plans/assistant-chat-design.md
+L00003553	```
+L00003554	
+L00003555	### ACD-002 - Assistant Chat Scope And Source Authority
+L00003556	
+L00003557	```yaml
+L00003558	plan_unit_id: ACD-002
+L00003559	unit_type: requirement
+L00003560	status: accepted
+L00003561	owner_doc: Plans/assistant-chat-design.md
+L00003562	canonical_text: >-
+L00003563	  Assistant Chat owns the shared Assistant/Interview chat UX, source-preserved
+L00003564	  owner-section requirements, compliance posture, route-payload boundary
+L00003565	  headings, change history, executive role, and table-of-contents anchors for
+L00003566	  this Phase 2B window. Original source prose remains in place for exact audit.
+L00003567	gui_related: true
+L00003568	gui_classification_reason: This unit defines the user-visible Assistant and Interview chat surface and its navigation anchors.
+L00003569	depends_on: []
+L00003570	unblocks: []
+L00003571	acceptance_criteria:
+L00003572	  - Spans assistant-chat-design-S0001 through assistant-chat-design-S0005 and S0007 through S0008 are mapped to this PlanUnit in the Phase 2B coverage map.
+L00003573	  - The source body remains available in place for exact-token audit.
+L00003574	validation_surfaces:
+L00003575	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003576	  - python3 scripts/pm-plan-index.py validate
+L00003577	risk_class: source_preservation
+L00003578	reasoning_tier: standard
+L00003579	context_scope: assistant_chat_window_001
+L00003580	implementation_surfaces:
+L00003581	  - Plans/assistant-chat-design.md
+L00003582	node_compile_hint:
+L00003583	  mode: planunit_atomization
+L00003584	  create_worknodes: false
+L00003585	source_lineage:
+L00003586	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0001
+L00003587	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0002
+L00003588	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0003
+L00003589	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0004
+L00003590	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0005
+L00003591	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+L00003592	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0008
+L00003593	preserved_exact_tokens:
+L00003594	  - "Assistant & Chat UI -- Design Plan"
+L00003595	  - "Canonical owner-section requirements"
+L00003596	  - "Shared conversational/runtime boundary"
+L00003597	  - "Canonical route payload"
+L00003598	  - "Calls to Action (CtAs)"
+L00003599	negative_constraints: []
+L00003600	owner_hints:
+L00003601	  - Plans/assistant-chat-design.md
+L00003602	```
+L00003603	
+L00003604	### ACD-003 - Rewrite Runtime Identity Boundary
+L00003605	
+L00003606	```yaml
+L00003607	plan_unit_id: ACD-003
+L00003608	unit_type: requirement
+L00003609	status: accepted
+L00003610	owner_doc: Plans/assistant-chat-design.md
+L00003611	canonical_text: >-
+L00003612	  Assistant Chat targets the rewrite architecture while displaying concrete
+L00003613	  requested/effective runtime identity and preserving shared provider/auth
+L00003614	  fields without reopening the Contracts_V0 additive field set.
+L00003615	gui_related: true
+L00003616	gui_classification_reason: Runtime identity, platform, account, and auth state are user-visible chat display requirements.
+L00003617	depends_on: []
+L00003618	unblocks: []
+L00003619	acceptance_criteria:
+L00003620	  - Assistant Chat displays concrete requested/effective provider identity instead of collapsing Gemini Direct, Antigravity, or retired Gemini CLI lineage into one generic badge.
+L00003621	  - Assistant Chat consumes shared provider/auth fields and does not invent a parallel field set.
+L00003622	validation_surfaces:
+L00003623	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003624	  - python3 scripts/pm-plan-index.py validate
+L00003625	risk_class: runtime_identity_drift
+L00003626	reasoning_tier: standard
+L00003627	context_scope: assistant_chat_window_001
+L00003628	implementation_surfaces:
+L00003629	  - Plans/assistant-chat-design.md
+L00003630	  - Plans/Contracts_V0.md
+L00003631	  - Plans/Multi-Account.md
+L00003632	node_compile_hint:
+L00003633	  mode: runtime_identity_boundary
+L00003634	  create_worknodes: false
+L00003635	source_lineage:
+L00003636	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0006
+L00003637	preserved_exact_tokens:
+L00003638	  - "Rust + Slint"
+L00003639	  - "gemini"
+L00003640	  - "gemini_cli"
+L00003641	  - "Gemini Direct"
+L00003642	  - "Gemini CLI"
+L00003643	  - "provider_family_id = gemini"
+L00003644	negative_constraints:
+L00003645	  - "Assistant Chat must not invent a parallel provider/auth field set."
+L00003646	  - "Reconciliation may align wording and placement but must not reopen the shared field set."
+L00003647	  - "Do not display Gemini CLI as an active provider row."
+L00003648	compatibility_only_notes:
+L00003649	  - "gemini_cli and Gemini CLI are preserved only as retired/source-lineage tokens."
+L00003650	owner_hints:
+L00003651	  - Plans/assistant-chat-design.md
+L00003652	  - Plans/Contracts_V0.md
+L00003653	```
+L00003654	
+L00003655	### ACD-004 - Primary Assistant Mode Strip
+L00003656	
+L00003657	```yaml
+L00003658	plan_unit_id: ACD-004
+L00003659	unit_type: requirement
+L00003660	status: accepted
+L00003661	owner_doc: Plans/assistant-chat-design.md
+L00003662	canonical_text: >-
+L00003663	  Assistant exposes stable Ask, Agent, Debug, Plan, and Deep Plan choices.
+L00003664	  Specialized Interview, BrainStorm, and Crew workflows remain overlays or
+L00003665	  routed flows that normalize through the shared requested/effective runtime
+L00003666	  and overlay model.
+L00003667	gui_related: true
+L00003668	gui_classification_reason: The Assistant mode strip and workflow choices are visible chat controls.
+L00003669	depends_on: []
+L00003670	unblocks: []
+L00003671	acceptance_criteria:
+L00003672	  - The Assistant mode strip exposes Ask, Agent, Debug, Plan, and Deep Plan as stable choices.
+L00003673	  - Specialized workflows remain overlays rather than replacements for the primary mode strip.
+L00003674	validation_surfaces:
+L00003675	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003676	  - python3 scripts/pm-plan-index.py validate
+L00003677	risk_class: mode_routing_drift
+L00003678	reasoning_tier: standard
+L00003679	context_scope: assistant_chat_window_001
+L00003680	implementation_surfaces:
+L00003681	  - Plans/assistant-chat-design.md
+L00003682	  - Plans/Run_Modes.md
+L00003683	  - Plans/FinalGUISpec.md
+L00003684	node_compile_hint:
+L00003685	  mode: visible_mode_strip
+L00003686	  create_worknodes: false
+L00003687	source_lineage:
+L00003688	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+L00003689	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0009
+L00003690	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0010
+L00003691	preserved_exact_tokens:
+L00003692	  - "Ask"
+L00003693	  - "Agent"
+L00003694	  - "Debug"
+L00003695	  - "Plan"
+L00003696	  - "Deep Plan"
+L00003697	  - "Interview"
+L00003698	  - "BrainStorm"
+L00003699	  - "Crew"
+L00003700	negative_constraints: []
+L00003701	owner_hints:
+L00003702	  - Plans/assistant-chat-design.md
+L00003703	  - Plans/Run_Modes.md
+L00003704	```
+L00003705	
+L00003706	### ACD-005 - Planning Read-Only Approval Boundary
+L00003707	
+L00003708	```yaml
+L00003709	plan_unit_id: ACD-005
+L00003710	unit_type: constraint
+L00003711	status: accepted
+L00003712	owner_doc: Plans/assistant-chat-design.md
+L00003713	canonical_text: >-
+L00003714	  Plan and Deep Plan are read-only planning runs. Execution requires approval
+L00003715	  and then runs under regular or yolo, never under plan; queueing applies only
+L00003716	  to post-approval execution.
+L00003717	gui_related: false
+L00003718	gui_classification_reason: This unit governs runtime execution posture and approval boundaries rather than visual presentation.
+L00003719	depends_on: []
+L00003720	unblocks: []
+L00003721	acceptance_criteria:
+L00003722	  - Planning-time runs do not mutate project files.
+L00003723	  - Execution after approval reuses approved plan/TODO state under regular or yolo, never plan.
+L00003724	validation_surfaces:
+L00003725	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003726	  - python3 scripts/pm-plan-index.py validate
+L00003727	risk_class: execution_boundary
+L00003728	reasoning_tier: standard
+L00003729	context_scope: assistant_chat_window_001
+L00003730	implementation_surfaces:
+L00003731	  - Plans/assistant-chat-design.md
+L00003732	  - Plans/Run_Modes.md
+L00003733	  - Plans/Prompt_Pipeline.md
+L00003734	node_compile_hint:
+L00003735	  mode: read_only_planning_boundary
+L00003736	  create_worknodes: false
+L00003737	source_lineage:
+L00003738	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0011
+L00003739	preserved_exact_tokens:
+L00003740	  - "planning is read-only"
+L00003741	  - "Puppet Master-controlled draft"
+L00003742	  - "regular"
+L00003743	  - "yolo"
+L00003744	  - "plan"
+L00003745	negative_constraints:
+L00003746	  - "Queueing affects only post-approval execution, never the planning-time read-only run."
+L00003747	owner_hints:
+L00003748	  - Plans/assistant-chat-design.md
+L00003749	  - Plans/Run_Modes.md
+L00003750	```
+L00003751	
+L00003752	### ACD-006 - Debug Overlay Entrypoint
+L00003753	
+L00003754	```yaml
+L00003755	plan_unit_id: ACD-006
+L00003756	unit_type: requirement
+L00003757	status: accepted
+L00003758	owner_doc: Plans/assistant-chat-design.md
+L00003759	canonical_text: >-
+L00003760	  Debug Mode is an Assistant workflow overlay, stronger than a behavioral hint,
+L00003761	  that persists requested/effective debug overlay fields, remains
+L00003762	  execution-capable, and is visually distinct in transcript and status
+L00003763	  labeling.
+L00003764	gui_related: true
+L00003765	gui_classification_reason: Debug overlay selection, transcript treatment, and status labeling are visible chat UI behavior.
+L00003766	depends_on: []
+L00003767	unblocks: []
+L00003768	acceptance_criteria:
+L00003769	  - /mode debug preserves requested and effective debug overlay fields through restore and resume.
+L00003770	  - Debug transcript and status labeling remain visually distinct from Agent and Plan threads.
+L00003771	validation_surfaces:
+L00003772	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003773	  - python3 scripts/pm-plan-index.py validate
+L00003774	risk_class: debug_mode_drift
+L00003775	reasoning_tier: standard
+L00003776	context_scope: assistant_chat_window_001
+L00003777	implementation_surfaces:
+L00003778	  - Plans/assistant-chat-design.md
+L00003779	  - Plans/Tools.md
+L00003780	  - Plans/Run_Modes.md
+L00003781	node_compile_hint:
+L00003782	  mode: debug_overlay_entrypoint
+L00003783	  create_worknodes: false
+L00003784	source_lineage:
+L00003785	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+L00003786	preserved_exact_tokens:
+L00003787	  - "requested_mode_overlay = debug"
+L00003788	  - "effective_mode_overlay = debug"
+L00003789	  - "/mode debug"
+L00003790	  - "Debug + ask"
+L00003791	negative_constraints:
+L00003792	  - "There is no stable `Debug + ask` combination for automated investigations."
+L00003793	owner_hints:
+L00003794	  - Plans/assistant-chat-design.md
+L00003795	```
+L00003796	
+L00003797	### ACD-007 - Debug Phase And Revalidation Loop
+L00003798	
+L00003799	```yaml
+L00003800	plan_unit_id: ACD-007
+L00003801	unit_type: requirement
+L00003802	status: accepted
+L00003803	owner_doc: Plans/assistant-chat-design.md
+L00003804	canonical_text: >-
+L00003805	  Debug investigations follow closed phases from target_binding through cleanup.
+L00003806	  Drift triggers explicit revalidation, verification is mandatory, and cleanup
+L00003807	  is the terminal mutation-capable phase unless preservation is explicit.
+L00003808	gui_related: true
+L00003809	gui_classification_reason: Investigation Context, attention status, and cleanup/resolution state are user-visible in the chat surface.
+L00003810	depends_on: [ACD-006]
+L00003811	unblocks: []
+L00003812	acceptance_criteria:
+L00003813	  - Target, runtime, worktree, auth, instrumentation, and evidence drift trigger explicit revalidation before mutation-capable steps continue.
+L00003814	  - A fix attempt without recorded verification remains attention_required or failed_cleanup, not resolved.
+L00003815	validation_surfaces:
+L00003816	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003817	  - python3 scripts/pm-plan-index.py validate
+L00003818	risk_class: evidence_loop
+L00003819	reasoning_tier: high
+L00003820	context_scope: assistant_chat_window_001
+L00003821	implementation_surfaces:
+L00003822	  - Plans/assistant-chat-design.md
+L00003823	  - Plans/storage-plan.md
+L00003824	  - Plans/Runtime_Artifacts_Panel.md
+L00003825	node_compile_hint:
+L00003826	  mode: debug_revalidation_loop
+L00003827	  create_worknodes: false
+L00003828	source_lineage:
+L00003829	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+L00003830	preserved_exact_tokens:
+L00003831	  - "target_binding"
+L00003832	  - "baseline_capture"
+L00003833	  - "instrumentation"
+L00003834	  - "verification"
+L00003835	  - "cleanup"
+L00003836	  - "attention_required"
+L00003837	  - "failed_cleanup"
+L00003838	  - "resolved"
+L00003839	negative_constraints:
+L00003840	  - "A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid."
+L00003841	owner_hints:
+L00003842	  - Plans/assistant-chat-design.md
+L00003843	  - Plans/storage-plan.md
+L00003844	```
+L00003845	
+L00003846	### ACD-008 - Runtime Mode Normalization And Project Gating
+L00003847	
+L00003848	```yaml
+L00003849	plan_unit_id: ACD-008
+L00003850	unit_type: requirement
+L00003851	status: accepted
+L00003852	owner_doc: Plans/assistant-chat-design.md
+L00003853	canonical_text: >-
+L00003854	  Assistant workflow identity is closed to ask, agent, debug, plan, and
+L00003855	  deep_plan. Only runtime posture normalizes to the run-envelope mode, and
+L00003856	  project-scoped capabilities require a selected project.
+L00003857	gui_related: true
+L00003858	gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
+L00003859	depends_on: []
+L00003860	unblocks: []
+L00003861	acceptance_criteria:
+L00003862	  - Debug and deep_plan do not mint extra canonical runtime-mode enum values.
+L00003863	  - Project-scoped capabilities are unavailable or gated when no project is selected.
+L00003864	validation_surfaces:
+L00003865	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003866	  - python3 scripts/pm-plan-index.py validate
+L00003867	risk_class: runtime_mode_drift
+L00003868	reasoning_tier: standard
+L00003869	context_scope: assistant_chat_window_001
+L00003870	implementation_surfaces:
+L00003871	  - Plans/assistant-chat-design.md
+L00003872	  - Plans/Contracts_V0.md
+L00003873	  - Plans/Run_Modes.md
+L00003874	node_compile_hint:
+L00003875	  mode: runtime_mode_normalization
+L00003876	  create_worknodes: false
+L00003877	source_lineage:
+L00003878	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013
+L00003879	preserved_exact_tokens:
+L00003880	  - "ask | agent | debug | plan | deep_plan"
+L00003881	  - "run-envelope"
+L00003882	  - "regular"
+L00003883	  - "yolo"
+L00003884	  - "Requires a project"
+L00003885	  - "@"
+L00003886	negative_constraints:
+L00003887	  - "Subordinate behavior/profile fields may describe investigation or planning depth, but they do not replace this workflow-mode enum."
+L00003888	owner_hints:
+L00003889	  - Plans/assistant-chat-design.md
+L00003890	  - Plans/Run_Modes.md
+L00003891	```
+L00003892	
+L00003893	### ACD-009 - Chat Header Runtime Controls
+L00003894	
+L00003895	```yaml
+L00003896	plan_unit_id: ACD-009
+L00003897	unit_type: requirement
+L00003898	status: accepted
+L00003899	owner_doc: Plans/assistant-chat-design.md
+L00003900	canonical_text: >-
+L00003901	  The chat header exposes platform, model, reasoning/effort, and worktree
+L00003902	  controls. Selections apply to the next turn and do not interrupt a streaming
+L00003903	  response.
+L00003904	gui_related: true
+L00003905	gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
+L00003906	depends_on: []
+L00003907	unblocks: []
+L00003908	acceptance_criteria:
+L00003909	  - Provider and model lists come from the account-bound Provider -> models registry plus the Models_System capability resolver rather than hardcoded UI lists.
+L00003910	  - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
+L00003911	validation_surfaces:
+L00003912	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003913	  - python3 scripts/pm-plan-index.py validate
+L00003914	risk_class: gui_state_sync
+L00003915	reasoning_tier: standard
+L00003916	context_scope: assistant_chat_window_001
+L00003917	implementation_surfaces:
+L00003918	  - Plans/assistant-chat-design.md
+L00003919	  - Plans/Models_System.md
+L00003920	  - Plans/WorktreeGitImprovement.md
+L00003921	node_compile_hint:
+L00003922	  mode: chat_header_controls
+L00003923	  create_worknodes: false
+L00003924	source_lineage:
+L00003925	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
+L00003926	preserved_exact_tokens:
+L00003927	  - "Provider -> models"
+L00003928	  - "fallback_chain"
+L00003929	  - "Reasoning / effort"
+L00003930	  - "Worktree"
+L00003931	  - "bound-dirty"
+L00003932	  - "bound-conflict"
+L00003933	  - "turn"
+L00003934	negative_constraints:
+L00003935	  - "Do not use legacy `platform_specs` or `platform_specs.rs` as the active provider/model capability source."
+L00003936	compatibility_only_notes:
+L00003937	  - "Legacy `platform_specs` and `fallback_model_ids(platform)` tokens are retired source-lineage only."
+L00003938	owner_hints:
+L00003939	  - Plans/assistant-chat-design.md
+L00003940	  - Plans/Models_System.md
+L00003941	```
+L00003942	
+L00003943	### ACD-010 - Dual ELI5 Toggle Contract
+L00003944	
+L00003945	```yaml
+L00003946	plan_unit_id: ACD-010
+L00003947	unit_type: requirement
+L00003948	status: accepted
+L00003949	owner_doc: Plans/assistant-chat-design.md
+L00003950	canonical_text: >-
+L00003951	  Chat ELI5 and app-level ELI5 are separate toggles with independent scope.
+L00003952	  Generated docs stay technical, and authored copy maintains Expert/ELI5
+L00003953	  variants without creating concept-help drift.
+L00003954	gui_related: true
+L00003955	gui_classification_reason: The ELI5 toggles, tooltips, and authored user-facing copy variants are visible product UI.
+L00003956	depends_on: []
+L00003957	unblocks: []
+L00003958	acceptance_criteria:
+L00003959	  - Chat ELI5 affects Assistant chat behavior only and is not passed into generated interview documentation prompts.
+L00003960	  - App-level ELI5 affects tooltips and interviewer Q&A responses without changing generated documentation.
+L00003961	validation_surfaces:
+L00003962	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003963	  - python3 scripts/pm-plan-index.py validate
+L00003964	risk_class: copy_policy_drift
+L00003965	reasoning_tier: standard
+L00003966	context_scope: assistant_chat_window_001
+L00003967	implementation_surfaces:
+L00003968	  - Plans/assistant-chat-design.md
+L00003969	  - Plans/FinalGUISpec.md
+L00003970	node_compile_hint:
+L00003971	  mode: dual_copy_toggle_contract
+L00003972	  create_worknodes: false
+L00003973	source_lineage:
+L00003974	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0015
+L00003975	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0016
+L00003976	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0017
+L00003977	preserved_exact_tokens:
+L00003978	  - "two separate ELI5 toggles"
+L00003979	  - "Interaction Mode (Expert/ELI5)"
+L00003980	  - "Expert"
+L00003981	  - "ELI5"
+L00003982	  - "concept-help"
+L00003983	negative_constraints:
+L00003984	  - "There are two separate ELI5 toggles; they are independent and must not be conflated."
+L00003985	owner_hints:
+L00003986	  - Plans/assistant-chat-design.md
+L00003987	  - Plans/FinalGUISpec.md
+L00003988	```
+L00003989	
+L00003990	### ACD-011 - Permission Posture And Approval Ladder
+L00003991	
+L00003992	```yaml
+L00003993	plan_unit_id: ACD-011
+L00003994	unit_type: requirement
+L00003995	status: accepted
+L00003996	owner_doc: Plans/assistant-chat-design.md
+L00003997	canonical_text: >-
+L00003998	  Chat supports YOLO and Regular permission postures. Regular uses the
+L00003999	  canonical deny, once, for session, and always approval ladder, while durable
+L00004000	  approval defaults remain owned by Permissions_System.
+L00004001	gui_related: true
+L00004002	gui_classification_reason: Permission prompts and approval choices are user-facing controls.
+L00004003	depends_on: []
+L00004004	unblocks: []
+L00004005	acceptance_criteria:
+L00004006	  - Regular mode asks before executing or editing and presents the canonical approval ladder.
+L00004007	  - Durable approval/default behavior remains routed to Permissions_System.
+L00004008	validation_surfaces:
+L00004009	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004010	  - python3 scripts/pm-plan-index.py validate
+L00004011	risk_class: permission_boundary
+L00004012	reasoning_tier: standard
+L00004013	context_scope: assistant_chat_window_001
+L00004014	implementation_surfaces:
+L00004015	  - Plans/assistant-chat-design.md
+L00004016	  - Plans/Permissions_System.md
+L00004017	node_compile_hint:
+L00004018	  mode: permission_posture_surface
+L00004019	  create_worknodes: false
+L00004020	source_lineage:
+L00004021	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0018
+L00004022	preserved_exact_tokens:
+L00004023	  - "YOLO mode"
+L00004024	  - "Regular mode"
+L00004025	  - "deny"
+L00004026	  - "once"
+L00004027	  - "for session"
+L00004028	  - "always"
+L00004029	negative_constraints: []
+L00004030	owner_hints:
+L00004031	  - Plans/assistant-chat-design.md
+L00004032	  - Plans/Permissions_System.md
+L00004033	```
+L00004034	
+L00004035	### ACD-012 - Message Controls And Queue Semantics
+L00004036	
+L00004037	```yaml
+L00004038	plan_unit_id: ACD-012
+L00004039	unit_type: requirement
+L00004040	status: accepted
+L00004041	owner_doc: Plans/assistant-chat-design.md
+L00004042	canonical_text: >-
+L00004043	  Stop, Edit, and Resend scope to the most recent user message. Copy controls
+L00004044	  stay visible, the queue is FIFO with max 2 entries, queue state is transient,
+L00004045	  and delete/rewrite shorthand labels remain retired.
+L00004046	gui_related: true
+L00004047	gui_classification_reason: Message-row controls, composer behavior, queue affordances, and copy actions are visible chat UI.
+L00004048	depends_on: []
+L00004049	unblocks: []
+L00004050	acceptance_criteria:
+L00004051	  - Stop, Edit, and Resend attach only to the most recent user-sent message and discard later generated history/work where specified.
+L00004052	  - Code-block and message-row copy controls remain visible and do not depend on hover-only discovery.
+L00004053	validation_surfaces:
+L00004054	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004055	  - python3 scripts/pm-plan-index.py validate
+L00004056	risk_class: message_history_safety
+L00004057	reasoning_tier: standard
+L00004058	context_scope: assistant_chat_window_001
+L00004059	implementation_surfaces:
+L00004060	  - Plans/assistant-chat-design.md
+L00004061	node_compile_hint:
+L00004062	  mode: message_control_contract
+L00004063	  create_worknodes: false
+L00004064	source_lineage:
+L00004065	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0019
+L00004066	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0020
+L00004067	preserved_exact_tokens:
+L00004068	  - "Stop"
+L00004069	  - "Edit"
+L00004070	  - "Resend"
+L00004071	  - "/steer"
+L00004072	  - "/resend"
+L00004073	  - "/follow"
+L00004074	  - "max 2"
+L00004075	  - "/open-in-editor"
+L00004076	negative_constraints:
+L00004077	  - "Copy availability must not depend on hover-only discovery."
+L00004078	stale_retired_terms:
+L00004079	  - "/edit/delete"
+L00004080	  - "/control"
+L00004081	  - "/composer"
+L00004082	owner_hints:
+L00004083	  - Plans/assistant-chat-design.md
+L00004084	```
+L00004085	
+L00004086	### ACD-013 - Footer Queue And Files-Touched Projection
+L00004087	
+L00004088	```yaml
+L00004089	plan_unit_id: ACD-013
+L00004090	unit_type: requirement
+L00004091	status: accepted
+L00004092	owner_doc: Plans/assistant-chat-design.md
+L00004093	canonical_text: >-
+L00004094	  The chat footer owns the send/stop morph, queued-message affordance,
+L00004095	  latest-message actions, and compact files-touched projections synchronized
+L00004096	  with operation cards.
+L00004097	gui_related: true
+L00004098	gui_classification_reason: Footer controls, queue UI, files-touched rows, and click-to-open affordances are visible UI.
+L00004099	depends_on: [ACD-012]
+L00004100	unblocks: []
+L00004101	acceptance_criteria:
+L00004102	  - Queue UI shows FIFO order, pending count, and stop/interrupt state without restoring transient queued text after reload or restart.
+L00004103	  - Files-touched summaries stay synchronized with operation cards rather than forking status models.
+L00004104	validation_surfaces:
+L00004105	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004106	  - python3 scripts/pm-plan-index.py validate
+L00004107	risk_class: projection_fork
+L00004108	reasoning_tier: standard
+L00004109	context_scope: assistant_chat_window_001
+L00004110	implementation_surfaces:
+L00004111	  - Plans/assistant-chat-design.md
+L00004112	node_compile_hint:
+L00004113	  mode: footer_projection_contract
+L00004114	  create_worknodes: false
+L00004115	source_lineage:
+L00004116	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0021
+L00004117	preserved_exact_tokens:
+L00004118	  - "Read:"
+L00004119	  - "Edited:"
+L00004120	  - "diff counts"
+L00004121	  - "operation cards"
+L00004122	negative_constraints:
+L00004123	  - "Files touched output stays a compact projection of edit/diff activity rather than a second transcript."
+L00004124	owner_hints:
+L00004125	  - Plans/assistant-chat-design.md
+L00004126	```
+L00004127	
+L00004128	### ACD-014 - Reserved Built-In Commands And Alias Disposition
+L00004129	
+L00004130	```yaml
+L00004131	plan_unit_id: ACD-014
+L00004132	unit_type: requirement
+L00004133	status: accepted
+L00004134	owner_doc: Plans/assistant-chat-design.md
+L00004135	canonical_text: >-
+L00004136	  Reserved slash commands are canonical and non-overridable. Deprecated and
+L00004137	  retired aliases remain visibly distinct and cannot suppress active command
+L00004138	  canon.
+L00004139	gui_related: false
+L00004140	gui_classification_reason: This unit governs command authority and compatibility routing rather than visual implementation.
+L00004141	depends_on: []
+L00004142	unblocks: []
+L00004143	acceptance_criteria:
+L00004144	  - Built-in commands remain reserved and non-editable by user-defined commands.
+L00004145	  - Retired aliases such as /assistant-chat and /clear remain compatibility lineage unless the command-catalog owner re-promotes them.
+L00004146	validation_surfaces:
+L00004147	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004148	  - python3 scripts/pm-plan-index.py validate
+L00004149	risk_class: command_alias_drift
+L00004150	reasoning_tier: standard
+L00004151	context_scope: assistant_chat_window_001
+L00004152	implementation_surfaces:
+L00004153	  - Plans/assistant-chat-design.md
+L00004154	  - Plans/UI_Command_Catalog.md
+L00004155	  - Plans/Commands_System.md
+L00004156	node_compile_hint:
+L00004157	  mode: reserved_command_boundary
+L00004158	  create_worknodes: false
+L00004159	source_lineage:
+L00004160	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0022
+L00004161	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0023
+L00004162	preserved_exact_tokens:
+L00004163	  - "/new"
+L00004164	  - "/model"
+L00004165	  - "/mode"
+L00004166	  - "/stop"
+L00004167	  - "/revert"
+L00004168	  - "/web"
+L00004169	  - "/skill"
+L00004170	  - "/cancel"
+L00004171	  - "cmd.chat.stop"
+L00004172	  - "cmd.chat.revert"
+L00004173	negative_constraints: []
+L00004174	compatibility_only_notes:
+L00004175	  - "/assistant-chat and /clear are retired legacy or compatibility aliases in this Assistant Chat SSOT."
+L00004176	stale_retired_terms:
+L00004177	  - "/assistant-chat"
+L00004178	  - "/clear"
+L00004179	owner_hints:
+L00004180	  - Plans/assistant-chat-design.md
+L00004181	  - Plans/UI_Command_Catalog.md
+L00004182	```
+L00004183	
+L00004184	### ACD-015 - Web Command Family And Capability Disclosure
+L00004185	
+L00004186	```yaml
+L00004187	plan_unit_id: ACD-015
+L00004188	unit_type: requirement
+L00004189	status: accepted
+L00004190	owner_doc: Plans/assistant-chat-design.md
+L00004191	canonical_text: >-
+L00004192	  /web stays one command family with explicit subcommands, stable command IDs,
+L00004193	  help-only bare behavior, capability disclosure, normalized schemas, URL
+L00004194	  normalization, and source-obligation carry-through.
+L00004195	gui_related: true
+L00004196	gui_classification_reason: Web help, autocomplete, settings disclosure, and command availability are user-visible.
+L00004197	depends_on: []
+L00004198	unblocks: []
+L00004199	acceptance_criteria:
+L00004200	  - Bare /web shows help/autocomplete only and executable web intents require explicit subcommands.
+L00004201	  - /web help and settings disclose provider support tier, credential state, failures, and availability.
+L00004202	validation_surfaces:
+L00004203	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004204	  - python3 scripts/pm-plan-index.py validate
+L00004205	risk_class: web_tool_routing
+L00004206	reasoning_tier: standard
+L00004207	context_scope: assistant_chat_window_001
+L00004208	implementation_surfaces:
+L00004209	  - Plans/assistant-chat-design.md
+L00004210	  - Plans/UI_Command_Catalog.md
+L00004211	  - Plans/Tools.md
+L00004212	node_compile_hint:
+L00004213	  mode: web_command_family
+L00004214	  create_worknodes: false
+L00004215	source_lineage:
+L00004216	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0024
+L00004217	preserved_exact_tokens:
+L00004218	  - "/web search <query>"
+L00004219	  - "/web extract <url>"
+L00004220	  - "/web research <task>"
+L00004221	  - "/web crawl <url>"
+L00004222	  - "cmd.chat.web.help"
+L00004223	  - "obl-037"
+L00004224	  - "obl-046"
+L00004225	  - "obl-047"
+L00004226	  - "obl-048"
+L00004227	  - "obl-051"
+L00004228	negative_constraints:
+L00004229	  - "Do not flatten /web into separate slash families."
+L00004230	  - "Bare /web is /help-only autocomplete and dispatches cmd.chat.web.help."
+L00004231	compatibility_only_notes:
+L00004232	  - "Legacy /what lineage is compatibility/help-only."
+L00004233	owner_hints:
+L00004234	  - Plans/assistant-chat-design.md
+L00004235	  - Plans/UI_Command_Catalog.md
+L00004236	```
+L00004237	
+L00004238	### ACD-016 - Skill Invocation Paths
+L00004239	
+L00004240	```yaml
+L00004241	plan_unit_id: ACD-016
+L00004242	unit_type: requirement
+L00004243	status: accepted
+L00004244	owner_doc: Plans/assistant-chat-design.md
+L00004245	canonical_text: >-
+L00004246	  Skill discovery and invocation are locked to the GUI panel, /skill, and
+L00004247	  natural language, all converging on invoke_skill without an MVP subcommand
+L00004248	  family.
+L00004249	gui_related: true
+L00004250	gui_classification_reason: The skill panel, slash help, and natural-language invocation are user-visible interaction paths.
+L00004251	depends_on: []
+L00004252	unblocks: []
+L00004253	acceptance_criteria:
+L00004254	  - /skill with no args lists available skills, and /skill with a name invokes the shared invoke_skill path.
+L00004255	  - GUI skill management, /skill, and natural-language invocation do not fork separate dispatch behavior.
+L00004256	validation_surfaces:
+L00004257	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004258	  - python3 scripts/pm-plan-index.py validate
+L00004259	risk_class: skill_dispatch_drift
+L00004260	reasoning_tier: standard
+L00004261	context_scope: assistant_chat_window_001
+L00004262	implementation_surfaces:
+L00004263	  - Plans/assistant-chat-design.md
+L00004264	  - Plans/Skills_System.md
+L00004265	node_compile_hint:
+L00004266	  mode: skill_invocation_paths
+L00004267	  create_worknodes: false
+L00004268	source_lineage:
+L00004269	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0024
+L00004270	preserved_exact_tokens:
+L00004271	  - "/skill <skill_name> [args]"
+L00004272	  - "/skill with no args"
+L00004273	  - "invoke_skill"
+L00004274	  - "Skills panel"
+L00004275	  - "Natural language"
+L00004276	  - "No subcommand family for MVP"
+L00004277	negative_constraints:
+L00004278	  - "Do not create a separate MVP subcommand family for skills."
+L00004279	owner_hints:
+L00004280	  - Plans/assistant-chat-design.md
+L00004281	  - Plans/Skills_System.md
+L00004282	```
+L00004283	
+L00004284	### ACD-017 - Git And GitHub Dispatch Boundary
+L00004285	
+L00004286	```yaml
+L00004287	plan_unit_id: ACD-017
+L00004288	unit_type: constraint
+L00004289	status: accepted
+L00004290	owner_doc: Plans/assistant-chat-design.md
+L00004291	canonical_text: >-
+L00004292	  /git and local repository requests route to source-control commands. /github
+L00004293	  and hosted-repo requests route to GitHub commands. Cross-domain flows disclose
+L00004294	  the boundary and preserve repo, worktree, and compare handoff identity.
+L00004295	gui_related: false
+L00004296	gui_classification_reason: This unit governs routing and source-control boundaries rather than visual presentation.
+L00004297	depends_on: []
+L00004298	unblocks: []
+L00004299	acceptance_criteria:
+L00004300	  - The assistant does not reinterpret Git requests as GitHub requests or GitHub requests as Git requests just because one path appears easier.
+L00004301	  - Cross-domain flows preserve canonical repo/worktree/compare identity fields between local and hosted stages.
+L00004302	validation_surfaces:
+L00004303	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004304	  - python3 scripts/pm-plan-index.py validate
+L00004305	risk_class: source_control_boundary
+L00004306	reasoning_tier: standard
+L00004307	context_scope: assistant_chat_window_001
+L00004308	implementation_surfaces:
+L00004309	  - Plans/assistant-chat-design.md
+L00004310	  - Plans/GitHub_Integration.md
+L00004311	  - Plans/UI_Command_Catalog.md
+L00004312	node_compile_hint:
+L00004313	  mode: git_github_dispatch_boundary
+L00004314	  create_worknodes: false
+L00004315	source_lineage:
+L00004316	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0025
+L00004317	preserved_exact_tokens:
+L00004318	  - "/git ..."
+L00004319	  - "/github ..."
+L00004320	  - "local compare first, then hosted PR creation"
+L00004321	  - "repo/worktree/compare identity"
+L00004322	negative_constraints:
+L00004323	  - "The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier."
+L00004324	owner_hints:
+L00004325	  - Plans/assistant-chat-design.md
+L00004326	  - Plans/GitHub_Integration.md
+L00004327	```
+L00004328	
+L00004329	### ACD-018 - Custom Command Boundary
+L00004330	
+L00004331	```yaml
+L00004332	plan_unit_id: ACD-018
+L00004333	unit_type: constraint
+L00004334	status: accepted
+L00004335	owner_doc: Plans/assistant-chat-design.md
+L00004336	canonical_text: User Commands may complement built-ins, but they cannot replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when upstream reference products handle modes or permissions differently.
+L00004337	gui_related: false
+L00004338	gui_classification_reason: This unit governs command authority and compatibility routing, not GUI implementation.
+L00004339	depends_on: []
+L00004340	unblocks: []
+L00004341	acceptance_criteria:
+L00004342	  - User Commands do not override reserved Assistant Chat built-ins.
+L00004343	  - PM-native Ask and Plan remain authoritative over upstream reference-product differences.
+L00004344	validation_surfaces:
+L00004345	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004346	  - python3 scripts/pm-plan-index.py validate
+L00004347	risk_class: command_authority
+L00004348	reasoning_tier: standard
+L00004349	context_scope: assistant_chat_window_002
+L00004350	implementation_surfaces:
+L00004351	  - Plans/assistant-chat-design.md
+L00004352	  - Plans/Run_Modes.md
+L00004353	  - Plans/Commands_System.md
+L00004354	node_compile_hint:
+L00004355	  mode: custom_command_boundary
+L00004356	  create_worknodes: false
+L00004357	source_lineage:
+L00004358	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0026
+L00004359	preserved_exact_tokens:
+L00004360	  - "User Commands"
+L00004361	  - "PM-native Ask"
+L00004362	  - "Plan"
+L00004363	negative_constraints:
+L00004364	  - "User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set."
+L00004365	owner_hints:
+L00004366	  - Plans/assistant-chat-design.md
+L00004367	  - Plans/Commands_System.md
+L00004368	```
+L00004369	
+L00004370	### ACD-019 - Dispatcher Parity For Web Intents
+L00004371	
+L00004372	```yaml
+L00004373	plan_unit_id: ACD-019
+L00004374	unit_type: requirement
+L00004375	status: accepted
+L00004376	owner_doc: Plans/assistant-chat-design.md
+L00004377	canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
+L00004378	gui_related: true
+L00004379	gui_classification_reason: Dispatcher parity affects user-visible command routing, help, and activity behavior.
+L00004380	depends_on: [ACD-015]
+L00004381	unblocks: []
+L00004382	acceptance_criteria:
+L00004383	  - Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents resolve through the same dispatcher.
+L00004384	  - Reading intents such as read this URL and fetch this page resolve to webfetch, not websearch.
+L00004385	validation_surfaces:
+L00004386	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004387	  - python3 scripts/pm-plan-index.py validate
+L00004388	risk_class: web_dispatch_drift
+L00004389	reasoning_tier: standard
+L00004390	context_scope: command_surface
+L00004391	implementation_surfaces:
+L00004392	  - Plans/assistant-chat-design.md
+L00004393	  - Plans/Tools.md
+L00004394	  - Plans/UI_Command_Catalog.md
+L00004395	node_compile_hint:
+L00004396	  mode: dispatcher_parity
+L00004397	  create_worknodes: false
+L00004398	source_lineage:
+L00004399	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0027
+L00004400	preserved_exact_tokens:
+L00004401	  - "read this site"
+L00004402	  - "read this URL"
+L00004403	  - "fetch this page"
+L00004404	  - "webfetch"
+L00004405	  - "websearch"
+L00004406	  - "webextract"
+L00004407	  - "webresearch"
+L00004408	  - "site/page reading is not search"
+L00004409	negative_constraints:
+L00004410	  - "Reading intents MUST resolve to `webfetch`, not `websearch`."
+L00004411	owner_hints:
+L00004412	  - Plans/assistant-chat-design.md
+L00004413	  - Plans/Tools.md
+L00004414	```
+L00004415	
+L00004416	### ACD-020 - Teach Capture Workflow
+L00004417	
+L00004418	```yaml
+L00004419	plan_unit_id: ACD-020
+L00004420	unit_type: requirement
+L00004421	status: accepted
+L00004422	owner_doc: Plans/assistant-chat-design.md
+L00004423	canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+L00004424	gui_related: false
+L00004425	gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
+L00004426	depends_on: []
+L00004427	unblocks: [ACD-021, ACD-022]
+L00004428	acceptance_criteria:
+L00004429	  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
+L00004430	  - Persistence requires explicit user-confirming action before knowledge is stored.
+L00004431	  - Teach does not create a separate closed mode_overlay.
+L00004432	validation_surfaces:
+L00004433	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004434	  - python3 scripts/pm-plan-index.py validate
+L00004435	risk_class: memory_capture_boundary
+L00004436	reasoning_tier: standard
+L00004437	context_scope: teach
+L00004438	implementation_surfaces:
+L00004439	  - Plans/assistant-chat-design.md
+L00004440	  - Plans/Prompt_Pipeline.md
+L00004441	  - Plans/storage-plan.md
+L00004442	node_compile_hint:
+L00004443	  mode: teach_capture_workflow
+L00004444	  create_worknodes: false
+L00004445	source_lineage:
+L00004446	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+L00004447	preserved_exact_tokens:
+L00004448	  - "user-locked"
+L00004449	  - "/teach"
+L00004450	  - "remember that..."
+L00004451	  - "for this repo always..."
+L00004452	  - "please prefer..."
+L00004453	  - "mode_overlay"
+L00004454	negative_constraints: []
+L00004455	owner_hints:
+L00004456	  - Plans/assistant-chat-design.md
+L00004457	  - Plans/Prompt_Pipeline.md
+L00004458	```
+L00004459	
+L00004460	### ACD-021 - Teach Scope And Record Fields
+L00004461	
+L00004462	```yaml
+L00004463	plan_unit_id: ACD-021
+L00004464	unit_type: requirement
+L00004465	status: accepted
+L00004466	owner_doc: Plans/assistant-chat-design.md
+L00004467	canonical_text: Every Teach record declares thread, project, or user scope before commit and stores the required durable memory fields, including identity, provenance, capture time, normalized fact, supersession, and revocation metadata.
+L00004468	gui_related: false
+L00004469	gui_classification_reason: Teach scope and record fields are persistence/schema requirements, not GUI implementation.
+L00004470	depends_on: [ACD-020]
+L00004471	unblocks: [ACD-022]
+L00004472	acceptance_criteria:
+L00004473	  - Each taught item declares thread, project, or user scope before commit.
+L00004474	  - Persisted Teach records store the required minimum identity, provenance, normalized_fact, supersession, and revocation fields.
+L00004475	validation_surfaces:
+L00004476	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004477	  - python3 scripts/pm-plan-index.py validate
+L00004478	risk_class: persistence_scope
+L00004479	reasoning_tier: standard
+L00004480	context_scope: teach_storage
+L00004481	implementation_surfaces:
+L00004482	  - Plans/assistant-chat-design.md
+L00004483	  - Plans/storage-plan.md
+L00004484	  - Plans/Contracts_V0.md
+L00004485	node_compile_hint:
+L00004486	  mode: teach_scope_schema
+L00004487	  create_worknodes: false
+L00004488	source_lineage:
+L00004489	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+L00004490	preserved_exact_tokens:
+L00004491	  - "thread"
+L00004492	  - "project"
+L00004493	  - "user"
+L00004494	  - "memory_id"
+L00004495	  - "scope"
+L00004496	  - "source_thread_id"
+L00004497	  - "author_message_id"
+L00004498	  - "captured_at"
+L00004499	  - "normalized_fact"
+L00004500	  - "supersedes_memory_id"
+L00004501	  - "revoked_at"
+L00004502	negative_constraints: []
+L00004503	owner_hints:
+L00004504	  - Plans/assistant-chat-design.md
+L00004505	  - Plans/storage-plan.md
+L00004506	```
+L00004507	
+L00004508	### ACD-022 - Teach Audit And Safety Rules
+L00004509	
+L00004510	```yaml
+L00004511	plan_unit_id: ACD-022
+L00004512	unit_type: requirement
+L00004513	status: accepted
+L00004514	owner_doc: Plans/assistant-chat-design.md
+L00004515	canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+L00004516	gui_related: false
+L00004517	gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
+L00004518	depends_on: [ACD-020, ACD-021]
+L00004519	unblocks: []
+L00004520	acceptance_criteria:
+L00004521	  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
+L00004522	  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
+L00004523	  - Teach does not persist secrets, tokens, passwords, or other credentials.
+L00004524	validation_surfaces:
+L00004525	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004526	  - python3 scripts/pm-plan-index.py validate
+L00004527	risk_class: safety_audit
+L00004528	reasoning_tier: high
+L00004529	context_scope: teach
+L00004530	implementation_surfaces:
+L00004531	  - Plans/assistant-chat-design.md
+L00004532	  - Plans/Decision_Policy.md
+L00004533	  - Plans/Tools.md
+L00004534	node_compile_hint:
+L00004535	  mode: teach_audit_safety
+L00004536	  create_worknodes: false
+L00004537	source_lineage:
+L00004538	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+L00004539	preserved_exact_tokens:
+L00004540	  - "explicit memory/context"
+L00004541	  - "MUST NOT persist secrets, tokens, passwords, or other credentials"
+L00004542	negative_constraints:
+L00004543	  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+L00004544	owner_hints:
+L00004545	  - Plans/assistant-chat-design.md
+L00004546	  - Plans/Decision_Policy.md
+L00004547	```
+L00004548	
+L00004549	### ACD-023 - Structured Input And External Capability Provenance
+L00004550	
+L00004551	```yaml
+L00004552	plan_unit_id: ACD-023
+L00004553	unit_type: requirement
+L00004554	status: accepted
+L00004555	owner_doc: Plans/assistant-chat-design.md
+L00004556	canonical_text: Assistant Chat accepts structured inputs and external capability integrations beyond plain text while preserving provenance. Attachments, web search, and extensibility surfaces do not hide origin or capability use.
+L00004557	gui_related: false
+L00004558	gui_classification_reason: This unit owns provenance and external capability boundaries rather than concrete visual rendering.
+L00004559	depends_on: []
+L00004560	unblocks: [ACD-024, ACD-025, ACD-026]
+L00004561	acceptance_criteria:
+L00004562	  - Structured inputs retain provenance instead of being flattened into hidden context.
+L00004563	  - External capability use remains attributable to its source or integration.
+L00004564	validation_surfaces:
+L00004565	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004566	  - python3 scripts/pm-plan-index.py validate
+L00004567	risk_class: provenance_boundary
+L00004568	reasoning_tier: standard
+L00004569	context_scope: attachments_web
+L00004570	implementation_surfaces:
+L00004571	  - Plans/assistant-chat-design.md
+L00004572	  - Plans/Media_Generation_and_Capabilities.md
+L00004573	  - Plans/Tools.md
+L00004574	  - Plans/storage-plan.md
+L00004575	node_compile_hint:
+L00004576	  mode: external_capability_provenance
+L00004577	  create_worknodes: false
+L00004578	source_lineage:
+L00004579	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0029
+L00004580	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0032
+L00004581	preserved_exact_tokens:
+L00004582	  - "Attachments, Web Search, and Extensibility"
+L00004583	  - "provenance"
+L00004584	negative_constraints: []
+L00004585	owner_hints:
+L00004586	  - Plans/assistant-chat-design.md
+L00004587	  - Plans/Tools.md
+L00004588	```
+L00004589	
+L00004590	### ACD-024 - Attachment Payload Schema
+L00004591	
+L00004592	```yaml
+L00004593	plan_unit_id: ACD-024
+L00004594	unit_type: requirement
+L00004595	status: accepted
+L00004596	owner_doc: Plans/assistant-chat-design.md
+L00004597	canonical_text: Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+L00004598	gui_related: false
+L00004599	gui_classification_reason: Attachment payload persistence and field shape are storage/schema behavior, not GUI implementation.
+L00004600	depends_on: [ACD-023]
+L00004601	unblocks: [ACD-025]
+L00004602	acceptance_criteria:
+L00004603	  - Supported attachment families include files, images, URLs, inline code snippets, and browser capture chips.
+L00004604	  - Attachment payloads include the minimum field set required by this PlanUnit.
+L00004605	validation_surfaces:
+L00004606	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004607	  - python3 scripts/pm-plan-index.py validate
+L00004608	risk_class: payload_schema
+L00004609	reasoning_tier: standard
+L00004610	context_scope: attachments
+L00004611	implementation_surfaces:
+L00004612	  - Plans/assistant-chat-design.md
+L00004613	  - Plans/storage-plan.md
+L00004614	node_compile_hint:
+L00004615	  mode: attachment_payload_schema
+L00004616	  create_worknodes: false
+L00004617	source_lineage:
+L00004618	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0030
+L00004619	preserved_exact_tokens:
+L00004620	  - "files"
+L00004621	  - "images"
+L00004622	  - "URLs"
+L00004623	  - "inline code snippets"
+L00004624	  - "attachment_id"
+L00004625	  - "attachment_type"
+L00004626	  - "display_name"
+L00004627	  - "source_ref"
+L00004628	  - "mime_type?"
+L00004629	  - "size_bytes?"
+L00004630	  - "preview_state"
+L00004631	negative_constraints: []
+L00004632	owner_hints:
+L00004633	  - Plans/assistant-chat-design.md
+L00004634	  - Plans/storage-plan.md
+L00004635	```
+L00004636	
+L00004637	### ACD-025 - Visible Composer And Browser Capture Attachments
+L00004638	
+L00004639	```yaml
+L00004640	plan_unit_id: ACD-025
+L00004641	unit_type: requirement
+L00004642	status: accepted
+L00004643	owner_doc: Plans/assistant-chat-design.md
+L00004644	canonical_text: Composer attachments, voice drafts, browser capture chips, and browser-to-agent selection lifecycle remain visible, pending, removable, and user-triggered. Browser capture never arrives as hidden automatic context injection.
+L00004645	gui_related: true
+L00004646	gui_classification_reason: Composer drafts, chips, browser highlight/share flows, and removability are visible interaction surfaces.
+L00004647	depends_on: [ACD-023, ACD-024]
+L00004648	unblocks: []
+L00004649	acceptance_criteria:
+L00004650	  - Voice input becomes a visible draft or pending input transcript before send.
+L00004651	  - Browser capture chips remain pending, visible, and removable until the user sends.
+L00004652	  - Browser selection and element-pick commands do not auto-send chat messages.
+L00004653	validation_surfaces:
+L00004654	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004655	  - python3 scripts/pm-plan-index.py validate
+L00004656	risk_class: hidden_context_injection
+L00004657	reasoning_tier: high
+L00004658	context_scope: composer
+L00004659	implementation_surfaces:
+L00004660	  - Plans/assistant-chat-design.md
+L00004661	  - Plans/Prompt_Pipeline.md
+L00004662	  - Plans/FinalGUISpec.md
+L00004663	node_compile_hint:
+L00004664	  mode: attachment_composer_capture
+L00004665	  create_worknodes: false
+L00004666	source_lineage:
+L00004667	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0030
+L00004668	preserved_exact_tokens:
+L00004669	  - "browser_selection_context"
+L00004670	  - "browser_element_context"
+L00004671	  - "document_selection_context"
+L00004672	  - "cmd.browser.add_selection_to_chat"
+L00004673	  - "cmd.browser.pick_element_for_chat"
+L00004674	  - "/primary"
+L00004675	  - "/highlight"
+L00004676	  - "/new-thread"
+L00004677	negative_constraints:
+L00004678	  - "Ordinary browser capture never arrives as hidden automatic context injection."
+L00004679	stale_retired_terms:
+L00004680	  - "Plans/newfeatures.md"
+L00004681	  - "/newfeatures.md"
+L00004682	owner_hints:
+L00004683	  - Plans/assistant-chat-design.md
+L00004684	  - Plans/Prompt_Pipeline.md
+L00004685	```
+L00004686	
+L00004687	### ACD-026 - Web Search Chat Disclosure
+L00004688	
+L00004689	```yaml
+L00004690	plan_unit_id: ACD-026
+L00004691	unit_type: requirement
+L00004692	status: accepted
+L00004693	owner_doc: Plans/assistant-chat-design.md
+L00004694	canonical_text: Web search is a first-class chat capability with explicit web activity cards, related-turn citations, provenance-preserving source disclosure, policy limitation disclosure, and distinct origin labels for user-supplied URLs versus assistant-triggered web results.
+L00004695	gui_related: true
+L00004696	gui_classification_reason: Web activity cards, source blocks, citations, and limitation disclosures are visible chat UI behavior.
+L00004697	depends_on: [ACD-019, ACD-023]
+L00004698	unblocks: []
+L00004699	acceptance_criteria:
+L00004700	  - Web use shows explicit web activity cards and later source or citation disclosure in the related assistant turn.
+L00004701	  - Fetched or extracted content preserves provenance distinct from synthesized conclusions.
+L00004702	  - Provider or policy inability to use web search is disclosed instead of implied away.
+L00004703	validation_surfaces:
+L00004704	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004705	  - python3 scripts/pm-plan-index.py validate
+L00004706	risk_class: web_provenance
+L00004707	reasoning_tier: standard
+L00004708	context_scope: chat_activity
+L00004709	implementation_surfaces:
+L00004710	  - Plans/assistant-chat-design.md
+L00004711	  - Plans/Tools.md
+L00004712	  - Plans/storage-plan.md
+L00004713	node_compile_hint:
+L00004714	  mode: web_search_chat_disclosure
+L00004715	  create_worknodes: false
+L00004716	source_lineage:
+L00004717	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0031
+L00004718	preserved_exact_tokens:
+L00004719	  - "web activity cards"
+L00004720	  - "operation cards"
+L00004721	  - "source blocks"
+L00004722	  - "citations"
+L00004723	  - "search snippets"
+L00004724	  - "extracted page text"
+L00004725	  - "synthesized conclusions"
+L00004726	negative_constraints: []
+L00004727	owner_hints:
+L00004728	  - Plans/assistant-chat-design.md
+L00004729	  - Plans/Tools.md
+L00004730	```
+L00004731	
+L00004732	### ACD-027 - Question Flow Lifecycle
+L00004733	
+L00004734	```yaml
+L00004735	plan_unit_id: ACD-027
+L00004736	unit_type: requirement
+L00004737	status: accepted
+L00004738	owner_doc: Plans/assistant-chat-design.md
+L00004739	canonical_text: Question flows are PM-managed, draft-backed, resumable, and follow the canonical lifecycle draft -> incomplete -> ready_to_submit -> submitted -> paused.
+L00004740	gui_related: true
+L00004741	gui_classification_reason: Question draft state, completion state, submission state, and pause/resume behavior are user-visible interaction behavior.
+L00004742	depends_on: []
+L00004743	unblocks: [ACD-028, ACD-029, ACD-030, ACD-031]
+L00004744	acceptance_criteria:
+L00004745	  - Question drafts are thread-scoped and auto-save until submit.
+L00004746	  - Users can answer out of order and revise before submit where the question type allows it.
+L00004747	  - The canonical lifecycle states are preserved.
+L00004748	validation_surfaces:
+L00004749	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004750	  - python3 scripts/pm-plan-index.py validate
+L00004751	risk_class: question_lifecycle
+L00004752	reasoning_tier: standard
+L00004753	context_scope: questionnaire
+L00004754	implementation_surfaces:
+L00004755	  - Plans/assistant-chat-design.md
+L00004756	node_compile_hint:
+L00004757	  mode: question_flow_lifecycle
+L00004758	  create_worknodes: false
+L00004759	source_lineage:
+L00004760	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004761	preserved_exact_tokens:
+L00004762	  - "draft"
+L00004763	  - "incomplete"
+L00004764	  - "ready_to_submit"
+L00004765	  - "submitted"
+L00004766	  - "paused"
+L00004767	  - "Thread-scoped draft state"
+L00004768	  - "drafts auto-save continuously"
+L00004769	negative_constraints: []
+L00004770	owner_hints:
+L00004771	  - Plans/assistant-chat-design.md
+L00004772	```
+L00004773	
+L00004774	### ACD-028 - Question Schema And Compatibility Normalization
+L00004775	
+L00004776	```yaml
+L00004777	plan_unit_id: ACD-028
+L00004778	unit_type: requirement
+L00004779	status: accepted
+L00004780	owner_doc: Plans/assistant-chat-design.md
+L00004781	canonical_text: Question schema names, enums, answer sources, legacy aliases, and compatibility normalizations are locked to the questionnaire envelope while preserving single_question compatibility through internal promotion.
+L00004782	gui_related: false
+L00004783	gui_classification_reason: Schema fields, aliases, enum values, and compatibility normalization are data-contract behavior rather than visual implementation.
+L00004784	depends_on: [ACD-027]
+L00004785	unblocks: [ACD-029, ACD-030]
+L00004786	acceptance_criteria:
+L00004787	  - single_question callers are promoted into the questionnaire envelope before processing.
+L00004788	  - Legacy input and output aliases normalize into canonical answer arrays and object-array options before draft storage, validation, or final answer submission.
+L00004789	  - allow_freeform is canonical and allow_other remains a retired alias.
+L00004790	validation_surfaces:
+L00004791	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004792	  - python3 scripts/pm-plan-index.py validate
+L00004793	risk_class: schema_compatibility
+L00004794	reasoning_tier: standard
+L00004795	context_scope: questionnaire
+L00004796	implementation_surfaces:
+L00004797	  - Plans/assistant-chat-design.md
+L00004798	  - Plans/Contracts_V0.md
+L00004799	node_compile_hint:
+L00004800	  mode: question_schema_normalization
+L00004801	  create_worknodes: false
+L00004802	source_lineage:
+L00004803	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004804	preserved_exact_tokens:
+L00004805	  - "single_question"
+L00004806	  - "questionnaire"
+L00004807	  - "QuestionItem"
+L00004808	  - "allow_freeform"
+L00004809	  - "allow_other"
+L00004810	  - "default_values"
+L00004811	  - "draft_value"
+L00004812	  - "response_kind"
+L00004813	  - "validation_state"
+L00004814	  - "header?: string"
+L00004815	  - "text: string"
+L00004816	  - "options?: string[]"
+L00004817	  - "answer: string"
+L00004818	  - "Something else"
+L00004819	  - "Decision #9"
+L00004820	negative_constraints: []
+L00004821	compatibility_only_notes:
+L00004822	  - "single_question is legacy syntactic sugar over the questionnaire envelope with exactly one QuestionItem."
+L00004823	  - "Legacy tool-shape aliases header?: string, text: string, and options?: string[] are accepted only at the compatibility boundary."
+L00004824	stale_retired_terms:
+L00004825	  - "allow_other"
+L00004826	owner_hints:
+L00004827	  - Plans/assistant-chat-design.md
+L00004828	```
+L00004829	
+L00004830	### ACD-029 - Question Card Rendering Contract
+L00004831	
+L00004832	```yaml
+L00004833	plan_unit_id: ACD-029
+L00004834	unit_type: requirement
+L00004835	status: accepted
+L00004836	owner_doc: Plans/assistant-chat-design.md
+L00004837	canonical_text: Question-card rendering supports visible options, freeform or Other paths, multi-select checkbox layouts, shared question-card styling across Assistant and document-building flows, and optional source-text-first visual context.
+L00004838	gui_related: true
+L00004839	gui_classification_reason: Question-card options, checkbox groups, shared styling, and visual context are direct UI presentation and interaction requirements.
+L00004840	depends_on: [ACD-027, ACD-028]
+L00004841	unblocks: []
+L00004842	acceptance_criteria:
+L00004843	  - Multi-select renders options as a checkbox group and preserves selected option IDs in order.
+L00004844	  - Shared question styling uses one consistent question-card flow across Assistant, Interviewer, requirements, and document-builder questions.
+L00004845	  - Source-text-first visual context may be attached while PM remains owner of draft and submit lifecycle.
+L00004846	validation_surfaces:
+L00004847	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004848	  - python3 scripts/pm-plan-index.py validate
+L00004849	risk_class: visual_flow_drift
+L00004850	reasoning_tier: standard
+L00004851	context_scope: questionnaire_ui
+L00004852	implementation_surfaces:
+L00004853	  - Plans/assistant-chat-design.md
+L00004854	  - Plans/FinalGUISpec.md
+L00004855	node_compile_hint:
+L00004856	  mode: question_card_rendering
+L00004857	  create_worknodes: false
+L00004858	source_lineage:
+L00004859	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004860	preserved_exact_tokens:
+L00004861	  - "multi_select"
+L00004862	  - "options?: Array<{id, label, description?}>"
+L00004863	  - "string[]"
+L00004864	  - "/flow"
+L00004865	  - "/Interviewer/requirements"
+L00004866	  - "/document-builder"
+L00004867	  - "source-text-first visual context"
+L00004868	negative_constraints: []
+L00004869	compatibility_only_notes:
+L00004870	  - "string[] remains backwards-compatible only for legacy single_question callers."
+L00004871	owner_hints:
+L00004872	  - Plans/assistant-chat-design.md
+L00004873	  - Plans/FinalGUISpec.md
+L00004874	```
+L00004875	
+L00004876	### ACD-030 - Question Submit And Dismiss Contract
+L00004877	
+L00004878	```yaml
+L00004879	plan_unit_id: ACD-030
+L00004880	unit_type: requirement
+L00004881	status: accepted
+L00004882	owner_doc: Plans/assistant-chat-design.md
+L00004883	canonical_text: Question submission and dismissal preserve submitted-versus-dismissed distinction. Dismissal pauses the flow and never fabricates partial submitted answers, auto-submits, or auto-cancels the broader thread.
+L00004884	gui_related: true
+L00004885	gui_classification_reason: Submit, dismissal, pause, and status feedback are user-visible question-card behavior.
+L00004886	depends_on: [ACD-027, ACD-028]
+L00004887	unblocks: []
+L00004888	acceptance_criteria:
+L00004889	  - /submit is the explicit user action that moves a ready question flow to submitted.
+L00004890	  - Dismissing pauses rather than auto-submitting, auto-cancelling, or fabricating partial answers.
+L00004891	  - Inline visuals do not invoke submit through sendPrompt.
+L00004892	validation_surfaces:
+L00004893	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004894	  - python3 scripts/pm-plan-index.py validate
+L00004895	risk_class: answer_integrity
+L00004896	reasoning_tier: high
+L00004897	context_scope: questionnaire
+L00004898	implementation_surfaces:
+L00004899	  - Plans/assistant-chat-design.md
+L00004900	node_compile_hint:
+L00004901	  mode: question_submit_dismiss_contract
+L00004902	  create_worknodes: false
+L00004903	source_lineage:
+L00004904	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004905	preserved_exact_tokens:
+L00004906	  - "answered"
+L00004907	  - "submitted"
+L00004908	  - "dismissed"
+L00004909	  - "timed_out"
+L00004910	  - "unavailable"
+L00004911	  - "/submit"
+L00004912	  - "/dismiss"
+L00004913	  - "NOT via `sendPrompt`"
+L00004914	  - "submitted_at?"
+L00004915	negative_constraints:
+L00004916	  - "Question flows never perform auto-submitting or auto-cancelling when dismissed."
+L00004917	stale_retired_terms:
+L00004918	  - "/dismiss"
+L00004919	owner_hints:
+L00004920	  - Plans/assistant-chat-design.md
+L00004921	```
+L00004922	
+L00004923	### ACD-031 - Subagent Question Boundary
+L00004924	
+L00004925	```yaml
+L00004926	plan_unit_id: ACD-031
+L00004927	unit_type: constraint
+L00004928	status: accepted
+L00004929	owner_doc: Plans/assistant-chat-design.md
+L00004930	canonical_text: Subagent question tool access is default-denied. Subagents escalate user questions to the parent orchestrator, and headless or HITL-unavailable flows return unavailable status.
+L00004931	gui_related: false
+L00004932	gui_classification_reason: Subagent question routing and default-denial are orchestration and policy behavior, not GUI implementation.
+L00004933	depends_on: [ACD-027]
+L00004934	unblocks: []
+L00004935	acceptance_criteria:
+L00004936	  - Subagents cannot address users directly unless explicitly re-enabled by run config.
+L00004937	  - Parent orchestrator owns the user-question surface decision.
+L00004938	  - Headless or HITL-unavailable question flows report unavailable status.
+L00004939	validation_surfaces:
+L00004940	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004941	  - python3 scripts/pm-plan-index.py validate
+L00004942	risk_class: subagent_boundary
+L00004943	reasoning_tier: standard
+L00004944	context_scope: hitl
+L00004945	implementation_surfaces:
+L00004946	  - Plans/assistant-chat-design.md
+L00004947	  - Plans/human-in-the-loop.md
+L00004948	node_compile_hint:
+L00004949	  mode: subagent_question_boundary
+L00004950	  create_worknodes: false
+L00004951	source_lineage:
+L00004952	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004953	preserved_exact_tokens:
+L00004954	  - "default-denial"
+L00004955	  - "Subagent question tool access is DENIED by default"
+L00004956	  - "status = \"unavailable\""
+L00004957	  - "assistant-chat-design.md §15.2"
+L00004958	negative_constraints:
+L00004959	  - "Subagent-direct question flows are prohibited product behavior, not a configurable local default."
+L00004960	owner_hints:
+L00004961	  - Plans/assistant-chat-design.md
+L00004962	  - Plans/human-in-the-loop.md
+L00004963	```
+L00004964	
+L00004965	### ACD-032 - Planning Model Core
+L00004966	
+L00004967	```yaml
+L00004968	plan_unit_id: ACD-032
+L00004969	unit_type: requirement
+L00004970	status: accepted
+L00004971	owner_doc: Plans/assistant-chat-design.md
+L00004972	canonical_text: Plan and Deep Plan share a normalized TODO projection, named Q&A loop, locked TODO schema, and locked status set while preserving explicit plan/checklist review before execution.
+L00004973	gui_related: false
+L00004974	gui_classification_reason: This unit defines planning data and workflow semantics rather than concrete visual presentation.
+L00004975	depends_on: []
+L00004976	unblocks: [ACD-033, ACD-034, ACD-035, ACD-038, ACD-040, ACD-043]
+L00004977	acceptance_criteria:
+L00004978	  - Plan and Deep Plan both project to a normalized TODO list.
+L00004979	  - TODO items preserve the canonical schema and active status set.
+L00004980	  - Competitive rationale remains source-lineage context without changing the canonical PM planning model.
+L00004981	validation_surfaces:
+L00004982	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004983	  - python3 scripts/pm-plan-index.py validate
+L00004984	risk_class: planning_model
+L00004985	reasoning_tier: standard
+L00004986	context_scope: plan_modes
+L00004987	implementation_surfaces:
+L00004988	  - Plans/assistant-chat-design.md
+L00004989	  - Plans/storage-plan.md
+L00004990	node_compile_hint:
+L00004991	  mode: planning_model_core
+L00004992	  create_worknodes: false
+L00004993	source_lineage:
+L00004994	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0034
+L00004995	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00004996	preserved_exact_tokens:
+L00004997	  - "Plan"
+L00004998	  - "Deep Plan"
+L00004999	  - "Q&A loop"
+L00005000	  - "todo_id"
+L00005001	  - "title"
+L00005002	  - "summary"
+L00005003	  - "status"
+L00005004	  - "dependencies[]"
+L00005005	  - "owner_hint"
+L00005006	  - "verification_hint"
+L00005007	  - "pending | in_progress | completed | blocked | skipped"
+L00005008	  - "Cursor"
+L00005009	  - "Codex"
+L00005010	  - "Claude Code"
+L00005011	negative_constraints: []
+L00005012	owner_hints:
+L00005013	  - Plans/assistant-chat-design.md
+L00005014	  - Plans/storage-plan.md
+L00005015	```
+L00005016	
+L00005017	### ACD-033 - Visible Plan Review Surface
+L00005018	
+L00005019	```yaml
+L00005020	plan_unit_id: ACD-033
+L00005021	unit_type: requirement
+L00005022	status: accepted
+L00005023	owner_doc: Plans/assistant-chat-design.md
+L00005024	canonical_text: Plan review is checklist-forward and visible, with a reviewable plan artifact, normalized TODO projection, live execution progress, sticky panel, and structural controls before approval.
+L00005025	gui_related: true
+L00005026	gui_classification_reason: Plan panel, checklist review, structural controls, sticky panel, and live execution progress are user-visible GUI behavior.
+L00005027	depends_on: [ACD-032]
+L00005028	unblocks: []
+L00005029	acceptance_criteria:
+L00005030	  - Planning is not hidden inside an opaque unified planning/execution loop.
+L00005031	  - The review surface exposes add, remove, and reorder structural controls before approval.
+L00005032	  - Live execution progress remains connected to the normalized TODO projection.
+L00005033	validation_surfaces:
+L00005034	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005035	  - python3 scripts/pm-plan-index.py validate
+L00005036	risk_class: planning_ui_projection
+L00005037	reasoning_tier: standard
+L00005038	context_scope: plan_review
+L00005039	implementation_surfaces:
+L00005040	  - Plans/assistant-chat-design.md
+L00005041	  - Plans/FinalGUISpec.md
+L00005042	node_compile_hint:
+L00005043	  mode: visible_plan_review_surface
+L00005044	  create_worknodes: false
+L00005045	source_lineage:
+L00005046	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00005047	preserved_exact_tokens:
+L00005048	  - "visible plan/checklist review"
+L00005049	  - "execution-tracker"
+L00005050	  - "plan panel"
+L00005051	  - "/add/remove/reorder"
+L00005052	  - "sticky panel"
+L00005053	negative_constraints: []
+L00005054	owner_hints:
+L00005055	  - Plans/assistant-chat-design.md
+L00005056	  - Plans/FinalGUISpec.md
+L00005057	```
+L00005058	
+L00005059	### ACD-034 - Plan Revision And TODO History
+L00005060	
+L00005061	```yaml
+L00005062	plan_unit_id: ACD-034
+L00005063	unit_type: requirement
+L00005064	status: accepted
+L00005065	owner_doc: Plans/assistant-chat-design.md
+L00005066	canonical_text: Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, chat.plan_todo_updated emissions, Deep Plan diff reconciliation, run-level states, and explicit replans.
+L00005067	gui_related: false
+L00005068	gui_classification_reason: Revision history, mutation events, and plan state persistence are backend/data behavior rather than visual implementation.
+L00005069	depends_on: [ACD-032]
+L00005070	unblocks: [ACD-043, ACD-044]
+L00005071	acceptance_criteria:
+L00005072	  - Structural edits after approval create a new revision rather than invisibly mutating approved history.
+L00005073	  - Deep Plan artifact edits resync the TODO projection through PM-extracted diffs.
+L00005074	  - chat.plan_todo_updated records durable normalized TODO mutations.
+L00005075	validation_surfaces:
+L00005076	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005077	  - python3 scripts/pm-plan-index.py validate
+L00005078	risk_class: todo_history_drift
+L00005079	reasoning_tier: high
+L00005080	context_scope: plan_persistence
+L00005081	implementation_surfaces:
+L00005082	  - Plans/assistant-chat-design.md
+L00005083	  - Plans/storage-plan.md
+L00005084	  - Plans/Contracts_V0.md
+L00005085	node_compile_hint:
+L00005086	  mode: plan_revision_todo_history
+L00005087	  create_worknodes: false
+L00005088	source_lineage:
+L00005089	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00005090	preserved_exact_tokens:
+L00005091	  - "chat.plan_todo_updated"
+L00005092	  - "todoread"
+L00005093	  - "source_surface"
+L00005094	  - "/diffs"
+L00005095	  - "/run-level"
+L00005096	  - "/replans"
+L00005097	  - "stale artifact copy"
+L00005098	negative_constraints:
+L00005099	  - "`todoread` must not survive as a `source_surface` mutation source."
+L00005100	owner_hints:
+L00005101	  - Plans/assistant-chat-design.md
+L00005102	  - Plans/storage-plan.md
+L00005103	```
+L00005104	
+L00005105	### ACD-035 - Plan Thoroughness Control Surface
+L00005106	
+L00005107	```yaml
+L00005108	plan_unit_id: ACD-035
+L00005109	unit_type: requirement
+L00005110	status: accepted
+L00005111	owner_doc: Plans/assistant-chat-design.md
+L00005112	canonical_text: Plan Thoroughness is a visible Assistant Chat GUI control for Plan and Deep Plan with the enum Light, Balanced, and Comprehensive; both Plan and Deep Plan default to Balanced.
+L00005113	gui_related: true
+L00005114	gui_classification_reason: Plan Thoroughness is a visible Assistant Chat GUI control.
+L00005115	depends_on: [ACD-032]
+L00005116	unblocks: [ACD-036, ACD-037]
+L00005117	acceptance_criteria:
+L00005118	  - The Plan Thoroughness enum is limited to Light, Balanced, and Comprehensive.
+L00005119	  - Plan and Deep Plan default Plan Thoroughness is Balanced.
+L00005120	validation_surfaces:
+L00005121	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005122	  - python3 scripts/pm-plan-index.py validate
+L00005123	risk_class: planning_control_sync
+L00005124	reasoning_tier: standard
+L00005125	context_scope: pt
+L00005126	implementation_surfaces:
+L00005127	  - Plans/assistant-chat-design.md
+L00005128	  - Plans/FinalGUISpec.md
+L00005129	node_compile_hint:
+L00005130	  mode: pt_control_surface
+L00005131	  create_worknodes: false
+L00005132	source_lineage:
+L00005133	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0036
+L00005134	preserved_exact_tokens:
+L00005135	  - "Plan Thoroughness (PT)"
+L00005136	  - "Assistant Chat GUI"
+L00005137	  - "Light"
+L00005138	  - "Balanced"
+L00005139	  - "Comprehensive"
+L00005140	negative_constraints: []
+L00005141	owner_hints:
+L00005142	  - Plans/assistant-chat-design.md
+L00005143	```
+L00005144	
+L00005145	### ACD-036 - Plan Thoroughness Intensity Semantics
+L00005146	
+L00005147	```yaml
+L00005148	plan_unit_id: ACD-036
+L00005149	unit_type: requirement
+L00005150	status: accepted
+L00005151	owner_doc: Plans/assistant-chat-design.md
+L00005152	canonical_text: Plan Thoroughness controls clarifying-question budget, repo research breadth, cited web research posture, risk, alternative, dependency, and validation detail, TODO detail, and relative intensity between Plan and Deep Plan.
+L00005153	gui_related: false
+L00005154	gui_classification_reason: Planning intensity and research-budget semantics are workflow behavior, not GUI implementation.
+L00005155	depends_on: [ACD-035]
+L00005156	unblocks: [ACD-037]
+L00005157	acceptance_criteria:
+L00005158	  - Deep Plan at a given PT remains more intensive than Plan at the same PT.
+L00005159	  - Research continuation starts from the current work-item ledger and narrows to relevant docs rather than sweeping unrelated docs by default.
+L00005160	validation_surfaces:
+L00005161	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005162	  - python3 scripts/pm-plan-index.py validate
+L00005163	risk_class: planning_intensity
+L00005164	reasoning_tier: standard
+L00005165	context_scope: pt
+L00005166	implementation_surfaces:
+L00005167	  - Plans/assistant-chat-design.md
+L00005168	node_compile_hint:
+L00005169	  mode: pt_intensity_semantics
+L00005170	  create_worknodes: false
+L00005171	source_lineage:
+L00005172	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0036
+L00005173	preserved_exact_tokens:
+L00005174	  - "clarifying-question budget"
+L00005175	  - "repo-research breadth"
+L00005176	  - "cited web research"
+L00005177	  - "current work-item ledger"
+L00005178	negative_constraints: []
+L00005179	owner_hints:
+L00005180	  - Plans/assistant-chat-design.md
+L00005181	```
+L00005182	
+L00005183	### ACD-037 - Plan Thoroughness Budget Matrix
+L00005184	
+L00005185	```yaml
+L00005186	plan_unit_id: ACD-037
+L00005187	unit_type: requirement
+L00005188	status: accepted
+L00005189	owner_doc: Plans/assistant-chat-design.md
+L00005190	canonical_text: The PT budget matrix is the deterministic first-implementation ceiling/default baseline, including Plan budgets 2, 4, and 6, Deep Plan budgets 4, 6, and 8, web-research rules, and primary or official source preference for platform-capability research.
+L00005191	gui_related: false
+L00005192	gui_classification_reason: Budget ceilings and research-source posture are planning workflow constraints, not GUI implementation.
+L00005193	depends_on: [ACD-035, ACD-036]
+L00005194	unblocks: [ACD-038, ACD-040]
+L00005195	acceptance_criteria:
+L00005196	  - PT budget values are ceilings/defaults rather than promises that every run uses the full budget.
+L00005197	  - Web research follows the cited web-search contract when used.
+L00005198	  - Deep Plan favors primary or official sources when researching current platform capabilities, provider behavior, or best practices.
+L00005199	validation_surfaces:
+L00005200	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005201	  - python3 scripts/pm-plan-index.py validate
+L00005202	risk_class: budget_drift
+L00005203	reasoning_tier: standard
+L00005204	context_scope: pt_matrix
+L00005205	implementation_surfaces:
+L00005206	  - Plans/assistant-chat-design.md
+L00005207	node_compile_hint:
+L00005208	  mode: pt_budget_matrix
+L00005209	  create_worknodes: false
+L00005210	source_lineage:
+L00005211	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0037
+L00005212	preserved_exact_tokens:
+L00005213	  - "ceilings/defaults"
+L00005214	  - "Plan | Light | 2"
+L00005215	  - "Plan | Balanced | 4"
+L00005216	  - "Plan | Comprehensive | 6"
+L00005217	  - "Deep Plan | Light | 4"
+L00005218	  - "Deep Plan | Balanced | 6"
+L00005219	  - "Deep Plan | Comprehensive | 8"
+L00005220	  - "primary/official sources"
+L00005221	negative_constraints: []
+L00005222	owner_hints:
+L00005223	  - Plans/assistant-chat-design.md
+L00005224	```
+L00005225	
+L00005226	### ACD-038 - Standard Plan Workflow
+L00005227	
+L00005228	```yaml
+L00005229	plan_unit_id: ACD-038
+L00005230	unit_type: requirement
+L00005231	status: accepted
+L00005232	owner_doc: Plans/assistant-chat-design.md
+L00005233	canonical_text: Standard Plan is for medium-complexity work, asks clarifying questions, remains a read-only planning run, may use safe parallel research where allowed, and prefers repo or codebase research first.
+L00005234	gui_related: false
+L00005235	gui_classification_reason: Standard Plan mode boundaries and research posture are workflow behavior, not GUI implementation.
+L00005236	depends_on: [ACD-032, ACD-037]
+L00005237	unblocks: [ACD-039]
+L00005238	acceptance_criteria:
+L00005239	  - Clarifying questions are allowed and expected in Standard Plan.
+L00005240	  - Standard Plan remains read-only during planning.
+L00005241	  - Standard Plan prefers repo/codebase research first and uses shorter web research than Deep Plan.
+L00005242	validation_surfaces:
+L00005243	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005244	  - python3 scripts/pm-plan-index.py validate
+L00005245	risk_class: mode_boundary
+L00005246	reasoning_tier: standard
+L00005247	context_scope: standard_plan
+L00005248	implementation_surfaces:
+L00005249	  - Plans/assistant-chat-design.md
+L00005250	node_compile_hint:
+L00005251	  mode: standard_plan_workflow
+L00005252	  create_worknodes: false
+L00005253	source_lineage:
+L00005254	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0038
+L00005255	preserved_exact_tokens:
+L00005256	  - "Clarifying questions are allowed and expected; they are not optional."
+L00005257	  - "read-only planning run"
+L00005258	negative_constraints: []
+L00005259	owner_hints:
+L00005260	  - Plans/assistant-chat-design.md
+L00005261	```
+L00005262	
+L00005263	### ACD-039 - Standard Plan Artifact Surface
+L00005264	
+L00005265	```yaml
+L00005266	plan_unit_id: ACD-039
+L00005267	unit_type: requirement
+L00005268	status: accepted
+L00005269	owner_doc: Plans/assistant-chat-design.md
+L00005270	canonical_text: Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the editor on demand, and has defined minimum artifact contents.
+L00005271	gui_related: true
+L00005272	gui_classification_reason: Plan panel display, editor opening, and artifact review are user-visible GUI behavior.
+L00005273	depends_on: [ACD-038]
+L00005274	unblocks: []
+L00005275	acceptance_criteria:
+L00005276	  - Standard Plan displays written plan content and normalized TODO list in the plan panel.
+L00005277	  - Opening the plan artifact in the editor is available on demand but is not automatic.
+L00005278	  - Standard Plan artifact minimums are preserved.
+L00005279	validation_surfaces:
+L00005280	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005281	  - python3 scripts/pm-plan-index.py validate
+L00005282	risk_class: artifact_surface
+L00005283	reasoning_tier: standard
+L00005284	context_scope: standard_plan
+L00005285	implementation_surfaces:
+L00005286	  - Plans/assistant-chat-design.md
+L00005287	  - Plans/FinalGUISpec.md
+L00005288	node_compile_hint:
+L00005289	  mode: standard_plan_artifact_surface
+L00005290	  create_worknodes: false
+L00005291	source_lineage:
+L00005292	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0038
+L00005293	preserved_exact_tokens:
+L00005294	  - "concise problem statement"
+L00005295	  - "current-state summary"
+L00005296	  - "proposed approach summary"
+L00005297	  - "normalized TODO list"
+L00005298	  - "verification / validation notes"
+L00005299	  - "unresolved questions"
+L00005300	negative_constraints: []
+L00005301	owner_hints:
+L00005302	  - Plans/assistant-chat-design.md
+L00005303	  - Plans/FinalGUISpec.md
+L00005304	```
+L00005305	
+L00005306	### ACD-040 - Deep Plan Intensity Boundary
+L00005307	
+L00005308	```yaml
+L00005309	plan_unit_id: ACD-040
+L00005310	unit_type: requirement
+L00005311	status: accepted
+L00005312	owner_doc: Plans/assistant-chat-design.md
+L00005313	canonical_text: >-
+L00005314	  Deep Plan is for larger or higher-uncertainty work and differs from Standard
+L00005315	  Plan by degree and intensity: more questions, broader local research, and
+L00005316	  broader web research at the same PT.
+L00005317	gui_related: false
+L00005318	gui_classification_reason: Deep Plan intensity and mode boundary are planning workflow behavior, not GUI implementation.
+L00005319	depends_on: [ACD-032, ACD-037]
+L00005320	unblocks: [ACD-041, ACD-042]
+L00005321	acceptance_criteria:
+L00005322	  - Deep Plan asks more questions than Standard Plan at the same PT.
+L00005323	  - Deep Plan performs materially broader repo and web research than Standard Plan at the same PT.
+L00005324	  - Plan versus Deep Plan difference remains degree/intensity, not categorical.
+L00005325	validation_surfaces:
+L00005326	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005327	  - python3 scripts/pm-plan-index.py validate
+L00005328	risk_class: mode_boundary
+L00005329	reasoning_tier: standard
+L00005330	context_scope: deep_plan
+L00005331	implementation_surfaces:
+L00005332	  - Plans/assistant-chat-design.md
+L00005333	node_compile_hint:
+L00005334	  mode: deep_plan_intensity_boundary
+L00005335	  create_worknodes: false
+L00005336	source_lineage:
+L00005337	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+L00005338	preserved_exact_tokens:
+L00005339	  - "LOCKED behavior"
+L00005340	  - "degree/intensity, not categorical"
+L00005341	negative_constraints: []
+L00005342	owner_hints:
+L00005343	  - Plans/assistant-chat-design.md
+L00005344	```
+L00005345	
+L00005346	### ACD-041 - Deep Plan Artifact Opening
+L00005347	
+L00005348	```yaml
+L00005349	plan_unit_id: ACD-041
+L00005350	unit_type: requirement
+L00005351	status: accepted
+L00005352	owner_doc: Plans/assistant-chat-design.md
+L00005353	canonical_text: Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface, defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+L00005354	gui_related: true
+L00005355	gui_classification_reason: Automatic preview-capable editor opening and rich document rendering are user-visible GUI behavior.
+L00005356	depends_on: [ACD-040]
+L00005357	unblocks: [ACD-042]
+L00005358	acceptance_criteria:
+L00005359	  - Deep Plan documents open automatically in a preview-capable editing surface.
+L00005360	  - Non-persisted Deep Plan documents open as transient generated:// artifact buffers.
+L00005361	  - Source markdown and Mermaid text remain canonical even when richly rendered.
+L00005362	validation_surfaces:
+L00005363	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005364	  - python3 scripts/pm-plan-index.py validate
+L00005365	risk_class: artifact_identity
+L00005366	reasoning_tier: standard
+L00005367	context_scope: deep_plan
+L00005368	implementation_surfaces:
+L00005369	  - Plans/assistant-chat-design.md
+L00005370	  - Plans/FileManager.md
+L00005371	  - Plans/FinalGUISpec.md
+L00005372	node_compile_hint:
+L00005373	  mode: deep_plan_artifact_opening
+L00005374	  create_worknodes: false
+L00005375	source_lineage:
+L00005376	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+L00005377	preserved_exact_tokens:
+L00005378	  - "planning_draft"
+L00005379	  - "open_source"
+L00005380	  - "generated://<artifact_id>"
+L00005381	  - "source markdown / Mermaid text"
+L00005382	  - "Mermaid Diagrams"
+L00005383	negative_constraints: []
+L00005384	owner_hints:
+L00005385	  - Plans/assistant-chat-design.md
+L00005386	  - Plans/FileManager.md
+L00005387	```
+L00005388	
+L00005389	### ACD-042 - Deep Plan Section Minimums
+L00005390	
+L00005391	```yaml
+L00005392	plan_unit_id: ACD-042
+L00005393	unit_type: requirement
+L00005394	status: accepted
+L00005395	owner_doc: Plans/assistant-chat-design.md
+L00005396	canonical_text: Deep Plan documents have locked minimum sections and allowed optional sections covering objective, scope, context, approach, questions, execution TODOs, validation, risks, alternatives, diagrams, snippets, affected areas, and rollout notes.
+L00005397	gui_related: false
+L00005398	gui_classification_reason: Document section requirements are content structure constraints, not GUI implementation.
+L00005399	depends_on: [ACD-041]
+L00005400	unblocks: []
+L00005401	acceptance_criteria:
+L00005402	  - Deep Plan documents include every minimum section.
+L00005403	  - Optional Deep Plan sections remain allowed without becoming required for every document.
+L00005404	validation_surfaces:
+L00005405	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005406	  - python3 scripts/pm-plan-index.py validate
+L00005407	risk_class: document_completeness
+L00005408	reasoning_tier: standard
+L00005409	context_scope: deep_plan
+L00005410	implementation_surfaces:
+L00005411	  - Plans/assistant-chat-design.md
+L00005412	node_compile_hint:
+L00005413	  mode: deep_plan_section_minimums
+L00005414	  create_worknodes: false
+L00005415	source_lineage:
+L00005416	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+L00005417	preserved_exact_tokens:
+L00005418	  - "Objective"
+L00005419	  - "Scope"
+L00005420	  - "Current State / Relevant Context"
+L00005421	  - "Proposed Approach"
+L00005422	  - "Open Questions / Assumptions"
+L00005423	  - "Execution Plan / TODOs"
+L00005424	  - "Validation / Acceptance"
+L00005425	  - "Risks"
+L00005426	  - "Alternatives Considered"
+L00005427	  - "Mermaid Diagrams"
+L00005428	  - "Code Snippets"
+L00005429	  - "Affected Files / Areas"
+L00005430	  - "Rollout / Migration Notes"
+L00005431	negative_constraints: []
+L00005432	owner_hints:
+L00005433	  - Plans/assistant-chat-design.md
+L00005434	```
+L00005435	
+L00005436	### ACD-043 - Normalized TODO Schema
+L00005437	
+L00005438	```yaml
+L00005439	plan_unit_id: ACD-043
+L00005440	unit_type: requirement
+L00005441	status: accepted
+L00005442	owner_doc: Plans/assistant-chat-design.md
+L00005443	canonical_text: The normalized TODO schema owns fields, ordering, notes, legacy payload normalization, plan-level superseded summaries, verification scope labeling, and visible TODO checklist terminology.
+L00005444	gui_related: false
+L00005445	gui_classification_reason: TODO field shape, compatibility normalization, and plan-level status semantics are data-contract behavior, not GUI implementation.
+L00005446	depends_on: [ACD-032, ACD-034]
+L00005447	unblocks: [ACD-044, ACD-045]
+L00005448	acceptance_criteria:
+L00005449	  - TODO items use order_index and notes as canonical fields.
+L00005450	  - Legacy TODO payloads normalize into the Assistant TODO schema.
+L00005451	  - Superseded TODO N/N remains a plan-level summary and not an active item-level TODO status.
+L00005452	validation_surfaces:
+L00005453	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005454	  - python3 scripts/pm-plan-index.py validate
+L00005455	risk_class: schema_compatibility
+L00005456	reasoning_tier: standard
+L00005457	context_scope: todo
+L00005458	implementation_surfaces:
+L00005459	  - Plans/assistant-chat-design.md
+L00005460	  - Plans/storage-plan.md
+L00005461	  - Plans/Contracts_V0.md
+L00005462	node_compile_hint:
+L00005463	  mode: normalized_todo_schema
+L00005464	  create_worknodes: false
+L00005465	source_lineage:
+L00005466	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+L00005467	preserved_exact_tokens:
+L00005468	  - "order_index"
+L00005469	  - "notes"
+L00005470	  - "notes?"
+L00005471	  - "order_index?"
+L00005472	  - "Superseded TODO N/N"
+L00005473	  - "verification_hint"
+L00005474	  - "todos: Array<{ id?, content, status? }>"
+L00005475	  - "todos: Array<{ id, content, status }>"
+L00005476	  - "TODO"
+L00005477	negative_constraints: []
+L00005478	compatibility_only_notes:
+L00005479	  - "Legacy optional spellings notes? and order_index? normalize to canonical notes and order_index."
+L00005480	owner_hints:
+L00005481	  - Plans/assistant-chat-design.md
+L00005482	  - Plans/storage-plan.md
+L00005483	```
+L00005484	
+L00005485	### ACD-044 - TODO Tool Mutation Boundary
+L00005486	
+L00005487	```yaml
+L00005488	plan_unit_id: ACD-044
+L00005489	unit_type: requirement
+L00005490	status: accepted
+L00005491	owner_doc: Plans/assistant-chat-design.md
+L00005492	canonical_text: todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or plan mode, and Deep Plan markdown edits resync TODO projection before execution begins.
+L00005493	gui_related: false
+L00005494	gui_classification_reason: TODO tool mutation, read behavior, and execution gating are runtime/tool behavior, not GUI implementation.
+L00005495	depends_on: [ACD-043]
+L00005496	unblocks: [ACD-045]

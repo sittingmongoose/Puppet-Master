@@ -1,0 +1,695 @@
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.runtime_artifact.cost_usage.schema.v1",
+L00000004	  "title": "Runtime Artifact cost_usage",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "artifact_id",
+L00000010	    "artifact_type",
+L00000011	    "project_id",
+L00000012	    "run_id",
+L00000013	    "attempt_id",
+L00000014	    "usage_event_ref",
+L00000015	    "usage_record_id",
+L00000016	    "created_at_utc",
+L00000017	    "projection_freshness",
+L00000018	    "projection_health",
+L00000019	    "retention_class",
+L00000020	    "routing_refs",
+L00000021	    "type_payload"
+L00000022	  ],
+L00000023	  "$defs": {
+L00000024	    "nonNegativeIntegerOrNull": {
+L00000025	      "type": [
+L00000026	        "integer",
+L00000027	        "null"
+L00000028	      ],
+L00000029	      "minimum": 0
+L00000030	    },
+L00000031	    "nonNegativeNumberOrNull": {
+L00000032	      "type": [
+L00000033	        "number",
+L00000034	        "null"
+L00000035	      ],
+L00000036	      "minimum": 0
+L00000037	    },
+L00000038	    "stringOrNull": {
+L00000039	      "type": [
+L00000040	        "string",
+L00000041	        "null"
+L00000042	      ]
+L00000043	    },
+L00000044	    "refString": {
+L00000045	      "type": "string",
+L00000046	      "minLength": 1
+L00000047	    },
+L00000048	    "tokenBuckets": {
+L00000049	      "type": "object",
+L00000050	      "additionalProperties": false,
+L00000051	      "required": [
+L00000052	        "input_total",
+L00000053	        "input_non_cached",
+L00000054	        "cache_read",
+L00000055	        "cache_write",
+L00000056	        "cache_write_1h",
+L00000057	        "output_total",
+L00000058	        "output_visible",
+L00000059	        "reasoning_tokens",
+L00000060	        "provider_total",
+L00000061	        "context_estimate",
+L00000062	        "counting_semantics",
+L00000063	        "usage_reporting_state"
+L00000064	      ],
+L00000065	      "properties": {
+L00000066	        "input_total": {
+L00000067	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000068	        },
+L00000069	        "input_non_cached": {
+L00000070	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000071	        },
+L00000072	        "cache_read": {
+L00000073	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000074	        },
+L00000075	        "cache_write": {
+L00000076	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000077	        },
+L00000078	        "cache_write_1h": {
+L00000079	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000080	        },
+L00000081	        "cache_write_ttl": {
+L00000082	          "$ref": "#/$defs/stringOrNull"
+L00000083	        },
+L00000084	        "cache_write_breakdown_state": {
+L00000085	          "type": "string",
+L00000086	          "enum": [
+L00000087	            "reported",
+L00000088	            "fallback_short_ttl",
+L00000089	            "not_exposed",
+L00000090	            "unknown"
+L00000091	          ]
+L00000092	        },
+L00000093	        "output_total": {
+L00000094	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000095	        },
+L00000096	        "output_visible": {
+L00000097	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000098	        },
+L00000099	        "reasoning_tokens": {
+L00000100	          "$ref": "#/$defs/nonNegativeIntegerOrNull",
+L00000101	          "description": "Runtime artifact JSON wire alias for the UF-085 reasoning/thoughts bucket; interpreted only through counting_semantics and not an independent UsageEvent accounting field."
+L00000102	        },
+L00000103	        "thoughts_tokens": {
+L00000104	          "$ref": "#/$defs/nonNegativeIntegerOrNull",
+L00000105	          "description": "Provider thoughts-specific raw count when separately exposed; maps into the UF-085 reasoning/thoughts semantics and does not replace reasoning_tokens/counting_semantics."
+L00000106	        },
+L00000107	        "provider_total": {
+L00000108	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000109	        },
+L00000110	        "context_estimate": {
+L00000111	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000112	        },
+L00000113	        "delta": {
+L00000114	          "type": "object",
+L00000115	          "additionalProperties": {
+L00000116	            "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000117	          }
+L00000118	        },
+L00000119	        "cumulative": {
+L00000120	          "type": "object",
+L00000121	          "additionalProperties": {
+L00000122	            "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000123	          }
+L00000124	        },
+L00000125	        "counting_semantics": {
+L00000126	          "type": "object",
+L00000127	          "additionalProperties": false,
+L00000128	          "required": [
+L00000129	            "input_total_includes_cache",
+L00000130	            "output_total_includes_reasoning",
+L00000131	            "provider_total_semantics"
+L00000132	          ],
+L00000133	          "properties": {
+L00000134	            "input_total_includes_cache": {
+L00000135	              "type": "string",
+L00000136	              "enum": [
+L00000137	                "yes",
+L00000138	                "no",
+L00000139	                "unknown"
+L00000140	              ]
+L00000141	            },
+L00000142	            "output_total_includes_reasoning": {
+L00000143	              "type": "string",
+L00000144	              "enum": [
+L00000145	                "yes",
+L00000146	                "no",
+L00000147	                "unknown"
+L00000148	              ]
+L00000149	            },
+L00000150	            "provider_total_semantics": {
+L00000151	              "type": "string",
+L00000152	              "enum": [
+L00000153	                "provider_reported",
+L00000154	                "derived_input_plus_output",
+L00000155	                "not_exposed",
+L00000156	                "unknown"
+L00000157	              ]
+L00000158	            }
+L00000159	          }
+L00000160	        },
+L00000161	        "usage_reporting_state": {
+L00000162	          "type": "string",
+L00000163	          "enum": [
+L00000164	            "final",
+L00000165	            "partial",
+L00000166	            "estimated",
+L00000167	            "unavailable",
+L00000168	            "unknown"
+L00000169	          ]
+L00000170	        }
+L00000171	      }
+L00000172	    },
+L00000173	    "providerIdentity": {
+L00000174	      "type": "object",
+L00000175	      "additionalProperties": false,
+L00000176	      "required": [
+L00000177	        "provider_id",
+L00000178	        "provider_route_kind",
+L00000179	        "model_id"
+L00000180	      ],
+L00000181	      "properties": {
+L00000182	        "provider_id": {
+L00000183	          "$ref": "#/$defs/refString"
+L00000184	        },
+L00000185	        "provider_route_kind": {
+L00000186	          "$ref": "#/$defs/refString"
+L00000187	        },
+L00000188	        "provider_account_ref": {
+L00000189	          "$ref": "#/$defs/stringOrNull"
+L00000190	        },
+L00000191	        "model_id": {
+L00000192	          "$ref": "#/$defs/refString"
+L00000193	        },
+L00000194	        "model_variant": {
+L00000195	          "$ref": "#/$defs/stringOrNull"
+L00000196	        },
+L00000197	        "reasoning_tier": {
+L00000198	          "$ref": "#/$defs/stringOrNull"
+L00000199	        },
+L00000200	        "context_window_tokens": {
+L00000201	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000202	        }
+L00000203	      }
+L00000204	    },
+L00000205	    "costFields": {
+L00000206	      "type": "object",
+L00000207	      "additionalProperties": false,
+L00000208	      "required": [
+L00000209	        "cost_status",
+L00000210	        "cost_microdollars",
+L00000211	        "cost_minor_units",
+L00000212	        "currency",
+L00000213	        "pricing_snapshot_id",
+L00000214	        "pricing_source",
+L00000215	        "pricing_effective_at",
+L00000216	        "pricing_version"
+L00000217	      ],
+L00000218	      "properties": {
+L00000219	        "cost_status": {
+L00000220	          "type": "string",
+L00000221	          "enum": [
+L00000222	            "provider_reported",
+L00000223	            "priced",
+L00000224	            "estimated",
+L00000225	            "hidden_subscription",
+L00000226	            "hidden_byok",
+L00000227	            "unknown"
+L00000228	          ]
+L00000229	        },
+L00000230	        "cost_microdollars": {
+L00000231	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000232	        },
+L00000233	        "cost_minor_units": {
+L00000234	          "type": [
+L00000235	            "object",
+L00000236	            "null"
+L00000237	          ],
+L00000238	          "additionalProperties": true
+L00000239	        },
+L00000240	        "currency": {
+L00000241	          "$ref": "#/$defs/stringOrNull"
+L00000242	        },
+L00000243	        "pricing_snapshot_id": {
+L00000244	          "$ref": "#/$defs/stringOrNull"
+L00000245	        },
+L00000246	        "pricing_source": {
+L00000247	          "$ref": "#/$defs/stringOrNull"
+L00000248	        },
+L00000249	        "pricing_effective_at": {
+L00000250	          "$ref": "#/$defs/stringOrNull"
+L00000251	        },
+L00000252	        "pricing_version": {
+L00000253	          "$ref": "#/$defs/stringOrNull"
+L00000254	        },
+L00000255	        "bucket_costs_microdollars": {
+L00000256	          "type": "object",
+L00000257	          "additionalProperties": {
+L00000258	            "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000259	          }
+L00000260	        },
+L00000261	        "custom_provider_price_row_ref": {
+L00000262	          "$ref": "#/$defs/stringOrNull"
+L00000263	        }
+L00000264	      }
+L00000265	    },
+L00000266	    "quotaFields": {
+L00000267	      "type": "object",
+L00000268	      "additionalProperties": false,
+L00000269	      "required": [
+L00000270	        "window_kind",
+L00000271	        "window_scope",
+L00000272	        "quota_status",
+L00000273	        "evidence_source",
+L00000274	        "reset_at",
+L00000275	        "cooldown_until",
+L00000276	        "quota_remaining",
+L00000277	        "quota_used",
+L00000278	        "quota_limit"
+L00000279	      ],
+L00000280	      "properties": {
+L00000281	        "window_kind": {
+L00000282	          "type": "string",
+L00000283	          "enum": [
+L00000284	            "rolling",
+L00000285	            "fixed",
+L00000286	            "billing",
+L00000287	            "session",
+L00000288	            "unknown"
+L00000289	          ]
+L00000290	        },
+L00000291	        "window_scope": {
+L00000292	          "$ref": "#/$defs/stringOrNull"
+L00000293	        },
+L00000294	        "quota_status": {
+L00000295	          "type": "string",
+L00000296	          "enum": [
+L00000297	            "reported",
+L00000298	            "disabled",
+L00000299	            "not_exposed",
+L00000300	            "estimated",
+L00000301	            "unknown"
+L00000302	          ]
+L00000303	        },
+L00000304	        "evidence_source": {
+L00000305	          "type": "string",
+L00000306	          "enum": [
+L00000307	            "provider_api",
+L00000308	            "provider_header",
+L00000309	            "cli_command",
+L00000310	            "statusline",
+L00000311	            "local_estimate",
+L00000312	            "not_exposed",
+L00000313	            "unknown"
+L00000314	          ]
+L00000315	        },
+L00000316	        "reset_at": {
+L00000317	          "$ref": "#/$defs/stringOrNull"
+L00000318	        },
+L00000319	        "cooldown_until": {
+L00000320	          "$ref": "#/$defs/stringOrNull"
+L00000321	        },
+L00000322	        "quota_remaining": {
+L00000323	          "$ref": "#/$defs/nonNegativeNumberOrNull"
+L00000324	        },
+L00000325	        "quota_used": {
+L00000326	          "$ref": "#/$defs/nonNegativeNumberOrNull"
+L00000327	        },
+L00000328	        "quota_limit": {
+L00000329	          "$ref": "#/$defs/nonNegativeNumberOrNull"
+L00000330	        },
+L00000331	        "credits_remaining": {
+L00000332	          "$ref": "#/$defs/nonNegativeNumberOrNull"
+L00000333	        },
+L00000334	        "credits_status": {
+L00000335	          "type": "string",
+L00000336	          "enum": [
+L00000337	            "reported",
+L00000338	            "not_exposed",
+L00000339	            "disabled",
+L00000340	            "unknown"
+L00000341	          ]
+L00000342	        }
+L00000343	      }
+L00000344	    },
+L00000345	    "authorityFields": {
+L00000346	      "type": "object",
+L00000347	      "additionalProperties": false,
+L00000348	      "required": [
+L00000349	        "source_class",
+L00000350	        "source_confidence",
+L00000351	        "source_authority",
+L00000352	        "settlement_status",
+L00000353	        "raw_payload_ref",
+L00000354	        "redaction_status",
+L00000355	        "provider_payload_hash"
+L00000356	      ],
+L00000357	      "properties": {
+L00000358	        "source_class": {
+L00000359	          "type": "string",
+L00000360	          "enum": [
+L00000361	            "provider_reported",
+L00000362	            "provider_header",
+L00000363	            "cli_reported",
+L00000364	            "local_estimated",
+L00000365	            "pricing_estimated",
+L00000366	            "unknown"
+L00000367	          ]
+L00000368	        },
+L00000369	        "source_confidence": {
+L00000370	          "type": "string",
+L00000371	          "enum": [
+L00000372	            "high",
+L00000373	            "medium",
+L00000374	            "low",
+L00000375	            "unknown"
+L00000376	          ]
+L00000377	        },
+L00000378	        "source_authority": {
+L00000379	          "$ref": "#/$defs/stringOrNull"
+L00000380	        },
+L00000381	        "settlement_status": {
+L00000382	          "type": "string",
+L00000383	          "enum": [
+L00000384	            "observed",
+L00000385	            "streaming_partial",
+L00000386	            "settled",
+L00000387	            "adjusted",
+L00000388	            "failed",
+L00000389	            "unknown"
+L00000390	          ]
+L00000391	        },
+L00000392	        "observed_at_utc": {
+L00000393	          "$ref": "#/$defs/stringOrNull"
+L00000394	        },
+L00000395	        "settled_at_utc": {
+L00000396	          "$ref": "#/$defs/stringOrNull"
+L00000397	        },
+L00000398	        "adjusted_at_utc": {
+L00000399	          "$ref": "#/$defs/stringOrNull"
+L00000400	        },
+L00000401	        "failure_class": {
+L00000402	          "$ref": "#/$defs/stringOrNull"
+L00000403	        },
+L00000404	        "partial_reason": {
+L00000405	          "$ref": "#/$defs/stringOrNull"
+L00000406	        },
+L00000407	        "raw_payload_ref": {
+L00000408	          "$ref": "#/$defs/stringOrNull"
+L00000409	        },
+L00000410	        "redaction_status": {
+L00000411	          "type": "string",
+L00000412	          "enum": [
+L00000413	            "redacted",
+L00000414	            "not_required",
+L00000415	            "pending",
+L00000416	            "unknown"
+L00000417	          ]
+L00000418	        },
+L00000419	        "provider_payload_hash": {
+L00000420	          "$ref": "#/$defs/stringOrNull"
+L00000421	        }
+L00000422	      }
+L00000423	    }
+L00000424	  },
+L00000425	  "properties": {
+L00000426	    "schema_id": {
+L00000427	      "type": "string",
+L00000428	      "const": "pm.runtime_artifact.cost_usage.schema.v1"
+L00000429	    },
+L00000430	    "artifact_id": {
+L00000431	      "type": "string",
+L00000432	      "minLength": 1
+L00000433	    },
+L00000434	    "artifact_type": {
+L00000435	      "type": "string",
+L00000436	      "const": "cost_usage"
+L00000437	    },
+L00000438	    "project_id": {
+L00000439	      "type": "string",
+L00000440	      "minLength": 1
+L00000441	    },
+L00000442	    "run_id": {
+L00000443	      "type": "string",
+L00000444	      "minLength": 1
+L00000445	    },
+L00000446	    "attempt_id": {
+L00000447	      "type": "string",
+L00000448	      "minLength": 1
+L00000449	    },
+L00000450	    "thread_id": {
+L00000451	      "type": "string"
+L00000452	    },
+L00000453	    "node_id": {
+L00000454	      "type": "string"
+L00000455	    },
+L00000456	    "provider_attempt_ref": {
+L00000457	      "type": "string"
+L00000458	    },
+L00000459	    "usage_event_ref": {
+L00000460	      "type": "string",
+L00000461	      "minLength": 1
+L00000462	    },
+L00000463	    "usage_record_id": {
+L00000464	      "type": "string",
+L00000465	      "minLength": 1
+L00000466	    },
+L00000467	    "receipt_refs": {
+L00000468	      "type": "array",
+L00000469	      "items": {
+L00000470	        "type": "string",
+L00000471	        "minLength": 1
+L00000472	      }
+L00000473	    },
+L00000474	    "producer_ref": {
+L00000475	      "type": "string"
+L00000476	    },
+L00000477	    "actor_ref": {
+L00000478	      "type": "string"
+L00000479	    },
+L00000480	    "created_at_utc": {
+L00000481	      "type": "string",
+L00000482	      "minLength": 1
+L00000483	    },
+L00000484	    "summary": {
+L00000485	      "type": "string"
+L00000486	    },
+L00000487	    "detail_ref": {
+L00000488	      "type": "string"
+L00000489	    },
+L00000490	    "content_ref": {
+L00000491	      "type": "string"
+L00000492	    },
+L00000493	    "source_surface": {
+L00000494	      "type": "string"
+L00000495	    },
+L00000496	    "projection_freshness": {
+L00000497	      "type": "string"
+L00000498	    },
+L00000499	    "projection_health": {
+L00000500	      "type": "string"
+L00000501	    },
+L00000502	    "retention_class": {
+L00000503	      "type": "string"
+L00000504	    },
+L00000505	    "routing_refs": {
+L00000506	      "type": "array",
+L00000507	      "minItems": 1,
+L00000508	      "items": {
+L00000509	        "type": "string",
+L00000510	        "minLength": 1
+L00000511	      }
+L00000512	    },
+L00000513	    "type_payload": {
+L00000514	      "type": "object",
+L00000515	      "additionalProperties": false,
+L00000516	      "required": [
+L00000517	        "usage_event_ref",
+L00000518	        "usage_record_id",
+L00000519	        "reasoning_tokens",
+L00000520	        "provider",
+L00000521	        "usage",
+L00000522	        "cost",
+L00000523	        "quota",
+L00000524	        "authority",
+L00000525	        "refs",
+L00000526	        "flags"
+L00000527	      ],
+L00000528	      "properties": {
+L00000529	        "usage_event_ref": {
+L00000530	          "type": "string",
+L00000531	          "minLength": 1
+L00000532	        },
+L00000533	        "usage_record_id": {
+L00000534	          "type": "string",
+L00000535	          "minLength": 1
+L00000536	        },
+L00000537	        "reasoning_tokens": {
+L00000538	          "type": "integer",
+L00000539	          "minimum": 0,
+L00000540	          "description": "Compatibility/wire alias mirrored from usage.reasoning_tokens for UF-085 reasoning/thoughts drill-through; not source authority or an extra total."
+L00000541	        },
+L00000542	        "total_tokens": {
+L00000543	          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+L00000544	        },
+L00000545	        "provider": {
+L00000546	          "$ref": "#/$defs/providerIdentity"
+L00000547	        },
+L00000548	        "usage": {
+L00000549	          "$ref": "#/$defs/tokenBuckets"
+L00000550	        },
+L00000551	        "cost": {
+L00000552	          "$ref": "#/$defs/costFields"
+L00000553	        },
+L00000554	        "quota": {
+L00000555	          "$ref": "#/$defs/quotaFields"
+L00000556	        },
+L00000557	        "authority": {
+L00000558	          "$ref": "#/$defs/authorityFields"
+L00000559	        },
+L00000560	        "refs": {
+L00000561	          "type": "object",
+L00000562	          "additionalProperties": false,
+L00000563	          "required": [
+L00000564	            "usage_event_ref",
+L00000565	            "usage_record_id",
+L00000566	            "provider_attempt_ref",
+L00000567	            "raw_payload_ref"
+L00000568	          ],
+L00000569	          "properties": {
+L00000570	            "usage_event_ref": {
+L00000571	              "type": "string",
+L00000572	              "minLength": 1
+L00000573	            },
+L00000574	            "usage_record_id": {
+L00000575	              "type": "string",
+L00000576	              "minLength": 1
+L00000577	            },
+L00000578	            "provider_attempt_ref": {
+L00000579	              "$ref": "#/$defs/stringOrNull"
+L00000580	            },
+L00000581	            "attempt_id": {
+L00000582	              "$ref": "#/$defs/stringOrNull"
+L00000583	            },
+L00000584	            "run_id": {
+L00000585	              "$ref": "#/$defs/stringOrNull"
+L00000586	            },
+L00000587	            "thread_id": {
+L00000588	              "$ref": "#/$defs/stringOrNull"
+L00000589	            },
+L00000590	            "node_id": {
+L00000591	              "$ref": "#/$defs/stringOrNull"
+L00000592	            },
+L00000593	            "tool_call_id": {
+L00000594	              "$ref": "#/$defs/stringOrNull"
+L00000595	            },
+L00000596	            "parent_usage_record_id": {
+L00000597	              "$ref": "#/$defs/stringOrNull"
+L00000598	            },
+L00000599	            "dedupe_key": {
+L00000600	              "$ref": "#/$defs/stringOrNull"
+L00000601	            },
+L00000602	            "raw_payload_ref": {
+L00000603	              "$ref": "#/$defs/stringOrNull"
+L00000604	            },
+L00000605	            "receipt_refs": {
+L00000606	              "type": "array",
+L00000607	              "items": {
+L00000608	                "type": "string",
+L00000609	                "minLength": 1
+L00000610	              }
+L00000611	            },
+L00000612	            "child_usage_event_refs": {
+L00000613	              "type": "array",
+L00000614	              "items": {
+L00000615	                "type": "string",
+L00000616	                "minLength": 1
+L00000617	              }
+L00000618	            }
+L00000619	          }
+L00000620	        },
+L00000621	        "flags": {
+L00000622	          "type": "object",
+L00000623	          "additionalProperties": false,
+L00000624	          "required": [
+L00000625	            "is_estimated",
+L00000626	            "is_provider_reported",
+L00000627	            "is_cli_reported",
+L00000628	            "is_local_context_estimate",
+L00000629	            "is_subscription_hidden",
+L00000630	            "is_byok",
+L00000631	            "unknown_reason"
+L00000632	          ],
+L00000633	          "properties": {
+L00000634	            "is_estimated": {
+L00000635	              "type": "boolean"
+L00000636	            },
+L00000637	            "is_provider_reported": {
+L00000638	              "type": "boolean"
+L00000639	            },
+L00000640	            "is_cli_reported": {
+L00000641	              "type": "boolean"
+L00000642	            },
+L00000643	            "is_local_context_estimate": {
+L00000644	              "type": "boolean"
+L00000645	            },
+L00000646	            "is_subscription_hidden": {
+L00000647	              "type": "boolean"
+L00000648	            },
+L00000649	            "is_byok": {
+L00000650	              "type": "boolean"
+L00000651	            },
+L00000652	            "unknown_reason": {
+L00000653	              "$ref": "#/$defs/stringOrNull"
+L00000654	            },
+L00000655	            "display_cost_policy": {
+L00000656	              "type": "string",
+L00000657	              "enum": [
+L00000658	                "show",
+L00000659	                "hide",
+L00000660	                "subscription_covered",
+L00000661	                "unknown"
+L00000662	              ]
+L00000663	            }
+L00000664	          }
+L00000665	        },
+L00000666	        "stream": {
+L00000667	          "type": "object",
+L00000668	          "additionalProperties": false,
+L00000669	          "properties": {
+L00000670	            "stop_reason": {
+L00000671	              "$ref": "#/$defs/stringOrNull"
+L00000672	            },
+L00000673	            "abort_requested": {
+L00000674	              "type": "boolean"
+L00000675	            },
+L00000676	            "usage_observed_before_abort": {
+L00000677	              "type": "boolean"
+L00000678	            },
+L00000679	            "stream_end_source": {
+L00000680	              "$ref": "#/$defs/stringOrNull"
+L00000681	            }
+L00000682	          }
+L00000683	        },
+L00000684	        "overflow_evidence": {
+L00000685	          "type": "object",
+L00000686	          "additionalProperties": true
+L00000687	        },
+L00000688	        "provider_compat": {
+L00000689	          "type": "object",
+L00000690	          "additionalProperties": true
+L00000691	        }
+L00000692	      }
+L00000693	    }
+L00000694	  }
+L00000695	}

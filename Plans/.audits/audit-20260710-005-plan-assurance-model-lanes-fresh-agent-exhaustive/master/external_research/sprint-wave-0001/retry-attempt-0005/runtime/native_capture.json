@@ -1,0 +1,99 @@
+{
+  "activation_transaction": {
+    "activation_core_sha256": "45784f060f94557d40ad57c9e182fdf5012d639dbb8c5e25a7825a34aed30b5e",
+    "activation_envelope_sha256": "ae090433f86fd2f5563b2fc4f8ca1c3094d38d4c357c6044ab6b91148bd7aa88",
+    "authorization_sha256": {
+      "ER-0003": "5408e49fb43866b4bb5d894190c3ec16bd174d5e389274ec842d5f1cfdcaa3f6",
+      "ER-0008": "27e3579aef55e6376a39bdc706797143d948072ad8f674adcc5338e5f64aa560"
+    }
+  },
+  "assignment_count": 2,
+  "attempt_id": "attempt-0005",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "bound_terminal_artifacts": {
+    "ER-0003": {
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/dispatch/ER-0003/attempt-0005/dispatch_receipt.json",
+      "receipt_sha256": "b215fb26cafee092db5b0435275ecadc86cf5c9cd8e2f5b48ee071a7dd08d250",
+      "result_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005/result.json",
+      "result_sha256": "72910cf0428c961cf70525629da40260e9ef1ae0d9f5bdde4ee986360c8c2849"
+    },
+    "ER-0008": {
+      "receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/dispatch/ER-0008/attempt-0005/dispatch_receipt.json",
+      "receipt_sha256": "2e78410dfc26e92b956238fbf86868a2613dbe5e465068523d91f630fd0aae44",
+      "result_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005/result.json",
+      "result_sha256": "bce959e0db06f308ea374ae753bab7adcb21f61be96fcb7b0d3d669c011cd1d8"
+    }
+  },
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "coverage_credit": 0,
+  "identity_nonreuse": {
+    "attempts_checked": [
+      "attempt-0001",
+      "attempt-0002",
+      "attempt-0003",
+      "attempt-0004",
+      "attempt-0005"
+    ],
+    "current_agent_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+    ],
+    "current_native_identities": [
+      "019f535d-af5d-7b02-8ade-09c6019da611",
+      "019f535d-affa-7102-8022-deec83e6d238",
+      "019f535d-b001-7c63-a679-69badff0b5c8",
+      "019f535d-b11c-7223-9510-8dc0b67f1fc4"
+    ],
+    "pass": true,
+    "prior_canonical_path_count": 17,
+    "prior_identity_digest": "48d6f5a5f9c729e1195d156472fc8b843d3fae895492f3ab4a5897fdb23a03ee",
+    "prior_native_identity_count": 58,
+    "prior_non_result_json_files_scanned": 106,
+    "reused_native_identities": [],
+    "reused_prior_agent_paths": []
+  },
+  "leaves": [
+    {
+      "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "assignment_id": "ER-0003",
+      "native_child_thread_id": "019f535d-af5d-7b02-8ade-09c6019da611",
+      "native_child_turn_id": "019f535d-affa-7102-8022-deec83e6d238",
+      "native_child_turn_status": "completed",
+      "receipt_sha256": "b215fb26cafee092db5b0435275ecadc86cf5c9cd8e2f5b48ee071a7dd08d250",
+      "result_present_before_pmr1": true,
+      "result_sha256": "72910cf0428c961cf70525629da40260e9ef1ae0d9f5bdde4ee986360c8c2849",
+      "terminal_response_exact": "PMR1"
+    },
+    {
+      "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal",
+      "assignment_id": "ER-0008",
+      "native_child_thread_id": "019f535d-b001-7c63-a679-69badff0b5c8",
+      "native_child_turn_id": "019f535d-b11c-7223-9510-8dc0b67f1fc4",
+      "native_child_turn_status": "completed",
+      "receipt_sha256": "2e78410dfc26e92b956238fbf86868a2613dbe5e465068523d91f630fd0aae44",
+      "result_present_before_pmr1": true,
+      "result_sha256": "bce959e0db06f308ea374ae753bab7adcb21f61be96fcb7b0d3d669c011cd1d8",
+      "terminal_response_exact": "PMR1"
+    }
+  ],
+  "merge_credit": 0,
+  "promotion_credit": 0,
+  "research_credit": 0,
+  "retry_namespace": "retry-attempt-0005",
+  "schema_version": "external-research-native-capture-v5",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "terminal_rules_verified": {
+    "all_results_present_before_pmr1": true,
+    "all_terminal_responses_exact_pmr1": true,
+    "all_turns_completed": true
+  },
+  "toctou": {
+    "captured_file_count": 15,
+    "closing_binding_root_sha256": "538a32c48658001a4d8bdc52c46fe8a22601b52ff71ca2b73e52c3bc66503f23",
+    "full_buffer_sha256": true,
+    "initial_binding_root_sha256": "538a32c48658001a4d8bdc52c46fe8a22601b52ff71ca2b73e52c3bc66503f23",
+    "stable": true
+  }
+}
+

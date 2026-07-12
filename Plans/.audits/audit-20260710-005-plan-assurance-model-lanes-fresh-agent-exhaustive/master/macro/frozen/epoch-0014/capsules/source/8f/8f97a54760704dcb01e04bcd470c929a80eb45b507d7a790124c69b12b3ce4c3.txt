@@ -1,0 +1,2819 @@
+L00002280	  - "billing/entity bucket"
+L00002281	  - "Gemini CLI"
+L00002282	  - "ChatGPT"
+L00002283	  - "API key"
+L00002284	  - "GitHub Copilot"
+L00002285	  - "OpenCode"
+L00002286	negative_constraints: []
+L00002287	preserved_contractrefs: []
+L00002288	owner_hints:
+L00002289	  - "Plans/Prompt_Pipeline.md"
+L00002290	```
+L00002291	
+L00002292	### PP-034 - Requested Effective Account Identity Fields
+L00002293	
+L00002294	```yaml
+L00002295	plan_unit_id: PP-034
+L00002296	unit_type: requirement
+L00002297	status: accepted
+L00002298	owner_doc: Plans/Prompt_Pipeline.md
+L00002299	canonical_text: >-
+L00002300	  The shared requested/effective account identity contract adds requested_account_id beside requested_account_policy, models requested_account_binding independently, carries effective account identity through runtime envelopes, and treats provider_account_id only as subordinate provider-native echo metadata.
+L00002301	gui_related: false
+L00002302	gui_classification_reason: This unit defines account identity schema fields rather than visual presentation.
+L00002303	split_recommended: false
+L00002304	depends_on:
+L00002305	  - "PP-033"
+L00002306	unblocks: []
+L00002307	acceptance_criteria:
+L00002308	  - "Requested Effective Account Identity Fields remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002309	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002310	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002311	validation_surfaces:
+L00002312	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002313	  - "python3 scripts/pm-plan-index.py validate"
+L00002314	risk_class: prompt_pipeline_drift
+L00002315	reasoning_tier: standard
+L00002316	context_scope: prompt_pipeline
+L00002317	implementation_surfaces:
+L00002318	  - "Plans/Prompt_Pipeline.md"
+L00002319	node_compile_hint:
+L00002320	  mode: requirement
+L00002321	  create_worknodes: false
+L00002322	source_lineage:
+L00002323	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
+L00002324	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0029"
+L00002325	preserved_exact_tokens:
+L00002326	  - "requested_account_id"
+L00002327	  - "requested_account_policy"
+L00002328	  - "requested_account_binding"
+L00002329	  - "provider_account_id"
+L00002330	  - "none | preferred | required"
+L00002331	  - "effective_account_id"
+L00002332	  - "effective_provider_identity"
+L00002333	  - "execution_role"
+L00002334	  - "operational_identity"
+L00002335	  - "account_switch_reason"
+L00002336	negative_constraints:
+L00002337	  - "Account choice and policy posture never collapse into one field."
+L00002338	preserved_contractrefs: []
+L00002339	stale_retired_dispositions:
+L00002340	  - "provider_account_id is retired from canonical account-identity naming and remains provider-native echo metadata only."
+L00002341	owner_hints:
+L00002342	  - "Plans/Prompt_Pipeline.md"
+L00002343	```
+L00002344	
+L00002345	### PP-035 - Account Identity Display Grammar
+L00002346	
+L00002347	```yaml
+L00002348	plan_unit_id: PP-035
+L00002349	unit_type: requirement
+L00002350	status: accepted
+L00002351	owner_doc: Plans/Prompt_Pipeline.md
+L00002352	canonical_text: >-
+L00002353	  Requested/effective account identity must be visible with Requested account, Requested binding, Effective account, Switch reason, named display grammar, and worker-policy display under the same requested/effective grammar.
+L00002354	gui_related: true
+L00002355	gui_classification_reason: This unit preserves user-visible runtime identity display grammar and switch reason labels.
+L00002356	split_recommended: false
+L00002357	depends_on:
+L00002358	  - "PP-034"
+L00002359	unblocks: []
+L00002360	acceptance_criteria:
+L00002361	  - "Account Identity Display Grammar remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002362	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002363	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002364	validation_surfaces:
+L00002365	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002366	  - "python3 scripts/pm-plan-index.py validate"
+L00002367	risk_class: prompt_pipeline_drift
+L00002368	reasoning_tier: standard
+L00002369	context_scope: prompt_pipeline
+L00002370	implementation_surfaces:
+L00002371	  - "Plans/Prompt_Pipeline.md"
+L00002372	node_compile_hint:
+L00002373	  mode: requirement
+L00002374	  create_worknodes: false
+L00002375	source_lineage:
+L00002376	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0029"
+L00002377	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+L00002378	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002379	preserved_exact_tokens:
+L00002380	  - "Requested account"
+L00002381	  - "Requested binding"
+L00002382	  - "Effective account"
+L00002383	  - "Switch reason"
+L00002384	  - "Inherited from"
+L00002385	  - "Overridden by"
+L00002386	  - "Requested"
+L00002387	  - "Effective"
+L00002388	  - "Reason"
+L00002389	  - "Support"
+L00002390	  - "worker-policy display"
+L00002391	negative_constraints: []
+L00002392	preserved_contractrefs: []
+L00002393	owner_hints:
+L00002394	  - "Plans/Prompt_Pipeline.md"
+L00002395	  - "Plans/FinalGUISpec.md"
+L00002396	  - "Plans/Orchestrator_Page.md"
+L00002397	```
+L00002398	
+L00002399	### PP-036 - Three Axis Resolver Emit Shape
+L00002400	
+L00002401	```yaml
+L00002402	plan_unit_id: PP-036
+L00002403	unit_type: requirement
+L00002404	status: accepted
+L00002405	owner_doc: Plans/Prompt_Pipeline.md
+L00002406	canonical_text: >-
+L00002407	  The resolver uses the source/request/execution settings model, preserves requested versus effective display values, accepts Persona, override, default, policy, capability, account/profile, worktree, and execution-role inputs, follows the deterministic resolver matrix, and emits requested/effective platform, model, variant, auth mode, account, role, reason, matrix entry, and worker policy fields.
+L00002408	gui_related: false
+L00002409	gui_classification_reason: This unit defines resolver mechanics and emitted fields rather than visual presentation.
+L00002410	split_recommended: false
+L00002411	depends_on:
+L00002412	  - "PP-034"
+L00002413	unblocks: []
+L00002414	acceptance_criteria:
+L00002415	  - "Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002416	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002417	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002418	validation_surfaces:
+L00002419	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002420	  - "python3 scripts/pm-plan-index.py validate"
+L00002421	risk_class: prompt_pipeline_drift
+L00002422	reasoning_tier: standard
+L00002423	context_scope: prompt_pipeline
+L00002424	implementation_surfaces:
+L00002425	  - "Plans/Prompt_Pipeline.md"
+L00002426	node_compile_hint:
+L00002427	  mode: requirement
+L00002428	  create_worknodes: false
+L00002429	source_lineage:
+L00002430	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
+L00002431	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+L00002432	preserved_exact_tokens:
+L00002433	  - "source"
+L00002434	  - "request"
+L00002435	  - "execution"
+L00002436	  - "working_directory"
+L00002437	  - "FileSafe"
+L00002438	  - "tool cwd"
+L00002439	  - "explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default"
+L00002440	  - "requested_platform"
+L00002441	  - "effective_platform"
+L00002442	  - "requested_model"
+L00002443	  - "effective_model"
+L00002444	  - "requested_variant"
+L00002445	  - "effective_variant"
+L00002446	  - "requested_auth_mode"
+L00002447	  - "effective_auth_mode"
+L00002448	  - "resolver_matrix_entry"
+L00002449	  - "worker_policy_display"
+L00002450	negative_constraints:
+L00002451	  - "Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block merely to make tools operate in the worktree."
+L00002452	preserved_contractrefs: []
+L00002453	owner_hints:
+L00002454	  - "Plans/Prompt_Pipeline.md"
+L00002455	  - "Plans/FileSafe.md"
+L00002456	```
+L00002457	
+L00002458	### PP-037 - P5 Export Resolver Gap Packet
+L00002459	
+L00002460	```yaml
+L00002461	plan_unit_id: PP-037
+L00002462	unit_type: source_lineage_reconciliation
+L00002463	status: accepted
+L00002464	owner_doc: Plans/Prompt_Pipeline.md
+L00002465	canonical_text: >-
+L00002466	  The P5 recovery packet is source-lineage-only reconciliation evidence for export taxonomy, export-family distinctions, source-layer enumeration, resolver actor inputs, deterministic resolver matrix, ranked candidates, winner, and fallback reason. It is not implementation canon for the current runtime/compiler packet and does not block accepted runtime flow.
+L00002467	gui_related: true
+L00002468	gui_classification_reason: The preserved recovery packet includes GUI/export/Orchestrator display grammar and cross-surface inspection gaps.
+L00002469	split_recommended: false
+L00002470	depends_on:
+L00002471	  - "PP-035"
+L00002472	  - "PP-036"
+L00002473	unblocks: []
+L00002474	acceptance_criteria:
+L00002475	  - "P5 Export Resolver Gap Packet remains addressable as source-lineage-only reconciliation evidence."
+L00002476	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002477	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002478	validation_surfaces:
+L00002479	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002480	  - "python3 scripts/pm-plan-index.py validate"
+L00002481	risk_class: source_lineage_reconciliation_not_current_blocker
+L00002482	reasoning_tier: standard
+L00002483	context_scope: prompt_pipeline_reconciliation_gap
+L00002484	implementation_surfaces:
+L00002485	  - "Plans/Prompt_Pipeline.md"
+L00002486	node_compile_hint:
+L00002487	  mode: source_lineage_only_not_required_for_current_runtime
+L00002488	  create_worknodes: false
+L00002489	source_lineage:
+L00002490	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002491	preserved_exact_tokens:
+L00002492	  - "record"
+L00002493	  - "bundle"
+L00002494	  - "view"
+L00002495	  - "Evidence / Artifact / Ledger / Run / Record"
+L00002496	  - "source-layer enumeration"
+L00002497	  - "actor-type"
+L00002498	  - "operation-type"
+L00002499	  - "ranked candidates"
+L00002500	  - "winner"
+L00002501	  - "fallback reason"
+L00002502	negative_constraints: []
+L00002503	preserved_contractrefs: []
+L00002504	owner_hints:
+L00002505	  - "Plans/Prompt_Pipeline.md"
+L00002506	  - "Plans/Orchestrator_Page.md"
+L00002507	  - "Plans/storage-plan.md"
+L00002508	  - "Plans/FinalGUISpec.md"
+L00002509	  - "Plans/Models_System.md"
+L00002510	  - "Plans/Multi-Account.md"
+L00002511	  - "Plans/Contracts_V0.md"
+L00002512	```
+L00002513	
+L00002514	### PP-038 - Provider Attempt Snapshot Requirements
+L00002515	
+L00002516	```yaml
+L00002517	plan_unit_id: PP-038
+L00002518	unit_type: requirement
+L00002519	status: accepted
+L00002520	owner_doc: Plans/Prompt_Pipeline.md
+L00002521	canonical_text: >-
+L00002522	  Every provider-executed attempt requires requested/effective persona, model, and permission snapshot refs plus requested/effective auth/account policy and account-switch fields so runtime evidence can show requested and effective truth.
+L00002523	gui_related: false
+L00002524	gui_classification_reason: This unit defines provider attempt evidence fields rather than visual presentation.
+L00002525	split_recommended: false
+L00002526	depends_on:
+L00002527	  - "PP-034"
+L00002528	  - "PP-036"
+L00002529	unblocks: []
+L00002530	acceptance_criteria:
+L00002531	  - "Provider Attempt Snapshot Requirements remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002532	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002533	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002534	validation_surfaces:
+L00002535	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002536	  - "python3 scripts/pm-plan-index.py validate"
+L00002537	risk_class: prompt_pipeline_drift
+L00002538	reasoning_tier: standard
+L00002539	context_scope: prompt_pipeline
+L00002540	implementation_surfaces:
+L00002541	  - "Plans/Prompt_Pipeline.md"
+L00002542	node_compile_hint:
+L00002543	  mode: requirement
+L00002544	  create_worknodes: false
+L00002545	source_lineage:
+L00002546	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002547	preserved_exact_tokens:
+L00002548	  - "requested/effective persona snapshot ref"
+L00002549	  - "requested/effective model snapshot ref"
+L00002550	  - "requested/effective permission snapshot ref"
+L00002551	  - "requested_auth_mode?"
+L00002552	  - "effective_auth_mode?"
+L00002553	  - "requested_account_policy?"
+L00002554	  - "effective_account_id?"
+L00002555	  - "account_switch_reason?"
+L00002556	negative_constraints: []
+L00002557	preserved_contractrefs: []
+L00002558	owner_hints:
+L00002559	  - "Plans/Prompt_Pipeline.md"
+L00002560	```
+L00002561	
+L00002562	### PP-039 - Tier Compatibility And Runtime Identity Owner Boundary
+L00002563	
+L00002564	```yaml
+L00002565	plan_unit_id: PP-039
+L00002566	unit_type: constraint
+L00002567	status: accepted
+L00002568	owner_doc: Plans/Prompt_Pipeline.md
+L00002569	canonical_text: >-
+L00002570	  Prompt Pipeline owns prompt-assembly handoff shape, storage owns durable records, and tier context survives only as compatibility or derived grouping; stale tier-era scope vocabulary must not become a third runtime identity authority.
+L00002571	gui_related: false
+L00002572	gui_classification_reason: This unit constrains runtime identity ownership and compatibility vocabulary rather than visual presentation.
+L00002573	split_recommended: false
+L00002574	depends_on:
+L00002575	  - "PP-007"
+L00002576	  - "PP-034"
+L00002577	unblocks: []
+L00002578	acceptance_criteria:
+L00002579	  - "Tier Compatibility And Runtime Identity Owner Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002580	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002581	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002582	validation_surfaces:
+L00002583	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002584	  - "python3 scripts/pm-plan-index.py validate"
+L00002585	risk_class: prompt_pipeline_drift
+L00002586	reasoning_tier: standard
+L00002587	context_scope: prompt_pipeline
+L00002588	implementation_surfaces:
+L00002589	  - "Plans/Prompt_Pipeline.md"
+L00002590	node_compile_hint:
+L00002591	  mode: constraint
+L00002592	  create_worknodes: false
+L00002593	source_lineage:
+L00002594	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002595	preserved_exact_tokens:
+L00002596	  - "tier context"
+L00002597	  - "compatibility/derived grouping"
+L00002598	  - "requested/effective runtime identity duplication"
+L00002599	  - "tier"
+L00002600	  - "tier/mode/platform/model"
+L00002601	  - "stage/tier/task context"
+L00002602	  - "persona_override_owner_id"
+L00002603	  - "tier_id"
+L00002604	  - "node-identity"
+L00002605	  - "package-identity"
+L00002606	  - "lane-identity"
+L00002607	negative_constraints:
+L00002608	  - "Tier context must not become a third runtime identity authority."
+L00002609	preserved_contractrefs: []
+L00002610	compatibility_only_notes:
+L00002611	  - "Surviving tier labels are compatibility or derived grouping metadata only."
+L00002612	stale_retired_dispositions:
+L00002613	  - "Run envelope, active mode/tier, plan_or_tier_default, Orchestrator tier override, stage/tier/task/repo context, and persona_override_owner_id tier_id are stale scope vocabulary."
+L00002614	owner_hints:
+L00002615	  - "Plans/Prompt_Pipeline.md"
+L00002616	  - "Plans/storage-plan.md"
+L00002617	  - "Plans/Widget_System.md"
+L00002618	```
+L00002619	
+L00002620	### PP-040 - Prompt Widget UI Non Ownership Constraint
+L00002621	
+L00002622	```yaml
+L00002623	plan_unit_id: PP-040
+L00002624	unit_type: constraint
+L00002625	status: accepted
+L00002626	owner_doc: Plans/Prompt_Pipeline.md
+L00002627	canonical_text: >-
+L00002628	  Prompt Pipeline must not teach tier-tree or active-tier widget semantics as reusable widget SSOT; prompt examples and context bundles may reference derived tier labels only as compatibility display metadata while Widget_System owns widget taxonomy.
+L00002629	gui_related: true
+L00002630	gui_classification_reason: This unit constrains GUI/widget ownership and display metadata.
+L00002631	split_recommended: false
+L00002632	depends_on:
+L00002633	  - "PP-039"
+L00002634	unblocks: []
+L00002635	acceptance_criteria:
+L00002636	  - "Prompt Widget UI Non Ownership Constraint remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002637	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002638	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002639	validation_surfaces:
+L00002640	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002641	  - "python3 scripts/pm-plan-index.py validate"
+L00002642	risk_class: widget_owner_boundary_drift
+L00002643	reasoning_tier: standard
+L00002644	context_scope: prompt_pipeline
+L00002645	implementation_surfaces:
+L00002646	  - "Plans/Prompt_Pipeline.md"
+L00002647	node_compile_hint:
+L00002648	  mode: blocked_cross_owner_reconciliation
+L00002649	  create_worknodes: false
+L00002650	source_lineage:
+L00002651	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002652	preserved_exact_tokens:
+L00002653	  - "tier-tree"
+L00002654	  - "active-tier"
+L00002655	  - "widget SSOT"
+L00002656	  - "compatibility display metadata"
+L00002657	  - "Widget_System"
+L00002658	  - "Orchestrator_Page.md"
+L00002659	  - "FinalGUISpec.md"
+L00002660	negative_constraints:
+L00002661	  - "Prompt Pipeline MUST NOT teach tier-tree or active-tier widget semantics as reusable widget SSOT."
+L00002662	preserved_contractrefs: []
+L00002663	owner_hints:
+L00002664	  - "Plans/Prompt_Pipeline.md"
+L00002665	  - "Plans/Widget_System.md"
+L00002666	  - "Plans/FinalGUISpec.md"
+L00002667	  - "Plans/Orchestrator_Page.md"
+L00002668	```
+L00002669	
+L00002670	### PP-041 - Cross Doc Operational Gap Register
+L00002671	
+L00002672	```yaml
+L00002673	plan_unit_id: PP-041
+L00002674	unit_type: source_lineage_reconciliation
+L00002675	status: accepted
+L00002676	owner_doc: Plans/Prompt_Pipeline.md
+L00002677	canonical_text: >-
+L00002678	  Prompt Pipeline preserves operational gap evidence for newtools, Contracts, Permissions, Personas, storage/usage, tool/runtime surfaces, Source Control, and rewrite-era operational nouns as source-lineage-only reconciliation input. Ownership for current runtime/compiler implementation readiness is resolved by the active owner docs named by each current PlanUnit, not by this historical register.
+L00002679	gui_related: false
+L00002680	gui_classification_reason: This unit preserves cross-document owner gaps rather than visual presentation.
+L00002681	split_recommended: false
+L00002682	depends_on:
+L00002683	  - "PP-039"
+L00002684	unblocks: []
+L00002685	acceptance_criteria:
+L00002686	  - "Cross Doc Operational Gap Register remains addressable as source-lineage-only reconciliation evidence."
+L00002687	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002688	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002689	validation_surfaces:
+L00002690	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002691	  - "python3 scripts/pm-plan-index.py validate"
+L00002692	risk_class: source_lineage_owner_gap_not_current_blocker
+L00002693	reasoning_tier: standard
+L00002694	context_scope: prompt_pipeline_reconciliation_gap
+L00002695	implementation_surfaces:
+L00002696	  - "Plans/Prompt_Pipeline.md"
+L00002697	node_compile_hint:
+L00002698	  mode: source_lineage_only_not_required_for_current_runtime
+L00002699	  create_worknodes: false
+L00002700	source_lineage:
+L00002701	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002702	preserved_exact_tokens:
+L00002703	  - "newtools.md"
+L00002704	  - "doctor-ID"
+L00002705	  - "CustomHeadlessTool"
+L00002706	  - "live.*"
+L00002707	  - "memory.gist.*"
+L00002708	  - "AutoRunBoundary/AutoMilestone"
+L00002709	  - "attention_required"
+L00002710	  - "Permissions_System.md"
+L00002711	  - "Contracts_V0.md"
+L00002712	  - "Personas.md"
+L00002713	  - "storage-plan.md"
+L00002714	  - "usage-feature.md"
+L00002715	  - "Formatters_System.md"
+L00002716	  - "LSPSupport.md"
+L00002717	  - "Plugins_System.md"
+L00002718	  - "Skills_System.md"
+L00002719	  - "agent-rules-context.md"
+L00002720	  - "Overseer"
+L00002721	  - "attempt"
+L00002722	  - "Seglog"
+L00002723	negative_constraints: []
+L00002724	preserved_contractrefs: []
+L00002725	owner_hints:
+L00002726	  - "Plans/Prompt_Pipeline.md"
+L00002727	  - "Plans/Contracts_V0.md"
+L00002728	  - "Plans/Permissions_System.md"
+L00002729	  - "Plans/Personas.md"
+L00002730	  - "Plans/storage-plan.md"
+L00002731	  - "Plans/usage-feature.md"
+L00002732	  - "Plans/Tools.md"
+L00002733	  - "Plans/Plugins_System.md"
+L00002734	  - "Plans/Skills_System.md"
+L00002735	  - "Plans/LSPSupport.md"
+L00002736	```
+L00002737	
+L00002738	### PP-042 - Dispatch Boundary And Blocked Attempt Integrity
+L00002739	
+L00002740	```yaml
+L00002741	plan_unit_id: PP-042
+L00002742	unit_type: requirement
+L00002743	status: accepted
+L00002744	owner_doc: Plans/Prompt_Pipeline.md
+L00002745	canonical_text: >-
+L00002746	  Prompt Pipeline preserves the dispatch-boundary fracture as a reconciliation target and requires runtime snapshot refs or canonical runtime bundles, first-class blocked/degraded reason ownership, blocked_reason_code as SSOT, and unique attempt_id values across retry or resume.
+L00002747	gui_related: false
+L00002748	gui_classification_reason: This unit defines dispatch and blocked-attempt integrity fields rather than visual presentation.
+L00002749	split_recommended: false
+L00002750	depends_on:
+L00002751	  - "PP-038"
+L00002752	  - "PP-041"
+L00002753	unblocks: []
+L00002754	acceptance_criteria:
+L00002755	  - "Dispatch Boundary And Blocked Attempt Integrity remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002756	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002757	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002758	validation_surfaces:
+L00002759	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002760	  - "python3 scripts/pm-plan-index.py validate"
+L00002761	risk_class: runtime_identity_ssot_fracture
+L00002762	reasoning_tier: standard
+L00002763	context_scope: prompt_pipeline
+L00002764	implementation_surfaces:
+L00002765	  - "Plans/Prompt_Pipeline.md"
+L00002766	node_compile_hint:
+L00002767	  mode: blocked_cross_owner_reconciliation
+L00002768	  create_worknodes: false
+L00002769	source_lineage:
+L00002770	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002771	preserved_exact_tokens:
+L00002772	  - "dispatch boundary"
+L00002773	  - "runtime snapshot refs"
+L00002774	  - "inline canonical runtime bundles"
+L00002775	  - "requested-vs-effective truth"
+L00002776	  - "requested_account_policy"
+L00002777	  - "effective_account_id"
+L00002778	  - "requested concrete account"
+L00002779	  - "blocked/degraded reason family"
+L00002780	  - "account_switch_reason?"
+L00002781	  - "blocked_reason_code"
+L00002782	  - "attempt_id"
+L00002783	negative_constraints:
+L00002784	  - "Retry/resume should not reuse old attempt ids."
+L00002785	preserved_contractrefs: []
+L00002786	owner_hints:
+L00002787	  - "Plans/Prompt_Pipeline.md"
+L00002788	  - "Plans/Contracts_V0.md"
+L00002789	  - "Plans/Multi-Account.md"
+L00002790	  - "Plans/assistant-chat-design.md"
+L00002791	```
+L00002792	
+L00002793	### PP-043 - Pathing Migration And Source Lineage Tail
+L00002794	
+L00002795	```yaml
+L00002796	plan_unit_id: PP-043
+L00002797	unit_type: source_lineage_residual_disposition
+L00002798	status: accepted
+L00002799	owner_doc: Plans/Prompt_Pipeline.md
+L00002800	canonical_text: >-
+L00002801	  Pathing migration candidates and source-lineage tail tokens are preserved as source-lineage-only residuals, including package/node, seam/package/node, content-addressed candidates, topic initialization context, and model-tail notes, without converting them into implementation requirements or current runtime/compiler dependencies.
+L00002802	gui_related: false
+L00002803	gui_classification_reason: This unit preserves pathing and lineage notes rather than visual presentation.
+L00002804	split_recommended: false
+L00002805	depends_on:
+L00002806	  - "PP-039"
+L00002807	unblocks: []
+L00002808	acceptance_criteria:
+L00002809	  - "Pathing Migration And Source Lineage Tail remains addressable as source-lineage-only residual evidence."
+L00002810	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002811	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002812	validation_surfaces:
+L00002813	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002814	  - "python3 scripts/pm-plan-index.py validate"
+L00002815	risk_class: source_lineage_pathing_residual_not_current_blocker
+L00002816	reasoning_tier: standard
+L00002817	context_scope: prompt_pipeline_reconciliation_gap
+L00002818	implementation_surfaces:
+L00002819	  - "Plans/Prompt_Pipeline.md"
+L00002820	node_compile_hint:
+L00002821	  mode: source_lineage_residual_not_required_for_current_runtime
+L00002822	  create_worknodes: false
+L00002823	source_lineage:
+L00002824	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+L00002825	preserved_exact_tokens:
+L00002826	  - "<phase>/<task>/<subtask>"
+L00002827	  - "<package_id>/<node_id>"
+L00002828	  - "<seam_id>/<package_id>/<node_id>"
+L00002829	  - "content-addressed"
+L00002830	  - "Orchestrator"
+L00002831	  - "source_ref"
+L00002832	  - "Gemini + Opus + Sonnet + GPT-5.4"
+L00002833	  - "Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2"
+L00002834	negative_constraints: []
+L00002835	preserved_contractrefs: []
+L00002836	owner_hints:
+L00002837	  - "Plans/Prompt_Pipeline.md"
+L00002838	```
+L00002839	
+L00002840	### PP-044 - Natural Language Persona Invocation Guardrails
+L00002841	
+L00002842	```yaml
+L00002843	plan_unit_id: PP-044
+L00002844	unit_type: constraint
+L00002845	status: accepted
+L00002846	owner_doc: Plans/Prompt_Pipeline.md
+L00002847	canonical_text: >-
+L00002848	  Natural-language Persona invocation remains conservative and applies only to Persona resolution; it must not silently rewrite requested provider entry, requested auth family, selected billing entity, or selected server profile.
+L00002849	gui_related: false
+L00002850	gui_classification_reason: This unit defines Persona invocation guardrails rather than visual presentation.
+L00002851	split_recommended: false
+L00002852	depends_on:
+L00002853	  - "PP-032"
+L00002854	  - "PP-036"
+L00002855	unblocks: []
+L00002856	acceptance_criteria:
+L00002857	  - "Natural Language Persona Invocation Guardrails remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002858	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002859	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002860	validation_surfaces:
+L00002861	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002862	  - "python3 scripts/pm-plan-index.py validate"
+L00002863	risk_class: prompt_pipeline_drift
+L00002864	reasoning_tier: standard
+L00002865	context_scope: prompt_pipeline
+L00002866	implementation_surfaces:
+L00002867	  - "Plans/Prompt_Pipeline.md"
+L00002868	node_compile_hint:
+L00002869	  mode: constraint
+L00002870	  create_worknodes: false
+L00002871	source_lineage:
+L00002872	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0032"
+L00002873	preserved_exact_tokens:
+L00002874	  - "Natural-language Persona invocation"
+L00002875	  - "execution_unit_context"
+L00002876	  - "working_directory"
+L00002877	  - "FileSafe"
+L00002878	  - "tool cwd"
+L00002879	  - "Agent-Config"
+L00002880	  - "requested provider entry"
+L00002881	  - "requested auth family"
+L00002882	  - "selected billing entity"
+L00002883	  - "selected server profile"
+L00002884	negative_constraints:
+L00002885	  - "Natural-language Persona invocation MUST NOT silently rewrite provider, auth, billing entity, or server profile selections."
+L00002886	preserved_contractrefs: []
+L00002887	owner_hints:
+L00002888	  - "Plans/Prompt_Pipeline.md"
+L00002889	  - "Plans/FileSafe.md"
+L00002890	```
+L00002891	
+L00002892	### PP-045 - Effective Resolution Record Identity Fields
+L00002893	
+L00002894	```yaml
+L00002895	plan_unit_id: PP-045
+L00002896	unit_type: requirement
+L00002897	status: accepted
+L00002898	owner_doc: Plans/Prompt_Pipeline.md
+L00002899	canonical_text: >-
+L00002900	  The effective-resolution record carries execution role, requested/effective account identity, requested/effective operational identity, account switch lineage, account pressure owner, blocked sequence, optional approval, and DAE jail posture across attempt, usage, inspector, recovery, remediation, and consumer docs.
+L00002901	gui_related: false
+L00002902	gui_classification_reason: This unit defines effective-resolution identity fields rather than visual presentation.
+L00002903	split_recommended: false
+L00002904	depends_on:
+L00002905	  - "PP-034"
+L00002906	  - "PP-038"
+L00002907	unblocks: []
+L00002908	acceptance_criteria:
+L00002909	  - "Effective Resolution Record Identity Fields remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00002910	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002911	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002912	validation_surfaces:
+L00002913	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002914	  - "python3 scripts/pm-plan-index.py validate"
+L00002915	risk_class: prompt_pipeline_drift
+L00002916	reasoning_tier: standard
+L00002917	context_scope: prompt_pipeline
+L00002918	implementation_surfaces:
+L00002919	  - "Plans/Prompt_Pipeline.md"
+L00002920	node_compile_hint:
+L00002921	  mode: requirement
+L00002922	  create_worknodes: false
+L00002923	source_lineage:
+L00002924	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0033"
+L00002925	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0034"
+L00002926	preserved_exact_tokens:
+L00002927	  - "execution_role"
+L00002928	  - "requested_account_id"
+L00002929	  - "effective_account_id"
+L00002930	  - "requested_operational_identity"
+L00002931	  - "effective_operational_identity"
+L00002932	  - "account_switch_lineage[]"
+L00002933	  - "account_pressure_owner"
+L00002934	  - "blocked_sequence"
+L00002935	  - "approval_id?"
+L00002936	  - "dae_jail_posture"
+L00002937	negative_constraints: []
+L00002938	preserved_contractrefs: []
+L00002939	owner_hints:
+L00002940	  - "Plans/Prompt_Pipeline.md"
+L00002941	```
+L00002942	
+L00002943	### PP-046 - Execution Unit Context Runtime Record
+L00002944	
+L00002945	```yaml
+L00002946	plan_unit_id: PP-046
+L00002947	unit_type: requirement
+L00002948	status: accepted
+L00002949	owner_doc: Plans/Prompt_Pipeline.md
+L00002950	canonical_text: >-
+L00002951	  Prompt Pipeline consumes the Executor-owned execution_unit_context contract and schema for prompt handoff, attempt snapshots, worker spawn inputs, recovery, remediation, and coordination; TierContext is compatibility/decomposition metadata, tier_id is retired, and canonical selection keys from schema-owned execution_unit_type plus execution_unit_id.
+L00002952	gui_related: false
+L00002953	gui_classification_reason: This unit defines runtime context identity rather than visual presentation.
+L00002954	split_recommended: false
+L00002955	depends_on:
+L00002956	  - "PP-045"
+L00002957	unblocks: []
+L00002958	acceptance_criteria:
+L00002959	  - "Execution Unit Context Runtime Record remains addressable as a fine-grained Prompt Pipeline consumer PlanUnit."
+L00002960	  - "Prompt Pipeline references Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json instead of redefining execution_unit_context fields."
+L00002961	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002962	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002963	validation_surfaces:
+L00002964	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002965	  - "python3 scripts/pm-plan-index.py validate"
+L00002966	risk_class: prompt_pipeline_drift
+L00002967	reasoning_tier: standard
+L00002968	context_scope: prompt_pipeline
+L00002969	implementation_surfaces:
+L00002970	  - "Plans/Prompt_Pipeline.md"
+L00002971	node_compile_hint:
+L00002972	  mode: requirement
+L00002973	  create_worknodes: false
+L00002974	source_lineage:
+L00002975	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0035"
+L00002976	preserved_exact_tokens:
+L00002977	  - "execution_unit_context"
+L00002978	  - "TierContext"
+L00002979	  - "tier_id"
+L00002980	  - "execution_unit_id"
+L00002981	  - "execution_unit_type"
+L00002982	  - "schema_version"
+L00002983	  - "run"
+L00002984	  - "seam"
+L00002985	  - "package"
+L00002986	  - "node"
+L00002987	  - "overseer"
+L00002988	  - "delegated_subagent"
+L00002989	  - "parent_execution_unit_id"
+L00002990	  - "execution_role"
+L00002991	  - "worktree_id"
+L00002992	negative_constraints:
+L00002993	  - "Prompt Pipeline must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+L00002994	  - "Persisted prompt handoff or attempt snapshot payloads must not store execution_unit_context without schema_version."
+L00002995	  - "execution_unit_context payloads must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
+L00002996	preserved_contractrefs: []
+L00002997	compatibility_only_notes:
+L00002998	  - "TierContext is a derived or compatibility-only selection/decomposition helper."
+L00002999	stale_retired_dispositions:
+L00003000	  - "tier_id is retired as canonical selection identity."
+L00003001	owner_hints:
+L00003002	  - "Plans/Prompt_Pipeline.md"
+L00003003	  - "Plans/Executor_Protocol.md"
+L00003004	  - "Plans/execution_unit_context.schema.json"
+L00003005	```
+L00003006	
+L00003007	### PP-047 - Execution Unit Context UI Inspection Hook
+L00003008	
+L00003009	```yaml
+L00003010	plan_unit_id: PP-047
+L00003011	unit_type: requirement
+L00003012	status: accepted
+L00003013	owner_doc: Plans/Prompt_Pipeline.md
+L00003014	canonical_text: >-
+L00003015	  UI inspection consumes execution_unit_context for runtime inspection without owning or redefining the runtime-facing context record.
+L00003016	gui_related: true
+L00003017	gui_classification_reason: This unit preserves UI inspection as a visible consumer of execution_unit_context.
+L00003018	split_recommended: false
+L00003019	depends_on:
+L00003020	  - "PP-046"
+L00003021	unblocks: []
+L00003022	acceptance_criteria:
+L00003023	  - "Execution Unit Context UI Inspection Hook remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003024	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003025	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003026	validation_surfaces:
+L00003027	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003028	  - "python3 scripts/pm-plan-index.py validate"
+L00003029	risk_class: prompt_pipeline_drift
+L00003030	reasoning_tier: standard
+L00003031	context_scope: prompt_pipeline
+L00003032	implementation_surfaces:
+L00003033	  - "Plans/Prompt_Pipeline.md"
+L00003034	node_compile_hint:
+L00003035	  mode: requirement
+L00003036	  create_worknodes: false
+L00003037	source_lineage:
+L00003038	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0035"
+L00003039	preserved_exact_tokens:
+L00003040	  - "UI inspection"
+L00003041	  - "execution_unit_context"
+L00003042	  - "runtime-facing context object"
+L00003043	negative_constraints: []
+L00003044	preserved_contractrefs: []
+L00003045	owner_hints:
+L00003046	  - "Plans/Prompt_Pipeline.md"
+L00003047	  - "Plans/FinalGUISpec.md"
+L00003048	```
+L00003049	
+L00003050	### PP-048 - Blocked Policy And Usage Transfer
+L00003051	
+L00003052	```yaml
+L00003053	plan_unit_id: PP-048
+L00003054	unit_type: requirement
+L00003055	status: accepted
+L00003056	owner_doc: Plans/Prompt_Pipeline.md
+L00003057	canonical_text: >-
+L00003058	  Blocked policy and usage transfer reuse blocked_sequence for blocked episode lineage, rebind execution_unit_context, runtime identity, and blocked_sequence during startup recovery, keep DAE jail and approval posture on the same effective-resolution record, and preserve execution role, account identity, and switch history in usage surfaces.
+L00003059	gui_related: false
+L00003060	gui_classification_reason: This unit defines blocked-policy, recovery, and usage behavior rather than visual presentation.
+L00003061	split_recommended: false
+L00003062	depends_on:
+L00003063	  - "PP-045"
+L00003064	  - "PP-046"
+L00003065	unblocks: []
+L00003066	acceptance_criteria:
+L00003067	  - "Blocked Policy And Usage Transfer remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003068	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003069	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003070	validation_surfaces:
+L00003071	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003072	  - "python3 scripts/pm-plan-index.py validate"
+L00003073	risk_class: prompt_pipeline_drift
+L00003074	reasoning_tier: standard
+L00003075	context_scope: prompt_pipeline
+L00003076	implementation_surfaces:
+L00003077	  - "Plans/Prompt_Pipeline.md"
+L00003078	node_compile_hint:
+L00003079	  mode: requirement
+L00003080	  create_worknodes: false
+L00003081	source_lineage:
+L00003082	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0036"
+L00003083	preserved_exact_tokens:
+L00003084	  - "blocked_sequence"
+L00003085	  - "Startup recovery handshake"
+L00003086	  - "execution_unit_context"
+L00003087	  - "runtime identity"
+L00003088	  - "DAE jail posture"
+L00003089	  - "approval posture"
+L00003090	  - "effective-resolution record"
+L00003091	  - "execution role"
+L00003092	  - "requested/effective account identity"
+L00003093	  - "switch history"
+L00003094	negative_constraints: []
+L00003095	preserved_contractrefs:
+L00003096	  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md"
+L00003097	owner_hints:
+L00003098	  - "Plans/Prompt_Pipeline.md"
+L00003099	  - "Plans/Contracts_V0.md"
+L00003100	  - "Plans/Multi-Account.md"
+L00003101	  - "Plans/Models_System.md"
+L00003102	```
+L00003103	
+L00003104	### PP-049 - PM Native Skills MCP Assembly Boundary
+L00003105	
+L00003106	```yaml
+L00003107	plan_unit_id: PP-049
+L00003108	unit_type: constraint
+L00003109	status: accepted
+L00003110	owner_doc: Plans/Prompt_Pipeline.md
+L00003111	canonical_text: >-
+L00003112	  Skill/tool/MCP resolution is part of the prompt pipeline; PM resolves and bundles skills from the PM registry and compatibility roots before provider execution, computes readiness from required and optional tool refs plus permission state, and treats provider-native files, /systems trees, and other external surfaces as optional projections rather than canonical runtime sources.
+L00003113	gui_related: false
+L00003114	gui_classification_reason: This unit defines skill/MCP assembly ownership rather than visual presentation.
+L00003115	split_recommended: false
+L00003116	depends_on:
+L00003117	  - "PP-030"
+L00003118	  - "PP-009"
+L00003119	unblocks: []
+L00003120	acceptance_criteria:
+L00003121	  - "PM Native Skills MCP Assembly Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003122	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003123	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003124	validation_surfaces:
+L00003125	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003126	  - "python3 scripts/pm-plan-index.py validate"
+L00003127	risk_class: prompt_pipeline_drift
+L00003128	reasoning_tier: standard
+L00003129	context_scope: prompt_pipeline
+L00003130	implementation_surfaces:
+L00003131	  - "Plans/Prompt_Pipeline.md"
+L00003132	node_compile_hint:
+L00003133	  mode: constraint
+L00003134	  create_worknodes: false
+L00003135	source_lineage:
+L00003136	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0037"
+L00003137	preserved_exact_tokens:
+L00003138	  - "Skill/tool/MCP resolution"
+L00003139	  - "/web/skills/runtime packets"
+L00003140	  - "SSOT"
+L00003141	  - "required_tool_refs"
+L00003142	  - "optional_tool_refs"
+L00003143	  - "PM-owned MCP availability"
+L00003144	  - "provider-native skill files"
+L00003145	  - "/systems"
+L00003146	  - "/projection"
+L00003147	  - "PM registry/bundling/skill /tool delivery"
+L00003148	negative_constraints:
+L00003149	  - "Provider-native skill or MCP files are optional projections and are never the canonical runtime source of truth."
+L00003150	preserved_contractrefs: []
+L00003151	compatibility_only_notes:
+L00003152	  - "Provider-native skill files, /systems-style compatibility trees, and other external surfaces are optional /projection layers for interoperability."
+L00003153	owner_hints:
+L00003154	  - "Plans/Prompt_Pipeline.md"
+L00003155	  - "Plans/Skills_System.md"
+L00003156	  - "Plans/Tools.md"
+L00003157	```
+L00003158	
+L00003159	### PP-050 - Runtime Resolution UI Transparency
+L00003160	
+L00003161	```yaml
+L00003162	plan_unit_id: PP-050
+L00003163	unit_type: requirement
+L00003164	status: accepted
+L00003165	owner_doc: Plans/Prompt_Pipeline.md
+L00003166	canonical_text: >-
+L00003167	  Agent-Config and other detailed inspectors must predict likely effective runtime from the same resolution pipeline before a run starts, then show the frozen snapshot and observed provider deviations after the run starts without heuristically recomputing the original decision.
+L00003168	gui_related: true
+L00003169	gui_classification_reason: This unit defines visible runtime inspector transparency before and after a run.
+L00003170	split_recommended: false
+L00003171	depends_on:
+L00003172	  - "PP-029"
+L00003173	  - "PP-035"
+L00003174	  - "PP-045"
+L00003175	unblocks: []
+L00003176	acceptance_criteria:
+L00003177	  - "Runtime Resolution UI Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003178	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003179	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003180	validation_surfaces:
+L00003181	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003182	  - "python3 scripts/pm-plan-index.py validate"
+L00003183	risk_class: prompt_pipeline_drift
+L00003184	reasoning_tier: standard
+L00003185	context_scope: prompt_pipeline
+L00003186	implementation_surfaces:
+L00003187	  - "Plans/Prompt_Pipeline.md"
+L00003188	node_compile_hint:
+L00003189	  mode: requirement
+L00003190	  create_worknodes: false
+L00003191	source_lineage:
+L00003192	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0038"
+L00003193	preserved_exact_tokens:
+L00003194	  - "UI transparency requirement"
+L00003195	  - "Agent-Config"
+L00003196	  - "detailed inspectors"
+L00003197	  - "likely effective runtime"
+L00003198	  - "frozen snapshot"
+L00003199	  - "observed provider deviations"
+L00003200	  - "heuristically recomputing"
+L00003201	negative_constraints: []
+L00003202	preserved_contractrefs: []
+L00003203	owner_hints:
+L00003204	  - "Plans/Prompt_Pipeline.md"
+L00003205	  - "Plans/FinalGUISpec.md"
+L00003206	```
+L00003207	
+L00003208	### PP-051 - Runtime Attempt Snapshot Handoff Bundle
+L00003209	
+L00003210	```yaml
+L00003211	plan_unit_id: PP-051
+L00003212	unit_type: requirement
+L00003213	status: accepted
+L00003214	owner_doc: Plans/Prompt_Pipeline.md
+L00003215	canonical_text: >-
+L00003216	  Every attempt snapshot preserves project, thread, wizard, resolution, execution_unit_context, requested/effective account identity, execution role, operational identity, blocked sequence, approval scope, and launched run request references as the canonical bridge from planning-time wizard state to the executing run.
+L00003217	gui_related: false
+L00003218	gui_classification_reason: This unit defines attempt snapshot handoff fields rather than visual presentation.
+L00003219	split_recommended: false
+L00003220	depends_on:
+L00003221	  - "PP-045"
+L00003222	  - "PP-046"
+L00003223	unblocks: []
+L00003224	acceptance_criteria:
+L00003225	  - "Runtime Attempt Snapshot Handoff Bundle remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003226	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003227	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003228	validation_surfaces:
+L00003229	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003230	  - "python3 scripts/pm-plan-index.py validate"
+L00003231	risk_class: prompt_pipeline_drift
+L00003232	reasoning_tier: standard
+L00003233	context_scope: prompt_pipeline
+L00003234	implementation_surfaces:
+L00003235	  - "Plans/Prompt_Pipeline.md"
+L00003236	node_compile_hint:
+L00003237	  mode: requirement
+L00003238	  create_worknodes: false
+L00003239	source_lineage:
+L00003240	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0039"
+L00003241	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0040"
+L00003242	preserved_exact_tokens:
+L00003243	  - "Runtime Attempt Snapshot and Handoff Bundle"
+L00003244	  - "project_id"
+L00003245	  - "thread_id"
+L00003246	  - "wizard_id"
+L00003247	  - "resolution_id"
+L00003248	  - "execution_unit_context"
+L00003249	  - "requested/effective account identity"
+L00003250	  - "execution_role"
+L00003251	  - "operational_identity"
+L00003252	  - "blocked_sequence"
+L00003253	  - "approval_scope_key"
+L00003254	  - "launched_run_request_ref"
+L00003255	negative_constraints: []
+L00003256	preserved_contractrefs: []
+L00003257	owner_hints:
+L00003258	  - "Plans/Prompt_Pipeline.md"
+L00003259	```
+L00003260	
+L00003261	### PP-052 - Wizard Interview Lineage Bridge
+L00003262	
+L00003263	```yaml
+L00003264	plan_unit_id: PP-052
+L00003265	unit_type: requirement
+L00003266	status: accepted
+L00003267	owner_doc: Plans/Prompt_Pipeline.md
+L00003268	canonical_text: >-
+L00003269	  auditor_cycle_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
+L00003270	gui_related: false
+L00003271	gui_classification_reason: This unit defines wizard/interview lineage fields rather than visual presentation.
+L00003272	split_recommended: false
+L00003273	depends_on:
+L00003274	  - "PP-051"
+L00003275	unblocks: []
+L00003276	acceptance_criteria:
+L00003277	  - "Wizard Interview Lineage Bridge remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003278	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003279	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003280	validation_surfaces:
+L00003281	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003282	  - "python3 scripts/pm-plan-index.py validate"
+L00003283	risk_class: prompt_pipeline_drift
+L00003284	reasoning_tier: standard
+L00003285	context_scope: prompt_pipeline
+L00003286	implementation_surfaces:
+L00003287	  - "Plans/Prompt_Pipeline.md"
+L00003288	node_compile_hint:
+L00003289	  mode: requirement
+L00003290	  create_worknodes: false
+L00003291	source_lineage:
+L00003292	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0041"
+L00003293	preserved_exact_tokens:
+L00003294	  - "auditor_cycle_report"
+L00003295	  - "validation_pass_report"
+L00003296	  - "cycle_report_ref"
+L00003297	  - "compatibility_only"
+L00003298	  - "phase_plan_ref"
+L00003299	  - "requirements_quality_report_ref"
+L00003300	  - "workflow_run_id"
+L00003301	  - "pass_verdict"
+L00003302	  - "wizard_snapshot_ref"
+L00003303	  - "launched_run_id"
+L00003304	  - "launched_run_ref"
+L00003305	negative_constraints: []
+L00003306	preserved_contractrefs:
+L00003307	  - "ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md"
+L00003308	owner_hints:
+L00003309	  - "Plans/Prompt_Pipeline.md"
+L00003310	  - "Plans/interview-subagent-integration.md"
+L00003311	  - "Plans/Contracts_V0.md"
+L00003312	```
+L00003313	
+L00003314	### PP-053 - Historical Runtime Handoff Addendum Disposition
+L00003315	
+L00003316	```yaml
+L00003317	plan_unit_id: PP-053
+L00003318	unit_type: compatibility_disposition
+L00003319	status: accepted
+L00003320	owner_doc: Plans/Prompt_Pipeline.md
+L00003321	canonical_text: >-
+L00003322	  The Runtime Attempt Snapshot and Handoff Consolidation Addendum is retained as historical reconciliation context only; canonical runtime handoff fields and rules live in section 6 and this historical note may not override the owner section.
+L00003323	gui_related: false
+L00003324	gui_classification_reason: This unit preserves historical reconciliation context rather than visual presentation.
+L00003325	split_recommended: false
+L00003326	depends_on:
+L00003327	  - "PP-051"
+L00003328	  - "PP-052"
+L00003329	unblocks: []
+L00003330	acceptance_criteria:
+L00003331	  - "Historical Runtime Handoff Addendum Disposition remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003332	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003333	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003334	validation_surfaces:
+L00003335	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003336	  - "python3 scripts/pm-plan-index.py validate"
+L00003337	risk_class: historical_handoff_drift
+L00003338	reasoning_tier: standard
+L00003339	context_scope: prompt_pipeline_historical_disposition
+L00003340	implementation_surfaces:
+L00003341	  - "Plans/Prompt_Pipeline.md"
+L00003342	node_compile_hint:
+L00003343	  mode: compatibility_disposition
+L00003344	  create_worknodes: false
+L00003345	source_lineage:
+L00003346	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0042"
+L00003347	preserved_exact_tokens:
+L00003348	  - "Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)"
+L00003349	  - "historical reconciliation context only"
+L00003350	  - "Runtime Attempt Snapshot and Handoff Bundle"
+L00003351	  - "Nothing in this historical note may override the owner section"
+L00003352	negative_constraints:
+L00003353	  - "The historical addendum must not override the owner section in section 6."
+L00003354	preserved_contractrefs: []
+L00003355	compatibility_only_notes:
+L00003356	  - "Historical runtime handoff note is retained for reconciliation context only."
+L00003357	owner_hints:
+L00003358	  - "Plans/Prompt_Pipeline.md"
+L00003359	```
+L00003360	
+L00003361	### PP-001 - Prompt Pipeline Retired Source-Preserving Bridge
+L00003362	
+L00003363	```yaml
+L00003364	plan_unit_id: PP-001
+L00003365	unit_type: compatibility_disposition
+L00003366	status: retired
+L00003367	owner_doc: Plans/Prompt_Pipeline.md
+L00003368	canonical_text: >-
+L00003369	  PP-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 155. Prompt_Pipeline-S0001 through Prompt_Pipeline-S0020 are covered by PP-002 through PP-026, Prompt_Pipeline-S0021 through Prompt_Pipeline-S0042 are covered by PP-027 through PP-053, and Prompt_Pipeline-S0043 through Prompt_Pipeline-S0046 are generated structural/audit dispositions. PP-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.
+L00003370	gui_related: false
+L00003371	gui_classification_reason: The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.
+L00003372	split_recommended: false
+L00003373	depends_on:
+L00003374	  - "PP-002"
+L00003375	  - "PP-003"
+L00003376	  - "PP-004"
+L00003377	  - "PP-005"
+L00003378	  - "PP-006"
+L00003379	  - "PP-007"
+L00003380	  - "PP-008"
+L00003381	  - "PP-009"
+L00003382	  - "PP-010"
+L00003383	  - "PP-011"
+L00003384	  - "PP-012"
+L00003385	  - "PP-013"
+L00003386	  - "PP-014"
+L00003387	  - "PP-015"
+L00003388	  - "PP-016"
+L00003389	  - "PP-017"
+L00003390	  - "PP-018"
+L00003391	  - "PP-019"
+L00003392	  - "PP-020"
+L00003393	  - "PP-021"
+L00003394	  - "PP-022"
+L00003395	  - "PP-023"
+L00003396	  - "PP-024"
+L00003397	  - "PP-025"
+L00003398	  - "PP-026"
+L00003399	  - "PP-027"
+L00003400	  - "PP-028"
+L00003401	  - "PP-029"
+L00003402	  - "PP-030"
+L00003403	  - "PP-031"
+L00003404	  - "PP-032"
+L00003405	  - "PP-033"
+L00003406	  - "PP-034"
+L00003407	  - "PP-035"
+L00003408	  - "PP-036"
+L00003409	  - "PP-037"
+L00003410	  - "PP-038"
+L00003411	  - "PP-039"
+L00003412	  - "PP-040"
+L00003413	  - "PP-041"
+L00003414	  - "PP-042"
+L00003415	  - "PP-043"
+L00003416	  - "PP-044"
+L00003417	  - "PP-045"
+L00003418	  - "PP-046"
+L00003419	  - "PP-047"
+L00003420	  - "PP-048"
+L00003421	  - "PP-049"
+L00003422	  - "PP-050"
+L00003423	  - "PP-051"
+L00003424	  - "PP-052"
+L00003425	  - "PP-053"
+L00003426	unblocks: []
+L00003427	acceptance_criteria:
+L00003428	  - "PP-001 does not override PP-002 through PP-053 for Prompt_Pipeline-S0001 through Prompt_Pipeline-S0042."
+L00003429	  - "Generated Owner / Consumer Map, PlanUnits heading, retired bridge, and Migration Coverage spans remain available for exact-text audit."
+L00003430	  - "Plans/Prompt_Pipeline.md has no residual source_preserving_planunit product coverage after this bridge retirement."
+L00003431	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition."
+L00003432	validation_surfaces:
+L00003433	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003434	  - "python3 scripts/pm-plan-index.py validate"
+L00003435	risk_class: residual_bridge_overreach
+L00003436	reasoning_tier: standard
+L00003437	context_scope: prompt_pipeline_residual_bridge
+L00003438	implementation_surfaces:
+L00003439	  - "Plans/Prompt_Pipeline.md"
+L00003440	node_compile_hint:
+L00003441	  mode: retired_source_preserving_bridge
+L00003442	  create_worknodes: false
+L00003443	source_lineage:
+L00003444	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0043"
+L00003445	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0044"
+L00003446	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0045"
+L00003447	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0046"
+L00003448	preserved_exact_tokens:
+L00003449	  - "PP-001"
+L00003450	  - "Prompt Pipeline Residual Source-Preserving Bridge"
+L00003451	  - "Prompt Pipeline Retired Source-Preserving Bridge"
+L00003452	  - "Prompt Pipeline (Canonical SSOT) Source-Preserving PlanUnit"
+L00003453	  - "source_preserving_planunit"
+L00003454	  - "retired_source_preserving_bridge"
+L00003455	  - "source_preserving_bridge_retired"
+L00003456	  - "Owner / Consumer Map"
+L00003457	  - "PlanUnits"
+L00003458	  - "Migration Coverage"
+L00003459	  - "PP-002"
+L00003460	  - "PP-053"
+L00003461	  - "Prompt_Pipeline-S0043"
+L00003462	  - "Prompt_Pipeline-S0044"
+L00003463	  - "Prompt_Pipeline-S0045"
+L00003464	  - "Prompt_Pipeline-S0046"
+L00003465	negative_constraints:
+L00003466	  - "PP-001 must not be used as implementation-ready product coverage for spans now mapped to PP-002 through PP-053."
+L00003467	  - "PP-001 must not use source_preserving_planunit compile mode after Phase 2B batch 155."
+L00003468	preserved_contractrefs:
+L00003469	  - "ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00003470	compatibility_only_notes:
+L00003471	  - "The retired bridge remains only as migration-lineage compatibility metadata."
+L00003472	stale_retired_dispositions:
+L00003473	  - "source_preserving_bridge_retired"
+L00003474	owner_hints:
+L00003475	  - "Plans/Prompt_Pipeline.md"
+L00003476	```
+L00003477	
+L00003478	## Migration Coverage
+L00003479	
+L00003480	Original hash: `7344aebefa758505ec0fd7b76c5a98b69768cc9253b2e8bd873cd30cdd0e8be7`.
+L00003481	
+L00003482	Run-scoped proof artifacts:
+L00003483	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00003484	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00003485	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00003486	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00003487	
+L00003488	Original spans from `Prompt_Pipeline-S0001` through `Prompt_Pipeline-S0020` are preserved in place and atomized into fine-grained PlanUnits `PP-002` through `PP-026`. Original spans from `Prompt_Pipeline-S0021` through `Prompt_Pipeline-S0042` are preserved in place and atomized into fine-grained PlanUnits `PP-027` through `PP-053`. Generated structural/audit spans `Prompt_Pipeline-S0043` through `Prompt_Pipeline-S0046` are dispositioned in Phase 2B batch 155, and `PP-001` is retired to migration-lineage-only compatibility disposition. `Plans/Prompt_Pipeline.md` has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00003489	
+L00003490	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00003491	
+L00003492	This addendum compiles accepted provider-update ledger atoms into prompt pipeline requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00003493	
+L00003494	### PP-054 - Requested Effective Provider Route Snapshot
+L00003495	
+L00003496	```yaml
+L00003497	plan_unit_id: PP-054
+L00003498	unit_type: requirement
+L00003499	status: accepted
+L00003500	owner_doc: Plans/Prompt_Pipeline.md
+L00003501	canonical_text: >-
+L00003502	  Prompt Pipeline records must snapshot requested and effective provider route identity for provider_entry_id, provider_family_id, account_profile_ref, transport_kind, auth_surface, model_id, effort intent, effective effort wire mapping, media_route_id, fallback_used, fallback_reason, support_state, verification_state, and capability gates for each provider attempt. This snapshot feeds usage, runtime artifacts, GUI run status, and audits without letting consumers infer route identity from model names alone.
+L00003503	gui_related: false
+L00003504	gui_classification_reason: Prompt/runtime identity snapshot contract rather than visual presentation.
+L00003505	depends_on: [CV-293, MS-113, MA-062]
+L00003506	unblocks: [UF-074, RAP-032, ACD-424]
+L00003507	acceptance_criteria:
+L00003508	  - Requested and effective provider/model/account/effort/media route identities are recorded per attempt.
+L00003509	  - Fallback and effort-clamp reasons remain queryable.
+L00003510	  - Usage, artifacts, and GUI consumers reuse this snapshot rather than creating independent provider identity guesses.
+L00003511	  - Secret material is not stored in prompt pipeline snapshots.
+L00003512	validation_surfaces:
+L00003513	  - python3 scripts/pm-plan-index.py validate
+L00003514	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00003515	risk_class: provider_identity_snapshot_drift
+L00003516	reasoning_tier: high
+L00003517	context_scope: prompt_provider_route_snapshot
+L00003518	implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/Models_System.md, Plans/Multi-Account.md]
+L00003519	node_compile_hint: {mode: requested_effective_provider_route_snapshot, create_worknodes: false, create_nodeseeds: false}
+L00003520	source_lineage:
+L00003521	  - pldg-20260624-001-provider-updates:atom-0119
+L00003522	  - pldg-20260624-001-provider-updates:atom-0122
+L00003523	  - pldg-20260624-001-provider-updates:atom-0139
+L00003524	source_atom_ids: [atom-0017, atom-0052, atom-0117, atom-0118, atom-0119, atom-0122, atom-0129, atom-0131, atom-0132, atom-0139, atom-0140]
+L00003525	preserved_exact_tokens: ["requested", "effective", "provider_entry_id", "provider_family_id", "account_profile_ref", "transport_kind", "auth_surface", "model_id", "media_route_id", "fallback_used", "fallback_reason", "support_state", "verification_state"]
+L00003526	negative_constraints:
+L00003527	  - Do not infer provider route identity from model name alone.
+L00003528	  - Do not store secrets in prompt pipeline snapshots.
+L00003529	  - Do not let usage, GUI, or artifact consumers invent separate requested/effective route schemas.
+L00003530	owner_hints: [Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/Models_System.md, Plans/Multi-Account.md]
+L00003531	```
+L00003532	
+L00003533	
+L00003534	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00003535	
+L00003536	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00003537	
+L00003538	### PP-055 - Vision Bridge Prompt Output Contract
+L00003539	
+L00003540	```yaml
+L00003541	plan_unit_id: PP-055
+L00003542	unit_type: requirement
+L00003543	status: accepted
+L00003544	owner_doc: Plans/Prompt_Pipeline.md
+L00003545	canonical_text: The vision bridge uses a structured prompt/output contract. Image source precedence is explicit
+L00003546	  current-turn attachment or selected artifact, then FileSafe-allowed project file, then explicit clipboard image,
+L00003547	  then recent OS screenshot picker. The vision route receives the image plus a bounded task and returns description/answer,
+L00003548	  uncertainty, notable text/OCR when available, limitations, and safety/redaction notes. The non-vision model receives
+L00003549	  the structured derived result and source refs, not raw image bytes. If bridge execution is denied, unavailable,
+L00003550	  inconclusive, or fails validation, PM returns a structured unavailable result; the instruction remains never guess
+L00003551	  image contents.
+L00003552	gui_related: true
+L00003553	gui_classification_reason: The structured image-derived output is user-visible and governs screenshot/image context
+L00003554	  passed into chat.
+L00003555	depends_on:
+L00003556	- CV-296
+L00003557	- F2-192
+L00003558	- PS-121
+L00003559	unblocks:
+L00003560	- RAP-035
+L00003561	- ACD-425
+L00003562	acceptance_criteria:
+L00003563	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00003564	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00003565	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00003566	  are created by this compile.
+L00003567	validation_surfaces:
+L00003568	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00003569	- python3 scripts/pm-plan-index.py validate
+L00003570	- git diff --check
+L00003571	risk_class: vision_prompt_injection_or_guessing
+L00003572	reasoning_tier: high
+L00003573	context_scope: vision_bridge_prompt_output
+L00003574	implementation_surfaces:
+L00003575	- Plans/Prompt_Pipeline.md
+L00003576	- future bridge prompt/result serializer
+L00003577	node_compile_hint:
+L00003578	  mode: vision_bridge_prompt_output
+L00003579	  create_worknodes: false
+L00003580	  create_nodeseeds: false
+L00003581	source_lineage:
+L00003582	- pldg-20260626-001-feature-name:atom-0071
+L00003583	- pldg-20260626-001-feature-name:atom-0075
+L00003584	- pldg-20260626-001-feature-name:atom-0081
+L00003585	- pldg-20260626-001-feature-name:atom-0082
+L00003586	- pldg-20260626-001-feature-name:atom-0085
+L00003587	- pldg-20260626-001-feature-name:atom-0086
+L00003588	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00003589	- Plans/Runtime_Artifacts_Panel.md
+L00003590	- Plans/Prompt_Pipeline.md
+L00003591	- chat:vision-bridge-defaults-answer
+L00003592	- chat:vision-pressure-test-request
+L00003593	- chat:vision-pressure-test-defaults-answer
+L00003594	- Plans/FinalGUISpec.md
+L00003595	- Plans/FileSafe.md
+L00003596	source_atom_ids:
+L00003597	- atom-0071
+L00003598	- atom-0075
+L00003599	- atom-0081
+L00003600	- atom-0082
+L00003601	- atom-0085
+L00003602	- atom-0086
+L00003603	decision_refs:
+L00003604	- dec-0014
+L00003605	- dec-0015
+L00003606	- dec-0016
+L00003607	- dec-0017
+L00003608	preserved_exact_tokens:
+L00003609	- see_image
+L00003610	- experimental.chat.system.transform
+L00003611	- OpenCode SQLite
+L00003612	- part
+L00003613	- screenshotSearchDirs
+L00003614	- SEE_IMAGE_MODEL
+L00003615	- SEE_IMAGE_PROVIDER
+L00003616	- minimax-m3
+L00003617	- opencode-go
+L00003618	- mimo-v2.5-free
+L00003619	- never guess image contents
+L00003620	- chat attachments
+L00003621	- runtime artifacts
+L00003622	- screenshots
+L00003623	- project files
+L00003624	- clipboard
+L00003625	- recent OS screenshots
+L00003626	- FileSafe
+L00003627	- 3. not deferred
+L00003628	- permission denied
+L00003629	- no eligible vision route
+L00003630	- provider unavailable
+L00003631	- auth expired
+L00003632	- timeout
+L00003633	- unsupported/corrupt/too-large image
+L00003634	- missing file/artifact
+L00003635	- empty clipboard
+L00003636	- ambiguous recent screenshot
+L00003637	- redaction blocked
+L00003638	- 'yes'
+L00003639	- current-turn attachment
+L00003640	- selected artifact
+L00003641	- project file allowed by FileSafe
+L00003642	- clipboard image
+L00003643	- recent OS screenshot picker
+L00003644	- ambiguous
+L00003645	- hidden Desktop/Downloads scraping
+L00003646	- sensitivity/redaction policy
+L00003647	- disclosure destination
+L00003648	- explicit user override
+L00003649	- redaction/omission details
+L00003650	- derived artifact manifest
+L00003651	- secrets
+L00003652	- structured prompt/output contract
+L00003653	- bounded question/task
+L00003654	- uncertainty
+L00003655	- notable text/OCR
+L00003656	- limitations
+L00003657	- safety/redaction notes
+L00003658	- source refs
+L00003659	- not raw image bytes
+L00003660	negative_constraints:
+L00003661	- Do not copy OpenCode's SQLite/session model as PM's source of truth.
+L00003662	- Do not hardcode `opencode-go`, `minimax-m3`, or `mimo-v2.5-free` as PM defaults without an explicit provider-routing
+L00003663	  decision.
+L00003664	- Do not carry over OpenCode-specific prompt injection unchanged.
+L00003665	- Do not defer clipboard or recent OS screenshot support out of MVP.
+L00003666	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
+L00003667	  and ingestion rules.
+L00003668	- Do not bypass FileSafe or artifact access policy when resolving project images.
+L00003669	- Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
+L00003670	- Do not let the non-vision model infer or guess image contents after bridge failure.
+L00003671	- Do not serialize failed, revoked, blocked, expired, or omitted image artifacts as successful prompt content.
+L00003672	- Do not show a generic failure when PM can provide a concrete reason code and next action.
+L00003673	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+L00003674	- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+L00003675	- Do not bypass FileSafe or artifact permissions for project-file image sources.
+L00003676	- Do not silently send sensitive screenshots or images to another provider without policy evaluation.
+L00003677	- Do not claim redaction happened without recording redaction/omission metadata.
+L00003678	- Do not expose secret material in manifests, receipts, GUI previews, or exports.
+L00003679	- Do not pass raw image bytes into non-vision model context when artifact refs plus bounded derived text are the
+L00003680	  contract.
+L00003681	- Do not omit uncertainty or limitations from bridge output when the image is ambiguous or low-confidence.
+L00003682	- Do not let image text/OCR become hidden, unsourced prompt material.
+L00003683	owner_hints:
+L00003684	- Plans/Tools.md
+L00003685	- Plans/Prompt_Pipeline.md
+L00003686	- Plans/Models_System.md
+L00003687	- Plans/Provider_OpenCode.md
+L00003688	- Plans/Runtime_Artifacts_Panel.md
+L00003689	- Plans/Project_Output_Artifacts.md
+L00003690	- Plans/FileSafe.md
+L00003691	- Plans/assistant-chat-design.md
+L00003692	- Plans/FinalGUISpec.md
+L00003693	- Plans/UI_Command_Catalog.md
+L00003694	- Plans/Permissions_System.md
+L00003695	- Plans/Contracts_V0.md
+L00003696	```
+L00003697	
+L00003698	### PP-056 - Teacher PM Knowledge Source Resolution
+L00003699	
+L00003700	```yaml
+L00003701	plan_unit_id: PP-056
+L00003702	unit_type: requirement
+L00003703	status: accepted
+L00003704	owner_doc: Plans/Prompt_Pipeline.md
+L00003705	canonical_text: 'Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
+L00003706	  canonical Plans, command catalog, GUI surface registry, model/capability/provider state, permission/policy state,
+L00003707	  runtime artifacts/history, Help/Glossary entries, taught memory, then safe fallback or handoff. Teacher must cite
+L00003708	  source groups or show missing coverage, expose source confidence/currentness states, avoid guessing about PM capabilities,
+L00003709	  and choose handoff when the user asks beyond teaching/help scope, external research beyond sources, build work,
+L00003710	  audit/repair, direct execution, or specialty tooling.'
+L00003711	gui_related: false
+L00003712	gui_classification_reason: Source ordering, confidence, and no-guessing are prompt/source behavior rather than visual
+L00003713	  presentation; GUI disclosure is owned elsewhere.
+L00003714	depends_on:
+L00003715	- P-055
+L00003716	unblocks:
+L00003717	- ACD-426
+L00003718	- ATS-014
+L00003719	acceptance_criteria:
+L00003720	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00003721	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00003722	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00003723	  are created by this compile.
+L00003724	validation_surfaces:
+L00003725	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00003726	- python3 scripts/pm-plan-index.py validate
+L00003727	- git diff --check
+L00003728	risk_class: teacher_pm_knowledge_guessing
+L00003729	reasoning_tier: high
+L00003730	context_scope: teacher_pm_knowledge_pipeline
+L00003731	implementation_surfaces:
+L00003732	- Plans/Prompt_Pipeline.md
+L00003733	- future Teacher source resolver
+L00003734	node_compile_hint:
+L00003735	  mode: teacher_pm_knowledge_pipeline
+L00003736	  create_worknodes: false
+L00003737	  create_nodeseeds: false
+L00003738	source_lineage:
+L00003739	- pldg-20260626-001-feature-name:atom-0095
+L00003740	- pldg-20260626-001-feature-name:atom-0105
+L00003741	- pldg-20260626-001-feature-name:atom-0109
+L00003742	- pldg-20260626-001-feature-name:atom-0115
+L00003743	- pldg-20260626-001-feature-name:atom-0124
+L00003744	- pldg-20260626-001-feature-name:atom-0128
+L00003745	- pldg-20260626-001-feature-name:atom-0137
+L00003746	- pldg-20260626-001-feature-name:atom-0138
+L00003747	- pldg-20260626-001-feature-name:atom-0149
+L00003748	- chat:teacher-feature-initial-framing
+L00003749	- Plans/Personas.md#P-040---Teacher-Core-Persona
+L00003750	- Plans/Media_Generation_and_Capabilities.md
+L00003751	- Plans/UI_Command_Catalog.md
+L00003752	- chat:teach-visual-specificity-challenge
+L00003753	- Plans/assistant-chat-design.md#6-Teach
+L00003754	- chat:teach-help-glossary-rest-request
+L00003755	- Plans/Glossary.md
+L00003756	- Plans/assistant-chat-design.md
+L00003757	- chat:teach-gap-fill-correction
+L00003758	- q-0028
+L00003759	- chat:teach-bundle-accepted-pmconcept-reference
+L00003760	- chat:work-through-teach-gaps
+L00003761	- Plans/Personas.md#11.8-teacher
+L00003762	- Plans/assistant-chat-design.md#6-teach
+L00003763	- Plans/Runtime_Artifacts_Panel.md#runtime-artifact-identity-index-and-preview-rules
+L00003764	- Plans/Personas.md#P-040-teacher-core-persona
+L00003765	source_atom_ids:
+L00003766	- atom-0095
+L00003767	- atom-0105
+L00003768	- atom-0109
+L00003769	- atom-0115
+L00003770	- atom-0124
+L00003771	- atom-0128
+L00003772	- atom-0137
+L00003773	- atom-0138
+L00003774	- atom-0149
+L00003775	decision_refs:
+L00003776	- dec-0018
+L00003777	- dec-0019
+L00003778	- dec-0020
+L00003779	- dec-0021
+L00003780	- dec-0022
+L00003781	- dec-0023
+L00003782	- dec-0024
+L00003783	correction_refs:
+L00003784	- corr-0002
+L00003785	- corr-0003
+L00003786	preserved_exact_tokens:
+L00003787	- know everything in PM
+L00003788	- how it works
+L00003789	- all the capabilities of PM
+L00003790	- how the user interacts with it
+L00003791	- PM documentation coverage
+L00003792	- capabilities.get
+L00003793	- command catalog
+L00003794	- Where it will get all its info from
+L00003795	- Sources used
+L00003796	- PM context
+L00003797	- capability snapshots
+L00003798	- settings registry
+L00003799	- missing coverage
+L00003800	- current surface/selection context
+L00003801	- settings
+L00003802	- command/route registries
+L00003803	- capability resolver
+L00003804	- Plans/PlanUnits
+L00003805	- taught memories
+L00003806	- current surface/control route
+L00003807	- Teach-specific help entry
+L00003808	- Glossary canonical definition
+L00003809	- owner Plans/PlanUnits
+L00003810	- command/settings/capability records
+L00003811	- scoped taught memory
+L00003812	- missing-help coverage callout
+L00003813	- current surface/control
+L00003814	- current thread/project
+L00003815	- help/glossary entry
+L00003816	- provider/model/account state
+L00003817	- runtime artifact
+L00003818	- stale
+L00003819	- missing
+L00003820	- disabled
+L00003821	- permission-required
+L00003822	- Teacher handoff
+L00003823	- missing PM coverage
+L00003824	- non-teaching assistance
+L00003825	- implementation work
+L00003826	- high-capability reasoning
+L00003827	- external search
+L00003828	- another persona/tool path
+L00003829	- required help entry
+L00003830	- owner source
+L00003831	- capability record
+L00003832	- route/control record
+L00003833	- permission
+L00003834	- current surface/control context
+L00003835	- Glossary/help entries
+L00003836	- UI command/route catalog
+L00003837	- capability/provider/account snapshots
+L00003838	- available
+L00003839	- capability-unavailable
+L00003840	- conflict-detected
+L00003841	- could not verify
+L00003842	- PM knowledge pressure test
+L00003843	- PM concepts
+L00003844	- workflows
+L00003845	- models
+L00003846	- capabilities
+L00003847	- permissions
+L00003848	- history
+L00003849	- artifacts
+L00003850	- Personas
+L00003851	- skills/plugins
+L00003852	- Orchestrator behavior
+L00003853	- Teach memory
+L00003854	- avoid guessing
+L00003855	- handoff
+L00003856	negative_constraints:
+L00003857	- Do not hardcode a stale PM encyclopedia inside the Teacher prompt.
+L00003858	- Do not let Teacher invent unsupported capabilities or GUI steps when the capability resolver, command catalog,
+L00003859	  or Plans do not support them.
+L00003860	- Do not search other projects or external sources unless the user explicitly requests external navigation/import.
+L00003861	- Do not let Teacher present PM facts as unsourced hidden prompt lore.
+L00003862	- Do not hide stale, missing, disabled, or capability-unavailable source states.
+L00003863	- Do not cite unavailable PlanUnits before a future compile creates them.
+L00003864	- Do not let Teacher invent PM behavior when live PM sources are missing.
+L00003865	- Do not search external sources or other projects by default.
+L00003866	- Do not use taught memory outside its approved scope.
+L00003867	- Do not let Teacher silently skip missing help entries.
+L00003868	- Do not search/read external or cross-project sources unless the user explicitly approves that route.
+L00003869	- Do not use taught memory outside its scope.
+L00003870	- Do not collapse stale, missing, disabled, and permission-required states into generic uncertainty.
+L00003871	- Do not let Teacher guess through missing PM coverage.
+L00003872	- Do not silently change persona/model/tool path without disclosure.
+L00003873	- Do not treat handoff as failure when it is the correct safer route.
+L00003874	- Do not let Teacher invent PM behavior when owner sources are missing.
+L00003875	- Do not collapse stale, missing, disabled, permission-required, and capability-unavailable into one vague warning.
+L00003876	- Do not present unverified PM behavior as fact.
+L00003877	- Do not cite unavailable future PlanUnits before compile creates them.
+L00003878	- Do not certify Teacher on a small happy-path chat only.
+L00003879	- Do not let Teacher answer capability or settings questions without live/source-backed state.
+L00003880	- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+L00003881	owner_hints:
+L00003882	- Plans/Prompt_Pipeline.md
+L00003883	- Plans/assistant-chat-design.md
+L00003884	- Plans/Tools.md
+L00003885	- Plans/Media_Generation_and_Capabilities.md
+L00003886	- Plans/UI_Command_Catalog.md
+L00003887	- Plans/FinalGUISpec.md
+L00003888	- Plans/Glossary.md
+L00003889	- Plans/Personas.md
+L00003890	- Plans/storage-plan.md
+L00003891	- Plans/Models_System.md
+L00003892	- Plans/Runtime_Artifacts_Panel.md
+L00003893	- Plans/Permissions_System.md
+L00003894	- Plans/Automated_Testing_System.md
+L00003895	```
+L00003896	
+L00003897	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00003898	
+L00003899	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Prompt Pipeline owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003900	
+L00003901	### PP-057 - Shared DRY Instruction Bundle Conformance
+L00003902	
+L00003903	```yaml
+L00003904	plan_unit_id: PP-057
+L00003905	unit_type: requirement
+L00003906	status: accepted
+L00003907	owner_doc: Plans/Prompt_Pipeline.md
+L00003908	canonical_text: >-
+L00003909	  Assistant, Interview, Orchestrator, delegated child-run, document-builder, and code-generation prompt routes consume
+L00003910	  one shared Instruction Bundle route for the DRY Method. Prompt builders must not carry prompt-builder-local DRY prose,
+L00003911	  shadow instruction sources, or route-specific DRY behavior. The Instruction Bundle records
+L00003912	  `instruction_bundle_ref`, `rules_application_sha256`, `rules_project_sha256`, `dry_method_effective_state`, and
+L00003913	  `dry_method_reason` as run-start minimum fields when the DRY Method applies, degrades, is disabled, blocks, or
+L00003914	  caveats a route.
+L00003915	gui_related: false
+L00003916	gui_classification_reason: Defines prompt assembly and shared route conformance rather than visual presentation.
+L00003917	depends_on: [ARC-036, CV-299]
+L00003918	unblocks: [OSI-430, ISI-019, ATS-018]
+L00003919	acceptance_criteria:
+L00003920	  - Every listed prompt route consumes the same DRY Method Instruction Bundle path.
+L00003921	  - Local prompt templates do not duplicate or fork DRY Method prose.
+L00003922	  - Run-start minimum fields are present when DRY has a material route effect.
+L00003923	validation_surfaces:
+L00003924	  - python3 scripts/pm-plan-index.py validate
+L00003925	  - DRY Method prompt route conformance fixtures
+L00003926	risk_class: dry_method_prompt_route_drift
+L00003927	reasoning_tier: high
+L00003928	context_scope: dry_method_prompt_pipeline
+L00003929	implementation_surfaces:
+L00003930	  - Plans/Prompt_Pipeline.md
+L00003931	  - future prompt assembly
+L00003932	node_compile_hint:
+L00003933	  mode: dry_method_shared_instruction_bundle
+L00003934	  create_worknodes: false
+L00003935	  create_nodeseeds: false
+L00003936	source_lineage:
+L00003937	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-prompt-route-static-conformance
+L00003938	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-003
+L00003939	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-004
+L00003940	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0076
+L00003941	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+L00003942	source_atom_ids: [atom-0076, atom-0083]
+L00003943	preserved_exact_tokens:
+L00003944	  - "Assistant"
+L00003945	  - "Interview"
+L00003946	  - "Orchestrator"
+L00003947	  - "delegated child-run"
+L00003948	  - "document-builder"
+L00003949	  - "code-generation"
+L00003950	  - "Instruction Bundle"
+L00003951	  - "instruction_bundle_ref"
+L00003952	  - "rules_application_sha256"
+L00003953	  - "rules_project_sha256"
+L00003954	negative_constraints:
+L00003955	  - Do not create shadow instruction sources.
+L00003956	  - Do not duplicate DRY prose into prompt builders.
+L00003957	  - Do not let route-local prompt templates override the shared DRY owner.
+L00003958	owner_hints:
+L00003959	  - Plans/Prompt_Pipeline.md
+L00003960	  - Plans/agent-rules-context.md
+L00003961	  - Plans/orchestrator-subagent-integration.md
+L00003962	  - Plans/interview-subagent-integration.md
+L00003963	```
+L00003964	
+L00003965	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00003966	
+L00003967	This addendum compiles the Free Models prompt-route consumer contract. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00003968	
+L00003969	### PP-058 - Free Models Requested Effective Route Snapshot Handoff
+L00003970	
+L00003971	```yaml
+L00003972	plan_unit_id: PP-058
+L00003973	unit_type: requirement
+L00003974	status: accepted
+L00003975	owner_doc: Plans/Prompt_Pipeline.md
+L00003976	canonical_text: >-
+L00003977	  Prompt Pipeline consumes a requested/effective route snapshot for Free Models that includes the user-facing wrapper, underlying provider/model/account/source identity, section policy source, fallback reason, cost/usage refs, capability/support state, and source snapshot refs before provider handoff. Prompt assembly must not infer route identity from friendly model names alone and must preserve section/surface/role override provenance.
+L00003978	gui_related: false
+L00003979	gui_classification_reason: Defines prompt assembly and provider handoff metadata, not GUI presentation.
+L00003980	depends_on: []
+L00003981	unblocks: []
+L00003982	acceptance_criteria:
+L00003983	  - Prompt handoff snapshots include requested and effective provider/model/account/source identity.
+L00003984	  - Section/surface/role override source is carried through prompt assembly.
+L00003985	  - Friendly names do not replace canonical provider/model/account/source ids.
+L00003986	  - Fallback reason and cost/usage refs are available for Usage and Runtime Artifacts projection.
+L00003987	validation_surfaces:
+L00003988	  - python3 scripts/pm-plan-index.py validate
+L00003989	  - Free Models requested/effective route snapshot fixtures
+L00003990	  - Prompt handoff provenance fixtures
+L00003991	risk_class: prompt_route_identity_drift
+L00003992	reasoning_tier: high
+L00003993	context_scope: free_models_prompt_pipeline_handoff
+L00003994	implementation_surfaces:
+L00003995	  - Plans/Prompt_Pipeline.md
+L00003996	  - Plans/Models_System.md
+L00003997	  - Plans/usage-feature.md
+L00003998	  - Plans/Executor_Protocol.md
+L00003999	  - Plans/Runtime_Artifacts_Panel.md
+L00004000	node_compile_hint:
+L00004001	  mode: free_models_prompt_route_snapshot_planunit
+L00004002	  create_worknodes: false
+L00004003	  create_nodeseeds: false
+L00004004	source_lineage:
+L00004005	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00004006	source_atom_ids: [atom-0012, atom-0026, atom-0113, atom-0117, atom-0118, atom-0122, atom-0126, atom-0234, atom-0238, atom-0242, atom-0246, atom-0276, atom-0281, atom-0282, atom-0297, atom-0298]
+L00004007	preserved_exact_tokens:
+L00004008	  - "requested/effective"
+L00004009	  - "section/surface/role"
+L00004010	  - "fallback reason"
+L00004011	  - "provider/model/account/source"
+L00004012	  - "source snapshot"
+L00004013	  - "Provider_OpenCode adjacent/reference-only"
+L00004014	negative_constraints:
+L00004015	  - Do not infer provider/model/account/source identity from model display names alone.
+L00004016	  - Do not hide requested/effective model differences when section settings override the global top-10.
+L00004017	  - Do not compile Free Models ownership into Provider_OpenCode by default.
+L00004018	owner_hints:
+L00004019	  - Plans/Prompt_Pipeline.md
+L00004020	  - Plans/Models_System.md
+L00004021	  - Plans/usage-feature.md
+L00004022	  - Plans/Executor_Protocol.md
+L00004023	```
+L00004024	
+L00004025	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00004026	
+L00004027	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00004028	
+L00004029	### PP-059 - P1-CONTEXT-SKILL-BUDGETS
+L00004030	
+L00004031	```yaml
+L00004032	plan_unit_id: PP-059
+L00004033	unit_type: requirement
+L00004034	status: accepted
+L00004035	owner_doc: Plans/Prompt_Pipeline.md
+L00004036	canonical_text: >-
+L00004037	  P1-CONTEXT-SKILL-BUDGETS (P1) is compiled as canonical Puppet Master intent for Skill/context catalog progressive disclosure: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries. The preserved PM gap/delta is: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI. The observed external-repo signal remains source-lineage evidence: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+L00004038	gui_related: true
+L00004039	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004040	depends_on:
+L00004041	- PDS-003
+L00004042	- PNC-001
+L00004043	unblocks: []
+L00004044	acceptance_criteria:
+L00004045	- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
+L00004046	- Selected skill loads full instructions only when chosen.
+L00004047	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004048	validation_surfaces:
+L00004049	- python3 scripts/pm-plan-index.py validate
+L00004050	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004051	- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
+L00004052	- Selected skill loads full instructions only when chosen.
+L00004053	risk_class: p1_context_cache_hardening
+L00004054	reasoning_tier: standard
+L00004055	context_scope: context_cache
+L00004056	implementation_surfaces:
+L00004057	- Plans/Prompt_Pipeline.md
+L00004058	- Plans/Skills_System.md
+L00004059	- Plans/Tools.md
+L00004060	- Plans/Models_System.md
+L00004061	node_compile_hint:
+L00004062	  mode: p1_context_skill_budgets
+L00004063	  create_worknodes: false
+L00004064	  create_nodeseeds: false
+L00004065	source_lineage:
+L00004066	- pldg-20260703-001-feature-intake:atom-0018
+L00004067	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0018
+L00004068	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0014/P1-CONTEXT-SKILL-BUDGETS@line=14
+L00004069	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0014/P1-CONTEXT-SKILL-BUDGETS
+L00004070	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004071	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004072	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:14
+L00004073	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00004074	source_atom_ids:
+L00004075	- atom-0018
+L00004076	external_atom_id: extrepo-20260703-0014
+L00004077	source_row_id: P1-CONTEXT-SKILL-BUDGETS
+L00004078	priority: P1
+L00004079	finding_family: Skill/context catalog progressive disclosure
+L00004080	source_repos:
+L00004081	- openai/codex
+L00004082	- cline/cline
+L00004083	- earendil-works/pi
+L00004084	target_docs:
+L00004085	- Plans/Prompt_Pipeline.md
+L00004086	- Plans/Skills_System.md
+L00004087	- Plans/Tools.md
+L00004088	- Plans/Models_System.md
+L00004089	owner_hints:
+L00004090	- Plans/Prompt_Pipeline.md
+L00004091	- Plans/Skills_System.md
+L00004092	- Plans/Tools.md
+L00004093	- Plans/Models_System.md
+L00004094	preserved_exact_tokens:
+L00004095	- extrepo-20260703-0014
+L00004096	- P1-CONTEXT-SKILL-BUDGETS
+L00004097	- P1
+L00004098	- Skill/context catalog progressive disclosure
+L00004099	- openai/codex
+L00004100	- cline/cline
+L00004101	- earendil-works/pi
+L00004102	negative_constraints: []
+L00004103	observed_signal: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+L00004104	pm_current_coverage: PM Prompt Pipeline owns skill bundling and compaction algorithms.
+L00004105	pm_gap_or_delta: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI.
+L00004106	proposal_or_recommendation: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries.
+L00004107	compile_disposition: create_new_planunit
+L00004108	```
+L00004109	
+L00004110	## Usage GUI Propagation Addendum - 2026-07-09
+L00004111	
+L00004112	This addendum binds context epochs, compaction, and cache/context usage projection to UsageRecord display contracts. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00004113	
+L00004114	### PP-073 - Context Epoch Usage Projection Contract
+L00004115	
+L00004116	```yaml
+L00004117	plan_unit_id: PP-073
+L00004118	unit_type: requirement
+L00004119	status: accepted
+L00004120	owner_doc: Plans/Prompt_Pipeline.md
+L00004121	canonical_text: >-
+L00004122	  ContextEpoch records and compaction projections expose context_estimate, input_total, input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes, output_visible, reasoning/thoughts, provider_total, counting_semantics, hidden/background contribution refs, and source_confidence to GUI consumers through UsageRecord/context projections. Compact Now creates a new context epoch or compaction receipt according to chat command rules; it does not rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate into provider billing authority.
+L00004123	gui_related: true
+L00004124	gui_classification_reason: Context epoch and compaction projections feed the visible chat context circle and Context Detail Pane.
+L00004125	depends_on: [PP-072, UF-087, UF-088, ACD-434]
+L00004126	unblocks: []
+L00004127	acceptance_criteria:
+L00004128	  - Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority.
+L00004129	  - Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs.
+L00004130	  - Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics.
+L00004131	  - Hidden/background contribution refs remain visible in context breakdowns instead of being silently folded into user-message totals.
+L00004132	validation_surfaces:
+L00004133	  - python3 scripts/pm-plan-index.py validate
+L00004134	  - python3 scripts/pm-plans-verify.py run-gates
+L00004135	  - future context epoch usage projection fixture suite
+L00004136	risk_class: context_epoch_usage_projection_drift
+L00004137	reasoning_tier: high
+L00004138	context_scope: context_epoch_usage_projection
+L00004139	implementation_surfaces:
+L00004140	  - Plans/Prompt_Pipeline.md
+L00004141	  - Plans/assistant-chat-design.md
+L00004142	  - Plans/usage-feature.md
+L00004143	node_compile_hint:
+L00004144	  mode: context_epoch_usage_projection_contract
+L00004145	  create_worknodes: false
+L00004146	  create_nodeseeds: false
+L00004147	source_lineage:
+L00004148	  - "Plans/Prompt_Pipeline.md:4830-5020"
+L00004149	  - "Plans/assistant-chat-design.md:1217-1255"
+L00004150	  - "Plans/usage-feature.md:156-194"
+L00004151	  - "Plans/usage-feature.md:5412-5605"
+L00004152	  - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+L00004153	preserved_exact_tokens:
+L00004154	  - ContextEpoch
+L00004155	  - Compact Now
+L00004156	  - context_estimate
+L00004157	  - cache_write_1h
+L00004158	  - output_visible
+L00004159	  - reasoning/thoughts
+L00004160	  - provider_total
+L00004161	  - hidden/background
+L00004162	negative_constraints:
+L00004163	  - Do not convert context_estimate into billing, cost, quota, or provider authority.
+L00004164	  - Do not rewrite historical UsageRecord totals during compaction.
+L00004165	  - Do not render cache unsupported/not_exposed/unknown as cache zero.
+L00004166	owner_hints:
+L00004167	  - Plans/Prompt_Pipeline.md
+L00004168	  - Plans/assistant-chat-design.md
+L00004169	  - Plans/usage-feature.md
+L00004170	```
+L00004171	
+L00004172	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00004173	
+L00004174	This addendum repairs non-runtime prompt-pipeline rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00004175	
+L00004176	- Repairs `sfk-ccad8553537b0e17aeb5671b`: each named pipeline stage has `stage_id`, `input_refs[]`, `output_refs[]`, `algorithm_summary`, `error_codes[]`, `cache_policy`, `side_effect_policy`, and `owner_doc_ref`. Stage order is stable; stages may narrow context but must not widen authority beyond the incoming permission and instruction snapshots.
+L00004177	
+L00004178	### PP-060 - P0-HISTORY-ADMISSION-SANITIZATION
+L00004179	
+L00004180	```yaml
+L00004181	plan_unit_id: PP-060
+L00004182	unit_type: requirement
+L00004183	status: accepted
+L00004184	owner_doc: Plans/Prompt_Pipeline.md
+L00004185	canonical_text: >-
+L00004186	  P0-HISTORY-ADMISSION-SANITIZATION (P0) is compiled as canonical Puppet Master intent for Malformed provider/tool turns must not poison durable history: Imported external-repo finding extrepo-20260703-0022 / P0-HISTORY-ADMISSION-SANITIZATION (P0). The preserved PM gap/delta is: Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes. The observed external-repo signal remains source-lineage evidence: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
+L00004187	gui_related: true
+L00004188	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004189	depends_on:
+L00004190	- PDS-003
+L00004191	- PNC-001
+L00004192	unblocks: []
+L00004193	acceptance_criteria:
+L00004194	- Malformed empty tool name quarantined and not replayed
+L00004195	- JSON tool args followed by reasoning text recovered or rejected deterministically
+L00004196	- Length-truncated tool call cannot be persisted as success
+L00004197	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004198	validation_surfaces:
+L00004199	- python3 scripts/pm-plan-index.py validate
+L00004200	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004201	- Malformed empty tool name quarantined and not replayed
+L00004202	- JSON tool args followed by reasoning text recovered or rejected deterministically
+L00004203	- Length-truncated tool call cannot be persisted as success
+L00004204	risk_class: p0_provider_capability_and_metadata_hardening
+L00004205	reasoning_tier: high
+L00004206	context_scope: provider_capability_and_metadata
+L00004207	implementation_surfaces:
+L00004208	- Plans/Prompt_Pipeline.md
+L00004209	- Plans/storage-plan.md
+L00004210	- Plans/Tools.md
+L00004211	- Plans/CLI_Bridged_Providers.md
+L00004212	node_compile_hint:
+L00004213	  mode: p0_history_admission_sanitization
+L00004214	  create_worknodes: false
+L00004215	  create_nodeseeds: false
+L00004216	source_lineage:
+L00004217	- pldg-20260703-001-feature-intake:atom-0026
+L00004218	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0026
+L00004219	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0022/P0-HISTORY-ADMISSION-SANITIZATION@line=22
+L00004220	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0022/P0-HISTORY-ADMISSION-SANITIZATION
+L00004221	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004222	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004223	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:2
+L00004224	source_atom_ids:
+L00004225	- atom-0026
+L00004226	external_atom_id: extrepo-20260703-0022
+L00004227	source_row_id: P0-HISTORY-ADMISSION-SANITIZATION
+L00004228	priority: P0
+L00004229	finding_family: Malformed provider/tool turns must not poison durable history
+L00004230	source_repos:
+L00004231	- earendil-works/pi
+L00004232	- agent0ai/agent-zero
+L00004233	- anomalyco/opencode
+L00004234	target_docs:
+L00004235	- Plans/Prompt_Pipeline.md
+L00004236	- Plans/storage-plan.md
+L00004237	- Plans/Tools.md
+L00004238	- Plans/CLI_Bridged_Providers.md
+L00004239	owner_hints:
+L00004240	- Plans/Prompt_Pipeline.md
+L00004241	- Plans/storage-plan.md
+L00004242	- Plans/Tools.md
+L00004243	- Plans/CLI_Bridged_Providers.md
+L00004244	preserved_exact_tokens:
+L00004245	- extrepo-20260703-0022
+L00004246	- P0-HISTORY-ADMISSION-SANITIZATION
+L00004247	- P0
+L00004248	- Malformed provider/tool turns must not poison durable history
+L00004249	- earendil-works/pi
+L00004250	- agent0ai/agent-zero
+L00004251	- anomalyco/opencode
+L00004252	negative_constraints: []
+L00004253	observed_signal: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
+L00004254	pm_current_coverage: Tools T-077/T-078 already reject invalid args and truncated invocations before dispatch or success.
+L00004255	pm_gap_or_delta: >-
+L00004256	  Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes.
+L00004257	compile_disposition: create_new_planunit
+L00004258	```
+L00004259	
+L00004260	`HistoryAdmissionGate` writes rejected or quarantined turns to `history_quarantine.v1:{thread_id}:{turn_id}` in the event-sourced storage projection. Minimum quarantine fields are `quarantine_id`, `thread_id`, `turn_id`, `provider_message_ref`, `reason_code`, `severity`, `raw_ref`, `normalized_preview_ref?`, `admission_decision` (`reject`, `quarantine_and_skip_replay`, `repair_required`), `created_at_utc`, and `redaction_profile`. Validation checks are closed to `empty_tool_name`, `duplicate_tool_call_id`, `malformed_json_arguments`, `trailing_reasoning_after_json`, `role_mismatch`, `length_truncated_tool_call`, `stringified_mcp_params`, and `same_delta_duplicate_content`.
+L00004261	
+L00004262	### PP-061 - P0-CONTEXT-EPOCH-BASELINE
+L00004263	
+L00004264	```yaml
+L00004265	plan_unit_id: PP-061
+L00004266	unit_type: requirement
+L00004267	status: accepted
+L00004268	owner_doc: Plans/Prompt_Pipeline.md
+L00004269	canonical_text: >-
+L00004270	  P0-CONTEXT-EPOCH-BASELINE (P0) is compiled as canonical Puppet Master intent for Add ContextEpoch and stable baseline context: Provider turns reference context_epoch_id; baseline hash stable across volatile date/git/file-list changes; compaction/model/provider switches create explicit epoch outcomes.
+L00004271	gui_related: false
+L00004272	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00004273	depends_on:
+L00004274	- PDS-003
+L00004275	- PNC-001
+L00004276	unblocks: []
+L00004277	acceptance_criteria:
+L00004278	- Provider turns reference context_epoch_id
+L00004279	- baseline hash stable across volatile date/git/file-list changes
+L00004280	- compaction/model/provider switches create explicit epoch outcomes.
+L00004281	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004282	validation_surfaces:
+L00004283	- python3 scripts/pm-plan-index.py validate
+L00004284	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004285	- Provider turns reference context_epoch_id
+L00004286	- baseline hash stable across volatile date/git/file-list changes
+L00004287	- compaction/model/provider switches create explicit epoch outcomes.
+L00004288	risk_class: p0_context_cache_hardening
+L00004289	reasoning_tier: high
+L00004290	context_scope: context_cache
+L00004291	implementation_surfaces:
+L00004292	- Plans/Prompt_Pipeline.md
+L00004293	- Plans/storage-plan.md
+L00004294	- Plans/Models_System.md
+L00004295	- Plans/usage-feature.md
+L00004296	node_compile_hint:
+L00004297	  mode: p0_context_epoch_baseline
+L00004298	  create_worknodes: false
+L00004299	  create_nodeseeds: false
+L00004300	source_lineage:
+L00004301	- pldg-20260703-001-feature-intake:atom-0041
+L00004302	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00004303	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0037/P0-CONTEXT-EPOCH-BASELINE@line=37
+L00004304	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0037/P0-CONTEXT-EPOCH-BASELINE
+L00004305	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004306	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004307	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:1
+L00004308	source_atom_ids:
+L00004309	- atom-0041
+L00004310	external_atom_id: extrepo-20260703-0037
+L00004311	source_row_id: P0-CONTEXT-EPOCH-BASELINE
+L00004312	priority: P0
+L00004313	finding_family: Add ContextEpoch and stable baseline context
+L00004314	target_docs:
+L00004315	- Plans/Prompt_Pipeline.md
+L00004316	- Plans/storage-plan.md
+L00004317	- Plans/Models_System.md
+L00004318	- Plans/usage-feature.md
+L00004319	owner_hints:
+L00004320	- Plans/Prompt_Pipeline.md
+L00004321	- Plans/storage-plan.md
+L00004322	- Plans/Models_System.md
+L00004323	- Plans/usage-feature.md
+L00004324	preserved_exact_tokens:
+L00004325	- extrepo-20260703-0037
+L00004326	- P0-CONTEXT-EPOCH-BASELINE
+L00004327	- P0
+L00004328	- Add ContextEpoch and stable baseline context
+L00004329	negative_constraints: []
+L00004330	proposal_or_recommendation: Provider turns reference context_epoch_id; baseline hash stable across volatile date/git/file-list changes; compaction/model/provider switches create explicit epoch outcomes.
+L00004331	compile_disposition: create_new_planunit
+L00004332	```
+L00004333	
+L00004334	### PP-062 - P0-PROMPT-CACHE-POLICY
+L00004335	
+L00004336	```yaml
+L00004337	plan_unit_id: PP-062
+L00004338	unit_type: requirement
+L00004339	status: accepted
+L00004340	owner_doc: Plans/Prompt_Pipeline.md
+L00004341	canonical_text: >-
+L00004342	  P0-PROMPT-CACHE-POLICY (P0) is compiled as canonical Puppet Master intent for Add provider-neutral prompt cache policy plus provider adapters: Cache support states distinguish automatic, explicit, implicit, unsupported, unknown, not reported, and disabled; adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.
+L00004343	gui_related: true
+L00004344	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004345	depends_on:
+L00004346	- PDS-003
+L00004347	- PNC-001
+L00004348	unblocks: []
+L00004349	acceptance_criteria:
+L00004350	- Cache support states distinguish automatic, explicit, implicit, unsupported, unknown, not reported, and disabled
+L00004351	- adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.
+L00004352	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004353	validation_surfaces:
+L00004354	- python3 scripts/pm-plan-index.py validate
+L00004355	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004356	- Cache support states distinguish automatic, explicit, implicit, unsupported, unknown, not reported, and disabled
+L00004357	- adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.
+L00004358	risk_class: p0_context_cache_hardening
+L00004359	reasoning_tier: high
+L00004360	context_scope: context_cache
+L00004361	implementation_surfaces:
+L00004362	- Plans/Prompt_Pipeline.md
+L00004363	- Plans/Models_System.md
+L00004364	- Plans/Provider_OpenCode.md
+L00004365	- Plans/CLI_Bridged_Providers.md
+L00004366	- Plans/usage-feature.md
+L00004367	node_compile_hint:
+L00004368	  mode: p0_prompt_cache_policy
+L00004369	  create_worknodes: false
+L00004370	  create_nodeseeds: false
+L00004371	source_lineage:
+L00004372	- pldg-20260703-001-feature-intake:atom-0042
+L00004373	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0042
+L00004374	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0038/P0-PROMPT-CACHE-POLICY@line=38
+L00004375	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0038/P0-PROMPT-CACHE-POLICY
+L00004376	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004377	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004378	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:2
+L00004379	source_atom_ids:
+L00004380	- atom-0042
+L00004381	external_atom_id: extrepo-20260703-0038
+L00004382	source_row_id: P0-PROMPT-CACHE-POLICY
+L00004383	priority: P0
+L00004384	finding_family: Add provider-neutral prompt cache policy plus provider adapters
+L00004385	target_docs:
+L00004386	- Plans/Models_System.md
+L00004387	- Plans/Provider_OpenCode.md
+L00004388	- Plans/CLI_Bridged_Providers.md
+L00004389	- Plans/usage-feature.md
+L00004390	owner_hints:
+L00004391	- Plans/Models_System.md
+L00004392	- Plans/Provider_OpenCode.md
+L00004393	- Plans/CLI_Bridged_Providers.md
+L00004394	- Plans/usage-feature.md
+L00004395	preserved_exact_tokens:
+L00004396	- extrepo-20260703-0038
+L00004397	- P0-PROMPT-CACHE-POLICY
+L00004398	- P0
+L00004399	- Add provider-neutral prompt cache policy plus provider adapters
+L00004400	negative_constraints: []
+L00004401	proposal_or_recommendation: Cache support states distinguish automatic, explicit, implicit, unsupported, unknown, not reported, and disabled; adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.
+L00004402	compile_disposition: create_new_planunit
+L00004403	```
+L00004404	
+L00004405	### PP-063 - P0-VOLATILE-CONTEXT-QUARANTINE
+L00004406	
+L00004407	```yaml
+L00004408	plan_unit_id: PP-063
+L00004409	unit_type: requirement
+L00004410	status: accepted
+L00004411	owner_doc: Plans/Prompt_Pipeline.md
+L00004412	canonical_text: >-
+L00004413	  P0-VOLATILE-CONTEXT-QUARANTINE (P0) is compiled as canonical Puppet Master intent for Separate volatile context from cacheable baseline: Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt; they enter metadata or mid-conversation update at safe boundary.
+L00004414	gui_related: true
+L00004415	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00004416	depends_on:
+L00004417	- PDS-003
+L00004418	- PNC-001
+L00004419	unblocks: []
+L00004420	acceptance_criteria:
+L00004421	- Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt
+L00004422	- they enter metadata or mid-conversation update at safe boundary.
+L00004423	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004424	validation_surfaces:
+L00004425	- python3 scripts/pm-plan-index.py validate
+L00004426	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004427	- Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt
+L00004428	- they enter metadata or mid-conversation update at safe boundary.
+L00004429	risk_class: p0_context_cache_hardening
+L00004430	reasoning_tier: high
+L00004431	context_scope: context_cache
+L00004432	implementation_surfaces:
+L00004433	- Plans/Prompt_Pipeline.md
+L00004434	- Plans/assistant-chat-design.md
+L00004435	node_compile_hint:
+L00004436	  mode: p0_volatile_context_quarantine
+L00004437	  create_worknodes: false
+L00004438	  create_nodeseeds: false
+L00004439	source_lineage:
+L00004440	- pldg-20260703-001-feature-intake:atom-0044
+L00004441	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00004442	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0040/P0-VOLATILE-CONTEXT-QUARANTINE@line=40
+L00004443	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0040/P0-VOLATILE-CONTEXT-QUARANTINE
+L00004444	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004445	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004446	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:4
+L00004447	source_atom_ids:
+L00004448	- atom-0044
+L00004449	external_atom_id: extrepo-20260703-0040
+L00004450	source_row_id: P0-VOLATILE-CONTEXT-QUARANTINE
+L00004451	priority: P0
+L00004452	finding_family: Separate volatile context from cacheable baseline
+L00004453	target_docs:
+L00004454	- Plans/Prompt_Pipeline.md
+L00004455	- Plans/assistant-chat-design.md
+L00004456	owner_hints:
+L00004457	- Plans/Prompt_Pipeline.md
+L00004458	- Plans/assistant-chat-design.md
+L00004459	preserved_exact_tokens:
+L00004460	- extrepo-20260703-0040
+L00004461	- P0-VOLATILE-CONTEXT-QUARANTINE
+L00004462	- P0
+L00004463	- Separate volatile context from cacheable baseline
+L00004464	negative_constraints: []
+L00004465	proposal_or_recommendation: Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt; they enter metadata or mid-conversation update at safe boundary.
+L00004466	compile_disposition: create_new_planunit
+L00004467	```
+L00004468	
+L00004469	### PP-064 - P1-COMPACTION-CACHE-EFFECT
+L00004470	
+L00004471	```yaml
+L00004472	plan_unit_id: PP-064
+L00004473	unit_type: requirement
+L00004474	status: accepted
+L00004475	owner_doc: Plans/Prompt_Pipeline.md
+L00004476	canonical_text: >-
+L00004477	  P1-COMPACTION-CACHE-EFFECT (P1) is compiled as canonical Puppet Master intent for Make compaction cache impact explicit: Compaction starts/continues epoch per rule; UI and usage explain cache lineage effect; manual compact does not mint lineage without logical context change.
+L00004478	gui_related: true
+L00004479	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004480	depends_on:
+L00004481	- PDS-003
+L00004482	- PNC-001
+L00004483	unblocks: []
+L00004484	acceptance_criteria:
+L00004485	- Compaction starts/continues epoch per rule
+L00004486	- UI and usage explain cache lineage effect
+L00004487	- manual compact does not mint lineage without logical context change.
+L00004488	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004489	validation_surfaces:
+L00004490	- python3 scripts/pm-plan-index.py validate
+L00004491	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004492	- Compaction starts/continues epoch per rule
+L00004493	- UI and usage explain cache lineage effect
+L00004494	- manual compact does not mint lineage without logical context change.
+L00004495	risk_class: p1_context_cache_hardening
+L00004496	reasoning_tier: standard
+L00004497	context_scope: context_cache
+L00004498	implementation_surfaces:
+L00004499	- Plans/Prompt_Pipeline.md
+L00004500	- Plans/Automated_Testing_System.md
+L00004501	- Plans/usage-feature.md
+L00004502	node_compile_hint:
+L00004503	  mode: p1_compaction_cache_effect
+L00004504	  create_worknodes: false
+L00004505	  create_nodeseeds: false
+L00004506	source_lineage:
+L00004507	- pldg-20260703-001-feature-intake:atom-0049
+L00004508	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0049
+L00004509	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0045/P1-COMPACTION-CACHE-EFFECT@line=45
+L00004510	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0045/P1-COMPACTION-CACHE-EFFECT
+L00004511	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004512	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004513	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:9
+L00004514	source_atom_ids:
+L00004515	- atom-0049
+L00004516	external_atom_id: extrepo-20260703-0045
+L00004517	source_row_id: P1-COMPACTION-CACHE-EFFECT
+L00004518	priority: P1
+L00004519	finding_family: Make compaction cache impact explicit
+L00004520	target_docs:
+L00004521	- Plans/Prompt_Pipeline.md
+L00004522	- Plans/Automated_Testing_System.md
+L00004523	- Plans/usage-feature.md
+L00004524	owner_hints:
+L00004525	- Plans/Prompt_Pipeline.md
+L00004526	- Plans/Automated_Testing_System.md
+L00004527	- Plans/usage-feature.md
+L00004528	preserved_exact_tokens:
+L00004529	- extrepo-20260703-0045
+L00004530	- P1-COMPACTION-CACHE-EFFECT
+L00004531	- P1
+L00004532	- Make compaction cache impact explicit
+L00004533	negative_constraints: []
+L00004534	proposal_or_recommendation: Compaction starts/continues epoch per rule; UI and usage explain cache lineage effect; manual compact does not mint lineage without logical context change.
+L00004535	compile_disposition: create_new_planunit
+L00004536	```
+L00004537	
+L00004538	### PP-065 - P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+L00004539	
+L00004540	```yaml
+L00004541	plan_unit_id: PP-065
+L00004542	unit_type: requirement
+L00004543	status: accepted
+L00004544	owner_doc: Plans/Prompt_Pipeline.md
+L00004545	canonical_text: >-
+L00004546	  P1-PROVIDER-CAPABILITY-EPOCH-CACHE (P1) is compiled as canonical Puppet Master intent for Extend provider capability epoch with cache/freshness/source metadata: Model metadata source/freshness/account/route-limit/cache support are recorded; stale/ghost model or route-specific limit changes produce explicit capability epoch.
+L00004547	gui_related: false
+L00004548	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00004549	depends_on:
+L00004550	- PDS-003
+L00004551	- PNC-001
+L00004552	unblocks: []
+L00004553	acceptance_criteria:
+L00004554	- Model metadata source/freshness/account/route-limit/cache support are recorded
+L00004555	- stale/ghost model or route-specific limit changes produce explicit capability epoch.
+L00004556	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004557	validation_surfaces:
+L00004558	- python3 scripts/pm-plan-index.py validate
+L00004559	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004560	- Model metadata source/freshness/account/route-limit/cache support are recorded
+L00004561	- stale/ghost model or route-specific limit changes produce explicit capability epoch.
+L00004562	risk_class: p1_context_cache_hardening
+L00004563	reasoning_tier: standard
+L00004564	context_scope: context_cache
+L00004565	implementation_surfaces:
+L00004566	- Plans/Prompt_Pipeline.md
+L00004567	- Plans/Models_System.md
+L00004568	- Plans/Provider_OpenCode.md
+L00004569	node_compile_hint:
+L00004570	  mode: p1_provider_capability_epoch_cache
+L00004571	  create_worknodes: false
+L00004572	  create_nodeseeds: false
+L00004573	source_lineage:
+L00004574	- pldg-20260703-001-feature-intake:atom-0050
+L00004575	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0050
+L00004576	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0046/P1-PROVIDER-CAPABILITY-EPOCH-CACHE@line=46
+L00004577	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0046/P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+L00004578	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004579	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004580	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:10
+L00004581	source_atom_ids:
+L00004582	- atom-0050
+L00004583	external_atom_id: extrepo-20260703-0046
+L00004584	source_row_id: P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+L00004585	priority: P1
+L00004586	finding_family: Extend provider capability epoch with cache/freshness/source metadata
+L00004587	target_docs:
+L00004588	- Plans/Models_System.md
+L00004589	- Plans/Provider_OpenCode.md
+L00004590	owner_hints:
+L00004591	- Plans/Models_System.md
+L00004592	- Plans/Provider_OpenCode.md
+L00004593	preserved_exact_tokens:
+L00004594	- extrepo-20260703-0046
+L00004595	- P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+L00004596	- P1
+L00004597	- Extend provider capability epoch with cache/freshness/source metadata
+L00004598	negative_constraints: []
+L00004599	proposal_or_recommendation: Model metadata source/freshness/account/route-limit/cache support are recorded; stale/ghost model or route-specific limit changes produce explicit capability epoch.
+L00004600	compile_disposition: create_new_planunit
+L00004601	```
+L00004602	
+L00004603	### PP-066 - P1-MODEL-SWITCH-REPLAY-SANITIZER
+L00004604	
+L00004605	```yaml
+L00004606	plan_unit_id: PP-066
+L00004607	unit_type: requirement
+L00004608	status: accepted
+L00004609	owner_doc: Plans/Prompt_Pipeline.md
+L00004610	canonical_text: >-
+L00004611	  P1-MODEL-SWITCH-REPLAY-SANITIZER (P1) is compiled as canonical Puppet Master intent for Sanitize provider-native reasoning/item/cache metadata on model switch: Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible; otherwise dropped with replay receipt.
+L00004612	gui_related: false
+L00004613	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00004614	depends_on:
+L00004615	- PDS-003
+L00004616	- PNC-001
+L00004617	unblocks: []
+L00004618	acceptance_criteria:
+L00004619	- Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible
+L00004620	- otherwise dropped with replay receipt.
+L00004621	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004622	validation_surfaces:
+L00004623	- python3 scripts/pm-plan-index.py validate
+L00004624	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004625	- Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible
+L00004626	- otherwise dropped with replay receipt.
+L00004627	risk_class: p1_context_cache_hardening
+L00004628	reasoning_tier: standard
+L00004629	context_scope: context_cache
+L00004630	implementation_surfaces:
+L00004631	- Plans/Prompt_Pipeline.md
+L00004632	- Plans/Models_System.md
+L00004633	- Plans/CLI_Bridged_Providers.md
+L00004634	node_compile_hint:
+L00004635	  mode: p1_model_switch_replay_sanitizer
+L00004636	  create_worknodes: false
+L00004637	  create_nodeseeds: false
+L00004638	source_lineage:
+L00004639	- pldg-20260703-001-feature-intake:atom-0051
+L00004640	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0051
+L00004641	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0047/P1-MODEL-SWITCH-REPLAY-SANITIZER@line=47
+L00004642	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0047/P1-MODEL-SWITCH-REPLAY-SANITIZER
+L00004643	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004644	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004645	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:11
+L00004646	source_atom_ids:
+L00004647	- atom-0051
+L00004648	external_atom_id: extrepo-20260703-0047
+L00004649	source_row_id: P1-MODEL-SWITCH-REPLAY-SANITIZER
+L00004650	priority: P1
+L00004651	finding_family: Sanitize provider-native reasoning/item/cache metadata on model switch
+L00004652	target_docs:
+L00004653	- Plans/Models_System.md
+L00004654	- Plans/Prompt_Pipeline.md
+L00004655	- Plans/CLI_Bridged_Providers.md
+L00004656	owner_hints:
+L00004657	- Plans/Models_System.md
+L00004658	- Plans/Prompt_Pipeline.md
+L00004659	- Plans/CLI_Bridged_Providers.md
+L00004660	preserved_exact_tokens:
+L00004661	- extrepo-20260703-0047
+L00004662	- P1-MODEL-SWITCH-REPLAY-SANITIZER
+L00004663	- P1
+L00004664	- Sanitize provider-native reasoning/item/cache metadata on model switch
+L00004665	negative_constraints: []
+L00004666	proposal_or_recommendation: Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible; otherwise dropped with replay receipt.
+L00004667	compile_disposition: create_new_planunit
+L00004668	```
+L00004669	
+L00004670	### PP-067 - P1-LOCAL-LLM-CONTEXT-CAPS
+L00004671	
+L00004672	```yaml
+L00004673	plan_unit_id: PP-067
+L00004674	unit_type: requirement
+L00004675	status: accepted
+L00004676	owner_doc: Plans/Prompt_Pipeline.md
+L00004677	canonical_text: >-
+L00004678	  P1-LOCAL-LLM-CONTEXT-CAPS (P1) is compiled as canonical Puppet Master intent for Apply context caps to utility/memory/subagent models: Local utility/memory/subagent contexts enforce model caps and bounded summaries; no hidden full-history stuffing.
+L00004679	gui_related: false
+L00004680	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00004681	depends_on:
+L00004682	- PDS-003
+L00004683	- PNC-001
+L00004684	unblocks: []
+L00004685	acceptance_criteria:
+L00004686	- Local utility/memory/subagent contexts enforce model caps and bounded summaries
+L00004687	- no hidden full-history stuffing.
+L00004688	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004689	validation_surfaces:
+L00004690	- python3 scripts/pm-plan-index.py validate
+L00004691	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004692	- Local utility/memory/subagent contexts enforce model caps and bounded summaries
+L00004693	- no hidden full-history stuffing.
+L00004694	risk_class: p1_context_cache_hardening
+L00004695	reasoning_tier: standard
+L00004696	context_scope: context_cache
+L00004697	implementation_surfaces:
+L00004698	- Plans/Prompt_Pipeline.md
+L00004699	- Plans/Models_System.md
+L00004700	- Plans/assistant-memory-subsystem.md
+L00004701	- Plans/Goal_Runtime_System.md
+L00004702	node_compile_hint:
+L00004703	  mode: p1_local_llm_context_caps
+L00004704	  create_worknodes: false
+L00004705	  create_nodeseeds: false
+L00004706	source_lineage:
+L00004707	- pldg-20260703-001-feature-intake:atom-0052
+L00004708	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0052
+L00004709	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0048/P1-LOCAL-LLM-CONTEXT-CAPS@line=48
+L00004710	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0048/P1-LOCAL-LLM-CONTEXT-CAPS
+L00004711	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004712	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004713	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:12
+L00004714	source_atom_ids:
+L00004715	- atom-0052
+L00004716	external_atom_id: extrepo-20260703-0048
+L00004717	source_row_id: P1-LOCAL-LLM-CONTEXT-CAPS
+L00004718	priority: P1
+L00004719	finding_family: Apply context caps to utility/memory/subagent models
+L00004720	target_docs:
+L00004721	- Plans/Models_System.md
+L00004722	- Plans/assistant-memory-subsystem.md
+L00004723	- Plans/Goal_Runtime_System.md
+L00004724	owner_hints:
+L00004725	- Plans/Models_System.md
+L00004726	- Plans/assistant-memory-subsystem.md
+L00004727	- Plans/Goal_Runtime_System.md
+L00004728	preserved_exact_tokens:
+L00004729	- extrepo-20260703-0048
+L00004730	- P1-LOCAL-LLM-CONTEXT-CAPS
+L00004731	- P1
+L00004732	- Apply context caps to utility/memory/subagent models
+L00004733	negative_constraints: []
+L00004734	proposal_or_recommendation: Local utility/memory/subagent contexts enforce model caps and bounded summaries; no hidden full-history stuffing.
+L00004735	compile_disposition: create_new_planunit
+L00004736	```
+L00004737	
+L00004738	### PP-068 - P1-PROMPT-CACHE-STABILITY-LINTER
+L00004739	
+L00004740	```yaml
+L00004741	plan_unit_id: PP-068
+L00004742	unit_type: requirement
+L00004743	status: accepted
+L00004744	owner_doc: Plans/Prompt_Pipeline.md
+L00004745	canonical_text: >-
+L00004746	  P1-PROMPT-CACHE-STABILITY-LINTER (P1) is compiled as canonical Puppet Master intent for Prompt/cache/token efficiency hygiene: Add PromptCacheStabilityLinter: stable_prefix_hash, volatile_context_hashes, tool/schema ordering hash, skill catalog slice hash, file-list volatility, date/time/cwd injection warnings, provider cache marker support, and cache hit expectation. The preserved PM gap/delta is: PM should add a linter/diagnostic that explains why cache hit rate is low, not only record usage. The observed external-repo signal remains source-lineage evidence: OpenCode reports system-environment prompt cache invalidation and provider cache-marker gaps; Pi changelog includes prompt caching and cached-token accounting; Codex skills use progressive disclosure; Cline fixes prompt-cache detection and compaction routing.
+L00004747	gui_related: true
+L00004748	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004749	depends_on:
+L00004750	- PDS-003
+L00004751	- PNC-001
+L00004752	unblocks: []
+L00004753	acceptance_criteria:
+L00004754	- Two identical tasks show stable prefix preserved.
+L00004755	- Moving cwd/date/git status to late volatile block improves cache expectation.
+L00004756	- Dynamic tool result not placed before stable instructions.
+L00004757	- GUI explains cache miss source.
+L00004758	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004759	validation_surfaces:
+L00004760	- python3 scripts/pm-plan-index.py validate
+L00004761	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004762	- Two identical tasks show stable prefix preserved.
+L00004763	- Moving cwd/date/git status to late volatile block improves cache expectation.
+L00004764	- Dynamic tool result not placed before stable instructions.
+L00004765	- GUI explains cache miss source.
+L00004766	risk_class: p1_context_cache_hardening
+L00004767	reasoning_tier: standard
+L00004768	context_scope: context_cache
+L00004769	implementation_surfaces:
+L00004770	- Plans/Prompt_Pipeline.md
+L00004771	- Plans/Models_System.md
+L00004772	- Plans/usage-feature.md
+L00004773	- Plans/Tools.md
+L00004774	node_compile_hint:
+L00004775	  mode: p1_prompt_cache_stability_linter
+L00004776	  create_worknodes: false
+L00004777	  create_nodeseeds: false
+L00004778	source_lineage:
+L00004779	- pldg-20260703-001-feature-intake:atom-0071
+L00004780	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0071
+L00004781	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0067/P1-PROMPT-CACHE-STABILITY-LINTER@line=67
+L00004782	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0067/P1-PROMPT-CACHE-STABILITY-LINTER
+L00004783	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004784	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004785	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:13
+L00004786	source_atom_ids:
+L00004787	- atom-0071
+L00004788	external_atom_id: extrepo-20260703-0067
+L00004789	source_row_id: P1-PROMPT-CACHE-STABILITY-LINTER
+L00004790	priority: P1
+L00004791	finding_family: Prompt/cache/token efficiency hygiene
+L00004792	source_repos:
+L00004793	- OpenCode
+L00004794	- Cline
+L00004795	- Pi
+L00004796	- Codex
+L00004797	target_docs:
+L00004798	- Plans/Models_System.md
+L00004799	- Plans/Prompt_Pipeline.md
+L00004800	- Plans/usage-feature.md
+L00004801	- Plans/Tools.md
+L00004802	owner_hints:
+L00004803	- Plans/Models_System.md
+L00004804	- Plans/Prompt_Pipeline.md
+L00004805	- Plans/usage-feature.md
+L00004806	- Plans/Tools.md
+L00004807	preserved_exact_tokens:
+L00004808	- extrepo-20260703-0067
+L00004809	- P1-PROMPT-CACHE-STABILITY-LINTER
+L00004810	- P1
+L00004811	- Prompt/cache/token efficiency hygiene
+L00004812	- OpenCode
+L00004813	- Cline
+L00004814	- Pi
+L00004815	- Codex
+L00004816	negative_constraints: []
+L00004817	observed_signal: OpenCode reports system-environment prompt cache invalidation and provider cache-marker gaps; Pi changelog includes prompt caching and cached-token accounting; Codex skills use progressive disclosure; Cline fixes prompt-cache detection and compaction routing.
+L00004818	pm_current_coverage: Previous pass recommended ContextEpoch/PromptCachePolicy; PM has provider cache metadata boundaries and compaction metadata.
+L00004819	pm_gap_or_delta: PM should add a linter/diagnostic that explains why cache hit rate is low, not only record usage.
+L00004820	proposal_or_recommendation: 'Add PromptCacheStabilityLinter: stable_prefix_hash, volatile_context_hashes, tool/schema ordering hash, skill catalog slice hash, file-list volatility, date/time/cwd injection warnings, provider cache marker support, and cache hit expectation.'
+L00004821	compile_disposition: create_new_planunit
+L00004822	```
+L00004823	
+L00004824	### PP-069 - P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+L00004825	
+L00004826	```yaml
+L00004827	plan_unit_id: PP-069
+L00004828	unit_type: requirement
+L00004829	status: accepted
+L00004830	owner_doc: Plans/Prompt_Pipeline.md
+L00004831	canonical_text: >-
+L00004832	  P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1) is compiled as canonical Puppet Master intent for AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling: Imported external-repo finding extrepo-20260703-0080 / P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1). The preserved PM gap/delta is: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence. The observed external-repo signal remains source-lineage evidence: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
+L00004833	gui_related: true
+L00004834	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004835	depends_on:
+L00004836	- PDS-003
+L00004837	- PNC-001
+L00004838	unblocks: []
+L00004839	acceptance_criteria:
+L00004840	- InstructionSetEpoch includes source path, encoding status, parse status, precedence, hash, loaded scope, and denial reason.
+L00004841	- Invalid UTF-8 or unreadable instruction files generate user-visible warnings and do not silently drop rules.
+L00004842	- Resume/fork/import preserves or intentionally re-resolves instruction scope with a receipt.
+L00004843	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004844	validation_surfaces:
+L00004845	- python3 scripts/pm-plan-index.py validate
+L00004846	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004847	- InstructionSetEpoch includes source path, encoding status, parse status, precedence, hash, loaded scope, and denial reason.
+L00004848	- Invalid UTF-8 or unreadable instruction files generate user-visible warnings and do not silently drop rules.
+L00004849	- Resume/fork/import preserves or intentionally re-resolves instruction scope with a receipt.
+L00004850	risk_class: p1_agent_control_subagents_hardening
+L00004851	reasoning_tier: standard
+L00004852	context_scope: agent_control_subagents
+L00004853	implementation_surfaces:
+L00004854	- Plans/Prompt_Pipeline.md
+L00004855	node_compile_hint:
+L00004856	  mode: p1_instruction_source_integrity_epoch
+L00004857	  create_worknodes: false
+L00004858	  create_nodeseeds: false
+L00004859	source_lineage:
+L00004860	- pldg-20260703-001-feature-intake:atom-0084
+L00004861	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0084
+L00004862	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0080/P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH@line=80
+L00004863	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0080/P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+L00004864	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004865	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004866	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:7
+L00004867	source_atom_ids:
+L00004868	- atom-0084
+L00004869	external_atom_id: extrepo-20260703-0080
+L00004870	source_row_id: P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+L00004871	priority: P1
+L00004872	finding_family: AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
+L00004873	target_docs:
+L00004874	- Plans/Prompt_Pipeline.md
+L00004875	- Plans/Skills_System.md
+L00004876	- Goal_Runtime_System.md
+L00004877	- Models_System.md
+L00004878	- Contracts_V0.md
+L00004879	owner_hints:
+L00004880	- Plans/Prompt_Pipeline.md
+L00004881	- Plans/Skills_System.md
+L00004882	- Goal_Runtime_System.md
+L00004883	- Models_System.md
+L00004884	- Contracts_V0.md
+L00004885	preserved_exact_tokens:
+L00004886	- extrepo-20260703-0080
+L00004887	- P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+L00004888	- P1
+L00004889	- AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
+L00004890	negative_constraints: []
+L00004891	observed_signal: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
+L00004892	pm_gap_or_delta: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence.
+L00004893	relationship_to_prior_reports: Refines ContextEpoch with instruction integrity semantics.
+L00004894	compile_disposition: create_new_planunit
+L00004895	```
+L00004896	
+L00004897	### PP-070 - P0-CONTEXT-OBJECT-BUDGET
+L00004898	
+L00004899	```yaml
+L00004900	plan_unit_id: PP-070
+L00004901	unit_type: requirement
+L00004902	status: accepted
+L00004903	owner_doc: Plans/Prompt_Pipeline.md
+L00004904	canonical_text: >-
+L00004905	  P0-CONTEXT-OBJECT-BUDGET (P0) is compiled as canonical Puppet Master intent for Context object/media budget and dedupe: Imported external-repo finding extrepo-20260703-0093 / P0-CONTEXT-OBJECT-BUDGET (P0). The preserved PM gap/delta is: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects. The observed external-repo signal remains source-lineage evidence: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
+L00004906	gui_related: true
+L00004907	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00004908	depends_on:
+L00004909	- PDS-003
+L00004910	- PNC-001
+L00004911	unblocks: []
+L00004912	acceptance_criteria:
+L00004913	- Identical screenshots are referenced by hash across checkpoints
+L00004914	- Object budget warnings trigger before runaway RSS
+L00004915	- Replay uses artifact refs instead of repeated by-value embedding
+L00004916	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004917	validation_surfaces:
+L00004918	- python3 scripts/pm-plan-index.py validate
+L00004919	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004920	- Identical screenshots are referenced by hash across checkpoints
+L00004921	- Object budget warnings trigger before runaway RSS
+L00004922	- Replay uses artifact refs instead of repeated by-value embedding
+L00004923	risk_class: p0_context_cache_hardening
+L00004924	reasoning_tier: high
+L00004925	context_scope: context_cache
+L00004926	implementation_surfaces:
+L00004927	- Plans/Prompt_Pipeline.md
+L00004928	node_compile_hint:
+L00004929	  mode: p0_context_object_budget
+L00004930	  create_worknodes: false
+L00004931	  create_nodeseeds: false
+L00004932	source_lineage:
+L00004933	- pldg-20260703-001-feature-intake:atom-0097
+L00004934	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0097
+L00004935	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0093/P0-CONTEXT-OBJECT-BUDGET@line=93
+L00004936	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0093/P0-CONTEXT-OBJECT-BUDGET
+L00004937	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00004938	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00004939	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:6
+L00004940	source_atom_ids:
+L00004941	- atom-0097
+L00004942	external_atom_id: extrepo-20260703-0093
+L00004943	source_row_id: P0-CONTEXT-OBJECT-BUDGET
+L00004944	priority: P0
+L00004945	finding_family: Context object/media budget and dedupe
+L00004946	source_repos:
+L00004947	- OpenAI Codex
+L00004948	preserved_exact_tokens:
+L00004949	- extrepo-20260703-0093
+L00004950	- P0-CONTEXT-OBJECT-BUDGET
+L00004951	- P0
+L00004952	- Context object/media budget and dedupe
+L00004953	- OpenAI Codex
+L00004954	negative_constraints: []
+L00004955	observed_signal: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
+L00004956	pm_gap_or_delta: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects.
+L00004957	compile_disposition: create_new_planunit
+L00004958	```
+L00004959	
+L00004960	### PP-071 - P1-INSTRUCTION-IMPORT-GRAPH
+L00004961	
+L00004962	```yaml
+L00004963	plan_unit_id: PP-071
+L00004964	unit_type: requirement
+L00004965	status: accepted
+L00004966	owner_doc: Plans/Prompt_Pipeline.md
+L00004967	canonical_text: >-
+L00004968	  P1-INSTRUCTION-IMPORT-GRAPH (P1) is compiled as canonical Puppet Master intent for Instruction import graph integrity: Imported external-repo finding extrepo-20260703-0095 / P1-INSTRUCTION-IMPORT-GRAPH (P1). The preserved PM gap/delta is: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch. The observed external-repo signal remains source-lineage evidence: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
+L00004969	gui_related: false
+L00004970	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00004971	depends_on:
+L00004972	- PDS-003
+L00004973	- PNC-001
+L00004974	unblocks: []
+L00004975	acceptance_criteria:
+L00004976	- Import cycles block or cap safely
+L00004977	- Changed imported file changes instruction epoch
+L00004978	- External/untrusted import cannot gain broader scope silently
+L00004979	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004980	validation_surfaces:
+L00004981	- python3 scripts/pm-plan-index.py validate
+L00004982	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00004983	- Import cycles block or cap safely
+L00004984	- Changed imported file changes instruction epoch
+L00004985	- External/untrusted import cannot gain broader scope silently
+L00004986	risk_class: p1_instruction_integrity_hardening
+L00004987	reasoning_tier: standard
+L00004988	context_scope: instruction_integrity
+L00004989	implementation_surfaces:
+L00004990	- Plans/Prompt_Pipeline.md
+L00004991	node_compile_hint:
+L00004992	  mode: p1_instruction_import_graph
+L00004993	  create_worknodes: false
+L00004994	  create_nodeseeds: false
+L00004995	source_lineage:
+L00004996	- pldg-20260703-001-feature-intake:atom-0099
+L00004997	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0099
+L00004998	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0095/P1-INSTRUCTION-IMPORT-GRAPH@line=95
+L00004999	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0095/P1-INSTRUCTION-IMPORT-GRAPH
+L00005000	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00005001	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00005002	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:8
+L00005003	source_atom_ids:
+L00005004	- atom-0099
+L00005005	external_atom_id: extrepo-20260703-0095
+L00005006	source_row_id: P1-INSTRUCTION-IMPORT-GRAPH
+L00005007	priority: P1
+L00005008	finding_family: Instruction import graph integrity
+L00005009	source_repos:
+L00005010	- Pi
+L00005011	- OpenAI Codex
+L00005012	preserved_exact_tokens:
+L00005013	- extrepo-20260703-0095
+L00005014	- P1-INSTRUCTION-IMPORT-GRAPH
+L00005015	- P1
+L00005016	- Instruction import graph integrity
+L00005017	- Pi
+L00005018	- OpenAI Codex
+L00005019	negative_constraints: []
+L00005020	observed_signal: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
+L00005021	pm_gap_or_delta: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch.
+L00005022	compile_disposition: create_new_planunit
+L00005023	```
+L00005024	
+L00005025	### PP-072 - context_epoch
+L00005026	
+L00005027	```yaml
+L00005028	plan_unit_id: PP-072
+L00005029	unit_type: requirement
+L00005030	status: accepted
+L00005031	owner_doc: Plans/Prompt_Pipeline.md
+L00005032	canonical_text: >-
+L00005033	  context_epoch (P0) is compiled as canonical Puppet Master intent for context_epoch: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes The preserved PM gap/delta is: No first-class ContextEpoch object found in repo scan The observed external-repo signal remains source-lineage evidence: OpenCode v2 session/context epochs, compaction as active representation replacement
+L00005034	gui_related: true
+L00005035	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00005036	depends_on:
+L00005037	- PDS-003
+L00005038	- PNC-001
+L00005039	unblocks: []
+L00005040	acceptance_criteria:
+L00005041	- Plan index validate
+L00005042	- context epoch replay fixtures
+L00005043	- model-switch compaction tests
+L00005044	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00005045	validation_surfaces:
+L00005046	- python3 scripts/pm-plan-index.py validate
+L00005047	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00005048	- Plan index validate
+L00005049	- context epoch replay fixtures
+L00005050	- model-switch compaction tests
+L00005051	risk_class: p0_context_cache_hardening
+L00005052	reasoning_tier: high
+L00005053	context_scope: context_cache
+L00005054	implementation_surfaces:
+L00005055	- Plans/Prompt_Pipeline.md
+L00005056	- Plans/storage-plan.md
+L00005057	- Plans/assistant-chat-design.md
+L00005058	- Plans/usage-feature.md
+L00005059	node_compile_hint:
+L00005060	  mode: context_epoch
+L00005061	  create_worknodes: false
+L00005062	  create_nodeseeds: false
+L00005063	source_lineage:
+L00005064	- pldg-20260703-001-feature-intake:atom-0104
+L00005065	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0104
+L00005066	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0100/context_epoch@line=100
+L00005067	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0100/context_epoch
+L00005068	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00005069	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00005070	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:2
+L00005071	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+L00005072	source_atom_ids:
+L00005073	- atom-0104
+L00005074	external_atom_id: extrepo-20260703-0100
+L00005075	source_row_id: context_epoch
+L00005076	priority: P0
+L00005077	finding_family: context_epoch
+L00005078	target_docs:
+L00005079	- Plans/Prompt_Pipeline.md
+L00005080	- Plans/storage-plan.md
+L00005081	- Plans/assistant-chat-design.md
+L00005082	- Plans/usage-feature.md
+L00005083	owner_hints:
+L00005084	- Plans/Prompt_Pipeline.md
+L00005085	- Plans/storage-plan.md
+L00005086	- Plans/assistant-chat-design.md
+L00005087	- Plans/usage-feature.md
+L00005088	preserved_exact_tokens:
+L00005089	- extrepo-20260703-0100
+L00005090	- context_epoch
+L00005091	- P0
+L00005092	negative_constraints: []
+L00005093	observed_signal: OpenCode v2 session/context epochs, compaction as active representation replacement
+L00005094	pm_current_coverage: Compaction rules, context usage UI, low-context warnings, reasoning replay
+L00005095	pm_gap_or_delta: No first-class ContextEpoch object found in repo scan
+L00005096	proposal_or_recommendation: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes
+L00005097	compile_disposition: create_new_planunit
+L00005098	```

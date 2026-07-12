@@ -1,0 +1,2137 @@
+{
+  "authority_sha256": "45dadd69bd049298c2d551fcb58a916952a355a22c02f6c2f8be6ddf673517e1",
+  "case_id_digest": "d708127ff162d57785cfe7d0bf5d2d7dc792b0e09675b97ffaec2457adc37ac7",
+  "cases": [
+    {
+      "case_id": "luna_capture_gate:positive:luna-complete",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:luna-exact-rejected",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:luna-exact-eligible",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:embedded-identity-ignored",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:capture-complete",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:capture-fresh-reviewer",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:capture-terminal-binding",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:positive:capture-zero-scope",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-schema",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-audit",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-wave",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-cohort",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-status",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-cohort-status",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-derived-status",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-model",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-effort",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-fork",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-descendants",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-followups",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-retries",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-read-only",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-fresh",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-independent",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-primary-comparison-only",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-primary-sha",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-rejected-omitted",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-rejected-reordered",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-eligible-omitted",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-unresolved",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-credit",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:luna-side-effect",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-schema",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-gate",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-audit",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-wave",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-cohort",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-kind",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-append",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-role",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-controller-path",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-parent",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-authority",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-embedded-authority",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-reviewer-model",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-reused-id",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-report-sha",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "luna_capture_gate:negative:capture-activation",
+      "category": "luna_capture_gate",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0009:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0009:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0009:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0009:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0010:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0010:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0010:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0010:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0012:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0012:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0012:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0012:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0013:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0013:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0013:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0013:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0014:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0014:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0014:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0014:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0016:packet",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0016:intent",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:positive:A005SA-0016:empty-output",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:packet-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:packet-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:packet-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:packet-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:intent-raw",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:intent-bytes",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:intent-canonical",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:intent-swap",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:output-missing",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:output-file",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:output-nested",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:output-symlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "six_assignment_packet_intent_output_rehash:negative:A005SA-0016:output-hardlink",
+      "category": "six_assignment_packet_intent_output_rehash",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-00",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-01",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-02",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-03",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-04",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-05",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-06",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-07",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-08",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-09",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-10",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:positive:public-11",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-00",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-01",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-02",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-03",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-04",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-05",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-06",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-07",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-08",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-09",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-10",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-11",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-12",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-13",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-14",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-15",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-16",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-17",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-18",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-19",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-20",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-21",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-22",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-23",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-24",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-25",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-26",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-27",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-28",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-29",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-30",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-31",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-32",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-33",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-34",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-35",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-36",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-37",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-38",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-39",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-40",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-41",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-42",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-43",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-44",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-45",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-46",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-47",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-48",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-49",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-50",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-51",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-52",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-53",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-54",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-55",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-56",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-57",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-58",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "https_private_placeholder_registrable_authority:negative:rejected-59",
+      "category": "https_private_placeholder_registrable_authority",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-00",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-01",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-02",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-03",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-04",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-05",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-06",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-07",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-08",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:positive:closed-registry-09",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:performed",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:state",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:attempts",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:query-short",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:outcome-short",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-id",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:http-url",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:example-url",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:canonical",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:domain",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:authority-duplicate",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:authority-empty",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:secondary",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:retrieval-status",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:final-http",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:http-status",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:content-hash",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:receipt-hash",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:ips-empty",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:ip-private",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:ip-loopback",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:redirect-http",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:redirect-private",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-url",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-canonical",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-domain",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:claim-id",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:claim-short",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:label-short",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:source-ids-empty",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:unknown-source",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-source-ref",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:inference",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:orphan",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:no-mappings",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:no-projected-claims",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:projected-text",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:projected-url",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:base-state",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:browsing",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:one-source",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:one-mapping",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:extra-orphan",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:duplicate-source-row",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:authority-repeat",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:userinfo",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:public-ip-literal",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:reserved-resolved",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:invalid-authority-class",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "live_source_registry_claim_support:negative:invalid-evidence-class",
+      "category": "live_source_registry_claim_support",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-00",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-01",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-02",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-03",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-04",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-05",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-06",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:positive:valid-disposition-07",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:attempts-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:attempts-one",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:attempts-duplicate",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:query-short",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:query-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:outcome-short",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:registry-present",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:mapping-present",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:claims-present",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:state",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:browsing",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:certified",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:gap",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:deltas-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:delta-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:dimensions-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:dimension-disposition",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:spec-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:spec-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:scenario-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:scenario-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:criteria-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:criterion-short",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:criterion-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:observables-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:observables-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:artifacts-empty",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:artifacts-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:pass-short",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:pass-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:fail-short",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:fail-tbd",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:oracle-equal",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:performed",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:weak-certified",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:misapplied-certified",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:insufficient-certified",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:notapp-certified",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:certified-one-source",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "disposition_no_evidence_concrete_delta:negative:certified-duplicate-domain",
+      "category": "disposition_no_evidence_concrete_delta",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:positive:result-schema-valid",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:positive:capture-schema-valid",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:positive:luna-schema-valid",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:positive:preterminal-pass-blocked",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "positive"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:duplicate-json-key",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:stable-symlink",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:stable-directory",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:output-symlink",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:output-hardlink",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:output-nested",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:placeholder-text",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:short-text",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:empty-concrete-list",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:whitespace-url",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:private-ip",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:invalid-ip",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:binding-raw",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:binding-canonical",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:binding-bytes",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:capture-invalid-instance",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:result-invalid-instance",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:duplicate-domain",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:no-evidence-delta",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    },
+    {
+      "case_id": "draft202012_namespace_zero_state_toctou:negative:fifo-nonregular",
+      "category": "draft202012_namespace_zero_state_toctou",
+      "passed": true,
+      "polarity": "negative"
+    }
+  ],
+  "category_counts": {
+    "disposition_no_evidence_concrete_delta": {
+      "negative": 40,
+      "positive": 8,
+      "total": 48
+    },
+    "draft202012_namespace_zero_state_toctou": {
+      "negative": 20,
+      "positive": 4,
+      "total": 24
+    },
+    "https_private_placeholder_registrable_authority": {
+      "negative": 60,
+      "positive": 12,
+      "total": 72
+    },
+    "live_source_registry_claim_support": {
+      "negative": 50,
+      "positive": 10,
+      "total": 60
+    },
+    "luna_capture_gate": {
+      "negative": 40,
+      "positive": 8,
+      "total": 48
+    },
+    "six_assignment_packet_intent_output_rehash": {
+      "negative": 78,
+      "positive": 18,
+      "total": 96
+    }
+  },
+  "failed": 0,
+  "failures": [],
+  "minimum_required": 300,
+  "negative": 288,
+  "passed": 348,
+  "positive": 60,
+  "schema_version": "scenario-adversarial-semantic-repair-tests-v31-report-v1",
+  "status": "pass",
+  "test_source_sha256": "c03de6d3d9f827c483a2a4bdbf3f254586c5d2edfa2b77fb3186e8df806bdeb2",
+  "total": 348,
+  "verifier_source_sha256": "8f5ada680fb86dbd96e3d5e12ca84f59d7ab58d528b640891a1975e01cbd723a"
+}

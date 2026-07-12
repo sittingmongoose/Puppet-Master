@@ -1,0 +1,876 @@
+{
+  "assignment_id": "A005M15-000161-INTEGRATED-MACRO15-C506D27334DD-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "  \"$id\": \"pm.goal_runtime_events.schema.v1\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "  \"title\": \"Puppet Master Goal Runtime Event\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "  \"type\": \"object\",",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Validators and producers have an explicit draft, stable schema identifier, human title, and root JSON type to bind against.",
+      "item_id": "A005M15-000161-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/goal_runtime_events.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:type",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The document is a Draft 2020-12 object schema identified as pm.goal_runtime_events.schema.v1 and titled Puppet Master Goal Runtime Event.",
+      "title": "Explicit root schema identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Unknown top-level fields are rejectable, giving producers and validators a falsifiable envelope boundary.",
+      "item_id": "A005M15-000161-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:additionalProperties",
+        "STRUCTURAL:$.additionalProperties"
+      ],
+      "statement": "The event envelope is closed at the root because additionalProperties is false.",
+      "title": "Closed top-level event envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "propagation",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"actor_ref\",",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"correlation_id\",",
+          "line_end": 22,
+          "line_start": 22,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"payload\"",
+          "line_end": 25,
+          "line_start": 25,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every valid event must carry the common identity, actor, execution-routing, correlation, evidence, artifact, and payload envelope.",
+      "item_id": "A005M15-000161-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "The schema requires event identity and time, project and goal identity, revision, actor and role, requested and effective provider/model/account refs, correlation, evidence and artifact arrays, and payload.",
+      "title": "Common required event envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "failures_recovery",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"goal.created\",",
+          "line_end": 31,
+          "line_start": 31,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal.degraded\",",
+          "line_end": 42,
+          "line_start": 42,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal_run.certified\",",
+          "line_end": 49,
+          "line_start": 49,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "  }",
+          "line_end": 87,
+          "line_start": 87,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Producers are constrained to a finite vocabulary covering goal lifecycle, evidence, verification, receipt, degradation, blocking, cancellation, stopping, and goal-run lifecycle events.",
+      "item_id": "A005M15-000161-I004",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/goal_runtime_events.schema.json",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "event_name is restricted to twenty-one goal and goal_run event names spanning creation through terminal and exceptional outcomes.",
+      "title": "Finite goal runtime event vocabulary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"payload\": {",
+          "line_end": 83,
+          "line_start": 83,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "      \"minProperties\": 1",
+          "line_end": 85,
+          "line_start": 85,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_discriminator_specific_payload_contracts",
+      "impact": "Invalid or incomplete event-specific data can pass the schema, so state changes, terminal outcomes, recovery facts, certification facts, and destructive-action details remain producer-defined and cannot be reliably falsified by this schema.",
+      "item_id": "A005M15-000161-I005",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "payload is only required to be a nonempty object; there are no event_name-discriminated schemas defining required fields, types, invariants, or forbidden combinations for any event.",
+      "title": "Event payload semantics are untyped"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"event_name\",",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"requested_account_ref\",",
+          "line_end": 20,
+          "line_start": 20,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"effective_account_ref\",",
+          "line_end": 21,
+          "line_start": 21,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "invariant_required_set_across_event_kinds",
+      "impact": "Events that may not execute a provider or model must invent routing/account values or be rejected, while events that require approval, block, causation, or parent linkage are not forced to carry those semantically relevant refs.",
+      "item_id": "A005M15-000161-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "One invariant required-field set applies to every event_name, with no conditional distinction between lifecycle facts, execution facts, approval facts, blocking facts, and parent-child facts.",
+      "title": "Required fields do not vary by event semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"thread_id\": {\"type\": \"string\"},",
+          "line_end": 57,
+          "line_start": 57,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"approval_ref\": {\"type\": \"string\"},",
+          "line_end": 73,
+          "line_start": 73,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"block_ref\": {\"type\": \"string\"},",
+          "line_end": 74,
+          "line_start": 74,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "optional_refs_allow_empty_and_unbound_values",
+      "impact": "Consumers cannot distinguish omission from unusable empty references, and blocked, approval-dependent, child, or causally linked events are not structurally tied to their supporting records.",
+      "item_id": "A005M15-000161-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "thread_id, parent_goal_id, causation_event_ref, idempotency_key, approval_ref, and block_ref are optional unconstrained strings that permit empty values and have no event-specific dependency rules.",
+      "title": "Control and linkage references are underconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "operations",
+        "builder_discretion",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"correlation_id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 70,
+          "line_start": 70,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"idempotency_key\": {\"type\": \"string\"},",
+          "line_end": 72,
+          "line_start": 72,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_event_identity_and_idempotency_contract",
+      "impact": "Duplicate delivery, retry, replay, and concurrent-write handling cannot be validated; correlation groups events but does not identify an event, and idempotency may be absent or empty.",
+      "item_id": "A005M15-000161-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The envelope has no required unique event identifier, and idempotency_key is optional and permits an empty string.",
+      "title": "Retry and duplicate-event semantics are not enforceable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"items\": {\"type\": \"string\", \"minLength\": 1}",
+          "line_end": 77,
+          "line_start": 77,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "      \"items\": {\"type\": \"string\", \"minLength\": 1}",
+          "line_end": 81,
+          "line_start": 81,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "unbounded_nonunique_reference_arrays",
+      "impact": "Events may contain empty, duplicate-heavy, or arbitrarily large reference arrays, increasing storage and transport cost and leaving evidence sufficiency entirely outside validation.",
+      "item_id": "A005M15-000161-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "evidence_refs and artifact_refs constrain only each present element; they have no minItems, maxItems, or uniqueItems constraints.",
+      "title": "Evidence and artifact arrays lack cardinality limits"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"type\": \"object\",",
+          "line_end": 84,
+          "line_start": 84,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "      \"minProperties\": 1",
+          "line_end": 85,
+          "line_start": 85,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "unbounded_untrusted_payload",
+      "impact": "A producer can place arbitrary keys, deeply nested values, sensitive data, or very large content into an otherwise valid payload; size, redaction, retention, and safe-display boundaries are not enforceable here.",
+      "item_id": "A005M15-000161-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "payload has no properties, additionalProperties, nesting, value-type, or size constraints beyond being a nonempty object.",
+      "title": "Payload admits arbitrary unbounded data"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "security_privacy",
+        "builder_discretion",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"requested_provider_ref\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 64,
+          "line_start": 64,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"effective_account_ref\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 69,
+          "line_start": 69,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "opaque_authority_and_account_references",
+      "impact": "The schema cannot reject cross-project refs, unauthorized effective substitutions, malformed namespaces, or references that expose sensitive account identifiers; authorization and privacy depend on unspecified external consumers.",
+      "item_id": "A005M15-000161-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Actor, role, provider, model, and account references are nonempty strings without format, namespace, project-binding, authorization, or requested-to-effective transition rules.",
+      "title": "Authority-bearing references are structurally opaque"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "operations",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"goal_revision\": {\"type\": \"integer\", \"minimum\": 1},",
+          "line_end": 60,
+          "line_start": 60,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"expected_goal_revision\": {\"type\": \"integer\", \"minimum\": 1},",
+          "line_end": 61,
+          "line_start": 61,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"causation_event_ref\": {\"type\": \"string\"},",
+          "line_end": 71,
+          "line_start": 71,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_ordering_and_transition_invariants",
+      "impact": "Out-of-order, stale, repeated, regressive, or causally disconnected events can be schema-valid, leaving optimistic concurrency and transition legality to external implementation.",
+      "item_id": "A005M15-000161-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "goal_revision is required, but expected_goal_revision and causation_event_ref are optional and no constraints relate revisions, causation, event_name, or prior state.",
+      "title": "Event ordering and transition legality are external"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"schema_version\": {\"type\": \"string\", \"const\": \"pm.goal_runtime_events.schema.v1\"},",
+          "line_end": 54,
+          "line_start": 54,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"occurred_at_utc\": {\"type\": \"string\", \"format\": \"date-time\"},",
+          "line_end": 55,
+          "line_start": 55,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"project_id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 56,
+          "line_start": 56,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Tests can directly reject a wrong schema version, malformed asserted date-time, empty project and goal identifiers, and revisions below one when format validation is enabled.",
+      "item_id": "A005M15-000161-I013",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema supplies concrete field-level oracles for schema version, timestamp shape, nonempty core references, and positive revisions.",
+      "title": "Core primitive validation oracles are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "builder_discretion",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "    \"schema_version\": {\"type\": \"string\", \"const\": \"pm.goal_runtime_events.schema.v1\"},",
+          "line_end": 54,
+          "line_start": 54,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_compatibility_and_migration_policy",
+      "impact": "Adding a top-level field or accepting another schema version is breaking under this contract, but the schema does not define version negotiation, coexistence, up-conversion, down-conversion, or unknown-event handling.",
+      "item_id": "A005M15-000161-I014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The closed root and constant v1 field create a strict version boundary without any in-schema compatibility or migration mechanism.",
+      "title": "Version evolution policy is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"title\": \"Puppet Master Goal Runtime Event\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal.verification_decided\",",
+          "line_end": 39,
+          "line_start": 39,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal_run.certified\",",
+          "line_end": 49,
+          "line_start": 49,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_consumer_and_presentation_semantics",
+      "impact": "Callers and GUI consumers may disagree about ordering, terminality, certification, degraded versus blocked presentation, localization, accessibility announcements, or safe rendering of payload content, producing misleading user-visible state.",
+      "item_id": "A005M15-000161-I015",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema names runtime facts but defines no producer ownership, subscriber set, projection rules, GUI mapping, localization or accessibility behavior, or support-facing observability contract.",
+      "title": "Consumer and GUI interpretations are outside the schema"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"goal.receipt_recorded\",",
+          "line_end": 40,
+          "line_start": 40,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal.degraded\",",
+          "line_end": 42,
+          "line_start": 42,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        },
+        {
+          "exact_quote": "        \"goal_run.stopped\"",
+          "line_end": 51,
+          "line_start": 51,
+          "path": "Plans/goal_runtime_events.schema.json",
+          "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+        }
+      ],
+      "gap_kind": "missing_delivery_recovery_and_rollback_contract",
+      "impact": "A producer can emit terminal or degraded events without validated recovery guidance, replay status, rollback linkage, or delivery acknowledgement, so network loss and partial persistence can leave projections ambiguous.",
+      "item_id": "A005M15-000161-I016",
+      "item_type": "failure_recovery",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The vocabulary includes degraded, blocked, cancelled, stopped, receipt, and certified facts, but the envelope has no delivery acknowledgement, retry state, recovery action, compensating-event, or rollback linkage contract.",
+      "title": "Failure events lack delivery and recovery semantics"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        88
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/goal_runtime_events.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/goal_runtime_events.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-000161-I001",
+        "A005M15-000161-I002",
+        "A005M15-000161-I003",
+        "A005M15-000161-I004",
+        "A005M15-000161-I005",
+        "A005M15-000161-I006",
+        "A005M15-000161-I007",
+        "A005M15-000161-I008",
+        "A005M15-000161-I009",
+        "A005M15-000161-I010",
+        "A005M15-000161-I011",
+        "A005M15-000161-I012",
+        "A005M15-000161-I013",
+        "A005M15-000161-I014",
+        "A005M15-000161-I015",
+        "A005M15-000161-I016"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 88 core lines and all 17 assigned semantic and structural source units. The schema provides a closed, versioned common event envelope and finite event vocabulary, but event-specific payload, transition, authority, idempotency, recovery, size, compatibility, consumer, and GUI semantics remain unenforceable or external.",
+      "window_id": "WIN-C506D27334DD-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-C506D27334DD-0001",
+    "document_path": "Plans/goal_runtime_events.schema.json",
+    "micro_window_ids": [
+      "WIN-C506D27334DD-0001"
+    ],
+    "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines per-event payload schemas and legal predecessor/successor states for each goal and goal_run event?",
+      "Which component owns event production, ordering, idempotent persistence, replay, and consumer acknowledgement?",
+      "Which authority contract validates requested-to-effective provider, model, and account substitutions and binds approval_ref to relevant events?",
+      "Which projection and GUI contracts define terminality, degraded or blocked presentation, certification truth, localization, accessibility announcements, and safe payload rendering?",
+      "Which compatibility contract governs v1 evolution, unknown event names, and mixed-version replay?"
+    ],
+    "feature_family_keys": [
+      "goal-runtime-event-envelope",
+      "goal-runtime-event-payloads",
+      "goal-runtime-state-transitions",
+      "goal-runtime-event-delivery",
+      "goal-runtime-event-consumers"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 discriminator patterns for event-specific payload validation",
+      "event envelope idempotency ordering replay and schema evolution practices",
+      "secure event payload size privacy and untrusted-data validation patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000161_attempt_0015_terminal"
+}

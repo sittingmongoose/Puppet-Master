@@ -1,0 +1,30 @@
+{
+  "activation_granted": false,
+  "activation_transaction_files": 0,
+  "active_prospective_concurrency_policy_v11_sha256": "6717f715c8a32dea88d7e79e70fca87aeb4a0b637853da3742c5c6e6a0c9a086",
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0007",
+  "authority_sha256": "6ee33c5229ae78e4fd0e54ca5233b696863db38764f8598f6a55cec32c2549c6",
+  "blocking_condition": "fresh independent Luna prelaunch v7 not present",
+  "concurrency_policy_v10_lineage_sha256": "0fbaad08800f3f5e8e122e7638e2537382d9c6f6be5fc93afcd307a3a42098f1",
+  "credits": {
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0
+  },
+  "launch_authorized": false,
+  "manifest_sha256": "0653671397d64fb798b22c8ddb2796d5df0012ca8ff3c2706ca61d684ff3ef72",
+  "model_lane_routing_policy_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544",
+  "native_capture_rows": 0,
+  "receipts": 0,
+  "results": 0,
+  "schema_version": "external-research-recovery-launch-seal-v7",
+  "semantic_transaction_cap": 2,
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH_V7"
+}

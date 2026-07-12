@@ -1,0 +1,1015 @@
+{
+  "schema_version": "macro-review-result-v1",
+  "assignment_id": "A005M-000033-INTEGRATED-MACRO-E36B3E5CECA0-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "task_thread_id": "/root/a005m_000033_attempt_0014_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "phase": "blind_macro_window_review",
+  "status": "completed",
+  "source_binding": {
+    "bundle_id": "MACRO-E36B3E5CECA0-0001",
+    "document_path": "Plans/Executor_Protocol.md",
+    "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+    "source_excerpt_ref": "capsules/source/dd/dd656cf11b14183cc9dafe8585d4be860f07cfca10aa767dafd952ba34a60477.txt",
+    "source_excerpt_sha256_expected": "dd656cf11b14183cc9dafe8585d4be860f07cfca10aa767dafd952ba34a60477",
+    "source_excerpt_sha256_observed": "dd656cf11b14183cc9dafe8585d4be860f07cfca10aa767dafd952ba34a60477",
+    "capsule_sha256_expected": "c26b9e878d078e835c90324f40ad92cf35d5ea4fb1d7e65609f067782cb996ea",
+    "capsule_sha256_observed": "c26b9e878d078e835c90324f40ad92cf35d5ea4fb1d7e65609f067782cb996ea",
+    "assignment_record_sha256_from_intent": "a9c0d77dd2eff1dbd8b584cfbdb6cdc0d52c4d7ee581b8657791437f5e37f3fe",
+    "identity_verified": true,
+    "identity_checks": {
+      "assignment_id_matches": true,
+      "attempt_id_matches": true,
+      "audit_id_matches": true,
+      "bundle_id_matches": true,
+      "document_path_matches": true,
+      "model_matches": true,
+      "phase_matches": true
+    },
+    "core_hashes": [
+      {"window_id": "WIN-E36B3E5CECA0-0001", "range": [1, 392], "expected": "b49da73789a79d7a6b25889a9085ec93afef596c78f123e5509918ea953f8943", "observed": "b49da73789a79d7a6b25889a9085ec93afef596c78f123e5509918ea953f8943", "matched": true},
+      {"window_id": "WIN-E36B3E5CECA0-0002", "range": [393, 789], "expected": "718c94e45062c7627b975ce019c4121be2fbaaa58a0b1b90989a60a5749140d9", "observed": "718c94e45062c7627b975ce019c4121be2fbaaa58a0b1b90989a60a5749140d9", "matched": true},
+      {"window_id": "WIN-E36B3E5CECA0-0003", "range": [790, 1180], "expected": "ef58f697d776df2472ac82a43684499b39e91843dc6e7613d7761e5264f45290", "observed": "ef58f697d776df2472ac82a43684499b39e91843dc6e7613d7761e5264f45290", "matched": true},
+      {"window_id": "WIN-E36B3E5CECA0-0004", "range": [1181, 1546], "expected": "446ccb23474b0b51f61001c7d16b04a90c68e8f09e3dc5b70a0245ba4615dc1f", "observed": "446ccb23474b0b51f61001c7d16b04a90c68e8f09e3dc5b70a0245ba4615dc1f", "matched": true},
+      {"window_id": "WIN-E36B3E5CECA0-0005", "range": [1547, 1925], "expected": "5cea9bf9c8849e52eaaec507b1a270e8fc6560d0d1a39c3c83f1158c6a12819f", "observed": "5cea9bf9c8849e52eaaec507b1a270e8fc6560d0d1a39c3c83f1158c6a12819f", "matched": true},
+      {"window_id": "WIN-E36B3E5CECA0-0006", "range": [1926, 2323], "expected": "af67efade29e386402553e361565a927f751b7b8c09b1862f70576a931a57f46", "observed": "af67efade29e386402553e361565a927f751b7b8c09b1862f70576a931a57f46", "matched": true}
+    ]
+  },
+  "coverage": {
+    "bundle_core_range": [1, 2323],
+    "context_ranges": [[2324, 2335]],
+    "core_lines_reviewed": 2323,
+    "context_lines_reviewed": 12,
+    "segments_expected": 6,
+    "segments_reviewed": 6,
+    "required_source_units_expected": 57,
+    "required_source_units_reviewed": 57,
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "required_dimensions": [
+      "behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "scale_performance", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "destructive_actions", "cross_document_seams", "test_falsifiability", "unknown_unknowns"
+    ],
+    "all_required_dimensions_reviewed": true
+  },
+  "segments": [
+    {
+      "window_id": "WIN-E36B3E5CECA0-0001",
+      "core_range": [1, 392],
+      "required_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "item_ids": ["A005M-I001", "A005M-I002", "A005M-I003", "A005M-I004", "A005M-I005", "A005M-I006"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    },
+    {
+      "window_id": "WIN-E36B3E5CECA0-0002",
+      "core_range": [393, 789],
+      "required_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "item_ids": ["A005M-I007", "A005M-I008", "A005M-I009", "A005M-I010", "A005M-I011", "A005M-I012", "A005M-I013", "A005M-I014", "A005M-I015", "A005M-I016", "A005M-I017"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    },
+    {
+      "window_id": "WIN-E36B3E5CECA0-0003",
+      "core_range": [790, 1180],
+      "required_source_unit_refs": ["PLANUNIT:EP-002", "PLANUNIT:EP-003", "PLANUNIT:EP-004", "PLANUNIT:EP-005", "PLANUNIT:EP-006", "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-003", "SEMANTIC:PLANUNIT:EP-002", "SEMANTIC:PLANUNIT:EP-003", "SEMANTIC:PLANUNIT:EP-004", "SEMANTIC:PLANUNIT:EP-005", "SEMANTIC:PLANUNIT:EP-006"],
+      "item_ids": ["A005M-I018", "A005M-I019", "A005M-I020", "A005M-I021", "A005M-I022", "A005M-I023", "A005M-I024"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    },
+    {
+      "window_id": "WIN-E36B3E5CECA0-0004",
+      "core_range": [1181, 1546],
+      "required_source_unit_refs": ["PLANUNIT:EP-007", "PLANUNIT:EP-008", "PLANUNIT:EP-009", "PLANUNIT:EP-010", "PLANUNIT:EP-011", "PLANUNIT:EP-012", "PLANUNIT:EP-013", "SEMANTIC:PLANUNIT:EP-007", "SEMANTIC:PLANUNIT:EP-008", "SEMANTIC:PLANUNIT:EP-009", "SEMANTIC:PLANUNIT:EP-010", "SEMANTIC:PLANUNIT:EP-011", "SEMANTIC:PLANUNIT:EP-012", "SEMANTIC:PLANUNIT:EP-013"],
+      "item_ids": ["A005M-I025", "A005M-I026", "A005M-I027", "A005M-I028", "A005M-I029", "A005M-I030", "A005M-I031", "A005M-I032"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    },
+    {
+      "window_id": "WIN-E36B3E5CECA0-0005",
+      "core_range": [1547, 1925],
+      "required_source_unit_refs": ["PLANUNIT:EP-014", "PLANUNIT:EP-015", "PLANUNIT:EP-016", "PLANUNIT:EP-017", "PLANUNIT:EP-018", "PLANUNIT:EP-019", "PLANUNIT:EP-020", "SEMANTIC:PLANUNIT:EP-014", "SEMANTIC:PLANUNIT:EP-015", "SEMANTIC:PLANUNIT:EP-016", "SEMANTIC:PLANUNIT:EP-017", "SEMANTIC:PLANUNIT:EP-018", "SEMANTIC:PLANUNIT:EP-019", "SEMANTIC:PLANUNIT:EP-020"],
+      "item_ids": ["A005M-I019", "A005M-I033", "A005M-I034", "A005M-I035", "A005M-I036", "A005M-I037", "A005M-I038"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    },
+    {
+      "window_id": "WIN-E36B3E5CECA0-0006",
+      "core_range": [1926, 2323],
+      "required_source_unit_refs": ["PLANUNIT:EP-021", "PLANUNIT:EP-022", "PLANUNIT:EP-023", "PLANUNIT:EP-024", "PLANUNIT:EP-025", "PLANUNIT:EP-026", "PLANUNIT:EP-027", "PLANUNIT:EP-028", "SEMANTIC:PLANUNIT:EP-021", "SEMANTIC:PLANUNIT:EP-022", "SEMANTIC:PLANUNIT:EP-023", "SEMANTIC:PLANUNIT:EP-024", "SEMANTIC:PLANUNIT:EP-025", "SEMANTIC:PLANUNIT:EP-026", "SEMANTIC:PLANUNIT:EP-027", "SEMANTIC:PLANUNIT:EP-028"],
+      "item_ids": ["A005M-I005", "A005M-I039", "A005M-I040", "A005M-I041", "A005M-I042", "A005M-I043", "A005M-I044", "A005M-I045", "A005M-I046", "A005M-I047", "A005M-I048", "A005M-I049"],
+      "lenses_applied": ["exact_behavior", "adversarial_negative_space"]
+    }
+  ],
+  "items": [
+    {
+      "item_id": "A005M-I001",
+      "item_type": "explicit_non_gap",
+      "title": "Scheduler and overseer authority are explicitly separated",
+      "statement": "The runtime scheduler owns canonical readiness and transition state while package and seam overseers govern rather than becoming a second scheduler.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Prevents split-brain scheduling authority and preserves one runtime state owner.",
+      "dimensions": ["behavior", "authority", "ownership", "authority_boundaries"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "The canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch.", "line_start": 54, "line_end": 54, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- overseers are governance actors, not hidden second schedulers", "line_start": 57, "line_end": 57, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I002",
+      "item_type": "gap",
+      "title": "Reviewer, verifier, and corroborator decision rights are collapsed",
+      "statement": "The role definition groups three actors as generic execution-support actors without defining which can pass verification, create findings, corroborate, revoke, or challenge; later outcome handling distinguishes them, so callers lack a local authority matrix.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_authority_contract",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Implementations can grant conflicting mutation or completion authority to review actors.",
+      "dimensions": ["capabilities", "authority", "ownership", "missing_callers_consumers", "ambiguity_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "### 1.2 Verifier / reviewer / corroborator", "line_start": 38, "line_end": 38, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "The execution-support actors that review, verify, or corroborate work products without becoming the scheduler.", "line_start": 41, "line_end": 41, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I003",
+      "item_type": "gap",
+      "title": "Closed execution context requires node identity for non-node units",
+      "statement": "execution_unit_type admits run, seam, package, overseer, recovery, verification, and host_operation, yet node_id is unconditionally required and non-null. No sentinel or conditional schema rule is supplied, forcing fabricated node identities for valid non-node execution units.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "invalid_contract_state",
+      "builder_discretion": "none_without_governed_schema_change",
+      "impact": "Audit joins and dispatch receipts can become false or impossible to validate for legitimate non-node work.",
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "invalid_states_transitions", "test_falsifiability"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "| `execution_unit_type` | closed enum, non-null | Runtime unit class: `run`, `seam`, `package`, `node`, `overseer`, `delegated_subagent`, `recovery`, `verification`, or `host_operation`. |", "line_start": 156, "line_end": 156, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "| `node_id` | string, non-null | Canonical node identity for dispatch and receipts. |", "line_start": 159, "line_end": 159, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I004",
+      "item_type": "gap",
+      "title": "Account binding and approval scope lack conditional validity rules",
+      "statement": "requested_account_binding and approval_scope_key are mandatory for every packet while requested_account_id is optional. The excerpt gives no invariant for required binding without an ID and no neutral approval-scope value for attempts that are not blocked or approval-bearing.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_conditional_contract",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Dispatchers can encode semantically contradictory identity or approval packets that still satisfy field presence.",
+      "dimensions": ["inputs_outputs", "contracts", "authority", "security_privacy", "ambiguity_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "| `requested_account_binding` | closed enum, non-null | Binding mode: `none`, `preferred`, `required`, or `system_default`. |", "line_start": 163, "line_end": 163, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "| `approval_scope_key` | string, non-null | Approval and blocked-action scope key for recovery/HITL joins. |", "line_start": 164, "line_end": 164, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "| Account/policy resolution | `requested_account_id`, `requested_account_policy`, `effective_account_id` |", "line_start": 173, "line_end": 173, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I005",
+      "item_type": "gap",
+      "title": "Ready-eligible states conflict with the declared closed lifecycle",
+      "statement": "The canonical lifecycle declares done and failed terminal and contains queued but not pending or reopened. The scheduler nevertheless admits reopened or an unspecified equivalent state and the prerequisite event transitions blocked nodes to pending. The excerpt does not define legal transitions into or out of those values.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "state_machine_conflict",
+      "builder_discretion": "none_without_owner_adjudication",
+      "impact": "Different schedulers can dispatch, reject, or resurrect the same node from incompatible state interpretations.",
+      "dimensions": ["states_transitions", "invalid_states_transitions", "contracts", "concurrency_races", "cross_document_seams"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001", "PLANUNIT:EP-025", "SEMANTIC:PLANUNIT:EP-025"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "`queued -> in_progress -> verify_pending -> verified -> done`", "line_start": 114, "line_end": 114, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "`done` and `failed` are terminal states for this protocol revision.", "line_start": 119, "line_end": 119, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- canonical node state is schedulable (`queued`, `reopened`, or equivalent ready-eligible state)", "line_start": 289, "line_end": 289, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- wake behavior: receiving this event triggers prerequisite re-evaluation on all `target_node_ids`; if all prerequisites are now resolved, the runtime blocked projection clears and the node transitions from `blocked` to `pending` / ready-eligible queue state in the same scheduler wake", "line_start": 386, "line_end": 386, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Under the scheduler addendum, ready nodes must be schedulable, dependency-satisfied, graph-integrity-clean, not in backoff or blocked on listed conditions, valid for active replan_generation, and allowed by lane/pool capacity.", "line_start": 2127, "line_end": 2127, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I006",
+      "item_type": "explicit_non_gap",
+      "title": "Wake coalescing has a deterministic concurrency contract",
+      "statement": "Wake admission is scoped per run and generation, primary selection is deterministic, additional reasons remain observable, and watchdog polling cannot overtake event-driven work.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_by_closed_wake_contract",
+      "impact": "Limits duplicate passes while retaining causal evidence for coalesced triggers.",
+      "dimensions": ["behavior", "concurrency_races", "observability_support", "operations"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- Runtime keeps one pending wake set per `{run_id, replan_generation}`.", "line_start": 367, "line_end": 367, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- One pending wake set produces at most one `scheduler.pass`; no additional pass is created only to replay a coalesced reason.", "line_start": 370, "line_end": 370, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I007",
+      "item_type": "gap",
+      "title": "Classified outcome matrix is not closed over its own mandatory mappings",
+      "statement": "The matrix omits auth_required, validation_blocked, worktree-conflict, dirty-worktree, and related blocked codes that the following closed mapping requires. No source-local row-level policy defines their retry, terminality, or recovery action.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_enum_policy_matrix",
+      "builder_discretion": "unacceptably_open",
+      "impact": "The same blocked outcome can receive divergent retry or terminal handling across consumers.",
+      "dimensions": ["failures_recovery", "contracts", "untrusted_inputs", "partial_failure", "recovery_rollback"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "### 7.1 Classified outcome matrix", "line_start": 402, "line_end": 402, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- missing or expired refreshable credentials map to `failure_class = auth_expired`; absent credentials, missing scopes, or required login before admission map to `blocked_reason_code = auth_required`.", "line_start": 428, "line_end": 428, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- approval declined, headless approval denial, FileSafe denial, external side-effect approval, replan-required, validation blockers, worktree conflicts, and dirty worktrees remain blocked reason codes, not failure classes.", "line_start": 430, "line_end": 430, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I008",
+      "item_type": "gap",
+      "title": "Doom-loop guard can terminate unrelated runnable work",
+      "statement": "Two consecutive matching failures at one nesting level terminate the entire run, but the contract does not scope matching to attempt, node, provider session, or side-effect phase, nor define reset behavior after intervening success. This conflicts with the rule that unrelated blocked work must not stall runnable graph work.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "overbroad_failure_scope",
+      "builder_discretion": "unacceptably_open",
+      "impact": "A local deterministic tool failure can kill independent nodes and discard useful parallel capacity.",
+      "dimensions": ["failures_recovery", "concurrency_races", "partial_failure", "scale_performance", "destructive_actions"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "If the same triple `(tool_name, serialized_args_hash, error_message)` is observed twice consecutively at the same nesting level, the executor MUST emit `stop.identical_failure` and terminate the run immediately.", "line_start": 442, "line_end": 442, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "Provider-transient retry evidence preserves the explicit `1s -> 2s -> 4s` sequence and the compatibility shorthand `/2s/4s`; retry counters are per-error after classification, not a shared global retry bucket. Doom-loop matching uses `(tool_name, args_hash, error_message)`, where `serialized_args_hash` is the canonical serialized form of `args_hash`; the terminal outcome is `kill.identical_failure`, with `stop.identical_failure` retained only as an older compatibility alias.", "line_start": 450, "line_end": 450, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I009",
+      "item_type": "gap",
+      "title": "Safe-point branch field has two canonical names",
+      "statement": "The safe-point table names worktree_branch, while the subsequent required-property list names branch_name. No alias, migration, or precedence rule reconciles them.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "field_name_conflict",
+      "builder_discretion": "none_without_schema_adjudication",
+      "impact": "Recovery validation and persistence can reject or silently omit branch identity.",
+      "dimensions": ["inputs_outputs", "contracts", "recovery_rollback", "compatibility_migration"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "| `worktree_branch` | string? | Branch checked out in worktree |", "line_start": 510, "line_end": 510, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- `worktree_id`, `branch_name`, and `HEAD_sha` for worktree-bound attempts, with `HEAD_sha` captured from `git rev-parse HEAD` in the worktree", "line_start": 528, "line_end": 528, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I010",
+      "item_type": "gap",
+      "title": "Remediation generation field is inconsistently named",
+      "statement": "One canonical lineage list records generation, while the later alignment requires remediation_generation. The excerpt gives no equivalence rule.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "field_name_conflict",
+      "builder_discretion": "none_without_owner_adjudication",
+      "impact": "Remediation retries can fork lineage or fail to join to their parent attempt.",
+      "dimensions": ["contracts", "propagation", "recovery_rollback", "cross_document_seams"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- record `remediation_root_id`, `remediation_parent_attempt_id`, `generation`, and `origin_failure_event_id`", "line_start": 540, "line_end": 540, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, finding identifiers, and final resolution state. A new canonical graph node is created only when a replan changes canonical graph scope.", "line_start": 637, "line_end": 637, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I011",
+      "item_type": "gap",
+      "title": "Transient transport overload is mislabeled as validation failure",
+      "statement": "Stream-frame overflow is classified as validation_blocked even though the cause is transport pressure and the same section treats missing terminal transport events as provider_transient. No resume, drainage, or bounded retry policy is defined for overload.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "misclassified_partial_failure",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Recoverable pressure can become an indefinite user-action block, while operators receive a misleading diagnosis.",
+      "dimensions": ["partial_failure", "failures_recovery", "scale_limits", "observability_support", "gui_misleading_states"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- Missing terminal event before timeout is a retryable transport failure with `failure_class = provider_transient` and `timeout_class = inactivity_timeout`; zero-usage aborted turns are not replay content.", "line_start": 478, "line_end": 478, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- Overflow returns a structured overload/blocking result with `blocked_reason_code = validation_blocked`, `transport_pressure = overloaded`, and no silent frame drop.", "line_start": 480, "line_end": 480, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I012",
+      "item_type": "gap",
+      "title": "Transport decision receipts permit identity-free runtime evidence",
+      "statement": "run_id, node_id, and attempt_id are all optional on transport_decision_receipt, with no conditional rule requiring them once a runtime attempt exists. That weakens the document's attempt-native attribution invariant.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_identity_condition",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Provider and transport decisions may be impossible to attribute during incident review, billing, replay, or recovery.",
+      "dimensions": ["inputs_outputs", "operations", "observability_support", "privacy_data_lifecycle", "missing_callers_consumers"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "Every adapter selection records `transport_decision_receipt` with `receipt_id`, `schema_version`, `run_id?`, `node_id?`, `attempt_id?`, `provider_id`, `adapter_kind`, `transport_kind`, `locality`, `auth_mode`, `replay_policy`, `backpressure_policy`, `fallback_policy`, `provider_support_ref`, `decision_reason`, `selected_at_utc`, and `event_refs[]`.", "line_start": 482, "line_end": 482, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I013",
+      "item_type": "gap",
+      "title": "Event deduplication key can erase distinct events",
+      "statement": "Deduplication uses event_name, node_id, attempt_id, and ts rather than event_id or payload identity. Two legitimate same-type events at the same timestamp collide, and non-node events have no specified key semantics.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_data_loss",
+      "builder_discretion": "none_without_event_contract_change",
+      "impact": "Approval, wake, usage, or recovery evidence can be silently discarded under concurrency or coarse timestamp precision.",
+      "dimensions": ["concurrency_races", "scale_performance", "operations", "observability_support", "partial_failure"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "3. **Deduplication**: The event bus MUST deduplicate events by `(event_name, node_id, attempt_id, ts)` tuple. Duplicate deliveries are silently dropped.", "line_start": 805, "line_end": 805, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I014",
+      "item_type": "gap",
+      "title": "Attempt-counter equation assumes unstated cause exclusivity",
+      "statement": "The exact sum invariant requires every post-initial attempt to increment exactly one sub-counter, but the text only says each counter tracks a cause and never defines mutually exclusive cause selection for attempts that are both remediation retries and manual or prerequisite resumes.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "ambiguous_counter_invariant",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Metrics and retry-budget enforcement can disagree even when every attempt is recorded.",
+      "dimensions": ["contracts", "states_transitions", "scale_performance", "test_falsifiability", "ambiguity_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "attempt_count = automatic_retry_count", "line_start": 784, "line_end": 784, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- The sum of all sub-counters plus the initial attempt MUST equal `attempt_count`.", "line_start": 793, "line_end": 793, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- Each sub-counter increments at attempt start, not at completion.", "line_start": 794, "line_end": 794, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I015",
+      "item_type": "gap",
+      "title": "Provider and model precedence is requested but not defined",
+      "statement": "The acceptance carry-through says to define one precedence owner across run, seam, package, node, overseer, and delegated-subagent levels, but this assigned source never supplies the ordered override algorithm, conflict rules, required-binding failure behavior, or inheritance reset semantics.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "missing_precedence_algorithm",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Parallel workers can resolve different effective accounts/models from identical policy inputs, undermining authority, cost, privacy, and reproducibility.",
+      "dimensions": ["authority", "ownership", "contracts", "security_privacy", "concurrency_races", "cross_document_seams", "unknown_unknowns"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels", "line_start": 764, "line_end": 764, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- `auto` resolution must be explainable through an actor-type mapping. When `auto` selects an account/model/persona for an overseer or worker, the receipt records the resolved actor-type basis so overseer-heavy rewrite roles do not feel arbitrary.", "line_start": 769, "line_end": 769, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I016",
+      "item_type": "explicit_non_gap",
+      "title": "Graph lock and mutation safe points fail closed",
+      "statement": "Mutation-capable attempts require runtime safe points, and invalid canonical graphs after graph lock stop new dispatches rather than degrading to flat execution.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Provides a clear recovery anchor and prevents silent execution against corrupt canonical graphs.",
+      "dimensions": ["failures_recovery", "recovery_rollback", "security_privacy", "destructive_actions"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "Before any mutation-capable node attempt, the executor MUST create or attach a runtime safe point.", "line_start": 519, "line_end": 519, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- execution MUST stop accepting new dispatches", "line_start": 721, "line_end": 721, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I017",
+      "item_type": "explicit_non_gap",
+      "title": "Offline and remote degradation preserves runtime identity",
+      "statement": "Remote and reconnect loss, auth friction, startup cost, and performance pressure are explicitly surfaced as blocked, degraded, backoff, or recovery events without erasing attempt or worktree lineage.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_by_classification_contract",
+      "impact": "Prevents network loss from becoming an anonymous or identity-resetting fallback.",
+      "dimensions": ["offline_network_loss", "failures_recovery", "propagation", "observability_support"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "The executor treats rich `/editor-agent` and `/workbench` surfaces as runtime peers of terminal, browser, document, and artifact callers. `/plugin-first` and command-first entry points, `/rules/skills` guided plans, multi-surface review loops, `/persisted` tabs and `/splits/windows`, and `/history/navigation` re-entry all dispatch through the same `execution_unit_context` rather than surface-local state. Auth `/login` friction, remote/reconnect loss, dumb-mode or `/disabled-feature` fallbacks, regex-heavy UI blocking, indexing/startup cost, performance pressure under large projects, and IDE `/workbenches` switching clutter surface as explicit blocked, degraded, backoff, or recovery events and MUST NOT erase attempt identity, safe points, worktree binding, diff/review visibility, or user-visible autonomy defaults.", "line_start": 607, "line_end": 607, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I018",
+      "item_type": "gap",
+      "title": "A second required-field list contradicts the closed schema",
+      "statement": "The prologue first classifies lane_id, package_id, seam_id, requested_account_id, effective_account_id, and blocked_sequence as optional, then CONT-003 labels all of them required. That violates the stated sole-owner and no-redefinition rules.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "direct_contract_contradiction",
+      "builder_discretion": "none_without_canonical_repair",
+      "impact": "Producers and validators cannot agree on the minimum valid execution packet, making dispatch and replay non-portable.",
+      "dimensions": ["contracts", "inputs_outputs", "cross_document_seams", "invalid_states_transitions", "test_falsifiability"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001", "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-003"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "| Graph/lane/worktree linkage | `lane_id`, `package_id`, `seam_id`, `worktree_id`, `working_directory`, `scheduler_pass_id` |", "line_start": 172, "line_end": 172, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "Required fields:", "line_start": 856, "line_end": 856, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- lane_id", "line_start": 860, "line_end": 860, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- blocked_sequence", "line_start": 867, "line_end": 867, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I019",
+      "item_type": "gap",
+      "title": "Missing worktree binding fails open to the project root",
+      "statement": "A missing worktree_id and absent context defaults execution to the project root. The contract does not distinguish intentional unbound execution from failed or stale binding lookup, so a worktree-intended mutation can target the main repository. EP-016 preserves freezing and propagation but supplies no fail-closed oracle for lookup failure.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "unsafe_fallback",
+      "builder_discretion": "none_without_policy_decision",
+      "impact": "Edits, Git operations, FileSafe checks, and provider tools can mutate the wrong workspace.",
+      "dimensions": ["security_privacy", "destructive_actions", "failures_recovery", "authority_boundaries", "propagation"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-003", "PLANUNIT:EP-016", "SEMANTIC:PLANUNIT:EP-016"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root", "line_start": 841, "line_end": 841, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Assistant Chat freezes worktree_id and working_directory from thread_state worktree binding at turn start, sends working directory through FileSafe/tools/MCP/provider contexts, and records worktree-bound safe point fields before mutation-capable execution.", "line_start": 1651, "line_end": 1651, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I020",
+      "item_type": "explicit_non_gap",
+      "title": "EP-002 preserves document scope and noncanonical export boundary",
+      "statement": "The PlanUnit identifies both self-build and user-project sharded graph scope and retains compatibility-only vocabulary boundaries.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Keeps runtime ownership scoped to the intended graph artifacts.",
+      "dimensions": ["behavior", "ownership", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:EP-002", "SEMANTIC:PLANUNIT:EP-002"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Executor Protocol owns deterministic plan_graph execution ordering and completion semantics for self-build and user-project sharded plan graph artifacts, while preserving owner-section authority, compliance, and compatibility-only vocabulary boundaries.", "line_start": 922, "line_end": 922, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I021",
+      "item_type": "gap",
+      "title": "EP-003 names roles without acceptance-grade capabilities",
+      "statement": "EP-003 preserves role names and the no-scheduler boundary but has no role-specific inputs, outputs, allowed actions, or decision authority, so it does not close the role ambiguity present in the source prose.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "under_specified_planunit",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Builders must invent the operational boundary between reviewer, verifier, and corroborator.",
+      "dimensions": ["capabilities", "authority", "acceptance_oracles", "builder_discretion"],
+      "source_unit_refs": ["PLANUNIT:EP-003", "SEMANTIC:PLANUNIT:EP-003"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Executor Protocol defines Builder/node worker, Verifier/reviewer/corroborator, Package Overseer, and Seam Overseer roles without making execution-support actors the scheduler.", "line_start": 979, "line_end": 979, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I022",
+      "item_type": "explicit_non_gap",
+      "title": "EP-004 carries the single-scheduler authority boundary",
+      "statement": "The PlanUnit accurately preserves scheduler ownership and denies overseers hidden scheduler authority.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Provides a stable authority anchor for runtime implementation.",
+      "dimensions": ["authority", "ownership", "contracts"],
+      "source_unit_refs": ["PLANUNIT:EP-004", "SEMANTIC:PLANUNIT:EP-004"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime scheduler owns readiness, blocked state, transitions, retry budgets, wakeups, and dispatch; overseers remain governance actors and are not hidden second schedulers.", "line_start": 1029, "line_end": 1029, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I023",
+      "item_type": "explicit_non_gap",
+      "title": "EP-005 explicitly retires tier-era state authority",
+      "statement": "Durable package, seam, lane, and sharded-node state is canonical, while named tier-era fields and streams are restricted to compatibility inputs.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_by_compatibility_boundary",
+      "impact": "Reduces the risk that old projections become a second execution-state owner.",
+      "dimensions": ["compatibility_migration", "ownership", "consumers", "propagation"],
+      "source_unit_refs": ["PLANUNIT:EP-005", "SEMANTIC:PLANUNIT:EP-005"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime scheduling consumes durable package/seam/lane and sharded-node state; tier-era terms, TierType, TierContext, active-agents, tier_tree, Tiers, PuppetMasterEvent streams, and related labels are compatibility inputs only.", "line_start": 1081, "line_end": 1081, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I024",
+      "item_type": "gap",
+      "title": "EP-006 exposes stale projection state without a mutation gate",
+      "statement": "EP-006 requires projection_health and projection_freshness to be shown before mutation but does not define freshness thresholds, unhealthy states, fail-closed behavior, override authority, or whether the CTA must be disabled.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_gui_safety_oracle",
+      "builder_discretion": "unacceptably_open",
+      "impact": "A GUI can truthfully display stale status yet still permit a destructive action against an obsolete blocked episode or work object.",
+      "dimensions": ["gui_truth", "gui_misleading_states", "destructive_actions", "security_privacy", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:EP-006", "SEMANTIC:PLANUNIT:EP-006"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime objects open through route_target and OpenSubject consumers; projection-backed actions show projection_health and projection_freshness before mutating blocked episodes, seams, packages, or overseer targets.", "line_start": 1137, "line_end": 1137, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I025",
+      "item_type": "explicit_non_gap",
+      "title": "EP-007 rejects index-only readiness",
+      "statement": "The PlanUnit binds readiness reads to canonical node documents for both graph storage modes and expressly excludes index metadata as the sole state source.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Prevents stale or partial index projections from dispatching work.",
+      "dimensions": ["inputs_outputs", "contracts", "ownership", "consumers"],
+      "source_unit_refs": ["PLANUNIT:EP-007", "SEMANTIC:PLANUNIT:EP-007"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Overseer reads execution state from canonical node documents in self-build or user-project sharded graph storage and must not infer execution state from index metadata alone.", "line_start": 1188, "line_end": 1188, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I026",
+      "item_type": "gap",
+      "title": "EP-008 promotes superseded lexical readiness as canonical text",
+      "statement": "EP-008 says only queued/all-done nodes are ready and lexical node_id wins, but the owner prose explicitly supersedes that rule with schedulable states, dependency-satisfying blockers, lane scoring, and lexical tie-breaking only last. EP-008 carries no supersession note.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "stale_planunit_semantics",
+      "builder_discretion": "none_without_planunit_repair",
+      "impact": "A builder following the accepted PlanUnit can implement a scheduler that violates the canonical addendum.",
+      "dimensions": ["behavior", "contracts", "states_transitions", "compatibility_migration", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:EP-008", "SEMANTIC:PLANUNIT:EP-008", "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: A node is ready only when queued, all blockers are done, Spec Lock schema_versions exactly match, and tie-breaking chooses the lexicographically smallest node_id.", "line_start": 1233, "line_end": 1233, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "Compatibility/source-lineage disposition: older smallest-lexical-node dispatch wording is no longer the scheduler authority. The canonical executor pass is the scored ready-set algorithm in the Runtime Scheduler Addendum below; lexicographically smaller `node_id` is only the final deterministic tiebreak after scheduler lane, manual priority, transitive unblock count, and ready-since time.", "line_start": 242, "line_end": 242, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I027",
+      "item_type": "explicit_non_gap",
+      "title": "EP-009 fails closed on unresolved blockers",
+      "statement": "Every blocker must resolve to a canonical node; unresolved IDs are invalid input and prevent readiness.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Avoids treating missing dependencies as satisfied.",
+      "dimensions": ["contracts", "untrusted_inputs", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:EP-009", "SEMANTIC:PLANUNIT:EP-009"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Every blockers[] entry resolves to an existing canonical node document; unresolved blocker IDs are invalid graph input and keep the node not ready.", "line_start": 1280, "line_end": 1280, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I028",
+      "item_type": "explicit_non_gap",
+      "title": "EP-010 provides ordered success and failure transitions",
+      "statement": "The success path includes verified before done, failure begins at verify_pending, and out-of-order transitions are rejected.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none_for_listed_transitions",
+      "impact": "Creates deterministic completion state for the listed baseline lifecycle.",
+      "dimensions": ["states_transitions", "behavior", "contracts"],
+      "source_unit_refs": ["PLANUNIT:EP-010", "SEMANTIC:PLANUNIT:EP-010"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Canonical status lifecycle is queued -> in_progress -> verify_pending -> verified -> done for success and verify_pending -> failed for failure; done and failed are terminal and out-of-order transitions are rejected.", "line_start": 1327, "line_end": 1327, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I029",
+      "item_type": "explicit_non_gap",
+      "title": "EP-011 separates GUI overlays from node state",
+      "statement": "User-facing CTA labels persist as separate projections and cannot replace canonical node status values.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Prevents display vocabulary from corrupting graph lifecycle semantics.",
+      "dimensions": ["gui_truth", "states_transitions", "consumers", "propagation"],
+      "source_unit_refs": ["PLANUNIT:EP-011", "SEMANTIC:PLANUNIT:EP-011"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: UI and orchestrator labels such as waiting_approval, needs_review, cancelled, or complete_with_warnings are run-local overlay or CTA states, not canonical node status values, and must persist separately.", "line_start": 1374, "line_end": 1374, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I030",
+      "item_type": "explicit_non_gap",
+      "title": "EP-012 preserves verified-before-done and fail handling",
+      "statement": "Passing evidence must validate before the verified transition, verified cannot be skipped, and failed verification sets failed without requiring manual completion.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Makes completion evidence-bearing rather than a manual UI shortcut.",
+      "dimensions": ["acceptance_oracles", "states_transitions", "behavior", "operations"],
+      "source_unit_refs": ["PLANUNIT:EP-012", "SEMANTIC:PLANUNIT:EP-012"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Verifier evidence with pass outcome moves status through verified before done; the verified state is schema-enforced, manual mark-complete is not required, and fail outcome sets failed.", "line_start": 1422, "line_end": 1422, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I031",
+      "item_type": "explicit_non_gap",
+      "title": "EP-013 closes schema ownership and secret persistence",
+      "statement": "The execution context is versioned, closed, replayable, reference-only for consumers, and prohibited from containing raw credentials or local secrets.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none_without_successor_schema",
+      "impact": "Provides a strong privacy and migration boundary despite the separate field contradictions reported elsewhere.",
+      "dimensions": ["privacy_data_lifecycle", "security_privacy", "contracts", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:EP-013", "SEMANTIC:PLANUNIT:EP-013"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The canonical dispatch/runtime packet carries the Executor-owned execution_unit_context contract with schema_id pm.execution_unit_context, schema_version 1.0.0, closed required and optional field sets, closed enums, persistence/replay rules, redaction requirements, and consumer-reference-only boundaries; stale persona names are compatibility inputs only.", "line_start": 1474, "line_end": 1474, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.", "line_start": 1538, "line_end": 1538, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I032",
+      "item_type": "gap",
+      "title": "PlanUnit dependency and validation metadata do not falsify runtime behavior",
+      "statement": "EP-007 through EP-013 declare depends_on empty and repeat migration/index validators plus traceability criteria. None supplies a behavior-specific executable oracle for readiness, transitions, overlays, evidence validation, replay, or secret rejection, despite direct schema and contract dependencies.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "non_falsifiable_acceptance",
+      "builder_discretion": "unacceptably_open",
+      "impact": "The PlanUnits can pass listed validation while their described runtime behavior remains unimplemented or contradictory.",
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "builder_discretion", "cross_document_seams", "unknown_unknowns"],
+      "source_unit_refs": ["PLANUNIT:EP-007", "SEMANTIC:PLANUNIT:EP-007", "PLANUNIT:EP-008", "SEMANTIC:PLANUNIT:EP-008", "PLANUNIT:EP-009", "SEMANTIC:PLANUNIT:EP-009", "PLANUNIT:EP-010", "SEMANTIC:PLANUNIT:EP-010", "PLANUNIT:EP-011", "SEMANTIC:PLANUNIT:EP-011", "PLANUNIT:EP-012", "SEMANTIC:PLANUNIT:EP-012", "PLANUNIT:EP-013", "SEMANTIC:PLANUNIT:EP-013"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "depends_on: []", "line_start": 1192, "line_end": 1192, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.", "line_start": 1196, "line_end": 1196, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- python3 scripts/pm-plan-index.py validate", "line_start": 1487, "line_end": 1487, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I033",
+      "item_type": "explicit_non_gap",
+      "title": "EP-014 keeps DispatchContext a projection",
+      "statement": "DispatchContext reads the one closed execution context schema and is expressly barred from defining another required-field list.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Avoids a second dispatch schema owner.",
+      "dimensions": ["contracts", "ownership", "consumers"],
+      "source_unit_refs": ["PLANUNIT:EP-014", "SEMANTIC:PLANUNIT:EP-014"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: DispatchContext is a projection over the Executor-owned execution_unit_context schema and reads required fields, optional fields, nullability, enum values, and persistence rules from Plans/execution_unit_context.schema.json instead of defining a second required-field list.", "line_start": 1554, "line_end": 1554, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I034",
+      "item_type": "gap",
+      "title": "EP-015 promises lossless joins without join contracts",
+      "statement": "The PlanUnit requires lossless joins to attempt, worktree, permission, and runtime records but names no keys, cardinalities, missing-record behavior, stale-generation behavior, or consistency boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_join_contract",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Consumers can produce inconsistent blocked-action authority or attach recovery to the wrong attempt/worktree.",
+      "dimensions": ["inputs_outputs", "consumers", "propagation", "concurrency_races", "partial_failure"],
+      "source_unit_refs": ["PLANUNIT:EP-015", "SEMANTIC:PLANUNIT:EP-015"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Dispatch, recovery, remediation, and inspection read one execution-unit packet; downstream consumers join losslessly to attempt, worktree, permission, and runtime records while blocked-action carrythrough stays anchored to blocked-episode lineage.", "line_start": 1603, "line_end": 1603, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I035",
+      "item_type": "gap",
+      "title": "EP-017 loses destructive worktree eligibility semantics",
+      "statement": "The source defines remove as destructive and conditional on confirmation and eligibility, but EP-017 reduces the contract to actions having explicit meanings and preserving history. Its generic acceptance criteria do not test confirmation, active-run ownership, or eligibility.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "semantic_omission",
+      "builder_discretion": "unacceptably_open",
+      "impact": "A conforming-looking implementation could remove a live or owned worktree without the intended guard.",
+      "dimensions": ["destructive_actions", "security_privacy", "gui_truth", "acceptance_oracles", "recovery_rollback"],
+      "source_unit_refs": ["PLANUNIT:EP-017", "SEMANTIC:PLANUNIT:EP-017"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- Worktree lifecycle actions are explicit: `recover` restores or reconciles a suspect `/orphaned/conflicted` workspace into a safe known state; `archive` retires active use while preserving `/metadata/lineage`; `prune` is a cleanup-oriented action for policy-eligible `/orphaned/live-no-longer-needed` worktrees; `remove` destructively removes live backing only after confirmation and eligibility checks.", "line_start": 213, "line_end": 213, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Worktree lifecycle actions recover, archive, prune, and remove have explicit meanings; projections must preserve historical lineage and cannot assume one active-worktree or current-worktree scalar.", "line_start": 1706, "line_end": 1706, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I036",
+      "item_type": "gap",
+      "title": "EP-018 is misclassified as non-GUI",
+      "statement": "The canonical text explicitly covers settings/GUI handoffs and says the mixed owner split is not yet safe, yet gui_related is false. This can exclude the unit from GUI-specific design, accessibility, and validation lanes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_classification_error",
+      "builder_discretion": "none",
+      "impact": "A user-visible identity and policy handoff can escape GUI assurance and show misleading requested/effective identity.",
+      "dimensions": ["gui_truth", "consumers", "compatibility_migration", "accessibility", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:EP-018", "SEMANTIC:PLANUNIT:EP-018"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime artifacts, tool drills, wizard/builder/settings/GUI/CUP pre-run handoffs, interview handoffs, and provider execution payloads carry attempt identity plus requested/effective identity through execution_unit_context; mixed settings/GUI handoff wording remains intact until a later owner split is proven safe.", "line_start": 1762, "line_end": 1762, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "gui_related: false", "line_start": 1763, "line_end": 1763, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "split_recommended: true", "line_start": 1765, "line_end": 1765, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I037",
+      "item_type": "explicit_non_gap",
+      "title": "EP-019 keeps route identity object-shaped",
+      "statement": "Operational GUI projections retain run/object/worktree identity and expressly reject filter or subview noise as route authority.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_by_route_contract",
+      "impact": "Supports deterministic deep links and safer cross-surface mutations.",
+      "dimensions": ["gui_truth", "inputs_outputs", "consumers", "operations"],
+      "source_unit_refs": ["PLANUNIT:EP-019", "SEMANTIC:PLANUNIT:EP-019"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Operational projections expose queue/thread views, Progress and Seams navigation, Source Control worktree-first routing, route payload object context, and route-target normalization without collapsing route payloads into filter/subview-shaped surface noise.", "line_start": 1823, "line_end": 1823, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- Route payloads must not absorb filter or /subview noise and become surface-shaped again.", "line_start": 1870, "line_end": 1870, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I038",
+      "item_type": "gap",
+      "title": "EP-020 hides user-facing error behavior from GUI assurance",
+      "statement": "EP-020 combines terminology policy with a fixed user-visible revert error, marks gui_related false, and declines a split. The error's localization, accessibility announcement, and action/recovery affordance are therefore unowned.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "gui_classification_and_cohesion_error",
+      "builder_discretion": "unacceptably_open",
+      "impact": "A safety-critical revert failure can be inconsistently presented or inaccessible while still satisfying the PlanUnit's generic checks.",
+      "dimensions": ["gui_truth", "localization", "accessibility", "failures_recovery", "builder_discretion"],
+      "source_unit_refs": ["PLANUNIT:EP-020", "SEMANTIC:PLANUNIT:EP-020"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime worker copy prefers overseer-spawned node worker while retaining Overseer where protocol title and legacy role framing require it; removed-worktree revert reports the fixed missing-path error without recreating directories.", "line_start": 1885, "line_end": 1885, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "gui_related: false", "line_start": 1886, "line_end": 1886, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "split_recommended: false", "line_start": 1888, "line_end": 1888, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I039",
+      "item_type": "explicit_non_gap",
+      "title": "EP-021 labels its lexical loop as superseded baseline",
+      "statement": "Although the PlanUnit preserves the old loop, its canonical text and owner-boundary note both subordinate conflicting lexical behavior to the scheduler addendum.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none_where_addendum_conflicts",
+      "impact": "Provides an explicit migration disposition instead of silently maintaining two schedulers.",
+      "dimensions": ["compatibility_migration", "contracts", "behavior"],
+      "source_unit_refs": ["PLANUNIT:EP-021", "SEMANTIC:PLANUNIT:EP-021"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The baseline deterministic loop evaluates readiness over queued nodes, selects the smallest lexical node_id, dispatches Builder then Verifier, applies auto-marking, and repeats; later scheduler addendum rules supersede this wording where they conflict.", "line_start": 1933, "line_end": 1933, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- Runtime Scheduler Addendum supersedes earlier lexical-dispatch wording where it conflicts.", "line_start": 1973, "line_end": 1973, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I040",
+      "item_type": "explicit_non_gap",
+      "title": "EP-022 makes packaging audits a completion gate",
+      "statement": "Triggered text artifacts under .puppet-master cannot reach run completion when reconstruction, manifest, idempotency, or clean-room audits fail.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Prevents a run from claiming completion with nondeterministic or unreconstructable document outputs.",
+      "dimensions": ["acceptance_oracles", "operations", "failures_recovery", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:EP-022", "SEMANTIC:PLANUNIT:EP-022"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Before run finalization, Executor enforces Document Packaging Policy for triggered Markdown/text artifacts under .puppet-master/**, and failed reconstruction, line accounting, idempotency, index-manifest, or clean-room audits block completion.", "line_start": 1985, "line_end": 1985, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- A run must not be marked complete when any required Document Set audit fails.", "line_start": 2020, "line_end": 2020, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I041",
+      "item_type": "explicit_non_gap",
+      "title": "EP-023 states scheduler supersession directly",
+      "statement": "The dated scheduler addendum is explicitly authoritative over earlier conflicting lexical-dispatch wording.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Supplies a clear conflict rule for legacy scheduling prose.",
+      "dimensions": ["contracts", "compatibility_migration", "authority"],
+      "source_unit_refs": ["PLANUNIT:EP-023", "SEMANTIC:PLANUNIT:EP-023"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The Runtime Scheduler Addendum dated 2026-03-08 supersedes earlier lexical-dispatch wording wherever conflicts exist.", "line_start": 2035, "line_end": 2035, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I042",
+      "item_type": "explicit_non_gap",
+      "title": "EP-024 preserves the full scheduler-pass stages",
+      "statement": "Candidate refresh, readiness and capacity recomputation, ready-set scoring, observability, and dispatch are all represented in the PlanUnit.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_by_ordered_pass",
+      "impact": "Prevents dispatch from bypassing current blocked, backoff, or capacity state.",
+      "dimensions": ["behavior", "operations", "observability_support", "scale_performance"],
+      "source_unit_refs": ["PLANUNIT:EP-024", "SEMANTIC:PLANUNIT:EP-024"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Each scheduler pass rebuilds or refreshes candidates, recomputes readiness, blocked, backoff, and capacity state, builds and scores the ready set, emits queue-analysis observability, and dispatches selected nodes.", "line_start": 2077, "line_end": 2077, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I043",
+      "item_type": "explicit_non_gap",
+      "title": "EP-025 includes runtime overlays and generation validity in readiness",
+      "statement": "The PlanUnit goes beyond dependency checks to include graph integrity, backoff, blocked causes, active generation, and capacity.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "bounded_except_for_state_taxonomy_gap",
+      "impact": "Prevents stale-generation and capacity-violating dispatch; the separate lifecycle conflict remains reported in A005M-I005.",
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "scale_limits"],
+      "source_unit_refs": ["PLANUNIT:EP-025", "SEMANTIC:PLANUNIT:EP-025"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Under the scheduler addendum, ready nodes must be schedulable, dependency-satisfied, graph-integrity-clean, not in backoff or blocked on listed conditions, valid for active replan_generation, and allowed by lane/pool capacity.", "line_start": 2127, "line_end": 2127, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I044",
+      "item_type": "gap",
+      "title": "EP-026 is wrongly excluded from GUI work",
+      "statement": "The PlanUnit requires a user-visible queue-analysis tuple breakdown yet marks gui_related false, so the primary explanation surface can escape GUI truth, accessibility, and localization validation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_classification_error",
+      "builder_discretion": "none",
+      "impact": "Users may receive no usable or trustworthy explanation for scheduler selection despite the canonical requirement.",
+      "dimensions": ["gui_truth", "observability_support", "accessibility", "localization", "consumers"],
+      "source_unit_refs": ["PLANUNIT:EP-026", "SEMANTIC:PLANUNIT:EP-026"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown.", "line_start": 2183, "line_end": 2183, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "gui_related: false", "line_start": 2184, "line_end": 2184, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I045",
+      "item_type": "gap",
+      "title": "EP-027 revives legacy phase/task/subtask ownership",
+      "statement": "The owner prose allows phase/task/subtask only as labels normalized into package/lane/seam scopes, but EP-027 states those legacy levels directly as concurrency constraints and omits the normalization boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_regression",
+      "builder_discretion": "none_without_planunit_repair",
+      "impact": "Capacity accounting can regain a second legacy ownership hierarchy and diverge across schedulers.",
+      "dimensions": ["compatibility_migration", "ownership", "scale_performance", "authority_boundaries", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:EP-027", "SEMANTIC:PLANUNIT:EP-027", "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- any active package/lane/seam concurrency constraints; legacy phase/task/subtask labels may only normalize into those scopes", "line_start": 336, "line_end": 336, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Executor selects up to available_slots nodes per scheduler pass, derived from run, phase/task/subtask, resource/provider, and remediation lane constraints, with selection global across the ready set rather than level-by-level lexical dispatch.", "line_start": 2237, "line_end": 2237, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I046",
+      "item_type": "explicit_non_gap",
+      "title": "EP-028 is a clean forward-reference boundary",
+      "statement": "The PlanUnit explicitly refuses to redefine wake values, identifies the later owner section, and the context begins the next PlanUnit without extending EP-028's scope.",
+      "severity": "info",
+      "confidence": "high",
+      "gap_kind": "none",
+      "builder_discretion": "none",
+      "impact": "Avoids duplicating the closed wake enum and coalescing behavior.",
+      "dimensions": ["ownership", "contracts", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:EP-028", "SEMANTIC:PLANUNIT:EP-028"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Wake-trigger values and coalescing behavior are owned by the later Wake reasons and coalescing section; this span is only a forward-reference boundary.", "line_start": 2285, "line_end": 2285, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- No wake-trigger values are redefined in this forward-reference span.", "line_start": 2319, "line_end": 2319, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I047",
+      "item_type": "gap",
+      "title": "PlanUnit acceptance criteria are migration checks, not product oracles",
+      "statement": "Across EP-002 through EP-028, acceptance criteria repeat lossless source availability, addressability, traceability, and no-WorkNode constraints, while validation surfaces only run migration and index validators. They do not assert the described runtime inputs, state transitions, failure outcomes, GUI truth, concurrency, or recovery behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "systemic_non_falsifiability",
+      "builder_discretion": "unacceptably_open",
+      "impact": "All listed validators can pass while the executable protocol remains absent, unsafe, or semantically wrong.",
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "builder_discretion", "operations", "unknown_unknowns"],
+      "source_unit_refs": ["PLANUNIT:EP-002", "SEMANTIC:PLANUNIT:EP-002", "PLANUNIT:EP-024", "SEMANTIC:PLANUNIT:EP-024", "PLANUNIT:EP-028", "SEMANTIC:PLANUNIT:EP-028"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.", "line_start": 2085, "line_end": 2085, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.", "line_start": 2087, "line_end": 2087, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- python3 scripts/pm-plan-index.py validate", "line_start": 2298, "line_end": 2298, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I048",
+      "item_type": "gap",
+      "title": "User-visible operational surfaces have no accessibility or localization contract",
+      "statement": "Projection health, queue explanations, route/navigation surfaces, destructive worktree controls, and fixed error copy are user-visible, but the assigned source defines no keyboard/focus behavior, semantic names, live-region announcements, non-color status cues, localization keys, interpolation rules, or overflow behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_cross_cutting_gui_contract",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Core scheduler and recovery truth can be inaccessible, mistranslated, truncated, or conveyed only visually.",
+      "dimensions": ["accessibility", "localization", "gui_truth", "gui_misleading_states", "missing_callers_consumers"],
+      "source_unit_refs": ["PLANUNIT:EP-006", "SEMANTIC:PLANUNIT:EP-006", "PLANUNIT:EP-019", "SEMANTIC:PLANUNIT:EP-019", "PLANUNIT:EP-026", "SEMANTIC:PLANUNIT:EP-026"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Runtime objects open through route_target and OpenSubject consumers; projection-backed actions show projection_health and projection_freshness before mutating blocked episodes, seams, packages, or overseer targets.", "line_start": 1137, "line_end": 1137, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Operational projections expose queue/thread views, Progress and Seams navigation, Source Control worktree-first routing, route payload object context, and route-target normalization without collapsing route payloads into filter/subview-shaped surface noise.", "line_start": 1823, "line_end": 1823, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown.", "line_start": 2183, "line_end": 2183, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    },
+    {
+      "item_id": "A005M-I049",
+      "item_type": "gap",
+      "title": "Replan invalidation has no active-side-effect reconciliation protocol",
+      "statement": "A generation increment makes prior attempts, safe points, and blocked projections stale and non-resumable, but the excerpt does not say how already-running workers are cancelled, how their late events are fenced, or how completed external side effects and workspace mutations are reconciled before the new generation dispatches.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_replan_fencing",
+      "builder_discretion": "unacceptably_open",
+      "impact": "Old-generation workers can race new-generation dispatch and commit events or side effects into the wrong graph generation.",
+      "dimensions": ["concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "states_transitions"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-003", "PLANUNIT:EP-024", "SEMANTIC:PLANUNIT:EP-024"],
+      "lens": ["exact_behavior", "adversarial_negative_space"],
+      "evidence": [
+        {"exact_quote": "- Attempts, safe points, and blocked projections created under generation N become stale when generation increments to N+1.", "line_start": 816, "line_end": 816, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"},
+        {"exact_quote": "- Stale attempts remain queryable for audit but are never resumable.", "line_start": 817, "line_end": 817, "path": "Plans/Executor_Protocol.md", "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"}
+      ]
+    }
+  ],
+  "synthesis": {
+    "overall_assessment": "The assigned macro defines a rich scheduler, recovery, identity, worktree, event, and GUI-projection protocol with several strong fail-closed boundaries. It is not implementation-determinate as written because accepted PlanUnits preserve superseded semantics, the closed execution context has contradictory required fields, lifecycle/readiness values do not form one state machine, provider/model precedence is absent, event dedup and replan fencing permit concurrency data loss, and runtime behavior lacks executable acceptance oracles.",
+    "highest_risk_item_ids": ["A005M-I003", "A005M-I005", "A005M-I015", "A005M-I018", "A005M-I019", "A005M-I026"],
+    "systemic_themes": [
+      "Closed contracts are locally redefined by later compatibility or handoff sections.",
+      "Historical addenda are dispositioned in prose, but some accepted PlanUnits still promote the superseded wording.",
+      "Attempt and generation identity is emphasized, yet optional receipt identity, timestamp-based deduplication, and absent replan fencing weaken that invariant.",
+      "GUI-bearing PlanUnits are inconsistently classified and omit accessibility/localization oracles.",
+      "PlanUnit validation proves migration/index structure and traceability, not executable product behavior."
+    ],
+    "explicit_non_gap_item_ids": ["A005M-I001", "A005M-I006", "A005M-I016", "A005M-I017", "A005M-I020", "A005M-I022", "A005M-I023", "A005M-I025", "A005M-I027", "A005M-I028", "A005M-I029", "A005M-I030", "A005M-I031", "A005M-I033", "A005M-I037", "A005M-I039", "A005M-I040", "A005M-I041", "A005M-I042", "A005M-I043", "A005M-I046"],
+    "severity_counts": {"critical": 6, "high": 16, "medium": 6, "low": 0, "info": 21},
+    "unknowns": [
+      "External owner documents may define some referenced enums or joins, but blindness rules prevented using them; the assigned source itself does not make those seams self-sufficient.",
+      "The assignment-record content was not among the four allowed reads, so its intent-supplied digest is bound but not independently recomputed; capsule, excerpt, and all six core-range hashes were independently matched."
+    ]
+  },
+  "self_attestation": {
+    "read_only_scope_observed": true,
+    "read_dispatch_intent": true,
+    "read_assigned_capsule": true,
+    "read_single_source_excerpt_only": true,
+    "read_result_schema": true,
+    "read_prior_audits": false,
+    "read_peer_results": false,
+    "used_external_research": false,
+    "read_unrelated_sources": false,
+    "reviewed_every_core_line": true,
+    "reviewed_context_range": true,
+    "accounted_for_every_required_source_unit_ref": true,
+    "applied_exact_behavior_lens": true,
+    "applied_adversarial_negative_space_lens": true,
+    "wrote_terminal_seal": false,
+    "canonical_plans_edited": false,
+    "output_file_count_written": 1
+  }
+}

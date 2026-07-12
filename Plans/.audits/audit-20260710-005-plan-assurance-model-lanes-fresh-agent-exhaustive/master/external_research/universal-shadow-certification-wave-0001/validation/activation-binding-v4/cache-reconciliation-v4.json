@@ -1,0 +1,74 @@
+{
+  "schema_version": "universal-shadow-certification-activation-binding-cache-reconciliation-v4",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "status": "READY_FOR_FRESH_INDEPENDENT_PRELAUNCH_V4",
+  "semantic_authority": {
+    "manifest_path": "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/immutable_authoritative_semantic_tree.jsonl",
+    "manifest_sha256": "c4f157475096cdeec98837019dcc341d2c2818ba3d33e21a4123b34b4dc7212d",
+    "file_count": 152,
+    "tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "authoritative": true,
+    "semantic_scope": "site-packages files listed by the immutable manifest only"
+  },
+  "validated_cache_evidence": {
+    "manifest_path": "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/observed_cache_tree.jsonl",
+    "manifest_sha256": "b5e7e64523e968b85bf702b7ad94885f8f97242a5dc9562aa1f3ea9653eb184d",
+    "file_count": 39,
+    "tree_sha256": "b7262c3dd93051aaa7c3278c2a24ae9c1e4ee1c49a050e17554f18fc589e7ba5",
+    "authoritative": false,
+    "cache_tag": "cpython-312",
+    "magic_hex": "cb0d0d0a",
+    "exclusion_rule": "only regular direct *.cpython-312.pyc files under exactly one __pycache__, with existing source and matching timestamp/size; no symlinks or path escapes"
+  },
+  "validated_runtime_evidence": {
+    "manifest_path": "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/observed_runtime_tree.jsonl",
+    "manifest_sha256": "6398a5682c07370deea9f970fb8b7ed42e028911abf4ce1e94d7944f443b5306",
+    "file_count": 191,
+    "tree_sha256": "37e2762646b7c6c49af370b5ecf35b03b0d70258536fdb9faa953953b6ac4517",
+    "authoritative": false,
+    "runtime_scope": "observed semantic files plus validated cache files"
+  },
+  "v3_root_scope_reconciliation": {
+    "legacy_static_file_count": 40,
+    "legacy_static_root_sha256": "2a6f490a1901d9650209a10ae3b324f4a04de6068f9c10aae017b6fa103eafb8",
+    "legacy_static_byte_sorted_root_sha256": "3600ea51fb19caff0c2b218e1c2570f3ebec4b8b064422fc36a7a8bf27973e91",
+    "pre_v4_file_count": 53,
+    "pre_v4_root_sha256": "c46e6b6ce110c4fec3743380af606f958b622b05be87d13e8e96ae3a5ebd871f",
+    "pre_v4_byte_sorted_root_sha256": "d7fb0f2306d0ba2893f4fd4dc3e849b2d3521d43c39cf9f1075b716e289b9003",
+    "excluded_append_only_prefixes": [
+      "validation/activation-binding-v3/",
+      "validation/activation-binding-v4/"
+    ],
+    "packet_bytes_changed": false,
+    "intent_bytes_changed": false,
+    "result_schema_bytes_changed": false,
+    "note": "v4 validation files are append-only and excluded from the immutable v3 payload-root scope"
+  },
+  "source_terminal_reconciliation": {
+    "report_path": "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/validation/terminal-cache-reconciliation-v2.json",
+    "report_sha256": "bfb3a7fc8a3723994f23930085f5989848c1aac85b4a6b39ed4dc0d15e0b3782",
+    "authority_path": "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/CACHE_RECONCILIATION_AUTHORITY_V2.json",
+    "authority_sha256": "e04b1d8e2b903e1a03b48f2b7cdecf740a4d0687fb29400ee16b1d712d52e855",
+    "tests_passed": 562,
+    "tests_total": 562,
+    "test_digest": "18fc5553f0ca3f29572c0027e0c1e68ac81a4e749486af144a11b197635a4b48",
+    "status": "PASS",
+    "credits": 0
+  },
+  "v3_lineage": {
+    "preparation_report_sha256": "6e305c66489ea39c152dc93020c5f408ab433fc278552d262b45a64fde451ccc",
+    "independent_report_sha256": "c6da2d69cb2950ec2ed1cfbcfa80900af3c317daae0e660f2b4dd6c4868dddb5",
+    "v3_report_preserved_immutable": true,
+    "v3_failure_preserved": true
+  },
+  "activation_effect": {
+    "activation_authorized": false,
+    "generator_invoked": false,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "certification_credit": 0,
+    "canonical_plan_writes": false
+  }
+}

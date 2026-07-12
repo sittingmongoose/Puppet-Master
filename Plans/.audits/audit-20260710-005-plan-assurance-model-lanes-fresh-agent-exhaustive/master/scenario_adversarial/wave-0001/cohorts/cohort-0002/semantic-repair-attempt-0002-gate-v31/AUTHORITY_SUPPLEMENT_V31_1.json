@@ -1,0 +1,75 @@
+{
+  "activation": false,
+  "activation_authorized": false,
+  "append_only": true,
+  "artifact_bindings": {
+    "supplement_preparer": {
+      "byte_count": 5825,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/prepare_gate_v31_1.py",
+      "raw_sha256": "c36c4079a84f0ddb628d2f9ca37b15113d9dcc49c237323cb3f4c06053f76844"
+    },
+    "terminal_tests": {
+      "byte_count": 37223,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/test_gate_v31_1.py",
+      "raw_sha256": "c03de6d3d9f827c483a2a4bdbf3f254586c5d2edfa2b77fb3186e8df806bdeb2"
+    },
+    "terminal_verifier": {
+      "byte_count": 35920,
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/verify_gate_v31_1.py",
+      "raw_sha256": "8f5ada680fb86dbd96e3d5e12ca84f59d7ab58d528b640891a1975e01cbd723a"
+    },
+    "test_matrix": {
+      "byte_count": 1008,
+      "canonical_sha256": "1fc1db8fb330ffed626d625187e22eee469bc5c0bc7b9632318744977221119f",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/test_matrix.json",
+      "raw_sha256": "c69e11f698ebfa991e10311d8d741cb0875652bed656fe64630de0057ff0f5e3"
+    }
+  },
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "base_authority": {
+    "byte_count": 16447,
+    "canonical_sha256": "431da03f3ffde87733d88ae2a183109a84da5d1b4be17b6bec73e8470b77e43b",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/IMMUTABLE_AUTHORITY.json",
+    "raw_sha256": "45dadd69bd049298c2d551fcb58a916952a355a22c02f6c2f8be6ddf673517e1"
+  },
+  "corrective_lineage": {
+    "activation_or_credit_affected": false,
+    "defects": [
+      "late-bound evidence-fixture selection in test closures",
+      "DNS label grammar did not reject leading-hyphen host labels"
+    ],
+    "first_isolated_run_passed": 319,
+    "first_isolated_run_report_written": false,
+    "first_isolated_run_total": 348,
+    "result_or_receipt_artifacts_affected": false
+  },
+  "future_activation_policy_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+  "gate_id": "SCENARIO-COHORT-0002-SEMANTIC-REPAIR-ATTEMPT-0002-GATE-V31",
+  "parent_native_capture": {
+    "fixed_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/validation/controller-parent-native-identity-capture.json",
+    "required": true,
+    "state": "required_absent"
+  },
+  "preserved_contract_artifacts": true,
+  "preserved_luna_binding_sha256": "bd0a749e597fcb74c5347c85865c552c3f4a99a88543d754cf94ef7624fdd932",
+  "preserved_primary_binding_sha256": "a3d998309ba2b5be3127329dcbf7168c04fad8dd860246cbe5e11a2f064c87f8",
+  "preserved_v30_bindings": true,
+  "schema_version": "scenario-adversarial-semantic-repair-gate-authority-supplement-v31.1-v1",
+  "status": "prepared_blocked_pending_parent_native_capture",
+  "supersedes": "V31 verifier/test harness only",
+  "terminal_test_contract": {
+    "exact_total": 348,
+    "minimum": 300,
+    "negative": 288,
+    "positive": 60,
+    "report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/validation/test-report-v31_1.json"
+  },
+  "zero_state": {
+    "activation": false,
+    "credit": 0,
+    "receipts": 0,
+    "results": 0,
+    "sol_native_capture_rows": 0,
+    "spawned_children": 0
+  }
+}

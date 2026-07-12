@@ -1,0 +1,1684 @@
+L00005434	- DAE execution-context JSON payloads
+L00005435	- cwd-based execution contract
+L00005436	negative_constraints:
+L00005437	- The cwd-based execution contract does not require separate prompt-only worktree injection.
+L00005438	compatibility_only_notes: []
+L00005439	stale_retired_dispositions: []
+L00005440	owner_boundary_notes:
+L00005441	- Assistant Chat consumes thread worktree binding and passes a frozen cwd-oriented execution context to executor surfaces.
+L00005442	owner_hints:
+L00005443	- Plans/Executor_Protocol.md
+L00005444	```
+L00005445	
+L00005446	### EP-091 - Executor Worktree Operation Resolution And Removed-Worktree Revert
+L00005447	
+L00005448	```yaml
+L00005449	plan_unit_id: EP-091
+L00005450	unit_type: requirement
+L00005451	status: accepted
+L00005452	owner_doc: Plans/Executor_Protocol.md
+L00005453	canonical_text: >-
+L00005454	  Executor worktree operations resolve files, git commands, terminals, and LSP
+L00005455	  root identity through working_directory, store absolute mutation paths, and
+L00005456	  report a non-recreating error when cmd.chat.revert targets an edit whose
+L00005457	  original worktree path no longer exists.
+L00005458	gui_related: false
+L00005459	gui_classification_reason: This unit defines executor file/git/terminal/LSP and revert behavior, not GUI presentation.
+L00005460	split_recommended: false
+L00005461	depends_on: []
+L00005462	unblocks: []
+L00005463	acceptance_criteria:
+L00005464	- The covered source span remains losslessly available for exact-text audit.
+L00005465	- File operations resolve relative to working_directory.
+L00005466	- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when bound worktree context is present.
+L00005467	- File mutation logs store absolute paths.
+L00005468	- A removed-worktree cmd.chat.revert reports the preserved error message and does not recreate missing directories.
+L00005469	validation_surfaces:
+L00005470	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005471	- python3 scripts/pm-plan-index.py validate
+L00005472	risk_class: executor_protocol_drift
+L00005473	reasoning_tier: standard
+L00005474	context_scope: executor_protocol_standardization
+L00005475	implementation_surfaces:
+L00005476	- Plans/Executor_Protocol.md
+L00005477	node_compile_hint:
+L00005478	  mode: executor_worktree_operation_resolution_and_removed_worktree_revert
+L00005479	  create_worknodes: false
+L00005480	source_lineage:
+L00005481	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+L00005482	preserved_exact_tokens:
+L00005483	- File operations resolve relative to `working_directory`
+L00005484	- Git operations target the worktree, not the main repo
+L00005485	- Terminal sessions start in `working_directory`
+L00005486	- LSP root identity uses worktree path when `is_worktree` is true
+L00005487	- File mutation logs store absolute paths
+L00005488	- cmd.chat.revert
+L00005489	- /project/.puppet-master/worktrees/thread-abc/src/main.rs
+L00005490	- 'Cannot restore file: original path no longer exists. The worktree may have been removed.'
+L00005491	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md'
+L00005492	negative_constraints:
+L00005493	- is_worktree is a source-lineage token only; it must not become an execution_unit_context field in schema_version 1.0.0.
+L00005494	- The executor does not recreate missing directories when a removed worktree makes the original path unavailable.
+L00005495	compatibility_only_notes: []
+L00005496	stale_retired_dispositions: []
+L00005497	owner_boundary_notes:
+L00005498	- FileManager, LSPSupport, and Commands_System consume this executor worktree resolution behavior.
+L00005499	owner_hints:
+L00005500	- Plans/Executor_Protocol.md
+L00005501	```
+L00005502	
+L00005503	### EP-092 - Execution Unit Context Canonical Contract
+L00005504	
+L00005505	```yaml
+L00005506	plan_unit_id: EP-092
+L00005507	unit_type: requirement
+L00005508	status: accepted
+L00005509	owner_doc: Plans/Executor_Protocol.md
+L00005510	canonical_text: >-
+L00005511	  Executor Protocol owns the canonical execution_unit_context contract through
+L00005512	  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context
+L00005513	  and schema_version 1.0.0. The contract defines a closed required field list,
+L00005514	  closed optional field set, field types, nullability, closed enums, identity
+L00005515	  and linkage fields, persistence and replay rules, redaction and no-secret
+L00005516	  constraints, lifecycle ownership, and producer/consumer boundaries.
+L00005517	gui_related: false
+L00005518	gui_classification_reason: This unit defines runtime identity schema and labels, not GUI presentation.
+L00005519	split_recommended: false
+L00005520	depends_on: []
+L00005521	unblocks: []
+L00005522	acceptance_criteria:
+L00005523	- The covered source span remains losslessly available for exact-text audit.
+L00005524	- All required fields from the schema remain explicit and closed.
+L00005525	- Optional fields, nullability, enum values, persistence/replay constraints, and redaction rules remain explicit.
+L00005526	- Consumer docs reference this owner and schema instead of redefining execution_unit_context.
+L00005527	- The labels execution unit context and blocked episode remain preserved.
+L00005528	validation_surfaces:
+L00005529	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005530	- python3 scripts/pm-plan-index.py validate
+L00005531	- python3 scripts/pm-implementation-readiness.py validate
+L00005532	risk_class: executor_protocol_drift
+L00005533	reasoning_tier: standard
+L00005534	context_scope: executor_protocol_standardization
+L00005535	implementation_surfaces:
+L00005536	- Plans/Executor_Protocol.md
+L00005537	- Plans/execution_unit_context.schema.json
+L00005538	- scripts/pm-implementation-readiness.py
+L00005539	node_compile_hint:
+L00005540	  mode: execution_unit_context_canonical_contract
+L00005541	  create_worknodes: false
+L00005542	source_lineage:
+L00005543	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+L00005544	preserved_exact_tokens:
+L00005545	- run_id
+L00005546	- node_id
+L00005547	- attempt_id
+L00005548	- schema_id
+L00005549	- schema_version
+L00005550	- execution_unit_type
+L00005551	- execution_unit_id
+L00005552	- lane_id
+L00005553	- package_id
+L00005554	- seam_id
+L00005555	- worktree_id
+L00005556	- execution_role
+L00005557	- requested_account_binding
+L00005558	- requested_account_id
+L00005559	- effective_account_id
+L00005560	- operational_identity
+L00005561	- blocked_sequence
+L00005562	- allowed_action_ids[]
+L00005563	- approval_scope_key
+L00005564	- created_at_utc
+L00005565	- execution unit context
+L00005566	- blocked episode
+L00005567	- 'ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor'
+L00005568	negative_constraints:
+L00005569	- No consumer may redefine the execution_unit_context required or optional field set.
+L00005570	- No persisted execution_unit_context payload is valid without schema_version.
+L00005571	- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00005572	compatibility_only_notes: []
+L00005573	stale_retired_dispositions: []
+L00005574	owner_boundary_notes:
+L00005575	- Required identity fields align executor runtime scope with the canonical blocked-episode approval anchor.
+L00005576	- Executor Protocol is the sole owner of the execution_unit_context contract; Prompt Pipeline, Contracts_V0, storage-plan, orchestrator-subagent-integration, Plan_To_Node_Compilation, and Planning_Wizard are consumers.
+L00005577	owner_hints:
+L00005578	- Plans/Executor_Protocol.md
+L00005579	```
+L00005580	
+L00005581	### EP-093 - Runtime Scope Blocked Episode And Permission Carry-Through
+L00005582	
+L00005583	```yaml
+L00005584	plan_unit_id: EP-093
+L00005585	unit_type: requirement
+L00005586	status: accepted
+L00005587	owner_doc: Plans/Executor_Protocol.md
+L00005588	canonical_text: >-
+L00005589	  Execution Protocol defines runtime scope through execution-unit context rather
+L00005590	  than tier roots, keeps blocked-episode identity explicit in recovery paths,
+L00005591	  and carries effective account, execution role, and blocked-episode approval
+L00005592	  scope through execution handoff.
+L00005593	gui_related: false
+L00005594	gui_classification_reason: This unit defines runtime scope, recovery identity, and permission handoff behavior, not GUI presentation.
+L00005595	split_recommended: false
+L00005596	depends_on: []
+L00005597	unblocks: []
+L00005598	acceptance_criteria:
+L00005599	- The covered source span remains losslessly available for exact-text audit.
+L00005600	- Runtime scope is defined through execution-unit context rather than tier roots.
+L00005601	- Blocked-episode identity remains explicit in execution-relevant recovery paths.
+L00005602	- effective account, execution role, and blocked-episode approval scope survive execution handoff.
+L00005603	validation_surfaces:
+L00005604	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005605	- python3 scripts/pm-plan-index.py validate
+L00005606	risk_class: executor_protocol_drift
+L00005607	reasoning_tier: standard
+L00005608	context_scope: executor_protocol_standardization
+L00005609	implementation_surfaces:
+L00005610	- Plans/Executor_Protocol.md
+L00005611	node_compile_hint:
+L00005612	  mode: runtime_scope_blocked_episode_and_permission_carry_through
+L00005613	  create_worknodes: false
+L00005614	source_lineage:
+L00005615	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+L00005616	preserved_exact_tokens:
+L00005617	- Behavioral rules
+L00005618	- runtime scope through execution-unit context rather than tier roots
+L00005619	- Blocked-episode identity
+L00005620	- Permission carry-through
+L00005621	- effective account
+L00005622	- execution role
+L00005623	- blocked-episode approval scope
+L00005624	negative_constraints:
+L00005625	- Runtime scope must not be derived from tier roots.
+L00005626	compatibility_only_notes: []
+L00005627	stale_retired_dispositions: []
+L00005628	owner_boundary_notes:
+L00005629	- Permission carry-through binds execution handoff to blocked-episode recovery identity.
+L00005630	owner_hints:
+L00005631	- Plans/Executor_Protocol.md
+L00005632	```
+L00005633	
+L00005634	### EP-094 - Assistant Chat Mode Worktree Behavior Matrix
+L00005635	
+L00005636	```yaml
+L00005637	plan_unit_id: EP-094
+L00005638	unit_type: requirement
+L00005639	status: accepted
+L00005640	owner_doc: Plans/Executor_Protocol.md
+L00005641	canonical_text: >-
+L00005642	  Ask, Agent, Plan, Deep Plan, and Debug modes operate within the thread's
+L00005643	  bound worktree, with reads, edits, plan execution, and debug operations
+L00005644	  routed to the worktree context according to mode behavior.
+L00005645	gui_related: false
+L00005646	gui_classification_reason: This unit defines Assistant Chat runtime mode routing, not GUI presentation.
+L00005647	split_recommended: false
+L00005648	depends_on: []
+L00005649	unblocks: []
+L00005650	acceptance_criteria:
+L00005651	- The covered source span remains losslessly available for exact-text audit.
+L00005652	- Ask mode reads context from worktree files.
+L00005653	- Agent mode writes file edits to the worktree.
+L00005654	- Plan and Deep Plan modes execute plans in worktree context.
+L00005655	- Debug mode targets the worktree for debug operations.
+L00005656	validation_surfaces:
+L00005657	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005658	- python3 scripts/pm-plan-index.py validate
+L00005659	risk_class: executor_protocol_drift
+L00005660	reasoning_tier: standard
+L00005661	context_scope: executor_protocol_standardization
+L00005662	implementation_surfaces:
+L00005663	- Plans/Executor_Protocol.md
+L00005664	node_compile_hint:
+L00005665	  mode: assistant_chat_mode_worktree_behavior_matrix
+L00005666	  create_worknodes: false
+L00005667	source_lineage:
+L00005668	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0067
+L00005669	preserved_exact_tokens:
+L00005670	- Ask
+L00005671	- Agent
+L00005672	- Plan
+L00005673	- Deep Plan
+L00005674	- Debug
+L00005675	- thread's worktree
+L00005676	- read-only context from worktree files
+L00005677	- file edits go to worktree
+L00005678	- plans execute in worktree context
+L00005679	- debug operations target worktree
+L00005680	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
+L00005681	negative_constraints: []
+L00005682	compatibility_only_notes: []
+L00005683	stale_retired_dispositions: []
+L00005684	owner_boundary_notes:
+L00005685	- Run Modes and Assistant Chat consume this mode matrix through the thread worktree binding.
+L00005686	owner_hints:
+L00005687	- Plans/Executor_Protocol.md
+L00005688	```
+L00005689	
+L00005690	### EP-095 - Thread-Level Worktree Binding Across Mode Transitions
+L00005691	
+L00005692	```yaml
+L00005693	plan_unit_id: EP-095
+L00005694	unit_type: requirement
+L00005695	status: accepted
+L00005696	owner_doc: Plans/Executor_Protocol.md
+L00005697	canonical_text: >-
+L00005698	  Assistant Chat mode transitions do not affect worktree binding because the
+L00005699	  binding is thread-level, not mode-level.
+L00005700	gui_related: false
+L00005701	gui_classification_reason: This unit defines runtime binding invariants across mode transitions, not GUI presentation.
+L00005702	split_recommended: false
+L00005703	depends_on: []
+L00005704	unblocks: []
+L00005705	acceptance_criteria:
+L00005706	- The covered source span remains losslessly available for exact-text audit.
+L00005707	- Mode transitions do not change the active worktree binding.
+L00005708	- Worktree binding remains thread-level rather than mode-level.
+L00005709	- ContractRefs and source lineage remain traceable.
+L00005710	validation_surfaces:
+L00005711	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005712	- python3 scripts/pm-plan-index.py validate
+L00005713	risk_class: executor_protocol_drift
+L00005714	reasoning_tier: standard
+L00005715	context_scope: executor_protocol_standardization
+L00005716	implementation_surfaces:
+L00005717	- Plans/Executor_Protocol.md
+L00005718	node_compile_hint:
+L00005719	  mode: thread_level_worktree_binding_across_mode_transitions
+L00005720	  create_worknodes: false
+L00005721	source_lineage:
+L00005722	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0067
+L00005723	preserved_exact_tokens:
+L00005724	- Mode transitions do not affect worktree binding
+L00005725	- thread-level
+L00005726	- not mode-level
+L00005727	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
+L00005728	negative_constraints:
+L00005729	- Mode transitions must not affect worktree binding.
+L00005730	compatibility_only_notes: []
+L00005731	stale_retired_dispositions: []
+L00005732	owner_boundary_notes:
+L00005733	- Worktree binding is owned at the Assistant Chat thread level and is consumed by individual modes.
+L00005734	owner_hints:
+L00005735	- Plans/Executor_Protocol.md
+L00005736	```
+L00005737	
+L00005738	### EP-001 - Executor Protocol Retired Source-Preserving Bridge
+L00005739	
+L00005740	```yaml
+L00005741	plan_unit_id: EP-001
+L00005742	unit_type: compatibility_disposition
+L00005743	status: accepted
+L00005744	owner_doc: Plans/Executor_Protocol.md
+L00005745	canonical_text: >-
+L00005746	  The former Executor Protocol source-preserving bridge is retired after Phase
+L00005747	  2B atomized Executor_Protocol-S0001 through Executor_Protocol-S0067 into
+L00005748	  EP-002 through EP-095 and structurally dispositioned the owner map, PlanUnits
+L00005749	  heading, retired bridge lineage, and Migration Coverage. EP-001 remains only
+L00005750	  as migration lineage for the retired bridge span and must not re-own atomized
+L00005751	  source coverage.
+L00005752	gui_related: false
+L00005753	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior; coverage_map still preserves S0070 gui_related_inferred=true from the historical broad bridge span.
+L00005754	split_recommended: false
+L00005755	depends_on: []
+L00005756	unblocks: []
+L00005757	acceptance_criteria:
+L00005758	- EP-001 no longer uses the source-preserving PlanUnit compile hint.
+L00005759	- EP-002 through EP-095 own product coverage for Executor_Protocol-S0001 through Executor_Protocol-S0067.
+L00005760	- Executor_Protocol-S0068, S0069, and S0071 are structural owner-map, heading, and migration-coverage dispositions.
+L00005761	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00005762	validation_surfaces:
+L00005763	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005764	- python3 scripts/pm-plan-index.py validate
+L00005765	risk_class: migration_lineage
+L00005766	reasoning_tier: standard
+L00005767	context_scope: plan_standardization
+L00005768	implementation_surfaces:
+L00005769	- Plans/Executor_Protocol.md
+L00005770	node_compile_hint:
+L00005771	  mode: source_preserving_bridge_retired
+L00005772	  create_worknodes: false
+L00005773	source_lineage:
+L00005774	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0070
+L00005775	preserved_exact_tokens:
+L00005776	- EP-001
+L00005777	- source_preserving_planunit
+L00005778	- source_preserving_bridge_retired
+L00005779	- EP-002
+L00005780	- EP-095
+L00005781	- Executor_Protocol-S0001
+L00005782	- Executor_Protocol-S0071
+L00005783	- 'Execution Context: Worktree Handoff'
+L00005784	- Mode interaction
+L00005785	- Owner / Consumer Map
+L00005786	- PlanUnits
+L00005787	- Migration Coverage
+L00005788	negative_constraints:
+L00005789	- Do not remap atomized Executor_Protocol spans back to EP-001.
+L00005790	- Do not treat the retired bridge as implementation-ready product coverage.
+L00005791	- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit.
+L00005792	compatibility_only_notes:
+L00005793	- The old source-preserving bridge is retained only so migration lineage and historical references to EP-001 remain auditable.
+L00005794	stale_retired_dispositions: []
+L00005795	owner_boundary_notes:
+L00005796	- EP-002 through EP-095 own product coverage for Executor_Protocol-S0001 through Executor_Protocol-S0067.
+L00005797	- S0068, S0069, and S0071 are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions.
+L00005798	owner_hints:
+L00005799	- Plans/Executor_Protocol.md
+L00005800	```
+L00005801	## Migration Coverage
+L00005802	
+L00005803	Original hash: `fd77b8360e92673ca0bf6bad5015f8075a545c30216b71a5df0107f1e8db47f3`.
+L00005804	
+L00005805	Run-scoped proof artifacts:
+L00005806	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00005807	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00005808	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00005809	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00005810	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00005811	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00005812	
+L00005813	Phase 2B batch 050 atomized or structurally dispositioned `Executor_Protocol-S0001` through `Executor_Protocol-S0029` into `EP-002` through `EP-033`. Phase 2B batch 051 atomized or structurally dispositioned `Executor_Protocol-S0030` through `Executor_Protocol-S0065` into `EP-034` through `EP-086`. Phase 2B batch 052 atomized `Executor_Protocol-S0066` through `Executor_Protocol-S0067` into `EP-087` through `EP-095`, structurally dispositioned `Executor_Protocol-S0068`, `Executor_Protocol-S0069`, and `Executor_Protocol-S0071`, and retired `EP-001` as migration lineage for `Executor_Protocol-S0070`. No residual source-preserving Executor Protocol PlanUnit remains. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00005814	
+L00005815	## Ledger Compile Addendum - pldg-20260614-001
+L00005816	
+L00005817	### EP-096 - Runtime Consumer Header Recovery Compile Addendum
+L00005818	
+L00005819	```yaml
+L00005820	plan_unit_id: EP-096
+L00005821	unit_type: requirement
+L00005822	status: accepted
+L00005823	owner_doc: Plans/Executor_Protocol.md
+L00005824	canonical_text: >-
+L00005825	  Executor_Protocol missing Section 5 and top owner stubs recover as runtime consumer sections. Executor consumes tier-era retirement,
+L00005826	  blocked-policy transfer, provider/model carry-through, approval scope, durable approver identity, and worktree allocation from their owners;
+L00005827	  it must not revive tier as primary execution canon or replace Models_System provider/model precedence ownership.
+L00005828	gui_related: false
+L00005829	gui_classification_reason: Executor runtime protocol and scheduler consumer sections are backend/runtime contracts.
+L00005830	depends_on: [EP-005, EP-075, EP-077, EP-079]
+L00005831	unblocks: []
+L00005832	acceptance_criteria:
+L00005833	  - Section 5 is restored or explicitly aliased as a structural parent without changing scheduler behavior.
+L00005834	  - tier, TierContext, tier_id, TierType, and Phase/Task/Subtask are compatibility-only in Executor runtime context.
+L00005835	  - Approval scope and durable approver identity consume Contracts/HITL owner fields.
+L00005836	validation_surfaces:
+L00005837	  - python3 scripts/pm-plan-index.py validate
+L00005838	  - manual Executor heading/owner review
+L00005839	risk_class: executor_consumer_drift
+L00005840	reasoning_tier: standard
+L00005841	context_scope: executor_owner_stub_recovery
+L00005842	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/Models_System.md]
+L00005843	node_compile_hint: {mode: executor_consumer_section_recovery, create_worknodes: false}
+L00005844	source_lineage:
+L00005845	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+L00005846	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0038
+L00005847	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0072
+L00005848	preserved_exact_tokens: ["Retire tier-era canon and shadow fields", "Identity and blocked-policy transfer cluster", "Coverage blocker provider/model precedence owner section", "Approval scope key and approver identity", "TierContext", "tier_id", "execution_role", "requested_account_id", "operational_identity"]
+L00005849	negative_constraints:
+L00005850	  - Do not revive tier vocabulary as primary Executor canon.
+L00005851	  - Do not make Executor replace Models_System provider/model precedence ownership.
+L00005852	owner_hints: [Plans/Executor_Protocol.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/human-in-the-loop.md]
+L00005853	```
+L00005854	
+L00005855	## Ledger Compile Addendum - pldg-20260615-001
+L00005856	
+L00005857	### EP-097 - Runtime Addenda Consolidation Boundary
+L00005858	
+L00005859	```yaml
+L00005860	plan_unit_id: EP-097
+L00005861	unit_type: compatibility_disposition
+L00005862	status: accepted
+L00005863	owner_doc: Plans/Executor_Protocol.md
+L00005864	canonical_text: >-
+L00005865	  Executor_Protocol runtime scheduler, blocked/recovery, retry, safe-point,
+L00005866	  remediation, readiness, score, attempt lifecycle, and provider/model carry-through
+L00005867	  addenda are consolidated as consumer-facing executor rules subordinate to the
+L00005868	  named runtime, contract, storage, mode, model, and wiring owners. Historical
+L00005869	  `Canonical Alignment` or `Consolidation Addendum` headings and dates remain
+L00005870	  source-lineage, but executor implementers must not treat overlapping addenda as
+L00005871	  peer precedence layers or infer canonical behavior from their order.
+L00005872	gui_related: false
+L00005873	gui_classification_reason: This unit defines executor/runtime protocol precedence rather than visual presentation.
+L00005874	depends_on:
+L00005875	  - EP-096
+L00005876	unblocks: []
+L00005877	acceptance_criteria:
+L00005878	  - Executor runtime recovery behavior is read through named owner sections and PlanUnits rather than additive addendum order.
+L00005879	  - Scheduler, blocked/recovery, retry, safe-point, remediation, readiness, score, attempt lifecycle, approval, and provider/model terms remain preserved as exact lineage.
+L00005880	  - Executor consumes Contracts_V0, Run_Modes, Models_System, storage-plan, and Wiring_Matrix ownership without replacing them.
+L00005881	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
+L00005882	validation_surfaces:
+L00005883	  - python3 scripts/pm-plan-index.py validate
+L00005884	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
+L00005885	risk_class: executor_addenda_precedence_drift
+L00005886	reasoning_tier: high
+L00005887	context_scope: executor_runtime_addenda_consolidation
+L00005888	implementation_surfaces:
+L00005889	  - Plans/Executor_Protocol.md
+L00005890	  - Plans/Contracts_V0.md
+L00005891	  - Plans/Run_Modes.md
+L00005892	  - Plans/Models_System.md
+L00005893	  - Plans/storage-plan.md
+L00005894	  - Plans/Wiring_Matrix.md
+L00005895	node_compile_hint:
+L00005896	  mode: executor_runtime_addenda_consolidation
+L00005897	  create_worknodes: false
+L00005898	source_lineage:
+L00005899	  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+L00005900	  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
+L00005901	  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
+L00005902	  - pldg-20260615-001-part-4-fable-cleanup:atom-0018
+L00005903	  - local:Plans/Executor_Protocol.md:259
+L00005904	  - local:Plans/Executor_Protocol.md:506
+L00005905	  - local:Plans/Executor_Protocol.md:578
+L00005906	  - local:Plans/Executor_Protocol.md:663
+L00005907	preserved_exact_tokens:
+L00005908	  - "Runtime Scheduler Addendum (2026-03-08)"
+L00005909	  - "Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)"
+L00005910	  - "Canonical Runtime Scheduler Canonical Alignment (2026-03-09)"
+L00005911	  - "Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)"
+L00005912	  - "Canonical Alignment"
+L00005913	  - "Consolidation Addendum"
+L00005914	  - "runtime scheduler"
+L00005915	  - "blocked/recovery"
+L00005916	  - "retry"
+L00005917	  - "safe-point"
+L00005918	  - "remediation"
+L00005919	  - "blocked_sequence"
+L00005920	  - "request_id"
+L00005921	  - "tier-era"
+L00005922	  - "TierContext"
+L00005923	  - "Phase/Task/Subtask/Iteration"
+L00005924	negative_constraints:
+L00005925	  - Do not leave overlapping addenda as coequal normative sections when owner PlanUnits carry the merged rule.
+L00005926	  - Do not semantically change scheduler, blocked, retry, safe-point, remediation, readiness, score, attempt lifecycle, or provider/model behavior during consolidation.
+L00005927	compatibility_only_notes:
+L00005928	  - Cited runtime addenda sections are compatibility/source-lineage sections; named owner PlanUnits and owner docs carry merged runtime precedence.
+L00005929	owner_hints:
+L00005930	  - Plans/Executor_Protocol.md
+L00005931	  - Plans/Contracts_V0.md
+L00005932	  - Plans/Run_Modes.md
+L00005933	  - Plans/Models_System.md
+L00005934	  - Plans/storage-plan.md
+L00005935	  - Plans/Wiring_Matrix.md
+L00005936	```
+L00005937	
+L00005938	## Ledger Compile Addendum - pldg-20260616-002
+L00005939	
+L00005940	### EP-098 - GoalRun WorkNode Scheduler Boundary
+L00005941	
+L00005942	```yaml
+L00005943	plan_unit_id: EP-098
+L00005944	unit_type: requirement
+L00005945	status: accepted
+L00005946	owner_doc: Plans/Executor_Protocol.md
+L00005947	canonical_text: >-
+L00005948	  Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
+L00005949	gui_related: false
+L00005950	gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
+L00005951	depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
+L00005952	unblocks: [OP-022, RGV-012]
+L00005953	acceptance_criteria:
+L00005954	  - Goal Runtime does not dispatch concrete graph nodes directly.
+L00005955	  - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
+L00005956	  - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
+L00005957	  - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
+L00005958	  - WorkNode success alone does not certify parent GoalRun or final completion.
+L00005959	validation_surfaces:
+L00005960	  - python3 scripts/pm-plan-index.py validate
+L00005961	  - future Executor WorkNode scheduler integration tests
+L00005962	risk_class: scheduler_boundary_drift
+L00005963	reasoning_tier: high
+L00005964	context_scope: executor_goalrun_worknode_dispatch
+L00005965	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
+L00005966	node_compile_hint: {mode: goalrun_worknode_scheduler_boundary, create_worknodes: false}
+L00005967	source_lineage:
+L00005968	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0009
+L00005969	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0013
+L00005970	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0017
+L00005971	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
+L00005972	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0041
+L00005973	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0042
+L00005974	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0048
+L00005975	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
+L00005976	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
+L00005977	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0076
+L00005978	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+L00005979	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+L00005980	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
+L00005981	preserved_exact_tokens:
+L00005982	  - "readiness"
+L00005983	  - "blocked state"
+L00005984	  - "retry/backoff"
+L00005985	  - "capacity-aware dispatch"
+L00005986	  - "failure-class recovery"
+L00005987	  - "ready WorkNodes"
+L00005988	  - "bounded executable unit"
+L00005989	  - "decomposes"
+L00005990	  - "bounded WorkNodes"
+L00005991	  - "runnable work"
+L00005992	  - "Execution success is not completion"
+L00005993	negative_constraints:
+L00005994	  - Do not bypass blocked/backoff/capacity semantics.
+L00005995	  - Do not let WorkNode executors certify global completion.
+L00005996	  - Do not treat design-time WorkNode terms as permission to create runtime work artifacts.
+L00005997	owner_hints: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
+L00005998	```
+L00005999	
+L00006000	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00006001	
+L00006002	### EP-099 - Executor Intake For WorkNode Requests
+L00006003	
+L00006004	```yaml
+L00006005	plan_unit_id: EP-099
+L00006006	unit_type: requirement
+L00006007	status: accepted
+L00006008	owner_doc: Plans/Executor_Protocol.md
+L00006009	canonical_text: >-
+L00006010	    WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
+L00006011	gui_related: false
+L00006012	gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
+L00006013	depends_on: [EP-098, PNC-013]
+L00006014	unblocks: [EP-100, EP-101, EP-102, GRS-030]
+L00006015	acceptance_criteria:
+L00006016	  - WorkNodeRequest records cannot bypass Executor intake.
+L00006017	  - ExecutorIntakeReport validates graph integrity, source-control/test/model/authority metadata, readiness prerequisites, and scheduler metadata.
+L00006018	  - PlanCompile remains unable to dispatch runnable WorkNodes directly.
+L00006019	validation_surfaces:
+L00006020	  - python3 scripts/pm-plans-verify.py run-gates
+L00006021	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006022	risk_class: executor_intake_bypass
+L00006023	reasoning_tier: high
+L00006024	context_scope: executor_worknode_request_intake
+L00006025	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json]
+L00006026	node_compile_hint: {mode: executor_intake_boundary, create_worknodes: false}
+L00006027	source_lineage:
+L00006028	  - pldg-20260617-001-plans-to-code-handoff:atom-0016
+L00006029	  - pldg-20260617-001-plans-to-code-handoff:atom-0042
+L00006030	  - pldg-20260617-001-plans-to-code-handoff:dec-0005
+L00006031	preserved_exact_tokens:
+L00006032	  - "ExecutorIntakeReport"
+L00006033	  - "WorkNodeRequest"
+L00006034	  - "readiness prerequisites"
+L00006035	  - "Executor intake"
+L00006036	  - "not runnable WorkNodes"
+L00006037	negative_constraints:
+L00006038	  - Do not let WorkNodeRequest bypass Executor intake.
+L00006039	  - Do not let PlanCompile directly dispatch worker execution.
+L00006040	owner_hints:
+L00006041	  - Plans/Executor_Protocol.md
+L00006042	  - Plans/Plan_To_Node_Compilation.md
+L00006043	```
+L00006044	
+L00006045	### EP-100 - Source-Control And Model Preflight Execution Context
+L00006046	
+L00006047	```yaml
+L00006048	plan_unit_id: EP-100
+L00006049	unit_type: requirement
+L00006050	status: accepted
+L00006051	owner_doc: Plans/Executor_Protocol.md
+L00006052	canonical_text: >-
+L00006053	  Executor intake and dispatch must establish a source-control execution context and model-resolution context before mutation-capable work starts. The execution context preserves repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Model routing preserves requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. PlanCompile does not own source control; source control, worktrees, safe points, snapshots, rollback, FileSafe, and GitHub promotion apply after Executor accepts WorkNode requests.
+L00006054	  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth.
+L00006055	gui_related: false
+L00006056	gui_classification_reason: Execution preflight and model receipt fields are backend runtime contracts.
+L00006057	depends_on: [EP-099, MS-111, W-072, F2-189]
+L00006058	unblocks: [EP-102, POA-048, RAP-029]
+L00006059	acceptance_criteria:
+L00006060	  - Mutation-capable WorkNodes have repo/worktree/baseline/safe-point context before risky execution.
+L00006061	  - Model resolution receipts are captured before dispatch and visible to receipt consumers.
+L00006062	  - GitHub is optional promotion/output and local source-control/worktree state remains execution truth.
+L00006063	validation_surfaces:
+L00006064	  - python3 scripts/pm-plans-verify.py run-gates
+L00006065	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006066	risk_class: unsafe_execution_context
+L00006067	reasoning_tier: high
+L00006068	context_scope: executor_preflight_context
+L00006069	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md, Plans/FileSafe.md, Plans/Models_System.md, Plans/GitHub_Integration.md, Plans/plans_to_code_handoff.schema.json]
+L00006070	node_compile_hint: {mode: source_control_and_model_preflight, create_worknodes: false}
+L00006071	source_lineage:
+L00006072	  - pldg-20260617-001-plans-to-code-handoff:atom-0024
+L00006073	  - pldg-20260617-001-plans-to-code-handoff:atom-0035
+L00006074	  - pldg-20260617-001-plans-to-code-handoff:atom-0038
+L00006075	  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+L00006076	preserved_exact_tokens:
+L00006077	  - "source-control execution contract"
+L00006078	  - "worktrees"
+L00006079	  - "snapshots"
+L00006080	  - "safe points"
+L00006081	  - "branch_head_state"
+L00006082	  - "head_commit_oid"
+L00006083	  - "changed_files"
+L00006084	  - "conflict_refs"
+L00006085	  - "rollback_ref"
+L00006086	  - "rollback"
+L00006087	  - "FileSafe"
+L00006088	  - "GitHub optional"
+L00006089	  - "PR"
+L00006090	  - "GitHub Actions"
+L00006091	  - "local source-control truth"
+L00006092	  - "requested_model_profile"
+L00006093	  - "effective_model_profile"
+L00006094	negative_constraints:
+L00006095	  - Do not make PlanCompile own source-control mutation.
+L00006096	  - Do not require GitHub for local-only project completion.
+L00006097	owner_hints:
+L00006098	  - Plans/Executor_Protocol.md
+L00006099	  - Plans/WorktreeGitImprovement.md
+L00006100	  - Plans/FileSafe.md
+L00006101	  - Plans/GitHub_Integration.md
+L00006102	  - Plans/GitHub_API_Auth_and_Flows.md
+L00006103	```
+L00006104	
+L00006105	### EP-101 - Automated Test Binding Intake
+L00006106	
+L00006107	```yaml
+L00006108	plan_unit_id: EP-101
+L00006109	unit_type: requirement
+L00006110	status: accepted
+L00006111	owner_doc: Plans/Executor_Protocol.md
+L00006112	canonical_text: >-
+L00006113	  Executor intake must validate WorkNode test_binding fields before dispatch: required capabilities, required harnesses, generated/reused tests, generated_test_ids, reused_test_ids, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, flake policy, expected artifacts, and test_gap_policy. WorkNode completion cannot depend on human eyeballing. If automatic verification is unavailable, Executor blocks the WorkNode or requests test-harness work rather than marking it complete.
+L00006114	  Executor test intake preserves generated_test_ids, reused_test_ids, browser_session_required, visual_evidence_required, browser/GUI/device sessions, and manual_only_acceptance_not_allowed before completion is accepted.
+L00006115	gui_related: true
+L00006116	gui_classification_reason: Browser/session requirements, emulator requirements, screenshots, and visual evidence are user-visible verification surfaces.
+L00006117	depends_on: [EP-099, ATS-003, ATS-004]
+L00006118	unblocks: [EP-102, GRS-030, RAP-029]
+L00006119	acceptance_criteria:
+L00006120	  - Test binding is validated during Executor intake before runnable dispatch.
+L00006121	  - Manual-only acceptance is not sufficient for WorkNode completion.
+L00006122	  - Test gaps become blockers or harness work.
+L00006123	validation_surfaces:
+L00006124	  - python3 scripts/pm-plans-verify.py run-gates
+L00006125	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006126	risk_class: unverified_execution_completion
+L00006127	reasoning_tier: high
+L00006128	context_scope: executor_test_binding
+L00006129	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Automated_Testing_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/plans_to_code_handoff.schema.json]
+L00006130	node_compile_hint: {mode: executor_test_binding_intake, create_worknodes: false}
+L00006131	source_lineage:
+L00006132	  - pldg-20260617-001-plans-to-code-handoff:atom-0029
+L00006133	  - pldg-20260617-001-plans-to-code-handoff:atom-0033
+L00006134	  - pldg-20260617-001-plans-to-code-handoff:atom-0034
+L00006135	  - pldg-20260617-001-plans-to-code-handoff:dec-0012
+L00006136	  - pldg-20260617-001-plans-to-code-handoff:dec-0013
+L00006137	preserved_exact_tokens:
+L00006138	  - "test_binding"
+L00006139	  - "reused_test_ids"
+L00006140	  - "browser_session_required"
+L00006141	  - "visual_evidence_required"
+L00006142	  - "test_gap_policy"
+L00006143	  - "100% automated"
+L00006144	  - "no human intervention"
+L00006145	  - "test capability blocker"
+L00006146	  - "test-harness WorkNode"
+L00006147	negative_constraints:
+L00006148	  - Do not make manual visual inspection a required completion step.
+L00006149	  - Do not silently allow unverifiable WorkNodes.
+L00006150	owner_hints:
+L00006151	  - Plans/Executor_Protocol.md
+L00006152	  - Plans/Automated_Testing_System.md
+L00006153	```
+L00006154	
+L00006155	### EP-102 - Failure Signatures, Loop Breakers, And Plan Changes
+L00006156	
+L00006157	```yaml
+L00006158	plan_unit_id: EP-102
+L00006159	unit_type: requirement
+L00006160	status: accepted
+L00006161	owner_doc: Plans/Executor_Protocol.md
+L00006162	canonical_text: >-
+L00006163	  Executor repair loops preserve failure_signature records with kind, normalized_key, attempt_count, last_safe_point_id, last_repair_worknode_id, overseer_reviewed, auditor_reviewed, repeated_failure_policy, escalation_lane, user_escalation_allowed, and last evidence refs. Repeated failures escalate internally through normal repair, Auditor classification, Overseer graph/work/model/source-control/test-harness repair, High-Effort/Auditor deep repair, and only then critical user escalation unless explicit HITL policy requires earlier intervention. If Plans change during execution, PlanChangeDetected pauses affected lanes, a PlanDiffImpactReport classifies nodes as unaffected, needs_recompile, invalidated, or already_safe, and Executor resumes only after graph patching/replan work and currentness gates. The ledger phrase create replan WorkNodes is disposed for this phase as future runtime-enabled replan work only; current Plans-to-code contracts do not create replan WorkNodes.
+L00006164	  Failure signatures expose failure_signature.kind, and external-effect preflights preserve network_access_policy, secret_access_policy, and destructive_command_policy before risky repair or execution continues. Overseer review and High-Effort Worker escalation remain internal repair routes before critical user escalation.
+L00006165	gui_related: false
+L00006166	gui_classification_reason: Loop-breaker and PlanChangeDetected policy is runtime orchestration behavior.
+L00006167	depends_on: [EP-099, EP-100, EP-101, GRS-029, PS-116]
+L00006168	unblocks: [GRS-030, POA-048]
+L00006169	acceptance_criteria:
+L00006170	  - Failure signatures are normalized and counted across repair attempts.
+L00006171	  - Repeated failures route internally before user escalation in default mode.
+L00006172	  - Plan changes pause affected lanes and require impact classification before resume.
+L00006173	validation_surfaces:
+L00006174	  - python3 scripts/pm-plans-verify.py run-gates
+L00006175	  - future failure_signature and PlanDiffImpactReport validation
+L00006176	risk_class: infinite_repair_loop
+L00006177	reasoning_tier: high
+L00006178	context_scope: executor_repair_loop_breakers
+L00006179	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Permissions_System.md, Plans/Project_Output_Artifacts.md]
+L00006180	node_compile_hint: {mode: executor_loop_breaker_policy, create_worknodes: false}
+L00006181	source_lineage:
+L00006182	  - pldg-20260617-001-plans-to-code-handoff:atom-0046
+L00006183	  - pldg-20260617-001-plans-to-code-handoff:atom-0047
+L00006184	  - pldg-20260617-001-plans-to-code-handoff:atom-0048
+L00006185	  - pldg-20260617-001-plans-to-code-handoff:dec-0020
+L00006186	  - pldg-20260617-001-plans-to-code-handoff:dec-0021
+L00006187	  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+L00006188	preserved_exact_tokens:
+L00006189	  - "failure_signature"
+L00006190	  - "normalized_key"
+L00006191	  - "attempt_count"
+L00006192	  - "repeated_failure_policy"
+L00006193	  - "escalation_lane"
+L00006194	  - "Auditor classification"
+L00006195	  - "Overseer review"
+L00006196	  - "High-Effort Worker"
+L00006197	  - "critical user escalation"
+L00006198	  - "PlanChangeDetected"
+L00006199	  - "PlanDiffImpactReport"
+L00006200	  - "needs_recompile"
+L00006201	  - "invalidated"
+L00006202	  - "currentness gate"
+L00006203	negative_constraints:
+L00006204	  - Do not jump to user decision because a low-quality agent got stuck.
+L00006205	  - Do not create replan WorkNodes in this design-only phase.
+L00006206	owner_hints:
+L00006207	  - Plans/Executor_Protocol.md
+L00006208	  - Plans/Goal_Runtime_System.md
+L00006209	  - Plans/Planning_Ledger_System.md
+L00006210	```
+L00006211	
+L00006212	### EP-103 - Plans-To-Code Execution Receipt Chain
+L00006213	
+L00006214	```yaml
+L00006215	plan_unit_id: EP-103
+L00006216	unit_type: requirement
+L00006217	status: accepted
+L00006218	owner_doc: Plans/Executor_Protocol.md
+L00006219	canonical_text: >-
+L00006220	  Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
+L00006221	  The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified. The source-control chain must preserve the same repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, rollback_available, rollback_ref, and restore_command_or_action through preflight, safe point creation, mutation/change, optional promotion, finalization, and completion certification.
+L00006222	gui_related: false
+L00006223	gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.
+L00006224	depends_on: [EP-099, EP-100, EP-101, EP-102, PNC-014]
+L00006225	unblocks: [GRS-030, POA-048, RAP-029, CV-289]
+L00006226	acceptance_criteria:
+L00006227	  - Every Executor handoff has artifact, owner, validator, receipt, retry, rollback, and escalation fields.
+L00006228	  - WorkNode execution receipts distinguish dispatch, preflight, safe point, change, test, audit, repair, promotion, and completion.
+L00006229	  - Code completion is certified from receipts, tests, source-control state, Auditor result, blockers, and final evidence, not worker prose.
+L00006230	validation_surfaces:
+L00006231	  - python3 scripts/pm-plans-verify.py run-gates
+L00006232	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006233	risk_class: false_completion
+L00006234	reasoning_tier: high
+L00006235	context_scope: plans_to_code_execution_receipts
+L00006236	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/plans_to_code_handoff.schema.json]
+L00006237	node_compile_hint: {mode: execution_receipt_chain, create_worknodes: false}
+L00006238	source_lineage:
+L00006239	  - pldg-20260617-001-plans-to-code-handoff:atom-0039
+L00006240	  - pldg-20260617-001-plans-to-code-handoff:atom-0040
+L00006241	  - pldg-20260617-001-plans-to-code-handoff:atom-0041
+L00006242	  - pldg-20260617-001-plans-to-code-handoff:atom-0043
+L00006243	  - pldg-20260617-001-plans-to-code-handoff:dec-0016
+L00006244	  - pldg-20260617-001-plans-to-code-handoff:dec-0017
+L00006245	  - pldg-20260617-001-plans-to-code-handoff:dec-0018
+L00006246	preserved_exact_tokens:
+L00006247	  - "worknode_dispatch_receipt"
+L00006248	  - "source_control_preflight_receipt"
+L00006249	  - "safe_point_receipt"
+L00006250	  - "worknode_change_receipt"
+L00006251	  - "test_run_receipt"
+L00006252	  - "auditor_verification_receipt"
+L00006253	  - "repair_attempt_receipt"
+L00006254	  - "worknode_completion_receipt"
+L00006255	  - "Plans-to-Code Handoff Matrix"
+L00006256	  - "artifact-backed handoff"
+L00006257	  - "worker says done is insufficient"
+L00006258	  - "branch_head_state"
+L00006259	  - "baseline_commit_oid"
+L00006260	  - "head_commit_oid"
+L00006261	  - "safe_point_id"
+L00006262	  - "changed_files"
+L00006263	  - "conflict_refs"
+L00006264	  - "rollback_ref"
+L00006265	negative_constraints:
+L00006266	  - Do not accept worker says done as code completion.
+L00006267	owner_hints:
+L00006268	  - Plans/Executor_Protocol.md
+L00006269	  - Plans/Project_Output_Artifacts.md
+L00006270	  - Plans/Runtime_Artifacts_Panel.md
+L00006271	```
+L00006272	
+L00006273	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00006274	
+L00006275	
+L00006276	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00006277	
+L00006278	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00006279	
+L00006280	### EP-104 - Three-Stage Executor Intake And Required Graph Acceptance
+L00006281	
+L00006282	```yaml
+L00006283	plan_unit_id: EP-104
+L00006284	unit_type: requirement
+L00006285	status: accepted
+L00006286	owner_doc: Plans/Executor_Protocol.md
+L00006287	canonical_text: 'Downstream intake is Executor Structural Intake, Provisioning Preflight, and Executor Activation Decision so graph/request validation occurs before repository, worktree, safe-point, test-harness, model, permissions, and credential provisioning. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution.'
+L00006288	gui_related: false
+L00006289	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00006290	depends_on: []
+L00006291	unblocks: []
+L00006292	acceptance_criteria:
+L00006293	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00006294	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00006295	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00006296	validation_surfaces:
+L00006297	- python3 scripts/pm-plan-index.py validate
+L00006298	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00006299	risk_class: execution_boundary
+L00006300	reasoning_tier: high
+L00006301	context_scope: ledger_to_plans_compile
+L00006302	implementation_surfaces:
+L00006303	- Plans/Executor_Protocol.md
+L00006304	- Plans/Plan_To_Node_Compilation.md
+L00006305	- Plans/Goal_Runtime_System.md
+L00006306	- Plans/FileSafe.md
+L00006307	- Plans/Automated_Testing_System.md
+L00006308	node_compile_hint:
+L00006309	  mode: canonical_planunit_from_bootstrap_ledger
+L00006310	  create_worknodes: false
+L00006311	  create_nodeseeds: false
+L00006312	source_lineage:
+L00006313	- pldg-20260618-001-prd-planning-wizard:atom-0119
+L00006314	- pldg-20260618-001-prd-planning-wizard:atom-0120
+L00006315	- pldg-20260618-001-prd-planning-wizard:atom-0078
+L00006316	- pldg-20260618-001-prd-planning-wizard:atom-0100
+L00006317	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00006318	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00006319	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00006320	source_atom_ids:
+L00006321	- atom-0119
+L00006322	- atom-0120
+L00006323	- atom-0078
+L00006324	- atom-0100
+L00006325	decision_refs:
+L00006326	- dec-0024
+L00006327	- dec-0025
+L00006328	correction_refs: []
+L00006329	preserved_exact_tokens:
+L00006330	- Executor Structural Intake
+L00006331	- Provisioning Preflight
+L00006332	- Executor Activation Decision
+L00006333	- all required active-scope
+L00006334	- mixed
+L00006335	- revalidate
+L00006336	- stale facts
+L00006337	- harness revalidation
+L00006338	negative_constraints:
+L00006339	- Do not start a partially accepted required WorkGraph.
+L00006340	owner_hints:
+L00006341	- Plans/Executor_Protocol.md
+L00006342	- Plans/Plan_To_Node_Compilation.md
+L00006343	- Plans/Goal_Runtime_System.md
+L00006344	- Plans/FileSafe.md
+L00006345	- Plans/Automated_Testing_System.md
+L00006346	```
+L00006347	
+L00006348	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00006349	
+L00006350	### EP-106 - Executor Discovery Orientation And Verification Handoff
+L00006351	
+L00006352	```yaml
+L00006353	plan_unit_id: EP-106
+L00006354	unit_type: requirement
+L00006355	status: accepted
+L00006356	owner_doc: Plans/Executor_Protocol.md
+L00006357	canonical_text: >-
+L00006358	  Executor Builder and Verifier actors may use discover_paths for file orientation when implementation or verification requires locating files without exact path evidence. Builder uses ranked discovery candidates for read orientation only, while Verifier may use discovery to locate verification-relevant files. Ranking never substitutes for exact evidence, tests, AST/LSP, grep/codesearch/Instant Grep, domain checks, or verifier pass criteria; discovery receipts feed attempt evidence only when linked to exact verification receipts before edits, test claims, completion, or verifier pass.
+L00006359	gui_related: false
+L00006360	gui_classification_reason: This is Executor protocol and verification handoff behavior, not GUI presentation.
+L00006361	depends_on: [T-161, T-162, OSI-429, CV-291]
+L00006362	unblocks: [ATS-011]
+L00006363	acceptance_criteria:
+L00006364	  - Builder uses discovery only for orientation when exact paths are absent.
+L00006365	  - Verifier may use discovery to find evidence targets but still requires exact evidence.
+L00006366	  - Discovery output cannot satisfy verifier pass criteria without exact verification.
+L00006367	validation_surfaces:
+L00006368	  - python3 scripts/pm-plan-index.py validate
+L00006369	  - Future Builder no-path orientation test.
+L00006370	  - Future Verifier exact evidence follow-up test.
+L00006371	  - Future SSH no-local-checkout Executor task test.
+L00006372	risk_class: executor_evidence_drift
+L00006373	reasoning_tier: standard
+L00006374	context_scope: executor_discovery_handoff
+L00006375	implementation_surfaces: [Plans/Executor_Protocol.md, future Executor Builder/Verifier routes]
+L00006376	node_compile_hint: {mode: executor_discovery_orientation, create_worknodes: false, create_nodeseeds: false}
+L00006377	source_lineage:
+L00006378	  - pldg-20260622-001-fff:atom-0041
+L00006379	  - pldg-20260622-001-fff:atom-0027
+L00006380	  - pldg-20260622-001-fff:atom-0030
+L00006381	  - pldg-20260622-001-fff:atom-0037
+L00006382	  - pldg-20260622-001-fff:atom-0043
+L00006383	  - pldg-20260622-001-fff:atom-0058
+L00006384	  - pldg-20260622-001-fff:atom-0059
+L00006385	  - pldg-20260622-001-fff:atom-0092
+L00006386	  - pldg-20260622-001-fff:atom-0094
+L00006387	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#executor_builder_verifier
+L00006388	source_atom_ids: [atom-0027, atom-0030, atom-0037, atom-0041, atom-0043, atom-0058, atom-0059, atom-0092, atom-0094]
+L00006389	preserved_exact_tokens: ["Builder", "Verifier", "orientation only", "ranking never substitutes", "exact evidence", "AST/LSP", "grep/codesearch/Instant Grep", "verifier pass"]
+L00006390	negative_constraints:
+L00006391	  - Do not let ranking substitute for verifier evidence.
+L00006392	  - Do not claim root cause, completion, or verifier pass from discovery candidates alone.
+L00006393	owner_hints: [Plans/Executor_Protocol.md, Plans/Tools.md, Plans/Automated_Testing_System.md]
+L00006394	```
+L00006395	
+L00006396	### EP-105 - Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers
+L00006397	
+L00006398	```yaml
+L00006399	plan_unit_id: EP-105
+L00006400	unit_type: requirement
+L00006401	status: accepted
+L00006402	owner_doc: Plans/Executor_Protocol.md
+L00006403	canonical_text: 'After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
+L00006404	  validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
+L00006405	gui_related: false
+L00006406	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00006407	depends_on: []
+L00006408	unblocks: []
+L00006409	acceptance_criteria:
+L00006410	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00006411	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00006412	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00006413	validation_surfaces:
+L00006414	- python3 scripts/pm-plan-index.py validate
+L00006415	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00006416	risk_class: execution_boundary
+L00006417	reasoning_tier: high
+L00006418	context_scope: ledger_to_plans_compile
+L00006419	implementation_surfaces:
+L00006420	- Plans/Executor_Protocol.md
+L00006421	- Plans/Contracts_V0.md
+L00006422	- Plans/storage-plan.md
+L00006423	- Plans/Planning_Wizard.md
+L00006424	- Plans/Plan_To_Node_Compilation.md
+L00006425	- Plans/Progression_Gates.md
+L00006426	- Plans/Orchestrator_Page.md
+L00006427	- Plans/Automated_Testing_System.md
+L00006428	node_compile_hint:
+L00006429	  mode: canonical_planunit_from_bootstrap_ledger
+L00006430	  create_worknodes: false
+L00006431	  create_nodeseeds: false
+L00006432	source_lineage:
+L00006433	- pldg-20260618-001-prd-planning-wizard:atom-0121
+L00006434	- pldg-20260618-001-prd-planning-wizard:atom-0122
+L00006435	- pldg-20260618-001-prd-planning-wizard:atom-0123
+L00006436	- pldg-20260618-001-prd-planning-wizard:atom-0124
+L00006437	- pldg-20260618-001-prd-planning-wizard:atom-0137
+L00006438	- pldg-20260618-001-prd-planning-wizard:atom-0145
+L00006439	- pldg-20260618-001-prd-planning-wizard:atom-0146
+L00006440	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00006441	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00006442	source_atom_ids:
+L00006443	- atom-0121
+L00006444	- atom-0122
+L00006445	- atom-0123
+L00006446	- atom-0124
+L00006447	- atom-0137
+L00006448	- atom-0145
+L00006449	- atom-0146
+L00006450	decision_refs:
+L00006451	- dec-0025
+L00006452	- dec-0027
+L00006453	- dec-0028
+L00006454	correction_refs: []
+L00006455	preserved_exact_tokens:
+L00006456	- WorkNodeRecord
+L00006457	- WorkNodeMaterializationReceipt
+L00006458	- worknode_id
+L00006459	- goal_run_id
+L00006460	- workgraph_revision
+L00006461	- attempt_id
+L00006462	- replan generation
+L00006463	- project_plan_node
+L00006464	- compatibility adapter
+L00006465	- Planning Wizard approval
+L00006466	- Plan Compile certification
+L00006467	- WorkNode completion
+L00006468	- Goal completion
+L00006469	- clean-room fixture
+L00006470	- exactly one PlanCompileRun
+L00006471	- entrypoint queued
+L00006472	- duplicate PlanApproved
+L00006473	- dirty repository
+L00006474	- missing parallel receipts
+L00006475	- deliberately introduced incomplete item
+L00006476	negative_constraints:
+L00006477	- Do not overload a legacy plan-node shape as runtime execution truth.
+L00006478	owner_hints:
+L00006479	- Plans/Executor_Protocol.md
+L00006480	- Plans/Contracts_V0.md
+L00006481	- Plans/storage-plan.md
+L00006482	- Plans/Planning_Wizard.md
+L00006483	- Plans/Plan_To_Node_Compilation.md
+L00006484	- Plans/Progression_Gates.md
+L00006485	- Plans/Orchestrator_Page.md
+L00006486	- Plans/Automated_Testing_System.md
+L00006487	```
+L00006488	
+L00006489	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00006490	
+L00006491	This addendum compiles Free Models executor dispatch and adapter activation behavior. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00006492	
+L00006493	### EP-107 - Free Models Dispatch Fallback Attempt Bounds And In-Flight Isolation
+L00006494	
+L00006495	```yaml
+L00006496	plan_unit_id: EP-107
+L00006497	unit_type: requirement
+L00006498	status: accepted
+L00006499	owner_doc: Plans/Executor_Protocol.md
+L00006500	canonical_text: >-
+L00006501	  Executor consumes Models_System precedence, Multi-Account pressure, Usage budget gates, and Prompt Pipeline requested/effective route snapshots when dispatching Free Models routes. Automatic fallback is bounded by configurable global/section limits and defaults to the initial selected/requested attempt plus `2` automatic fallback attempts. Auto Apply/model refresh changes never alter in-flight requests and apply only to new routing decisions after completion.
+L00006502	gui_related: false
+L00006503	gui_classification_reason: Defines runtime dispatch and in-flight request semantics, not GUI presentation.
+L00006504	depends_on: []
+L00006505	unblocks: []
+L00006506	acceptance_criteria:
+L00006507	  - Attempt limit counts the initial selected/requested model plus every automatic switch attempt.
+L00006508	  - Partial streaming failures are surfaced as partial/failure state with retry/switch action and are never silently retried/spliced.
+L00006509	  - Auto Apply/model refresh completion does not change in-flight model/provider/account/source snapshots.
+L00006510	  - Executor emits receipt inputs for attempted models, skipped entries, reasons, and final selected/stopped result.
+L00006511	validation_surfaces:
+L00006512	  - python3 scripts/pm-plan-index.py validate
+L00006513	  - Free Models fallback attempt limit fixtures
+L00006514	  - In-flight update isolation fixtures
+L00006515	  - Partial-stream failure routing fixtures
+L00006516	risk_class: fallback_dispatch_drift
+L00006517	reasoning_tier: high
+L00006518	context_scope: free_models_executor_dispatch
+L00006519	implementation_surfaces:
+L00006520	  - Plans/Executor_Protocol.md
+L00006521	  - Plans/Models_System.md
+L00006522	  - Plans/Multi-Account.md
+L00006523	  - Plans/usage-feature.md
+L00006524	  - Plans/Prompt_Pipeline.md
+L00006525	node_compile_hint:
+L00006526	  mode: free_models_executor_dispatch_planunit
+L00006527	  create_worknodes: false
+L00006528	  create_nodeseeds: false
+L00006529	source_lineage:
+L00006530	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00006531	source_atom_ids: [atom-0023, atom-0029, atom-0039, atom-0043, atom-0074, atom-0078, atom-0211, atom-0212, atom-0215, atom-0216, atom-0217, atom-0218, atom-0221, atom-0222, atom-0226, atom-0230, atom-0234, atom-0238, atom-0283, atom-0284, atom-0285, atom-0286]
+L00006532	preserved_exact_tokens:
+L00006533	  - "initial attempt plus 2 automatic fallbacks"
+L00006534	  - "attempt limit"
+L00006535	  - "partial streaming failures"
+L00006536	  - "Auto Apply/model refresh changes never alter in-flight requests"
+L00006537	  - "new routing decisions"
+L00006538	negative_constraints:
+L00006539	  - Do not make fallback unbounded by default.
+L00006540	  - Do not let automatic fallback retries bypass the configured attempt limit.
+L00006541	  - Do not silently retry/splice a different model after partial streaming output.
+L00006542	  - Do not break, cancel, or rewrite in-flight requests because Auto Apply or model refresh completes.
+L00006543	owner_hints:
+L00006544	  - Plans/Executor_Protocol.md
+L00006545	  - Plans/Models_System.md
+L00006546	  - Plans/Multi-Account.md
+L00006547	  - Plans/usage-feature.md
+L00006548	```
+L00006549	
+L00006550	### EP-108 - Free Models PM-Owned Runtime Adapter Activation Boundary
+L00006551	
+L00006552	```yaml
+L00006553	plan_unit_id: EP-108
+L00006554	unit_type: requirement
+L00006555	status: accepted
+L00006556	owner_doc: Plans/Executor_Protocol.md
+L00006557	canonical_text: >-
+L00006558	  Executor may consume Free Models runtime behavior changes only after PM-owned adapter validation has produced safe declarative router/probe/normalizer/fallback configuration, test evidence, source hashes, activation receipts, quarantine state, and rollback refs. Executor must not run upstream daemons, Docker workflows, command scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers as part of Free Models routing.
+L00006559	gui_related: false
+L00006560	gui_classification_reason: Defines executor/runtime activation boundary, not GUI presentation.
+L00006561	depends_on: []
+L00006562	unblocks: []
+L00006563	acceptance_criteria:
+L00006564	  - Runtime behavior changes are limited to Free Models and apply only after PM-owned adapter validation.
+L00006565	  - Unsafe upstream runtime behavior produces blocked/quarantined evidence rather than execution.
+L00006566	  - Activation receipts and rollback refs are available to diagnostics and storage.
+L00006567	validation_surfaces:
+L00006568	  - python3 scripts/pm-plan-index.py validate
+L00006569	  - Free Models adapter activation fixtures
+L00006570	  - Unsafe runtime behavior quarantine fixtures
+L00006571	risk_class: unsafe_runtime_activation
+L00006572	reasoning_tier: high
+L00006573	context_scope: free_models_runtime_adapter_activation
+L00006574	implementation_surfaces:
+L00006575	  - Plans/Executor_Protocol.md
+L00006576	  - Plans/Contracts_V0.md
+L00006577	  - Plans/FileSafe.md
+L00006578	  - Plans/Permissions_System.md
+L00006579	  - Plans/storage-plan.md
+L00006580	node_compile_hint:
+L00006581	  mode: free_models_runtime_adapter_activation_planunit
+L00006582	  create_worknodes: false
+L00006583	  create_nodeseeds: false
+L00006584	source_lineage:
+L00006585	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00006586	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00006587	source_atom_ids: [atom-0012, atom-0026, atom-0028, atom-0033, atom-0060, atom-0061, atom-0063, atom-0064, atom-0066, atom-0070, atom-0076, atom-0080, atom-0106, atom-0110, atom-0196, atom-0200, atom-0277, atom-0278]
+L00006588	preserved_exact_tokens:
+L00006589	  - "no Docker"
+L00006590	  - "native"
+L00006591	  - "Runtime behavior changes should be automatic too, but only for the free model provider."
+L00006592	  - "PM-owned declarative router/probe/normalizer/fallback configuration"
+L00006593	  - "activation receipts"
+L00006594	  - "quarantine"
+L00006595	  - "rollback"
+L00006596	negative_constraints:
+L00006597	  - Do not inherit the upstream local daemon as PM's execution model without PM-native adaptation.
+L00006598	  - Do not execute arbitrary upstream commands/scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers.
+L00006599	  - Do not auto-apply runtime behavior for non-Free-Models providers during manual all-provider refresh.
+L00006600	owner_hints:
+L00006601	  - Plans/Executor_Protocol.md
+L00006602	  - Plans/Contracts_V0.md
+L00006603	  - Plans/FileSafe.md
+L00006604	  - Plans/Permissions_System.md
+L00006605	```
+L00006606	
+L00006607	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00006608	
+L00006609	This addendum compiles containerized-host Executor intake and execution-lane boundaries. It does not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, generated governance artifacts, or production build tasks.
+L00006610	
+L00006611	### EP-109 - HostCapabilityCommand Executor Intake Boundary
+L00006612	
+L00006613	```yaml
+L00006614	plan_unit_id: EP-109
+L00006615	unit_type: requirement
+L00006616	status: accepted
+L00006617	owner_doc: Plans/Executor_Protocol.md
+L00006618	canonical_text: >-
+L00006619	  Executor consumes HostCapabilityCommand and HostOperationRequest through ExecutorIntakeReport or equivalent intake,
+L00006620	  not through Coasts local API, terminal, file controls, or container-local endpoints. Accepted lanes include
+L00006621	  apps/services under test, PM work, provider tools, agent harnesses, shells, and integration commands only where
+L00006622	  runtime execution is later enabled and authority allows it. Intake records host_capability_ref, host_profile_id,
+L00006623	  host_assignment_id, execution_unit_context, worktree/cwd binding, permission_snapshot_id, FileSafe scope,
+L00006624	  approval_scope_key, network_access_policy, secret_access_policy, destructive_command_policy, transcript policy,
+L00006625	  cleanup policy, expected receipts, host preflight, lane-specific evidence, cleanup/retention disposition, and
+L00006626	  blocked/failure reason. Host-side commands such as lint/typecheck/format/git/package installs/static analysis/browser
+L00006627	  tests stay host/worktree side unless runtime services are required; container-runtime commands are for service context,
+L00006628	  database/API/integration work, runtime-specific tests, logs, exec, and artifact capture.
+L00006629	gui_related: false
+L00006630	gui_classification_reason: Executor intake and authority boundaries are backend execution contracts, not GUI presentation.
+L00006631	depends_on: [CV-304, PS-126, F2-194, RM-048]
+L00006632	unblocks: [T-166, GRS-032, OSI-431, ACD-430, OP-028]
+L00006633	acceptance_criteria:
+L00006634	  - Every host action is accepted or blocked through Executor intake, preflight, authority checks, and expected receipts.
+L00006635	  - Host use cannot bypass Run_Modes, Permissions, FileSafe, tool policy, provider/account identity, or Runtime Artifacts evidence boundaries.
+L00006636	  - Runtime Artifacts projects evidence but never becomes the receipt authority.
+L00006637	  - Blocked outcomes preserve blocked != failed and expose reason codes and allowed actions.
+L00006638	validation_surfaces:
+L00006639	  - python3 scripts/pm-plan-index.py validate
+L00006640	  - future HostCapabilityCommand ExecutorIntakeReport fixtures
+L00006641	  - future blocked != failed host action fixtures
+L00006642	risk_class: host_executor_bypass
+L00006643	reasoning_tier: high
+L00006644	context_scope: containerized_host_executor_intake
+L00006645	implementation_surfaces:
+L00006646	  - Plans/Executor_Protocol.md
+L00006647	  - future Executor intake
+L00006648	node_compile_hint:
+L00006649	  mode: host_capability_executor_intake_boundary
+L00006650	  create_worknodes: false
+L00006651	  create_nodeseeds: false
+L00006652	source_lineage:
+L00006653	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+L00006654	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
+L00006655	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00006656	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00006657	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00006658	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0060
+L00006659	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00006660	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00006661	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00006662	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00006663	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+L00006664	source_atom_ids: [atom-0023, atom-0029, atom-0034, atom-0044, atom-0053, atom-0060, atom-0064, atom-0069, atom-0073, atom-0081]
+L00006665	decision_refs: [dec-0005, dec-0008, dec-0010, dec-0017, dec-0020]
+L00006666	preserved_exact_tokens:
+L00006667	  - "HostCapabilityCommand"
+L00006668	  - "HostOperationRequest"
+L00006669	  - "ExecutorIntakeReport"
+L00006670	  - "execution_unit_context"
+L00006671	  - "approval_scope_key"
+L00006672	  - "permission_snapshot_id"
+L00006673	  - "FileSafe scope"
+L00006674	  - "network_access_policy"
+L00006675	  - "secret_access_policy"
+L00006676	  - "destructive_command_policy"
+L00006677	  - "transcript policy"
+L00006678	  - "cleanup policy"
+L00006679	  - "required receipt refs"
+L00006680	  - "apps/services under test"
+L00006681	  - "PM work"
+L00006682	  - "provider tools"
+L00006683	  - "agent harnesses"
+L00006684	  - "shells"
+L00006685	  - "integration commands"
+L00006686	  - "where runtime execution is later enabled and authority allows it"
+L00006687	  - "blocked != failed"
+L00006688	negative_constraints:
+L00006689	  - Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal, file/service controls.
+L00006690	  - Do not route every command through a container just because a host exists.
+L00006691	  - Do not let container exec bypass Executor/Permissions/FileSafe/receipts.
+L00006692	  - Do not imply runtime dispatch, WorkNodes, NodeSeeds, executable queues, or PlanCompile runtime are enabled by this compile.
+L00006693	owner_hints:
+L00006694	  - Plans/Executor_Protocol.md
+L00006695	  - Plans/Run_Modes.md
+L00006696	  - Plans/Permissions_System.md
+L00006697	  - Plans/FileSafe.md
+L00006698	  - Plans/Tools.md
+L00006699	  - Plans/Runtime_Artifacts_Panel.md
+L00006700	```
+L00006701	
+L00006702	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00006703	
+L00006704	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00006705	
+L00006706	### EP-110 - P0-STREAM-HISTORY-COALESCER
+L00006707	
+L00006708	```yaml
+L00006709	plan_unit_id: EP-110
+L00006710	unit_type: requirement
+L00006711	status: accepted
+L00006712	owner_doc: Plans/Executor_Protocol.md
+L00006713	canonical_text: >-
+L00006714	  P0-STREAM-HISTORY-COALESCER (P0) is compiled as canonical Puppet Master intent for Prevent streaming partials from becoming durable duplicate history: Cumulative snapshots are persisted once; missing terminal event is retryable error; zero-usage aborted turn is not model replay content.
+L00006715	gui_related: true
+L00006716	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006717	depends_on:
+L00006718	- PDS-003
+L00006719	- PNC-001
+L00006720	unblocks: []
+L00006721	acceptance_criteria:
+L00006722	- Cumulative snapshots are persisted once
+L00006723	- missing terminal event is retryable error
+L00006724	- zero-usage aborted turn is not model replay content.
+L00006725	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006726	validation_surfaces:
+L00006727	- python3 scripts/pm-plan-index.py validate
+L00006728	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006729	- Cumulative snapshots are persisted once
+L00006730	- missing terminal event is retryable error
+L00006731	- zero-usage aborted turn is not model replay content.
+L00006732	risk_class: p0_transport_websocket_streaming_hardening
+L00006733	reasoning_tier: high
+L00006734	context_scope: transport_websocket_streaming
+L00006735	implementation_surfaces:
+L00006736	- Plans/Executor_Protocol.md
+L00006737	- Plans/Prompt_Pipeline.md
+L00006738	- Plans/storage-plan.md
+L00006739	- Plans/assistant-chat-design.md
+L00006740	node_compile_hint:
+L00006741	  mode: p0_stream_history_coalescer
+L00006742	  create_worknodes: false
+L00006743	  create_nodeseeds: false
+L00006744	source_lineage:
+L00006745	- pldg-20260703-001-feature-intake:atom-0045
+L00006746	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00006747	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0041/P0-STREAM-HISTORY-COALESCER@line=41
+L00006748	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0041/P0-STREAM-HISTORY-COALESCER
+L00006749	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006750	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006751	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:5
+L00006752	source_atom_ids:
+L00006753	- atom-0045
+L00006754	external_atom_id: extrepo-20260703-0041
+L00006755	source_row_id: P0-STREAM-HISTORY-COALESCER
+L00006756	priority: P0
+L00006757	finding_family: Prevent streaming partials from becoming durable duplicate history
+L00006758	target_docs:
+L00006759	- Plans/Executor_Protocol.md
+L00006760	- Plans/Prompt_Pipeline.md
+L00006761	- Plans/storage-plan.md
+L00006762	- Plans/assistant-chat-design.md
+L00006763	owner_hints:
+L00006764	- Plans/Executor_Protocol.md
+L00006765	- Plans/Prompt_Pipeline.md
+L00006766	- Plans/storage-plan.md
+L00006767	- Plans/assistant-chat-design.md
+L00006768	preserved_exact_tokens:
+L00006769	- extrepo-20260703-0041
+L00006770	- P0-STREAM-HISTORY-COALESCER
+L00006771	- P0
+L00006772	- Prevent streaming partials from becoming durable duplicate history
+L00006773	negative_constraints: []
+L00006774	proposal_or_recommendation: Cumulative snapshots are persisted once; missing terminal event is retryable error; zero-usage aborted turn is not model replay content.
+L00006775	compile_disposition: create_new_planunit
+L00006776	```
+L00006777	
+L00006778	### EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY
+L00006779	
+L00006780	```yaml
+L00006781	plan_unit_id: EP-111
+L00006782	unit_type: requirement
+L00006783	status: accepted
+L00006784	owner_doc: Plans/Executor_Protocol.md
+L00006785	canonical_text: >-
+L00006786	  P0-WEBSOCKET-TRANSPORT-POLICY (P0) is compiled as canonical Puppet Master intent for Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP: Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support; OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006787	gui_related: true
+L00006788	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00006789	depends_on:
+L00006790	- PDS-003
+L00006791	- PNC-001
+L00006792	unblocks: []
+L00006793	acceptance_criteria:
+L00006794	- Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support
+L00006795	- OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006796	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006797	validation_surfaces:
+L00006798	- python3 scripts/pm-plan-index.py validate
+L00006799	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006800	- Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support
+L00006801	- OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006802	risk_class: p0_transport_websocket_streaming_hardening
+L00006803	reasoning_tier: high
+L00006804	context_scope: transport_websocket_streaming
+L00006805	implementation_surfaces:
+L00006806	- Plans/Executor_Protocol.md
+L00006807	- Plans/Runtime_Artifacts_Panel.md
+L00006808	- Plans/FinalGUISpec.md
+L00006809	- Plans/Provider_OpenCode.md
+L00006810	- Plans/CLI_Bridged_Providers.md
+L00006811	node_compile_hint:
+L00006812	  mode: p0_websocket_transport_policy
+L00006813	  create_worknodes: false
+L00006814	  create_nodeseeds: false
+L00006815	source_lineage:
+L00006816	- pldg-20260703-001-feature-intake:atom-0046
+L00006817	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00006818	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0042/P0-WEBSOCKET-TRANSPORT-POLICY@line=42
+L00006819	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0042/P0-WEBSOCKET-TRANSPORT-POLICY
+L00006820	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006821	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006822	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:6
+L00006823	source_atom_ids:
+L00006824	- atom-0046
+L00006825	external_atom_id: extrepo-20260703-0042
+L00006826	source_row_id: P0-WEBSOCKET-TRANSPORT-POLICY
+L00006827	priority: P0
+L00006828	finding_family: Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP
+L00006829	target_docs:
+L00006830	- Plans/Executor_Protocol.md
+L00006831	- Plans/Runtime_Artifacts_Panel.md
+L00006832	- Plans/FinalGUISpec.md
+L00006833	- Plans/Provider_OpenCode.md
+L00006834	- Plans/CLI_Bridged_Providers.md
+L00006835	owner_hints:
+L00006836	- Plans/Executor_Protocol.md
+L00006837	- Plans/Runtime_Artifacts_Panel.md
+L00006838	- Plans/FinalGUISpec.md
+L00006839	- Plans/Provider_OpenCode.md
+L00006840	- Plans/CLI_Bridged_Providers.md
+L00006841	preserved_exact_tokens:
+L00006842	- extrepo-20260703-0042
+L00006843	- P0-WEBSOCKET-TRANSPORT-POLICY
+L00006844	- P0
+L00006845	- Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP
+L00006846	negative_constraints: []
+L00006847	proposal_or_recommendation: Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support; OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006848	compile_disposition: create_new_planunit
+L00006849	```
+L00006850	
+L00006851	### EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006852	
+L00006853	```yaml
+L00006854	plan_unit_id: EP-112
+L00006855	unit_type: requirement
+L00006856	status: accepted
+L00006857	owner_doc: Plans/Executor_Protocol.md
+L00006858	canonical_text: >-
+L00006859	  P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS (P1) is compiled as canonical Puppet Master intent for Add bounded queues, overload, retry, and pressure diagnostics: Frame ingress queues bounded; overflow returns structured overload; UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006860	gui_related: true
+L00006861	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006862	depends_on:
+L00006863	- PDS-003
+L00006864	- PNC-001
+L00006865	unblocks: []
+L00006866	acceptance_criteria:
+L00006867	- Frame ingress queues bounded
+L00006868	- overflow returns structured overload
+L00006869	- UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006870	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006871	validation_surfaces:
+L00006872	- python3 scripts/pm-plan-index.py validate
+L00006873	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006874	- Frame ingress queues bounded
+L00006875	- overflow returns structured overload
+L00006876	- UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006877	risk_class: p1_transport_websocket_streaming_hardening
+L00006878	reasoning_tier: standard
+L00006879	context_scope: transport_websocket_streaming
+L00006880	implementation_surfaces:
+L00006881	- Plans/Executor_Protocol.md
+L00006882	- Plans/Runtime_Artifacts_Panel.md
+L00006883	- Plans/storage-plan.md
+L00006884	node_compile_hint:
+L00006885	  mode: p1_websocket_backpressure_diagnostics
+L00006886	  create_worknodes: false
+L00006887	  create_nodeseeds: false
+L00006888	source_lineage:
+L00006889	- pldg-20260703-001-feature-intake:atom-0053
+L00006890	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00006891	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0049/P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS@line=49
+L00006892	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0049/P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006893	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006894	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006895	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:13
+L00006896	source_atom_ids:
+L00006897	- atom-0053
+L00006898	external_atom_id: extrepo-20260703-0049
+L00006899	source_row_id: P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006900	priority: P1
+L00006901	finding_family: Add bounded queues, overload, retry, and pressure diagnostics
+L00006902	target_docs:
+L00006903	- Plans/Executor_Protocol.md
+L00006904	- Plans/Runtime_Artifacts_Panel.md
+L00006905	- Plans/storage-plan.md
+L00006906	owner_hints:
+L00006907	- Plans/Executor_Protocol.md
+L00006908	- Plans/Runtime_Artifacts_Panel.md
+L00006909	- Plans/storage-plan.md
+L00006910	preserved_exact_tokens:
+L00006911	- extrepo-20260703-0049
+L00006912	- P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006913	- P1
+L00006914	- Add bounded queues, overload, retry, and pressure diagnostics
+L00006915	negative_constraints: []
+L00006916	proposal_or_recommendation: Frame ingress queues bounded; overflow returns structured overload; UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006917	compile_disposition: create_new_planunit
+L00006918	```
+L00006919	
+L00006920	### EP-113 - P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006921	
+L00006922	```yaml
+L00006923	plan_unit_id: EP-113
+L00006924	unit_type: requirement
+L00006925	status: accepted
+L00006926	owner_doc: Plans/Executor_Protocol.md
+L00006927	canonical_text: >-
+L00006928	  P1-STREAM-HISTORY-COALESCER-REPLAY (P1) is compiled as canonical Puppet Master intent for Streaming/admission/replay boundary: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases. The preserved PM gap/delta is: Make settled history admission mandatory for all providers, not just context/cache pass. The observed external-repo signal remains source-lineage evidence: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+L00006929	gui_related: false
+L00006930	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00006931	depends_on:
+L00006932	- PDS-003
+L00006933	- PNC-001
+L00006934	unblocks: []
+L00006935	acceptance_criteria:
+L00006936	- No partial stream fragment is replayed as a full assistant turn.
+L00006937	- Provider native item IDs are kept only where allowed by replay policy.
+L00006938	- First-event timeout is a transport failure, not empty assistant success.
+L00006939	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006940	validation_surfaces:
+L00006941	- python3 scripts/pm-plan-index.py validate
+L00006942	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006943	- No partial stream fragment is replayed as a full assistant turn.
+L00006944	- Provider native item IDs are kept only where allowed by replay policy.
+L00006945	- First-event timeout is a transport failure, not empty assistant success.
+L00006946	risk_class: p1_transport_websocket_streaming_hardening
+L00006947	reasoning_tier: standard
+L00006948	context_scope: transport_websocket_streaming
+L00006949	implementation_surfaces:
+L00006950	- Plans/Executor_Protocol.md
+L00006951	- Plans/storage-plan.md
+L00006952	- Plans/Prompt_Pipeline.md
+L00006953	- Plans/Provider_OpenCode.md
+L00006954	- Plans/Models_System.md
+L00006955	node_compile_hint:
+L00006956	  mode: p1_stream_history_coalescer_replay
+L00006957	  create_worknodes: false
+L00006958	  create_nodeseeds: false
+L00006959	source_lineage:
+L00006960	- pldg-20260703-001-feature-intake:atom-0075
+L00006961	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00006962	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0071/P1-STREAM-HISTORY-COALESCER-REPLAY@line=71
+L00006963	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0071/P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006964	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006965	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006966	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:17
+L00006967	source_atom_ids:
+L00006968	- atom-0075
+L00006969	external_atom_id: extrepo-20260703-0071
+L00006970	source_row_id: P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006971	priority: P1
+L00006972	finding_family: Streaming/admission/replay boundary
+L00006973	source_repos:
+L00006974	- OpenCode v2
+L00006975	- Pi
+L00006976	- Codex
+L00006977	- Cline
+L00006978	target_docs:
+L00006979	- Plans/storage-plan.md
+L00006980	- Plans/Prompt_Pipeline.md
+L00006981	- Plans/Provider_OpenCode.md
+L00006982	- Plans/Models_System.md
+L00006983	owner_hints:
+L00006984	- Plans/storage-plan.md
+L00006985	- Plans/Prompt_Pipeline.md
+L00006986	- Plans/Provider_OpenCode.md
+L00006987	- Plans/Models_System.md
+L00006988	preserved_exact_tokens:
+L00006989	- extrepo-20260703-0071
+L00006990	- P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006991	- P1
+L00006992	- Streaming/admission/replay boundary
+L00006993	- OpenCode v2
+L00006994	- Pi
+L00006995	- Codex
+L00006996	- Cline
+L00006997	negative_constraints: []
+L00006998	observed_signal: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+L00006999	pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan has seglog replay/checkpoints and context ownership.
+L00007000	pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
+L00007001	proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
+L00007002	compile_disposition: create_new_planunit
+L00007003	```
+L00007004	
+L00007005	### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+L00007006	
+L00007007	```yaml
+L00007008	plan_unit_id: EP-114
+L00007009	unit_type: requirement
+L00007010	status: accepted
+L00007011	owner_doc: Plans/Executor_Protocol.md
+L00007012	canonical_text: >-
+L00007013	  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+L00007014	  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+L00007015	  bounds, and transport decision receipts for the FABLE contract-runtime core
+L00007016	  slice. Each {run_id, replan_generation} has at most one pending wake set; the
+L00007017	  earliest wake becomes scheduler.pass.wake_reason, additional wakes become
+L00007018	  coalesced_wake_reasons and wake_event_refs, and watchdog_recheck never outranks
+L00007019	  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,
+L00007020	  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and
+L00007021	  node_id ASC. Stream terminal timeout is 5000 ms, backpressure is bounded at
+L00007022	  1024 frames or 16777216 bytes, and each adapter selection records a
+L00007023	  transport_decision_receipt.
+L00007024	gui_related: false
+L00007025	gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
+L00007026	depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+L00007027	unblocks: []
+L00007028	acceptance_criteria:
+L00007029	  - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
+L00007030	  - Wake coalescing records primary wake, coalesced wake reasons, and event refs without creating duplicate scheduler passes.
+L00007031	  - Queue analysis persists the complete score tuple and non-selected reason for ready-but-unselected nodes.
+L00007032	  - Failure and blocked classifications map auth_required separately from auth_expired and fail closed on unknown classifier values.
+L00007033	  - Missing terminal stream events time out after 5000 ms as retryable provider_transient inactivity_timeout rather than durable assistant content.
+L00007034	  - Backpressure is bounded at 1024 frames or 16777216 bytes and overflow returns structured overload evidence.
+L00007035	  - Transport decision receipts include locality, auth, replay, backpressure, fallback, provider support, decision reason, selected timestamp, and event refs.
+L00007036	validation_surfaces:
+L00007037	  - python3 scripts/pm-plan-index.py validate
+L00007038	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00007039	  - python3 scripts/pm-plans-verify.py run-gates
+L00007040	risk_class: fable_executor_wake_coalescing_drift
+L00007041	reasoning_tier: high
+L00007042	context_scope: contract_runtime_core_repair
+L00007043	implementation_surfaces:
+L00007044	  - Plans/Executor_Protocol.md
+L00007045	  - Plans/Contracts_V0.md
+L00007046	  - Plans/storage-plan.md
+L00007047	  - Plans/CLI_Bridged_Providers.md
+L00007048	node_compile_hint:
+L00007049	  mode: executor_wake_coalescing_transport_closure
+L00007050	  create_worknodes: false
+L00007051	  create_nodeseeds: false
+L00007052	source_lineage:
+L00007053	  - fablereport.md
+L00007054	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+L00007055	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00007056	source_atom_ids: []
+L00007057	preserved_exact_tokens:
+L00007058	  - "`wake_reason`"
+L00007059	  - "`scheduler.pass`"
+L00007060	  - "`coalesced_wake_reasons[]`"
+L00007061	  - "`wake_event_refs[]`"
+L00007062	  - "`scheduler_lane_rank`"
+L00007063	  - "`failure_class`"
+L00007064	  - "`blocked_reason_code`"
+L00007065	  - "`auth_required`"
+L00007066	  - "`auth_expired`"
+L00007067	  - "`stream_terminal_event_timeout_ms = 5000`"
+L00007068	  - "`max_pending_stream_frames = 1024`"
+L00007069	  - "`max_pending_stream_bytes = 16777216`"
+L00007070	  - "`transport_decision_receipt`"
+L00007071	negative_constraints:
+L00007072	  - Do not treat this runtime protocol closure as implementation-readiness proof or runtime certification harness completion.
+L00007073	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+L00007074	owner_hints:
+L00007075	  - Plans/Executor_Protocol.md
+L00007076	  - Plans/Contracts_V0.md
+L00007077	  - Plans/storage-plan.md
+L00007078	```
+L00007079	
+L00007080	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00007081	
+L00007082	This addendum is canonical executor protocol spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00007083	
+L00007084	### execution_unit_context Example And Conditional Requirements
+L00007085	
+L00007086	Repairs row `sfk-1e2487142a1e52002f8eb946`.
+L00007087	
+L00007088	Example:
+L00007089	
+L00007090	```json
+L00007091	{
+L00007092	  "schema_id": "pm.execution_unit_context",
+L00007093	  "schema_version": "1.0.0",
+L00007094	  "execution_unit_type": "plan_unit",
+L00007095	  "project_id": "project-001",
+L00007096	  "run_id": "run-001",
+L00007097	  "unit_id": "PDS-003",
+L00007098	  "attempt_id": "attempt-001",
+L00007099	  "permission_snapshot_id": "perm-001",
+L00007100	  "input_artifact_refs": [],
+L00007101	  "owner_doc_refs": ["Plans/Plan_Document_System.md"]
+L00007102	}
+L00007103	```
+L00007104	
+L00007105	Conditional requirements: `plan_unit` requires `unit_id` and `owner_doc_refs[]`; `tool_attempt` requires `tool_call_id`, `permission_snapshot_id`, and `attempt_id`; `verification` requires `validator_id`, `target_ref`, and `evidence_ref`; `repair_slice` requires `audit_id`, `finding_key`, and `owner_doc_refs[]`.
+L00007106	
+L00007107	### Attempt Counter Invariant Recovery
+L00007108	
+L00007109	Repairs row `sfk-d91a2513114704894b54b826`.
+L00007110	
+L00007111	If sub-counters disagree with `attempt_count`, the executor records `attempt_counter_mismatch` with `attempt_id`, `attempt_count`, `subcounter_name`, `subcounter_value`, `expected_value`, and `recovery_action`. `recovery_action` values are `recompute_from_events`, `block_for_manual_repair`, and `ignore_non_authoritative_projection`. Event history is authoritative; projections must be recomputed before any retry/skip/complete transition.
+L00007112	
+L00007113	### Event Dedup Key Sequence Fallback
+L00007114	
+L00007115	Repairs row `sfk-13a077c1b96ec11515ca81d4`.
+L00007116	
+L00007117	Dedup identity is `event_name + node_id + attempt_id + event_sequence`. Timestamp is metadata only. If `event_sequence` is missing in imported source, the migration reader derives `event_sequence` from stable event-stream order and records `dedup_sequence_derived = true`. New executor events must carry monotonic `event_sequence` per attempt.

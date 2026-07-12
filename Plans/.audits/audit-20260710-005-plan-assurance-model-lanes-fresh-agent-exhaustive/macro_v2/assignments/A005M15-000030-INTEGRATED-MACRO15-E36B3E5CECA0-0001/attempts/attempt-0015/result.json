@@ -1,0 +1,2373 @@
+{
+  "assignment_id": "A005M15-000030-INTEGRATED-MACRO15-E36B3E5CECA0-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "states_transitions",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When a dependency completes or a blocking condition clears, direct dependents reevaluate immediately and can enter the ready set in the same wake cycle; node.prerequisite_resolved carries source, resolved prerequisite, targets, resolution, and wake behavior.",
+          "line_end": 2331,
+          "line_start": 2331,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This prevents unrelated waiting work from stalling runnable dependents and gives consumers a propagation signal.",
+      "item_id": "A005M15-I-EP-029",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-029",
+        "SEMANTIC:PLANUNIT:EP-029"
+      ],
+      "statement": "Direct dependents reevaluate immediately and may become ready in the same wake cycle, with a named prerequisite-resolution event payload.",
+      "title": "Same-wake prerequisite cascade is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Every failed or non-executed attempt classifies into one canonical failure class or blocked-episode cause before choosing retry, backoff, remediation, safe-point restore, or escalation.",
+          "line_end": 2385,
+          "line_start": 2385,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The boundary prevents policy from acting on unclassified or multiply classified outcomes.",
+      "item_id": "A005M15-I-EP-030",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-030",
+        "SEMANTIC:PLANUNIT:EP-030"
+      ],
+      "statement": "Every failed or non-executed attempt must receive exactly one canonical classification before recovery policy is selected.",
+      "title": "Classification precedes recovery policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Search side-panel and SSH-backed file-operation handoffs consume Search/FileManager/Tools route and classification ownership, mapping network, trust, permission, and not-found failures without inventing executor-only file failure classes.",
+          "line_end": 2447,
+          "line_start": 2447,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This avoids executor-local taxonomy drift across GUI and remote file-operation consumers.",
+      "item_id": "A005M15-I-EP-031",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-031",
+        "SEMANTIC:PLANUNIT:EP-031"
+      ],
+      "statement": "Search-side and SSH-backed file operations reuse Search, FileManager, and Tools route and failure ownership.",
+      "title": "Search and SSH handoffs consume owner classifications"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The classified outcome matrix preserves classifier families, max retries, backoff, auto-retry posture, per-class retry rules, distinct rate_limited handling, and generic retry prohibition.",
+          "line_end": 2499,
+          "line_start": 2499,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Implementations have a falsifiable prohibition against retrying before classification.",
+      "item_id": "A005M15-I-EP-032",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-032",
+        "SEMANTIC:PLANUNIT:EP-032"
+      ],
+      "statement": "The outcome matrix makes retry limits, backoff, and automatic posture per-class and prohibits generic retry.",
+      "title": "Retry behavior is class-driven"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: If the same tool_name, serialized_args_hash, and error_message triple is observed twice consecutively at the same nesting level, Executor emits stop.identical_failure and terminates the run immediately.",
+          "line_end": 2564,
+          "line_start": 2564,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "cross_unit_contract_conflict",
+      "impact": "Different producers can emit different terminal events for the same guard, breaking consumers, receipts, and acceptance tests.",
+      "item_id": "A005M15-I-EP-033",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-033",
+        "SEMANTIC:PLANUNIT:EP-033"
+      ],
+      "statement": "This unit requires emission of stop.identical_failure, while EP-035 declares kill.identical_failure canonical and stop.identical_failure compatibility-only.",
+      "title": "Doom-loop terminal event conflicts with EP-035"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Executor classification/lifecycle projection consumes Run Modes, Tools, storage, usage, and provider-facade owner contracts without redefining them locally.",
+          "line_end": 2613,
+          "line_start": 2613,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The owner boundary reduces duplicated enums and conflicting lifecycle semantics.",
+      "item_id": "A005M15-I-EP-034",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-034",
+        "SEMANTIC:PLANUNIT:EP-034"
+      ],
+      "statement": "Executor consumes lifecycle and classification owner contracts rather than redefining them.",
+      "title": "Classification projection is consumer-only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "failures_recovery",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider-transient retry evidence preserves 1s -> 2s -> 4s, /2s/4s compatibility shorthand, per-error retry counters after classification, and kill.identical_failure with stop.identical_failure as compatibility alias.",
+          "line_end": 2665,
+          "line_start": 2665,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "cross_unit_contract_conflict",
+      "impact": "Without one canonical producer value and bounded alias-consumer rule, terminal projections and tests can diverge.",
+      "item_id": "A005M15-I-EP-035",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-035",
+        "SEMANTIC:PLANUNIT:EP-035"
+      ],
+      "statement": "This unit makes kill.identical_failure canonical and stop.identical_failure an older alias, contradicting EP-033's required stop.identical_failure emission.",
+      "title": "Canonical doom-loop event is internally inconsistent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Retry may dispatch another overseer-spawned node worker, enter remediation, request review or corroboration, open graph patch/replan, or restore through safe-point logic when explicit handoff artifacts preserve the fresh-worker retry value.",
+          "line_end": 2715,
+          "line_start": 2715,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "handoff_selection_undefined",
+      "impact": "Builders could choose incompatible remediation, review, replan, or restore paths for the same classified outcome.",
+      "item_id": "A005M15-I-EP-036",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-036",
+        "SEMANTIC:PLANUNIT:EP-036"
+      ],
+      "statement": "Multiple materially different retry paths are allowed, but the conditions, precedence, and authority selecting among them are not stated here.",
+      "title": "Retry follow-up selection lacks a decision rule"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "untrusted_inputs",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'MCP listTools discovery is degraded rather than unavailable: retry three times with 1s backoff, then use the last-known stale tool list until five-minute periodic refresh succeeds, without permanent-killing executor/provider/run.'",
+          "line_end": 2762,
+          "line_start": 2762,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "stale_capability_safety",
+      "impact": "Stale capability metadata can cause invalid calls or retain authority after a server-side change.",
+      "item_id": "A005M15-I-EP-037",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-037",
+        "SEMANTIC:PLANUNIT:EP-037"
+      ],
+      "statement": "The degraded path permits indefinite use of a last-known tool list but does not state how removed tools, changed schemas, or revoked authority are rejected.",
+      "title": "Stale tool-list execution has no safety gate"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "untrusted_inputs",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Bridged-provider execution consumes CLI_Bridged_Providers facade and guard rails, completes parsing/sanitization/payload-preflight before classification, and handles stream disconnects with resume, bounded reconnects, and open/half-open/close circuit breaker.",
+          "line_end": 2810,
+          "line_start": 2810,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The contract covers untrusted provider output and network-loss recovery without redefining the facade.",
+      "item_id": "A005M15-I-EP-038",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-038",
+        "SEMANTIC:PLANUNIT:EP-038"
+      ],
+      "statement": "Parsing, sanitization, and payload preflight occur before classification, while disconnects use resume, bounded reconnect, and circuit-breaker states.",
+      "title": "Bridged providers preflight before classification"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "operations",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Executor storage and usage alignment consumes storage-plan and usage-feature owner sections; receipts carry checkpoint-marker, run.completed.usage, bounded usage.jsonl compatibility retirement, lock-path/FileSafe/worktree path alignment, and budget-exceeded split.",
+          "line_end": 2862,
+          "line_start": 2862,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "retirement_bound_unspecified",
+      "impact": "Legacy readers and writers may persist indefinitely or retire at incompatible times.",
+      "item_id": "A005M15-I-EP-039",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-039",
+        "SEMANTIC:PLANUNIT:EP-039"
+      ],
+      "statement": "The compatibility path is described as bounded without a version, time, migration, or deletion condition in this unit.",
+      "title": "usage.jsonl retirement is called bounded but has no bound"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Regex-index build lifecycle is executor-observable, uses per-project build slots, supports superseded build cancellation and cleanup, and prevents concurrent writes while sharing multi-project thread pool capacity.",
+          "line_end": 2914,
+          "line_start": 2914,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "atomic_publish_and_crash_recovery_missing",
+      "impact": "A crash or cancellation race can expose a partial index or remove the wrong generation.",
+      "item_id": "A005M15-I-EP-040",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-040",
+        "SEMANTIC:PLANUNIT:EP-040"
+      ],
+      "statement": "The lifecycle requires cancellation, cleanup, and no concurrent writes but does not state atomic generation publication or restart treatment for partial output.",
+      "title": "Index build cancellation lacks atomic publication semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.88,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "operations",
+        "privacy_data_lifecycle",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Helper/background attempts remain first-class usage contributors, and prompt/context handoff preserves implementation-grade context continuation, giant-instruction handling, budget visibility, and compatibility-shim retirement.",
+          "line_end": 2965,
+          "line_start": 2965,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "context_lifecycle_unspecified",
+      "impact": "Background attempts may retain or propagate more context than intended and behave inconsistently at size limits.",
+      "item_id": "A005M15-I-EP-041",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-041",
+        "SEMANTIC:PLANUNIT:EP-041"
+      ],
+      "statement": "The unit requires rich context continuation and giant-instruction handling but gives no retention, redaction, truncation, or sensitive-data lifecycle rule.",
+      "title": "Background context retention boundaries are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Lifecycle shutdown consumers treat shutdown as idempotent: double shutdown is guarded by a Once/idempotent root and becomes a safe no-op rather than a second destructive lifecycle transition.'",
+          "line_end": 3012,
+          "line_start": 3012,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The invariant is directly testable under concurrent or repeated shutdown requests.",
+      "item_id": "A005M15-I-EP-042",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-042",
+        "SEMANTIC:PLANUNIT:EP-042"
+      ],
+      "statement": "A once-owned root makes repeated shutdown a no-op instead of a second destructive transition.",
+      "title": "Double shutdown is explicitly safe"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: PM entrypoints establish a canonical signal.NotifyContext or equivalent once-owned fan-out before subprocess start; provider, MCP, and LSP subprocesses receive bounded graceful termination, SIGHUP reloads config, and managed subprocesses run in isolated process groups.",
+          "line_end": 3056,
+          "line_start": 3056,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "grace_window_mapping_ambiguous",
+      "impact": "Implementations can terminate different child classes on incompatible timelines and leak or prematurely kill processes.",
+      "item_id": "A005M15-I-EP-043",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-043",
+        "SEMANTIC:PLANUNIT:EP-043"
+      ],
+      "statement": "The unit promises bounded graceful termination, while preserved tokens include both five-second and three-second windows without mapping them to subprocess families or escalation steps.",
+      "title": "Subprocess grace-window ownership is ambiguous"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worktree safe-point payloads include worktree_id, worktree_path, worktree_branch, HEAD_sha, worktree_dirty and use redb projection from seglog events as canonical binding source for remediation/resume context.",
+          "line_end": 3105,
+          "line_start": 3105,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "dirty_state_not_recoverable",
+      "impact": "A safe point can claim a dirty baseline without containing enough evidence to restore it losslessly.",
+      "item_id": "A005M15-I-EP-044",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-044",
+        "SEMANTIC:PLANUNIT:EP-044"
+      ],
+      "statement": "The payload records worktree_dirty and HEAD identity but does not specify an immutable snapshot or content reference for uncommitted changes.",
+      "title": "Dirty safe-point state is identified but not captured"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Before mutation-capable attempts, Executor creates or attaches runtime safe points with required IDs, execution root, baseline refs, and replan_generation; safe points are recovery anchors and not user-facing restore points.",
+          "line_end": 3154,
+          "line_start": 3154,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "safe_point_reuse_race",
+      "impact": "Concurrent or resumed attempts could attach a stale or unrelated baseline and corrupt recovery.",
+      "item_id": "A005M15-I-EP-045",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-045",
+        "SEMANTIC:PLANUNIT:EP-045"
+      ],
+      "statement": "Before mutation, Executor may create or attach a safe point, but the identity match and atomicity required to attach an existing anchor are not stated.",
+      "title": "Safe-point attach eligibility is unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "propagation",
+        "operations",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Automatic fix cycles create remediation child lineage attached to the failed attempt, preserve remediation IDs/generation/finding IDs/final resolution state, and create canonical graph nodes only when replan changes scope.",
+          "line_end": 3208,
+          "line_start": 3208,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This protects graph identity while retaining auditable remediation generations and outcomes.",
+      "item_id": "A005M15-I-EP-046",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-046",
+        "SEMANTIC:PLANUNIT:EP-046"
+      ],
+      "statement": "Automatic fixes remain child lineage unless a scope-changing replan requires canonical graph nodes.",
+      "title": "Remediation lineage preserves failed-attempt ancestry"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Executor distinguishes draft decomposition from canonical graph execution: draft may degrade to flat sequencing with warning evidence, but invalid canonical graphs after lock are graph_integrity failures that must not silently flatten or degrade.'",
+          "line_end": 3258,
+          "line_start": 3258,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The boundary prevents a recovery shortcut from changing canonical execution semantics.",
+      "item_id": "A005M15-I-EP-047",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-047",
+        "SEMANTIC:PLANUNIT:EP-047"
+      ],
+      "statement": "Only draft decomposition may degrade to flat sequencing; post-lock invalid graphs are graph_integrity failures.",
+      "title": "Canonical graphs cannot silently flatten"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: text-only projection is not a fallback for required rich execution surfaces; required artifacts, tool outputs, and browser/web surfaces must not silently degrade to text-only output.",
+          "line_end": 3307,
+          "line_start": 3307,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "required_surface_failure_state_missing",
+      "impact": "A GUI can avoid text fallback yet still strand users with an empty or misleading surface.",
+      "item_id": "A005M15-I-EP-048",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-048",
+        "SEMANTIC:PLANUNIT:EP-048"
+      ],
+      "statement": "Silent text-only degradation is prohibited, but the blocking, degraded, or attention-required presentation and recovery action are not specified.",
+      "title": "Required rich-surface unavailability has no user state"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "authority",
+        "builder_discretion",
+        "gui_misleading_states",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When auto-use fires before canonical execution, on-trigger behavior creates or refreshes a draft plan, surfaces the sticky Plan panel, and keeps it user-dismissible and reviewable before execution observes revised TODO projection.",
+          "line_end": 3353,
+          "line_start": 3353,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "review_acknowledgement_ambiguous",
+      "impact": "The interface can imply review control while canonical execution proceeds without an explicit decision.",
+      "item_id": "A005M15-I-EP-049",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-049",
+        "SEMANTIC:PLANUNIT:EP-049"
+      ],
+      "statement": "The plan is reviewable and dismissible before execution observes it, but the unit does not say whether user acknowledgment is required or whether dismissal authorizes execution.",
+      "title": "Reviewable draft does not define execution gating"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime recovery scheduler pass refreshes candidate runtime state for active replan_generation, recomputes readiness/blocked/backoff/lane/score terms, selects up to capacity, emits queue-analysis, and dispatches attempts.",
+          "line_end": 3399,
+          "line_start": 3399,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "scheduler_snapshot_atomicity_missing",
+      "impact": "Concurrent wakeups or capacity changes can over-dispatch or emit analysis that does not match actual dispatch.",
+      "item_id": "A005M15-I-EP-050",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-050",
+        "SEMANTIC:PLANUNIT:EP-050"
+      ],
+      "statement": "Refresh, scoring, capacity selection, queue analysis, and dispatch are specified as one deterministic pass without an atomic snapshot version or compare-and-swap rule.",
+      "title": "Scheduler pass lacks a snapshot-and-commit boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Recovery readiness requires all blockers satisfied, current generation, no blocked state, no backoff, and lane capacity; permission denial, FileSafe, auth refresh, confirmation, and replan-required states are non-ready.",
+          "line_end": 3449,
+          "line_start": 3449,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The predicate prevents recovery dispatch while authority or safety prerequisites remain unresolved.",
+      "item_id": "A005M15-I-EP-051",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-051",
+        "SEMANTIC:PLANUNIT:EP-051"
+      ],
+      "statement": "Generation, blockers, backoff, and capacity all gate readiness, and permission, FileSafe, auth, confirmation, and replan states are explicitly non-ready.",
+      "title": "Recovery readiness has explicit negative predicates"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Scheduler score tuple uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id with remediation/unblocker/normal ordering, no critical-path MVP term, explicit defaults, and invalid/cyclic exclusion.",
+          "line_end": 3500,
+          "line_start": 3500,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "tuple_sort_direction_incomplete",
+      "impact": "Independent schedulers can produce different deterministic orders from the same ready set.",
+      "item_id": "A005M15-I-EP-052",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-052",
+        "SEMANTIC:PLANUNIT:EP-052"
+      ],
+      "statement": "The tuple names fields and lane precedence but does not state ascending or descending treatment for manual_priority, transitive_unblock_count, ready_since_utc, and node_id in the canonical text.",
+      "title": "Score tuple does not fully state ordering direction"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "operations",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime recovery wakeup triggers refer to the later Wake reasons and coalescing owner section for wake_reason values and watchdog-only polling rule.",
+          "line_end": 3551,
+          "line_start": 3551,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The boundary avoids duplicated wake enums and polling-policy drift.",
+      "item_id": "A005M15-I-EP-053",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-053",
+        "SEMANTIC:PLANUNIT:EP-053"
+      ],
+      "statement": "This unit forwards wake reasons and polling rules to their later owner section instead of redefining them.",
+      "title": "Wake values remain single-owned"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Rich editor-agent, workbench, terminal, browser, document, artifact, plugin-first, command-first, rules/skills, persisted tabs, splits/windows, and history/navigation surfaces dispatch through execution_unit_context and preserve attempt identity, safe points, worktree binding, diff/review visibility, and autonomy defaults.",
+          "line_end": 3596,
+          "line_start": 3596,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "context_minimum_schema_missing",
+      "impact": "Consumers can omit or overexpose different context fields while still claiming execution_unit_context conformance.",
+      "item_id": "A005M15-I-EP-054",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-054",
+        "SEMANTIC:PLANUNIT:EP-054"
+      ],
+      "statement": "Many heterogeneous surfaces must preserve identity, safe points, bindings, review visibility, and autonomy defaults, but required fields and redaction rules are not enumerated in this unit.",
+      "title": "Multi-surface context has no minimum field contract here"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Browser-driven debug handoff uses explicit pause and resume inside isolated automation; auth/manual-repro boundaries degrade to attention_required, while richer co-piloting remains future expansion.",
+          "line_end": 3654,
+          "line_start": 3654,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "browser_session_cleanup_unspecified",
+      "impact": "Paused automation may retain sensitive session state or become permanently non-resumable without a defined outcome.",
+      "item_id": "A005M15-I-EP-055",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-055",
+        "SEMANTIC:PLANUNIT:EP-055"
+      ],
+      "statement": "The boundary defines pause, resume, and attention_required but not expiry, credential isolation, cleanup, or recovery when the browser session disappears.",
+      "title": "Isolated browser pause/resume lacks session-lifecycle rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime context summarization stays PM-native, treats provider _context_updates only as a reference, preserves tcN handles, and replaces stale full tool results with audited summaries without a separate extra LLM call.",
+          "line_end": 3701,
+          "line_start": 3701,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "summary_integrity_contract_missing",
+      "impact": "A lossy or manipulated summary can silently change later execution context while the original result is no longer active.",
+      "item_id": "A005M15-I-EP-056",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-056",
+        "SEMANTIC:PLANUNIT:EP-056"
+      ],
+      "statement": "Full tool results are replaced by audited summaries without a separate model call, but the deterministic summarizer, integrity binding, redaction policy, and audit oracle are not defined here.",
+      "title": "Audited summary generation is underspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "concurrency_races",
+        "authority_boundaries",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: UI checkpoint, approve/deny, retry, and seam/lane/promotion/resolution-thread actions are runtime action families keyed by blocked_sequence and allowed_action_ids, not graph-local commands or single-current-task state.",
+          "line_end": 3751,
+          "line_start": 3751,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "runtime_action_authorization_missing",
+      "impact": "A delayed or replayed UI action can approve or retry the wrong episode or exceed the actor's authority.",
+      "item_id": "A005M15-I-EP-057",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-057",
+        "SEMANTIC:PLANUNIT:EP-057"
+      ],
+      "statement": "Runtime actions are keyed by blocked_sequence and allowed_action_ids, but caller authorization, single-use behavior, replay rejection, and stale blocked-sequence handling are not stated.",
+      "title": "Allowed action IDs lack authorization and stale-action semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Cursor-native managed instructions target .cursor/rules/*.mdc and .cursor/rules; .cursorrules is legacy compatibility only, and AGENTS.md/CLAUDE.md/root/provider copies are optional target projections that cannot be sole readiness evidence.",
+          "line_end": 3799,
+          "line_start": 3799,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This explicitly prevents a projected copy from falsely certifying readiness.",
+      "item_id": "A005M15-I-EP-058",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-058",
+        "SEMANTIC:PLANUNIT:EP-058"
+      ],
+      "statement": "Cursor-native targets are canonical for this projection, while legacy and provider copies are compatibility-only and insufficient as sole readiness evidence.",
+      "title": "Managed-instruction readiness cannot rely on copies"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: At launch time, PM Outdated projection should auto-reproject before run launch when safe.",
+          "line_end": 3848,
+          "line_start": 3848,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "safety_predicate_undefined",
+      "impact": "Builders decide whether to rewrite projections or launch against stale state, producing inconsistent and potentially destructive behavior.",
+      "item_id": "A005M15-I-EP-059",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-059",
+        "SEMANTIC:PLANUNIT:EP-059"
+      ],
+      "statement": "The only gate is the phrase when safe; no safety predicate, failure outcome, authority, or oracle is provided.",
+      "title": "Auto-reprojection safety is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "compatibility_migration",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GUI auth/setup copy exposes user-visible choices like Sign in with ChatGPT and Use API Key, while Direct-Gemini OAuth removal is PM app-policy and public-distribution compliance policy rather than evidence that Google OAuth protocol disappeared.",
+          "line_end": 3891,
+          "line_start": 3891,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This prevents removed Direct-Gemini OAuth UI from being misread as a universal protocol claim.",
+      "item_id": "A005M15-I-EP-060",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-060",
+        "SEMANTIC:PLANUNIT:EP-060"
+      ],
+      "statement": "The visible auth choices distinguish PM distribution policy from the existence of Google OAuth as a protocol.",
+      "title": "GUI copy reflects product policy rather than protocol history"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Every non-success outcome is classified before policy; blocked episodes preserve local work/runtime identity/resume prerequisites, FileSafe and external side-effect blocks wait for owning actions, and one path cannot be both failure class and blocked-episode cause.",
+          "line_end": 3938,
+          "line_start": 3938,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "overlap_precedence_missing",
+      "impact": "Different classifiers can route the same outcome to retry versus waiting for an owning action.",
+      "item_id": "A005M15-I-EP-061",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-061",
+        "SEMANTIC:PLANUNIT:EP-061"
+      ],
+      "statement": "A situation cannot be both failure and blocked cause, but the unit does not state deterministic precedence when evidence matches both families.",
+      "title": "Mutual exclusion lacks overlap precedence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Every dispatch creates or reuses attempt_id; mutation/remediation steps create safe_point_id before execution, and MVP cleanup uses canonical workspace or remote project binding with explicit mutation lineage rather than sandbox worktree jail semantics.",
+          "line_end": 3987,
+          "line_start": 3987,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "attempt_identity_reuse_conflict",
+      "impact": "Without defining which dispatches may reuse identity, immutable attempt history and retry counters can be corrupted.",
+      "item_id": "A005M15-I-EP-062",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-062",
+        "SEMANTIC:PLANUNIT:EP-062"
+      ],
+      "statement": "This unit allows every dispatch to create or reuse attempt_id, while EP-072 requires every retry, resume, or restored rerun to create a new attempt_id.",
+      "title": "Attempt ID reuse boundary conflicts with retry identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "operations",
+        "concurrency_races",
+        "partial_failure"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Canonical runtime scheduler readiness requires ready-eligible lifecycle, existing canonical blockers, dependency-satisfying blockers, no active backoff/block projection, matching replan_generation, no worktree conflict, and lane/pool capacity.",
+          "line_end": 4036,
+          "line_start": 4036,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "readiness_snapshot_consistency_missing",
+      "impact": "A mixed-version read can dispatch a node after a blocker or conflict appears.",
+      "item_id": "A005M15-I-EP-063",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-063",
+        "SEMANTIC:PLANUNIT:EP-063"
+      ],
+      "statement": "The predicate joins lifecycle, blockers, projections, generation, worktree conflict, and capacity without requiring they come from one scheduler snapshot.",
+      "title": "Readiness inputs have no consistency version"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "invalid_states_transitions",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Node lifecycle remains graph-progress contract while runtime overlays include blocked, backoff, retrying, remediation, and waiting-approval; overlays do not replace lifecycle values and waiting_approval is represented through runtime records.",
+          "line_end": 4086,
+          "line_start": 4086,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "overlay_combination_rules_missing",
+      "impact": "A node can appear blocked, retrying, and waiting approval at once with no canonical presentation or scheduler meaning.",
+      "item_id": "A005M15-I-EP-064",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-064",
+        "SEMANTIC:PLANUNIT:EP-064"
+      ],
+      "statement": "Overlays are separate from lifecycle, but valid and invalid simultaneous combinations, precedence, and GUI projection rules are not defined here.",
+      "title": "Runtime overlay combinations are not constrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Each scheduler wake refreshes runtime state, recomputes readiness and score terms, reevaluates direct dependents, builds global ready set, emits queue-analysis keyed by scheduler_pass_id, selects up to available_slots, and dispatches attempts.",
+          "line_end": 4138,
+          "line_start": 4138,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "capacity_reservation_race",
+      "impact": "Parallel passes or slow dispatch acknowledgments can oversubscribe capacity and leave misleading analysis receipts.",
+      "item_id": "A005M15-I-EP-065",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-065",
+        "SEMANTIC:PLANUNIT:EP-065"
+      ],
+      "statement": "The pass selects up to available_slots and dispatches, but no reservation or reconciliation rule binds queue-analysis to actual capacity consumption.",
+      "title": "Available slots are not reserved atomically"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "propagation",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When dependency or blocking condition clears, direct dependents reevaluate synchronously in the same wake cycle and newly ready nodes enter the ready set before dispatch completes without an extra scheduler pass.",
+          "line_end": 4184,
+          "line_start": 4184,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The rule is testable by asserting newly ready nodes enter the current pass's ready set.",
+      "item_id": "A005M15-I-EP-066",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-066",
+        "SEMANTIC:PLANUNIT:EP-066"
+      ],
+      "statement": "Cleared prerequisites synchronously reevaluate direct dependents before dispatch completes.",
+      "title": "Same-wake cascade forbids extra-pass latency"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider/model selection, worktree availability, and prerequisite readiness resolve before dispatch; dirty-baseline, merge-conflict, approval, auth, or validation blockers surface through the canonical blocked-episode contract.",
+          "line_end": 4228,
+          "line_start": 4228,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This prevents execution from crossing authority or workspace-safety boundaries prematurely.",
+      "item_id": "A005M15-I-EP-067",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-067",
+        "SEMANTIC:PLANUNIT:EP-067"
+      ],
+      "statement": "Provider, worktree, and prerequisite checks happen before dispatch, with dirty, conflict, approval, auth, and validation failures represented as blocked episodes.",
+      "title": "Mutation-relevant blockers resolve before dispatch"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HTE and DAE execution paths share graph-lock and write-scope safety, surfacing generation staleness, degradation, cleanup-remediation loops, FileSafe bypass, side-effect uncertainty, safe-point/restore conflicts, and projection trust failures as blocked/degraded/remediation classes.",
+          "line_end": 4277,
+          "line_start": 4277,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "safety_violation_class_precedence_missing",
+      "impact": "A severe safety breach could be treated as degradable and allow mutation to continue.",
+      "item_id": "A005M15-I-EP-068",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-068",
+        "SEMANTIC:PLANUNIT:EP-068"
+      ],
+      "statement": "FileSafe bypass, side-effect uncertainty, and projection trust failures may surface as blocked, degraded, or remediation classes, but the unit does not identify which conditions forbid all continued writes.",
+      "title": "Safety violations lack mandatory stop precedence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "propagation",
+        "failures_recovery",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: node-blocked, wizard-blocked, and thread-blocked projections keep family-local fields separate; Executor mints and reuses blocked_sequence across HITL/auth/storage/recovery updates and startup recovery must not lose or remint existing blocked episodes.",
+          "line_end": 4329,
+          "line_start": 4329,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The contract prevents silent loss or reminting of unresolved user-action episodes.",
+      "item_id": "A005M15-I-EP-069",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-069",
+        "SEMANTIC:PLANUNIT:EP-069"
+      ],
+      "statement": "Projection families retain local fields while blocked_sequence persists across owner updates and restart.",
+      "title": "Blocked episode identity survives startup recovery"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Reserved diagnostic schemas for execution, audit, handoff, and HITL events carry attempt_id and preserve attempt continuity as an architecture invariant.",
+          "line_end": 4384,
+          "line_start": 4384,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "diagnostic_data_lifecycle_missing",
+      "impact": "Cross-surface correlation identifiers can expose sensitive operational history beyond intended consumers.",
+      "item_id": "A005M15-I-EP-070",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-070",
+        "SEMANTIC:PLANUNIT:EP-070"
+      ],
+      "statement": "Diagnostic schemas must carry attempt_id across execution, audit, handoff, and HITL, but no redaction, retention, or access boundary is stated here.",
+      "title": "Diagnostic continuity omits privacy controls"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Draft decomposition fallback is allowed only before run.graph_canonical_locked; after graph lock, graph_integrity structure errors stop new dispatches and no silent flattening or degraded canonical execution is allowed.",
+          "line_end": 4431,
+          "line_start": 4431,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "inflight_attempt_policy_missing",
+      "impact": "Execution can continue mutating against a graph already known to be invalid.",
+      "item_id": "A005M15-I-EP-071",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-071",
+        "SEMANTIC:PLANUNIT:EP-071"
+      ],
+      "statement": "After lock, new dispatches stop, but the unit does not say whether already running mutation attempts are cancelled, drained, isolated, or rolled back.",
+      "title": "Graph-integrity stop omits in-flight attempt handling"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id; prior attempts remain immutable, and post-lock execution must preserve runtime identity plus corroboration/promotion/runtime context.",
+          "line_end": 4478,
+          "line_start": 4478,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This gives audit and counter consumers an unambiguous attempt boundary.",
+      "item_id": "A005M15-I-EP-072",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-072",
+        "SEMANTIC:PLANUNIT:EP-072"
+      ],
+      "statement": "Retry, resumed, and restored execution each create a new attempt while earlier attempts stay immutable.",
+      "title": "Reruns always get fresh attempt identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: execution_unit_context is the canonical runtime-facing context object and execution_unit_context plus execution_unit_type define authoritative runtime scope, replacing retired tier-era context as live runtime contract.",
+          "line_end": 4527,
+          "line_start": 4527,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This prevents legacy selector concepts from becoming competing live authority.",
+      "item_id": "A005M15-I-EP-073",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-073",
+        "SEMANTIC:PLANUNIT:EP-073"
+      ],
+      "statement": "execution_unit_context plus execution_unit_type define authoritative scope, replacing tier-era context.",
+      "title": "Runtime scope has one canonical context"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worker spawn, recovery, remediation, coordination services, scheduler joins, and UI inspection surfaces read one shared execution_unit_context so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.",
+          "line_end": 4574,
+          "line_start": 4574,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "shared_context_visibility_boundary_missing",
+      "impact": "A UI or diagnostic consumer may receive secrets or internal mutation context needed only by executor services.",
+      "item_id": "A005M15-I-EP-074",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-074",
+        "SEMANTIC:PLANUNIT:EP-074"
+      ],
+      "statement": "Workers, recovery, coordination, scheduler, and UI inspection all read one context, but field-level authorization and redaction are not specified.",
+      "title": "Shared runtime context lacks per-consumer visibility rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "compatibility_migration",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Compatibility adapters may derive retired tier-era context objects only for legacy selector translation or decomposition and must not persist, exchange, or rehydrate them as the live runtime contract.",
+          "line_end": 4625,
+          "line_start": 4625,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The negative boundary prevents compatibility data from reacquiring runtime authority.",
+      "item_id": "A005M15-I-EP-075",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-075",
+        "SEMANTIC:PLANUNIT:EP-075"
+      ],
+      "statement": "Legacy context may be derived only for translation or decomposition and cannot be persisted, exchanged, or rehydrated live.",
+      "title": "Tier-era context is tightly compatibility-bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "concurrency_races",
+        "compatibility_migration",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: blocked_sequence is canonical per run_id/node_id blocked episode and unresolved blocked episodes restore on restart without reminting, with request_id retained only as subordinate compatibility lookup metadata.",
+          "line_end": 4671,
+          "line_start": 4671,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "concurrent_block_episode_identity_ambiguous",
+      "impact": "Approvals and recovery updates may attach to the wrong cause or remint episodes unpredictably.",
+      "item_id": "A005M15-I-EP-076",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-076",
+        "SEMANTIC:PLANUNIT:EP-076"
+      ],
+      "statement": "blocked_sequence is canonical per run_id/node_id blocked episode, but the unit does not define merge, split, or ordering when multiple independent blockers arise concurrently.",
+      "title": "Concurrent blockers per node have no identity rule"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Blocked-episode approval scope is separate from session-wide policy scope, and approval/rejection events persist durable approver identity fields.",
+          "line_end": 4720,
+          "line_start": 4720,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "approver_identity_authentication_missing",
+      "impact": "Forged or replayed approval events could authorize destructive execution while still satisfying the presence of identity fields.",
+      "item_id": "A005M15-I-EP-077",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:EP-077",
+        "SEMANTIC:PLANUNIT:EP-077"
+      ],
+      "statement": "The unit requires persisted approver identity but does not define signed provenance, authentication strength, impersonation resistance, or replay binding to blocked_sequence.",
+      "title": "Durable approver identity is not authenticated here"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Execution role, requested_account_id, operational_identity, account-switch and pressure ownership, startup recovery, DAE jail/approval policy, usage switch-history, and usage execution-role follow-through transfer through owner and consumer docs.",
+          "line_end": 4764,
+          "line_start": 4764,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "cross_document_transfer_contract_missing",
+      "impact": "A consumer can drop requested versus effective identity or usage switch history without a local falsifiable oracle.",
+      "item_id": "A005M15-I-EP-078",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-078",
+        "SEMANTIC:PLANUNIT:EP-078"
+      ],
+      "statement": "Many authority and accounting fields must transfer through owner and consumer docs, but this unit names no versioned payload, precedence, or required-field matrix.",
+      "title": "Identity and usage carry-through lacks an explicit packet"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider/model precedence is owned across run, seam, package, node, overseer, and delegated-subagent levels and ties to parallel-node worktree assignment and ownership transitions.",
+          "line_end": 4812,
+          "line_start": 4812,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "provider_precedence_order_missing",
+      "impact": "Different dispatchers can select different providers, accounts, or models for identical delegated work.",
+      "item_id": "A005M15-I-EP-079",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:EP-079",
+        "SEMANTIC:PLANUNIT:EP-079"
+      ],
+      "statement": "The unit lists run, seam, package, node, overseer, and delegated-subagent levels but never states which level wins or when ownership transfer freezes resolution.",
+      "title": "Provider/model precedence order is absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "propagation",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider and event records for dispatched work are promotion-aware, preserve requested/effective account resolution across delegation, and keep Phase/Task/Subtask/Iteration as legacy taxonomy rather than canonical runtime ownership.",
+          "line_end": 4862,
+          "line_start": 4862,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This protects auditability of account changes and prevents legacy hierarchy from owning runtime work.",
+      "item_id": "A005M15-I-EP-080",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-080",
+        "SEMANTIC:PLANUNIT:EP-080"
+      ],
+      "statement": "Delegation retains account resolution while legacy Phase/Task/Subtask/Iteration labels remain non-authoritative.",
+      "title": "Promotion records preserve requested and effective accounts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "ownership",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Actor resolver inputs include actor type, overseer/worker/reviewer/corroborator/recovery/graph patch roles, operation type, scope, language/framework/domain, and GUI/backend/infra hints; auto resolution records actor-type basis.",
+          "line_end": 4909,
+          "line_start": 4909,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "actor_resolution_policy_missing",
+      "impact": "Auto resolution can assign materially different authority for the same work while producing equally plausible receipts.",
+      "item_id": "A005M15-I-EP-081",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-081",
+        "SEMANTIC:PLANUNIT:EP-081"
+      ],
+      "statement": "The input dimensions and receipt basis are named, but priority, conflict resolution, fallback, and disallowed-role combinations are absent.",
+      "title": "Actor resolver has inputs but no decision policy"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: If any node is runnable the run remains active; if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred until prerequisite, restore, remediation, auth, or capacity wakeups.",
+          "line_end": 4967,
+          "line_start": 4967,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "deferred_terminal_boundary_incomplete",
+      "impact": "A scheduler may leave a completed or irrecoverably failed run active because terminal evaluation is not closed here.",
+      "item_id": "A005M15-I-EP-082",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-082",
+        "SEMANTIC:PLANUNIT:EP-082"
+      ],
+      "statement": "Active and deferred conditions are explicit, but the transition when no node is runnable and no blocked, backoff, or waiting work exists is not stated in this unit.",
+      "title": "Run-level rule omits the no-work terminal branch"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: attempt_count equals automatic_retry_count plus prerequisite_resume_count plus manual_resume_count plus remediation_retry_count plus one initial attempt, with sub-counters incrementing at attempt start and not inferred by subtraction.",
+          "line_end": 5018,
+          "line_start": 5018,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "counter_crash_atomicity_missing",
+      "impact": "A restart between these writes can double-count or create an attempt not represented by the counters.",
+      "item_id": "A005M15-I-EP-083",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-083",
+        "SEMANTIC:PLANUNIT:EP-083"
+      ],
+      "statement": "The invariant and increment timing are stated, but not the atomic relationship between counter increment, attempt record creation, and dispatch under crash or retry.",
+      "title": "Attempt counters lack atomic crash semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Debug-mode verification records verification_summary with adapter_kind, attempt_count, passed, heuristic_version, optional latest_receipt_ref, and notes, and passes only when the prior class/reason/signature does not recur and rerun reaches expected terminal state.",
+          "line_end": 5069,
+          "line_start": 5069,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "signature_equivalence_undefined",
+      "impact": "Equivalent failures can evade detection through formatting changes, or different failures can collide under an ad hoc heuristic.",
+      "item_id": "A005M15-I-EP-084",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:EP-084",
+        "SEMANTIC:PLANUNIT:EP-084"
+      ],
+      "statement": "Verification depends on prior class, reason, and signature not recurring, but signature normalization and expected terminal-state ownership are not defined here.",
+      "title": "Recurrence comparison is not canonicalized"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Events are per-node sequential, cross-node eventual, deduplicated by event_name/node_id/attempt_id/ts, and multiple wakeup triggers in one scheduler-pass window coalesce into one scheduler pass with first wake_reason recorded.",
+          "line_end": 5120,
+          "line_start": 5120,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "timestamp_dedupe_key_unsound",
+      "impact": "Duplicate state transitions or dropped legitimate events can corrupt per-node sequencing and scheduler wake evidence.",
+      "item_id": "A005M15-I-EP-085",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:EP-085",
+        "SEMANTIC:PLANUNIT:EP-085"
+      ],
+      "statement": "Including ts means a replay with a changed timestamp is not deduplicated, while two distinct same-name events at the same timestamp can collide; first-reason-only coalescing also loses trigger provenance.",
+      "title": "Timestamp-based deduplication is not a stable event identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: replan_generation is a per-run monotonic u32 starting at 0, increments exactly once per applied replan via run.graph_canonical_locked, marks prior attempts/safe points/blocked projections stale, and stale attempts remain auditable but never resumable.",
+          "line_end": 5172,
+          "line_start": 5172,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "generation_overflow_and_atomicity_missing",
+      "impact": "A wrap or partial graph-lock transaction can make stale runtime records appear current and resumable.",
+      "item_id": "A005M15-I-EP-086",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-086",
+        "SEMANTIC:PLANUNIT:EP-086"
+      ],
+      "statement": "replan_generation is a monotonic u32 and preserved text claims no practical maximum, but overflow behavior and atomic coupling to graph application and stale marking are absent.",
+      "title": "Finite generation counter has no overflow or atomic-apply rule"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "gui_truth",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  PM-native Open With stays inside the file/editor surface and carries the",
+          "line_end": 5223,
+          "line_start": 5223,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The boundary preserves worktree identity and prevents an implicit external side effect.",
+      "item_id": "A005M15-I-EP-087",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-087",
+        "SEMANTIC:PLANUNIT:EP-087"
+      ],
+      "statement": "PM-native target selection stays inside the editor surface, while OS launching requires a separate explicit command.",
+      "title": "Open With keeps PM and OS handoffs distinct"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Orchestrator and Assistant Chat execution units that run inside a worktree",
+          "line_end": 5276,
+          "line_start": 5276,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "This avoids duplicating mutable source-control state in execution_unit_context.",
+      "item_id": "A005M15-I-EP-088",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:EP-088",
+        "SEMANTIC:PLANUNIT:EP-088"
+      ],
+      "statement": "Bound execution carries working_directory and worktree_id, while branch, HEAD, dirty state, and mode remain referenced owner context.",
+      "title": "Worktree execution context uses minimal identity fields"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "security_privacy",
+        "invalid_states_transitions",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Orchestrator sets worktree execution fields when launching a DAE in a",
+          "line_end": 5335,
+          "line_start": 5335,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "partial_worktree_binding_validation_missing",
+      "impact": "A malformed handoff can execute in the project root or another directory while carrying contradictory identity.",
+      "item_id": "A005M15-I-EP-089",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-089",
+        "SEMANTIC:PLANUNIT:EP-089"
+      ],
+      "statement": "The fallback addresses absent worktree_id and absent bound context, but does not define behavior for mismatched working_directory, present worktree_id with missing binding, or a path outside the bound root.",
+      "title": "Partial worktree identity combinations are not rejected"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "security_privacy",
+        "concurrency_races",
+        "partial_failure",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding,",
+          "line_end": 5392,
+          "line_start": 5392,
+          "path": "Plans/Executor_Protocol.md",
+          "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+        }
+      ],
+      "gap_kind": "mid_turn_worktree_invalidation_missing",
+      "impact": "Tools may continue against a stale or reassigned path after the authority that established the binding is gone.",
+      "item_id": "A005M15-I-EP-090",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:EP-090",
+        "SEMANTIC:PLANUNIT:EP-090"
+      ],
+      "statement": "The cwd remains frozen across mid-turn unbind, but the unit does not define what happens if the bound worktree is deleted, permissions change, or FileSafe binding becomes invalid during the turn.",
+      "title": "Frozen turn cwd lacks invalidation behavior"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        2324,
+        2707
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-029",
+        "PLANUNIT:EP-030",
+        "PLANUNIT:EP-031",
+        "PLANUNIT:EP-032",
+        "PLANUNIT:EP-033",
+        "PLANUNIT:EP-034",
+        "PLANUNIT:EP-035",
+        "SEMANTIC:PLANUNIT:EP-029",
+        "SEMANTIC:PLANUNIT:EP-030",
+        "SEMANTIC:PLANUNIT:EP-031",
+        "SEMANTIC:PLANUNIT:EP-032",
+        "SEMANTIC:PLANUNIT:EP-033",
+        "SEMANTIC:PLANUNIT:EP-034",
+        "SEMANTIC:PLANUNIT:EP-035"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-029",
+        "A005M15-I-EP-030",
+        "A005M15-I-EP-031",
+        "A005M15-I-EP-032",
+        "A005M15-I-EP-033",
+        "A005M15-I-EP-034",
+        "A005M15-I-EP-035"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-029 through EP-035 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0007"
+    },
+    {
+      "core_range": [
+        2708,
+        3097
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-036",
+        "PLANUNIT:EP-037",
+        "PLANUNIT:EP-038",
+        "PLANUNIT:EP-039",
+        "PLANUNIT:EP-040",
+        "PLANUNIT:EP-041",
+        "PLANUNIT:EP-042",
+        "PLANUNIT:EP-043",
+        "SEMANTIC:PLANUNIT:EP-036",
+        "SEMANTIC:PLANUNIT:EP-037",
+        "SEMANTIC:PLANUNIT:EP-038",
+        "SEMANTIC:PLANUNIT:EP-039",
+        "SEMANTIC:PLANUNIT:EP-040",
+        "SEMANTIC:PLANUNIT:EP-041",
+        "SEMANTIC:PLANUNIT:EP-042",
+        "SEMANTIC:PLANUNIT:EP-043"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-036",
+        "A005M15-I-EP-037",
+        "A005M15-I-EP-038",
+        "A005M15-I-EP-039",
+        "A005M15-I-EP-040",
+        "A005M15-I-EP-041",
+        "A005M15-I-EP-042",
+        "A005M15-I-EP-043"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-036 through EP-043 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0008"
+    },
+    {
+      "core_range": [
+        3098,
+        3492
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-044",
+        "PLANUNIT:EP-045",
+        "PLANUNIT:EP-046",
+        "PLANUNIT:EP-047",
+        "PLANUNIT:EP-048",
+        "PLANUNIT:EP-049",
+        "PLANUNIT:EP-050",
+        "PLANUNIT:EP-051",
+        "SEMANTIC:PLANUNIT:EP-044",
+        "SEMANTIC:PLANUNIT:EP-045",
+        "SEMANTIC:PLANUNIT:EP-046",
+        "SEMANTIC:PLANUNIT:EP-047",
+        "SEMANTIC:PLANUNIT:EP-048",
+        "SEMANTIC:PLANUNIT:EP-049",
+        "SEMANTIC:PLANUNIT:EP-050",
+        "SEMANTIC:PLANUNIT:EP-051"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-044",
+        "A005M15-I-EP-045",
+        "A005M15-I-EP-046",
+        "A005M15-I-EP-047",
+        "A005M15-I-EP-048",
+        "A005M15-I-EP-049",
+        "A005M15-I-EP-050",
+        "A005M15-I-EP-051"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-044 through EP-051 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0009"
+    },
+    {
+      "core_range": [
+        3493,
+        3883
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-052",
+        "PLANUNIT:EP-053",
+        "PLANUNIT:EP-054",
+        "PLANUNIT:EP-055",
+        "PLANUNIT:EP-056",
+        "PLANUNIT:EP-057",
+        "PLANUNIT:EP-058",
+        "PLANUNIT:EP-059",
+        "SEMANTIC:PLANUNIT:EP-052",
+        "SEMANTIC:PLANUNIT:EP-053",
+        "SEMANTIC:PLANUNIT:EP-054",
+        "SEMANTIC:PLANUNIT:EP-055",
+        "SEMANTIC:PLANUNIT:EP-056",
+        "SEMANTIC:PLANUNIT:EP-057",
+        "SEMANTIC:PLANUNIT:EP-058",
+        "SEMANTIC:PLANUNIT:EP-059"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-052",
+        "A005M15-I-EP-053",
+        "A005M15-I-EP-054",
+        "A005M15-I-EP-055",
+        "A005M15-I-EP-056",
+        "A005M15-I-EP-057",
+        "A005M15-I-EP-058",
+        "A005M15-I-EP-059"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-052 through EP-059 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0010"
+    },
+    {
+      "core_range": [
+        3884,
+        4269
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-060",
+        "PLANUNIT:EP-061",
+        "PLANUNIT:EP-062",
+        "PLANUNIT:EP-063",
+        "PLANUNIT:EP-064",
+        "PLANUNIT:EP-065",
+        "PLANUNIT:EP-066",
+        "PLANUNIT:EP-067",
+        "SEMANTIC:PLANUNIT:EP-060",
+        "SEMANTIC:PLANUNIT:EP-061",
+        "SEMANTIC:PLANUNIT:EP-062",
+        "SEMANTIC:PLANUNIT:EP-063",
+        "SEMANTIC:PLANUNIT:EP-064",
+        "SEMANTIC:PLANUNIT:EP-065",
+        "SEMANTIC:PLANUNIT:EP-066",
+        "SEMANTIC:PLANUNIT:EP-067"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-060",
+        "A005M15-I-EP-061",
+        "A005M15-I-EP-062",
+        "A005M15-I-EP-063",
+        "A005M15-I-EP-064",
+        "A005M15-I-EP-065",
+        "A005M15-I-EP-066",
+        "A005M15-I-EP-067"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-060 through EP-067 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0011"
+    },
+    {
+      "core_range": [
+        4270,
+        4663
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-068",
+        "PLANUNIT:EP-069",
+        "PLANUNIT:EP-070",
+        "PLANUNIT:EP-071",
+        "PLANUNIT:EP-072",
+        "PLANUNIT:EP-073",
+        "PLANUNIT:EP-074",
+        "PLANUNIT:EP-075",
+        "SEMANTIC:PLANUNIT:EP-068",
+        "SEMANTIC:PLANUNIT:EP-069",
+        "SEMANTIC:PLANUNIT:EP-070",
+        "SEMANTIC:PLANUNIT:EP-071",
+        "SEMANTIC:PLANUNIT:EP-072",
+        "SEMANTIC:PLANUNIT:EP-073",
+        "SEMANTIC:PLANUNIT:EP-074",
+        "SEMANTIC:PLANUNIT:EP-075"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-068",
+        "A005M15-I-EP-069",
+        "A005M15-I-EP-070",
+        "A005M15-I-EP-071",
+        "A005M15-I-EP-072",
+        "A005M15-I-EP-073",
+        "A005M15-I-EP-074",
+        "A005M15-I-EP-075"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-068 through EP-075 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0012"
+    },
+    {
+      "core_range": [
+        4664,
+        5061
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-076",
+        "PLANUNIT:EP-077",
+        "PLANUNIT:EP-078",
+        "PLANUNIT:EP-079",
+        "PLANUNIT:EP-080",
+        "PLANUNIT:EP-081",
+        "PLANUNIT:EP-082",
+        "PLANUNIT:EP-083",
+        "SEMANTIC:PLANUNIT:EP-076",
+        "SEMANTIC:PLANUNIT:EP-077",
+        "SEMANTIC:PLANUNIT:EP-078",
+        "SEMANTIC:PLANUNIT:EP-079",
+        "SEMANTIC:PLANUNIT:EP-080",
+        "SEMANTIC:PLANUNIT:EP-081",
+        "SEMANTIC:PLANUNIT:EP-082",
+        "SEMANTIC:PLANUNIT:EP-083"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-076",
+        "A005M15-I-EP-077",
+        "A005M15-I-EP-078",
+        "A005M15-I-EP-079",
+        "A005M15-I-EP-080",
+        "A005M15-I-EP-081",
+        "A005M15-I-EP-082",
+        "A005M15-I-EP-083"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-076 through EP-083 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0013"
+    },
+    {
+      "core_range": [
+        5062,
+        5445
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:EP-084",
+        "PLANUNIT:EP-085",
+        "PLANUNIT:EP-086",
+        "PLANUNIT:EP-087",
+        "PLANUNIT:EP-088",
+        "PLANUNIT:EP-089",
+        "PLANUNIT:EP-090",
+        "SEMANTIC:PLANUNIT:EP-084",
+        "SEMANTIC:PLANUNIT:EP-085",
+        "SEMANTIC:PLANUNIT:EP-086",
+        "SEMANTIC:PLANUNIT:EP-087",
+        "SEMANTIC:PLANUNIT:EP-088",
+        "SEMANTIC:PLANUNIT:EP-089",
+        "SEMANTIC:PLANUNIT:EP-090"
+      ],
+      "item_ids": [
+        "A005M15-I-EP-084",
+        "A005M15-I-EP-085",
+        "A005M15-I-EP-086",
+        "A005M15-I-EP-087",
+        "A005M15-I-EP-088",
+        "A005M15-I-EP-089",
+        "A005M15-I-EP-090"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and both semantic and PlanUnit refs for EP-084 through EP-090 under exact and adversarial lenses.",
+      "window_id": "WIN-E36B3E5CECA0-0014"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-E36B3E5CECA0-0001",
+    "document_path": "Plans/Executor_Protocol.md",
+    "micro_window_ids": [
+      "WIN-E36B3E5CECA0-0007",
+      "WIN-E36B3E5CECA0-0008",
+      "WIN-E36B3E5CECA0-0009",
+      "WIN-E36B3E5CECA0-0010",
+      "WIN-E36B3E5CECA0-0011",
+      "WIN-E36B3E5CECA0-0012",
+      "WIN-E36B3E5CECA0-0013",
+      "WIN-E36B3E5CECA0-0014"
+    ],
+    "source_sha256": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract selects one canonical doom-loop terminal event between kill.identical_failure and stop.identical_failure, and which consumers accept the bounded alias?",
+      "Which owner defines authenticated approver identity, replay protection, and blocked_sequence binding for approval and rejection events?",
+      "Which owner validates worktree_id, working_directory, and bound-worktree consistency before FileSafe and tool dispatch?",
+      "Which scheduler owner defines atomic capacity reservation and snapshot versioning across queue-analysis and dispatch?"
+    ],
+    "feature_family_keys": [
+      "executor-classification-retry-and-doom-loop",
+      "scheduler-readiness-capacity-and-wake-coalescing",
+      "safe-point-remediation-and-replan-generation",
+      "runtime-context-authority-and-worktree-binding",
+      "blocked-episode-hitl-and-approval",
+      "provider-account-actor-resolution-and-usage",
+      "rich-surfaces-browser-and-gui-runtime-actions"
+    ],
+    "research_queries": [
+      "distributed event deduplication stable idempotency keys versus timestamp composite keys",
+      "atomic safe-point snapshots for dirty git worktrees and crash-consistent recovery",
+      "secure approval event provenance replay protection and non-repudiation",
+      "scheduler capacity reservation compare-and-swap queue analysis dispatch consistency",
+      "stale MCP tool discovery cache schema revocation and capability safety"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000030_attempt_0015_terminal"
+}

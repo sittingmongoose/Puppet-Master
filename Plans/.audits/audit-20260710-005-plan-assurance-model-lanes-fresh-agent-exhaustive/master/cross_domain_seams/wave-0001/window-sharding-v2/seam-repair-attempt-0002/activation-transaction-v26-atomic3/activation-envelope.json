@@ -1,0 +1,25 @@
+{
+  "schema_version": "cross-domain-seam-repair-activation-envelope-v26-atomic3",
+  "status": "ACTIVE_FOR_EXACTLY_3_FRESH_SOL_XHIGH_REPAIR_LEAVES",
+  "activation_granted": true,
+  "activation_transaction_id": "A005-CDS-REPAIR-V26-ATOMIC3-02e940ededd60054",
+  "assignment_count": 3,
+  "assignment_ids": [
+    "A005CDSV2-0002",
+    "A005CDSV2-0006",
+    "A005CDSV2-0039"
+  ],
+  "activation_core_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/activation-transaction-v26-atomic3/activation-core.json",
+  "activation_core_sha256": "971d9066145c851226fd521026b5be2863814a331acd88c52040f2bbf4513c29",
+  "authorization_count": 3,
+  "authorization_sha256_by_assignment": {
+    "A005CDSV2-0002": "3769af58317a00a35eebf17d469c8ceac5146d0012f28eff2a4e92a6e21ed239",
+    "A005CDSV2-0006": "a136f0a79a223398ddd1eb9347e0ceed0081db093f2071566a797b1450588621",
+    "A005CDSV2-0039": "0e759664593340193bb15df901f6f8f8832e0a44ae572102636ec11effde4247"
+  },
+  "policy_v26_sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68",
+  "luna_independent_prelaunch_sha256": "02e940ededd60054f0e654159cabf21fe3e04a57c5d2601a3da09cd17fd6220e",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "candidate_credit": 0
+}

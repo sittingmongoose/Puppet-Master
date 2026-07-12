@@ -1,0 +1,11 @@
+{
+  "instructions": [
+    "Read only your intent, repair packet, repair schema, and live public sources needed to verify corrected registrations.",
+    "Preserve every original decision and evidence record except the explicitly permitted affected-edge cross-fields.",
+    "Register every cited source exactly once; resolved sufficient judgments must not carry unresolved_reason.",
+    "Do not add, remove, reorder, or change decisions outside original membership.",
+    "Write exactly one result.json and return PMR1 only after local validation.",
+    "No descendants, followups, retries, peer results, or canonical Plans."
+  ],
+  "schema_version": "cross-domain-seam-repair-leaf-prompt-v1"
+}
